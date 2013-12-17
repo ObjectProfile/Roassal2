@@ -5,7 +5,9 @@ Class {
 		'position',
 		'model',
 		'width',
-		'height'
+		'height',
+		'incomingEdges',
+		'outgoingEdges'
 	],
 	#category : #Roassal2
 }
@@ -17,15 +19,45 @@ RTElement class >> on: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+RTElement >> addIncomingEdge: anEdge [
+	"Method invoked by the class Edge, the user is not supposed to call this method directly.
+	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
+	the edges may have to be updated"
+	incomingEdges isNil ifTrue: [ incomingEdges := OrderedCollection new ]. 
+	incomingEdges add: anEdge
+]
+
+{ #category : #'as yet unclassified' }
+RTElement >> addOutgoingEdge: anEdge [
+	"Method invoked by the class Edge, the user is not supposed to call this method directly.
+	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
+	the edges may have to be updated"
+	outgoingEdges isNil ifTrue: [ outgoingEdges := OrderedCollection new ]. 
+	outgoingEdges add: anEdge
+]
+
+{ #category : #'as yet unclassified' }
 RTElement >> addShape: aRTShape [
+
+	"I am not sure we need to have aRTShape here. It should instead be a trachel shape"
 	shape := aRTShape instance.
+	"shape announcer: self announcer."
+
 	width := width max: (shape widthFor: self).
 	height := height max: (shape heightFor: self).
+	
+	
 ]
 
 { #category : #'as yet unclassified' }
 RTElement >> height [
 	^ height
+]
+
+{ #category : #'as yet unclassified' }
+RTElement >> incomingEdges [
+	incomingEdges isNil ifTrue: [ ^ #() ].
+	^ incomingEdges
 ]
 
 { #category : #'as yet unclassified' }
@@ -48,6 +80,12 @@ RTElement >> model: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+RTElement >> outgoingEdges [
+	outgoingEdges isNil ifTrue: [ ^ #() ].
+	^ outgoingEdges
+]
+
+{ #category : #'as yet unclassified' }
 RTElement >> position [
 	^ position
 ]
@@ -59,7 +97,10 @@ RTElement >> translateBy: delta [
 
 { #category : #'as yet unclassified' }
 RTElement >> translateTo: newPosition [
-	position := newPosition
+	position := newPosition.
+	self outgoingEdges do: [ :edge | edge update ].
+	self incomingEdges do: [ :edge | edge update ].
+	self update
 ]
 
 { #category : #'as yet unclassified' }

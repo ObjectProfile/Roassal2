@@ -1,35 +1,29 @@
 Class {
-	#name : #RTBox,
+	#name : #RTEllipse,
 	#superclass : #RTAbstractElementShape,
-	#instVars : [
-		'borderColor'
-	],
 	#category : #Roassal2
 }
 
-{ #category : #accessing }
-RTBox >> borderColor [
-	^ borderColor
+{ #category : #'as yet unclassified' }
+RTEllipse >> initialize [
+	super initialize.
+	color := self defaultColor
 ]
 
-{ #category : #accessing }
-RTBox >> borderColor: anObject [
-	borderColor := anObject
-]
-
-{ #category : #rendering }
-RTBox >> renderOn: trachelCanvas for: anElement [
+{ #category : #'as yet unclassified' }
+RTEllipse >> renderOn: trachelCanvas for: anElement [
 	| rec ex |
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
-	^ trachelCanvas buildRectangle: rec color: (self colorFor: anElement)
+	^ trachelCanvas buildCircleFrom: rec origin to: rec corner color: (self colorFor: anElement)
 ]
 
-{ #category : #rendering }
-RTBox >> updateFor: anElement [
+{ #category : #'as yet unclassified' }
+RTEllipse >> updateFor: anElement [
 	| rec ex |
 	"This is a bit ugly... We need to find a better way"
 	anElement trachelShape isNil ifTrue: [ ^ self ].
+	Halt once.
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	anElement trachelShape fromRectangle: rec

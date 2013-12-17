@@ -1,6 +1,9 @@
 Class {
 	#name : #RTShape,
 	#superclass : #RTObject,
+	#instVars : [
+		'color'
+	],
 	#category : #Roassal2
 }
 
@@ -21,6 +24,27 @@ RTShape class >> instance [
 	^ self new
 ]
 
+{ #category : #accessing }
+RTShape >> color [
+	^ color
+]
+
+{ #category : #accessing }
+RTShape >> color: anObject [
+	color := anObject
+]
+
+{ #category : #rendering }
+RTShape >> colorFor: anElement [
+	^ color rtValue: anElement
+]
+
+{ #category : #configuration }
+RTShape >> defaultColor [
+
+	^ Color veryVeryLightGray
+]
+
 { #category : #'as yet unclassified' }
 RTShape >> element [
 
@@ -34,12 +58,17 @@ RTShape >> elementOn: aModel [
 ]
 
 { #category : #'as yet unclassified' }
+RTShape >> initialize [
+	super initialize.
+	color := self defaultColor
+]
+
+{ #category : #'as yet unclassified' }
 RTShape >> instance [
 	^ self
 ]
 
 { #category : #'as yet unclassified' }
 RTShape >> renderOn: trachelCanvas for: aShapedObject [
-
 	self subclassResponsibility
 ]

@@ -13,9 +13,49 @@ RTElementTest >> testDefault [
 	self assert: el height = 0.
 ]
 
+{ #category : #interaction }
+RTElementTest >> testHighlighting [
+	| el view |
+	el := RTBox element.
+	view := RTView new.
+	view add: el.
+	view createAndFillCanvas.
+	
+	self assert: el trachelShape color = RTBox new defaultColor.
+	
+	el trachelShape color: Color red.
+	self assert: el trachelShape color = Color red.
+]
+
 { #category : #'as yet unclassified' }
 RTElementTest >> testModel [
 	self assert: (RTElement on: 10) model = 10
+]
+
+{ #category : #'as yet unclassified' }
+RTElementTest >> testRendering [
+
+	| view el |
+	view := RTView new.
+	el := RTBox element.
+	view add: el.
+	
+	self assert: el trachelShape isNil.
+	view createAndFillCanvas.
+	self assert: el trachelShape notNil.
+	self assert: el trachelShape class == TRBoxShape
+]
+
+{ #category : #'as yet unclassified' }
+RTElementTest >> testRenderingAndEvent [
+
+	| view el trachelShape |
+	view := RTView new.
+	el := RTBox element.
+	view add: el.
+	view createAndFillCanvas.
+	trachelShape := el trachelShape.
+	self assert: el announcer == trachelShape announcer
 ]
 
 { #category : #'as yet unclassified' }

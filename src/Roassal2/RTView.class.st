@@ -2,14 +2,24 @@ Class {
 	#name : #RTView,
 	#superclass : #RTObject,
 	#instVars : [
-		'elements'
+		'elements',
+		'trachelCanvas'
 	],
 	#category : #Roassal2
 }
 
 { #category : #'as yet unclassified' }
 RTView >> add: anElement [
-	elements add: anElement
+	elements add: anElement.
+	"anElement shape renderOn: trachelCanvas for: anElement"
+]
+
+{ #category : #'as yet unclassified' }
+RTView >> createAndFillCanvas [
+	| trCanvas |
+	trCanvas := TRCanvas new.
+	elements do: [ :el | el renderOn: trCanvas ].
+	^ trCanvas
 ]
 
 { #category : #'as yet unclassified' }
@@ -20,7 +30,8 @@ RTView >> elements [
 { #category : #'as yet unclassified' }
 RTView >> initialize [
 	super initialize.
-	elements := OrderedCollection new
+	elements := OrderedCollection new.
+	"trachelCanvas := TRCanvas new."
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,11 +41,7 @@ RTView >> numberOfElements [
 
 { #category : #'as yet unclassified' }
 RTView >> open [
+	"^ trachelCanvas open"
 
-	| trCanvas |
-	trCanvas := TRCanvas new.
-	elements do: [ :el |
-		el renderOn: trCanvas 
-	].
-	^ trCanvas open
+	^ self createAndFillCanvas open
 ]

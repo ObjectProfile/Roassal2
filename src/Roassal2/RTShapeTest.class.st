@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTShapeTest >> testColoredShape [
+
+	| shape el |
+	shape := RTBox new color: Color red.
+	el := shape element.
+	RTView new add: el; createAndFillCanvas.
+	self assert: el trachelShape color = Color red
+]
+
+{ #category : #'as yet unclassified' }
 RTShapeTest >> testElementCreation [
 
 	| s |

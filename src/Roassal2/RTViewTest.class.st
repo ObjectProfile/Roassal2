@@ -25,3 +25,21 @@ RTViewTest >> testDefault [
 
 	self assert: view numberOfElements = 0
 ]
+
+{ #category : #'as yet unclassified' }
+RTViewTest >> testEmptyCanvas [
+	self assert: RTView new createAndFillCanvas numberOfShapes = 0
+
+]
+
+{ #category : #'as yet unclassified' }
+RTViewTest >> testFillingCanvas [
+
+	| canvas |
+	view := RTView new.
+	view add: RTBox element.
+	canvas := view createAndFillCanvas.
+	
+	self assert: canvas class == TRCanvas.
+	self assert: canvas numberOfShapes = 1.
+]
