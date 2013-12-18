@@ -2,21 +2,75 @@ Class {
 	#name : #TRCircleShape,
 	#superclass : #TRShape,
 	#instVars : [
-		'radius'
+		'rectangle'
 	],
 	#category : #Trachel
 }
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
+TRCircleShape >> drawOn: athensCanvas [
+	athensCanvas pathTransform restoreAfter: [
+		athensCanvas pathTransform 
+			translateBy: rectangle center;
+			scaleBy: rectangle extent / 2
+			.
 
+		athensCanvas
+			setPaint: color;
+			drawShape: path.
+			
+"		athensCanvas
+			setStrokePaint: strokePaint;
+			drawShape: path
+"		]
+]
 
-	path := (canvas createPath: [:builder |
-		builder
-			absolute;	
-			moveTo: 0 @ 0; 
-			ccwArcTo: 1.0 @ 0.0 angle: 180 degreesToRadians
-	]).
+{ #category : #'as yet unclassified' }
+TRCircleShape >> from: aPoint to: anotherPoint color: aColor [
+	rectangle := aPoint corner: anotherPoint.
+	position := rectangle center.
+	self update.
 	self strokePaint: aColor.
 	self color: aColor
+]
+
+{ #category : #'as yet unclassified' }
+TRCircleShape >> includesPoint: aPoint [
+	"We could aternatively translate rectangle by position"
+	^ rectangle containsPoint: (aPoint)
+]
+
+{ #category : #'as yet unclassified' }
+TRCircleShape >> rectangle [
+	^ rectangle
+]
+
+{ #category : #'as yet unclassified' }
+TRCircleShape >> rectangle: rec [
+	rectangle := rec
+]
+
+{ #category : #'as yet unclassified' }
+TRCircleShape >> update [
+	path := canvas
+				createPath: [ :builder | 
+					builder
+						absolute;
+						moveTo: 0 @ 1;
+						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
+						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ]
+"	path := canvas
+		cacheAt: self
+		ifAbsentPut: [ 
+			canvas
+				createPath: [ :builder | 
+					builder
+						absolute;
+						moveTo: 0 @ 1;
+						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
+						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ] ]"
 ]

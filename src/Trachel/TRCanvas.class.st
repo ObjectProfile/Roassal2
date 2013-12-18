@@ -9,6 +9,12 @@ Class {
 	#category : #Trachel
 }
 
+{ #category : #events }
+TRCanvas >> announce: anEvent [
+
+	"Do it later"
+]
+
 { #category : #'as yet unclassified' }
 TRCanvas >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
 	"Does not work for now"
@@ -55,12 +61,24 @@ TRCanvas >> initialize [
 	shapes := OrderedCollection new
 ]
 
+{ #category : #accessing }
+TRCanvas >> numberOfShapes [
+	^ shapes size
+]
+
 { #category : #'instance creation' }
 TRCanvas >> open [ 
 	TRMorph new 
 		extent: canvas extent;
 		canvas: self;
 		openInWindow
+]
+
+{ #category : #accessing }
+TRCanvas >> shapeForPosition: position [
+	shapes do: [ :s | 
+		(s includesPoint: position) ifTrue: [ ^ s ] ].
+	^ self
 ]
 
 { #category : #accessing }

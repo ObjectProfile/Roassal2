@@ -1,17 +1,17 @@
 Class {
-	#name : #TRBoxShape,
+	#name : #TRBorderBoxShape,
 	#superclass : #TRAbstractBoxShape,
 	#category : #Trachel
 }
 
 { #category : #'as yet unclassified' }
-TRBoxShape >> drawOn: athensCanvas [
+TRBorderBoxShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
 			translateBy: position.
 
 		athensCanvas
-			setPaint: color;
+			setStrokePaint: strokePaint;
 			drawShape: path ]
 ]

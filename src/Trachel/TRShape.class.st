@@ -6,10 +6,28 @@ Class {
 		'color',
 		'path',
 		'strokePaint',
-		'position'
+		'position',
+		'announcer',
+		'element'
 	],
 	#category : #Trachel
 }
+
+{ #category : #events }
+TRShape >> announce: anEvent [
+	self announcer announce: anEvent
+]
+
+{ #category : #events }
+TRShape >> announcer [
+	announcer isNil ifTrue: [ announcer := Announcer new ].
+	^ announcer
+]
+
+{ #category : #events }
+TRShape >> announcer: anAnnouncer [
+	announcer := anAnnouncer
+]
 
 { #category : #accessing }
 TRShape >> canvas: aSurface [
@@ -45,6 +63,23 @@ TRShape >> drawOn: athensCanvas [
 			drawShape: path  ]
 ]
 
+{ #category : #accessing }
+TRShape >> element [
+	"A shape has a reference to an object, typically the object odel that the trachel shape represents"
+	^ element 
+]
+
+{ #category : #accessing }
+TRShape >> element: anObject [
+	"anObject could be any kind of object. A shape has a reference to an object, typically the object odel that the trachel shape represents"
+	element := anObject
+]
+
+{ #category : #testing }
+TRShape >> includesPoint: aPoint [
+	^ false
+]
+
 { #category : #initialization }
 TRShape >> initialize [
 	super initialize.
@@ -53,6 +88,11 @@ TRShape >> initialize [
 	path := 10 @ 20 extent: 30 @ 30.
 	
 	position := 0 @ 0
+]
+
+{ #category : #events }
+TRShape >> on: event do: aBlock [
+	self announcer on: event do: aBlock
 ]
 
 { #category : #accessing }
@@ -87,6 +127,11 @@ TRShape >> translateBy: aPoint [
 
 { #category : #actions }
 TRShape >> translateTo: aPoint [
-	"We should not have this..."
 	position := aPoint
+]
+
+{ #category : #actions }
+TRShape >> update [
+	"Update the path of the shape."
+	self subclassResponsibility
 ]

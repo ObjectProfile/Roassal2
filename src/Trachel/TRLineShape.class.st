@@ -9,15 +9,21 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TRLineShape >> from: aPoint to: anotherPoint [ 
+TRLineShape >> from [
+	"Return a point"
+	^ from
+]
 
-	path := (canvas createPath: [:builder |
-		builder
-			absolute;
-			moveTo: aPoint;
-			lineTo: anotherPoint
-	]).
+{ #category : #'as yet unclassified' }
+TRLineShape >> from: aPoint [
+	from := aPoint
+]
 
+{ #category : #'as yet unclassified' }
+TRLineShape >> from: aPoint to: anotherPoint [
+	from := aPoint.
+	to := anotherPoint.
+	self update
 ]
 
 { #category : #'as yet unclassified' }
@@ -26,4 +32,30 @@ TRLineShape >> from: aPoint to: anotherPoint color: aColor [
 	self from: aPoint to: anotherPoint.
 	self strokePaint: aColor.
 	self color: aColor
+]
+
+{ #category : #'as yet unclassified' }
+TRLineShape >> includesPoint: aPoint [
+	^ aPoint onLineFrom: from to: to within: 3
+]
+
+{ #category : #'as yet unclassified' }
+TRLineShape >> to [
+	"Return a point"
+	^ to
+]
+
+{ #category : #'as yet unclassified' }
+TRLineShape >> to: aPoint [
+	to := aPoint
+]
+
+{ #category : #'as yet unclassified' }
+TRLineShape >> update [
+	path := canvas
+		createPath: [ :builder | 
+			builder
+				absolute;
+				moveTo: from;
+				lineTo: to ]
 ]
