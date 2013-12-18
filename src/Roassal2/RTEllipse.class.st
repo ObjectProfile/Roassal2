@@ -23,8 +23,7 @@ RTEllipse >> updateFor: anElement [
 	| rec ex |
 	"This is a bit ugly... We need to find a better way"
 	anElement trachelShape isNil ifTrue: [ ^ self ].
-	Halt once.
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
-	anElement trachelShape fromRectangle: rec
+	anElement trachelShape rectangle: rec; update
 ]
