@@ -13,6 +13,13 @@ TRCanvasTest >> setUp [
 	canvas := TRCanvas new
 ]
 
+{ #category : #animations }
+TRCanvasTest >> testAddingAnimation [
+	canvas addAnimation: RTLinearMove new.
+	self assert: canvas hasAnimation.
+	self assert: canvas numberOfAnimations = 1
+]
+
 { #category : #contains }
 TRCanvasTest >> testContainsPoint1 [
 	self assert: (canvas shapeForPosition: 20 @ 20) == canvas
@@ -44,6 +51,12 @@ TRCanvasTest >> testContainsPointAfterTranslation [
 TRCanvasTest >> testDefault [
 
 	self assert: canvas shapes isEmpty
+]
+
+{ #category : #animations }
+TRCanvasTest >> testDefaultAnimation [
+	self deny: canvas hasAnimation.
+	self assert: canvas numberOfAnimations = 0
 ]
 
 { #category : #tests }

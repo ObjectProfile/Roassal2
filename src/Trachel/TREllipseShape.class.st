@@ -1,5 +1,5 @@
 Class {
-	#name : #TRCircleShape,
+	#name : #TREllipseShape,
 	#superclass : #TRShape,
 	#instVars : [
 		'rectangle'
@@ -8,12 +8,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> drawOn: athensCanvas [
+TREllipseShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
 			translateBy: rectangle center;
-			scaleBy: rectangle extent / 2
-			.
+			scaleBy: rectangle extent / 2.
 
 		athensCanvas
 			setPaint: color;
@@ -26,7 +25,7 @@ TRCircleShape >> drawOn: athensCanvas [
 ]
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> from: aPoint to: anotherPoint color: aColor [
+TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
 	rectangle := aPoint corner: anotherPoint.
 	position := rectangle center.
 	self update.
@@ -35,23 +34,23 @@ TRCircleShape >> from: aPoint to: anotherPoint color: aColor [
 ]
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> includesPoint: aPoint [
+TREllipseShape >> includesPoint: aPoint [
 	"We could aternatively translate rectangle by position"
 	^ rectangle containsPoint: (aPoint)
 ]
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> rectangle [
+TREllipseShape >> rectangle [
 	^ rectangle
 ]
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> rectangle: rec [
+TREllipseShape >> rectangle: rec [
 	rectangle := rec
 ]
 
 { #category : #'as yet unclassified' }
-TRCircleShape >> update [
+TREllipseShape >> update [
 	path := canvas
 				createPath: [ :builder | 
 					builder

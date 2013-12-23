@@ -24,6 +24,7 @@ TREvent >> canvas: aTrachelCanvas [
 
 { #category : #accessing }
 TREvent >> element [
+	"Could be any object"
 	^ self shape element
 ]
 

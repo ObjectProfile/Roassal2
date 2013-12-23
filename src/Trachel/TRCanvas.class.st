@@ -4,10 +4,17 @@ Class {
 	#instVars : [
 		'canvas',
 		'shapes',
-		'extent'
+		'extent',
+		'animations'
 	],
 	#category : #Trachel
 }
+
+{ #category : #animations }
+TRCanvas >> addAnimation: anAnimation [
+	animations add: anAnimation.
+	anAnimation start
+]
 
 { #category : #events }
 TRCanvas >> announce: anEvent [
@@ -15,18 +22,18 @@ TRCanvas >> announce: anEvent [
 	"Do it later"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 TRCanvas >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
 	"Does not work for now"
 	|  shape |
-	shape := TRCircleShape new.
+	shape := TREllipseShape new.
 	shape canvas: canvas.
 	shape from: aPoint to: anotherPoint color: aColor.
 	shapes add: shape.
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 
 	|  shape |
@@ -37,7 +44,7 @@ TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 TRCanvas >> buildRectangle: aRectangle color: aColor [
 
 	|  shape |
@@ -53,12 +60,23 @@ TRCanvas >> extent [
 	^ extent
 ]
 
+{ #category : #animations }
+TRCanvas >> hasAnimation [
+	^ animations notEmpty
+]
+
 { #category : #initialization }
 TRCanvas >> initialize [
 	super initialize.
 	extent := 500 @ 500.
 	canvas := AthensCairoSurface extent: extent.
-	shapes := OrderedCollection new
+	shapes := OrderedCollection new.
+	animations := OrderedCollection new
+]
+
+{ #category : #animations }
+TRCanvas >> numberOfAnimations [
+	^ animations size
 ]
 
 { #category : #accessing }
@@ -72,6 +90,18 @@ TRCanvas >> open [
 		extent: canvas extent;
 		canvas: self;
 		openInWindow
+]
+
+{ #category : #animations }
+TRCanvas >> playAnimations [
+	| shouldClean |
+	shouldClean := false.
+	animations do: [ :animation | 
+		animation refresh. 
+		animation hasCompleted ifTrue: [ shouldClean := true ] ].
+	
+	shouldClean ifTrue: [ 
+		animations := animations reject: [ :animation | animation hasCompleted ] ].
 ]
 
 { #category : #accessing }

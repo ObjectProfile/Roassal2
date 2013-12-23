@@ -24,8 +24,10 @@ TRMorph >> createSurface [
 { #category : #'as yet unclassified' }
 TRMorph >> drawOn: aCanvas [
 	"aCanvas is a form canvas"
-	
+
 	aCanvas fillRectangle: bounds color: Color lightGray.
+	
+	trachelCanvas playAnimations.
 	
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [:cs |
@@ -261,4 +263,21 @@ TRMorph >> shapeForEvent: anEvent [
 TRMorph >> shapeForPosition: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPosition: point
+]
+
+{ #category : #'as yet unclassified' }
+TRMorph >> step [
+	self changed
+]
+
+{ #category : #'as yet unclassified' }
+TRMorph >> stepTime [
+	"Answer the desired time between steps in milliseconds. This default implementation requests that the 'step' method be called once every second."
+
+	^ 20
+]
+
+{ #category : #'as yet unclassified' }
+TRMorph >> wantsSteps [
+	^ trachelCanvas hasAnimation 
 ]

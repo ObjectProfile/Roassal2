@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+TRCanvasExample >> animationTest [
+	"
+	self new animationTest
+	"
+	| canvas circle |
+	canvas := TRCanvas new.
+	circle := canvas buildCircleFrom: 50 @ 50 to: 100 @ 80 color: (Color purple alpha: 0.2).
+	canvas addAnimation: (RTLinearMove to: 100 @ 100 during: 2000 on: circle). 
+	canvas open
+]
+
+{ #category : #'as yet unclassified' }
 TRCanvasExample >> circle [
 	"
 	self new circle
