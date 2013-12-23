@@ -170,6 +170,29 @@ TRMorph >> relativePositionFor: evt [
 ]
 
 { #category : #'as yet unclassified' }
+TRMorph >> rtMouseClick: evt [
+	| relativePosition ev  shape |
+	relativePosition := self relativePositionFor: evt.	
+"	evt yellowButtonChanged
+		ifTrue: [ ev := TRMouseRightClick new ].
+	evt redButtonChanged
+		ifTrue: [ ev := TRMouseLeftClick new ].
+	evt blueButtonChanged
+		ifTrue: [ ev := TRMouseClick new ]."
+
+	shape := self shapeForPosition: relativePosition.
+	ev := TRMouseClick new.
+	ev commandKeyPressed: evt commandKeyPressed.
+	ev controlKeyPressed: evt controlKeyPressed.
+	ev shiftKeyPressed: evt shiftPressed.
+	ev shape: shape.
+	
+	ev position: relativePosition.
+	shape announce: ev.
+	
+]
+
+{ #category : #'as yet unclassified' }
 TRMorph >> rtMouseDragBegin: evt [
 	| relativePosition |
 	eventBeginingDragging := evt copy.
