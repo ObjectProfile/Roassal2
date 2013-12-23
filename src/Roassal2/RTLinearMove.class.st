@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTLinearMove class >> to: endPoint during: milliseconds on: shape [
-	^ self new to: endPoint during: milliseconds on: shape
+RTLinearMove class >> to: endPoint during: seconds on: shape [
+	^ self new to: endPoint during: seconds on: shape
 ]
 
 { #category : #'as yet unclassified' }
