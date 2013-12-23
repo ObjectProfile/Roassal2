@@ -15,7 +15,7 @@ TRCanvasTest >> setUp [
 
 { #category : #animations }
 TRCanvasTest >> testAddingAnimation [
-	canvas addAnimation: RTLinearMove new.
+	canvas addAnimation: (RTLinearMove to: 50 @ 50 during: 2 on: RTBox element).
 	self assert: canvas hasAnimation.
 	self assert: canvas numberOfAnimations = 1
 ]
