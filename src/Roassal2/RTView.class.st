@@ -3,7 +3,7 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'elements',
-		'trachelCanvas'
+		'animations'
 	],
 	#category : #Roassal2
 }
@@ -15,10 +15,16 @@ RTView >> add: anElement [
 ]
 
 { #category : #'as yet unclassified' }
+RTView >> addAnimation: animation [
+	animations add: animation
+]
+
+{ #category : #'as yet unclassified' }
 RTView >> createAndFillCanvas [
 	| trCanvas |
 	trCanvas := TRCanvas new.
 	elements do: [ :el | el renderOn: trCanvas ].
+	animations do: [ :a | trCanvas addAnimation: a ].
 	^ trCanvas
 ]
 
@@ -31,7 +37,7 @@ RTView >> elements [
 RTView >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
-	"trachelCanvas := TRCanvas new."
+	animations := OrderedCollection new
 ]
 
 { #category : #'as yet unclassified' }

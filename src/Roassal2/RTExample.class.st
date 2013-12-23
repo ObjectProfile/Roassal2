@@ -4,6 +4,21 @@ Class {
 	#category : #Roassal2
 }
 
+{ #category : #animations }
+RTExample >> animationTest [
+	"
+	self new animationTest
+	"
+	| view circle |
+	view := RTView new.
+	circle := (RTEllipse new size: 40; color: (Color purple alpha: 0.2)) element.
+	view add: circle.
+	view addAnimation: (RTLinearMove to: 100 @ 100 during: 2 on: circle). 
+
+	view open.
+	^ view
+]
+
 { #category : #'as yet unclassified' }
 RTExample >> basic [
 	"
@@ -29,6 +44,7 @@ RTExample >> circles [
 		el := shape element translateTo: 500 atRandom @ 500 atRandom.
 		el @ RTDraggable.
 		view add: el. 
+		view addAnimation: (RTLinearMove to: 500 atRandom @ 500 atRandom during: 2 on: el).
 	].	
 	view open
 ]
