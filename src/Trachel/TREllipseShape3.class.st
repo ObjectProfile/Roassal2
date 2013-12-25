@@ -1,13 +1,26 @@
+"
+A TREllipseShape is xxxxxxxxx.
+
+Instance Variables
+	rectangle:		<Object>
+
+rectangle
+	- xxxxx
+
+"
 Class {
-	#name : #TREllipseShape,
-	#superclass : #TRAbstractBoxShape,
+	#name : #TREllipseShape3,
+	#superclass : #TRShape,
+	#instVars : [
+		'rectangle'
+	],
 	#category : #Trachel
 }
 
 { #category : #'as yet unclassified' }
-TREllipseShape >> computePath [
+TREllipseShape3 >> computePath [
 	canvas ifNil: [ ^ self ].
-	path := self athensCanvas
+	path := canvas
 				createPath: [ :builder | 
 					builder
 						absolute;
@@ -31,7 +44,9 @@ TREllipseShape >> computePath [
 ]
 
 { #category : #'as yet unclassified' }
-TREllipseShape >> drawOn: athensCanvas [
+TREllipseShape3 >> drawOn: athensCanvas [
+
+Transcript show: rectangle printString, color printString, self path printString; cr.
 
 	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
@@ -49,7 +64,7 @@ TREllipseShape >> drawOn: athensCanvas [
 ]
 
 { #category : #'as yet unclassified' }
-TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
+TREllipseShape3 >> from: aPoint to: anotherPoint color: aColor [
 	rectangle := aPoint corner: anotherPoint.
 	position := rectangle center.
 	self strokePaint: aColor.
@@ -57,7 +72,17 @@ TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
 ]
 
 { #category : #'as yet unclassified' }
-TREllipseShape >> includesPoint: aPoint [
+TREllipseShape3 >> includesPoint: aPoint [
 	"We could aternatively translate rectangle by position"
 	^ rectangle containsPoint: (aPoint)
+]
+
+{ #category : #'as yet unclassified' }
+TREllipseShape3 >> rectangle [
+	^ rectangle
+]
+
+{ #category : #'as yet unclassified' }
+TREllipseShape3 >> rectangle: rec [
+	rectangle := rec
 ]

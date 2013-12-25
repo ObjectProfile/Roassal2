@@ -5,7 +5,8 @@ Class {
 		'canvas',
 		'shapes',
 		'extent',
-		'animations'
+		'animations',
+		'morph'
 	],
 	#category : #Trachel
 }
@@ -16,42 +17,47 @@ TRCanvas >> addAnimation: anAnimation [
 	anAnimation start
 ]
 
+{ #category : #building }
+TRCanvas >> addShape: shape [
+	shapes add: shape.
+	shape canvas: self
+]
+
 { #category : #events }
 TRCanvas >> announce: anEvent [
 
 	"Do it later"
 ]
 
+{ #category : #accessing }
+TRCanvas >> athensCanvas [
+	^ canvas
+]
+
 { #category : #building }
 TRCanvas >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
-	"Does not work for now"
-	|  shape |
+	| shape |
 	shape := TREllipseShape new.
-	shape canvas: canvas.
 	shape from: aPoint to: anotherPoint color: aColor.
-	shapes add: shape.
+	self addShape: shape.
 	^ shape
 ]
 
 { #category : #building }
 TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
-
 	|  shape |
 	shape := TRLineShape new.
-	shape canvas: canvas.
 	shape from: aPoint to: anotherPoint color: aColor.
-	shapes add: shape.
+	self addShape: shape.
 	^ shape
 ]
 
 { #category : #building }
 TRCanvas >> buildRectangle: aRectangle color: aColor [
-
-	|  shape |
+	| shape |
 	shape := TRBoxShape new.
-	shape canvas: canvas.
 	shape fromRectangle: aRectangle color: aColor.
-	shapes add: shape.
+	self addShape: shape.
 	^ shape
 ]
 
@@ -86,10 +92,10 @@ TRCanvas >> numberOfShapes [
 
 { #category : #'instance creation' }
 TRCanvas >> open [ 
-	TRMorph new 
+	morph := TRMorph new 
 		extent: canvas extent;
-		canvas: self;
-		openInWindow
+		canvas: self. 
+	morph openInWindow
 ]
 
 { #category : #animations }
@@ -115,4 +121,9 @@ TRCanvas >> shapeForPosition: position [
 TRCanvas >> shapes [
 	"Return the list of shapes"
 	^ shapes
+]
+
+{ #category : #updating }
+TRCanvas >> signalUpdate [
+	morph changed
 ]

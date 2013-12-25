@@ -5,7 +5,8 @@ Class {
 		'trachelCanvas',
 		'surface',
 		'eventBeginingDragging',
-		'shapeBeingPointed'
+		'shapeBeingPointed',
+		'shouldRefresh'
 	],
 	#category : #Trachel
 }
@@ -88,7 +89,8 @@ TRMorph >> handlesMouseOver: evt [
 { #category : #'as yet unclassified' }
 TRMorph >> initialize [
 	super initialize.
-	self createSurface
+	self createSurface.
+	shouldRefresh := false
 	"session := Smalltalk session."
 ]
 
@@ -186,6 +188,7 @@ TRMorph >> rtMouseClick: evt [
 	ev controlKeyPressed: evt controlKeyPressed.
 	ev shiftKeyPressed: evt shiftPressed.
 	ev shape: shape.
+	ev morph: self.
 	
 	ev position: relativePosition.
 	shape announce: ev.
@@ -286,6 +289,11 @@ TRMorph >> shapeForEvent: anEvent [
 TRMorph >> shapeForPosition: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPosition: point
+]
+
+{ #category : #'as yet unclassified' }
+TRMorph >> signalUpdate [
+	self changed
 ]
 
 { #category : #'as yet unclassified' }

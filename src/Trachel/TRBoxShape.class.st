@@ -13,5 +13,5 @@ TRBoxShape >> drawOn: athensCanvas [
 
 		athensCanvas
 			setPaint: color;
-			drawShape: path ]
+			drawShape: self path ]
 ]

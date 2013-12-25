@@ -29,6 +29,11 @@ TREvent >> element [
 ]
 
 { #category : #accessing }
+TREvent >> morph [
+	^ morph
+]
+
+{ #category : #accessing }
 TREvent >> morph: aMorph [
 	morph := aMorph
 ]

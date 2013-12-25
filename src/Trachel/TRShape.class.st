@@ -30,6 +30,17 @@ TRShape >> announcer: anAnnouncer [
 ]
 
 { #category : #accessing }
+TRShape >> athensCanvas [
+	^ self canvas athensCanvas
+]
+
+{ #category : #accessing }
+TRShape >> canvas [
+	"Return a Trachel Canvas"
+	^ canvas
+]
+
+{ #category : #accessing }
 TRShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
 	canvas := aSurface
@@ -47,6 +58,11 @@ TRShape >> color: aColor [
 	color := aColor
 ]
 
+{ #category : #hooks }
+TRShape >> computePath [
+	self subclassResponsibility
+]
+
 { #category : #drawing }
 TRShape >> drawOn: athensCanvas [
 
@@ -56,11 +72,11 @@ TRShape >> drawOn: athensCanvas [
 
 		athensCanvas
 			setPaint: color;
-			drawShape: path.
+			drawShape: self path.
 			
 		athensCanvas
 			setStrokePaint: strokePaint;
-			drawShape: path  ]
+			drawShape: self path  ]
 ]
 
 { #category : #accessing }
@@ -84,9 +100,7 @@ TRShape >> includesPoint: aPoint [
 TRShape >> initialize [
 	super initialize.
 	color := Color gray.
-	strokePaint := Color black.
-	path := 10 @ 20 extent: 30 @ 30.
-	
+	strokePaint := Color black.	
 	position := 0 @ 0
 ]
 
@@ -97,14 +111,18 @@ TRShape >> on: event do: aBlock [
 
 { #category : #accessing }
 TRShape >> path [
-	
+	path ifNil: [ self computePath ].
 	^ path
 ]
 
-{ #category : #accessing }
-TRShape >> path: aCairoPath [
-	
-	path := aCairoPath
+{ #category : #'as yet unclassified' }
+TRShape >> resetPath [
+	path := nil
+]
+
+{ #category : #actions }
+TRShape >> signalUpdate [
+	canvas signalUpdate
 ]
 
 { #category : #accessing }
@@ -128,10 +146,4 @@ TRShape >> translateBy: aPoint [
 { #category : #actions }
 TRShape >> translateTo: aPoint [
 	position := aPoint
-]
-
-{ #category : #actions }
-TRShape >> update [
-	"Update the path of the shape."
-	self subclassResponsibility
 ]

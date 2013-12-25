@@ -20,6 +20,37 @@ TRCanvasTest >> testAddingAnimation [
 	self assert: canvas numberOfAnimations = 1
 ]
 
+{ #category : #tests }
+TRCanvasTest >> testBox [
+	| rec box |
+	rec := (50 @ 50 extent: 100 @ 50).
+	box := canvas buildRectangle: rec color: Color purple.
+	self assert: box rectangle center = rec center.
+
+	box extent: 20 @ 20.
+	self assert: box rectangle center = rec center.
+]
+
+{ #category : #tests }
+TRCanvasTest >> testCanvas [
+	| box |
+	box := canvas buildRectangle: ( (5 @ 5) extent: (5 @ 5) ) color: Color red.
+	self assert: box canvas == canvas.
+	self assert: box athensCanvas == canvas athensCanvas.
+	self assert: canvas ~~ canvas athensCanvas.
+]
+
+{ #category : #tests }
+TRCanvasTest >> testCircle [
+
+	| c  |
+	c := TRCanvas new.
+	100 to: 200 by: 20 do: [ :i |
+		 c buildCircleFrom: 50 @ 50 to: i @ 100 color: (Color red alpha: 0.2).
+	].
+	self assert: c numberOfShapes = (100 to: 200 by: 20) size 
+]
+
 { #category : #contains }
 TRCanvasTest >> testContainsPoint1 [
 	self assert: (canvas shapeForPosition: 20 @ 20) == canvas

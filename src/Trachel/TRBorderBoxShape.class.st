@@ -13,5 +13,5 @@ TRBorderBoxShape >> drawOn: athensCanvas [
 
 		athensCanvas
 			setStrokePaint: strokePaint;
-			drawShape: path ]
+			drawShape: self path ]
 ]

@@ -9,6 +9,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+TRLineShape >> computePath [
+	canvas ifNil: [ ^ self ].
+	path := canvas
+		createPath: [ :builder | 
+			builder
+				absolute;
+				moveTo: from;
+				lineTo: to ]
+]
+
+{ #category : #'as yet unclassified' }
 TRLineShape >> from [
 	"Return a point"
 	^ from
@@ -23,7 +34,7 @@ TRLineShape >> from: aPoint [
 TRLineShape >> from: aPoint to: anotherPoint [
 	from := aPoint.
 	to := anotherPoint.
-	self update
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -48,14 +59,4 @@ TRLineShape >> to [
 { #category : #'as yet unclassified' }
 TRLineShape >> to: aPoint [
 	to := aPoint
-]
-
-{ #category : #'as yet unclassified' }
-TRLineShape >> update [
-	path := canvas
-		createPath: [ :builder | 
-			builder
-				absolute;
-				moveTo: from;
-				lineTo: to ]
 ]
