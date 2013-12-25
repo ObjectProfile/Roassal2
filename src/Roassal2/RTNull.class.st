@@ -24,6 +24,11 @@ RTNull >> renderOn: trachelCanvas for: aShapedObject [
 ]
 
 { #category : #'as yet unclassified' }
+RTNull >> trachelShapeFor: element [
+	"Nothing to do here"
+]
+
+{ #category : #'as yet unclassified' }
 RTNull >> updateFor: anElement [
 	"Do nothing"
 ]

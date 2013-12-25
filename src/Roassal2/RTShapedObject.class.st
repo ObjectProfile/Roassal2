@@ -22,6 +22,18 @@ RTShapedObject >> addInteraction: anInteractionClassOrInstance [
 ]
 
 { #category : #'as yet unclassified' }
+RTShapedObject >> addShape: aRTShape [
+
+	"I am not sure we need to have aRTShape here. It should instead be a trachel shape"
+	shape := aRTShape instance.
+	trachelShape := shape trachelShapeFor: self.
+"	width := width max: (shape widthFor: self).
+	height := height max: (shape heightFor: self).
+"	
+	
+]
+
+{ #category : #'as yet unclassified' }
 RTShapedObject >> announce: evt [
 	self announcer announce: evt
 ]
@@ -46,7 +58,8 @@ RTShapedObject >> on: evt do: aBlock [
 { #category : #'as yet unclassified' }
 RTShapedObject >> renderOn: trachelCanvas [
 
-	trachelShape := shape renderOn: trachelCanvas for: self.
+	"trachelShape := shape renderOn: trachelCanvas for: self."
+	trachelCanvas addShape: trachelShape.
 	trachelShape announcer: self announcer.
 	trachelShape element: self
 ]
@@ -63,7 +76,8 @@ RTShapedObject >> trachelShape [
 
 { #category : #'as yet unclassified' }
 RTShapedObject >> update [
-	"Update the path of the trachel shape. This has the effect of moving the visual widget"
-	shape updateFor: self
+	"Update the trachel shape and reset the path. This has the effect of moving the visual widget"
+	shape updateFor: self.
+	trachelShape ifNotNil: [ trachelShape resetPath ]
 
 ]

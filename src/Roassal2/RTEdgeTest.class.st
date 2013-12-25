@@ -38,6 +38,13 @@ RTEdgeTest >> testIncomingAndOutgoingEdges [
 ]
 
 { #category : #'as yet unclassified' }
+RTEdgeTest >> testTrachelShape [
+	edge := RTLine edgeFrom: RTBox element to: RTBox element.
+	self assert: edge trachelShape notNil.
+	self assert: edge trachelShape class == TRLineShape.
+]
+
+{ #category : #'as yet unclassified' }
 RTEdgeTest >> testTranslatingNode [
 	| old |
 	RTView new

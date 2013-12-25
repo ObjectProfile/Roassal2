@@ -33,12 +33,12 @@ RTHighlightable class >> lastHighlightedShape: aTrachelShape [
 	lastHighlightedShape := aTrachelShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTHighlightable >> highlightedColor [
 	^ self class highlightedColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTHighlightable >> initializeElement: element [
 	element
 		on: TRMouseEnter

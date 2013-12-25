@@ -12,22 +12,22 @@ RTLinearMove class >> to: endPoint during: seconds on: shape [
 	^ self new to: endPoint during: seconds on: shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLinearMove >> hasCompleted [
 	^ animatedValue hasCompleted
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTLinearMove >> refresh [
 	element translateTo: animatedValue value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLinearMove >> start [
 	animatedValue start
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTLinearMove >> to: anEndPoint during: seconds on: anElement [
 	| position |
 	element := anElement.

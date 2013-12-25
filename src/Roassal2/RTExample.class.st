@@ -49,6 +49,27 @@ RTExample >> circles [
 	view open
 ]
 
+{ #category : #animations }
+RTExample >> growingSquare [
+	" 
+	self new growingSquare
+	"
+
+	| view el |
+	view := RTView new.
+	el := RTBox new size: 20; color: (Color purple alpha: 0.2); element.
+	el @ RTDraggable.
+	el translateTo: 100 @ 130.
+	
+	el on: TRMouseClick do: [ :evt |
+		| t |
+		t := evt element trachelShape width + 5.
+		evt element trachelShape extent: t @ t. evt signalUpdate ].
+
+	view add: el.
+	view open
+]
+
 { #category : #'as yet unclassified' }
 RTExample >> growingSquares [
 	"
@@ -134,4 +155,26 @@ RTExample >> manySquares [
 	RTGridLayout new gapSize: 1; on: view elements.
 	
 	view open
+]
+
+{ #category : #nesting }
+RTExample >> nesting [
+	"
+	self new nesting
+	"
+	| view el shape |
+	view := RTView new.
+	el := (RTBox new width: 80; height: 40; color: (Color purple alpha: 0.3)) element.
+	
+	shape := RTBox new color: (Color purple alpha: 0.3).
+	RTNest
+		new 
+		layout: RTGridLayout new;
+		on: el nest: (shape elementsOn: (1 to: 20)).
+		
+	view add: el.
+	el translateTo: 100 @ 50.
+	view open.
+	
+	
 ]

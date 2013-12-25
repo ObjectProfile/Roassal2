@@ -16,6 +16,6 @@ RTAbstractLine class >> edgeFrom: el1 to: el2 [
 RTAbstractLine >> updateFor: edge [
 	edge trachelShape from: edge from position.
 	edge trachelShape to: edge to position.
-	edge trachelShape update
+	edge trachelShape resetPath
 
 ]

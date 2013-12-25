@@ -8,12 +8,12 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTAnimation >> hasCompleted [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTAnimation >> refresh [
 	self subclassResponsibility
 ]

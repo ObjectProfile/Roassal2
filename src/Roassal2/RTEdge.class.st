@@ -13,11 +13,6 @@ RTEdge class >> from: fromEl to: toEl [
 	^ self new from: fromEl; to: toEl; yourself
 ]
 
-{ #category : #'as yet unclassified' }
-RTEdge >> addShape: aRTShape [
-	shape := aRTShape instance
-]
-
 { #category : #accessing }
 RTEdge >> from [
 	

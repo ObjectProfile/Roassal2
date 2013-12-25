@@ -45,30 +45,30 @@ RTShape >> defaultColor [
 	^ Color veryVeryLightGray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTShape >> element [
 
 	^ RTElement new addShape: self; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTShape >> elementOn: aModel [
 
 	^ RTElement new model: aModel; addShape: self; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTShape >> initialize [
 	super initialize.
 	color := self defaultColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTShape >> instance [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-RTShape >> renderOn: trachelCanvas for: aShapedObject [
+{ #category : #hooks }
+RTShape >> trachelShapeFor: element [
 	self subclassResponsibility
 ]

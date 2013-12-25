@@ -19,6 +19,18 @@ RTAbstractElementShape >> defaultWidth [
 ]
 
 { #category : #accessing }
+RTAbstractElementShape >> extent: extentAsPoint [
+	self width: extentAsPoint x.
+	self height: extentAsPoint y.
+
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> height [
+	^ height
+]
+
+{ #category : #accessing }
 RTAbstractElementShape >> height: aValueOrASymbolOrAOneArgBlock [
 	height := aValueOrASymbolOrAOneArgBlock
 ]
@@ -40,6 +52,11 @@ RTAbstractElementShape >> initialize [
 RTAbstractElementShape >> size: aValueOrASymbolOrAOneArgBlock [
 	self height: aValueOrASymbolOrAOneArgBlock.
 	self width: aValueOrASymbolOrAOneArgBlock
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> width [
+	^ width
 ]
 
 { #category : #accessing }

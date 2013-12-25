@@ -5,12 +5,27 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTElementTest >> testAddingABoxAndEllipse [
+
+	| view el1 el2 |
+	view := RTView new.
+	el1 := (RTBox new extent: 40 @ 20; color: Color purple) element.
+	el1 translateTo: 50 @ 40.
+	el2 := (RTEllipse new extent: 40 @ 20; color: Color blue) element.
+	el2 translateTo: 150 @ 40.
+	view add: el1; add: el2.
+	
+	self assert: el1 position = (50 @ 40).
+	self assert: el1 trachelShape rectangle = ((30@30) corner: (70@50))
+]
+
+{ #category : #'as yet unclassified' }
 RTElementTest >> testDefault [
 	| el |
 	el := RTElement new.
 	self assert: el position = (0 @ 0).
-	self assert: el width = 0.
-	self assert: el height = 0.
+	"self assert: el width = 0.
+	self assert: el height = 0."
 ]
 
 { #category : #interaction }
@@ -28,6 +43,19 @@ RTElementTest >> testDraggingCircle [
 	self assert: el position = (100 @ 50).
 	
 	self assert: el trachelShape rectangle = ((80@30) corner: (120@70))
+]
+
+{ #category : #interaction }
+RTElementTest >> testGrowing [
+
+	| view el |
+	view := RTView new.
+	el := RTBox new size: 20; color: (Color purple alpha: 0.2); element.
+	el @ RODraggable.
+	el translateTo: 100 @ 130.
+	view add: el.
+	
+	
 ]
 
 { #category : #interaction }
@@ -57,8 +85,6 @@ RTElementTest >> testRendering [
 	el := RTBox element.
 	view add: el.
 	
-	self assert: el trachelShape isNil.
-	view createAndFillCanvas.
 	self assert: el trachelShape notNil.
 	self assert: el trachelShape class == TRBoxShape
 ]
@@ -73,6 +99,23 @@ RTElementTest >> testRenderingAndEvent [
 	view createAndFillCanvas.
 	trachelShape := el trachelShape.
 	self assert: el announcer == trachelShape announcer
+]
+
+{ #category : #'as yet unclassified' }
+RTElementTest >> testResizingAndDragging [
+
+	| view box |
+	view := RTView new.
+	box := RTBox element.
+	view add: box.
+	view createAndFillCanvas.
+	
+	self assert: box extent = (5 @ 5).
+	box trachelShape extent: 10 @ 10.
+	self assert: box extent = (10 @ 10).
+
+	box translateTo: 5 @ 5.
+	self assert: box extent = (10 @ 10).
 ]
 
 { #category : #'as yet unclassified' }
@@ -101,6 +144,14 @@ RTElementTest >> testSizeAndModel [
 	self assert: el position = (0 @ 0).
 	self assert: el height = 8.
 	self assert: el width = 7
+]
+
+{ #category : #'as yet unclassified' }
+RTElementTest >> testTrachelShape [
+
+	self assert: RTBox element trachelShape notNil.
+	self assert: RTBox element trachelShape class == TRBoxShape.
+
 ]
 
 { #category : #'as yet unclassified' }

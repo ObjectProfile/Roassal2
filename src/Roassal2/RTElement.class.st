@@ -37,21 +37,18 @@ RTElement >> addOutgoingEdge: anEdge [
 ]
 
 { #category : #'as yet unclassified' }
-RTElement >> addShape: aRTShape [
+RTElement >> encompassingRectangle [
+	^ (self position - ((self width / 2) @ (self height / 2))) extent: (self width @ self height)
+]
 
-	"I am not sure we need to have aRTShape here. It should instead be a trachel shape"
-	shape := aRTShape instance.
-	"shape announcer: self announcer."
-
-	width := width max: (shape widthFor: self).
-	height := height max: (shape heightFor: self).
-	
-	
+{ #category : #'as yet unclassified' }
+RTElement >> extent [
+	^ self encompassingRectangle extent
 ]
 
 { #category : #'as yet unclassified' }
 RTElement >> height [
-	^ height
+	^ trachelShape height
 ]
 
 { #category : #'as yet unclassified' }
@@ -64,8 +61,7 @@ RTElement >> incomingEdges [
 RTElement >> initialize [
 	super initialize.
 	position := 0 @ 0.
-	width := 0.
-	height := 0
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -101,9 +97,10 @@ RTElement >> translateTo: newPosition [
 	self outgoingEdges do: [ :edge | edge update ].
 	self incomingEdges do: [ :edge | edge update ].
 	self update
+
 ]
 
 { #category : #'as yet unclassified' }
 RTElement >> width [
-	^ width
+	^ trachelShape width
 ]

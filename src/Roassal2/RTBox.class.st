@@ -20,17 +20,29 @@ RTBox >> borderColor: anObject [
 { #category : #rendering }
 RTBox >> renderOn: trachelCanvas for: anElement [
 	| rec ex |
+	self halt.
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	^ trachelCanvas buildRectangle: rec color: (self colorFor: anElement)
 ]
 
+{ #category : #'as yet unclassified' }
+RTBox >> trachelShapeFor: anElement [
+	|  shape rec ex |
+	ex := (self widthFor: anElement) @ (self heightFor: anElement).
+	rec := (anElement position - (ex / 2)) extent: ex.
+
+	shape := TRBoxShape new.
+	shape fromRectangle: rec color: (self colorFor: anElement).
+	^ shape
+]
+
 { #category : #rendering }
 RTBox >> updateFor: anElement [
 	| rec ex |
-	"This is a bit ugly... We need to find a better way"
 	anElement trachelShape isNil ifTrue: [ ^ self ].
-	ex := (self widthFor: anElement) @ (self heightFor: anElement).
+	 
+	ex := anElement trachelShape width @ anElement trachelShape height.
 	rec := (anElement position - (ex / 2)) extent: ex.
 	anElement trachelShape fromRectangle: rec
 ]

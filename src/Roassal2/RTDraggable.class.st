@@ -4,7 +4,7 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDraggable >> initializeElement: element [
-	element on: TRMouseDragging do: [ :e | Halt once. e element translateBy: e step. e signalUpdate ]
+	element on: TRMouseDragging do: [ :e | e element translateBy: e step. e signalUpdate ]
 ]
