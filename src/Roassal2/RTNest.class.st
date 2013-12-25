@@ -10,12 +10,22 @@ Class {
 { #category : #'as yet unclassified' }
 RTNest >> centerOn: backElement element: elements [
 	| encompassingRectangle off |
-	encompassingRectangle := elements anyOne encompassingRectangle.
-	elements do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
+	encompassingRectangle := self encompassingRectangleOf: elements.
 	
 	backElement trachelShape extent: (encompassingRectangle width + (5 * 2)) @ (encompassingRectangle height + (5 * 2)).
-	off := backElement encompassingRectangle topLeft.
-	elements do: [ :e | e translateBy: (encompassingRectangle topLeft + off) ]
+
+	off := backElement encompassingRectangle center - encompassingRectangle center. 
+	elements do: [ :e | e translateBy: off ].
+	
+self assert: [ backElement encompassingRectangle center = (self encompassingRectangleOf: elements) center ]
+]
+
+{ #category : #'as yet unclassified' }
+RTNest >> encompassingRectangleOf: elements [
+	| encompassingRectangle |
+	encompassingRectangle := elements anyOne encompassingRectangle.
+	elements do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
+	^ encompassingRectangle 
 ]
 
 { #category : #'as yet unclassified' }

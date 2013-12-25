@@ -37,6 +37,53 @@ RTNestTest >> testDefault [
 ]
 
 { #category : #tests }
+RTNestTest >> testDifferentSizes [
+	| view el innerElement1 innerElement2 |
+	view := RTView new.
+	el := (RTBox new color: Color red) element.
+	innerElement1 := (RTBox new size: 10) element.
+	innerElement2 := (RTBox new size: 20) element.
+	el translateTo: 100 @ 50.
+	RTNest
+		new 
+		layout: RTGridLayout new;
+		on: el nest: (Array with: innerElement1 with: innerElement2).
+
+	view add: el.
+	view add: innerElement1.
+	view add: innerElement2.
+	
+	self assert: el position = (100 @ 50).
+	self assert: el trachelShape width = 45.
+	self assert: el trachelShape height = 30.
+
+	self assert: innerElement1 position y = el position y.
+	self assert: innerElement2 position y = el position y.
+]
+
+{ #category : #encompassing }
+RTNestTest >> testEncompassingRectangle [
+
+	| e1 e2 r |
+	e1 := (RTBox new size: 10) element.
+	e2 := (RTBox new size: 30) element.
+	
+	r := RTNest new encompassingRectangleOf: (Array with: e1 with: e2).
+	self assert: r = ((-15 @ -15) extent: (30 @ 30))
+]
+
+{ #category : #encompassing }
+RTNestTest >> testEncompassingRectangle2 [
+
+	| e1 e2 r |
+	e1 := (RTBox new size: 10) element.
+	e2 := (RTBox new size: 30) element.
+	e2 translateTo: (100 @ 80).
+	r := RTNest new encompassingRectangleOf: (Array with: e1 with: e2).
+	self assert: r = ((-5 @ -5) corner: (115 @ 95))
+]
+
+{ #category : #tests }
 RTNestTest >> testWithTwoInnerNodes [
 
 	| view el shape innerElement innerElement2 |
