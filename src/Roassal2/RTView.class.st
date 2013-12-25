@@ -10,8 +10,12 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTView >> add: anElement [
-	elements add: anElement.
-	"anElement shape renderOn: trachelCanvas for: anElement"
+	elements add: anElement
+]
+
+{ #category : #'as yet unclassified' }
+RTView >> addAll: someElements [
+	someElements do: [ :el | self add: el ]
 ]
 
 { #category : #'as yet unclassified' }
