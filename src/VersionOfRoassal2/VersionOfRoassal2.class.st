@@ -563,3 +563,14 @@ VersionOfRoassal2 >> version000007 [
 	at: #date put: '25 December 2013';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000008 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.8';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.10';
+	at: #version put: '0.9';
+	at: #comment put: '0.9 : RTNest seems to work well now :-)';
+	at: #date put: '25 December 2013';
+	yourself
+]
