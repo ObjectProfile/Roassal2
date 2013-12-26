@@ -20,6 +20,12 @@ RTShape class >> elementOn: aModel [
 ]
 
 { #category : #'as yet unclassified' }
+RTShape class >> elementsOn: models [
+
+	^ models collect: [ :m | self instance elementOn: m ]
+]
+
+{ #category : #'as yet unclassified' }
 RTShape class >> instance [
 	^ self new
 ]

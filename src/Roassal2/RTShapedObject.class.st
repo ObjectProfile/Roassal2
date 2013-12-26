@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTShapedObject >> + aRTShape [
+
+	self addShape: aRTShape
+]
+
+{ #category : #'as yet unclassified' }
 RTShapedObject >> @ anInteractionClassOrInstance [
 	"Add an interaction to the node"
 	

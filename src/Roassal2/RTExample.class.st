@@ -49,6 +49,40 @@ RTExample >> circles [
 	view open
 ]
 
+{ #category : #'as yet unclassified' }
+RTExample >> edges [
+	"
+	self new edges
+	"
+
+	| view elements |
+	view := RTView new.
+	elements := RTBox elementsOn: (Collection withAllSubclasses).
+	view addAll: elements.
+	
+	RTEdge buildEdgesFromElements: view elements from: #yourself to: #superclass in: view.
+	
+	RTGridLayout on: view elements.
+	view open
+]
+
+{ #category : #'as yet unclassified' }
+RTExample >> edges2 [
+	"
+	self new edges2
+	"
+	
+	| view elements |
+	view := RTView new.
+	elements := RTBox elementsOn: #(1 2).
+	elements do: [ :e | e @ RTDraggable ].
+	view addAll: elements.
+	
+	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
+	RTHorizontalLineLayout on: elements.
+	view open
+]
+
 { #category : #animations }
 RTExample >> growingSquare [
 	" 
@@ -132,7 +166,6 @@ RTExample >> linkedSquares [
 	view add: fromEl; add: toEl; add: edge.
 
 	view open.
-	view inspect
 ]
 
 { #category : #'as yet unclassified' }

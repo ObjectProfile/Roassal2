@@ -19,6 +19,14 @@ RTElementTest >> testAddingABoxAndEllipse [
 	self assert: el1 trachelShape rectangle = ((30@30) corner: (70@50))
 ]
 
+{ #category : #creating }
+RTElementTest >> testCreatingMany [
+	| els |
+	els := RTBox elementsOn: (1 to: 20).
+	self assert: els size = 20.
+	self assert: (els collect: #model) asArray = (1 to: 20) asArray.
+]
+
 { #category : #'as yet unclassified' }
 RTElementTest >> testDefault [
 	| el |

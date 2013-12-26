@@ -9,7 +9,7 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTEdgeTest >> setUp [
 	el1 := RTBox element.
 	el2 := RTBox element.
@@ -18,7 +18,7 @@ RTEdgeTest >> setUp [
 	edge := RTLine edgeFrom: el1 to: el2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTEdgeTest >> testBasic [
 
 	RTView new
@@ -30,21 +30,41 @@ RTEdgeTest >> testBasic [
 	self assert: edge trachelShape color notNil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - building' }
+RTEdgeTest >> testBuildingFromAssociations [
+
+	| view elements |
+	view := RTView new.
+	elements := RTBox elementsOn: #(1 2).
+	view addAll: elements.
+	
+	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
+	
+	self assert: view numberOfElements = 3.
+	edge := view elements last.
+	self assert: edge from == view elements first.
+	self assert: edge to == view elements second.
+	
+	self assert: edge trachelShape class == TRLineShape.
+	
+	
+]
+
+{ #category : #tests }
 RTEdgeTest >> testIncomingAndOutgoingEdges [
 
 	self assert: (el1 outgoingEdges includes: edge).
 	self assert: (el2 incomingEdges includes: edge).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTEdgeTest >> testTrachelShape [
 	edge := RTLine edgeFrom: RTBox element to: RTBox element.
 	self assert: edge trachelShape notNil.
 	self assert: edge trachelShape class == TRLineShape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTEdgeTest >> testTranslatingNode [
 	| old |
 	RTView new

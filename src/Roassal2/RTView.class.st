@@ -33,6 +33,11 @@ RTView >> createAndFillCanvas [
 ]
 
 { #category : #'as yet unclassified' }
+RTView >> elementFromModel: aModel [
+	^ elements detect: [ :el | el model == aModel ]
+]
+
+{ #category : #'as yet unclassified' }
 RTView >> elements [
 	^ elements
 ]
