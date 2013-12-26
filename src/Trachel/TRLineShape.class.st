@@ -10,8 +10,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 TRLineShape >> computePath [
-	canvas ifNil: [ ^ self ].
-	path := canvas
+	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
