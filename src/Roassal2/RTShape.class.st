@@ -63,6 +63,12 @@ RTShape >> elementOn: aModel [
 	^ RTElement new model: aModel; addShape: self; yourself
 ]
 
+{ #category : #public }
+RTShape >> elementsOn: models [
+
+	^ models collect: [ :m | self elementOn: m ]
+]
+
 { #category : #initialization }
 RTShape >> initialize [
 	super initialize.

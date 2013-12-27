@@ -37,6 +37,11 @@ RTElement >> addOutgoingEdge: anEdge [
 ]
 
 { #category : #'as yet unclassified' }
+RTElement >> addedIn: view [
+	view addElement: self
+]
+
+{ #category : #'as yet unclassified' }
 RTElement >> encompassingRectangle [
 	^ (self position - ((self width / 2) @ (self height / 2))) extent: (self width @ self height)
 ]

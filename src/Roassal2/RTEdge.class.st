@@ -132,6 +132,36 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 
 ]
 
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view
+]
+
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	| edges fromElement toElement |
+	objects isEmpty ifTrue: [ ^ #() ].
+	edges := OrderedCollection new.
+	objects do: [ :object |
+		fromElement := view elementFromModel: (fromBlock roValue: object).
+		toElement := view elementFromModel: (toBlock roValue: object).
+		(fromElement notNil and: [ toElement notNil ])
+			ifTrue: [  
+				| edge |
+				edge := RTEdge from: fromElement to: toElement. 
+				edge + aLineShape.
+				edges add: edge.
+				view add: edge ] ].
+	^ edges
+
+]
+
 { #category : #public }
 RTEdge class >> from: fromEl to: toEl [
 	^ self new from: fromEl; to: toEl; yourself
@@ -140,6 +170,11 @@ RTEdge class >> from: fromEl to: toEl [
 { #category : #public }
 RTEdge class >> on: aModel from: fromElement to: toElement [
 	^ (self on: aModel) from: fromElement to: toElement; yourself
+]
+
+{ #category : #accessing }
+RTEdge >> addedIn: view [
+	view addEdge: self
 ]
 
 { #category : #accessing }

@@ -40,14 +40,32 @@ RTEdgeTest >> testBuildingFromAssociations [
 	
 	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
 	
-	self assert: view numberOfElements = 3.
-	edge := view elements last.
+	self assert: view numberOfElements = 2.
+	self assert: view numberOfEdges = 1.
+	edge := view edges last.
 	self assert: edge from == view elements first.
 	self assert: edge to == view elements second.
 	
 	self assert: edge trachelShape class == TRLineShape.
 	
 	
+]
+
+{ #category : #'tests - building' }
+RTEdgeTest >> testBuildingFromObjects [
+
+	| view objects elements |
+	view := RTView new.
+	objects := Array with: RTLine with: RTLine superclass.
+	elements := (RTBox new size: 20) elementsOn: objects.
+	view addAll: elements.
+	RTEdge buildEdgesFromObjects: objects from: #yourself to: #superclass inView: view.
+	
+	self assert: view numberOfElements = 2. 
+	self assert: view numberOfEdges = 1.
+	edge := view edges last.
+	self assert: edge from == elements first.
+	self assert: edge to == elements second.
 ]
 
 { #category : #tests }

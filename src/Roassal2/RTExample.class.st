@@ -60,7 +60,7 @@ RTExample >> edges [
 	elements := RTBox elementsOn: (Collection withAllSubclasses).
 	view addAll: elements.
 	
-	RTEdge buildEdgesFromElements: view elements from: #yourself to: #superclass in: view.
+	RTEdge buildEdgesFromObjects: view elements from: #yourself to: #superclass inView: view.
 	
 	RTGridLayout on: view elements.
 	view open
@@ -74,7 +74,7 @@ RTExample >> edges2 [
 	
 	| view elements |
 	view := RTView new.
-	elements := RTBox elementsOn: #(1 2).
+	elements := (RTBox new color: (Color purple alpha: 0.2); size: 40) elementsOn: #(1 2).
 	elements do: [ :e | e @ RTDraggable ].
 	view addAll: elements.
 	

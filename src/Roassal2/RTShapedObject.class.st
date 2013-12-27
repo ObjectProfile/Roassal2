@@ -40,6 +40,11 @@ RTShapedObject >> addShape: aRTShape [
 ]
 
 { #category : #'as yet unclassified' }
+RTShapedObject >> addedIn: view [
+	self subclassReponsibility
+]
+
+{ #category : #'as yet unclassified' }
 RTShapedObject >> announce: evt [
 	self announcer announce: evt
 ]
