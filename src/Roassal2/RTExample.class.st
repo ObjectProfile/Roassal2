@@ -49,6 +49,19 @@ RTExample >> circles [
 	view open
 ]
 
+{ #category : #layout }
+RTExample >> classHierarchy [
+	"
+	self new classHierarchy
+	"
+	| view |
+	view := RTView new.	
+	view addAll: (RTBox elementsOn: Collection withAllSubclasses).
+	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: view.
+	RTTreeLayout on: view elements edges: view edges.
+	view open
+]
+
 { #category : #'as yet unclassified' }
 RTExample >> edges [
 	"
