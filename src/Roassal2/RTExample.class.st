@@ -19,7 +19,7 @@ RTExample >> animationTest [
 	^ view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> basic [
 	"
 	self new basic
@@ -45,7 +45,7 @@ RTExample >> blinking [
 	view inspect.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> circles [
 	"
 	self new circles
@@ -76,7 +76,7 @@ RTExample >> classHierarchy [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> edges [
 	"
 	self new edges
@@ -98,7 +98,7 @@ RTExample >> edges [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> edges2 [
 	"
 	self new edges2
@@ -171,7 +171,7 @@ RTExample >> growingSquare [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> growingSquares [
 	"
 	self new growingSquares
@@ -189,7 +189,7 @@ RTExample >> growingSquares [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> highlightSquare [
 	"
 	self new highlightSquare
@@ -212,7 +212,18 @@ RTExample >> highlightSquare [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
+RTExample >> label [
+	"
+	self new label
+	"
+	| view |
+	view := RTView new.
+	view add: (RTLabel elementOn: 'hello world').
+	view open
+]
+
+{ #category : #shapes }
 RTExample >> linkedSquares [
 	"
 	self new linkedSquares
@@ -235,7 +246,7 @@ RTExample >> linkedSquares [
 	view open.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTExample >> manySquares [
 	"
 	self new manySquares
