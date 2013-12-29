@@ -55,3 +55,14 @@ TRCanvasExample >> rec1 [
 	c buildLineFrom: 50 @ 50 to: 80 @ 80 color: Color lightGreen.
 	c open
 ]
+
+{ #category : #'as yet unclassified' }
+TRCanvasExample >> text [
+	"
+	self new text
+	"
+	| c |
+	c := TRCanvas new.
+	c addShape: (TRLabelShape new).
+	c open
+]
