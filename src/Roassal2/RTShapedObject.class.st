@@ -4,88 +4,113 @@ Class {
 	#instVars : [
 		'shape',
 		'announcer',
-		'trachelShape'
+		'trachelShape',
+		'attributes'
 	],
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTShapedObject >> + aRTShape [
-
+	"Add a Roassal shape, class or instance of it. Not that a Trachel cannot be given as argument"
 	self addShape: aRTShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTShapedObject >> @ anInteractionClassOrInstance [
 	"Add an interaction to the node"
 	
 	self addInteraction: anInteractionClassOrInstance
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTShapedObject >> addInteraction: anInteractionClassOrInstance [
  	anInteractionClassOrInstance initializeElement: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTShapedObject >> addShape: aRTShape [
-
-	"I am not sure we need to have aRTShape here. It should instead be a trachel shape"
 	shape := aRTShape instance.
 	trachelShape := shape trachelShapeFor: self.
-"	width := width max: (shape widthFor: self).
-	height := height max: (shape heightFor: self).
-"	
-	
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTShapedObject >> addedIn: view [
 	self subclassReponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #announce }
 RTShapedObject >> announce: evt [
 	self announcer announce: evt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTShapedObject >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].
 	^ announcer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #attributes }
+RTShapedObject >> attributeAt: aKey [
+	^ self attributes at: aKey
+]
+
+{ #category : #attributes }
+RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
+]
+
+{ #category : #attributes }
+RTShapedObject >> attributeAt: aKey put: value [
+	^ self attributes at: aKey put: value
+]
+
+{ #category : #attributes }
+RTShapedObject >> attributes [
+	"Return the list of attributes associated to the element. Attributes are useful for caching values"
+
+	^ attributes ifNil: [ attributes := Dictionary new ]
+]
+
+{ #category : #attributes }
+RTShapedObject >> hasAttributes [ 
+	"Return true if at least one attributes is present"
+	
+	^ attributes notNil and: [ attributes notEmpty ]
+]
+
+{ #category : #initialization }
 RTShapedObject >> initialize [
 	super initialize.
 	shape := RTNull new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interaction }
 RTShapedObject >> on: evt do: aBlock [
 	self announcer on: evt do: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTShapedObject >> renderOn: trachelCanvas [
 
-	"trachelShape := shape renderOn: trachelCanvas for: self."
 	trachelCanvas addShape: trachelShape.
 	trachelShape announcer: self announcer.
 	trachelShape element: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTShapedObject >> shape [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTShapedObject >> trachelShape [
 	^ trachelShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 RTShapedObject >> update [
 	"Update the trachel shape and reset the path. This has the effect of moving the visual widget"
 	shape updateFor: self.

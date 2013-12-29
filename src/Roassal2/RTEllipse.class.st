@@ -4,21 +4,13 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTEllipse >> initialize [
 	super initialize.
 	color := self defaultColor
 ]
 
-{ #category : #'as yet unclassified' }
-RTEllipse >> renderOn: trachelCanvas for: anElement [
-	| rec ex |
-	ex := (self widthFor: anElement) @ (self heightFor: anElement).
-	rec := (anElement position - (ex / 2)) extent: ex.
-	^ trachelCanvas buildCircleFrom: rec origin to: rec corner color: (self colorFor: anElement)
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTEllipse >> trachelShapeFor: anElement [
 	|  shape ex rec |
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
@@ -29,7 +21,7 @@ RTEllipse >> trachelShapeFor: anElement [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTEllipse >> updateFor: anElement [
 	| rec ex |
 	"This is a bit ugly... We need to find a better way"

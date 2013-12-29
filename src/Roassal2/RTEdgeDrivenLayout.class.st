@@ -29,7 +29,7 @@ Class {
 		'fromPositions',
 		'toPositions'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #'as yet unclassified' }
@@ -152,9 +152,6 @@ RTEdgeDrivenLayout >> isLineLayout [
 { #category : #accessing }
 RTEdgeDrivenLayout >> setEdgesFromElements: elements [ 
 	| view |
-	elements isEmpty ifTrue: [ ^ self ].
-	self assert: [ (elements collect: #view) asSet size = 1 ].
-	
 	elements isEmpty ifTrue: [ ^ self ].
 	
 	view := elements anyOne view.

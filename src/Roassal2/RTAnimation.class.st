@@ -8,6 +8,11 @@ Class {
 	#category : #Roassal2
 }
 
+{ #category : #actions }
+RTAnimation >> addedIn: trachelCanvas [
+	"do nothing"
+]
+
 { #category : #testing }
 RTAnimation >> hasCompleted [
 	self subclassResponsibility
@@ -15,5 +20,5 @@ RTAnimation >> hasCompleted [
 
 { #category : #refreshing }
 RTAnimation >> refresh [
-	self subclassResponsibility
+
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testAddingABoxAndEllipse [
 
 	| view el1 el2 |
@@ -19,6 +19,15 @@ RTElementTest >> testAddingABoxAndEllipse [
 	self assert: el1 trachelShape rectangle = ((30@30) corner: (70@50))
 ]
 
+{ #category : #attributes }
+RTElementTest >> testAttributes [
+	| el |
+	el := RTElement new.
+	self deny: el hasAttributes.
+	el attributes at: #oldColor put: Color black.
+	self assert: el hasAttributes.
+]
+
 { #category : #creating }
 RTElementTest >> testCreatingMany [
 	| els |
@@ -27,7 +36,7 @@ RTElementTest >> testCreatingMany [
 	self assert: (els collect: #model) asArray = (1 to: 20) asArray.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testDefault [
 	| el |
 	el := RTElement new.
@@ -80,12 +89,12 @@ RTElementTest >> testHighlighting [
 	self assert: el trachelShape color = Color red.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testModel [
 	self assert: (RTElement on: 10) model = 10
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testRendering [
 
 	| view el |
@@ -97,7 +106,7 @@ RTElementTest >> testRendering [
 	self assert: el trachelShape class == TRBoxShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testRenderingAndEvent [
 
 	| view el trachelShape |
@@ -109,7 +118,7 @@ RTElementTest >> testRenderingAndEvent [
 	self assert: el announcer == trachelShape announcer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testResizingAndDragging [
 
 	| view box |
@@ -126,13 +135,13 @@ RTElementTest >> testResizingAndDragging [
 	self assert: box extent = (10 @ 10).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testSameNullShape [
 	self assert: RTElement new shape == RTElement new shape.
 	self assert: RTNull element shape == RTElement new shape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testSize [
 	| box el |
 	box := RTBox new width: 10; height: 8.
@@ -143,7 +152,7 @@ RTElementTest >> testSize [
 	self assert: el width = 10
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testSizeAndModel [
 	| box el |
 	box := RTBox new width: [ :e | e model + 2 ]; height: [ :e | e model + 3 ].
@@ -154,7 +163,7 @@ RTElementTest >> testSizeAndModel [
 	self assert: el width = 7
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testTrachelShape [
 
 	self assert: RTBox element trachelShape notNil.
@@ -162,7 +171,7 @@ RTElementTest >> testTrachelShape [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testTranslationBy [
 	| el |
 	el := RTElement new.
@@ -174,10 +183,39 @@ RTElementTest >> testTranslationBy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTElementTest >> testTranslationTo [
 	| el |
 	el := RTElement new.
 	el translateTo: 15 @ 10.
 	self assert: el position = (15 @ 10)
+]
+
+{ #category : #tests }
+RTElementTest >> testWidthAndHeight [
+
+	| view outter inner |
+	view := RTView new.
+	outter := RTBox element.
+	inner := (RTBox new color: Color green) element.
+	RTNest new on: outter nest: (Array with: inner).
+	self assert: outter width = 15.
+	self assert: outter height = 15.
+	self assert: outter encompassingRectangle extent = (15 @ 15)
+]
+
+{ #category : #tests }
+RTElementTest >> testWidthAndHeight2 [
+
+	| view outter inners |
+	view := RTView new.
+	outter := RTBox element.
+	inners := (RTBox new color: Color green) elementsOn: (1 to: 3).
+	
+	RTHorizontalLineLayout on: inners.
+	RTNest new on: outter nest: inners.
+
+	self assert: outter width = 45.
+	self assert: outter height = 15.
+	self assert: outter encompassingRectangle extent = (45 @ 15)
 ]

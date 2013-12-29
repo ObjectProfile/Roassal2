@@ -141,16 +141,32 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view scope: aGroup
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
+]
+
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
 
 	| edges fromElement toElement |
 	objects isEmpty ifTrue: [ ^ #() ].
-	edges := OrderedCollection new.
+	edges := RTGroup new.
 	objects do: [ :object |
-		fromElement := view elementFromModel: (fromBlock roValue: object).
-		toElement := view elementFromModel: (toBlock roValue: object).
+		fromElement := aGroup elementFromModel: (fromBlock roValue: object).
+		toElement := aGroup elementFromModel: (toBlock roValue: object).
 		(fromElement notNil and: [ toElement notNil ])
 			ifTrue: [  
 				| edge |

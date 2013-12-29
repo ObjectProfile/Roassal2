@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'elements',
 		'edges',
-		'animations'
+		'animations',
+		'trCanvas'
 	],
 	#category : #Roassal2
 }
@@ -22,7 +23,7 @@ RTView >> addAll: someElements [
 
 { #category : #'as yet unclassified' }
 RTView >> addAnimation: animation [
-	animations add: animation
+	trCanvas addAnimation: animation
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,11 +38,10 @@ RTView >> addElement: anElement [
 
 { #category : #'as yet unclassified' }
 RTView >> createAndFillCanvas [
-	| trCanvas |
-	trCanvas := TRCanvas new.
 	elements do: [ :el | el renderOn: trCanvas ].
 	edges do: [ :el | el renderOn: trCanvas ].
 	animations do: [ :a | trCanvas addAnimation: a ].
+	trCanvas camera focusOnCenter.
 	^ trCanvas
 ]
 
@@ -66,7 +66,8 @@ RTView >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
 	animations := OrderedCollection new.
-	edges := OrderedCollection new
+	edges := OrderedCollection new.
+	trCanvas := TRCanvas new.
 ]
 
 { #category : #'as yet unclassified' }

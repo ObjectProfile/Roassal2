@@ -19,7 +19,7 @@ Class {
 		'gapSize',
 		'lineItemsCountBlock'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #public }

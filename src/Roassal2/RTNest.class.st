@@ -7,7 +7,7 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTNest >> centerOn: backElement element: elements [
 	| encompassingRectangle off |
 	encompassingRectangle := self encompassingRectangleOf: elements.
@@ -16,11 +16,9 @@ RTNest >> centerOn: backElement element: elements [
 
 	off := backElement encompassingRectangle center - encompassingRectangle center. 
 	elements do: [ :e | e translateBy: off ].
-	
-self assert: [ backElement encompassingRectangle center = (self encompassingRectangleOf: elements) center ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTNest >> encompassingRectangleOf: elements [
 	| encompassingRectangle |
 	encompassingRectangle := elements anyOne encompassingRectangle.
@@ -28,27 +26,40 @@ RTNest >> encompassingRectangleOf: elements [
 	^ encompassingRectangle 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTNest >> initialize [
 	super initialize.
-	layout := RTHorizontalLineLayout new
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTNest >> layout [
 	^ layout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTNest >> layout: aLayout [
 	layout := aLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
+RTNest >> makeElements: elements draggableBy: backElement [
+	| callback |
+	callback := TRTranslationCallback block: [ :shape :step | elements do: [ :e | e translateBy: step ] ].
+	backElement trachelShape addCallback: callback 
+]
+
+{ #category : #public }
 RTNest >> on: backElement nest: elements [
 	"public method"
 	"backElement is the elements on which elements are layout-ed"
-	layout on: elements.
-	self centerOn: backElement element: elements
+	"- position the elements above backElement. 
+	 - resize backElement to encapsulate the elements
+	 - perform a layout of the elements if a layout has been set
+	 - make the inner elements draggable"
+	
+	layout ifNotNil: [ layout on: elements ].
+	self centerOn: backElement element: elements.
+	self makeElements: elements draggableBy: backElement.
 
 ]

@@ -19,11 +19,6 @@ RTNull >> heightFor: element [
 ]
 
 { #category : #'as yet unclassified' }
-RTNull >> renderOn: trachelCanvas for: aShapedObject [
-	"Nothing to do here"
-]
-
-{ #category : #'as yet unclassified' }
 RTNull >> trachelShapeFor: element [
 	"Nothing to do here"
 ]

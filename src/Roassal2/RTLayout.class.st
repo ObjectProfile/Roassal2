@@ -38,7 +38,7 @@ Class {
 		'paddingRight',
 		'paddingTop'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #public }

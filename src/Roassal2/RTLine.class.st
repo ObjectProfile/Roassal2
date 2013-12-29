@@ -5,13 +5,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTLine >> renderOn: trachelCanvas for: anEdge [
-	"w := self widthFor: anEdge."
-	self halt.
-	^ trachelCanvas buildLineFrom: anEdge from position to: anEdge to position color: (self colorFor: anEdge)
-]
-
-{ #category : #'as yet unclassified' }
 RTLine >> trachelShape [
 	|  shape aPoint anotherPoint aColor |
 	shape := TRLineShape new.

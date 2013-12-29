@@ -18,7 +18,7 @@ RTElement class >> on: anObject [
 	^ self new model: anObject; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTElement >> addIncomingEdge: anEdge [
 	"Method invoked by the class Edge, the user is not supposed to call this method directly.
 	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
@@ -27,7 +27,7 @@ RTElement >> addIncomingEdge: anEdge [
 	incomingEdges add: anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTElement >> addOutgoingEdge: anEdge [
 	"Method invoked by the class Edge, the user is not supposed to call this method directly.
 	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
@@ -41,22 +41,22 @@ RTElement >> addedIn: view [
 	view addElement: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> encompassingRectangle [
 	^ (self position - ((self width / 2) @ (self height / 2))) extent: (self width @ self height)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> extent [
 	^ self encompassingRectangle extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> height [
 	^ trachelShape height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> incomingEdges [
 	incomingEdges isNil ifTrue: [ ^ #() ].
 	^ incomingEdges
@@ -69,34 +69,34 @@ RTElement >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> model [
 	^ model
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> model: anObject [
 	"anObject could be any Smalltalk object. Shapes are computed based on that object"
 	model := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> outgoingEdges [
 	outgoingEdges isNil ifTrue: [ ^ #() ].
 	^ outgoingEdges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> position [
 	^ position
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTElement >> translateBy: delta [
 	self translateTo: position + delta
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTElement >> translateTo: newPosition [
 	position := newPosition.
 	self outgoingEdges do: [ :edge | edge update ].
@@ -105,7 +105,7 @@ RTElement >> translateTo: newPosition [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTElement >> width [
 	^ trachelShape width
 ]

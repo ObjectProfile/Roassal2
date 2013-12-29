@@ -31,6 +31,20 @@ RTExample >> basic [
 	view open
 ]
 
+{ #category : #animations }
+RTExample >> blinking [
+	"
+	self new blinking
+	"
+	| view el |
+	view := RTView new.
+	el := (RTBox new size: 100) element.
+	view add: el.
+	el on: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
+	view open.
+	view inspect.
+]
+
 { #category : #'as yet unclassified' }
 RTExample >> circles [
 	"
@@ -70,10 +84,15 @@ RTExample >> edges [
 
 	| view elements |
 	view := RTView new.
-	elements := RTBox elementsOn: (Collection withAllSubclasses).
+	elements := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (Collection withAllSubclasses).
 	view addAll: elements.
 	
-	RTEdge buildEdgesFromObjects: view elements from: #yourself to: #superclass inView: view.
+	RTEdge 
+		buildEdgesFromObjects: Collection withAllSubclasses 
+		from: #yourself 
+		to: #superclass 
+		using: (RTLine new color: (Color blue alpha: 0.2))
+		inView: view.
 	
 	RTGridLayout on: view elements.
 	view open
@@ -88,11 +107,46 @@ RTExample >> edges2 [
 	| view elements |
 	view := RTView new.
 	elements := (RTBox new color: (Color purple alpha: 0.2); size: 40) elementsOn: #(1 2).
-	elements do: [ :e | e @ RTDraggable ].
+	elements @ RTDraggable.
 	view addAll: elements.
 	
 	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
 	RTHorizontalLineLayout on: elements.
+	view open
+]
+
+{ #category : #groups }
+RTExample >> group1 [
+	"self new group1"
+
+	| view group1 group2 host1 host2 edgesGroup1 edgesGroup2 |
+	view := RTView new.
+	group1 := (RTBox new color: (Color blue alpha: 0.3)) elementsOn: (1 to: 10).
+	group2 := (RTBox new color: (Color blue alpha: 0.3)) elementsOn: (1 to: 10).
+	
+	host1 := (RTBox new color: (Color green alpha: 0.3)) element.
+	host2 := (RTBox new color: (Color green alpha: 0.3)) element.
+	
+	view addAll: group1; addAll: group2; add: host1; add: host2.
+	
+	edgesGroup1 := RTEdge 
+		buildEdgesFromObjects: (1 to: 10) 
+		from: [ :v | v //2 ] to: #yourself inView: view scope: group1.
+	edgesGroup2 := RTEdge 
+		buildEdgesFromObjects: (1 to: 10) 
+		from: [ :v | v //2 ] to: #yourself inView: view scope: group2.
+
+	
+	RTTreeLayout on: group1 edges: edgesGroup1.
+	RTTreeLayout on: group2 edges: edgesGroup2.
+	
+	RTNest new on: host1 nest: group1.
+	RTNest new on: host2 nest: group2.
+	
+	RTHorizontalLineLayout on: (Array with: host1 with: host2).
+	
+	host1 @ RTDraggable.
+	host2 @ RTDraggable.
 	view open
 ]
 
@@ -204,21 +258,86 @@ RTExample >> manySquares [
 ]
 
 { #category : #nesting }
+RTExample >> multipleNesting [
+	" 
+	self new multipleNesting
+	"
+	| view inner host edges outter trachelCanvas |
+	outter := OrderedCollection new.
+	view := RTView new.
+	
+	1 to: 200 by: 10 do: [ :i |
+		inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: i).
+		host := (RTBox new color: (Color yellow alpha: 0.1)) element.
+		outter add: host.
+
+		view add: host.
+		view addAll: inner.
+		edges := 
+			RTEdge 
+				buildEdgesFromObjects: (1 to: 100) 
+				from: [ :v | v // 2 ] 
+				to: #yourself 
+				inView: view
+				scope: inner.
+
+		"RTTreeLayout new on: inner edges: edges."
+		RTGridLayout new on: inner.
+		RTNest new		
+			on: host nest: inner.
+	].
+	"RTHorizontalLineLayout on: outter."
+	RTGridLayout on: outter.
+	
+	trachelCanvas := view createAndFillCanvas.
+	TRFocusCenter on: trachelCanvas.
+	trachelCanvas open  
+]
+
+{ #category : #nesting }
+RTExample >> nestedHierarchy [
+	" 
+	self new nestedHierarchy
+	"
+	| view inner host |
+	view := RTView new.
+	
+	inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: 100).
+	host := (RTBox new color: (Color yellow alpha: 0.1)) element.
+
+	view add: host.
+	view addAll: inner.
+	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :v | v // 2 ] to: #yourself inView: view.
+
+	RTTreeLayout new on: inner edges: view edges.
+	RTNest new		
+		on: host nest: inner.
+		
+	view open
+]
+
+{ #category : #nesting }
 RTExample >> nesting [
 	"
 	self new nesting
 	"
-	| view el shape |
+	| view el shape inner |
 	view := RTView new.
 	el := (RTBox new width: 80; height: 40; color: (Color purple alpha: 0.3)) element.
 	
 	shape := RTBox new color: (Color purple alpha: 0.3).
+	inner := shape elementsOn: (1 to: 20).
+
+	view add: el.
+	view addAll: inner.
+
+	el @ RTDraggable.
+	
 	RTNest
 		new 
 		layout: RTGridLayout new;
-		on: el nest: (shape elementsOn: (1 to: 20)).
+		on: el nest: inner.
 		
-	view add: el.
 	el translateTo: 100 @ 50.
 	view open.
 	
@@ -248,6 +367,32 @@ RTExample >> nesting2 [
 		
 	view add: el.
 	
+	view open.
+	
+	
+]
+
+{ #category : #nesting }
+RTExample >> nesting3 [
+	"
+	self new nesting3
+	"
+	| view el shape inner |
+	view := RTView new.
+	el := (RTBox new width: 80; height: 40; color: (Color purple alpha: 0.3)) element.
+	
+	shape := RTBox new color: (Color purple alpha: 0.3).
+	inner := (shape elementOn: #inner).
+
+	view add: el.
+	view add: inner.
+
+	RTNest
+		new 
+		layout: RTGridLayout new;
+		on: el nest: (Array with: inner).
+		
+	el translateTo: 100 @ 50.
 	view open.
 	
 	

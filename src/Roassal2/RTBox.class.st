@@ -17,16 +17,7 @@ RTBox >> borderColor: anObject [
 	borderColor := anObject
 ]
 
-{ #category : #rendering }
-RTBox >> renderOn: trachelCanvas for: anElement [
-	| rec ex |
-	self halt.
-	ex := (self widthFor: anElement) @ (self heightFor: anElement).
-	rec := (anElement position - (ex / 2)) extent: ex.
-	^ trachelCanvas buildRectangle: rec color: (self colorFor: anElement)
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTBox >> trachelShapeFor: anElement [
 	|  shape rec ex |
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).

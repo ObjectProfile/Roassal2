@@ -34,7 +34,7 @@ Class {
 		'cachedParents',
 		'cachedParentsWithHighestNestings'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #constants }

@@ -34,7 +34,7 @@ Class {
 		'nodesByLayer',
 		'isLayered'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #testing }

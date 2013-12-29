@@ -21,8 +21,12 @@ RTShape class >> elementOn: aModel [
 
 { #category : #'as yet unclassified' }
 RTShape class >> elementsOn: models [
-
-	^ models collect: [ :m | self instance elementOn: m ]
+	"Return a group of elements, which is a kind of ordered collection"
+	| group |
+	group := RTGroup new.
+	models do: [ :m | 
+		group add: (self instance elementOn: m) ].
+	^ group
 ]
 
 { #category : #'as yet unclassified' }
@@ -65,8 +69,10 @@ RTShape >> elementOn: aModel [
 
 { #category : #public }
 RTShape >> elementsOn: models [
-
-	^ models collect: [ :m | self elementOn: m ]
+	| group |
+	group := RTGroup new.
+	models do: [ :m | group add: (self elementOn: m) ].
+	^ group
 ]
 
 { #category : #initialization }
