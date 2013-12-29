@@ -224,6 +224,20 @@ RTExample >> label [
 ]
 
 { #category : #shapes }
+RTExample >> label2 [
+	"
+	self new label2
+	"
+	| view |
+	view := RTView new.
+	1 to: 20 do: [ :i |
+		view add: (RTLabel elementOn: 'hello world').
+	].
+	RTVerticalLineLayout on: view elements.
+	view open
+]
+
+{ #category : #shapes }
 RTExample >> linkedSquares [
 	"
 	self new linkedSquares
