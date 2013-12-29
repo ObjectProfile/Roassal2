@@ -607,3 +607,14 @@ VersionOfRoassal2 >> version000011 [
 	at: #date put: '28 December 2013';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000012 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.10';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.14';
+	at: #version put: '0.13';
+	at: #comment put: '0.13 : worked on the animations and element blinking. Not working properly so far. More work is required';
+	at: #date put: '29 December 2013';
+	yourself
+]
