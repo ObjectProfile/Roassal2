@@ -11,28 +11,31 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMorph >> canvas: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas.
 	surface := AthensCairoSurface extent: aTrachelCanvas extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'session management' }
 TRMorph >> createSurface [
 	surface := AthensCairoSurface extent: self extent asIntegerPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRMorph >> drawOn: aCanvas [
 	"aCanvas is a form canvas"
-
-	aCanvas fillRectangle: bounds color: Color lightGray.
+	| offset |
 	
+	aCanvas fillRectangle: bounds color: Color lightGray.
 	trachelCanvas playAnimations.
 	
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [:cs |
-		surface clear.		
+		surface clear.
+		
+		offset := (self extent / 2) - trachelCanvas camera position.
+		cs pathTransform translateX: offset x Y: offset y.
 		"cs pathTransform 
 			scaleBy: 1.0."
 		trachelCanvas shapes do: [ :trachelShape |
@@ -44,13 +47,13 @@ TRMorph >> drawOn: aCanvas [
 	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'events-processing' }
 TRMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
 	self rtMouseMoving: anEvent.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'events-processing' }
 TRMorph >> handleMouseOver: anEvent [
 
 	| currentElement event |
@@ -74,19 +77,19 @@ TRMorph >> handleMouseOver: anEvent [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> handlesMouseDown: anEvent [
 	anEvent wasHandled ifTrue:[ ^ false ]. "not interested"
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #morphic }
 TRMorph >> handlesMouseOver: evt [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRMorph >> initialize [
 	super initialize.
 	self createSurface.
@@ -94,23 +97,24 @@ TRMorph >> initialize [
 	"session := Smalltalk session."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRMorph >> isDragging [
 	^ eventBeginingDragging notNil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #morphic }
 TRMorph >> layoutChanged [ 
 	"react on morph resize"
 	super layoutChanged.
 	surface ifNotNil: [  
 		self extent asIntegerPoint ~= surface extent ifTrue: [ 
-			self createSurface ]
+			self createSurface.
+			trachelCanvas extent: self extent ]
 	].
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> mouseDown: evt [
 
 	eventBeginingDragging ifNil: [
@@ -128,7 +132,7 @@ TRMorph >> mouseDown: evt [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> mouseEnter: evt [
 	evt anyButtonPressed ifFalse: [
 		self rtMouseEnter: evt.
@@ -137,7 +141,7 @@ TRMorph >> mouseEnter: evt [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> mouseLeave: evt [
 	
 	evt anyButtonPressed ifFalse: [
@@ -147,7 +151,7 @@ TRMorph >> mouseLeave: evt [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> mouseMove: evt [
 	
 	evt anyButtonPressed
@@ -157,21 +161,21 @@ TRMorph >> mouseMove: evt [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 TRMorph >> mouseUp: evt [
 	self isDragging ifTrue: 
 		[self rtMouseDragEnd: evt ].
 	evt wasHandled: true.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'events-roassal' }
 TRMorph >> relativePositionFor: evt [
 	"Return the position within the window"
 	
-	^ evt position - self bounds origin
+	^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseClick: evt [
 	| relativePosition ev  shape |
 	relativePosition := self relativePositionFor: evt.	
@@ -195,7 +199,7 @@ TRMorph >> rtMouseClick: evt [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseDragBegin: evt [
 	| relativePosition |
 	eventBeginingDragging := evt copy.
@@ -204,13 +208,13 @@ TRMorph >> rtMouseDragBegin: evt [
 	shapeBeingPointed := self shapeForPosition: relativePosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseDragEnd: evt [
 	eventBeginingDragging := nil.
 	shapeBeingPointed := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseDragging: evt [
 	| step relativePosition event  |
 	eventBeginingDragging ifNil: [ ^ self ].
@@ -236,7 +240,7 @@ TRMorph >> rtMouseDragging: evt [
 	eventBeginingDragging := evt copy.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseEnter: evt [
 	| relativePosition ev shape |
 	
@@ -251,7 +255,7 @@ TRMorph >> rtMouseEnter: evt [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseLeave: evt [
 	| position ev shape |
 	
@@ -266,7 +270,7 @@ Transcript show: shape printString; cr.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> rtMouseMoving: evt [
 
 	| relativePosition ev shape |
@@ -280,35 +284,35 @@ TRMorph >> rtMouseMoving: evt [
 	(self shapeForPosition: relativePosition) announce: ev
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event-processed' }
 TRMorph >> shapeForEvent: anEvent [	
 	^ self shapeForPosition: (self relativePositionFor: anEvent)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMorph >> shapeForPosition: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPosition: point
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #signalling }
 TRMorph >> signalUpdate [
 	self changed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stepping }
 TRMorph >> step [
 	self changed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stepping }
 TRMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds. This default implementation requests that the 'step' method be called once every second."
 
 	^ 20
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRMorph >> wantsSteps [
 	^ trachelCanvas hasAnimation 
 ]

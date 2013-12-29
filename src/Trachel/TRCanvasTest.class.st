@@ -1,6 +1,6 @@
 Class {
 	#name : #TRCanvasTest,
-	#superclass : #TestCase,
+	#superclass : #TRTest,
 	#instVars : [
 		'canvas'
 	],
@@ -29,6 +29,12 @@ TRCanvasTest >> testBox [
 
 	box extent: 20 @ 20.
 	self assert: box rectangle center = rec center.
+]
+
+{ #category : #camera }
+TRCanvasTest >> testCamera [
+
+	self assert: canvas camera position = (0 @ 0)
 ]
 
 { #category : #tests }
@@ -71,7 +77,7 @@ TRCanvasTest >> testContainsPointAfterTranslation [
 	| box |
 	box := canvas buildRectangle: (0 @ 0 extent: 20 @ 20) color: Color gray.
 
-	box translateTo: 10 @ 10.
+	box translateBy: 10 @ 10.
 	
 	self assert: (canvas shapeForPosition: 10 @ 10) == box.
 	self assert: (canvas shapeForPosition: 5 @ 5) == canvas.
@@ -88,6 +94,27 @@ TRCanvasTest >> testDefault [
 TRCanvasTest >> testDefaultAnimation [
 	self deny: canvas hasAnimation.
 	self assert: canvas numberOfAnimations = 0
+]
+
+{ #category : #tests }
+TRCanvasTest >> testInitialization [
+
+	| circle |
+	circle := TREllipseShape new.
+	self assert: circle rectangle = TRAbstractBoxShape nullRectangle
+]
+
+{ #category : #tests }
+TRCanvasTest >> testLine [
+	| line |
+	line := canvas buildLineFrom: 2 @ 3 to: 13 @ 15 color: Color blue.
+	self assert: line from = (2 @ 3).
+	self assert: line to = (13 @ 15).
+	
+	line translateBy: 3 @ 4.
+	self assert: line from = (5 @ 7).
+	self assert: line to = (16 @ 19).
+
 ]
 
 { #category : #tests }
@@ -131,4 +158,16 @@ TRCanvasTest >> testShapes [
 	canvas buildRectangle: (5 @ 5 extent: 20 @ 20) color: Color gray.
 	canvas buildRectangle: (5 @ 5 extent: 20 @ 20) color: Color gray.
 	self assert: canvas shapes size = 2
+]
+
+{ #category : #tests }
+TRCanvasTest >> testShapingElement [
+
+	| circle |
+	circle := canvas buildCircleFrom: 20 @ 20 to: 100 @ 80 color: Color red.
+
+	self assert: circle rectangle = ((20 @ 20) corner: (100 @ 80)).
+	
+	circle translateBy: -20 @ -20.
+	self assert: circle rectangle = ((0 @ 0) corner: (80 @ 60)).
 ]

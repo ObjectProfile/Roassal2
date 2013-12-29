@@ -7,26 +7,61 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+TRAbstractBoxShape class >> nullRectangle [
+	nullRectangle ifNotNil: [ ^ nullRectangle ].
+	nullRectangle := (0 @ 0) extent: (0 @ 0).
+	^ nullRectangle
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> center [
+	^ rectangle center
+]
+
+{ #category : #hooks }
 TRAbstractBoxShape >> computePath [
 	canvas ifNil: [ ^ self ].
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: rectangle topLeft;
-				lineTo: rectangle topRight;
-				lineTo: rectangle bottomRight;
-				lineTo: rectangle bottomLeft;
-				lineTo: rectangle topLeft ]
+				moveTo: -1 @ -1;
+				lineTo: 1 @ -1;
+				lineTo: 1 @ 1;
+				lineTo: -1 @ 1;
+				lineTo: -1 @ -1 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
+TRAbstractBoxShape >> drawOn: athensCanvas [
+
+	athensCanvas pathTransform restoreAfter: [
+		athensCanvas pathTransform 
+			translateBy: rectangle center;
+			scaleBy: rectangle extent / 2.
+
+		athensCanvas
+			setPaint: color;
+			drawShape: self path.
+			
+"		athensCanvas
+			setStrokePaint: strokePaint;
+			drawShape: path
+"		]
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> encompassingRectangle [
+	^ self rectangle
+]
+
+{ #category : #accessing }
 TRAbstractBoxShape >> extent [
 	^ self rectangle extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #geometry }
 TRAbstractBoxShape >> extent: anExtent [
 	| center |
 	center := rectangle center.
@@ -34,52 +69,82 @@ TRAbstractBoxShape >> extent: anExtent [
 	self resetPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRAbstractBoxShape >> from: aPoint to: anotherPoint [ 
 	
 	self fromRectangle: (aPoint corner: anotherPoint)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRAbstractBoxShape >> from: aPoint to: anotherPoint color: aColor [
 	self from: aPoint to: anotherPoint.
 	self color: aColor.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRAbstractBoxShape >> fromRectangle: r [
+	| oldTopLeft |
+	oldTopLeft := rectangle topLeft.
 	rectangle := r.
+	self triggerCallbacksForStep: (r topLeft - oldTopLeft).
 	self resetPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRAbstractBoxShape >> fromRectangle: r color: aColor [
 	self fromRectangle: r.
 	self color: aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRAbstractBoxShape >> height [
 	^ rectangle height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRAbstractBoxShape >> includesPoint: aPoint [
 	"We could aternatively translate rectangle by position"
-	^ rectangle containsPoint: (aPoint - position)
+	^ rectangle containsPoint: aPoint
 ]
 
 { #category : #'as yet unclassified' }
+TRAbstractBoxShape >> initialize [
+	super initialize.
+	rectangle := self class nullRectangle
+]
+
+{ #category : #accessing }
 TRAbstractBoxShape >> rectangle [
 	^ rectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRAbstractBoxShape >> rectangle: r [
 	self fromRectangle: r
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
+TRAbstractBoxShape >> translateBy: aPoint [
+	rectangle := (rectangle topLeft + aPoint) extent: rectangle extent.
+	self triggerCallbacksForStep: aPoint
+]
+
+{ #category : #actions }
+TRAbstractBoxShape >> translateTo: aPoint [
+	| oldTopLeft |
+	oldTopLeft := rectangle topLeft.
+	rectangle := (aPoint - (self extent / 2)) extent: self extent.
+	self triggerCallbacksForStep: (rectangle topLeft - oldTopLeft)
+]
+
+{ #category : #actions }
+TRAbstractBoxShape >> triggerCallbacksForStep: aStep [
+	"aStep is a point that represents a translation step"
+	callbacks ifNil: [ ^ self ].
+	callbacks do: [ :c | c block value: self value: aStep ]
+]
+
+{ #category : #accessing }
 TRAbstractBoxShape >> width [
 	^ rectangle width
 ]

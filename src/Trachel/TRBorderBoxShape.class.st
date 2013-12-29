@@ -4,13 +4,13 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRBorderBoxShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
-		athensCanvas pathTransform 
+"		athensCanvas pathTransform 
 			translateBy: position.
-
+"
 		athensCanvas
 			setStrokePaint: strokePaint;
 			drawShape: self path ]

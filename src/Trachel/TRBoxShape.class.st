@@ -1,17 +1,20 @@
 Class {
 	#name : #TRBoxShape,
 	#superclass : #TRAbstractBoxShape,
+	#classInstVars : [
+		'nullRectangle'
+	],
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRBoxShape >> drawOn: athensCanvas [
-
-	athensCanvas pathTransform restoreAfter: [
+	super drawOn: athensCanvas
+"	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
 			translateBy: position.
 
 		athensCanvas
 			setPaint: color;
-			drawShape: self path ]
+			drawShape: self path ]"
 ]

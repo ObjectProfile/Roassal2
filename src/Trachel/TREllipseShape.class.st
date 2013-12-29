@@ -4,7 +4,7 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 TREllipseShape >> computePath [
 	canvas ifNil: [ ^ self ].
 	path := self athensCanvas
@@ -30,7 +30,7 @@ TREllipseShape >> computePath [
 						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ] ]"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TREllipseShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
@@ -48,15 +48,14 @@ TREllipseShape >> drawOn: athensCanvas [
 "		]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
 	rectangle := aPoint corner: anotherPoint.
-	position := rectangle center.
 	self strokePaint: aColor.
 	self color: aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TREllipseShape >> includesPoint: aPoint [
 	"We could aternatively translate rectangle by position"
 	^ rectangle containsPoint: (aPoint)

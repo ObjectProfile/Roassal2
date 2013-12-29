@@ -6,7 +6,8 @@ Class {
 		'shapes',
 		'extent',
 		'animations',
-		'morph'
+		'morph',
+		'camera'
 	],
 	#category : #Trachel
 }
@@ -14,6 +15,7 @@ Class {
 { #category : #animations }
 TRCanvas >> addAnimation: anAnimation [
 	animations add: anAnimation.
+	anAnimation addedIn: self.
 	anAnimation start
 ]
 
@@ -62,12 +64,25 @@ TRCanvas >> buildRectangle: aRectangle color: aColor [
 ]
 
 { #category : #accessing }
+TRCanvas >> camera [
+	^ camera
+]
+
+{ #category : #accessing }
 TRCanvas >> extent [
+	"size of the canvas"
 	^ extent
+]
+
+{ #category : #accessing }
+TRCanvas >> extent: aPoint [
+	"Set of the size of the canvas. Useful, for example, when the window is resized"
+	extent := aPoint
 ]
 
 { #category : #animations }
 TRCanvas >> hasAnimation [
+	"True is at least one animation is running"
 	^ animations notEmpty
 ]
 
@@ -77,24 +92,27 @@ TRCanvas >> initialize [
 	extent := 500 @ 500.
 	canvas := AthensCairoSurface extent: extent.
 	shapes := OrderedCollection new.
-	animations := OrderedCollection new
+	animations := OrderedCollection new.
+	camera := TRCamera forCanvas: self
 ]
 
 { #category : #animations }
 TRCanvas >> numberOfAnimations [
+	"Return the number of animations contained in the canvas"
 	^ animations size
 ]
 
 { #category : #accessing }
 TRCanvas >> numberOfShapes [
+	"Return the number of displayed shapes"
 	^ shapes size
 ]
 
 { #category : #'instance creation' }
 TRCanvas >> open [ 
 	morph := TRMorph new 
-		extent: canvas extent;
-		canvas: self. 
+		canvas: self;
+		extent: canvas extent. 
 	morph openInWindow
 ]
 

@@ -6,12 +6,18 @@ Class {
 		'color',
 		'path',
 		'strokePaint',
-		'position',
 		'announcer',
-		'element'
+		'element',
+		'callbacks'
 	],
 	#category : #Trachel
 }
+
+{ #category : #actions }
+TRShape >> addCallback: aCallback [
+	callbacks ifNil: [ callbacks := OrderedCollection new ].
+	callbacks add: aCallback
+]
 
 { #category : #events }
 TRShape >> announce: anEvent [
@@ -47,6 +53,11 @@ TRShape >> canvas: aSurface [
 ]
 
 { #category : #accessing }
+TRShape >> center [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 TRShape >> color [
 	
 	^ color
@@ -67,9 +78,6 @@ TRShape >> computePath [
 TRShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
-		athensCanvas pathTransform 
-			translateBy: position.
-
 		athensCanvas
 			setPaint: color;
 			drawShape: self path.
@@ -91,6 +99,16 @@ TRShape >> element: anObject [
 	element := anObject
 ]
 
+{ #category : #accessing }
+TRShape >> encompassingRectangle [
+	self subclassReponsibility
+]
+
+{ #category : #testing }
+TRShape >> hasCallback [
+	^ callbacks notNil
+]
+
 { #category : #testing }
 TRShape >> includesPoint: aPoint [
 	^ false
@@ -101,7 +119,7 @@ TRShape >> initialize [
 	super initialize.
 	color := Color gray.
 	strokePaint := Color black.	
-	position := 0 @ 0
+	
 ]
 
 { #category : #events }
@@ -115,13 +133,14 @@ TRShape >> path [
 	^ path
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRShape >> resetPath [
 	path := nil
 ]
 
 { #category : #actions }
 TRShape >> signalUpdate [
+	"Refresh the canvas"
 	canvas signalUpdate
 ]
 
@@ -139,11 +158,10 @@ TRShape >> strokePaint: aColor [
 
 { #category : #actions }
 TRShape >> translateBy: aPoint [
-	"We should not have this..."
-	self translateTo: (position + aPoint)
+	self subclassResponsibility
 ]
 
 { #category : #actions }
 TRShape >> translateTo: aPoint [
-	position := aPoint
+	self subclassResponsibility
 ]
