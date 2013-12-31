@@ -651,3 +651,14 @@ VersionOfRoassal2 >> version000015 [
 	at: #date put: '31 December 2013';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000016 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.14';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.18';
+	at: #version put: '0.17';
+	at: #comment put: '0.17 : working on event for labels. Added menus in TRCanvas. Worked on fixed and movable shapes. A bug is still there, about the encompassing shapeof a label';
+	at: #date put: '31 December 2013';
+	yourself
+]
