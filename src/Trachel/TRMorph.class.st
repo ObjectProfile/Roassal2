@@ -24,7 +24,7 @@ TRMorph >> createSurface [
 
 { #category : #drawing }
 TRMorph >> drawOn: aCanvas [
-	"aCanvas is a form canvas"
+	"aCanvas is a FormCanvas"
 	| offset |
 	
 	aCanvas fillRectangle: bounds color: Color lightGray.
@@ -34,13 +34,20 @@ TRMorph >> drawOn: aCanvas [
 	surface drawDuring: [:cs |
 		surface clear.
 		
+		"We display the elements that are subject to the camera"
 		offset := (self extent / 2) - trachelCanvas camera position.
 		cs pathTransform translateX: offset x Y: offset y.
 		"cs pathTransform 
-			scaleBy: 1.0."
+			scaleBy: 1.0."		
 		trachelCanvas shapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
-		]
+		].
+	
+		"We display the elements that are _NOT_ subject to the camera"
+		cs pathTransform loadIdentity.
+		trachelCanvas fixedShapes do: [ :trachelShape |
+			trachelShape drawOn: cs.
+		].
 	].
 	"aCanvas translucentImage: surface asForm at: self bounds origin."
 	"asForm creates a new Form, which is likely to be expensive. This can be cached"
@@ -171,8 +178,8 @@ TRMorph >> mouseUp: evt [
 { #category : #'events-roassal' }
 TRMorph >> relativePositionFor: evt [
 	"Return the position within the window"
-	
-	^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) 
+	^ evt position - self bounds origin
+	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
 ]
 
 { #category : #'event-processed' }
@@ -186,7 +193,7 @@ TRMorph >> rtMouseClick: evt [
 	evt blueButtonChanged
 		ifTrue: [ ev := TRMouseClick new ]."
 
-	shape := self shapeForPosition: relativePosition.
+	shape := self shapeForPositionInPixels: relativePosition.
 	ev := TRMouseClick new.
 	ev commandKeyPressed: evt commandKeyPressed.
 	ev controlKeyPressed: evt controlKeyPressed.
@@ -205,7 +212,7 @@ TRMorph >> rtMouseDragBegin: evt [
 	eventBeginingDragging := evt copy.
 	
 	relativePosition := self relativePositionFor: evt.
-	shapeBeingPointed := self shapeForPosition: relativePosition
+	shapeBeingPointed := self shapeForPositionInPixels: relativePosition
 ]
 
 { #category : #'event-processed' }
@@ -222,7 +229,7 @@ TRMorph >> rtMouseDragging: evt [
 	step := evt position - eventBeginingDragging position.
 
 	shapeBeingPointed ifNil: 
-		[ shapeBeingPointed := self shapeForPosition: relativePosition ].
+		[ shapeBeingPointed := self shapeForPositionInPixels: relativePosition ].
 	
 	event := TRMouseDragging new 
 				morph: self;
@@ -246,7 +253,7 @@ TRMorph >> rtMouseEnter: evt [
 	
 	relativePosition := self relativePositionFor: evt.
 
-	shape := self shapeForPosition: relativePosition.
+	shape := self shapeForPositionInPixels: relativePosition.
 	ev := TRMouseEnter new.
 	ev position: relativePosition.
 	ev shape: shape.
@@ -260,8 +267,7 @@ TRMorph >> rtMouseLeave: evt [
 	| position ev shape |
 	
 	position := self relativePositionFor: evt.
-	shape := self shapeForPosition: position.
-Transcript show: shape printString; cr.
+	shape := self shapeForPositionInPixels: position.
 	ev := TRMouseLeave new.
 	ev position: position.
 	ev shape: shape.
@@ -275,24 +281,24 @@ TRMorph >> rtMouseMoving: evt [
 
 	| relativePosition ev shape |
 	relativePosition := self relativePositionFor: evt.	
-	shape := self shapeForPosition: relativePosition.
+	shape := self shapeForPositionInPixels: relativePosition.
 
 	ev := TRMouseMove new.
 	ev position: relativePosition.
 	ev shape: shape.
 	ev morph: self.
-	(self shapeForPosition: relativePosition) announce: ev
+	shape announce: ev
 ]
 
 { #category : #'event-processed' }
 TRMorph >> shapeForEvent: anEvent [	
-	^ self shapeForPosition: (self relativePositionFor: anEvent)
+	^ self shapeForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
-{ #category : #accessing }
-TRMorph >> shapeForPosition: point [
+{ #category : #'as yet unclassified' }
+TRMorph >> shapeForPositionInPixels: point [
 	"Return the shape located that contains point"
-	 ^ trachelCanvas shapeForPosition: point
+	 ^ trachelCanvas shapeForPositionInPixels: point
 ]
 
 { #category : #signalling }

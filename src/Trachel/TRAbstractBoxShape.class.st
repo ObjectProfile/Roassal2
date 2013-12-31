@@ -70,6 +70,12 @@ TRAbstractBoxShape >> extent: anExtent [
 ]
 
 { #category : #public }
+TRAbstractBoxShape >> from: aPoint extent: anotherPoint [ 
+	
+	self fromRectangle: (aPoint corner: (aPoint + anotherPoint))
+]
+
+{ #category : #public }
 TRAbstractBoxShape >> from: aPoint to: anotherPoint [ 
 	
 	self fromRectangle: (aPoint corner: anotherPoint)
@@ -103,7 +109,6 @@ TRAbstractBoxShape >> height [
 
 { #category : #testing }
 TRAbstractBoxShape >> includesPoint: aPoint [
-	"We could aternatively translate rectangle by position"
 	^ rectangle containsPoint: aPoint
 ]
 

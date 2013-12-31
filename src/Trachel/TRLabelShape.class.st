@@ -17,7 +17,7 @@ TRLabelShape >> drawOn: athensCanvas [
 			translateBy: position;
 			scaleBy: 2.
 		athensCanvas setFont: font.
-		athensCanvas setPaint: Color black.
+		athensCanvas setPaint: color.
 		athensCanvas drawString: text
 		]
 ]
@@ -38,6 +38,11 @@ TRLabelShape >> font [
 { #category : #accessing }
 TRLabelShape >> height [
 	^ font height
+]
+
+{ #category : #testing }
+TRLabelShape >> includesPoint: aPoint [
+	^ self encompassingRectangle containsPoint: aPoint
 ]
 
 { #category : #initialization }

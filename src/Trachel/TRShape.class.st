@@ -122,6 +122,24 @@ TRShape >> initialize [
 	
 ]
 
+{ #category : #testing }
+TRShape >> isFixed [
+
+	^ self canvas fixedShapes includes: self
+]
+
+{ #category : #testing }
+TRShape >> isMovable [
+
+	^ self canvas isMovableShape: self
+]
+
+{ #category : #testing }
+TRShape >> isNotFixed [
+
+	^ self isMovable
+]
+
 { #category : #events }
 TRShape >> on: event do: aBlock [
 	self announcer on: event do: aBlock
@@ -136,6 +154,18 @@ TRShape >> path [
 { #category : #actions }
 TRShape >> resetPath [
 	path := nil
+]
+
+{ #category : #actions }
+TRShape >> setAsFixed [
+	canvas removeShape: self.
+	canvas addFixedShape: self.
+]
+
+{ #category : #actions }
+TRShape >> setAsNotFixed [
+	canvas removeFixedShape: self.
+	canvas addShape: self.
 ]
 
 { #category : #actions }

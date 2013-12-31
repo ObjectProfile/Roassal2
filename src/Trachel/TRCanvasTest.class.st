@@ -13,6 +13,19 @@ TRCanvasTest >> setUp [
 	canvas := TRCanvas new
 ]
 
+{ #category : #'fixed shape' }
+TRCanvasTest >> testAccessing [
+	| c r1 r2 |
+	c := TRCanvas new.
+	r1 := c buildRectangle: ((0 @ 0) extent: (150 @ 75)) color: Color red.
+	r1 setAsFixed.
+	
+	r2 := c buildRectangle: ((0 @ 0) extent: (130 @ 50)) color: Color lightGreen.
+
+	self assert: (c shapeForPositionInPixels: (0 @ 0)) = r1.
+	self assert: (c shapeForPositionInPixels: (250 @ 250)) = r2.
+]
+
 { #category : #animations }
 TRCanvasTest >> testAddingAnimation [
 	canvas addAnimation: (RTLinearMove to: 50 @ 50 during: 2 on: RTBox element).
@@ -110,6 +123,27 @@ TRCanvasTest >> testDefaultAnimation [
 	self assert: canvas numberOfAnimations = 0
 ]
 
+{ #category : #'fixed shape' }
+TRCanvasTest >> testFixedShapes [
+
+	| s1 s2 |
+	s1 := TRBoxShape new from: 10 @ 20 extent: 50 @ 40.
+	s2 := TRBoxShape new from: 10 @ 20 extent: 50 @ 40.
+	canvas addShape: s1; addShape: s2.
+	
+	self assert: s1 isNotFixed.
+	self assert: s2 isNotFixed.
+	
+	s2 setAsFixed.
+	self assert: s1 isNotFixed.
+	self deny: s2 isNotFixed.
+	
+	s2 setAsNotFixed.
+	self assert: s1 isNotFixed.
+	self assert: s2 isNotFixed.
+
+]
+
 { #category : #tests }
 TRCanvasTest >> testInitialization [
 
@@ -130,6 +164,29 @@ TRCanvasTest >> testLabelShapes [
 	
 	rec := label1 encompassingRectangle.
 	self assert: rec center = (0 @ 0).
+]
+
+{ #category : #tests }
+TRCanvasTest >> testLabelShapesAndColor [
+
+	| label  |
+	label := TRLabelShape new.
+	label color: Color blue.
+	self assert: label color = Color blue
+]
+
+{ #category : #tests }
+TRCanvasTest >> testLabelShapesAndIncludesPoint [
+
+	| label rec |
+	label := TRLabelShape new.
+	label text: 'hello'.
+	
+	rec := label encompassingRectangle.
+	self assert: (label includesPoint: rec topLeft).
+	self assert: (label includesPoint: (rec bottomLeft - (0 @ 1))).
+	self assert: (label includesPoint: rec topRight - (1 @ 0)).
+	self assert: (label includesPoint: rec bottomRight - (1 @ 1)).
 ]
 
 { #category : #tests }

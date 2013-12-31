@@ -43,6 +43,41 @@ TRCanvasExample >> circle2 [
 ]
 
 { #category : #examples }
+TRCanvasExample >> fixedRec [
+	"
+	self new fixedRec
+	"
+
+	| c r1 r2 colors |
+	c := TRCanvas new.
+	r1 := c buildRectangle: ((0 @ 0) extent: (150 @ 75)) color: Color red.
+	r2 := c buildRectangle: ((0 @ 0) extent: (130 @ 50)) color: Color lightGreen.
+	c buildLineFrom: 50 @ 50 to: 80 @ 80 color: Color lightGreen.
+	
+	colors := Array with: Color red with: Color blue with: Color white.
+	r1 on: TRMouseClick do: [ :event | event shape color: colors atRandom. c signalUpdate ].
+	r2 on: TRMouseClick do: [ :event | r2 color: colors atRandom. c signalUpdate ].	
+		
+	r2 setAsFixed.
+	
+	c on: TRMouseDragging do: [ :event | c camera translateBy: event step negated. c signalUpdate ].
+	c open
+]
+
+{ #category : #menu }
+TRCanvasExample >> menu1 [
+	"
+	self new menu1
+	"
+	| canvas |
+	canvas := TRCanvas new.
+	canvas addMenu: '+ box' callback: [ canvas addShape: (TRBoxShape new color: (Color purple alpha: 0.1); from: (400 atRandom @ 400 atRandom) extent: (100 atRandom @ 100 atRandom)). canvas signalUpdate ].
+	
+	canvas camera translateTo: 250 @ 250.
+	canvas open
+]
+
+{ #category : #examples }
 TRCanvasExample >> rec1 [
 	"
 	self new rec1
@@ -61,8 +96,12 @@ TRCanvasExample >> text [
 	"
 	self new text
 	"
-	| c |
+	| c label rec |
 	c := TRCanvas new.
-	c addShape: (TRLabelShape new).
+	label := TRLabelShape new.
+	rec := TRBoxShape new color: Color white.
+	rec fromRectangle: label encompassingRectangle.
+	c addShape: rec.
+	c addShape: label.
 	c open
 ]

@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'canvas',
 		'shapes',
+		'fixedShapes',
 		'extent',
 		'animations',
 		'morph',
@@ -18,6 +19,23 @@ TRCanvas >> addAnimation: anAnimation [
 	animations add: anAnimation.
 	anAnimation addedIn: self.
 	anAnimation start
+]
+
+{ #category : #building }
+TRCanvas >> addFixedShape: shape [
+	fixedShapes add: shape.
+	shape canvas: self
+]
+
+{ #category : #menu }
+TRCanvas >> addMenu: aTitle callback: aBlock [
+	| lbl |
+	lbl := TRLabelShape new text: aTitle on: 20 @ 20.
+	lbl color: Color black.
+	lbl on: TRMouseClick do: [ :event | aBlock value ].
+	lbl on: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
+	lbl on: TRMouseLeave do: [ :event | lbl color: Color black. self signalUpdate ].
+	self addFixedShape: lbl
 ]
 
 { #category : #building }
@@ -91,6 +109,11 @@ TRCanvas >> extent: aPoint [
 	extent := aPoint
 ]
 
+{ #category : #accessing }
+TRCanvas >> fixedShapes [
+	^ fixedShapes
+]
+
 { #category : #animations }
 TRCanvas >> hasAnimation [
 	"True is at least one animation is running"
@@ -103,14 +126,31 @@ TRCanvas >> initialize [
 	extent := 500 @ 500.
 	canvas := AthensCairoSurface extent: extent.
 	shapes := OrderedCollection new.
+	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self
+]
+
+{ #category : #testing }
+TRCanvas >> isFixedShape: aShape [
+	^ fixedShapes includes: aShape
+]
+
+{ #category : #testing }
+TRCanvas >> isMovableShape: aShape [
+	^ shapes includes: aShape
 ]
 
 { #category : #animations }
 TRCanvas >> numberOfAnimations [
 	"Return the number of animations contained in the canvas"
 	^ animations size
+]
+
+{ #category : #accessing }
+TRCanvas >> numberOfFixedShapes [
+	"Return the number of displayed shapes"
+	^ fixedShapes size
 ]
 
 { #category : #accessing }
@@ -144,10 +184,35 @@ TRCanvas >> playAnimations [
 		animations := animations reject: [ :animation | animation hasCompleted ] ].
 ]
 
+{ #category : #actions }
+TRCanvas >> removeFixedShape: aShape [
+	fixedShapes := fixedShapes copyWithout: aShape
+]
+
+{ #category : #actions }
+TRCanvas >> removeShape: aShape [
+	shapes := shapes copyWithout: aShape
+]
+
 { #category : #accessing }
 TRCanvas >> shapeForPosition: position [
+	fixedShapes do: [ :s | 
+		(s includesPoint: position) ifTrue: [ ^ s ] ].
+
 	shapes do: [ :s | 
 		(s includesPoint: position) ifTrue: [ ^ s ] ].
+	^ self
+]
+
+{ #category : #accessing }
+TRCanvas >> shapeForPositionInPixels: position [
+	"position is in pixel, it corresponds to the physical location in the window.
+	e.g., 0 @ 0 is top left of the window"
+	fixedShapes do: [ :s | 
+		(s includesPoint: position) ifTrue: [ ^ s ] ].
+
+	shapes do: [ :s | 
+		(s includesPoint: (self camera fromPixelToSpace: position)) ifTrue: [ ^ s ] ].
 	^ self
 ]
 
