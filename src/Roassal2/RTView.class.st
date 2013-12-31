@@ -48,6 +48,16 @@ RTView >> addInteraction: anInteractionClassOrInstance [
  	anInteractionClassOrInstance initializeElement: self
 ]
 
+{ #category : #menu }
+RTView >> addMenu: aTitle callback: aBlock [
+	self canvas addMenu: aTitle callback: aBlock
+	"| el |
+	el := RTLabel elementOn: aTitle.
+	el on: TRMouseClick do: [ :event | aBlock value ].
+	self add: el.
+	el trachelShape setAsFixed"
+]
+
 { #category : #accessing }
 RTView >> canvas [
 	"Return the trachel canvas on which everything is drawn"

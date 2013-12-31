@@ -69,3 +69,13 @@ RTViewTest >> testFillingCanvas [
 	self assert: canvas class == TRCanvas.
 	self assert: canvas numberOfShapes = 1.
 ]
+
+{ #category : #menu }
+RTViewTest >> testMenu [
+
+	view := RTView new.
+	view add: (RTEllipse new size: 50) element.
+	view addMenu: 'foo' callback: [  ].
+	self assert: view canvas numberOfShapes = 0.
+	self assert: view canvas numberOfFixedShapes = 1.
+]

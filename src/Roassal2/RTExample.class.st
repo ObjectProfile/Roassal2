@@ -71,7 +71,9 @@ RTExample >> classHierarchy [
 	| view |
 	view := RTView new.	
 	view addAll: (RTBox elementsOn: Collection withAllSubclasses).
-	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: view.
+	RTEdge 
+		buildEdgesFromObjects: Collection 
+		withAllSubclasses from: #superclass to: #yourself inView: view.
 	RTTreeLayout on: view elements edges: view edges.
 	view @ RTDraggableView.
 	view open
@@ -348,6 +350,8 @@ RTExample >> nestedHierarchy [
 	
 	inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: 100).
 	host := (RTBox new color: (Color yellow alpha: 0.1)) element.
+
+	inner do: [ :i | i on: TRMouseClick do: [:event | event model inspect ]  ].
 
 	view add: host.
 	view addAll: inner.
