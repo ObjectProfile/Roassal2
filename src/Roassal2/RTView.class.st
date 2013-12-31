@@ -10,33 +10,51 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+RTView >> @ anInteractionClassOrInstance [
+	"Add an interaction to the node"
+	
+	self addInteraction: anInteractionClassOrInstance
+]
+
+{ #category : #adding }
 RTView >> add: anElementOrAnEdge [
 	anElementOrAnEdge addedIn: self
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTView >> addAll: someElements [
 	someElements do: [ :el | self add: el ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTView >> addAnimation: animation [
 	trCanvas addAnimation: animation
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTView >> addEdge: anEdge [
 	edges add: anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTView >> addElement: anElement [
 	elements add: anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+RTView >> addInteraction: anInteractionClassOrInstance [
+ 	anInteractionClassOrInstance initializeElement: self
+]
+
+{ #category : #accessing }
+RTView >> canvas [
+	"Return the trachel canvas on which everything is drawn"
+	^ trCanvas
+]
+
+{ #category : #initialization }
 RTView >> createAndFillCanvas [
 	elements do: [ :el | el renderOn: trCanvas ].
 	edges do: [ :el | el renderOn: trCanvas ].
@@ -45,23 +63,23 @@ RTView >> createAndFillCanvas [
 	^ trCanvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTView >> edges [
 	^ edges copy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTView >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements detect: [ :el | el model == anObject ] ifNone: [ nil ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTView >> elements [
 	^ elements copy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTView >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
@@ -70,17 +88,17 @@ RTView >> initialize [
 	trCanvas := TRCanvas new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-computed' }
 RTView >> numberOfEdges [
 	^ edges size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-computed' }
 RTView >> numberOfElements [
 	^ elements size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTView >> open [
 	"^ trachelCanvas open"
 

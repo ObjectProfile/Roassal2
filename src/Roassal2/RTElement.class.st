@@ -12,7 +12,12 @@ Class {
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTElement class >> forCollection: aCollection [ 
+	^ (aCollection collect: [ :v | self on: v ]) asArray
+]
+
+{ #category : #public }
 RTElement class >> on: anObject [
 
 	^ self new model: anObject; yourself

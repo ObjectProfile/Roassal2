@@ -60,5 +60,5 @@ RTLabel >> updateFor: anElement [
 { #category : #'as yet unclassified' }
 RTLabel >> widthFor: anElement [
 	text := self textFor: anElement.
-	^ font widthOfString: text
+	^ (font widthOfString: text) * 2
 ]

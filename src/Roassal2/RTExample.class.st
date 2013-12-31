@@ -73,6 +73,7 @@ RTExample >> classHierarchy [
 	view addAll: (RTBox elementsOn: Collection withAllSubclasses).
 	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: view.
 	RTTreeLayout on: view elements edges: view edges.
+	view @ RTDraggableView.
 	view open
 ]
 
@@ -233,7 +234,25 @@ RTExample >> label2 [
 	1 to: 20 do: [ :i |
 		view add: (RTLabel elementOn: 'hello world').
 	].
-	RTVerticalLineLayout on: view elements.
+"	RTVerticalLineLayout on: view elements."
+	RTGridLayout on: view elements.
+"	RTHorizontalLineLayout on: view elements."
+	view open
+]
+
+{ #category : #shapes }
+RTExample >> label3 [
+	"
+	self new label3
+	"
+	| view |
+	view := RTView new.
+	1 to: 20 do: [ :i |
+		view add: (RTLabel elementOn: i asString).
+	].
+"	RTVerticalLineLayout on: view elements."
+	RTGridLayout on: view elements.
+"	RTHorizontalLineLayout on: view elements."
 	view open
 ]
 
