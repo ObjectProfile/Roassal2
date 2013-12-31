@@ -640,3 +640,14 @@ VersionOfRoassal2 >> version000014 [
 	at: #date put: '29 December 2013';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000015 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.13';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.17';
+	at: #version put: '0.16';
+	at: #comment put: '0.16 : added announcer in TRCanvas. A view (and trachel canvas) can now be draggable';
+	at: #date put: '31 December 2013';
+	yourself
+]
