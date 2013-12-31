@@ -4,7 +4,7 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 TRCanvasExample >> circle [
 	"
 	self new circle
@@ -21,7 +21,7 @@ TRCanvasExample >> circle [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 TRCanvasExample >> circle2 [
 	"
 	self new circle2
@@ -42,7 +42,7 @@ TRCanvasExample >> circle2 [
 	c open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 TRCanvasExample >> rec1 [
 	"
 	self new rec1
@@ -56,7 +56,7 @@ TRCanvasExample >> rec1 [
 	c open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 TRCanvasExample >> text [
 	"
 	self new text

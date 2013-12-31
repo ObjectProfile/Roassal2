@@ -7,7 +7,8 @@ Class {
 		'extent',
 		'animations',
 		'morph',
-		'camera'
+		'camera',
+		'announcer'
 	],
 	#category : #Trachel
 }
@@ -27,8 +28,18 @@ TRCanvas >> addShape: shape [
 
 { #category : #events }
 TRCanvas >> announce: anEvent [
+	self announcer announce: anEvent
+]
 
-	"Do it later"
+{ #category : #events }
+TRCanvas >> announcer [
+	announcer isNil ifTrue: [ announcer := Announcer new ].
+	^ announcer
+]
+
+{ #category : #events }
+TRCanvas >> announcer: anAnnouncer [
+	announcer := anAnnouncer
 ]
 
 { #category : #accessing }
@@ -106,6 +117,11 @@ TRCanvas >> numberOfAnimations [
 TRCanvas >> numberOfShapes [
 	"Return the number of displayed shapes"
 	^ shapes size
+]
+
+{ #category : #events }
+TRCanvas >> on: event do: aBlock [
+	self announcer on: event do: aBlock
 ]
 
 { #category : #'instance creation' }

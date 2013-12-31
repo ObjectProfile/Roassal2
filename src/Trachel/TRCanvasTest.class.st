@@ -46,6 +46,20 @@ TRCanvasTest >> testCanvas [
 	self assert: canvas ~~ canvas athensCanvas.
 ]
 
+{ #category : #events }
+TRCanvasTest >> testCanvasAndEvent [
+
+	| c f |
+	c := TRCanvas new.
+	f := false.
+	c on: TRMouseClick do: [ :event | f := true ].
+	self deny: f.
+	c announce: TRMouseMove.
+	self deny: f.
+	c announce: TRMouseClick.
+	self assert: f
+]
+
 { #category : #tests }
 TRCanvasTest >> testCircle [
 

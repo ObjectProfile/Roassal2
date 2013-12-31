@@ -7,18 +7,23 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+TRMouseDragging class >> step: aStepAsPoint [
+	^ self new step: aStepAsPoint
+]
+
+{ #category : #initialization }
 TRMouseDragging >> initialize [
 	super initialize.
 	step := 0 @ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMouseDragging >> step [
 	^ step
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMouseDragging >> step: aPoint [
 	step := aPoint
 ]

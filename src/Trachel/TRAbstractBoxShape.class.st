@@ -107,7 +107,7 @@ TRAbstractBoxShape >> includesPoint: aPoint [
 	^ rectangle containsPoint: aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRAbstractBoxShape >> initialize [
 	super initialize.
 	rectangle := self class nullRectangle

@@ -9,7 +9,7 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRLabelShape >> drawOn: athensCanvas [
  
 	athensCanvas pathTransform restoreAfter: [
@@ -22,7 +22,7 @@ TRLabelShape >> drawOn: athensCanvas [
 		]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> encompassingRectangle [
 	| w h |
 	w := self width.
@@ -30,17 +30,17 @@ TRLabelShape >> encompassingRectangle [
 	^ (position - ((w @ h) / 2)) extent: (w @ h)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> font [
 	^ font
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> height [
 	^ font height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRLabelShape >> initialize [
 	super initialize.
 	position := 0 @ 0.
@@ -48,23 +48,23 @@ TRLabelShape >> initialize [
 	font := LogicalFont familyName: 'Arial' pointSize: 20.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> position: aPosition [
 	position := aPosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> text: aText [
 	text := aText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRLabelShape >> text: aText on: aPosition [
 	self text: aText.
 	self position: aPosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRLabelShape >> width [
-	^ font widthOfString: text
+	^ (font widthOfString: text) * 2
 ]
