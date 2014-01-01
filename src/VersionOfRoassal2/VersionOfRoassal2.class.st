@@ -673,3 +673,14 @@ VersionOfRoassal2 >> version000017 [
 	at: #date put: '1 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000018 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.16';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.19';
+	at: #version put: '0.19';
+	at: #comment put: '0.19 : added the punch card builder. Added some guards for the shapes to be drawn. Apparently Cairo behaves strangely if an error occurs durring the rendering loop.';
+	at: #date put: '1 January 2014';
+	yourself
+]
