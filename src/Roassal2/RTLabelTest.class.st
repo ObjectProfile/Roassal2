@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #tests }
+RTLabelTest >> testDefault [
+	self assert: (RTLabel new heightFor: RTElement new) = TRLabelShape new defaultFontSize.
+]
+
+{ #category : #tests }
 RTLabelTest >> testEncompassing [
 
 	| lbl rec |
@@ -13,6 +18,23 @@ RTLabelTest >> testEncompassing [
 	self assert: rec class == Rectangle.
 	self assert: rec center = (0 @ 0).
 	self assert: rec extent > (10 @ 10)
+]
+
+{ #category : #tests }
+RTLabelTest >> testHeight2 [
+	| v label els |
+	v := RTView new.
+	label := RTLabel new.
+	label height: [ :e | e model ].
+	els := label elementsOn: (1 to: 3).
+	self assert: els first trachelShape text = '1'.
+	self assert: els first trachelShape fontSize = 1.
+
+	self assert: els second trachelShape text = '2'.
+	self assert: els second trachelShape fontSize = 2.
+
+	self assert: els third trachelShape text = '3'.
+	self assert: els third trachelShape fontSize = 3.
 ]
 
 { #category : #tests }
@@ -49,4 +71,14 @@ RTLabelTest >> testLabelWidth [
 	label2 := RTLabel new text: 'hello world'.
 	el := RTElement new.
 	self assert: (label1 widthFor: el) < (label2 widthFor: el)
+]
+
+{ #category : #tests }
+RTLabelTest >> testText [
+	| v label els |
+	v := RTView new.
+	label := RTLabel new.
+	els := label elementsOn: (1 to: 30).
+	self assert: els first trachelShape text = '1'.
+	self assert: els second trachelShape text = '2'.
 ]

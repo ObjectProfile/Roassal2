@@ -19,8 +19,8 @@ RTNestTest >> testBasic [
 	view add: el.
 	view add: el2.
 	
-	self assert: el position = (100 @ 50).
-	self assert: el2 position = (100 @ 50).
+	self assert: el position asIntegerPoint = (100 @ 50).
+	self assert: el2 position asIntegerPoint = (100 @ 50).
 
 	self assert: el trachelShape width = 15.
 	self assert: el trachelShape height = 15.
@@ -45,7 +45,7 @@ RTNestTest >> testDifferentSizes [
 	view add: el.
 	view add: innerElement1.
 	view add: innerElement2.
-	
+
 	self assert: el position = (100 @ 50).
 	self assert: el trachelShape width = 45.
 	self assert: el trachelShape height = 30.

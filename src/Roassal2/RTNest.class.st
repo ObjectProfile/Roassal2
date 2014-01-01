@@ -15,6 +15,7 @@ RTNest >> centerOn: backElement element: elements [
 	backElement trachelShape extent: (encompassingRectangle width + (5 * 2)) @ (encompassingRectangle height + (5 * 2)).
 
 	off := backElement encompassingRectangle center - encompassingRectangle center. 
+	off := off asIntegerPoint.
 	elements do: [ :e | e translateBy: off ].
 ]
 

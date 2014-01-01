@@ -26,7 +26,8 @@ RTCellLayout >> doExecute: elements [
 	elements withIndexDo: 
 		[ :element :index | 
 		cell element: element; number: index.
-		translator translate: element to: pointer + (cell extent / 2) asIntegerPoint.
+		pointer := pointer + (cell extent / 2) asIntegerPoint.
+		translator translate: element to: pointer.
 		pointer := (pointer x + cell extent x + (self gapSize * 2)) @ pointer y.
 		lineItemCount := lineItemCount + 1.
 		lineItemCount >= lineItemSize ifTrue: 

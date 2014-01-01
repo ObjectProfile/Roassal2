@@ -245,15 +245,18 @@ RTExample >> highlightSquare [
 	view open
 ]
 
-{ #category : #shapes }
+{ #category : #labels }
 RTExample >> label [
 	"
 	self new label
 	"
-	| view |
-	view := RTView new.
-	view add: (RTLabel elementOn: 'hello world').
-	view open
+	| v label els |
+	v := RTView new.
+	label := RTLabel new height: [ :e | e model ].
+	els := label elementsOn: (1 to: 30).
+	v addAll: els.
+	RTHorizontalLineLayout on: els.
+	v open
 ]
 
 { #category : #shapes }

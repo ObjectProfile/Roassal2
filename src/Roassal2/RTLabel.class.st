@@ -3,51 +3,59 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'text',
-		'font'
+		'font',
+		'height'
 	],
 	#category : #Roassal2
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTLabel >> defaultText [
 	^ [ :e | e model asString ]
 ]
 
-{ #category : #'as yet unclassified' }
-RTLabel >> heightFor: element [
-	^ font height
+{ #category : #accessing }
+RTLabel >> height: aValueOrABlock [
+	height := aValueOrABlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
+RTLabel >> heightFor: element [
+	^ height roValue: element
+]
+
+{ #category : #initialization }
 RTLabel >> initialize [
 	super initialize.
 	text := self defaultText.
-	font := LogicalFont familyName: 'Arial' pointSize: 20.
+	height := TRLabelShape defaultFontSize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabel >> text: aStringOrABlock [
 
 	text := aStringOrABlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTLabel >> textFor: element [
-	^ text roValue: element
+	^ (text roValue: element) asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLabel >> trachelShapeFor: anElement [
 	|  shape |
 	"ex := (self widthFor: anElement) @ (self heightFor: anElement)."
 	"rec := (anElement position ) extent: ex."
 	
 	shape := TRLabelShape new.
-	shape text: (self textFor: anElement) on: anElement position.
+	shape text: (self textFor: anElement);
+			position: anElement position;
+			fontSize: (self heightFor: anElement).
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTLabel >> updateFor: anElement [
 	| rec ex |
 	
@@ -57,8 +65,7 @@ RTLabel >> updateFor: anElement [
 	anElement trachelShape text: (self textFor: anElement) on: anElement position
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTLabel >> widthFor: anElement [
-	text := self textFor: anElement.
-	^ (font widthOfString: text) * 2
+	^ TRLabelShape widthOfText: (self textFor: anElement) fontSize: (self heightFor: anElement)
 ]
