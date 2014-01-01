@@ -73,7 +73,7 @@ TRCanvasTest >> testCanvasAndEvent [
 	self assert: f
 ]
 
-{ #category : #'label positions' }
+{ #category : #label }
 TRCanvasTest >> testCenteredLabelShapes [
 
 	| label1 label2  |
@@ -142,6 +142,11 @@ TRCanvasTest >> testDefaultAnimation [
 	self assert: canvas numberOfAnimations = 0
 ]
 
+{ #category : #label }
+TRCanvasTest >> testDefaultFontSize [
+	self assert: (TRLabelShape new fontSize = TRLabelShape new defaultFontSize)
+]
+
 { #category : #'fixed shape' }
 TRCanvasTest >> testFixedShapes [
 
@@ -171,7 +176,7 @@ TRCanvasTest >> testInitialization [
 	self assert: circle rectangle = TRAbstractBoxShape nullRectangle
 ]
 
-{ #category : #tests }
+{ #category : #label }
 TRCanvasTest >> testLabelShapes [
 
 	| label1 label2 rec |
@@ -185,7 +190,7 @@ TRCanvasTest >> testLabelShapes [
 	self assert: rec center = (0 @ 0).
 ]
 
-{ #category : #tests }
+{ #category : #label }
 TRCanvasTest >> testLabelShapesAndColor [
 
 	| label  |
@@ -194,7 +199,7 @@ TRCanvasTest >> testLabelShapesAndColor [
 	self assert: label color = Color blue
 ]
 
-{ #category : #tests }
+{ #category : #label }
 TRCanvasTest >> testLabelShapesAndIncludesPoint [
 
 	| label rec |
@@ -208,7 +213,7 @@ TRCanvasTest >> testLabelShapesAndIncludesPoint [
 	self assert: (label includesPoint: rec bottomRight - (1 @ 1)).
 ]
 
-{ #category : #tests }
+{ #category : #label }
 TRCanvasTest >> testLabelShapesHeight [
 
 	| label1 label2 |
@@ -295,4 +300,18 @@ TRCanvasTest >> testShouldBeDrawn [
 	self deny: (TRBoxShape new from: 200 @ 0 to: 200 @ 0) shouldBeDrawn.
 	self deny: (TREllipseShape new from: 0 @ 0 to: 0 @ 0) shouldBeDrawn.
 	self assert: (TREllipseShape new from: 10 @ 0 to: 50 @ 50) shouldBeDrawn
+]
+
+{ #category : #label }
+TRCanvasTest >> testSizeAndLabels [
+
+	| c l1 l2 |
+	c := TRCanvas new.
+	l1 := TRLabelShape new fontSize: 10.
+	l2 := TRLabelShape new fontSize: 15; position: 20 @ 20.
+	c addShape: l1.
+	c addShape: l2.
+	
+	self assert: l1 font ~~ l2 font
+	
 ]

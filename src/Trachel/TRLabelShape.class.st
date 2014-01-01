@@ -4,10 +4,32 @@ Class {
 	#instVars : [
 		'text',
 		'position',
-		'font'
+		'font',
+		'fontSize'
 	],
 	#category : #Trachel
 }
+
+{ #category : #configuration }
+TRLabelShape class >> defaultFontSize [
+	^ 12
+]
+
+{ #category : #configuration }
+TRLabelShape class >> getFontForSize: aNumber [
+
+	^ LogicalFont familyName: 'Arial' pointSize: aNumber
+]
+
+{ #category : #configuration }
+TRLabelShape class >> widthOfText: aString fontSize: aNumber [
+	^ (self getFontForSize: aNumber) widthOfString: aString
+]
+
+{ #category : #initialization }
+TRLabelShape >> defaultFontSize [
+	^ self class defaultFontSize
+]
 
 { #category : #drawing }
 TRLabelShape >> drawOn: athensCanvas [
@@ -15,8 +37,8 @@ TRLabelShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [
 		"Draw the label centered on the position"
 		athensCanvas pathTransform 
-			translateBy: position + ((self width / -2) @ (self height / 2)) asIntegerPoint;
-			scaleBy: 2.
+			translateBy: position + ((self width / -2) @ (self height / 2)) asIntegerPoint.
+			"scaleBy: (fontSize / 10)."
 		athensCanvas setFont: font.
 		athensCanvas setPaint: color.
 		athensCanvas drawString: text
@@ -37,6 +59,17 @@ TRLabelShape >> font [
 ]
 
 { #category : #accessing }
+TRLabelShape >> fontSize [
+	^ fontSize
+]
+
+{ #category : #accessing }
+TRLabelShape >> fontSize: aNumber [
+	font := self class getFontForSize: aNumber.
+	fontSize := aNumber
+]
+
+{ #category : #accessing }
 TRLabelShape >> height [
 	^ font height
 ]
@@ -51,7 +84,7 @@ TRLabelShape >> initialize [
 	super initialize.
 	position := 0 @ 0.
 	text := 'Trachel label'.
-	font := LogicalFont familyName: 'Arial' pointSize: 20.
+	self fontSize: self defaultFontSize
 ]
 
 { #category : #public }
@@ -62,6 +95,11 @@ TRLabelShape >> leftPosition: aPosition [
 { #category : #accessing }
 TRLabelShape >> position: aPosition [
 	position := aPosition
+]
+
+{ #category : #accessing }
+TRLabelShape >> text [
+	^ text
 ]
 
 { #category : #accessing }
@@ -87,5 +125,5 @@ TRLabelShape >> translateTo: aPoint [
 
 { #category : #accessing }
 TRLabelShape >> width [
-	^ (font widthOfString: text) * 2
+	^ (font widthOfString: text)
 ]
