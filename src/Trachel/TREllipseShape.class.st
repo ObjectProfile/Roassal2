@@ -32,7 +32,7 @@ TREllipseShape >> computePath [
 
 { #category : #drawing }
 TREllipseShape >> drawOn: athensCanvas [
-
+	self shouldBeDrawn ifFalse: [ ^ self ].
 	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
 			translateBy: rectangle center;

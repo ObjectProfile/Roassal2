@@ -75,6 +75,16 @@ TRLabelShape >> text: aText on: aPosition [
 	self position: aPosition
 ]
 
+{ #category : #public }
+TRLabelShape >> translateBy: step [
+	position := position + step.
+]
+
+{ #category : #public }
+TRLabelShape >> translateTo: aPoint [
+	position := aPoint
+]
+
 { #category : #accessing }
 TRLabelShape >> width [
 	^ (font widthOfString: text) * 2

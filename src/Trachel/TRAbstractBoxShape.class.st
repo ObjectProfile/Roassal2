@@ -35,7 +35,7 @@ TRAbstractBoxShape >> computePath [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawOn: athensCanvas [
-
+	self shouldBeDrawn ifFalse: [ ^ self ].
 	athensCanvas pathTransform restoreAfter: [
 		athensCanvas pathTransform 
 			translateBy: rectangle center;
@@ -118,6 +118,11 @@ TRAbstractBoxShape >> initialize [
 	rectangle := self class nullRectangle
 ]
 
+{ #category : #public }
+TRAbstractBoxShape >> leftPosition: aPosition [
+	self position: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
+]
+
 { #category : #accessing }
 TRAbstractBoxShape >> rectangle [
 	^ rectangle
@@ -126,6 +131,11 @@ TRAbstractBoxShape >> rectangle [
 { #category : #accessing }
 TRAbstractBoxShape >> rectangle: r [
 	self fromRectangle: r
+]
+
+{ #category : #testing }
+TRAbstractBoxShape >> shouldBeDrawn [
+	^ rectangle width > 0 and: [ rectangle height > 0 ]
 ]
 
 { #category : #actions }

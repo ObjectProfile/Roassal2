@@ -6,11 +6,8 @@ Class {
 
 { #category : #drawing }
 TRBorderBoxShape >> drawOn: athensCanvas [
-
+	self shouldBeDrawn ifFalse: [ ^ self ].
 	athensCanvas pathTransform restoreAfter: [
-"		athensCanvas pathTransform 
-			translateBy: position.
-"
 		athensCanvas
 			setStrokePaint: strokePaint;
 			drawShape: self path ]

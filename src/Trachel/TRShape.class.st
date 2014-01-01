@@ -168,6 +168,11 @@ TRShape >> setAsNotFixed [
 	canvas addShape: self.
 ]
 
+{ #category : #testing }
+TRShape >> shouldBeDrawn [
+	^ true
+]
+
 { #category : #actions }
 TRShape >> signalUpdate [
 	"Refresh the canvas"
