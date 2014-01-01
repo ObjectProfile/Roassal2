@@ -29,8 +29,9 @@ TRCanvas >> addFixedShape: shape [
 
 { #category : #menu }
 TRCanvas >> addMenu: aTitle callback: aBlock [
-	| lbl |
-	lbl := TRLabelShape new text: aTitle on: 20 @ 20.
+	| lbl index |
+	index := fixedShapes inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
+	lbl := TRLabelShape new text: aTitle; leftPosition: index @ 20.
 	lbl color: Color black.
 	lbl on: TRMouseClick do: [ :event | aBlock value ].
 	lbl on: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].

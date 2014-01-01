@@ -13,8 +13,9 @@ Class {
 TRLabelShape >> drawOn: athensCanvas [
  
 	athensCanvas pathTransform restoreAfter: [
+		"Draw the label centered on the position"
 		athensCanvas pathTransform 
-			translateBy: position;
+			translateBy: position + ((self width / -2) @ (self height / 2)) asIntegerPoint;
 			scaleBy: 2.
 		athensCanvas setFont: font.
 		athensCanvas setPaint: color.
@@ -51,6 +52,11 @@ TRLabelShape >> initialize [
 	position := 0 @ 0.
 	text := 'Trachel label'.
 	font := LogicalFont familyName: 'Arial' pointSize: 20.
+]
+
+{ #category : #public }
+TRLabelShape >> leftPosition: aPosition [
+	self position: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
 ]
 
 { #category : #accessing }
