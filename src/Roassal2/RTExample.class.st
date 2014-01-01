@@ -45,6 +45,36 @@ RTExample >> blinking [
 	view inspect.
 ]
 
+{ #category : #layout }
+RTExample >> cellLayout [
+	"
+	self new cellLayout
+	"
+	| view substrings |
+	view := RTView new.
+	substrings := (RTCellLayout >> #doExecute:) getSource substrings.
+	view addAll: (RTLabel elementsOn: substrings).
+	
+	RTCellLayout on: view elements.
+	view @ RTDraggableView.
+	view open
+]
+
+{ #category : #layout }
+RTExample >> cellLayout2 [
+	"
+	self new cellLayout2
+	"
+	| view substrings |
+	view := RTView new.
+	substrings := #('doExecute:' 'elements' '|').
+	view addAll: (RTLabel elementsOn: substrings).
+	
+	RTCellLayout new lineItemsCount: 3; on: view elements.
+	view @ RTDraggableView.
+	view open
+]
+
 { #category : #shapes }
 RTExample >> circles [
 	"

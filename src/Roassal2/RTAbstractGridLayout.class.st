@@ -102,7 +102,7 @@ RTAbstractGridLayout >> defaultLineItemsCount [
 { #category : #accessing }
 RTAbstractGridLayout >> gapSize [
 	
-	^gapSize
+	^ gapSize
 ]
 
 { #category : #accessing }
