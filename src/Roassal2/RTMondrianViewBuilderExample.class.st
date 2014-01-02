@@ -11,7 +11,8 @@ RTMondrianViewBuilderExample >> basic [
 	"
 	| b |
 	b := RTMondrianViewBuilder new.
-	b nodes: (1 to: 10).
-	b horizontalLineLayout.
+	b nodes: (1 to: 100).
+	b edges: (1 to: 100) from: [ :v | v // 2 ] to: #yourself.
+	b treeLayout.
 	b open
 ]
