@@ -2,7 +2,10 @@ Class {
 	#name : #RTMondrianViewBuilder,
 	#superclass : #RTObject,
 	#instVars : [
-		'view'
+		'view',
+		'topLevelNodes',
+		'nesting',
+		'topLevelEdges'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
@@ -10,17 +13,19 @@ Class {
 { #category : #adding }
 RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 
-	RTEdge buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view
+	| es |
+	es := RTEdge buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view scope: (RTGroup new addAll: topLevelNodes; yourself).
+	topLevelEdges addAll: es
 ]
 
 { #category : #layout }
 RTMondrianViewBuilder >> gridLayout [
-	RTGridLayout on: view elements
+	RTGridLayout on: topLevelNodes
 ]
 
 { #category : #layout }
 RTMondrianViewBuilder >> horizontalLineLayout [
-	RTHorizontalLineLayout on: view elements
+	RTHorizontalLineLayout on: topLevelNodes
 ]
 
 { #category : #initialization }
@@ -28,15 +33,54 @@ RTMondrianViewBuilder >> initialize [
 	super initialize.
 	view := RTView new.
 	view @ RTDraggableView.
+	topLevelNodes := OrderedCollection new.
+	topLevelEdges := OrderedCollection new.
+	nesting := 0.
 ]
 
 { #category : #adding }
 RTMondrianViewBuilder >> nodes: objects [
 	| elements |
-	elements := RTBox elementsOn: objects.
+	elements := (RTBox new color: (Color purple alpha: 0.3)) elementsOn: objects.
 	view addAll: elements.
 	elements @ RTDraggable.
+	topLevelNodes addAll: elements.
 	^ elements
+]
+
+{ #category : #adding }
+RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
+	"Create a set of nodes, each representing an element of objects. Each node then acts as a view on its own."
+
+	| nodes allElements addedElements oldTopLevelNodes oldTopLevelEdges |
+	nodes := self nodes: objects.
+	nodes do: [ :n | 
+		"self push."
+		"self horizontalLineLayout.		
+		self createNewInteractionBuilder."
+		oldTopLevelNodes := topLevelNodes.
+		topLevelNodes := OrderedCollection new.
+		oldTopLevelEdges := topLevelEdges.
+		topLevelEdges := OrderedCollection new.
+		
+		nesting := nesting + 1.
+		allElements := view elements.	
+		aOneArgBlock roValue: n model.
+		topLevelNodes := oldTopLevelNodes.
+		topLevelEdges := oldTopLevelEdges.
+		
+		nesting := nesting - 1.
+		addedElements := view elements copyWithoutAll: allElements.
+		
+		"Check if they are all at the same position. If this is the case, then we need to do the layout"
+		(addedElements allSatisfy: [ :aNode | aNode position = addedElements anyOne position ])
+			ifTrue: [ RTHorizontalLineLayout on: addedElements ].
+
+		RTNest new
+			on: n nest: addedElements.
+		 ].
+	"self unsetShape."
+	^ nodes
 ]
 
 { #category : #'instance creation' }
@@ -44,9 +88,14 @@ RTMondrianViewBuilder >> open [
 	^ view open
 ]
 
+{ #category : #accessing }
+RTMondrianViewBuilder >> topLevelNodes [
+	^ topLevelNodes
+]
+
 { #category : #layout }
 RTMondrianViewBuilder >> treeLayout [
-	RTTreeLayout on: view elements edges: view edges
+	RTTreeLayout on: topLevelNodes edges: topLevelEdges
 ]
 
 { #category : #accessing }
