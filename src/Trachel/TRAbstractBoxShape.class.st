@@ -44,11 +44,12 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 		athensCanvas
 			setPaint: color;
 			drawShape: self path.
-			
-"		athensCanvas
-			setStrokePaint: strokePaint;
-			drawShape: path
-"		]
+
+		strokePaint	ifNotNil: 
+			[ (athensCanvas
+				setStrokePaint: strokePaint) width: 0.1.
+				athensCanvas drawShape: path  ]
+		]
 ]
 
 { #category : #accessing }
