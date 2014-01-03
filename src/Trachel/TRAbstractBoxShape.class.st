@@ -35,21 +35,25 @@ TRAbstractBoxShape >> computePath [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawOn: athensCanvas [
-	self shouldBeDrawn ifFalse: [ ^ self ].
-	athensCanvas pathTransform restoreAfter: [
-		athensCanvas pathTransform 
-			translateBy: rectangle center;
-			scaleBy: rectangle extent / 2.
+	self shouldBeDrawn
+		ifFalse: [ ^ self ].
+	athensCanvas pathTransform
+		restoreAfter: [ 
+			athensCanvas pathTransform
+				translateBy: rectangle center;
+				scaleBy: rectangle extent / 2.
+			athensCanvas
+				setPaint: color;
+				drawShape: self path.
+			self drawStrokeIfNecessaryOn: athensCanvas ]
+]
 
-		athensCanvas
-			setPaint: color;
-			drawShape: self path.
-
-		strokePaint	ifNotNil: 
-			[ (athensCanvas
-				setStrokePaint: strokePaint) width: 0.1.
-				athensCanvas drawShape: path  ]
-		]
+{ #category : #drawing }
+TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
+	^ strokePaint
+		ifNotNil: [ 
+			(athensCanvas setStrokePaint: strokePaint) width: (4 / (rectangle extent x + 10)) asFloat.
+			athensCanvas drawShape: path ]
 ]
 
 { #category : #accessing }

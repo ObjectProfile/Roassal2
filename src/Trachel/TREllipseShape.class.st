@@ -42,10 +42,7 @@ TREllipseShape >> drawOn: athensCanvas [
 			setPaint: color;
 			drawShape: self path.
 
-		strokePaint	ifNotNil: 
-			[ (athensCanvas
-				setStrokePaint: strokePaint) width: 0.1.
-				athensCanvas drawShape: path  ]
+		self drawStrokeIfNecessaryOn: athensCanvas
 		]
 ]
 
