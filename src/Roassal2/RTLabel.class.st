@@ -14,6 +14,16 @@ RTLabel >> defaultText [
 	^ [ :e | e model asString ]
 ]
 
+{ #category : #'instance creation' }
+RTLabel >> defaultText [
+	^ [ :e | e model asString ]
+]
+
+{ #category : #accessing }
+RTLabel >> height: aValueOrABlock [
+	height := aValueOrABlock
+]
+
 { #category : #accessing }
 RTLabel >> height: aValueOrABlock [
 	height := aValueOrABlock
@@ -22,6 +32,18 @@ RTLabel >> height: aValueOrABlock [
 { #category : #rendering }
 RTLabel >> heightFor: element [
 	^ height roValue: element
+]
+
+{ #category : #rendering }
+RTLabel >> heightFor: element [
+	^ height roValue: element
+]
+
+{ #category : #initialization }
+RTLabel >> initialize [
+	super initialize.
+	text := self defaultText.
+	height := TRLabelShape defaultFontSize
 ]
 
 { #category : #initialization }
@@ -37,9 +59,33 @@ RTLabel >> text: aStringOrABlock [
 	text := aStringOrABlock
 ]
 
+{ #category : #accessing }
+RTLabel >> text: aStringOrABlock [
+
+	text := aStringOrABlock
+]
+
 { #category : #rendering }
 RTLabel >> textFor: element [
 	^ (text roValue: element) asString
+]
+
+{ #category : #rendering }
+RTLabel >> textFor: element [
+	^ (text roValue: element) asString
+]
+
+{ #category : #hooks }
+RTLabel >> trachelShapeFor: anElement [
+	|  shape |
+	"ex := (self widthFor: anElement) @ (self heightFor: anElement)."
+	"rec := (anElement position ) extent: ex."
+	
+	shape := TRLabelShape new.
+	shape text: (self textFor: anElement);
+			position: anElement position;
+			fontSize: (self heightFor: anElement).
+	^ shape
 ]
 
 { #category : #hooks }
@@ -63,6 +109,21 @@ RTLabel >> updateFor: anElement [
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	anElement trachelShape text: (self textFor: anElement) on: anElement position
+]
+
+{ #category : #rendering }
+RTLabel >> updateFor: anElement [
+	| rec ex |
+	
+	anElement trachelShape isNil ifTrue: [ ^ self ].
+	ex := (self widthFor: anElement) @ (self heightFor: anElement).
+	rec := (anElement position - (ex / 2)) extent: ex.
+	anElement trachelShape text: (self textFor: anElement) on: anElement position
+]
+
+{ #category : #rendering }
+RTLabel >> widthFor: anElement [
+	^ TRLabelShape widthOfText: (self textFor: anElement) fontSize: (self heightFor: anElement)
 ]
 
 { #category : #rendering }

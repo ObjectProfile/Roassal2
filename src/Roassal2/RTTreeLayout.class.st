@@ -12,3 +12,8 @@ Class {
 RTTreeLayout >> computeChildrenFor: aNode [
 	^ self childrenFor: aNode except: alreadyLayoutedNodes
 ]
+
+{ #category : #'hook-private' }
+RTTreeLayout >> computeChildrenFor: aNode [
+	^ self childrenFor: aNode except: alreadyLayoutedNodes
+]
