@@ -5,7 +5,9 @@ Class {
 		'view',
 		'topLevelNodes',
 		'nesting',
-		'topLevelEdges'
+		'topLevelEdges',
+		'shapeBuilder',
+		'interactionBuilder'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
@@ -36,6 +38,7 @@ RTMondrianViewBuilder >> initialize [
 	topLevelNodes := OrderedCollection new.
 	topLevelEdges := OrderedCollection new.
 	nesting := 0.
+	shapeBuilder := RTShapeBuilder new.
 ]
 
 { #category : #adding }

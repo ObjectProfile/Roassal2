@@ -6,7 +6,7 @@ Class {
 		'font',
 		'height'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'instance creation' }

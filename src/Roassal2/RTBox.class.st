@@ -1,30 +1,18 @@
 Class {
 	#name : #RTBox,
 	#superclass : #RTAbstractElementShape,
-	#instVars : [
-		'borderColor'
-	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
-
-{ #category : #accessing }
-RTBox >> borderColor [
-	^ borderColor
-]
-
-{ #category : #accessing }
-RTBox >> borderColor: anObject [
-	borderColor := anObject
-]
 
 { #category : #hooks }
 RTBox >> trachelShapeFor: anElement [
-	|  shape rec ex |
+	| shape rec ex |
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 
 	shape := TRBoxShape new.
 	shape fromRectangle: rec color: (self colorFor: anElement).
+	shape strokePaint: (self borderColorFor: anElement).
 	^ shape
 ]
 
@@ -35,5 +23,6 @@ RTBox >> updateFor: anElement [
 	 
 	ex := anElement trachelShape width @ anElement trachelShape height.
 	rec := (anElement position - (ex / 2)) extent: ex.
-	anElement trachelShape fromRectangle: rec
+	anElement trachelShape fromRectangle: rec.
+	anElement trachelShape strokePaint: (self borderColorFor: anElement).
 ]

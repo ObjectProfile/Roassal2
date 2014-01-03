@@ -3,10 +3,26 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'height',
-		'width'
+		'width',
+		'borderColor'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderColor [
+	^ borderColor
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderColor: aValueOrAOneArgBlock [
+	borderColor := aValueOrAOneArgBlock
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderColorFor: anElement [
+	^ borderColor rtValue: anElement
+]
 
 { #category : #configuration }
 RTAbstractElementShape >> defaultHeight [

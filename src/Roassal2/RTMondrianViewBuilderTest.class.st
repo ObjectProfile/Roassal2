@@ -51,7 +51,7 @@ RTMondrianViewBuilderTest >> testNestingSmallTree [
 	self assert: builder view numberOfElements = 5.
 	self assert: builder view numberOfEdges = 3.
 	self assert: builder topLevelNodes size = 1.
-	self assert: (builder elementFromModel: 100) position = (0 @ 0).
+	self assert: (builder view elementFromModel: 100) position = (0 @ 0).
 	 
 ]
 

@@ -7,7 +7,7 @@ Class {
 		'trachelShape',
 		'attributes'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #adding }

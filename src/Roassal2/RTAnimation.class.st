@@ -5,7 +5,7 @@ Class {
 		'cycleLength',
 		'element'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #actions }

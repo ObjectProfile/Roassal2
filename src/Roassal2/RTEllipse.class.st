@@ -1,7 +1,7 @@
 Class {
 	#name : #RTEllipse,
 	#superclass : #RTAbstractElementShape,
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #initialization }
@@ -18,6 +18,7 @@ RTEllipse >> trachelShapeFor: anElement [
 	
 	shape := TREllipseShape new.
 	shape from: rec origin to: rec corner color: (self colorFor: anElement).
+	shape strokePaint: (self borderColorFor: anElement).
 	^ shape
 ]
 
@@ -28,5 +29,6 @@ RTEllipse >> updateFor: anElement [
 	anElement trachelShape isNil ifTrue: [ ^ self ].
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
-	anElement trachelShape rectangle: rec
+	anElement trachelShape rectangle: rec.
+	anElement trachelShape strokePaint: (self borderColorFor: anElement).
 ]

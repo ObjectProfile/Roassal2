@@ -1,7 +1,7 @@
 Class {
 	#name : #RTElementTest,
 	#superclass : #RTTest,
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #tests }

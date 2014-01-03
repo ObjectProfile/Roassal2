@@ -23,7 +23,7 @@ RTMondrianViewBuilderExample >> nestedTrees [
 	self new nestedTrees
 	"
 	| b |
-	b := ROMondrianViewBuilder new.
+	b := RTMondrianViewBuilder new.
 	b nodes: ((1 to: 10)) forEach: [ :each |
 		b nodes: (each to: (each + 10)).
 		b edges: (each to: (each + 10)) from: [ :v | v // 2 ] to: #yourself.

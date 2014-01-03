@@ -5,7 +5,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'public - edge construction' }

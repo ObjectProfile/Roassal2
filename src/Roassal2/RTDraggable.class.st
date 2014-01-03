@@ -1,7 +1,7 @@
 Class {
 	#name : #RTDraggable,
 	#superclass : #RTInteraction,
-	#category : #Roassal2
+	#category : #'Roassal2-Core'
 }
 
 { #category : #hooks }
