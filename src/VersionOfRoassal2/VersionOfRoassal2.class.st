@@ -750,3 +750,14 @@ VersionOfRoassal2 >> version000024 [
 	at: #date put: '3 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000025 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.20';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.24';
+	at: #version put: '0.26';
+	at: #comment put: '0.26 : stroke width is now fixed';
+	at: #date put: '3 January 2014';
+	yourself
+]
