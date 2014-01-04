@@ -1,0 +1,38 @@
+"
+This implements the Null Pattern for a Trachel shape.
+"
+Class {
+	#name : #TRNoShape,
+	#superclass : #TRShape,
+	#category : #Trachel
+}
+
+{ #category : #accessing }
+TRNoShape >> center [
+	0@0
+]
+
+{ #category : #hooks }
+TRNoShape >> computePath [
+	"do nothing"
+]
+
+{ #category : #drawing }
+TRNoShape >> drawOn: athensCanvas [
+	"do nothing"
+]
+
+{ #category : #accessing }
+TRNoShape >> encompassingRectangle [
+	^ 0@0 corner: 0@0
+]
+
+{ #category : #actions }
+TRNoShape >> translateBy: aPoint [
+	"do nothing"
+]
+
+{ #category : #actions }
+TRNoShape >> translateTo: aPoint [
+	"do nothing"
+]
