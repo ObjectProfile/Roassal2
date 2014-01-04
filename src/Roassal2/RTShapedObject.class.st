@@ -17,28 +17,10 @@ RTShapedObject >> + aRTShape [
 ]
 
 { #category : #adding }
-RTShapedObject >> + aRTShape [
-	"Add a Roassal shape, class or instance of it. Not that a Trachel cannot be given as argument"
-	self addShape: aRTShape
-]
-
-{ #category : #adding }
 RTShapedObject >> @ anInteractionClassOrInstance [
 	"Add an interaction to the node"
 	
 	self addInteraction: anInteractionClassOrInstance
-]
-
-{ #category : #adding }
-RTShapedObject >> @ anInteractionClassOrInstance [
-	"Add an interaction to the node"
-	
-	self addInteraction: anInteractionClassOrInstance
-]
-
-{ #category : #adding }
-RTShapedObject >> addInteraction: anInteractionClassOrInstance [
- 	anInteractionClassOrInstance initializeElement: self
 ]
 
 { #category : #adding }
@@ -54,18 +36,6 @@ RTShapedObject >> addShape: aRTShape [
 ]
 
 { #category : #adding }
-RTShapedObject >> addShape: aRTShape [
-	shape := aRTShape instance.
-	trachelShape := shape trachelShapeFor: self.
-
-]
-
-{ #category : #adding }
-RTShapedObject >> addedIn: view [
-	self subclassReponsibility
-]
-
-{ #category : #adding }
 RTShapedObject >> addedIn: view [
 	self subclassReponsibility
 ]
@@ -73,17 +43,6 @@ RTShapedObject >> addedIn: view [
 { #category : #announce }
 RTShapedObject >> announce: evt [
 	self announcer announce: evt
-]
-
-{ #category : #announce }
-RTShapedObject >> announce: evt [
-	self announcer announce: evt
-]
-
-{ #category : #accessing }
-RTShapedObject >> announcer [
-	announcer ifNil: [ announcer := Announcer new ].
-	^ announcer
 ]
 
 { #category : #accessing }
@@ -98,17 +57,6 @@ RTShapedObject >> attributeAt: aKey [
 ]
 
 { #category : #attributes }
-RTShapedObject >> attributeAt: aKey [
-	^ self attributes at: aKey
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
-]
-
-{ #category : #attributes }
 RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
 	
 	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
@@ -117,18 +65,6 @@ RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [
 { #category : #attributes }
 RTShapedObject >> attributeAt: aKey put: value [
 	^ self attributes at: aKey put: value
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey put: value [
-	^ self attributes at: aKey put: value
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributes [
-	"Return the list of attributes associated to the element. Attributes are useful for caching values"
-
-	^ attributes ifNil: [ attributes := Dictionary new ]
 ]
 
 { #category : #attributes }
@@ -145,41 +81,15 @@ RTShapedObject >> hasAttributes [
 	^ attributes notNil and: [ attributes notEmpty ]
 ]
 
-{ #category : #attributes }
-RTShapedObject >> hasAttributes [ 
-	"Return true if at least one attributes is present"
-	
-	^ attributes notNil and: [ attributes notEmpty ]
-]
-
 { #category : #initialization }
 RTShapedObject >> initialize [
 	super initialize.
-	shape := RTNull new
-]
-
-{ #category : #initialization }
-RTShapedObject >> initialize [
-	super initialize.
-	shape := RTNull new
+	shape := RTNoShape new
 ]
 
 { #category : #interaction }
 RTShapedObject >> on: evt do: aBlock [
 	self announcer on: evt do: aBlock
-]
-
-{ #category : #interaction }
-RTShapedObject >> on: evt do: aBlock [
-	self announcer on: evt do: aBlock
-]
-
-{ #category : #rendering }
-RTShapedObject >> renderOn: trachelCanvas [
-
-	trachelCanvas addShape: trachelShape.
-	trachelShape announcer: self announcer.
-	trachelShape element: self
 ]
 
 { #category : #rendering }
@@ -196,26 +106,8 @@ RTShapedObject >> shape [
 ]
 
 { #category : #accessing }
-RTShapedObject >> shape [
-	^ shape
-]
-
-{ #category : #accessing }
 RTShapedObject >> trachelShape [
 	^ trachelShape
-]
-
-{ #category : #accessing }
-RTShapedObject >> trachelShape [
-	^ trachelShape
-]
-
-{ #category : #updating }
-RTShapedObject >> update [
-	"Update the trachel shape and reset the path. This has the effect of moving the visual widget"
-	shape updateFor: self.
-	trachelShape ifNotNil: [ trachelShape resetPath ]
-
 ]
 
 { #category : #updating }

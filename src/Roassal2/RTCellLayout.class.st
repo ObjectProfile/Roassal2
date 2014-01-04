@@ -36,32 +36,6 @@ RTCellLayout >> doExecute: elements [
 		self step ]
 ]
 
-{ #category : #hook }
-RTCellLayout >> doExecute: elements [ 
-	| pointer lineItemCount lineItemSize cell |
-	lineItemSize := self lineItemsCountBlock roValue: elements.
-	cell := RTCell elements: elements columns: lineItemSize.
-	pointer := self gapSize @ self gapSize.
-	lineItemCount := 0.
-	elements withIndexDo: 
-		[ :element :index | 
-		cell element: element; number: index.
-		pointer := pointer + (cell extent / 2) asIntegerPoint.
-		translator translate: element to: pointer.
-		pointer := (pointer x + cell extent x + (self gapSize * 2)) @ pointer y.
-		lineItemCount := lineItemCount + 1.
-		lineItemCount >= lineItemSize ifTrue: 
-			[ pointer := self gapSize @ (pointer y + (self gapSize * 2) + cell extent y).
-			lineItemCount := 0 ].
-		self step ]
-]
-
-{ #category : #accessing }
-RTCellLayout >> inCellPosition: anObjectOrOneArgBlock [
-
-	inCellPosition := anObjectOrOneArgBlock
-]
-
 { #category : #accessing }
 RTCellLayout >> inCellPosition: anObjectOrOneArgBlock [
 
@@ -73,19 +47,6 @@ RTCellLayout >> initialize [
 
 	super initialize.
 
-]
-
-{ #category : #'initialize-release' }
-RTCellLayout >> initialize [
-
-	super initialize.
-
-]
-
-{ #category : #accessing }
-RTCellLayout >> leftCentred [
-
-	self inCellPosition: [ :cell | 0 @ ((cell extent y - cell element height) / 2) ]
 ]
 
 { #category : #accessing }

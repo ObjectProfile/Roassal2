@@ -18,7 +18,7 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 
 { #category : #initialization }
 RTShapeBuilder >> initialize [
-	shape := RTNull new
+	self reset
 ]
 
 { #category : #shapes }
@@ -32,11 +32,16 @@ RTShapeBuilder >> rectangle [
 ]
 
 { #category : #accessing }
-RTShapeBuilder >> shape [
-	^ shape
+RTShapeBuilder >> reset [
+	shape := nil
 ]
 
 { #category : #accessing }
 RTShapeBuilder >> shape: anObject [
 	shape := anObject
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> shapeIfNotDefined: aBlock [
+	^ shape ifNil: [ aBlock value ]
 ]

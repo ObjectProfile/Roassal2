@@ -42,37 +42,11 @@ RTAbstractRegularTreeLayout class >> isAbstract [
 	^ self name = #ROAbstractRegularTreeLayout
 ]
 
-{ #category : #testing }
-RTAbstractRegularTreeLayout class >> isAbstract [
-	^ self name = #ROAbstractRegularTreeLayout
-]
-
 { #category : #private }
 RTAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
 	| collection |
 	collection := nodesByLayer at: aNumber ifAbsentPut: [OrderedCollection new].
 	collection addAll: aNodeCollection
-]
-
-{ #category : #private }
-RTAbstractRegularTreeLayout >> atLayer: aNumber add: aNodeCollection [
-	| collection |
-	collection := nodesByLayer at: aNumber ifAbsentPut: [OrderedCollection new].
-	collection addAll: aNodeCollection
-]
-
-{ #category : #hook }
-RTAbstractRegularTreeLayout >> doExecute: elements [
-	| rootNodes |
-	alreadyLayoutedNodes := OrderedCollection new.
-	rootNodes := self rootNodesFor: elements.
-	nodesByLayer := OrderedCollection new.
-	self
-		layout: rootNodes
-		atPoint: self leftGap @ self topGap
-		atLayer: 1.
-	self isLayered ifTrue: [
-		self rearrangeByLayers: elements ]
 ]
 
 { #category : #hook }
@@ -97,21 +71,6 @@ RTAbstractRegularTreeLayout >> initialize [
 	isLayered := false
 ]
 
-{ #category : #'initialize-release' }
-RTAbstractRegularTreeLayout >> initialize [
-	super initialize.
-	topGap := 5.
-	leftGap := 5.
-	isLayered := false
-]
-
-{ #category : #accessing }
-RTAbstractRegularTreeLayout >> isLayered [
-	"Is the layout layered"
-	
-	^ isLayered
-]
-
 { #category : #accessing }
 RTAbstractRegularTreeLayout >> isLayered [
 	"Is the layout layered"
@@ -127,25 +86,8 @@ RTAbstractRegularTreeLayout >> isLayered: boolean [
 ]
 
 { #category : #accessing }
-RTAbstractRegularTreeLayout >> isLayered: boolean [
-	"Is the layout layered"
-	
-	isLayered := boolean
-]
-
-{ #category : #accessing }
 RTAbstractRegularTreeLayout >> layered [
 	self isLayered: true
-]
-
-{ #category : #accessing }
-RTAbstractRegularTreeLayout >> layered [
-	self isLayered: true
-]
-
-{ #category : #'hook-private' }
-RTAbstractRegularTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: anObject [
-	self subclassResponsibility
 ]
 
 { #category : #'hook-private' }
@@ -159,23 +101,8 @@ RTAbstractRegularTreeLayout >> leftGap [
 ]
 
 { #category : #accessing }
-RTAbstractRegularTreeLayout >> leftGap [
-	^ leftGap
-]
-
-{ #category : #accessing }
 RTAbstractRegularTreeLayout >> leftGap: anInteger [
 	leftGap := anInteger
-]
-
-{ #category : #accessing }
-RTAbstractRegularTreeLayout >> leftGap: anInteger [
-	leftGap := anInteger
-]
-
-{ #category : #private }
-RTAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
-	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -186,16 +113,6 @@ RTAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 { #category : #accessing }
 RTAbstractRegularTreeLayout >> topGap [
 	^ topGap
-]
-
-{ #category : #accessing }
-RTAbstractRegularTreeLayout >> topGap [
-	^ topGap
-]
-
-{ #category : #accessing }
-RTAbstractRegularTreeLayout >> topGap: anInteger [
-	topGap := anInteger
 ]
 
 { #category : #accessing }

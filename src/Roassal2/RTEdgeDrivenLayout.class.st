@@ -37,27 +37,10 @@ RTEdgeDrivenLayout class >> isAbstract [
 	^ self name = #ROEdgeDrivenLayout
 ]
 
-{ #category : #'as yet unclassified' }
-RTEdgeDrivenLayout class >> isAbstract [
-	^ self name = #ROEdgeDrivenLayout
-]
-
 { #category : #'instance creation' }
 RTEdgeDrivenLayout class >> withEdges: aCollection [
 	
 	^self new initialize userDefinedEdges: aCollection
-]
-
-{ #category : #'instance creation' }
-RTEdgeDrivenLayout class >> withEdges: aCollection [
-	
-	^self new initialize userDefinedEdges: aCollection
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> affectedNodes [
-	
-	^affectedNodes
 ]
 
 { #category : #accessing }
@@ -73,17 +56,6 @@ RTEdgeDrivenLayout >> affectedNodes: anObject [
 ]
 
 { #category : #accessing }
-RTEdgeDrivenLayout >> affectedNodes: anObject [
-	
-	affectedNodes := anObject
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> affectedNodesOf:  aNode [ 
-	^ affectedNodes ifNil: [ aNode nodes ]
-]
-
-{ #category : #accessing }
 RTEdgeDrivenLayout >> affectedNodesOf:  aNode [ 
 	^ affectedNodes ifNil: [ aNode nodes ]
 ]
@@ -92,18 +64,6 @@ RTEdgeDrivenLayout >> affectedNodesOf:  aNode [
 RTEdgeDrivenLayout >> defaultFromPositions [
 	^ #()
 	
-]
-
-{ #category : #'default values' }
-RTEdgeDrivenLayout >> defaultFromPositions [
-	^ #()
-	
-]
-
-{ #category : #'default values' }
-RTEdgeDrivenLayout >> defaultToPositions [
-	^ #()
-
 ]
 
 { #category : #'default values' }
@@ -119,19 +79,6 @@ RTEdgeDrivenLayout >> doExecute: aGraphElement [
 ]
 
 { #category : #hook }
-RTEdgeDrivenLayout >> doExecute: aGraphElement [
-	
-	self subclassResponsibility
-]
-
-{ #category : #hook }
-RTEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
-	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
-	
-	self doExecute: anElementNode
-]
-
-{ #category : #hook }
 RTEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
 	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
 	
@@ -144,31 +91,10 @@ RTEdgeDrivenLayout >> edges [
 	^edges
 ]
 
-{ #category : #private }
-RTEdgeDrivenLayout >> edges [
-	
-	^edges
-]
-
 { #category : #accessing }
 RTEdgeDrivenLayout >> edges: aCollection [
 	
 	edges := aCollection
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> edges: aCollection [
-	
-	edges := aCollection
-]
-
-{ #category : #iterator }
-RTEdgeDrivenLayout >> edgesDo: aBlock [
-	"Iterates over all the edges of the receiver."
-	
-	edges ifNil: [ ^ self ].
-	edges do: aBlock
-
 ]
 
 { #category : #iterator }
@@ -199,41 +125,10 @@ RTEdgeDrivenLayout >> executeOnElements: elements [
 	super executeOnElements: elements
 ]
 
-{ #category : #hook }
-RTEdgeDrivenLayout >> executeOnElements: elements [ 
-	"Execute the layout, myself, on the elements"
-
-	self userDefinedEdges isNil 
-		ifTrue: [ self setEdgesFromElements: elements ]
-		ifFalse: 
-			[ | flat |
-			flat := OrderedCollection new.
-			self userDefinedEdges do: 
-				[ :each | 
-				each isCollection 
-					ifTrue: [ flat addAll: each ]
-					ifFalse: [ flat add: each ] ].
-			self edges: flat ].
-		
-	super executeOnElements: elements
-]
-
 { #category : #private }
 RTEdgeDrivenLayout >> fromPositions [
 	
 	^fromPositions ifNil: [fromPositions := self defaultFromPositions]
-]
-
-{ #category : #private }
-RTEdgeDrivenLayout >> fromPositions [
-	
-	^fromPositions ifNil: [fromPositions := self defaultFromPositions]
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> fromPositions: anArray [
-	
-	fromPositions := anArray
 ]
 
 { #category : #accessing }
@@ -249,31 +144,9 @@ RTEdgeDrivenLayout >> initialize [
 	edges := nil
 ]
 
-{ #category : #'initialize-release' }
-RTEdgeDrivenLayout >> initialize [
-	"Initialization"
-	super initialize.
-	edges := nil
-]
-
 { #category : #testing }
 RTEdgeDrivenLayout >> isLineLayout [
 	^ false
-]
-
-{ #category : #testing }
-RTEdgeDrivenLayout >> isLineLayout [
-	^ false
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> setEdgesFromElements: elements [ 
-	| view |
-	elements isEmpty ifTrue: [ ^ self ].
-	
-	view := elements anyOne view.
-	self edges: (view elementsSuchThat: [ :el | ((el isKindOf: ROEdge) and: [ elements includes: el from ]) and: [ elements includes: el to ] ]).
-	
 ]
 
 { #category : #accessing }
@@ -292,18 +165,6 @@ RTEdgeDrivenLayout >> toPositions [
 	^toPositions ifNil: [toPositions := self defaultToPositions]
 ]
 
-{ #category : #private }
-RTEdgeDrivenLayout >> toPositions [
-	
-	^toPositions ifNil: [toPositions := self defaultToPositions]
-]
-
-{ #category : #accessing }
-RTEdgeDrivenLayout >> toPositions: anArray [
-	
-	toPositions := anArray
-]
-
 { #category : #accessing }
 RTEdgeDrivenLayout >> toPositions: anArray [
 	
@@ -314,20 +175,6 @@ RTEdgeDrivenLayout >> toPositions: anArray [
 RTEdgeDrivenLayout >> userDefinedEdges [
 	
 	^userDefinedEdges
-]
-
-{ #category : #private }
-RTEdgeDrivenLayout >> userDefinedEdges [
-	
-	^userDefinedEdges
-]
-
-{ #category : #'initialize-release' }
-RTEdgeDrivenLayout >> userDefinedEdges: aCollectionOfEdges [
-	"useful to tell to the layout which edges have to be used for the layout"
-
-	userDefinedEdges := aCollectionOfEdges.
-	
 ]
 
 { #category : #'initialize-release' }

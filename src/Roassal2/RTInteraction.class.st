@@ -13,16 +13,6 @@ RTInteraction class >> initializeElement: element [
 	^ self new initializeElement: element; yourself
 ]
 
-{ #category : #public }
-RTInteraction class >> initializeElement: element [
-	^ self new initializeElement: element; yourself
-]
-
-{ #category : #hooks }
-RTInteraction >> initializeElement: element [
-	self subclassResponsibility 
-]
-
 { #category : #hooks }
 RTInteraction >> initializeElement: element [
 	self subclassResponsibility 

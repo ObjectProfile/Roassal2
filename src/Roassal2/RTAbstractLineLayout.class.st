@@ -57,19 +57,6 @@ RTAbstractLineLayout class >> isAbstract [
 	^ self name =  #ROAbstractLineLayout
 ]
 
-{ #category : #testing }
-RTAbstractLineLayout class >> isAbstract [
-	^ self name =  #ROAbstractLineLayout
-]
-
-{ #category : #'instance creation' }
-RTAbstractLineLayout class >> withGap: anInteger [
-	
-	^(self new)
-		gapSize: anInteger;
-		yourself
-]
-
 { #category : #'instance creation' }
 RTAbstractLineLayout class >> withGap: anInteger [
 	
@@ -85,27 +72,9 @@ RTAbstractLineLayout >> alignBottom [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> alignBottom [
-	
-	alignment := #bottom
-]
-
-{ #category : #accessing }
 RTAbstractLineLayout >> alignCenter [
 	
 	alignment := #center
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> alignCenter [
-	
-	alignment := #center
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> alignLeft [
-	
-	alignment := #left
 ]
 
 { #category : #accessing }
@@ -121,27 +90,9 @@ RTAbstractLineLayout >> alignRight [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> alignRight [
-	
-	alignment := #right
-]
-
-{ #category : #accessing }
 RTAbstractLineLayout >> alignTop [
 	
 	alignment := #top
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> alignTop [
-	
-	alignment := #top
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> alignment [
-	
-	^alignment
 ]
 
 { #category : #accessing }
@@ -156,17 +107,6 @@ RTAbstractLineLayout >> alignment: anObject [
 	alignment := anObject
 ]
 
-{ #category : #accessing }
-RTAbstractLineLayout >> alignment: anObject [
-	
-	alignment := anObject
-]
-
-{ #category : #configuration }
-RTAbstractLineLayout >> center [
-	self alignment: #center
-]
-
 { #category : #configuration }
 RTAbstractLineLayout >> center [
 	self alignment: #center
@@ -179,37 +119,8 @@ RTAbstractLineLayout >> deltaFor: aNodeFigure [
 ]
 
 { #category : #hook }
-RTAbstractLineLayout >> deltaFor: aNodeFigure [
-	
-	^self subclassResponsibility
-]
-
-{ #category : #hook }
 RTAbstractLineLayout >> doCenter: aGraph [
 	self subclassResponsibility 
-]
-
-{ #category : #hook }
-RTAbstractLineLayout >> doCenter: aGraph [
-	self subclassResponsibility 
-]
-
-{ #category : #hook }
-RTAbstractLineLayout >> doExecute: elements [ 
-	| pointer delta |
-	horizontallyStretchable ifTrue: 
-		[ self doStretchHorizontal: elements ].
-	verticallyStretchable ifTrue: 
-		[ self doStretchVertical: elements ].
-	pointer := self positionOriginalPointer: elements.
-	elements do: 
-		[ :element |
-		delta := self deltaFor: element.
-		translator translate: element to: pointer - delta.
-		pointer := self 
-					movePointer: pointer
-					accordingToFigure: element.
-		self step ].
 ]
 
 { #category : #hook }
@@ -237,27 +148,9 @@ RTAbstractLineLayout >> doStretchHorizontal: aCollectionOfElements [
 ]
 
 { #category : #hook }
-RTAbstractLineLayout >> doStretchHorizontal: aCollectionOfElements [ 
-
-	self subclassResponsibility
-]
-
-{ #category : #hook }
 RTAbstractLineLayout >> doStretchVertical: aCollectionOfElements [ 
 
 	self subclassResponsibility
-]
-
-{ #category : #hook }
-RTAbstractLineLayout >> doStretchVertical: aCollectionOfElements [ 
-
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> gapSize [
-	
-	^gapSize
 ]
 
 { #category : #accessing }
@@ -275,20 +168,6 @@ RTAbstractLineLayout >> gapSize: aNumber [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> gapSize: aNumber [
-	gapSize := aNumber. " This value is never used actually "
-	
-	verticalGap := 2 * aNumber.
-	horizontalGap := 2 * aNumber
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> horizontalGap [
-	
-	^horizontalGap
-]
-
-{ #category : #accessing }
 RTAbstractLineLayout >> horizontalGap [
 	
 	^horizontalGap
@@ -298,17 +177,6 @@ RTAbstractLineLayout >> horizontalGap [
 RTAbstractLineLayout >> horizontalGap: anObject [
 	
 	horizontalGap := anObject
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> horizontalGap: anObject [
-	
-	horizontalGap := anObject
-]
-
-{ #category : #testing }
-RTAbstractLineLayout >> horizontallyStretchable [
-	^ horizontallyStretchable
 ]
 
 { #category : #testing }
@@ -326,30 +194,9 @@ RTAbstractLineLayout >> initialize [
 	verticallyStretchable := false
 ]
 
-{ #category : #'initialize-release' }
-RTAbstractLineLayout >> initialize [
-	
-	super initialize.
-	verticalGap := 10.
-	horizontalGap := 10.
-	horizontallyStretchable := false.
-	verticallyStretchable := false
-]
-
 { #category : #testing }
 RTAbstractLineLayout >> isLineLayout [
 	^ true
-]
-
-{ #category : #testing }
-RTAbstractLineLayout >> isLineLayout [
-	^ true
-]
-
-{ #category : #hook }
-RTAbstractLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
-	
-	self subclassResponsibility
 ]
 
 { #category : #hook }
@@ -364,17 +211,6 @@ RTAbstractLineLayout >> positionOriginalPointer: aGraph [
 	^self subclassResponsibility
 ]
 
-{ #category : #hook }
-RTAbstractLineLayout >> positionOriginalPointer: aGraph [
-	
-	^self subclassResponsibility
-]
-
-{ #category : #configuration }
-RTAbstractLineLayout >> stretch [
-	horizontallyStretchable := verticallyStretchable := true
-]
-
 { #category : #configuration }
 RTAbstractLineLayout >> stretch [
 	horizontallyStretchable := verticallyStretchable := true
@@ -383,16 +219,6 @@ RTAbstractLineLayout >> stretch [
 { #category : #configuration }
 RTAbstractLineLayout >> stretchHorizontally [
 	horizontallyStretchable := true
-]
-
-{ #category : #configuration }
-RTAbstractLineLayout >> stretchHorizontally [
-	horizontallyStretchable := true
-]
-
-{ #category : #configuration }
-RTAbstractLineLayout >> stretchVertically [
-	verticallyStretchable := true
 ]
 
 { #category : #configuration }
@@ -407,26 +233,9 @@ RTAbstractLineLayout >> verticalGap [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> verticalGap [
-	
-	^verticalGap
-]
-
-{ #category : #accessing }
 RTAbstractLineLayout >> verticalGap: anObject [
 	
 	verticalGap := anObject
-]
-
-{ #category : #accessing }
-RTAbstractLineLayout >> verticalGap: anObject [
-	
-	verticalGap := anObject
-]
-
-{ #category : #testing }
-RTAbstractLineLayout >> verticallyStretchable [
-	^ verticallyStretchable
 ]
 
 { #category : #testing }
