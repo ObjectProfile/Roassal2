@@ -23,8 +23,9 @@ RTNoShape >> heightFor: element [
 
 { #category : #hooks }
 RTNoShape >> trachelShapeFor: element [
-	"Nothing to do here"
-	self flag: 'actually, we should return a null trachel shape because the shape is cached in the element, and the element works directly with the trachel shape'
+	"We return a Trachel null shape because shapedObjects play directly with the low level shape"
+
+	^ TRNoShape new
 ]
 
 { #category : #rendering }
