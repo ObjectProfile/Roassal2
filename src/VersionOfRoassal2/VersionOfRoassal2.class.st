@@ -805,3 +805,14 @@ VersionOfRoassal2 >> version000029 [
 	at: #date put: '5 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000030 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.23';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.31';
+	at: #version put: '0.31';
+	at: #comment put: '0.31 : fixed bugs when dynamic removal of elements / shapes. Started to work on popup';
+	at: #date put: '5 January 2014';
+	yourself
+]
