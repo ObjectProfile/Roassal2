@@ -156,8 +156,8 @@ TRCanvas >> numberOfFixedShapes [
 
 { #category : #accessing }
 TRCanvas >> numberOfShapes [
-	"Return the number of displayed shapes"
-	^ shapes size
+	"Return the number of displayed nonfixed shapes"
+	^ shapes size 
 ]
 
 { #category : #events }
@@ -190,9 +190,19 @@ TRCanvas >> removeFixedShape: aShape [
 	fixedShapes := fixedShapes copyWithout: aShape
 ]
 
+{ #category : #building }
+TRCanvas >> removeShape: shape [
+	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
+	shape canvas: nil
+]
+
 { #category : #actions }
-TRCanvas >> removeShape: aShape [
-	shapes := shapes copyWithout: aShape
+TRCanvas >> setAsFixed: aShape [
+
+	self removeShape: aShape.
+	self addFixedShape: aShape.
+	
+
 ]
 
 { #category : #accessing }

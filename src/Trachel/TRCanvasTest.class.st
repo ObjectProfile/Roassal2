@@ -26,6 +26,17 @@ TRCanvasTest >> testAccessing [
 	self assert: (c shapeForPositionInPixels: (250 @ 250)) = r2.
 ]
 
+{ #category : #tests }
+TRCanvasTest >> testAddingAndRemoving [
+
+	| box |
+	box := TRBoxShape new from: 10 @ 10 to: 20 @ 20.
+	canvas addShape: box.
+	self assert: canvas numberOfShapes = 1.
+	box remove.
+	self assert: canvas numberOfShapes = 0.
+]
+
 { #category : #animations }
 TRCanvasTest >> testAddingAnimation [
 	canvas addAnimation: (RTLinearMove to: 50 @ 50 during: 2 on: RTBox element).
@@ -235,6 +246,20 @@ TRCanvasTest >> testLine [
 	self assert: line from = (5 @ 7).
 	self assert: line to = (16 @ 19).
 
+]
+
+{ #category : #'fixed shape' }
+TRCanvasTest >> testRemovingFixedElement [
+	| c r |
+	c := TRCanvas new.
+	r := c buildRectangle: ((0 @ 0) extent: (150 @ 75)) color: Color red.
+	r setAsFixed.
+
+	self assert: c numberOfFixedShapes = 1.
+	self assert: c numberOfShapes = 0.
+	r remove.
+	self assert: c numberOfShapes = 0.
+	self assert: c numberOfFixedShapes = 0.
 ]
 
 { #category : #tests }

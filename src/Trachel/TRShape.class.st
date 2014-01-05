@@ -152,14 +152,19 @@ TRShape >> path [
 ]
 
 { #category : #actions }
+TRShape >> remove [
+	canvas removeShape: self
+]
+
+{ #category : #actions }
 TRShape >> resetPath [
 	path := nil
 ]
 
 { #category : #actions }
 TRShape >> setAsFixed [
-	canvas removeShape: self.
-	canvas addFixedShape: self.
+	canvas setAsFixed: self.
+	
 ]
 
 { #category : #actions }
@@ -176,6 +181,7 @@ TRShape >> shouldBeDrawn [
 { #category : #actions }
 TRShape >> signalUpdate [
 	"Refresh the canvas"
+	canvas ifNil: [ ^ self ].
 	canvas signalUpdate
 ]
 
