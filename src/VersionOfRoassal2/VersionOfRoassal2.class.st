@@ -794,3 +794,14 @@ VersionOfRoassal2 >> version000028 [
 	at: #date put: '5 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000029 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.22';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.30';
+	at: #version put: '0.30';
+	at: #comment put: '0.30 : added xxElement: on the Roassal shapes. Added similarity matrix, however it has not been ported to Roassal2';
+	at: #date put: '5 January 2014';
+	yourself
+]
