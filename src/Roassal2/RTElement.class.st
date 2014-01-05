@@ -4,8 +4,6 @@ Class {
 	#instVars : [
 		'position',
 		'model',
-		'width',
-		'height',
 		'incomingEdges',
 		'outgoingEdges'
 	],
