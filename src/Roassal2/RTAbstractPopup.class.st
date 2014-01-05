@@ -105,13 +105,18 @@ RTAbstractPopup >> initializeElement: element [
 
 	element
 		on: TRMouseEnter
-		do: [ :event | self createAndShowPopupFor: element event: event ].
+		do: [ :event | 
+			self createAndShowPopupFor: element event: event ].
 	element
 		on: TRMouseLeave
-		do: [ :event | self removeLastPopup ].
+		do: [ :event | 
+			self removeLastPopup.
+			element trachelShape signalUpdate ].
 	element
 		on: TRMouseDragging
-		do: [ :event | self removeLastPopup ]
+		do: [ :event | 
+			self removeLastPopup.
+			element trachelShape signalUpdate ]
 ]
 
 { #category : #'as yet unclassified' }

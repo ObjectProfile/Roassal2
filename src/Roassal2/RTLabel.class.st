@@ -50,6 +50,7 @@ RTLabel >> trachelShapeFor: anElement [
 	
 	shape := TRLabelShape new.
 	shape text: (self textFor: anElement);
+			color: (self colorFor: anElement);
 			position: anElement position;
 			fontSize: (self heightFor: anElement).
 	^ shape
@@ -62,7 +63,9 @@ RTLabel >> updateFor: anElement [
 	anElement trachelShape isNil ifTrue: [ ^ self ].
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
-	anElement trachelShape text: (self textFor: anElement) on: anElement position
+	anElement trachelShape 
+		color: (self colorFor: anElement);
+		text: (self textFor: anElement) on: anElement position
 ]
 
 { #category : #rendering }

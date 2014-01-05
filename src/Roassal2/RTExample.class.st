@@ -489,6 +489,7 @@ RTExample >> popup1 [
 	v @ RTDraggableView.
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
 	els @ (RTPopup new textElement: [ :e | e model printString ]).
+	els on: TRMouseClick do: [ :evt | evt element inspect ].
 	v addAll: els.
 	RTGridLayout on: els.
 	v open.
