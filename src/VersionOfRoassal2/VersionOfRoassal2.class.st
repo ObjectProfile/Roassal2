@@ -772,3 +772,14 @@ VersionOfRoassal2 >> version000026 [
 	at: #date put: '5 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000027 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-TudorGirba.21';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.28';
+	at: #version put: '0.28';
+	at: #comment put: '0.28 : delegation of encompassingRectangle';
+	at: #date put: '5 January 2014';
+	yourself
+]
