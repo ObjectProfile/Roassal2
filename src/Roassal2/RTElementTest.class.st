@@ -19,6 +19,26 @@ RTElementTest >> testAddingABoxAndEllipse [
 	self assert: el1 trachelShape rectangle = ((30@30) corner: (70@50))
 ]
 
+{ #category : #view }
+RTElementTest >> testAddingAndRemoving [
+
+	| view e tr |
+	view := RTView new.
+	tr := view canvas.
+	e := RTBox element.
+	
+	self assert: e view isNil.
+	self assert: tr numberOfShapes = 0.
+	view add: e.
+	self assert: e view == view.
+	self assert: tr numberOfShapes = 1.
+	
+	e remove.
+	self assert: view numberOfElements = 0.
+	self assert: tr numberOfShapes = 0.
+	self assert: e view isNil.
+]
+
 { #category : #attributes }
 RTElementTest >> testAttributes [
 	| el |
@@ -178,6 +198,7 @@ RTElementTest >> testTrachelShape [
 	self assert: RTBox element trachelShape notNil.
 	self assert: RTBox element trachelShape class == TRBoxShape.
 
+	self assert: (RTElement new + RTBox) trachelShape notNil.
 ]
 
 { #category : #tests }

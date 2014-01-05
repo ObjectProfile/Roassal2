@@ -16,7 +16,7 @@ RTViewTest >> setUp [
 { #category : #tests }
 RTViewTest >> testAdding [
 
-	view add: RTElement new.
+	view add: RTBox element.
 	self assert: view numberOfElements = 1
 ]
 
@@ -25,7 +25,7 @@ RTViewTest >> testAddingEdges [
 	| el1 el2 edge |
 	el1 := RTBox element.
 	el2 := RTBox element.
-	edge := RTEdge from: el1 to: el2.
+	edge := RTLine edgeFrom: el1 to: el2.
 	view add: el1; add: el2.
 	self assert: view numberOfElements = 2.
 
@@ -76,6 +76,6 @@ RTViewTest >> testMenu [
 	view := RTView new.
 	view add: (RTEllipse new size: 50) element.
 	view addMenu: 'foo' callback: [  ].
-	self assert: view canvas numberOfShapes = 0.
+	self assert: view canvas numberOfShapes = 1.
 	self assert: view canvas numberOfFixedShapes = 1.
 ]

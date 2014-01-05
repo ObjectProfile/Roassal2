@@ -19,7 +19,8 @@ RTView >> @ anInteractionClassOrInstance [
 
 { #category : #adding }
 RTView >> add: anElementOrAnEdge [
-	anElementOrAnEdge addedIn: self
+	anElementOrAnEdge addedIn: self.
+	anElementOrAnEdge renderOn: trCanvas 
 
 ]
 
@@ -66,9 +67,9 @@ RTView >> canvas [
 
 { #category : #initialization }
 RTView >> createAndFillCanvas [
-	elements do: [ :el | el renderOn: trCanvas ].
-	edges do: [ :el | el renderOn: trCanvas ].
-	animations do: [ :a | trCanvas addAnimation: a ].
+	"elements do: [ :el | el renderOn: trCanvas ].
+	edges do: [ :el | el renderOn: trCanvas ]."
+	"animations do: [ :a | trCanvas addAnimation: a ]."
 	trCanvas camera focusOnCenter.
 	^ trCanvas
 ]
@@ -113,4 +114,10 @@ RTView >> open [
 	"^ trachelCanvas open"
 
 	^ self createAndFillCanvas open
+]
+
+{ #category : #adding }
+RTView >> removeElement: anElement [
+	elements remove: anElement ifAbsent: [ ].
+	anElement trachelShape remove.
 ]

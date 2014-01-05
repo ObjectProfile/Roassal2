@@ -55,7 +55,7 @@ RTSimilarityMatrix class >> comparingWordsBetweenText [
 
 { #category : #'as yet unclassified' }
 RTSimilarityMatrix class >> demo1 [
-	^ SimilarityMatrix new
+	^ RTSimilarityMatrix new
 		on: (1 to: 50)
 		by: [ :a :b |
 			(a + b) odd
@@ -68,7 +68,7 @@ RTSimilarityMatrix class >> demo1 [
 { #category : #'as yet unclassified' }
 RTSimilarityMatrix class >> demo2 [
 	"show which Collection subclasses have a similar number of methods"
-	^ SimilarityMatrix new
+	^ RTSimilarityMatrix new
 		on: (Collection allSubclasses
 			sort: [:a :b | a methods size < b methods size])
 		by: [ :classA : classB | |a b|
@@ -84,7 +84,7 @@ RTSimilarityMatrix class >> demo2 [
 { #category : #'as yet unclassified' }
 RTSimilarityMatrix class >> demo3 [
 	"methods are similar if they send the same messages; large methods are top-left"
-	^ SimilarityMatrix new
+	^ RTSimilarityMatrix new
 		on: ((Set allSubclasses flatCollect: #methods)
 					sort: [ :m1 :m2 | m1 size > m2 size ])
 		by: [ :m1 : m2 |

@@ -5,7 +5,8 @@ Class {
 		'shape',
 		'announcer',
 		'trachelShape',
-		'attributes'
+		'attributes',
+		'view'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -94,7 +95,7 @@ RTShapedObject >> on: evt do: aBlock [
 
 { #category : #rendering }
 RTShapedObject >> renderOn: trachelCanvas [
-
+	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
 	trachelCanvas addShape: trachelShape.
 	trachelShape announcer: self announcer.
 	trachelShape element: self
@@ -116,4 +117,14 @@ RTShapedObject >> update [
 	shape updateFor: self.
 	trachelShape ifNotNil: [ trachelShape resetPath ]
 
+]
+
+{ #category : #accessing }
+RTShapedObject >> view [
+	^ view
+]
+
+{ #category : #accessing }
+RTShapedObject >> view: aRoassalView [
+	view := aRoassalView
 ]

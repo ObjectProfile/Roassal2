@@ -189,7 +189,8 @@ RTEdge class >> on: aModel from: fromElement to: toElement [
 ]
 
 { #category : #accessing }
-RTEdge >> addedIn: view [
+RTEdge >> addedIn: aView [
+	view := aView.
 	view addEdge: self
 ]
 

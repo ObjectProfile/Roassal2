@@ -478,3 +478,19 @@ RTExample >> nesting3 [
 	
 	
 ]
+
+{ #category : #popup }
+RTExample >> popup1 [
+	"
+	self new popup1
+	"
+	| v els |
+	v := RTView new.
+	v @ RTDraggableView.
+	els := (RTBox new size: 20) elementsOn: (1 to: 100).
+	els @ RTPopup.
+	v addAll: els.
+	RTGridLayout on: els.
+	v open.
+
+]

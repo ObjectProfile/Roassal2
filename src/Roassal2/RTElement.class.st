@@ -40,7 +40,8 @@ RTElement >> addOutgoingEdge: anEdge [
 ]
 
 { #category : #adding }
-RTElement >> addedIn: view [
+RTElement >> addedIn: aView [
+	view := aView.
 	view addElement: self
 ]
 
@@ -95,6 +96,12 @@ RTElement >> outgoingEdges [
 { #category : #accessing }
 RTElement >> position [
 	^ position
+]
+
+{ #category : #actions }
+RTElement >> remove [
+	view removeElement: self.
+	view := nil 
 ]
 
 { #category : #actions }
