@@ -123,10 +123,7 @@ RTSimilarityMatrix >> elementOn: pair For: view [
 		extent: self defaultExtent
 	).
 	self flag: #todo.
-	"elt @ (RTPopup new
-			text: [self popupTextFor: elt];
-			receivingView: view
-			)."
+	elt @ (RTPopup new text: [self popupTextFor: elt]).
 	elt on: TRMouseClick do: [:event | self action: pair ].
 	"elt forward: ROMouseDragging."
 	^ elt
@@ -141,11 +138,9 @@ RTSimilarityMatrix >> elementOn: pair forView: view andStack: stack [
 		extent: self defaultExtent
 	).
 	self flag: #todo.
-"	elt @ (ROPopup new
-			text: [self popupTextFor: elt];
-			receivingView: stack
-			).
-"	elt on: TRMouseClick do: [:event | self action: pair ].
+	elt @ (ROPopup new text: [self popupTextFor: elt] ).
+
+	elt on: TRMouseClick do: [:event | self action: pair ].
 "	elt forward: ROMouseDragging."
 	^ elt
 ]

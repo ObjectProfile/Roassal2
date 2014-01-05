@@ -25,7 +25,7 @@ RTAbstractPopup class >> removeLastPopup [
 	lastPopup := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTAbstractPopup >> closestPositionOf: popup from: position inView: aView [
 	"Return the closest position for el to realPosition to be entierely visible in the view"
 	"position is the location in the space"
@@ -60,7 +60,7 @@ RTAbstractPopup >> closestPositionOf: popup from: position inView: aView [
 	^ virtualPositionX @ virtualPositionY
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTAbstractPopup >> createAndShowPopupFor: element event: event [
 	| popupPosition popup idealPosition |
 	self removeLastPopup.
@@ -82,12 +82,12 @@ RTAbstractPopup >> createAndShowPopupFor: element event: event [
 	^ popup trachelShape signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTAbstractPopup >> createElementFor: element [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #creation }
 RTAbstractPopup >> createPopupFor: element [
 	| el |
 	el := self createElementFor: element.
@@ -100,7 +100,7 @@ RTAbstractPopup >> createPopupFor: element [
 	^ el
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTAbstractPopup >> initializeElement: element [
 
 	element
@@ -119,17 +119,17 @@ RTAbstractPopup >> initializeElement: element [
 			element trachelShape signalUpdate ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTAbstractPopup >> lastPopup: anElement [
 	self class lastPopup: anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTAbstractPopup >> popupOffset [
 	^ 10 @ 10
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTAbstractPopup >> removeLastPopup [
 	self class removeLastPopup
 ]

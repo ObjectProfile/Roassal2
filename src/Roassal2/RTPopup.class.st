@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPopup >> createElementFor: element [
 	| el labelShape |
 	el := RTElement on: (text roValue: element).
@@ -16,12 +16,12 @@ RTPopup >> createElementFor: element [
 	^ el
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTPopup >> text: aOneArgBlock [
 	^ self textElement: [ :e | aOneArgBlock roValue: e model ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTPopup >> textElement: aOneArgBlock [
 	text := aOneArgBlock
 ]
