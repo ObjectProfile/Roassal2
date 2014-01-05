@@ -761,3 +761,14 @@ VersionOfRoassal2 >> version000025 [
 	at: #date put: '3 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000026 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-TudorGirba.21';
+	at: 'Roassal2' put: 'Roassal2-TudorGirba.27';
+	at: #version put: '0.27';
+	at: #comment put: '0.27 : integrated changes of Doru';
+	at: #date put: '5 January 2014';
+	yourself
+]
