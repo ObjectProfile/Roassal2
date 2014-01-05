@@ -16,6 +16,12 @@ RTAbstractElementShape >> borderColor [
 
 { #category : #accessing }
 RTAbstractElementShape >> borderColor: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self borderColorElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderColorElement: aValueOrAOneArgBlock [
 	borderColor := aValueOrAOneArgBlock
 ]
 
@@ -36,8 +42,8 @@ RTAbstractElementShape >> defaultWidth [
 
 { #category : #accessing }
 RTAbstractElementShape >> extent: extentAsPoint [
-	self width: extentAsPoint x.
-	self height: extentAsPoint y.
+	self widthElement: extentAsPoint x.
+	self heightElement: extentAsPoint y.
 
 ]
 
@@ -47,7 +53,13 @@ RTAbstractElementShape >> height [
 ]
 
 { #category : #accessing }
-RTAbstractElementShape >> height: aValueOrASymbolOrAOneArgBlock [
+RTAbstractElementShape >> height: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self heightElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> heightElement: aValueOrASymbolOrAOneArgBlock [
 	height := aValueOrASymbolOrAOneArgBlock
 ]
 
@@ -77,6 +89,12 @@ RTAbstractElementShape >> width [
 
 { #category : #accessing }
 RTAbstractElementShape >> width: aValueOrASymbolOrAOneArgBlock [
+	"aValueOrASymbolOrAOneArgBlock is applied on the object model"
+	self widthElement: [ :anElement | aValueOrASymbolOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> widthElement: aValueOrASymbolOrAOneArgBlock [
 	width := aValueOrASymbolOrAOneArgBlock
 ]
 

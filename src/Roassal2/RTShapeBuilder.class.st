@@ -33,15 +33,16 @@ RTShapeBuilder >> rectangle [
 
 { #category : #accessing }
 RTShapeBuilder >> reset [
-	shape := nil
+	shape := RTNoShape instance
 ]
 
 { #category : #accessing }
-RTShapeBuilder >> shape: anObject [
-	shape := anObject
+RTShapeBuilder >> shape [
+	"Return the shape currently built"
+	^ shape
 ]
 
 { #category : #accessing }
-RTShapeBuilder >> shapeIfNotDefined: aBlock [
-	^ shape ifNil: [ aBlock value ]
+RTShapeBuilder >> shape: aRoassalShape [
+	shape := aRoassalShape
 ]

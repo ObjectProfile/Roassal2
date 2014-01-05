@@ -62,6 +62,15 @@ RTElementTest >> testDraggingCircle [
 	self assert: el trachelShape rectangle = ((80@30) corner: (120@70))
 ]
 
+{ #category : #tests }
+RTElementTest >> testExtentAndWidthHeight [
+
+	| shape |
+	shape := RTBox new extent: 40 @ 20.
+	self assert: (shape widthFor: RTElement new) = 40.
+	self assert: (shape heightFor: RTElement new) = 20.
+]
+
 { #category : #interaction }
 RTElementTest >> testGrowing [
 
@@ -155,7 +164,7 @@ RTElementTest >> testSize [
 { #category : #tests }
 RTElementTest >> testSizeAndModel [
 	| box el |
-	box := RTBox new width: [ :e | e model + 2 ]; height: [ :e | e model + 3 ].
+	box := RTBox new width: [ :e | e + 2 ]; height: [ :e | e + 3 ].
 	el := box elementOn: 5.
 	
 	self assert: el position = (0 @ 0).

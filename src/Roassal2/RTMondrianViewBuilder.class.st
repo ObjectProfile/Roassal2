@@ -14,7 +14,8 @@ Class {
 
 { #category : #private }
 RTMondrianViewBuilder >> edgeShape [
-	^ shapeBuilder shapeIfNotDefined: [ RTLine new ]
+	shapeBuilder shape: (RTLine new).
+	^ shapeBuilder shape
 ]
 
 { #category : #adding }
@@ -54,7 +55,7 @@ RTMondrianViewBuilder >> initialize [
 
 { #category : #private }
 RTMondrianViewBuilder >> nodeShape [
-	^ shapeBuilder shapeIfNotDefined: [ RTBox new ]
+	^ shapeBuilder shape
 ]
 
 { #category : #adding }
