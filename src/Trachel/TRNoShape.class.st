@@ -27,6 +27,11 @@ TRNoShape >> encompassingRectangle [
 	^ 0@0 corner: 0@0
 ]
 
+{ #category : #accessing }
+TRNoShape >> height [
+	^ 0
+]
+
 { #category : #actions }
 TRNoShape >> translateBy: aPoint [
 	"do nothing"
@@ -35,4 +40,9 @@ TRNoShape >> translateBy: aPoint [
 { #category : #actions }
 TRNoShape >> translateTo: aPoint [
 	"do nothing"
+]
+
+{ #category : #accessing }
+TRNoShape >> width [
+	^ 0
 ]
