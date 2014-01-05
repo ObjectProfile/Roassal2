@@ -21,6 +21,11 @@ RTGroup >> elementFromModel: anObject [
 ]
 
 { #category : #public }
+RTGroup >> on: evt do: callback [
+	self do: [ :e | e on: evt do: callback ]
+]
+
+{ #category : #public }
 RTGroup >> translateBy: aPoint [
 	self do: [ :e | e translateBy: aPoint ]
 ]

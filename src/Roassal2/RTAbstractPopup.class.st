@@ -34,6 +34,8 @@ RTAbstractPopup >> closestPositionOf: popup from: position inView: aView [
 	idealVirtualPosition := position.
 	
 	winSize := aView canvas extent.
+	"Happens if we are in a test"
+	winSize ifNil: [ winSize := 500 @ 500 ].
 	
 	"If the popup is larger than the window, then there is not much we can do"
 	(popup width > winSize x or: [ popup height > winSize y ]) 
@@ -70,7 +72,7 @@ RTAbstractPopup >> createAndShowPopupFor: element event: event [
 	event position isNil
 		ifTrue: [ idealPosition := element position ]
 		ifFalse: [ idealPosition := event position ].
-	popupPosition := self closestPositionOf: popup from: event position inView: element view.
+	popupPosition := self closestPositionOf: popup from: idealPosition inView: element view.
 
 	popup translateTo: popupPosition.	
 	element view add: popup.

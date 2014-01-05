@@ -9,9 +9,10 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTPopup >> createElementFor: element [
-	| el |
+	| el labelShape |
 	el := RTElement on: (text roValue: element).
-	el + RTLabel.
+	labelShape := RTLabel new color: Color black. 
+	el + labelShape.
 	^ el
 ]
 
@@ -22,5 +23,5 @@ RTPopup >> text: aOneArgBlock [
 
 { #category : #'as yet unclassified' }
 RTPopup >> textElement: aOneArgBlock [
-	^ text := aOneArgBlock
+	text := aOneArgBlock
 ]
