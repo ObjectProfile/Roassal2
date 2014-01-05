@@ -41,18 +41,21 @@ RTElement >> addOutgoingEdge: anEdge [
 	outgoingEdges add: anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTElement >> addedIn: view [
 	view addElement: self
 ]
 
 { #category : #accessing }
 RTElement >> encompassingRectangle [
-	^ (self position - ((self width / 2) @ (self height / 2))) extent: (self width @ self height)
+	"Return the encompassing rectangle of the element"
+	^ trachelShape encompassingRectangle
+
 ]
 
 { #category : #accessing }
 RTElement >> extent [
+	"Returns a point, describing the extent of the encompassing rectangle of myself"
 	^ self encompassingRectangle extent
 ]
 
@@ -67,7 +70,7 @@ RTElement >> incomingEdges [
 	^ incomingEdges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTElement >> initialize [
 	super initialize.
 	position := 0 @ 0.
@@ -98,11 +101,13 @@ RTElement >> position [
 
 { #category : #actions }
 RTElement >> translateBy: delta [
+	"Translate the element by an incremental step. If I am connected to some edges, the edges are also updated."
 	self translateTo: position + delta
 ]
 
 { #category : #actions }
 RTElement >> translateTo: newPosition [
+	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
 	position := newPosition.
 	self outgoingEdges do: [ :edge | edge update ].
 	self incomingEdges do: [ :edge | edge update ].
