@@ -838,3 +838,14 @@ VersionOfRoassal2 >> version000032 [
 	at: #date put: '5 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000033 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.23';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.34';
+	at: #version put: '0.34';
+	at: #comment put: '0.34 : added a small new builder about structural matrixes';
+	at: #date put: '5 January 2014';
+	yourself
+]
