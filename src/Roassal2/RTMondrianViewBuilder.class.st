@@ -86,7 +86,7 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		
 		nesting := nesting + 1.
 		allElements := view elements.	
-		aOneArgBlock roValue: n model.
+		aOneArgBlock rtValue: n model.
 		topLevelNodes := oldTopLevelNodes.
 		topLevelEdges := oldTopLevelEdges.
 		

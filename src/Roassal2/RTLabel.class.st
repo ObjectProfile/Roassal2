@@ -21,7 +21,7 @@ RTLabel >> height: aValueOrABlock [
 
 { #category : #rendering }
 RTLabel >> heightFor: element [
-	^ height roValue: element
+	^ height rtValue: element
 ]
 
 { #category : #initialization }
@@ -39,7 +39,7 @@ RTLabel >> text: aStringOrABlock [
 
 { #category : #rendering }
 RTLabel >> textFor: element [
-	^ (text roValue: element) asString
+	^ (text rtValue: element) asString
 ]
 
 { #category : #hooks }

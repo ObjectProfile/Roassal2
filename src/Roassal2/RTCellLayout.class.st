@@ -19,7 +19,7 @@ Class {
 { #category : #hook }
 RTCellLayout >> doExecute: elements [ 
 	| pointer lineItemCount lineItemSize cell |
-	lineItemSize := self lineItemsCountBlock roValue: elements.
+	lineItemSize := self lineItemsCountBlock rtValue: elements.
 	cell := RTCell elements: elements columns: lineItemSize.
 	pointer := self gapSize @ self gapSize.
 	lineItemCount := 0.

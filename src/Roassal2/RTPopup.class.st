@@ -10,7 +10,7 @@ Class {
 { #category : #hooks }
 RTPopup >> createElementFor: element [
 	| el labelShape |
-	el := RTElement on: (text roValue: element).
+	el := RTElement on: (text rtValue: element).
 	labelShape := RTLabel new color: Color black. 
 	el + labelShape.
 	^ el
@@ -18,7 +18,7 @@ RTPopup >> createElementFor: element [
 
 { #category : #accessing }
 RTPopup >> text: aOneArgBlock [
-	^ self textElement: [ :e | aOneArgBlock roValue: e model ]
+	^ self textElement: [ :e | aOneArgBlock rtValue: e model ]
 ]
 
 { #category : #accessing }

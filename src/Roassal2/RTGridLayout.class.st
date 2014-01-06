@@ -25,7 +25,7 @@ RTGridLayout >> doExecute: elements [
 	originalGapTop := self paddingTopFor: elements.
 	
 	pointer := originalGapLeft @ originalGapTop.
-	lineItemSize := self lineItemsCountBlock roValue: elements.
+	lineItemSize := self lineItemsCountBlock rtValue: elements.
 	lineItemCount := 0.
 	maxLastLineHeight := 0.
 	elements

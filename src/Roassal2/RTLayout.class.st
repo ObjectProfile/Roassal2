@@ -117,13 +117,13 @@ RTLayout >> doExecute: elements [
 { #category : #hook }
 RTLayout >> doInitialize: elements [
 	"Method executed before beginning the layout. Useful when the graph to be ordered need to be prepared"
-	self announce: (ROLayoutBegin new elements: elements).
+	"self announce: (ROLayoutBegin new elements: elements)."
 ]
 
 { #category : #hook }
 RTLayout >> doPost: elements [
 	"Method executed after performing the layout"
-	self announce: (ROLayoutEnd new elements: elements).
+	"self announce: (ROLayoutEnd new elements: elements)."
 ]
 
 { #category : #accessing }
@@ -139,8 +139,8 @@ RTLayout >> executeOnElements: elements [
 
 { #category : #'initialize-release' }
 RTLayout >> initialize [
-	translator := ROLayoutTranslator default.
-	eventHandler := ROAnnouncer new.
+	translator := RTLayoutTranslator default.
+	eventHandler := Announcer new.
 	currentIteraction := 0.
 	maxInterations := 0.
 	iterationsToSendEvent := self defaultIterationsToSendEvent.

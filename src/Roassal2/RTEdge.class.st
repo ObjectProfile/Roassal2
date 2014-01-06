@@ -48,21 +48,21 @@ RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inVie
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock [
 	"Handy method to easily build edges. Return a list of edges"
 
-	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: ROLine
+	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine
 ]
 
 { #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock in: view [
 	"Handy method to easily build edges. Return a list of edges"
 
-	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: ROLine in: view
+	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine in: view
 ]
 
 { #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 
-	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: ROLine inView: view
+	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine inView: view
 ]
 
 { #category : #'public - edge construction' }
@@ -76,12 +76,12 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 	elementsWithModels := elements select: [ :el | el model notNil ].
 	elementsWithModels do: [ :element |
 		container := element parent.
-		fromElement := container elementFromModel: (fromBlock roValue: element model).
-		toElement := container elementFromModel: (toBlock roValue: element model).
+		fromElement := container elementFromModel: (fromBlock rtValue: element model).
+		toElement := container elementFromModel: (toBlock rtValue: element model).
 		(fromElement notNil and: [ toElement notNil ])
 			ifTrue: [  
 				| edge |
-				edge := ROEdge from: fromElement to: toElement. 
+				edge := RTEdge from: fromElement to: toElement. 
 				edge + aLineShape.
 				edges add: edge.
 				container add: edge ] ].
@@ -110,11 +110,11 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	
 	elementsWithModels do: [ :element |
 		container := element parent.
-		fromElement := container elementFromModel: (fromBlock roValue: element model).
+		fromElement := container elementFromModel: (fromBlock rtValue: element model).
 		
 		"We get the list of elements that corresponds to (toBlock roValues: element model)"
 		toElements := OrderedCollection new.
-		(toBlock roValue: element model) do: [ :model | 
+		(toBlock rtValue: element model) do: [ :model | 
 			| v |
 			v := container elementFromModel: model.
 			v notNil ifTrue: [ toElements add: v ] ].
@@ -124,7 +124,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 			ifTrue: [  
 				toElements do: [ :toElement |
 					| edge |
-					edge := ROEdge from: fromElement to: toElement. 
+					edge := RTEdge from: fromElement to: toElement. 
 					edge + aLineShape.
 					edges add: edge.
 					container add: edge ] ]  ].
@@ -165,8 +165,8 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 	objects isEmpty ifTrue: [ ^ #() ].
 	edges := RTGroup new.
 	objects do: [ :object |
-		fromElement := aGroup elementFromModel: (fromBlock roValue: object).
-		toElement := aGroup elementFromModel: (toBlock roValue: object).
+		fromElement := aGroup elementFromModel: (fromBlock rtValue: object).
+		toElement := aGroup elementFromModel: (toBlock rtValue: object).
 		(fromElement notNil and: [ toElement notNil ])
 			ifTrue: [  
 				| edge |
