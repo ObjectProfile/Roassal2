@@ -84,6 +84,14 @@ TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 	^ shape
 ]
 
+{ #category : #'instance creation' }
+TRCanvas >> buildMorph [
+	morph := TRMorph new
+		canvas: self;
+		extent: canvas extent.
+	^ morph
+]
+
 { #category : #building }
 TRCanvas >> buildRectangle: aRectangle color: aColor [
 	| shape |
@@ -166,10 +174,8 @@ TRCanvas >> on: event do: aBlock [
 ]
 
 { #category : #'instance creation' }
-TRCanvas >> open [ 
-	morph := TRMorph new 
-		canvas: self;
-		extent: canvas extent. 
+TRCanvas >> open [
+	self buildMorph.
 	morph openInWindow
 ]
 
