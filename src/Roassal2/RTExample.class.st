@@ -180,6 +180,12 @@ RTExample >> group1 [
 	
 	host1 @ RTDraggable.
 	host2 @ RTDraggable.
+	
+	view canvas addMenu: 'In' callback: [ RTZoomInMove on: view ].
+	view canvas addMenu: 'Out' callback: [ RTZoomOutMove on: view ].
+
+	view @ RTDraggableView.
+	
 	view open
 ]
 

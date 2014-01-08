@@ -34,7 +34,7 @@ RTLinearMove >> to: anEndPoint during: seconds on: anElement [
 	
 	position := anElement position.
 	animatedValue := VIAnimatedValue new
-							evaluator: [ :t | position interpolateTo: anEndPoint at: (t) ];
+							evaluator: [ :t | position interpolateTo: anEndPoint at: t ];
 							timer: (VITimer new cycleLength: seconds);
 							yourself.
 	

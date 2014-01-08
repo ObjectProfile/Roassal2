@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTNopAnimation >> addedIn: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas
 ]
