@@ -2,7 +2,6 @@ Class {
 	#name : #TREvent,
 	#superclass : #Announcement,
 	#instVars : [
-		'shape',
 		'canvas',
 		'position',
 		'morph'
@@ -20,12 +19,6 @@ TREvent >> canvas [
 TREvent >> canvas: aTrachelCanvas [
 	
 	canvas := aTrachelCanvas
-]
-
-{ #category : #accessing }
-TREvent >> element [
-	"Could be any object"
-	^ self shape element
 ]
 
 { #category : #accessing }
@@ -48,18 +41,6 @@ TREvent >> position [
 TREvent >> position: aPoint [
 	
 	position := aPoint
-]
-
-{ #category : #accessing }
-TREvent >> shape [
-	
-	^ shape
-]
-
-{ #category : #accessing }
-TREvent >> shape: aTrachelShape [
-	
-	shape := aTrachelShape
 ]
 
 { #category : #accessing }

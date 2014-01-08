@@ -115,7 +115,8 @@ TRCanvas >> extent [
 { #category : #accessing }
 TRCanvas >> extent: aPoint [
 	"Set of the size of the canvas. Useful, for example, when the window is resized"
-	extent := aPoint
+	extent := aPoint.
+	self announce: TRResizeCanvasEvent
 ]
 
 { #category : #accessing }
@@ -176,7 +177,7 @@ TRCanvas >> on: event do: aBlock [
 { #category : #'instance creation' }
 TRCanvas >> open [
 	self buildMorph.
-	morph openInWindow
+	^ morph openInWindow
 ]
 
 { #category : #animations }

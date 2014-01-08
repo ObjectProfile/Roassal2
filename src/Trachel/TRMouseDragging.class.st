@@ -1,6 +1,6 @@
 Class {
 	#name : #TRMouseDragging,
-	#superclass : #TREvent,
+	#superclass : #TRShapeEvent,
 	#instVars : [
 		'step'
 	],

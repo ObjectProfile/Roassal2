@@ -1,5 +1,5 @@
 Class {
 	#name : #TRMouseEnter,
-	#superclass : #TREvent,
+	#superclass : #TRShapeEvent,
 	#category : #Trachel
 }

@@ -307,6 +307,16 @@ TRCanvasTest >> testRemovingFixedElement [
 	self assert: c numberOfFixedShapes = 0.
 ]
 
+{ #category : #resizing }
+TRCanvasTest >> testResizing [
+
+	| t |
+	t := false.
+	canvas on: TRResizeCanvasEvent do: [ :evt | t := true ].
+	canvas extent:  12 @ 12.
+	self assert: t
+]
+
 { #category : #tests }
 TRCanvasTest >> testShape [
 	| shape |
