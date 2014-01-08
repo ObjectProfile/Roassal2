@@ -12,7 +12,12 @@ RTAbstractLine class >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTAbstractLine >> edgeFrom: el1 to: el2 [
+	^ (RTEdge from: el1 to: el2) addShape: self
+]
+
+{ #category : #rendering }
 RTAbstractLine >> updateFor: edge [
 	edge trachelShape from: edge from position.
 	edge trachelShape to: edge to position.
