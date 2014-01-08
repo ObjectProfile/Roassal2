@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'position',
-		'canvas'
+		'canvas',
+		'scale'
 	],
 	#category : #Trachel
 }
@@ -71,11 +72,22 @@ TRCamera >> fromSpaceToPixel: aPoint [
 TRCamera >> initialize [
 	super initialize.
 	position := 0 @ 0.
+	scale := 1.0
 ]
 
 { #category : #accessing }
 TRCamera >> position [
 	^ position
+]
+
+{ #category : #accessing }
+TRCamera >> scale [
+	^ scale
+]
+
+{ #category : #accessing }
+TRCamera >> scale: aNewScale [
+	scale := aNewScale
 ]
 
 { #category : #actions }

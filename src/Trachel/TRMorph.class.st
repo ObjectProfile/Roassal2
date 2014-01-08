@@ -37,8 +37,8 @@ TRMorph >> drawOn: aCanvas [
 		"We display the elements that are subject to the camera"
 		offset := (self extent / 2) - trachelCanvas camera position.
 		cs pathTransform translateX: offset x Y: offset y.
-		"cs pathTransform 
-			scaleBy: 1.0."		
+		cs pathTransform 
+			scaleBy: trachelCanvas camera scale.
 		trachelCanvas shapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
 		].
