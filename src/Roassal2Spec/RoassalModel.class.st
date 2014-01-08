@@ -24,7 +24,13 @@ RoassalModel >> initialize [
 	super initialize.
 
 	script := [ :view :canvas | ] asValueHolder.
-	script whenChangedDo: [ self changed: #applyScript with: #() ]
+	script whenChangedDo: [ self refresh ]
+]
+
+{ #category : #protocol }
+RoassalModel >> refresh [
+
+	self changed: #applyScript with: #()
 ]
 
 { #category : #accessing }
