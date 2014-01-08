@@ -192,6 +192,18 @@ TRCanvas >> playAnimations [
 ]
 
 { #category : #actions }
+TRCanvas >> pushBack: aShape [
+	shapes remove: aShape.
+	shapes addFirst: aShape
+]
+
+{ #category : #actions }
+TRCanvas >> pushFront: aShape [
+	shapes remove: aShape.
+	shapes addLast: aShape
+]
+
+{ #category : #actions }
 TRCanvas >> removeFixedShape: aShape [
 	fixedShapes := fixedShapes copyWithout: aShape
 ]
@@ -213,10 +225,10 @@ TRCanvas >> setAsFixed: aShape [
 
 { #category : #accessing }
 TRCanvas >> shapeForPosition: position [
-	fixedShapes do: [ :s | 
+	fixedShapes reverseDo: [ :s | 
 		(s includesPoint: position) ifTrue: [ ^ s ] ].
 
-	shapes do: [ :s | 
+	shapes reverseDo: [ :s | 
 		(s includesPoint: position) ifTrue: [ ^ s ] ].
 	^ self
 ]
@@ -225,10 +237,10 @@ TRCanvas >> shapeForPosition: position [
 TRCanvas >> shapeForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	fixedShapes do: [ :s | 
+	fixedShapes reverseDo: [ :s | 
 		(s includesPoint: position) ifTrue: [ ^ s ] ].
 
-	shapes do: [ :s | 
+	shapes reverseDo: [ :s | 
 		(s includesPoint: (self camera fromPixelToSpace: position)) ifTrue: [ ^ s ] ].
 	^ self
 ]
@@ -236,7 +248,7 @@ TRCanvas >> shapeForPositionInPixels: position [
 { #category : #accessing }
 TRCanvas >> shapes [
 	"Return the list of shapes"
-	^ shapes
+	^ shapes asArray
 ]
 
 { #category : #updating }

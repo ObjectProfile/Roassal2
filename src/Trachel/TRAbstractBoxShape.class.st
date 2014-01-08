@@ -143,6 +143,11 @@ TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]
 ]
 
+{ #category : #accessing }
+TRAbstractBoxShape >> size: v [
+	^ self extent: v @ v
+]
+
 { #category : #actions }
 TRAbstractBoxShape >> translateBy: aPoint [
 	rectangle := (rectangle topLeft + aPoint) extent: rectangle extent.

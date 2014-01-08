@@ -44,6 +44,22 @@ TRCanvasTest >> testAddingAnimation [
 	self assert: canvas numberOfAnimations = 1
 ]
 
+{ #category : #'back and front' }
+TRCanvasTest >> testBack [
+
+	| s1 s2 s3 |
+	s1 := TRBoxShape new size: 10.
+	s2 := TRBoxShape new size: 10.
+	s3 := TRBoxShape new size: 10.
+	canvas addShape: s1; addShape: s2; addShape: s3.
+	
+	s1 pushBack.
+	self assert: canvas shapes = (Array with: s1 with: s2 with: s3).
+	
+	s3 pushBack.
+	self assert: canvas shapes = (Array with: s3 with: s1 with: s2).
+]
+
 { #category : #tests }
 TRCanvasTest >> testBox [
 	| rec box |
@@ -82,6 +98,17 @@ TRCanvasTest >> testCanvasAndEvent [
 	self deny: f.
 	c announce: TRMouseClick.
 	self assert: f
+]
+
+{ #category : #events }
+TRCanvasTest >> testCapturingEvents2 [
+	| s1 s2 |
+	 
+	s1 := (TRBoxShape new size: 10).
+	s2 := (TRBoxShape new size: 10).
+	canvas addShape: s1.
+	canvas addShape: s2. 
+	self assert: (canvas shapeForPosition: 0 @ 0) == s2
 ]
 
 { #category : #label }
@@ -177,6 +204,24 @@ TRCanvasTest >> testFixedShapes [
 	self assert: s1 isNotFixed.
 	self assert: s2 isNotFixed.
 
+]
+
+{ #category : #'back and front' }
+TRCanvasTest >> testFront [
+
+	| s1 s2 s3 |
+	s1 := TRBoxShape new size: 10.
+	s2 := TRBoxShape new size: 10.
+	s3 := TRBoxShape new size: 10.
+	canvas addShape: s1; addShape: s2; addShape: s3.
+	
+	self assert: canvas shapes = (Array with: s1 with: s2 with: s3).
+	
+	s1 pushFront.
+	self assert: canvas shapes = (Array with: s2 with: s3 with: s1).
+	
+	s3 pushFront.
+	self assert: canvas shapes = (Array with: s2 with: s1 with: s3).
 ]
 
 { #category : #tests }

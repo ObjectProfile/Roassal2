@@ -152,6 +152,20 @@ TRShape >> path [
 ]
 
 { #category : #actions }
+TRShape >> pushBack [
+	canvas pushBack: self
+	
+	
+]
+
+{ #category : #actions }
+TRShape >> pushFront [
+	canvas pushFront: self
+	
+	
+]
+
+{ #category : #actions }
 TRShape >> remove [
 	canvas removeShape: self
 ]
