@@ -27,7 +27,7 @@ TRMorph >> drawOn: aCanvas [
 	"aCanvas is a FormCanvas"
 	| offset |
 	
-	aCanvas fillRectangle: bounds color: Color lightGray.
+	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	trachelCanvas playAnimations.
 	
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."

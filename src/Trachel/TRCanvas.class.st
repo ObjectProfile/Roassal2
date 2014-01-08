@@ -9,7 +9,8 @@ Class {
 		'animations',
 		'morph',
 		'camera',
-		'announcer'
+		'announcer',
+		'color'
 	],
 	#category : #Trachel
 }
@@ -107,6 +108,17 @@ TRCanvas >> camera [
 ]
 
 { #category : #accessing }
+TRCanvas >> color [
+	^ color
+]
+
+{ #category : #accessing }
+TRCanvas >> color: aColor [
+	color := aColor.
+	self signalUpdate
+]
+
+{ #category : #accessing }
 TRCanvas >> extent [
 	"size of the canvas"
 	^ extent
@@ -138,7 +150,8 @@ TRCanvas >> initialize [
 	shapes := OrderedCollection new.
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
-	camera := TRCamera forCanvas: self
+	camera := TRCamera forCanvas: self.
+	color := Color lightGray.
 ]
 
 { #category : #testing }
@@ -255,4 +268,12 @@ TRCanvas >> shapes [
 { #category : #updating }
 TRCanvas >> signalUpdate [
 	morph changed
+]
+
+{ #category : #accessing }
+TRCanvas >> topLeft [
+
+	^ morph
+		ifNil:[ 0@0 ]
+		ifNotNil: [ morph topLeft ]
 ]
