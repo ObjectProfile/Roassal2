@@ -25,7 +25,8 @@ RTNopAnimation >> hasCompleted [
 
 { #category : #actions }
 RTNopAnimation >> refresh [
-	animatedValue value
+	animatedValue value.
+	trachelCanvas signalUpdate
 ]
 
 { #category : #'waiting-specific' }

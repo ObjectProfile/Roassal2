@@ -73,7 +73,7 @@ RTElementTest >> testDraggingCircle [
 	shape := RTEllipse new size: 40.
 	el := shape element.
 	view add: el.
-	view createAndFillCanvas.
+	view setUpCanvas.
 	
 	self assert: el position = (0 @ 0).
 	el translateBy: 100 @ 50.
@@ -110,7 +110,7 @@ RTElementTest >> testHighlighting [
 	el := RTBox element.
 	view := RTView new.
 	view add: el.
-	view createAndFillCanvas.
+	view setUpCanvas.
 	
 	self assert: el trachelShape color = RTBox new defaultColor.
 	
@@ -142,7 +142,7 @@ RTElementTest >> testRenderingAndEvent [
 	view := RTView new.
 	el := RTBox element.
 	view add: el.
-	view createAndFillCanvas.
+	view setUpCanvas.
 	trachelShape := el trachelShape.
 	self assert: el announcer == trachelShape announcer
 ]
@@ -154,7 +154,7 @@ RTElementTest >> testResizingAndDragging [
 	view := RTView new.
 	box := RTBox element.
 	view add: box.
-	view createAndFillCanvas.
+	view setUpCanvas.
 	
 	self assert: box extent = (5 @ 5).
 	box trachelShape extent: 10 @ 10.

@@ -25,7 +25,7 @@ RTEdgeTest >> testBasic [
 		add: el1;
 		add: el2;
 		add: edge;
-		createAndFillCanvas.
+		setUpCanvas.
 	self assert: edge trachelShape notNil.
 	self assert: edge trachelShape color notNil
 ]
@@ -89,7 +89,7 @@ RTEdgeTest >> testTranslatingNode [
 		add: el1;
 		add: el2;
 		add: edge;
-		createAndFillCanvas.
+		setUpCanvas.
 
 	old := edge trachelShape from.
 	self assert: edge trachelShape from = el1 position.

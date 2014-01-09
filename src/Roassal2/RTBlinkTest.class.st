@@ -11,7 +11,7 @@ RTBlinkTest >> testBlink [
 	view := RTView new.
 	el := RTBox element.
 	view add: el.
-	canvas := view createAndFillCanvas.
+	canvas := view setUpCanvas.
 
 	self assert: el shape color ~= Color red.
 	self deny: canvas hasAnimation.
@@ -28,7 +28,7 @@ RTBlinkTest >> testHighlighting [
 	view := RTView new.
 	el := RTBox element.
 	view add: el.
-	canvas := view createAndFillCanvas.
+	canvas := view setUpCanvas.
 
 	originalColor := el trachelShape color.
 

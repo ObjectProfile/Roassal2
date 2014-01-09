@@ -83,6 +83,13 @@ RTAbstractElementShape >> size: aValueOrASymbolOrAOneArgBlock [
 ]
 
 { #category : #accessing }
+RTAbstractElementShape >> sizeElement: aValueOrASymbolOrAOneArgBlock [
+	"Argument evaluated against the element"
+	self heightElement: aValueOrASymbolOrAOneArgBlock.
+	self widthElement: aValueOrASymbolOrAOneArgBlock
+]
+
+{ #category : #accessing }
 RTAbstractElementShape >> width [
 	^ width
 ]

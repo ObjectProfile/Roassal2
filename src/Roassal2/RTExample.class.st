@@ -42,7 +42,7 @@ RTExample >> blinking [
 	view add: el.
 	el on: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
 	view open.
-	view inspect.
+	
 ]
 
 { #category : #layout }
@@ -374,7 +374,7 @@ RTExample >> multipleNesting [
 	"RTHorizontalLineLayout on: outter."
 	RTGridLayout on: outter.
 	
-	trachelCanvas := view createAndFillCanvas.
+	trachelCanvas := view setUpCanvas.
 	TRFocusCenter on: trachelCanvas.
 	trachelCanvas open  
 ]
@@ -400,7 +400,7 @@ RTExample >> nestedHierarchy [
 	RTNest new		
 		on: host nest: inner.
 		
-	view open
+	view openWithMenu
 ]
 
 { #category : #nesting }
@@ -441,7 +441,7 @@ RTExample >> nesting2 [
 	view := RTView new.
 	el := (RTBox new width: 80; height: 40; color: (Color purple alpha: 0.3)) element.
 	el translateTo: 200 @ 150.
-	shape := RTBox new color: (Color red alpha: 0.3); size: [ :e | e model ].
+	shape := RTBox new color: (Color red alpha: 0.3); size: #yourself.
 	
 	innerElements := (1 to: 30) collect: [ :i | shape elementOn: i ].
 	view addAll: innerElements.
@@ -488,15 +488,21 @@ RTExample >> nesting3 [
 { #category : #layout }
 RTExample >> numbers [
 
-	| view |
+	| view elements |
 	view := RTView new.	
-	view addAll: (RTBox elementsOn: (1 to: 100)).
+	elements := RTBox elementsOn: (1 to: 100).
+	elements @ RTDraggable.
+	view addAll: elements.
 	RTEdge 
 		buildEdgesFromObjects: (1 to: 100)
-		from: [ :v | v // 2 ] to: #yourself inView: view.
+		from: [ :v | v // 2 ] to: #yourself 
+		using: (RTLine new color: Color purple) inView: view.
 	RTTreeLayout on: view elements edges: view edges.
+	
+	view edges do: [ :e | e trachelShape pushBack ].
+	
 	view @ RTDraggableView.
-	view open
+	view openWithMenu
 ]
 
 { #category : #popup }

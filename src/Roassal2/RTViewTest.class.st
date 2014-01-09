@@ -54,7 +54,7 @@ RTViewTest >> testElementFromModel [
 
 { #category : #tests }
 RTViewTest >> testEmptyCanvas [
-	self assert: RTView new createAndFillCanvas numberOfShapes = 0
+	self assert: RTView new setUpCanvas numberOfShapes = 0
 
 ]
 
@@ -64,7 +64,7 @@ RTViewTest >> testFillingCanvas [
 	| canvas |
 	view := RTView new.
 	view add: RTBox element.
-	canvas := view createAndFillCanvas.
+	canvas := view setUpCanvas.
 	
 	self assert: canvas class == TRCanvas.
 	self assert: canvas numberOfShapes = 1.

@@ -65,15 +65,6 @@ RTView >> canvas [
 	^ trCanvas
 ]
 
-{ #category : #initialization }
-RTView >> createAndFillCanvas [
-	"elements do: [ :el | el renderOn: trCanvas ].
-	edges do: [ :el | el renderOn: trCanvas ]."
-	"animations do: [ :a | trCanvas addAnimation: a ]."
-	trCanvas camera focusOnCenter.
-	^ trCanvas
-]
-
 { #category : #accessing }
 RTView >> edges [
 	^ edges copy
@@ -111,13 +102,28 @@ RTView >> numberOfElements [
 
 { #category : #'instance creation' }
 RTView >> open [
-	"^ trachelCanvas open"
+	^ self setUpCanvas open
+]
 
-	^ self createAndFillCanvas open
+{ #category : #'instance creation' }
+RTView >> openWithMenu [
+	self canvas addMenu: 'In' callback: [ RTZoomInMove on: self ].
+	self canvas addMenu: 'Out' callback: [ RTZoomOutMove on: self ].
+
+	^ self setUpCanvas open
 ]
 
 { #category : #adding }
 RTView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
 	anElement trachelShape remove.
+]
+
+{ #category : #initialization }
+RTView >> setUpCanvas [
+	"elements do: [ :el | el renderOn: trCanvas ].
+	edges do: [ :el | el renderOn: trCanvas ]."
+	"animations do: [ :a | trCanvas addAnimation: a ]."
+	trCanvas camera focusOnCenter.
+	^ trCanvas
 ]
