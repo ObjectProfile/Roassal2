@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RTPopup class >> text: aBlockOrSymbol [
+	^ self new text: aBlockOrSymbol
+]
+
 { #category : #hooks }
 RTPopup >> createElementFor: element [
 	| el labelShape |
