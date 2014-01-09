@@ -535,3 +535,17 @@ RTExample >> smoothLayout [
 	RTTreeLayout new  on: v elements edges: v edges.
 	v open
 ]
+
+{ #category : #animations }
+RTExample >> zooming [
+
+	| v |
+	v := RTView new.
+	v add: (RTBox new size: 40) element.
+
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView.
+	v open.
+
+]
