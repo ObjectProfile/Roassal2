@@ -23,7 +23,7 @@ MorphicRoassalAdapter >> adapt: aComposableModel [
 
 	super adapt: aComposableModel.
 	view := widget.
-	canvas := widget createAndFillCanvas.
+	canvas := widget setUpCanvas.
 	widget := canvas buildMorph.
 	widget
 		hResizing: #spaceFill;
