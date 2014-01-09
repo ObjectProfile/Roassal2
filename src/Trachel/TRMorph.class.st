@@ -295,7 +295,7 @@ TRMorph >> shapeForEvent: anEvent [
 	^ self shapeForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMorph >> shapeForPositionInPixels: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPositionInPixels: point
