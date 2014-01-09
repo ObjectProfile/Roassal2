@@ -948,3 +948,14 @@ VersionOfRoassal2 >> version000042 [
 	at: #date put: '9 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000043 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.32';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.43';
+	at: #version put: '0.44';
+	at: #comment put: '0.44 : imported the punchcard builder, and fix bugs in the celllayout';
+	at: #date put: '9 January 2014';
+	yourself
+]
