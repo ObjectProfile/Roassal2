@@ -1,6 +1,6 @@
 Class {
 	#name : #TRCanvasExample,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#category : #Trachel
 }
 

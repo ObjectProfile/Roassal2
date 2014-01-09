@@ -1,6 +1,6 @@
 Class {
 	#name : #TRShape,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#instVars : [
 		'canvas',
 		'color',

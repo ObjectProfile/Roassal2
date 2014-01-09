@@ -1,6 +1,6 @@
 Class {
 	#name : #TRTranslationCallback,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#instVars : [
 		'block'
 	],

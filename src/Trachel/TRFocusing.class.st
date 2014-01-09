@@ -1,6 +1,6 @@
 Class {
 	#name : #TRFocusing,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#category : #Trachel
 }
 

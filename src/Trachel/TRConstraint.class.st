@@ -4,7 +4,7 @@ A ROConstraint is a utility class that contains methods to position elements aga
 "
 Class {
 	#name : #TRConstraint,
-	#superclass : #RTObject,
+	#superclass : #TRObject,
 	#category : #Trachel
 }
 
