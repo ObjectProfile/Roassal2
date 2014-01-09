@@ -57,7 +57,7 @@ RTPunchcardBuilder >> initialize [
 	super initialize.
 	metrics := OrderedCollection new.
 	models := OrderedCollection new.
-	minColor := maxColor := Color lightGray.
+	minColor := maxColor := Color gray.
 	popupText := [ :object :metricName :value | value ]
 ]
 

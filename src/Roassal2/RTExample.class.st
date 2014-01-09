@@ -124,6 +124,18 @@ RTExample >> classHierarchy [
 	view open
 ]
 
+{ #category : #layout }
+RTExample >> clusterLayout [
+
+	| v |
+	v := RTView new.
+	v addAll: ((RTEllipse new size: 10) elementsOn: (Collection withAllSubclasses)).
+	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
+	RTClusterLayout on: v elements edges: v edges.
+	v open
+
+]
+
 { #category : #shapes }
 RTExample >> edges [
 	"
@@ -540,6 +552,10 @@ RTExample >> popup1 [
 { #category : #layout }
 RTExample >> smoothLayout [
 
+	"
+	self new smoothLayout
+	"
+	
 	| v translator |
 	translator := RTSmoothLayoutTranslator new.
 	v := RTView new.
@@ -548,6 +564,8 @@ RTExample >> smoothLayout [
 	v canvas addMenu: 'hori' callback: [ RTHorizontalLineLayout new translator: translator; on: v elements. v canvas signalUpdate ].
 
 	v canvas addMenu: 'tree' callback: [ RTTreeLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
+
+	v canvas addMenu: 'cluster' callback: [ RTClusterLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
 
 	v addAll: (RTBox new elementsOn: (1 to: 100)).
 	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.
