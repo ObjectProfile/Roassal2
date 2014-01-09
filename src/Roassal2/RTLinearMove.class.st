@@ -19,7 +19,8 @@ RTLinearMove >> hasCompleted [
 
 { #category : #refreshing }
 RTLinearMove >> refresh [
-	element translateTo: animatedValue value
+	element translateTo: animatedValue value.
+	element view canvas signalUpdate.
 ]
 
 { #category : #accessing }

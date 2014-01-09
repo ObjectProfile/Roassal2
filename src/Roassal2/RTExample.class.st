@@ -485,6 +485,20 @@ RTExample >> nesting3 [
 	
 ]
 
+{ #category : #layout }
+RTExample >> numbers [
+
+	| view |
+	view := RTView new.	
+	view addAll: (RTBox elementsOn: (1 to: 100)).
+	RTEdge 
+		buildEdgesFromObjects: (1 to: 100)
+		from: [ :v | v // 2 ] to: #yourself inView: view.
+	RTTreeLayout on: view elements edges: view edges.
+	view @ RTDraggableView.
+	view open
+]
+
 { #category : #popup }
 RTExample >> popup1 [
 	"
@@ -500,4 +514,24 @@ RTExample >> popup1 [
 	RTGridLayout on: els.
 	v open.
 
+]
+
+{ #category : #layout }
+RTExample >> smoothLayout [
+
+	| v translator |
+	translator := RTSmoothLayoutTranslator new.
+	v := RTView new.
+	v canvas addMenu: 'grid' callback: [ RTGridLayout new translator: translator; on: v elements. v canvas signalUpdate ].
+
+	v canvas addMenu: 'hori' callback: [ RTHorizontalLineLayout new translator: translator; on: v elements. v canvas signalUpdate ].
+
+	v canvas addMenu: 'tree' callback: [ RTTreeLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
+
+	v addAll: (RTBox new elementsOn: (1 to: 100)).
+	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.
+
+	"RTGridLayout on: v elements."
+	RTTreeLayout new  on: v elements edges: v edges.
+	v open
 ]
