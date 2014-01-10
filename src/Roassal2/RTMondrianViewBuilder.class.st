@@ -61,7 +61,7 @@ RTMondrianViewBuilder >> nodeShape [
 { #category : #adding }
 RTMondrianViewBuilder >> nodes: objects [
 	| elements |
-	elements := shapeBuilder elementsOn: objects.
+	elements := self nodeShape elementsOn: objects.
 	view addAll: elements.
 	elements @ RTDraggable.
 	topLevelNodes addAll: elements.

@@ -16,17 +16,6 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 		withArguments: aMessage arguments
 ]
 
-{ #category : #building }
-RTShapeBuilder >> elementsOn: objects [
-	self hasSetShape ifFalse: [ self rectangle ].
-	^ shape elementsOn: objects
-]
-
-{ #category : #testing }
-RTShapeBuilder >> hasSetShape [
-	^ shape class ~~ RTNoShape
-]
-
 { #category : #initialization }
 RTShapeBuilder >> initialize [
 	self reset
