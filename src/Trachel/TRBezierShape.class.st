@@ -7,15 +7,37 @@ Class {
 	#category : #Trachel
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 TRBezierShape >> computePath [
+	|   |
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: listOfPoints first;
-				curveVia: listOfPoints second and: listOfPoints third  to:  listOfPoints fourth
-				]
+				moveTo: listOfPoints first.
+			
+			(2 to: (listOfPoints size -1)) do: [ :index |
+				builder 
+					curveVia: (listOfPoints at: index) 
+					to: (((listOfPoints at: index) + (listOfPoints at: (index + 1))) / 2) asFloatPoint.
+			].
+			builder lineTo: listOfPoints last.
+		]
+]
+
+{ #category : #drawing }
+TRBezierShape >> drawOn: athensCanvas [
+
+	athensCanvas pathTransform restoreAfter: [
+			
+		athensCanvas
+			setStrokePaint: strokePaint;
+			drawShape: self path  ]
+]
+
+{ #category : #accessing }
+TRBezierShape >> encompassingRectangle [
+	^ Rectangle encompassing: listOfPoints
 ]
 
 { #category : #public }

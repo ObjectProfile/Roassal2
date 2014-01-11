@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #examples }
+TRCanvasExample >> bezier [
+
+	| t |
+	t := TRCanvas new.
+	t addShape: (TRLineShape  new from: 50 @ 50 to: 130 @ 20).
+	t addShape: (TRBezierShape new 
+		points: {50 @ 50 . 150 @ 20 . 120 @ 130 . 50 @ 150 . 80 @ 80}; 
+			strokePaint: Color purple).
+	t open
+]
+
+{ #category : #examples }
 TRCanvasExample >> circle [
 	"
 	self new circle
