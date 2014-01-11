@@ -2,7 +2,9 @@ Class {
 	#name : #RTBuilder,
 	#superclass : #RTObject,
 	#instVars : [
-		'view'
+		'view',
+		'interactionBuilder',
+		'shapeBuilder'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -11,6 +13,7 @@ Class {
 RTBuilder >> initialize [
 	super initialize.
 	view := RTView new.
+	shapeBuilder := RTShapeBuilder new.
 ]
 
 { #category : #'public-ui' }

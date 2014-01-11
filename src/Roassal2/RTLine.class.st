@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLine >> trachelShape [
 	|  shape aPoint anotherPoint aColor |
 	shape := TRLineShape new.
@@ -12,7 +12,7 @@ RTLine >> trachelShape [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLine >> trachelShapeFor: anEdge [
 	| shape |
 	shape := TRLineShape new.

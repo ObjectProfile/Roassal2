@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'position',
 		'model',
+		'connectedEdges',
 		'incomingEdges',
 		'outgoingEdges'
 	],
@@ -21,28 +22,22 @@ RTElement class >> on: anObject [
 	^ self new model: anObject; yourself
 ]
 
-{ #category : #adding }
-RTElement >> addIncomingEdge: anEdge [
-	"Method invoked by the class Edge, the user is not supposed to call this method directly.
-	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
-	the edges may have to be updated"
-	incomingEdges isNil ifTrue: [ incomingEdges := OrderedCollection new ]. 
-	incomingEdges add: anEdge
-]
-
-{ #category : #adding }
-RTElement >> addOutgoingEdge: anEdge [
-	"Method invoked by the class Edge, the user is not supposed to call this method directly.
-	We keep a list of incoming and outoing edges because when the element is dragged and dropped, 
-	the edges may have to be updated"
-	outgoingEdges isNil ifTrue: [ outgoingEdges := OrderedCollection new ]. 
-	outgoingEdges add: anEdge
+{ #category : #initialization }
+RTElement >> addConnectedEdge: anEdge [
+	[  anEdge class == RTEdge ] assert.
+	self connectedEdges add: anEdge
 ]
 
 { #category : #adding }
 RTElement >> addedIn: aView [
 	view := aView.
 	view addElement: self
+]
+
+{ #category : #initialization }
+RTElement >> connectedEdges [
+	connectedEdges ifNil: [ connectedEdges := OrderedCollection new ].
+	^ connectedEdges
 ]
 
 { #category : #accessing }
@@ -65,8 +60,8 @@ RTElement >> height [
 
 { #category : #accessing }
 RTElement >> incomingEdges [
-	incomingEdges isNil ifTrue: [ ^ #() ].
-	^ incomingEdges
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e to == self ]
 ]
 
 { #category : #initialization }
@@ -74,6 +69,12 @@ RTElement >> initialize [
 	super initialize.
 	position := 0 @ 0.
 
+]
+
+{ #category : #testing }
+RTElement >> isConnectedTo: anEdge [
+	connectedEdges ifNil: [ ^ false ].
+	^ connectedEdges anySatisfy: [ :edge | edge == anEdge ]
 ]
 
 { #category : #accessing }
@@ -89,8 +90,8 @@ RTElement >> model: anObject [
 
 { #category : #accessing }
 RTElement >> outgoingEdges [
-	outgoingEdges isNil ifTrue: [ ^ #() ].
-	^ outgoingEdges
+	connectedEdges ifNil: [ ^ #() ].
+	^ self connectedEdges select: [ :e | e from == self ]
 ]
 
 { #category : #accessing }
@@ -114,8 +115,7 @@ RTElement >> translateBy: delta [
 RTElement >> translateTo: newPosition [
 	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
 	position := newPosition.
-	self outgoingEdges do: [ :edge | edge update ].
-	self incomingEdges do: [ :edge | edge update ].
+	self connectedEdges do: [ :edge | edge update ].
 	self update
 
 ]

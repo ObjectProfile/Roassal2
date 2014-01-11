@@ -21,6 +21,12 @@ RTPopup >> createElementFor: element [
 	^ el
 ]
 
+{ #category : #'as yet unclassified' }
+RTPopup >> initialize [
+	super initialize.
+	self text: #yourself
+]
+
 { #category : #accessing }
 RTPopup >> text: aOneArgBlock [
 	^ self textElement: [ :e | aOneArgBlock rtValue: e model ]

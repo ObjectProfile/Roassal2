@@ -204,7 +204,7 @@ RTEdge >> from [
 RTEdge >> from: anElement [
 	
 	from := anElement.
-	anElement addOutgoingEdge: self
+	anElement addConnectedEdge: self
 ]
 
 { #category : #accessing }
@@ -217,5 +217,5 @@ RTEdge >> to [
 RTEdge >> to: anElement [
 	
 	to := anElement.
-	anElement addIncomingEdge: self
+	anElement addConnectedEdge: self
 ]

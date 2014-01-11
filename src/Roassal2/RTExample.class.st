@@ -31,6 +31,66 @@ RTExample >> basic [
 	view open
 ]
 
+{ #category : #beziers }
+RTExample >> beziers01 [
+
+	| v shape  edge els |
+	v := RTView new.
+	shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
+	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
+	v addAll: els .
+	RTHorizontalLineLayout on: v elements.
+
+	edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
+	v add: edge.
+
+	v open
+]
+
+{ #category : #beziers }
+RTExample >> beziers02 [
+	"
+	self new beziers02
+	"
+
+| v classes hierarchicalLinks depLinks dep |
+v := RTView new.
+classes := (RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses.
+classes @ RTDraggable @ RTPopup.
+v addAll: classes.
+hierarchicalLinks := RTEdge 
+	buildEdgesFromObjects: Collection withAllSubclasses 
+	from: #superclass to: #yourself 
+	using: (RTLine new color: (Color white alpha: 0.2)) inView: v.
+
+"A nice layout"
+RTClusterLayout on: v elements edges: v edges.
+
+"Computing dependencies"
+dep := OrderedCollection new.
+Collection withAllSubclasses do: [ :cls |
+	cls methods do: [ :cm | 
+		((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass) ifTrue: [ dep add: cls -> depClass ] ] ]
+].
+
+"Add dependency edges"
+depLinks := RTEdge 
+	buildEdgesFromObjects: dep
+	from: #key 
+	to: #value 
+	using: (RTBezierLine new 
+					color: (Color blue alpha: 0.2);
+					follow: #superclass) inView: v.
+
+
+"Move the edges at the back"
+depLinks do: [ :e | e trachelShape pushBack ].
+hierarchicalLinks do: [ :e | e trachelShape pushBack ].
+
+"Open the view"
+v openWithMenu
+]
+
 { #category : #animations }
 RTExample >> blinking [
 	"
@@ -126,14 +186,17 @@ RTExample >> classHierarchy [
 
 { #category : #layout }
 RTExample >> clusterLayout [
-
+	"
+	self new clusterLayout
+	"
+	
 	| v |
 	v := RTView new.
-	v addAll: ((RTEllipse new size: 10) elementsOn: (Collection withAllSubclasses)).
+	v addAll: ((RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses) @ RTDraggable.
 	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
 	RTClusterLayout on: v elements edges: v edges.
+	v edges do: [ :e | e trachelShape pushBack ].
 	v open
-
 ]
 
 { #category : #shapes }
