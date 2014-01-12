@@ -82,10 +82,10 @@ RTNLinearNormalizer >> maximumValue: anEntity [
 	
 	maximumValue isNil
 		ifTrue:
-			[maximumValue := (self context roValue: anEntity)
+			[maximumValue := (self context rtValue: anEntity)
 				inject: 1
 				into:
-					[:maximum :entity | maximum max: (self command roValue: entity)]].
+					[:maximum :entity | maximum max: (self command rtValue: entity)]].
 	^maximumValue
 ]
 
@@ -95,9 +95,9 @@ RTNLinearNormalizer >> minimumValue: anEntity [
 	
 	minimumValue isNil
 		ifTrue:
-			[minimumValue := (self context roValue: anEntity)
+			[minimumValue := (self context rtValue: anEntity)
 				inject: 100000000000 
 				into:
-					[:minimum :entity | minimum min: (self command roValue: entity)]].
+					[:minimum :entity | minimum min: (self command rtValue: entity)]].
 	^minimumValue
 ]

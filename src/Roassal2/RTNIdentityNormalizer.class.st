@@ -69,7 +69,7 @@ RTNIdentityNormalizer >> nextColor [
 RTNIdentityNormalizer >> rtValue: anEntity [
 	
 	^dictionary
-		at: (command roValue: anEntity)
+		at: (command rtValue: anEntity)
 		ifAbsentPut: [ self nextColor ]
 ]
 

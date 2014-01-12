@@ -100,7 +100,7 @@ RTNColorLinearNormalizer >> highColor: aBlock [
 { #category : #'translator protocol' }
 RTNColorLinearNormalizer >> highColorFor: anEntity [
 	
-	^highColor roValue: anEntity
+	^highColor rtValue: anEntity
 ]
 
 { #category : #'initialize-release' }
@@ -120,7 +120,7 @@ RTNColorLinearNormalizer >> lowColor: aBlock [
 { #category : #'translator protocol' }
 RTNColorLinearNormalizer >> lowColorFor: anEntity [
 	
-	^lowColor roValue: anEntity
+	^lowColor rtValue: anEntity
 ]
 
 { #category : #accessing }
@@ -134,7 +134,7 @@ RTNColorLinearNormalizer >> maxBrightnessFor: anEntity [
 	
 	^maxBrightness isNil
 		ifTrue: [1.0]
-		ifFalse: [maxBrightness roValue: anEntity]
+		ifFalse: [maxBrightness rtValue: anEntity]
 ]
 
 { #category : #accessing }
@@ -148,7 +148,7 @@ RTNColorLinearNormalizer >> minBrightnessFor: anEntity [
 	
 	^minBrightness isNil
 		ifTrue: [0.0]
-		ifFalse: [minBrightness roValue: anEntity]
+		ifFalse: [minBrightness rtValue: anEntity]
 ]
 
 { #category : #accessing }
@@ -166,7 +166,7 @@ RTNColorLinearNormalizer >> rtValue: anEntity [
 	weight := minValue = maxValue 
 		ifTrue: [(myMinBrightness + myMaxBrightness) / 2]
 		ifFalse: [	
-			myValue := (self command roValue: anEntity) - (self minimumValue: anEntity).
+			myValue := (self command rtValue: anEntity) - (self minimumValue: anEntity).
 			myMinBrightness + (myValue abs / (maxValue - minValue) * (myMaxBrightness - myMinBrightness)) ].
 	^self blend: myLowColor with: myHighColor weight: weight
 ]

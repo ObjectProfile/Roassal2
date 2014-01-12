@@ -33,8 +33,8 @@ RTNormalizerTest >> testExplicitIdentity [
 						withColors: (Array with: Color blue with: Color white with: Color red) 
 						withDefaultColor: Color green.
 						
-	colorOne := normalizer roValue: 'alex'.
-	colorTwo := normalizer roValue: 'suffix'.
+	colorOne := normalizer rtValue: 'alex'.
+	colorTwo := normalizer rtValue: 'suffix'.
 	self assert: (colorOne = colorTwo)
 
 

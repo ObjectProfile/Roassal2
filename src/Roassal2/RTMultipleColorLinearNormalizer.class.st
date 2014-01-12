@@ -42,9 +42,9 @@ RTMultipleColorLinearNormalizer >> initialize [
 RTMultipleColorLinearNormalizer >> rtValue: anEntity [
 
 	| value |
-	value := self command roValue: anEntity.
+	value := self command rtValue: anEntity.
 	"detect range for the value, retrieve and call corresponding normalizers"
-	^ (self detectNormalizerFor: value) roValue: value
+	^ (self detectNormalizerFor: value) rtValue: value
 ]
 
 { #category : #'initialize-release' }
@@ -60,7 +60,7 @@ RTMultipleColorLinearNormalizer >> valueRange: anArrayOfNumbers colorRange: anAr
 		end :=  anArrayOfNumbers at: i + 1.
 		normalizers
 			at: (start to: end)
-			put: (RONColorLinearNormalizer
+			put: (RTNColorLinearNormalizer
 						inContext: (Array with: start with: end)
 						lowColor: (anArrayOfColors at: i)
 						highColor: (anArrayOfColors at: i + 1))
