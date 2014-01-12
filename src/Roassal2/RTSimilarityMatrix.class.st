@@ -21,8 +21,8 @@ RTSimilarityMatrix class >> comparingMethodSourceCode [
 	"Compare the source code of all the subclasses of ROShape"
 	"Black dot means the two classes are identical"
 	"White dot means the two classes are very different"
-	^ SimilarityMatrix new
-		on: ROShape withAllSubclasses
+	^ RTSimilarityMatrix new
+		on: RTShape withAllSubclasses
 		by: [ :class1 :class2 |
 			| sourceCode1 sourceCode2 s |
 			"We get the source code of class1"
@@ -44,7 +44,7 @@ RTSimilarityMatrix class >> comparingMethodSourceCode [
 { #category : #examples }
 RTSimilarityMatrix class >> comparingWordsBetweenText [
 	"methods are similar if they send the same messages; large methods are top-left"
-	^ SimilarityMatrix new
+	^ RTSimilarityMatrix new
 		on: #('hello world' 'welcome to our world' 'hello means bonjour' 'bye bye')
 		by: [ :m1 : m2 |
 			(m1 substrings intersection: m2 substrings) size
@@ -92,8 +92,8 @@ RTSimilarityMatrix class >> demo3 [
 			/ ((1 max: (m1 messages union: m2 messages) size) + 1) "NB penalty for small methods"
 			]
 		withAction: [:m1 : m2 |
-			GTUtils browseMethod: m1.
-			GTUtils browseMethod: m2.
+			m1 browse.
+			m2 browse.
 			];
 		viewMatrix
 ]
@@ -137,8 +137,7 @@ RTSimilarityMatrix >> elementOn: pair forView: view andStack: stack [
 		color: (self colorForElement: elt);
 		extent: self defaultExtent
 	).
-	self flag: #todo.
-	elt @ (ROPopup new text: [self popupTextFor: elt] ).
+	elt @ (RTPopup new text: [self popupTextFor: elt] ).
 
 	elt on: TRMouseClick do: [:event | self action: pair ].
 "	elt forward: ROMouseDragging."
@@ -184,7 +183,7 @@ RTSimilarityMatrix >> on: aCollection by: similarity withAction: aCallBack [
 	elements
 		do: [ : lhs |
 			elements do: [ : rhs | | pair |
-				pair := (Comparison of: lhs with: rhs by: similarity).
+				pair := (RTComparison of: lhs with: rhs by: similarity).
 				pairs add: pair ] ]
 		displayingProgress: 'comparing elements ...'.
 ]

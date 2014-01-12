@@ -37,7 +37,7 @@ RTShapedObject >> addShape: aRTShape [
 ]
 
 { #category : #adding }
-RTShapedObject >> addedIn: view [
+RTShapedObject >> addedIn: aView [
 	self subclassReponsibility
 ]
 

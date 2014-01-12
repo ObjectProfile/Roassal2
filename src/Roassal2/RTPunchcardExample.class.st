@@ -51,7 +51,7 @@ RTPunchcardExample >> example3 [
 self new example3
 "
 | b |
-b := ROPunchcardBuilder new.
+b := RTPunchcardBuilder new.
 b addModels: #( 'hello' 'world' 'hello world' ).
 b addMetric: [:word | word size] namedAs: 'length'.
 b addMetric: [:word | word size * 2 ] namedAs: 'length 2'.
