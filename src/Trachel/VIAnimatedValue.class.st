@@ -19,17 +19,19 @@ Class {
 
 { #category : #grouping }
 VIAnimatedValue >> + aVIAnimatedValue [ 
-	^VIAnimatedGroup new 
+	self error: 'Not supported yet'
+"	^VIAnimatedGroup new 
 		add:self;
-		add:aVIAnimatedValue.
+		add:aVIAnimatedValue."
 ]
 
 { #category : #secuence }
 VIAnimatedValue >> , aVIAnimatedValue [ 
-	^VIAnimatedSecuence new
+	self error: 'Not yet supported'
+"	^VIAnimatedSecuence new
 		add:self;
 		add:aVIAnimatedValue.
-	
+	"
 ]
 
 { #category : #actions }

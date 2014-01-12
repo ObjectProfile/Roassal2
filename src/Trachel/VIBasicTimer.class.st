@@ -52,7 +52,8 @@ VIBasicTimer >> isRepeating [
 
 { #category : #converting }
 VIBasicTimer >> mirrored [
-	^ VIMirrorRepeatTimer on: self
+	self error: 'not yet supported'
+	"^ VIMirrorRepeatTimer on: self"
 ]
 
 { #category : #accessing }
@@ -106,6 +107,6 @@ VIBasicTimer >> value [
 
 { #category : #converting }
 VIBasicTimer >> withBias: aWeight [
-
-	^ (VIBiasedTimerModifier on: self) weight: aWeight
+	self error: 'not yet supported'
+	"^ (VIBiasedTimerModifier on: self) weight: aWeight"
 ]

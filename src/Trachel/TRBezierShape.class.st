@@ -46,9 +46,9 @@ TRBezierShape >> points: points [
 ]
 
 { #category : #public }
-TRBezierShape >> points: listOfPoints color: aColor [
+TRBezierShape >> points: aListOfPoints color: aColor [
 
-	self points: listOfPoints.
+	self points: aListOfPoints.
 	self strokePaint: aColor.
 	self color: aColor
 ]

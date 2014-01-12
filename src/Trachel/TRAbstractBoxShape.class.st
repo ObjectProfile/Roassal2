@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'rectangle'
 	],
+	#classInstVars : [
+		'nullRectangle'
+	],
 	#category : #Trachel
 }
 
