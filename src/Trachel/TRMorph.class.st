@@ -6,7 +6,8 @@ Class {
 		'surface',
 		'eventBeginingDragging',
 		'shapeBeingPointed',
-		'shouldRefresh'
+		'shouldRefresh',
+		'session'
 	],
 	#category : #Trachel
 }
@@ -18,14 +19,24 @@ TRMorph >> canvas: aTrachelCanvas [
 ]
 
 { #category : #'session management' }
+TRMorph >> checkSession [
+	session == Smalltalk session
+		ifFalse: [ surface := nil. self createSurface ]
+]
+
+{ #category : #'session management' }
 TRMorph >> createSurface [
-	surface := AthensCairoSurface extent: self extent asIntegerPoint
+	surface isNil ifFalse: [ ^ self ].
+	surface := AthensCairoSurface extent: self extent asIntegerPoint.
+	session := Smalltalk session.
 ]
 
 { #category : #drawing }
 TRMorph >> drawOn: aCanvas [
 	"aCanvas is a FormCanvas"
 	| offset |
+	
+"	self checkSession."
 	
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	trachelCanvas playAnimations.
@@ -100,8 +111,8 @@ TRMorph >> handlesMouseOver: evt [
 TRMorph >> initialize [
 	super initialize.
 	self createSurface.
-	shouldRefresh := false
-	"session := Smalltalk session."
+	shouldRefresh := false.
+	session := Smalltalk session.
 ]
 
 { #category : #testing }
