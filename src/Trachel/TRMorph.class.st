@@ -26,7 +26,7 @@ TRMorph >> checkSession [
 
 { #category : #'session management' }
 TRMorph >> createSurface [
-	surface isNil ifFalse: [ ^ self ].
+"	surface isNil ifFalse: [ ^ self ]."
 	surface := AthensCairoSurface extent: self extent asIntegerPoint.
 	session := Smalltalk session.
 ]
