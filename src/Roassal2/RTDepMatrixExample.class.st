@@ -60,11 +60,11 @@ RTDepMatrixExample >> example05DuplicationClasses [
 	| m cls1 cls2 str |
 	 
 	str := WriteStream on: String new.
-	ROShape fileOutOn: str.
+	RTLine fileOutOn: str.
 	cls1 := str contents lines.
 
 	str := WriteStream on: String new.
-	RTShape fileOutOn: str.
+	RTBox fileOutOn: str.
 	cls2 := str contents lines.
 
 	m := RTDepMatrix new.

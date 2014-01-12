@@ -144,22 +144,6 @@ RTAbstractGraphLayout >> doInitialize: elements [
 	self greedyCycleRemoval: elements
 ]
 
-{ #category : #private }
-RTAbstractGraphLayout >> executeWithoutResizeStrategy: nodeElements block: block [
-	| hasParentWhichIsNotAView oldResizeStrategy parent |
-	hasParentWhichIsNotAView := nodeElements notEmpty and: [ nodeElements first parent isView not ] .
-	hasParentWhichIsNotAView ifTrue: [
-		parent := nodeElements first parent.
-		oldResizeStrategy := parent resizeStrategy.
-		parent resizeStrategy: (ROPermissiveParent new padding: oldResizeStrategy padding). ].
-
-	block value.
-	
-	hasParentWhichIsNotAView ifTrue: [
-		parent resizeStrategy: oldResizeStrategy.
-		parent adjustSizeIfNecessary ].
-]
-
 { #category : #battista }
 RTAbstractGraphLayout >> greedyCycleRemoval: aCollection [
 	"Di Battista Greedy-Cycle-Removal algorithm. Chapter 9.4, page 297. The last part is not like in the book. The original algorithm only takes

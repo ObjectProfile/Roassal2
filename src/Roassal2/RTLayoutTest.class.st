@@ -34,6 +34,17 @@ RTLayoutTest >> testHorizontalLineLayout [
 ]
 
 { #category : #tests }
+RTLayoutTest >> testTreeLayoutWithoutSpecificingEdges [
+
+	| v |
+	v := RTView new.
+	v addAll: (RTBox elementsOn: OrderedCollection withAllSubclasses).
+	RTEdge buildEdgesFromObjects: OrderedCollection withAllSubclasses from: #superclass to: #yourself inView: v.
+	RTTreeLayout on: v elements.
+	self assert: (v elements collect: #position) asArray equals:  ((Array new: 13) at: 1 put: ((9.0@30)); at: 2 put: ((21.0@30)); at: 3 put: ((29.0@30)); at: 4 put: ((37.0@30)); at: 5 put: ((45.0@30)); at: 6 put: ((53.0@30)); at: 7 put: ((61.0@30)); at: 8 put: ((69.0@30)); at: 9 put: ((77.0@30)); at: 10 put: ((85.0@30)); at: 11 put: ((5.0@55)); at: 12 put: ((13.0@55)); at: 13 put: ((45.0@5)); yourself)
+]
+
+{ #category : #tests }
 RTLayoutTest >> testTreelLineLayout [
 
 	| answer  |

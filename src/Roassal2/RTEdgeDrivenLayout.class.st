@@ -155,7 +155,7 @@ RTEdgeDrivenLayout >> setEdgesFromElements: elements [
 	elements isEmpty ifTrue: [ ^ self ].
 	
 	view := elements anyOne view.
-	self edges: (view elementsSuchThat: [ :el | ((el isKindOf: ROEdge) and: [ elements includes: el from ]) and: [ elements includes: el to ] ]).
+	self edges: (view edges select: [ :el | (elements includes: el from) and: [ elements includes: el to ] ]).
 	
 ]
 

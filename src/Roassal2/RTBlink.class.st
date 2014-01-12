@@ -52,8 +52,8 @@ RTBlink class >> highlightOutgoingEdgesOf: element [
 { #category : #public }
 RTBlink class >> incomingEdgesOf: element [
 	"Blink all the edges that leave the node element"
-	element view raw elementsAsEdge 
-		do: [ :edg | (edg from == element) ifTrue: [ ROBlink on: edg ] ].
+	element view edges 
+		do: [ :edg | (edg from == element) ifTrue: [ RTBlink on: edg ] ].
 ]
 
 { #category : #testing }
@@ -75,8 +75,8 @@ RTBlink class >> on: element [
 { #category : #public }
 RTBlink class >> outgoingEdgesOf: element [
 	"Blink all the edges that leave the node element"
-	element view elementsAsEdge 
-		do: [ :edg | (edg to == element) ifTrue: [ ROBlink on: edg ] ].
+	element view edges 
+		do: [ :edg | (edg to == element) ifTrue: [ RTBlink on: edg ] ].
 ]
 
 { #category : #util }

@@ -57,6 +57,7 @@ RTExample >> beziers02 [
 v := RTView new.
 classes := (RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses.
 classes @ RTDraggable @ RTPopup.
+classes on: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
 v addAll: classes.
 hierarchicalLinks := RTEdge 
 	buildEdgesFromObjects: Collection withAllSubclasses 
