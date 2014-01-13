@@ -56,7 +56,7 @@ RTCenteredCircleLayout >> doExecute: elements [
 	elements
 		do: [ :each | 
 			| point |
-			point := centerPoint + (Point radius: rad theta: angle).
+			point := centerPoint + (Point r: rad theta: angle).
 			angle := angle + angleIncrement.
 			translator translate: each to: point.
 			self step ]

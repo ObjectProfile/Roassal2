@@ -159,7 +159,7 @@ RTRadialTreeLayout >> layoutLayer: aCollection radius: oldRadius from: aFromAngl
 				do:
 					[:child | 
 					translator translate: child to: (Point
-								radius: myRadius
+								r: myRadius
 								theta: toAngle - (delta / 2.0)).
 					"child
 						translateTo:
@@ -199,7 +199,7 @@ RTRadialTreeLayout >> radialDraw: aNode [
 
 	| children r max |
 	r := (self rOf: aNode).
-	translator translate: aNode to: (Point radius: r theta: (self thetaOf: aNode)).
+	translator translate: aNode to: (Point r: r theta: (self thetaOf: aNode)).
 	"aNode translateTo: (Point radius: (aNode r) theta: (aNode theta))."
 	children := self childrenFor: aNode.
 	max := 0.
