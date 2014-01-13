@@ -137,6 +137,16 @@ RTLayout >> executeOnElements: elements [
 
 ]
 
+{ #category : #utils }
+RTLayout >> fatherOf: aNode [
+	^ aNode attributes at: #father
+]
+
+{ #category : #utils }
+RTLayout >> fatherOf: aNode put: aValue [
+	aNode attributes at: #father put: aValue
+]
+
 { #category : #'initialize-release' }
 RTLayout >> initialize [
 	translator := RTLayoutTranslator default.
@@ -159,6 +169,38 @@ RTLayout >> iterationsToSendEvent [
 { #category : #accessing }
 RTLayout >> iterationsToSendEvent: anInteger [
 	iterationsToSendEvent := anInteger
+]
+
+{ #category : #utils }
+RTLayout >> layerOf: aNode [
+	^ aNode attributes at: #layout
+]
+
+{ #category : #utils }
+RTLayout >> layerOf: aNode put: aValue [
+	aNode attributes at: #layout put: aValue
+]
+
+{ #category : #utils }
+RTLayout >> leftContourOf: aNode [
+	^ aNode attributes at: #leftContour ifAbsent: [ ^ nil ]
+]
+
+{ #category : #utils }
+RTLayout >> leftContourOf: aNode put: aValue [
+	aNode attributes at: #leftContour put: aValue
+]
+
+{ #category : #utils }
+RTLayout >> modOf: aNode [
+	^ aNode attributes at: #mod ifAbsent: [ ^ 0 ]
+
+]
+
+{ #category : #utils }
+RTLayout >> modOf: aNode put: aFloat [
+	aNode attributes at: #mod put: aFloat
+
 ]
 
 { #category : #hook }
@@ -218,6 +260,39 @@ RTLayout >> paddingTopFor: elements [
 	^ paddingTop
 ]
 
+{ #category : #utils }
+RTLayout >> pointerOf: aNode [
+
+	^ aNode attributes at: #pointer ifAbsent: [ ^ nil ]
+]
+
+{ #category : #utils }
+RTLayout >> pointerOf: aNode put: aValue [
+
+	^ aNode attributes at: #pointer put: aValue
+]
+
+{ #category : #utils }
+RTLayout >> rOf: aNode [ 
+	^ aNode attributes at: #r ifAbsent: [ 0 ]
+	
+]
+
+{ #category : #utils }
+RTLayout >> rOf: aNode put: aValue [
+	^ aNode attributes at: #r put: aValue
+]
+
+{ #category : #utils }
+RTLayout >> rightContourOf: aNode [
+	^ aNode attributes at: #rightContour ifAbsent: [ ^ nil ]
+]
+
+{ #category : #utils }
+RTLayout >> rightContourOf: aNode put: aValue [
+	aNode attributes at: #rightContour put: aValue
+]
+
 { #category : #events }
 RTLayout >> step [
 "	currentIteraction := currentIteraction + 1.
@@ -228,6 +303,16 @@ RTLayout >> step [
 	"
 ]
 
+{ #category : #utils }
+RTLayout >> thetaOf: aNode [
+	^ aNode attributes at: #theta ifAbsent: [ ^ 0 ]
+]
+
+{ #category : #utils }
+RTLayout >> thetaOf: aNode put: aValue [
+	^ aNode attributes at: #theta put: aValue
+]
+
 { #category : #accessing }
 RTLayout >> translator [
 	^ translator
@@ -236,4 +321,14 @@ RTLayout >> translator [
 { #category : #accessing }
 RTLayout >> translator: t [
 	translator := t
+]
+
+{ #category : #utils }
+RTLayout >> xOf: aNode [ 
+	^ aNode attributes at: #x ifAbsent: [ 0 ]
+]
+
+{ #category : #utils }
+RTLayout >> xOf: aNode put: aValue [
+	aNode attributes at: #x put: aValue
 ]

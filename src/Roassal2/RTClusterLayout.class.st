@@ -74,16 +74,6 @@ RTClusterLayout >> draw: aNode [
 	translator translate: aNode to: (Point radius: maxLayer - (self layerOf: aNode) * verticalGap theta: (maxAbcissa - (self xOf: aNode) / maxAbcissa) * 2 * Float pi )
 ]
 
-{ #category : #utils }
-RTClusterLayout >> fatherOf: aNode [
-	^ aNode attributes at: #father
-]
-
-{ #category : #utils }
-RTClusterLayout >> fatherOf: aNode put: aValue [
-	aNode attributes at: #father put: aValue
-]
-
 { #category : #'initialize-release' }
 RTClusterLayout >> initialize [ 
 
@@ -109,44 +99,4 @@ RTClusterLayout >> initializeNode: aNode [
 							self leftContourOf: aNode put: children first.
 							self rightContourOf: aNode put: children last ].
 					
-]
-
-{ #category : #utils }
-RTClusterLayout >> layerOf: aNode [
-	^ aNode attributes at: #layout
-]
-
-{ #category : #utils }
-RTClusterLayout >> layerOf: aNode put: aValue [
-	aNode attributes at: #layout put: aValue
-]
-
-{ #category : #utils }
-RTClusterLayout >> leftContourOf: aNode [
-	^ aNode attributes at: #leftContour
-]
-
-{ #category : #utils }
-RTClusterLayout >> leftContourOf: aNode put: aValue [
-	aNode attributes at: #leftContour put: aValue
-]
-
-{ #category : #utils }
-RTClusterLayout >> rightContourOf: aNode [
-	^ aNode attributes at: #rightContour
-]
-
-{ #category : #utils }
-RTClusterLayout >> rightContourOf: aNode put: aValue [
-	aNode attributes at: #rightContour put: aValue
-]
-
-{ #category : #utils }
-RTClusterLayout >> xOf: aNode [ 
-	^ aNode attributes at: #x ifAbsent: [ 0 ]
-]
-
-{ #category : #utils }
-RTClusterLayout >> xOf: aNode put: aValue [
-	aNode attributes at: #x put: aValue
 ]

@@ -16,6 +16,16 @@ RTLayoutTest >> setUp [
 ]
 
 { #category : #tests }
+RTLayoutTest >> testCircleLayout [
+
+	| answer |
+	RTCircleLayout on: view elements.
+	answer := ((Array new: 20) at: 1 put: ((440@220)); at: 2 put: ((429@287)); at: 3 put: ((397@349)); at: 4 put: ((349@397)); at: 5 put: ((287@429)); at: 6 put: ((220@440)); at: 7 put: ((152@429)); at: 8 put: ((90@397)); at: 9 put: ((42@349)); at: 10 put: ((10@287)); at: 11 put: ((0@220)); at: 12 put: ((10@152)); at: 13 put: ((42@90)); at: 14 put: ((90@42)); at: 15 put: ((152@10)); at: 16 put: ((219@0)); at: 17 put: ((287@10)); at: 18 put: ((349@42)); at: 19 put: ((397@90)); at: 20 put: ((429@152)); yourself).
+	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer
+	
+]
+
+{ #category : #tests }
 RTLayoutTest >> testCluster [
 	view := RTView new.
 	view addAll: ((RTEllipse new size: 10) elementsOn: (Collection withAllSubclasses)).
@@ -34,6 +44,18 @@ RTLayoutTest >> testHorizontalLineLayout [
 ]
 
 { #category : #tests }
+RTLayoutTest >> testRadialTreelLayout [
+
+	| answer  |
+	 
+	RTEdge buildEdgesFromObjects: (1 to: 20) from: [ :v | v // 2 ] to: #yourself inView: view.	
+	RTRadialTreeLayout on: view elements edges: view edges.
+
+	answer := ((Array new: 20) at: 1 put: ((200@200)); at: 2 put: ((213@214)); at: 3 put: ((185@213)); at: 4 put: ((237@214)); at: 5 put: ((211@238)); at: 6 put: ((182@235)); at: 7 put: ((162@214)); at: 8 put: ((259@205)); at: 9 put: ((247@236)); at: 10 put: ((224@254)); at: 11 put: ((209@259)); at: 12 put: ((180@256)); at: 13 put: ((166@250)); at: 14 put: ((146@227)); at: 15 put: ((141@213)); at: 16 put: ((280@200)); at: 17 put: ((278@214)); at: 18 put: ((267@242)); at: 19 put: ((258@254)); at: 20 put: ((232@273)); yourself).
+	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer
+]
+
+{ #category : #tests }
 RTLayoutTest >> testTreeLayoutWithoutSpecificingEdges [
 
 	| v |
@@ -46,7 +68,7 @@ RTLayoutTest >> testTreeLayoutWithoutSpecificingEdges [
 ]
 
 { #category : #tests }
-RTLayoutTest >> testTreelLineLayout [
+RTLayoutTest >> testTreelLayout [
 
 	| answer  |
 	 
