@@ -1069,3 +1069,14 @@ VersionOfRoassal2 >> version000053 [
 	at: #date put: '13 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000054 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.38';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.54';
+	at: #version put: '0.55';
+	at: #comment put: '0.55 : big changes. Added composed shapes. It seems to work relatively well. Labels can be embedded in a circle or rectangle. ';
+	at: #date put: '14 January 2014';
+	yourself
+]
