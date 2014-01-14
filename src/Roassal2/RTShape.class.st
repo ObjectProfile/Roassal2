@@ -34,14 +34,25 @@ RTShape class >> instance [
 	^ self new
 ]
 
+{ #category : #public }
+RTShape >> + anotherShape [
+	^ RTCompositeShape with: self with: anotherShape instance
+]
+
 { #category : #accessing }
 RTShape >> color [
 	^ color
 ]
 
 { #category : #accessing }
-RTShape >> color: anObject [
-	color := anObject
+RTShape >> color: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self colorElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTShape >> colorElement: aBlock [
+	color := aBlock
 ]
 
 { #category : #rendering }
@@ -75,6 +86,16 @@ RTShape >> elementsOn: models [
 	^ group
 ]
 
+{ #category : #accessing }
+RTShape >> fillColor [
+	^ self color
+]
+
+{ #category : #accessing }
+RTShape >> fillColor: arg [
+	^ self color: arg
+]
+
 { #category : #initialization }
 RTShape >> initialize [
 	super initialize.
@@ -88,5 +109,17 @@ RTShape >> instance [
 
 { #category : #hooks }
 RTShape >> trachelShapeFor: element [
+	self subclassResponsibility
+]
+
+{ #category : #hooks }
+RTShape >> updateFor: edgeOrElement [
+	self updateFor: edgeOrElement trachelShape: edgeOrElement trachelShape
+
+]
+
+{ #category : #hooks }
+RTShape >> updateFor: edgeOrElement trachelShape: trachelShape [
+
 	self subclassResponsibility
 ]

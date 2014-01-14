@@ -98,8 +98,8 @@ RTBezierLine >> trachelShapeFor: anEdge [
 ]
 
 { #category : #'as yet unclassified' }
-RTBezierLine >> updateFor: edge [
-	edge trachelShape resetPath. 
-	edge trachelShape points: (self getListOfPointsForTrachel: edge).
+RTBezierLine >> updateFor: edge trachelShape: trachelShape [
+	trachelShape resetPath. 
+	trachelShape points: (self getListOfPointsForTrachel: edge).
 
 ]

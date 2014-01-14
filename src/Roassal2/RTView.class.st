@@ -121,9 +121,6 @@ RTView >> removeElement: anElement [
 
 { #category : #initialization }
 RTView >> setUpCanvas [
-	"elements do: [ :el | el renderOn: trCanvas ].
-	edges do: [ :el | el renderOn: trCanvas ]."
-	"animations do: [ :a | trCanvas addAnimation: a ]."
 	trCanvas camera focusOnCenter.
 	^ trCanvas
 ]

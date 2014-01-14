@@ -18,9 +18,9 @@ RTAbstractLine >> edgeFrom: el1 to: el2 [
 ]
 
 { #category : #rendering }
-RTAbstractLine >> updateFor: edge [
-	edge trachelShape from: edge from position.
-	edge trachelShape to: edge to position.
-	edge trachelShape resetPath
+RTAbstractLine >> updateFor: edge trachelShape: trachelShape [
+	trachelShape from: edge from position.
+	trachelShape to: edge to position.
+	trachelShape resetPath
 
 ]

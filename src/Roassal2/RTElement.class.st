@@ -3,7 +3,6 @@ Class {
 	#superclass : #RTShapedObject,
 	#instVars : [
 		'position',
-		'model',
 		'connectedEdges',
 		'incomingEdges',
 		'outgoingEdges'
@@ -75,17 +74,6 @@ RTElement >> initialize [
 RTElement >> isConnectedTo: anEdge [
 	connectedEdges ifNil: [ ^ false ].
 	^ connectedEdges anySatisfy: [ :edge | edge == anEdge ]
-]
-
-{ #category : #accessing }
-RTElement >> model [
-	^ model
-]
-
-{ #category : #accessing }
-RTElement >> model: anObject [
-	"anObject could be any Smalltalk object. Shapes are computed based on that object"
-	model := anObject
 ]
 
 { #category : #accessing }

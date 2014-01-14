@@ -6,7 +6,8 @@ Class {
 		'announcer',
 		'trachelShape',
 		'attributes',
-		'view'
+		'view',
+		'model'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -31,8 +32,10 @@ RTShapedObject >> addInteraction: anInteractionClassOrInstance [
 
 { #category : #adding }
 RTShapedObject >> addShape: aRTShape [
-	shape := aRTShape instance.
-	trachelShape := shape trachelShapeFor: self.
+	(shape class == RTNoShape)  
+		ifTrue: [	shape := aRTShape instance ]
+		ifFalse: [ shape := RTCompositeShape with: shape with: aRTShape ].
+	trachelShape := shape trachelShapeFor: self
 
 ]
 
@@ -86,6 +89,17 @@ RTShapedObject >> hasAttributes [
 RTShapedObject >> initialize [
 	super initialize.
 	shape := RTNoShape new
+]
+
+{ #category : #accessing }
+RTShapedObject >> model [
+	^ model
+]
+
+{ #category : #accessing }
+RTShapedObject >> model: anObject [
+	"anObject could be any Smalltalk object. Shapes are computed based on that object"
+	model := anObject
 ]
 
 { #category : #interaction }

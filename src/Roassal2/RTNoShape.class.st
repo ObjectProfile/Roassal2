@@ -29,7 +29,7 @@ RTNoShape >> trachelShapeFor: element [
 ]
 
 { #category : #rendering }
-RTNoShape >> updateFor: anElement [
+RTNoShape >> updateFor: anElement trachelShape: trachelShape [
 	"Do nothing"
 ]
 

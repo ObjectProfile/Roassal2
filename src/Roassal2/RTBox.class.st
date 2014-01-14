@@ -17,12 +17,12 @@ RTBox >> trachelShapeFor: anElement [
 ]
 
 { #category : #rendering }
-RTBox >> updateFor: anElement [
+RTBox >> updateFor: anElement trachelShape: trachelShape [
 	| rec ex |
-	anElement trachelShape isNil ifTrue: [ ^ self ].
+	trachelShape isNil ifTrue: [ ^ self ].
 	 
-	ex := anElement trachelShape width @ anElement trachelShape height.
+	ex := trachelShape width @ trachelShape height.
 	rec := (anElement position - (ex / 2)) extent: ex.
-	anElement trachelShape fromRectangle: rec.
-	anElement trachelShape strokePaint: (self borderColorFor: anElement).
+	trachelShape fromRectangle: rec.
+	trachelShape strokePaint: (self borderColorFor: anElement).
 ]

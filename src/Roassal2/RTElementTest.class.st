@@ -171,6 +171,18 @@ RTElementTest >> testSameNullShape [
 ]
 
 { #category : #tests }
+RTElementTest >> testSharedAnnouncer [
+
+	| e v |
+	e := RTBox element.
+	self assert: e announcer ~~ e trachelShape announcer.
+	
+	v := RTView new.
+	v add: e.
+	self assert: e announcer == e trachelShape announcer.
+]
+
+{ #category : #tests }
 RTElementTest >> testSize [
 	| box el |
 	box := RTBox new width: 10; height: 8.
