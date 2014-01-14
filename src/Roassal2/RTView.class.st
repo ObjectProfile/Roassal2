@@ -113,6 +113,12 @@ RTView >> openWithMenu [
 	^ self setUpCanvas open
 ]
 
+{ #category : #actions }
+RTView >> removeEdge: anEdge [
+	edges remove: anEdge ifAbsent: [ ].
+	anEdge trachelShape remove.
+]
+
 { #category : #adding }
 RTView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
