@@ -19,6 +19,12 @@ TRShape >> addCallback: aCallback [
 	callbacks add: aCallback
 ]
 
+{ #category : #actions }
+TRShape >> addedIn: aCanvas [
+	aCanvas privateAdd: self.
+	self canvas: aCanvas
+]
+
 { #category : #events }
 TRShape >> announce: anEvent [
 	self announcer announce: anEvent
@@ -102,6 +108,11 @@ TRShape >> element: anObject [
 { #category : #accessing }
 TRShape >> encompassingRectangle [
 	self subclassReponsibility
+]
+
+{ #category : #actions }
+TRShape >> extent: anExtent [
+	"do nothing here. This method may be overriden for particular behavior"
 ]
 
 { #category : #testing }

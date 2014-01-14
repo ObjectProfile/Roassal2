@@ -9,7 +9,6 @@ Class {
 
 { #category : #hooks }
 TRBezierShape >> computePath [
-	|   |
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder

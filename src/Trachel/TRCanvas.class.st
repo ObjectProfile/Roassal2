@@ -42,8 +42,7 @@ TRCanvas >> addMenu: aTitle callback: aBlock [
 
 { #category : #building }
 TRCanvas >> addShape: shape [
-	shapes add: shape.
-	shape canvas: self
+	shape addedIn: self
 ]
 
 { #category : #events }
@@ -203,6 +202,11 @@ TRCanvas >> playAnimations [
 	
 	shouldClean ifTrue: [ 
 		animations := animations reject: [ :animation | animation hasCompleted ] ].
+]
+
+{ #category : #building }
+TRCanvas >> privateAdd: shape [
+	shapes add: shape
 ]
 
 { #category : #actions }
