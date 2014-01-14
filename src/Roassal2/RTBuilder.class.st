@@ -47,3 +47,8 @@ RTBuilder >> renderIn: aView [
 RTBuilder >> shape [
 	^ shapeBuilder
 ]
+
+{ #category : #accessing }
+RTBuilder >> view [
+	^ view
+]
