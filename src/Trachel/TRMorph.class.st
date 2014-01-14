@@ -197,15 +197,14 @@ TRMorph >> relativePositionFor: evt [
 TRMorph >> rtMouseClick: evt [
 	| relativePosition ev  shape |
 	relativePosition := self relativePositionFor: evt.	
-"	evt yellowButtonChanged
+	evt yellowButtonChanged
 		ifTrue: [ ev := TRMouseRightClick new ].
 	evt redButtonChanged
 		ifTrue: [ ev := TRMouseLeftClick new ].
 	evt blueButtonChanged
-		ifTrue: [ ev := TRMouseClick new ]."
+		ifTrue: [ ev := TRMouseClick new ].
 
 	shape := self shapeForPositionInPixels: relativePosition.
-	ev := TRMouseClick new.
 	ev commandKeyPressed: evt commandKeyPressed.
 	ev controlKeyPressed: evt controlKeyPressed.
 	ev shiftKeyPressed: evt shiftPressed.
