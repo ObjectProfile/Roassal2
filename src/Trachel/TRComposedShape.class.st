@@ -97,6 +97,12 @@ TRComposedShape >> on: event do: aBlock [
 ]
 
 { #category : #'as yet unclassified' }
+TRComposedShape >> remove [
+	shape1 remove.
+	shape2 remove
+]
+
+{ #category : #'as yet unclassified' }
 TRComposedShape >> shape1 [
 	^ shape1
 ]
