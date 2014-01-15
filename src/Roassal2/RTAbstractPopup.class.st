@@ -7,21 +7,29 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #lastPopup }
 RTAbstractPopup class >> lastPopup [
 	^ lastPopup
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lastPopup }
 RTAbstractPopup class >> lastPopup: anElement [
 	lastPopup := anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lastPopup }
 RTAbstractPopup class >> removeLastPopup [
 	lastPopup ifNil: [ ^ self ].
-	lastPopup view ifNil: [ lastPopup := nil. ^ self ].
+	lastPopup view
+		ifNil: [ 
+			self resetLastPopup.
+			^ self ].
 	lastPopup remove.
+	self resetLastPopup.
+]
+
+{ #category : #lastPopup }
+RTAbstractPopup class >> resetLastPopup [
 	lastPopup := nil
 ]
 
@@ -65,7 +73,7 @@ RTAbstractPopup >> createAndShowPopupFor: element event: event [
 	| popupPosition popup idealPosition |
 	self removeLastPopup.
 	
-	popup := self createPopupFor: element.
+	popup := self getNewPopupFor: element.
 	self lastPopup: popup.
 	
 	"The following is useful when testing"
@@ -73,13 +81,8 @@ RTAbstractPopup >> createAndShowPopupFor: element event: event [
 		ifTrue: [ idealPosition := element position ]
 		ifFalse: [ idealPosition := event position ].
 	popupPosition := self closestPositionOf: popup from: idealPosition inView: element view.
-
 	popup translateTo: popupPosition.	
-	element view add: popup.
 
-	popup trachelShape setAsFixed.
-	
-	^ popup trachelShape signalUpdate
 ]
 
 { #category : #hooks }
@@ -98,6 +101,15 @@ RTAbstractPopup >> createPopupFor: element [
 	"self popups add: el."
 
 	^ el
+]
+
+{ #category : #initialization }
+RTAbstractPopup >> getNewPopupFor: element [
+	| popup |
+	popup := self createPopupFor: element.
+	element view add: popup.
+	popup trachelShape setAsFixed.
+	^ popup trachelShape signalUpdate
 ]
 
 { #category : #hooks }
@@ -126,7 +138,7 @@ RTAbstractPopup >> lastPopup: anElement [
 
 { #category : #configuration }
 RTAbstractPopup >> popupOffset [
-	^ 10 @ 10
+	^ 15 @ 15
 ]
 
 { #category : #utility }

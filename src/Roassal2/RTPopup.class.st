@@ -2,10 +2,18 @@ Class {
 	#name : #RTPopup,
 	#superclass : #RTAbstractPopup,
 	#instVars : [
-		'text'
+		'text',
+		'groupBlock'
 	],
 	#category : #'Roassal2-Core'
 }
+
+{ #category : #'as yet unclassified' }
+RTPopup class >> removeLastPopup [
+	lastPopup ifNil: [ ^ self ].
+	lastPopup remove.
+	self resetLastPopup. 
+]
 
 { #category : #'as yet unclassified' }
 RTPopup class >> text: aBlockOrSymbol [
@@ -14,11 +22,24 @@ RTPopup class >> text: aBlockOrSymbol [
 
 { #category : #hooks }
 RTPopup >> createElementFor: element [
-	| el labelShape |
-	el := RTElement on: (text rtValue: element).
-	labelShape := RTLabel new color: Color black. 
-	el + labelShape.
-	^ el
+	| g |
+	g := RTGroup new.
+	groupBlock value: g value: element.
+	^ g
+]
+
+{ #category : #'as yet unclassified' }
+RTPopup >> getNewPopupFor: element [
+	| popupGroup |
+	popupGroup := self createPopupFor: element.
+	popupGroup do: [ :e | element view add: e. e trachelShape setAsFixed ].
+	element trachelShape signalUpdate.
+	^ popupGroup
+]
+
+{ #category : #'as yet unclassified' }
+RTPopup >> group: aTwoArgBlock [
+	groupBlock := aTwoArgBlock
 ]
 
 { #category : #'as yet unclassified' }
@@ -28,11 +49,31 @@ RTPopup >> initialize [
 ]
 
 { #category : #accessing }
+RTPopup >> simpleText: aOneArgBlock [
+	self group: [ :group :element | 
+		group add: 
+			(RTLabel new 
+				color: Color black;
+				text: (aOneArgBlock rtValue: element model)) element
+		] 
+
+]
+
+{ #category : #accessing }
 RTPopup >> text: aOneArgBlock [
-	^ self textElement: [ :e | aOneArgBlock rtValue: e model ]
+	self textElement: [ :el | aOneArgBlock rtValue: el model ]
 ]
 
 { #category : #accessing }
 RTPopup >> textElement: aOneArgBlock [
-	text := aOneArgBlock
+	self group: [ :group :element | 
+		| backRectangle lbl |
+		backRectangle := (RTBox new color: (Color gray alpha: 0.3); borderColor: Color black) element.
+		lbl := (RTLabel new 
+				color: Color black;
+				text: (aOneArgBlock rtValue: element)) element.
+		RTNest new centerOn: backRectangle elements: (Array with: lbl).
+		group add: backRectangle; add: lbl
+		] 
+
 ]

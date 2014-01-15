@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #utility }
-RTNest >> centerOn: backElement element: elements [
+RTNest >> centerOn: backElement elements: elements [
 	| encompassingRectangle off |
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
@@ -60,7 +60,7 @@ RTNest >> on: backElement nest: elements [
 	 - make the inner elements draggable"
 	
 	layout ifNotNil: [ layout on: elements ].
-	self centerOn: backElement element: elements.
+	self centerOn: backElement elements: elements.
 	self makeElements: elements draggableBy: backElement.
 
 ]

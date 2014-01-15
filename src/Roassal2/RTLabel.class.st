@@ -9,6 +9,12 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #configuration }
+RTLabel >> defaultColor [
+
+	^ Color black
+]
+
 { #category : #'instance creation' }
 RTLabel >> defaultText [
 	^ [ :e | e model asString ]

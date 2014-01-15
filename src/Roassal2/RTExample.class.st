@@ -606,7 +606,61 @@ RTExample >> popup1 [
 	v @ RTDraggableView.
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
 	els @ (RTPopup new textElement: [ :e | e model printString ]).
+	els @ RTDraggable.
 	els on: TRMouseClick do: [ :evt | evt element inspect ].
+	v addAll: els.
+	RTGridLayout on: els.
+	v open.
+
+]
+
+{ #category : #popup }
+RTExample >> popupView1 [
+	"
+	self new popupView1
+	"
+	| v els |
+	v := RTView new.
+	v @ RTDraggableView.
+	els := (RTBox new size: 20) elementsOn: (1 to: 100).
+	els + RTLabel.
+	
+	els @ (RTPopup new group: [ :group :el |
+		el model timesRepeat: [
+			group add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element ].
+		RTGridLayout on: group. ]).
+	
+	els @ RTDraggable.
+	
+	v addAll: els.
+	RTGridLayout on: els.
+	v open.
+
+]
+
+{ #category : #popup }
+RTExample >> popupView2 [
+	"
+	self new popupView2
+	"
+	| v els background |
+	v := RTView new.
+	v @ RTDraggableView.
+	els := (RTBox new size: 20) elementsOn: (1 to: 100).
+	els + RTLabel.
+	
+	els @ (RTPopup new group: [ :group :el |
+		el model timesRepeat: [
+			group add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element ].
+		RTGridLayout on: group.		
+		background := (RTBox new color: (Color white alpha: 0.5)) element.
+	
+		RTNest new centerOn: background elements: group.
+		group add: background.	
+		 ]).
+	
+	els @ RTDraggable.
+	
 	v addAll: els.
 	RTGridLayout on: els.
 	v open.

@@ -15,7 +15,7 @@ Class {
 { #category : #adding }
 RTShapedObject >> + aRTShape [
 	"Add a Roassal shape, class or instance of it. Not that a Trachel cannot be given as argument"
-	self addShape: aRTShape
+	self addShape: aRTShape instance
 ]
 
 { #category : #adding }
