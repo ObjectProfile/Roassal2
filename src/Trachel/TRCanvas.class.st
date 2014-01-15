@@ -243,6 +243,8 @@ TRCanvas >> setAsFixed: aShape [
 
 { #category : #accessing }
 TRCanvas >> shapeForPosition: position [
+
+
 	fixedShapes reverseDo: [ :s | 
 		(s includesPoint: position) ifTrue: [ ^ s ] ].
 

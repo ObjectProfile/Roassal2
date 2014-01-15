@@ -123,6 +123,11 @@ TRComposedShape >> shape2: aTRShape [
 ]
 
 { #category : #'as yet unclassified' }
+TRComposedShape >> signalUpdate [
+	shape1 signalUpdate
+]
+
+{ #category : #'as yet unclassified' }
 TRComposedShape >> width [
 	^ self encompassingRectangle width
 ]
