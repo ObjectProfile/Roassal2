@@ -1135,3 +1135,14 @@ VersionOfRoassal2 >> version000059 [
 	at: #date put: '15 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000060 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.41';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.58';
+	at: #version put: '0.61';
+	at: #comment put: '0.61 : Added popup. Removed RTGenericPopup. It is not necessary';
+	at: #date put: '15 January 2014';
+	yourself
+]
