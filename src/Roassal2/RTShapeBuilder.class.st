@@ -44,12 +44,12 @@ RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 
 	| oldBlockOrValue |
 	oldBlockOrValue := self fillColor.
-	^self fillColor: [ :aModel | (conditionBlock roValue: aModel)
-									ifTrue: [ colorBlock roValue: aModel ] 
+	^self fillColor: [ :aModel | (conditionBlock rtValue: aModel)
+									ifTrue: [ colorBlock rtValue: aModel ] 
 									ifFalse: [ 
 										"Having to create a new element is rather ugly. 
 										Ideally, the oldBlockOrValue has to be 'unwrapped' for the translation"
-										oldBlockOrValue roValue: (ROElement on: aModel) ]].
+										oldBlockOrValue rtValue: (RTElement on: aModel) ]].
 							
 						
 

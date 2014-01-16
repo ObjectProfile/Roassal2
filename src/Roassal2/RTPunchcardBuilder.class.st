@@ -106,11 +106,11 @@ RTPunchcardBuilder >> renderOn: aView [
 		m := metric first.
 		name := metric second.
 		"thresholds :=  self thresholdsFor: metric."
-		normalizer := RONColorLinearNormalizer inContext: (models collect: [:obj | m rtValue: obj]) lowColor: minColor highColor: maxColor.
+		normalizer := RTNColorLinearNormalizer inContext: (models collect: [:obj | m rtValue: obj]) lowColor: minColor highColor: maxColor.
 		models do: [ :obj |
 			| circle metricValue |
 			metricValue := m rtValue: obj.
-			circle := ((RTEllipse new size: metricValue ) color: (normalizer roValue: metricValue)) elementOn: obj.
+			circle := ((RTEllipse new size: metricValue ) color: (normalizer rtValue: metricValue)) elementOn: obj.
 			circle @ (RTPopup text: [ :roElement | (popupText value: obj  value: name value: metricValue) asString ]).
 			aView add: circle.
 			 ].
