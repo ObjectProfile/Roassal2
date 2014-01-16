@@ -48,7 +48,7 @@ RTDependencyAnalyzerBuilderExample >> roassalAndTrachel [
 	| b |
 	b := RTDependencyAnalyzerBuilder new. 
 	b shape circle
-				size: 10;
+				size: [ :cls | cls numberOfMethods ];
 				fillColor: (Color red alpha: 0.3);
 				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
 	b addClasses: RTObject withAllSubclasses.
