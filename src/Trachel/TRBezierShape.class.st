@@ -39,6 +39,11 @@ TRBezierShape >> encompassingRectangle [
 	^ Rectangle encompassing: listOfPoints
 ]
 
+{ #category : #'as yet unclassified' }
+TRBezierShape >> points [
+	^ listOfPoints copy
+]
+
 { #category : #public }
 TRBezierShape >> points: points [
 	listOfPoints := points
@@ -50,4 +55,10 @@ TRBezierShape >> points: aListOfPoints color: aColor [
 	self points: aListOfPoints.
 	self strokePaint: aColor.
 	self color: aColor
+]
+
+{ #category : #actions }
+TRBezierShape >> translateBy: aPoint [
+	listOfPoints := listOfPoints collect: [ :p | p:=p+aPoint ]
+
 ]
