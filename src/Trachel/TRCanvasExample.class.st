@@ -102,6 +102,47 @@ TRCanvasExample >> menu1 [
 	canvas open
 ]
 
+{ #category : #'rotating labels' }
+TRCanvasExample >> r1 [
+
+| v shape |
+v := RTView new.
+1 to: 4 do: [ :i |
+	shape := RTRotatedLabel new.
+	shape text: 'Hello World'.
+	shape angleInDegree: 0.
+	v add: shape element.
+].
+RTGridLayout on: v elements.
+v add: (RTBox new color: (Color yellow alpha: 0.3); size: 10) element.
+v open
+]
+
+{ #category : #'rotating labels' }
+TRCanvasExample >> r2 [
+
+| t label box |
+t := TRCanvas new.
+1 to: 100 by: 25 do: [ :angle |
+	label := TRRotatedLabelShape new.
+	label text: 'Hello World Bonjour Monde'.
+	label color: Color black.
+	label position: 50 @ 50.
+	label angleInDegree: angle.
+	t addShape: label ].
+
+box := TRBoxShape new.
+box from: 45 @ 45 to: 55 @ 55.
+box color: (Color blue alpha: 0.5).
+t addShape: box.
+
+box := TRBoxShape new.
+box from: -5 @ -5 to: 5 @ 5.
+box color: (Color yellow alpha: 0.5).
+t addShape: box.
+t open
+]
+
 { #category : #examples }
 TRCanvasExample >> rec1 [
 	"
