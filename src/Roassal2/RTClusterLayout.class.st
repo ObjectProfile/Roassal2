@@ -47,6 +47,8 @@ RTClusterLayout >> computePosition: aNode [
 RTClusterLayout >> doExecute: nodeElements [ 
 
 	| root gap |
+	"Not much to do if there is only one element"
+	nodeElements size = 1 ifTrue: [ ^ self ].
 	
 	root := self rootNodesFor: nodeElements .
 	root do: [ :e | self initializeNode: e ].
