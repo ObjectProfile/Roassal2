@@ -1,6 +1,6 @@
 Class {
 	#name : #RTView,
-	#superclass : #RTObject,
+	#superclass : #RTAnnounceableObject,
 	#instVars : [
 		'elements',
 		'edges',
@@ -9,13 +9,6 @@ Class {
 	],
 	#category : #'Roassal2-Core'
 }
-
-{ #category : #adding }
-RTView >> @ anInteractionClassOrInstance [
-	"Add an interaction to the node"
-	
-	self addInteraction: anInteractionClassOrInstance
-]
 
 { #category : #adding }
 RTView >> add: anElementOrAnEdge [
@@ -42,11 +35,6 @@ RTView >> addEdge: anEdge [
 { #category : #adding }
 RTView >> addElement: anElement [
 	elements add: anElement
-]
-
-{ #category : #adding }
-RTView >> addInteraction: anInteractionClassOrInstance [
- 	anInteractionClassOrInstance initializeElement: self
 ]
 
 { #category : #menu }
@@ -88,6 +76,9 @@ RTView >> initialize [
 	animations := OrderedCollection new.
 	edges := OrderedCollection new.
 	trCanvas := TRCanvas new.
+	
+	"Share my announcer with the one of the Trachel Canvas"
+	announcer := trCanvas announcer.
 ]
 
 { #category : #'accessing-computed' }
@@ -103,6 +94,11 @@ RTView >> numberOfElements [
 { #category : #'instance creation' }
 RTView >> open [
 	^ self setUpCanvas open
+]
+
+{ #category : #'as yet unclassified' }
+RTView >> openInWindowSized: anExtentAsPoint [
+	^ self setUpCanvas openInWindowSized: anExtentAsPoint
 ]
 
 { #category : #'instance creation' }

@@ -1,9 +1,8 @@
 Class {
 	#name : #RTShapedObject,
-	#superclass : #RTObject,
+	#superclass : #RTAnnounceableObject,
 	#instVars : [
 		'shape',
-		'announcer',
 		'trachelShape',
 		'attributes',
 		'view',
@@ -19,18 +18,6 @@ RTShapedObject >> + aRTShape [
 ]
 
 { #category : #adding }
-RTShapedObject >> @ anInteractionClassOrInstance [
-	"Add an interaction to the node"
-	
-	self addInteraction: anInteractionClassOrInstance
-]
-
-{ #category : #adding }
-RTShapedObject >> addInteraction: anInteractionClassOrInstance [
- 	anInteractionClassOrInstance initializeElement: self
-]
-
-{ #category : #adding }
 RTShapedObject >> addShape: aRTShape [
 	(shape class == RTNoShape)  
 		ifTrue: [	shape := aRTShape instance ]
@@ -42,17 +29,6 @@ RTShapedObject >> addShape: aRTShape [
 { #category : #adding }
 RTShapedObject >> addedIn: aView [
 	self subclassReponsibility
-]
-
-{ #category : #announce }
-RTShapedObject >> announce: evt [
-	self announcer announce: evt
-]
-
-{ #category : #accessing }
-RTShapedObject >> announcer [
-	announcer ifNil: [ announcer := Announcer new ].
-	^ announcer
 ]
 
 { #category : #attributes }
@@ -100,11 +76,6 @@ RTShapedObject >> model [
 RTShapedObject >> model: anObject [
 	"anObject could be any Smalltalk object. Shapes are computed based on that object"
 	model := anObject
-]
-
-{ #category : #interaction }
-RTShapedObject >> on: evt do: aBlock [
-	self announcer on: evt do: aBlock
 ]
 
 { #category : #rendering }
