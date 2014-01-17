@@ -1168,3 +1168,14 @@ VersionOfRoassal2 >> version000062 [
 	at: #date put: '16 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000063 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.43';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.61';
+	at: #version put: '0.64';
+	at: #comment put: '0.64 : worked on the constraint, added the vectorial edition example. Fixed bug in TRMorph...';
+	at: #date put: '17 January 2014';
+	yourself
+]
