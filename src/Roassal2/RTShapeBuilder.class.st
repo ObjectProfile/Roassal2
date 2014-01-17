@@ -104,5 +104,5 @@ RTShapeBuilder >> shape: aRoassalShape [
 
 { #category : #shapes }
 RTShapeBuilder >> withText [
-	shape := RTLabel new + shape
+	shape := shape + RTLabel new
 ]
