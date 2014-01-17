@@ -96,6 +96,11 @@ RTShape >> fillColor: arg [
 	^ self color: arg
 ]
 
+{ #category : #accessing }
+RTShape >> fillColorElement: arg [
+	^ self colorElement: arg
+]
+
 { #category : #initialization }
 RTShape >> initialize [
 	super initialize.

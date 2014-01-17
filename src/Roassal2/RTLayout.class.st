@@ -139,7 +139,7 @@ RTLayout >> executeOnElements: elements [
 
 { #category : #utils }
 RTLayout >> fatherOf: aNode [
-	^ aNode attributes at: #father
+	^ aNode attributes at: #father ifAbsent: [ nil ]
 ]
 
 { #category : #utils }
