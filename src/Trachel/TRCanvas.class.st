@@ -188,8 +188,16 @@ TRCanvas >> on: event do: aBlock [
 
 { #category : #'instance creation' }
 TRCanvas >> open [
+	^ self openInWindowSized: 500 @ 500
+]
+
+{ #category : #'instance creation' }
+TRCanvas >> openInWindowSized: anExtentAsPoint [
+	| window |
 	self buildMorph.
-	^ morph openInWindow
+	window := morph openInWindow.
+	window extent: anExtentAsPoint.
+	^ window
 ]
 
 { #category : #animations }

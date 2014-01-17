@@ -30,6 +30,14 @@ TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
 
 ]
 
+{ #category : #util }
+TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
+
+	| windowSize |
+	windowSize := trachelShape canvas extent.
+	trachelShape translateTo: ((trachelShape width / 2) @ (windowSize y - (trachelShape height / 2)))
+]
+
 { #category : #camera }
 TRConstraint class >> moveCameraToTheRightIn: trachelCanvas [
 	^ trachelCanvas camera translateTo: (trachelCanvas extent x / -2) @ trachelCanvas camera position y
@@ -59,6 +67,13 @@ TRConstraint class >> stick: aShape onTheCenterOf: anotherShape [
 	anotherShape addCallback: 
 		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheCenterOf: anotherShape ]) 
 	
+]
+
+{ #category : #public }
+TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
+	trachelShape canvas
+		on: TRResizeCanvasEvent
+		do: [ :event | self moveAtTheBottomOfTheWindow: trachelShape ]
 ]
 
 { #category : #camera }

@@ -211,7 +211,7 @@ TRMorph >> rtMouseClick: evt [
 	ev shape: shape.
 	ev morph: self.
 	
-	ev position: relativePosition.
+	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
 	shape announce: ev.
 	
 ]
