@@ -29,11 +29,16 @@ TRAbstractBoxShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: -1 @ -1;
+				moveTo: rectangle topLeft;
+				lineTo: rectangle topRight;
+				lineTo: rectangle bottomRight;
+				lineTo: rectangle bottomLeft;
+				lineTo: rectangle topLeft.
+				"moveTo: -1 @ -1;
 				lineTo: 1 @ -1;
 				lineTo: 1 @ 1;
 				lineTo: -1 @ 1;
-				lineTo: -1 @ -1 ]
+				lineTo: -1 @ -1" ]
 ]
 
 { #category : #drawing }
@@ -42,9 +47,9 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 		ifFalse: [ ^ self ].
 	athensCanvas pathTransform
 		restoreAfter: [ 
-			athensCanvas pathTransform
+			"athensCanvas pathTransform
 				translateBy: rectangle center;
-				scaleBy: rectangle extent / 2.
+				scaleBy: rectangle extent / 2."
 			athensCanvas
 				setPaint: color;
 				drawShape: self path.
@@ -53,9 +58,12 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
+	| scale |
+	scale := self canvas camera scale.
 	^ strokePaint
 		ifNotNil: [ 
-			(athensCanvas setStrokePaint: strokePaint) width: (4 / (rectangle extent x + 10)) asFloat.
+			"4 / (rectangle extent x + 10)"
+			(athensCanvas setStrokePaint: strokePaint) width: (1 / (scale )) asFloat.
 			athensCanvas drawShape: path ]
 ]
 
