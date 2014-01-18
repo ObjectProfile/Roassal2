@@ -1,16 +1,19 @@
 Class {
 	#name : #RTMondrianViewBuilder,
-	#superclass : #RTObject,
+	#superclass : #RTBuilder,
 	#instVars : [
-		'view',
 		'topLevelNodes',
 		'nesting',
 		'topLevelEdges',
-		'shapeBuilder',
-		'interactionBuilder'
+		'layout'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
+
+{ #category : #layout }
+RTMondrianViewBuilder >> applyLayout [
+	self layout on: self topLevelNodes edges: self topLevelEdges 
+]
 
 { #category : #private }
 RTMondrianViewBuilder >> edgeShape [
@@ -34,23 +37,35 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 
 { #category : #layout }
 RTMondrianViewBuilder >> gridLayout [
-	RTGridLayout on: topLevelNodes
+	self layout: RTGridLayout
 ]
 
 { #category : #layout }
 RTMondrianViewBuilder >> horizontalLineLayout [
-	RTHorizontalLineLayout on: topLevelNodes
+	self layout: RTHorizontalLineLayout
 ]
 
 { #category : #initialization }
 RTMondrianViewBuilder >> initialize [
 	super initialize.
-	view := RTView new.
-	view @ RTDraggableView.
+	self resetView.
+	self resetShapeBuilder.
+	
 	topLevelNodes := OrderedCollection new.
 	topLevelEdges := OrderedCollection new.
 	nesting := 0.
-	shapeBuilder := RTShapeBuilder new.
+	
+]
+
+{ #category : #accessing }
+RTMondrianViewBuilder >> layout [
+	layout ifNil: [ layout := RTHorizontalLineLayout new ].
+	^ layout
+]
+
+{ #category : #accessing }
+RTMondrianViewBuilder >> layout: aLayout [
+	layout := aLayout
 ]
 
 { #category : #private }
@@ -65,7 +80,9 @@ RTMondrianViewBuilder >> nodes: objects [
 	view addAll: elements.
 	elements @ RTDraggable.
 	topLevelNodes addAll: elements.
-	shapeBuilder reset.
+
+	"Do we really want to reset the shape builder? Users often find this disturbing"
+	self resetShapeBuilder.
 	^ elements
 ]
 
@@ -76,6 +93,7 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 	| nodes allElements addedElements oldTopLevelNodes oldTopLevelEdges |
 	nodes := self nodes: objects.
 	nodes do: [ :n | 
+		| oldShapeBuilder |
 		"self push."
 		"self horizontalLineLayout.		
 		self createNewInteractionBuilder."
@@ -83,6 +101,9 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		topLevelNodes := OrderedCollection new.
 		oldTopLevelEdges := topLevelEdges.
 		topLevelEdges := OrderedCollection new.
+		
+		oldShapeBuilder := shapeBuilder.
+		self resetShapeBuilder.
 		
 		nesting := nesting + 1.
 		allElements := view elements.	
@@ -99,6 +120,8 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 
 		RTNest new
 			on: n nest: addedElements.
+
+		shapeBuilder := oldShapeBuilder.
 		 ].
 	"self unsetShape."
 	^ nodes
@@ -106,7 +129,28 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 
 { #category : #'instance creation' }
 RTMondrianViewBuilder >> open [
+	self applyLayout.
 	^ view open
+]
+
+{ #category : #initialization }
+RTMondrianViewBuilder >> resetShapeBuilder [
+	shapeBuilder := RTShapeBuilder new.
+	shapeBuilder rectangle
+						fillColor: Color white;
+						borderColor: Color black. 
+]
+
+{ #category : #initialization }
+RTMondrianViewBuilder >> resetView [
+	view := RTView new.
+	view @ RTDraggableView.
+	view canvas color: Color white
+]
+
+{ #category : #accessing }
+RTMondrianViewBuilder >> topLevelEdges [
+	^ topLevelEdges
 ]
 
 { #category : #accessing }
@@ -116,7 +160,7 @@ RTMondrianViewBuilder >> topLevelNodes [
 
 { #category : #layout }
 RTMondrianViewBuilder >> treeLayout [
-	RTTreeLayout on: topLevelNodes edges: topLevelEdges
+	self layout: RTTreeLayout new
 ]
 
 { #category : #adding }

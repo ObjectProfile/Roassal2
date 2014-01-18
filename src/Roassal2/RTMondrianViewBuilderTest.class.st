@@ -23,6 +23,12 @@ RTMondrianViewBuilderTest >> testBasic [
 	self assert: builder view numberOfEdges = 4.
 ]
 
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testDefaultLayout [
+
+	self assert: builder layout class == RTHorizontalLineLayout
+]
+
 { #category : #basic }
 RTMondrianViewBuilderTest >> testNesting [
 
