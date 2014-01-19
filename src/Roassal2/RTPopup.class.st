@@ -68,7 +68,7 @@ RTPopup >> text: aOneArgBlock [
 RTPopup >> textElement: aOneArgBlock [
 	self group: [ :group :element | 
 		| backRectangle lbl |
-		backRectangle := (RTBox new color: (Color gray alpha: 0.3); borderColor: Color black) element.
+		backRectangle := (RTBox new color: (Color gray alpha: 0.9); borderColor: Color black) element.
 		lbl := (RTLabel new 
 				color: Color black;
 				text: (aOneArgBlock rtValue: element)) element.

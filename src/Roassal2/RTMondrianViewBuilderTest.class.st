@@ -29,6 +29,55 @@ RTMondrianViewBuilderTest >> testDefaultLayout [
 	self assert: builder layout class == RTHorizontalLineLayout
 ]
 
+{ #category : #edges }
+RTMondrianViewBuilderTest >> testEdgesFrom [
+
+	| view |
+	builder nodes: (Array with: 1 with: 2).
+	builder edgesFrom: [ :v | v - 1 ].
+	view := builder view.
+	
+	self assert: view numberOfElements equals: 2.
+	self assert: view numberOfEdges equals: 1.
+	
+	self assert: view edges anyOne shape class == RTLine
+]
+
+{ #category : #edges }
+RTMondrianViewBuilderTest >> testEdgesFromToAll [
+
+	| view edge nodes |
+	builder nodes: (Array with: 1 with: 2).
+	builder edges: (Array with: 1) from: #yourself toAll: (Array with: 2).
+	view := builder view.
+	
+	self assert: view numberOfElements equals: 2.
+	self assert: view numberOfEdges equals: 1.
+	
+	edge := view edges anyOne.
+	nodes := view elements.
+	self assert: edge from == nodes first.
+	self assert: edge to == nodes second.
+	self assert: edge shape class == RTLine
+]
+
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testLayoutAndTreeLayout [
+	| view |
+	builder nodes: (Array with: 'hello') forEach: [ :e |
+		
+		builder nodes: (1 to: 5).
+		builder shape line color: Color black.
+		builder edges: (Array with: 1) from: #yourself toAll: (1 to: 5).
+		builder treeLayout. 
+		].
+	builder gridLayout.
+	builder applyLayout.
+	
+	view := builder view.
+	self assert: (view elementFromModel: 1) position ~= (view elementFromModel: 2) position
+]
+
 { #category : #basic }
 RTMondrianViewBuilderTest >> testNesting [
 
@@ -101,4 +150,18 @@ RTMondrianViewBuilderTest >> testTopLevelObjects [
 
 	builder nodes: (1 to: 5).
 	self assert: builder topLevelObjects asArray = (1 to: 5) asArray
+]
+
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testTreeLayout [
+
+	| b |
+	b := RTMondrianViewBuilder new.
+	b nodes: (1 to: 5).
+	b shape line color: Color black.
+	b edges: (Array with: 1) from: #yourself toAll: (1 to: 5).
+	b treeLayout. 
+	b applyLayout.
+	"There are 5 different position, one for each element"
+	self assert: (b view elements collect: #position) asSet size = 5
 ]

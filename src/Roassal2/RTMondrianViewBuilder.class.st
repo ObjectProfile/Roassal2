@@ -5,7 +5,8 @@ Class {
 		'topLevelNodes',
 		'nesting',
 		'topLevelEdges',
-		'layout'
+		'layout',
+		'lineShapeBuilder'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
@@ -22,8 +23,7 @@ RTMondrianViewBuilder >> clusterLayout [
 
 { #category : #private }
 RTMondrianViewBuilder >> edgeShape [
-	shapeBuilder shape: (RTLine new).
-	^ shapeBuilder shape
+	^ lineShapeBuilder shape
 ]
 
 { #category : #'adding - edges' }
@@ -41,8 +41,45 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 ]
 
 { #category : #'adding - edges' }
+RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
+	"- objects is the collection of from which the edges are defined from.
+	- fromBlock will be called on each entity of the collection and return one edge source each time.
+	- toAllBlock will be called similarly to return a collection of destination correpsonding to each source.
+	Note that there is no restriction on the entities of aCollection, as long as aFromBlock returns a node and aToBlock returns a collection of nodes.
+	For example:
+	  aView edges: someFamixInvocations from: #sender toAll: #candidates
+
+	Or:
+	
+	| collection |
+	collection := #(1 2 3 4 5 6 7 8 9 10).
+	builder shape label.
+	builder nodes: collection.
+	builder edges: collection from: #yourself toAll: (collection select: #odd).
+	builder circleLayout
+		
+	aToBlock should return a collection, edges will be drawn from the entity returned by aFromBlock to this collection"
+	
+	| es |
+	es := RTEdge 
+		buildEdgesFromObjects: objects 
+		from: fromBlock 
+		toAll: toAllBlock 
+		using: self edgeShape
+		inView: view 
+		scope: (RTGroup new addAll: topLevelNodes; yourself).
+	topLevelEdges addAll: es
+]
+
+{ #category : #'adding - edges' }
 RTMondrianViewBuilder >> edgesFrom: fromBlock [
 	^ self edges: self topLevelObjects from: fromBlock to: #yourself
+
+]
+
+{ #category : #'adding - edges' }
+RTMondrianViewBuilder >> edgesFrom: object toAll: objects [
+	^ self edges: (Array with: object) from: #yourself toAll: objects
 
 ]
 
@@ -61,6 +98,7 @@ RTMondrianViewBuilder >> initialize [
 	super initialize.
 	self resetView.
 	self resetShapeBuilder.
+	self resetLineShapeBuilder.
 	self resetInteractionBuilder.
 	
 	topLevelNodes := OrderedCollection new.
@@ -125,7 +163,7 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		"We identify all the inner elements and edges"
 		addedElements := view elements copyWithoutAll: allElements.
 		addedEdges := view edges copyWithoutAll: allEdges.
-		
+
 		self applyLayout.
 
 		RTNest new
@@ -155,6 +193,13 @@ RTMondrianViewBuilder >> resetInteractionBuilder [
 	interactionBuilder := RTInteractionBuilder new.
 	interactionBuilder 
 		draggable; popup
+]
+
+{ #category : #initialization }
+RTMondrianViewBuilder >> resetLineShapeBuilder [
+	lineShapeBuilder := RTShapeBuilder new.
+	lineShapeBuilder line
+		color: Color gray 
 ]
 
 { #category : #initialization }

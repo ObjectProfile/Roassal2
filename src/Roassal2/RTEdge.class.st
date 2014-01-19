@@ -178,6 +178,30 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 
 ]
 
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toAllBlock operate on the model of the elements"
+
+	| edges fromElement toElement |
+	objects isEmpty ifTrue: [ ^ #() ].
+	edges := RTGroup new.
+	objects do: [ :object |
+		fromElement := aGroup elementFromModel: (fromBlock rtValue: object).
+		(toAllBlock rtValue: object) do: [ :toObject |
+			toElement := aGroup elementFromModel: toObject.
+			(fromElement notNil and: [ toElement notNil ])
+				ifTrue: [  
+					(fromElement ~~ toElement) ifTrue: 
+						[ | edge |
+						edge := RTEdge from: fromElement to: toElement. 
+						edge + aLineShape.
+						edges add: edge.
+						view add: edge ] ] ] ].
+	^ edges
+
+]
+
 { #category : #public }
 RTEdge class >> from: fromEl to: toEl [
 	^ self new from: fromEl; to: toEl; yourself
