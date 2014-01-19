@@ -63,7 +63,7 @@ TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 	^ strokePaint
 		ifNotNil: [ 
 			"4 / (rectangle extent x + 10)"
-			(athensCanvas setStrokePaint: strokePaint) width: (1 / (scale )) asFloat.
+			(athensCanvas setStrokePaint: strokePaint) width: (1.5 / (scale )) asInteger.
 			athensCanvas drawShape: path ]
 ]
 
