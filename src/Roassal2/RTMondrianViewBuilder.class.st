@@ -15,13 +15,18 @@ RTMondrianViewBuilder >> applyLayout [
 	self layout on: self topLevelNodes edges: self topLevelEdges 
 ]
 
+{ #category : #layout }
+RTMondrianViewBuilder >> clusterLayout [
+	self layout: RTClusterLayout new
+]
+
 { #category : #private }
 RTMondrianViewBuilder >> edgeShape [
 	shapeBuilder shape: (RTLine new).
 	^ shapeBuilder shape
 ]
 
-{ #category : #adding }
+{ #category : #'adding - edges' }
 RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 
 	| es |
@@ -33,6 +38,12 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 		inView: view 
 		scope: (RTGroup new addAll: topLevelNodes; yourself).
 	topLevelEdges addAll: es
+]
+
+{ #category : #'adding - edges' }
+RTMondrianViewBuilder >> edgesFrom: fromBlock [
+	^ self edges: self topLevelObjects from: fromBlock to: #yourself
+
 ]
 
 { #category : #layout }
@@ -50,6 +61,7 @@ RTMondrianViewBuilder >> initialize [
 	super initialize.
 	self resetView.
 	self resetShapeBuilder.
+	self resetInteractionBuilder.
 	
 	topLevelNodes := OrderedCollection new.
 	topLevelEdges := OrderedCollection new.
@@ -73,12 +85,14 @@ RTMondrianViewBuilder >> nodeShape [
 	^ shapeBuilder shape
 ]
 
-{ #category : #adding }
+{ #category : #'adding - nodes' }
 RTMondrianViewBuilder >> nodes: objects [
 	| elements |
 	elements := shapeBuilder elementsOn: objects.
 	view addAll: elements.
-	elements @ RTDraggable.
+
+	interactionBuilder setUpElements: elements.
+
 	topLevelNodes addAll: elements.
 
 	"Do we really want to reset the shape builder? Users often find this disturbing"
@@ -86,42 +100,45 @@ RTMondrianViewBuilder >> nodes: objects [
 	^ elements
 ]
 
-{ #category : #adding }
+{ #category : #'adding - nodes' }
 RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 	"Create a set of nodes, each representing an element of objects. Each node then acts as a view on its own."
 
-	| nodes allElements addedElements oldTopLevelNodes oldTopLevelEdges |
+	| nodes allElements addedElements oldTopLevelNodes oldTopLevelEdges oldShapeBuilder allEdges addedEdges |
 	nodes := self nodes: objects.
 	nodes do: [ :n | 
-		| oldShapeBuilder |
-		"self push."
-		"self horizontalLineLayout.		
-		self createNewInteractionBuilder."
+		"We push"
 		oldTopLevelNodes := topLevelNodes.
 		topLevelNodes := OrderedCollection new.
 		oldTopLevelEdges := topLevelEdges.
 		topLevelEdges := OrderedCollection new.
-		
+		nesting := nesting + 1.
 		oldShapeBuilder := shapeBuilder.
 		self resetShapeBuilder.
 		
-		nesting := nesting + 1.
+		"We remember all the elements before adding the inner ones"
 		allElements := view elements.	
+		allEdges := view edges.
+		
 		aOneArgBlock rtValue: n model.
-		topLevelNodes := oldTopLevelNodes.
-		topLevelEdges := oldTopLevelEdges.
-		
-		nesting := nesting - 1.
+
+		"We identify all the inner elements and edges"
 		addedElements := view elements copyWithoutAll: allElements.
+		addedEdges := view edges copyWithoutAll: allEdges.
 		
-		"Check if they are all at the same position. If this is the case, then we need to do the layout"
-		(addedElements allSatisfy: [ :aNode | aNode position = addedElements anyOne position ])
-			ifTrue: [ RTHorizontalLineLayout on: addedElements ].
+		self applyLayout.
 
 		RTNest new
 			on: n nest: addedElements.
 
+		addedElements do: [ :e | e trachelShape pushFront ].
+		
+		"We pop"
 		shapeBuilder := oldShapeBuilder.
+		topLevelNodes := oldTopLevelNodes.
+		topLevelEdges := oldTopLevelEdges.		
+		nesting := nesting - 1.
+
 		 ].
 	"self unsetShape."
 	^ nodes
@@ -131,6 +148,13 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 RTMondrianViewBuilder >> open [
 	self applyLayout.
 	^ view open
+]
+
+{ #category : #initialization }
+RTMondrianViewBuilder >> resetInteractionBuilder [
+	interactionBuilder := RTInteractionBuilder new.
+	interactionBuilder 
+		draggable; popup
 ]
 
 { #category : #initialization }
@@ -158,12 +182,17 @@ RTMondrianViewBuilder >> topLevelNodes [
 	^ topLevelNodes
 ]
 
+{ #category : #accessing }
+RTMondrianViewBuilder >> topLevelObjects [
+	^ self topLevelNodes collect: #model
+]
+
 { #category : #layout }
 RTMondrianViewBuilder >> treeLayout [
 	self layout: RTTreeLayout new
 ]
 
-{ #category : #adding }
+{ #category : #'adding - nodes' }
 RTMondrianViewBuilder >> use [
 	^ shapeBuilder ifNil: [ shapeBuilder := RTShapeBuilder new ]
 ]

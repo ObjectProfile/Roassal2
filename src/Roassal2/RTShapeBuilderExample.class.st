@@ -1,6 +1,6 @@
 Class {
 	#name : #RTShapeBuilderExample,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#category : #'Roassal2-Builder-Common'
 }
 

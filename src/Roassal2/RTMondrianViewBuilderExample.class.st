@@ -19,19 +19,37 @@ RTMondrianViewBuilderExample >> basic [
 ]
 
 { #category : #example }
+RTMondrianViewBuilderExample >> classes [
+
+	"
+	self new classes
+	"
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape rectangle 
+				withBorder;
+				width: #numberOfVariables;
+				height: #numberOfMethods;
+				fillColor: Color white.
+	b nodes: RTObject withAllSubclasses.
+	b gridLayout.
+	b open
+]
+
+{ #category : #example }
 RTMondrianViewBuilderExample >> nestedTrees [
 	"
 	self new nestedTrees
 	"
 	| b |
 	b := RTMondrianViewBuilder new.
-	b use rectangle.
-	b nodes: ((1 to: 10)) forEach: [ :each |
-		b nodes: (each to: (each + 10)).
-		b edges: (each to: (each + 10)) from: [ :v | v // 2 ] to: #yourself.
-		b treeLayout.
+	
+	b nodes: (1 to: 100 by: 10) forEach: [ :each |
+		b nodes: (1 to: each).
+		b edgesFrom: [ :v | v // 2 ].
+		b clusterLayout.
 	].
-	b horizontalLineLayout.
+	b gridLayout.
 	b open
 ]
 
@@ -43,8 +61,9 @@ RTMondrianViewBuilderExample >> nesting [
 	| b |
 	b := RTMondrianViewBuilder new.
 	
-	b nodes: (1 to: 10 by: 5) forEach: [ :each |
-		b nodes: (each to: (each + 4)).
+	b nodes: (1 to: 10) forEach: [ :each |
+		b nodes: (1 to: (each)).
+		b gridLayout.
 	].
 "	b horizontalLineLayout."
 	b open

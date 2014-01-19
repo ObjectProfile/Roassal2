@@ -1,6 +1,6 @@
 Class {
 	#name : #RTShapeBuilder,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'shape'
 	],
@@ -100,6 +100,11 @@ RTShapeBuilder >> shape [
 RTShapeBuilder >> shape: aRoassalShape [
 	shape := aRoassalShape.
 	
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> withBorder [
+	self borderColor: Color black
 ]
 
 { #category : #shapes }
