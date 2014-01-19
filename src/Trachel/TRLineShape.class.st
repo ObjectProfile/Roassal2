@@ -18,6 +18,16 @@ TRLineShape >> computePath [
 				lineTo: to ]
 ]
 
+{ #category : #'as yet unclassified' }
+TRLineShape >> drawOn: athensCanvas [
+
+	athensCanvas pathTransform restoreAfter: [
+		athensCanvas
+			setStrokePaint: strokePaint;
+			drawShape: self path  ]
+		"(athensCanvas setStrokePaint: strokePaint) width: (1.5 / (scale )) asInteger."
+]
+
 { #category : #accessing }
 TRLineShape >> encompassingRectangle [
 	^ Rectangle encompassing: (Array with: from with: to)
