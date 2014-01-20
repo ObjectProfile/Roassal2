@@ -81,6 +81,28 @@ TRShape >> computePath [
 ]
 
 { #category : #drawing }
+TRShape >> drawEncompassingRectangleOn: athensCanvas [
+	"debugging purpose"
+	self drawEncompassingRectangleOn: athensCanvas color: (Color blue alpha: 0.2)
+]
+
+{ #category : #drawing }
+TRShape >> drawEncompassingRectangleOn: athensCanvas color: aColor [
+	"debugging purpose"
+ 	| r tpath |
+	r := self encompassingRectangle.
+	tpath := athensCanvas
+				createPath: [ :builder | 
+					builder absolute; moveTo: r topLeft; lineTo: r topRight; 
+							lineTo: r bottomRight; lineTo: r bottomLeft; lineTo: r topLeft ].
+	athensCanvas pathTransform
+		restoreAfter: [ 
+			athensCanvas
+				setPaint: aColor;
+				drawShape: tpath ].
+]
+
+{ #category : #drawing }
 TRShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [

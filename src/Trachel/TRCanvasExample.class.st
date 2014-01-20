@@ -54,6 +54,32 @@ TRCanvasExample >> circle2 [
 	c open
 ]
 
+{ #category : #'rotating labels' }
+TRCanvasExample >> fiveLabelFlowers [
+	"
+	self new fiveLabelFlowers.
+	"
+	| t label box |
+	t := TRCanvas new.
+	t color: Color white.
+
+	{0 @ 0. 150 @ 150. -150 @ -150. 150 @ -150. -150 @ 150} do: [ :position |
+		1 to: 180 by: 25 do: [ :angle |
+			box := TRBoxShape new.
+			box from: position -1 to: position + 1.
+			box color: (Color blue alpha: 0.5).
+			t addShape: box.
+			
+			label := TRRotatedLabelShape new.
+			label text: 'Hello World Bonjour Monde'.
+			label color: Color black.
+			label position: position.
+			label angleInDegree: angle.
+			t addShape: label ] ].
+	
+	t open
+]
+
 { #category : #examples }
 TRCanvasExample >> fixedRec [
 	"
@@ -102,47 +128,6 @@ TRCanvasExample >> menu1 [
 	canvas open
 ]
 
-{ #category : #'rotating labels' }
-TRCanvasExample >> r1 [
-
-| v shape |
-v := RTView new.
-1 to: 4 do: [ :i |
-	shape := RTRotatedLabel new.
-	shape text: 'Hello World'.
-	shape angleInDegree: 0.
-	v add: shape element.
-].
-RTGridLayout on: v elements.
-v add: (RTBox new color: (Color yellow alpha: 0.3); size: 10) element.
-v open
-]
-
-{ #category : #'rotating labels' }
-TRCanvasExample >> r2 [
-
-| t label box |
-t := TRCanvas new.
-1 to: 100 by: 25 do: [ :angle |
-	label := TRRotatedLabelShape new.
-	label text: 'Hello World Bonjour Monde'.
-	label color: Color black.
-	label position: 50 @ 50.
-	label angleInDegree: angle.
-	t addShape: label ].
-
-box := TRBoxShape new.
-box from: 45 @ 45 to: 55 @ 55.
-box color: (Color blue alpha: 0.5).
-t addShape: box.
-
-box := TRBoxShape new.
-box from: -5 @ -5 to: 5 @ 5.
-box color: (Color yellow alpha: 0.5).
-t addShape: box.
-t open
-]
-
 { #category : #examples }
 TRCanvasExample >> rec1 [
 	"
@@ -155,6 +140,40 @@ TRCanvasExample >> rec1 [
 	c buildRectangle: ((80 @ 80) extent: (150 @ 75)) color: Color lightGreen.
 	c buildLineFrom: 50 @ 50 to: 80 @ 80 color: Color lightGreen.
 	c open
+]
+
+{ #category : #'rotating labels' }
+TRCanvasExample >> rotated45gridLayout [
+	"
+	self new rotated45gridLayout.
+	"
+	| v shape |
+	v := RTView new.
+	1 to: 20 do: [ :i |
+			shape := RTRotatedLabel new.
+			shape text: 'Hello World'.
+			shape angleInDegree: 45.
+			v add: shape element.
+	].
+	RTGridLayout on: v elements.
+	v open
+]
+
+{ #category : #'rotating labels' }
+TRCanvasExample >> rotated90gridLayout [
+	"
+	self new rotated90gridLayout.
+	"
+	| v shape |
+	v := RTView new.
+	1 to: 20 do: [ :i |
+			shape := RTRotatedLabel new.
+			shape text: 'Hello World'.
+			shape angleInDegree: 90.
+			v add: shape element.
+	].
+	RTGridLayout on: v elements.
+	v open
 ]
 
 { #category : #examples }

@@ -26,18 +26,30 @@ TRLabelShape class >> widthOfText: aString fontSize: aNumber [
 	^ (self getFontForSize: aNumber) widthOfString: aString
 ]
 
+{ #category : #accessing }
+TRLabelShape >> ascent [
+	^ font ascent
+]
+
 { #category : #initialization }
 TRLabelShape >> defaultFontSize [
 	^ self class defaultFontSize
 ]
 
+{ #category : #accessing }
+TRLabelShape >> descent [
+	^ font descent
+]
+
 { #category : #drawing }
 TRLabelShape >> drawOn: athensCanvas [
- 
+	"self drawEncompassingRectangleOn: athensCanvas color: (Color gray alpha: 0.1)."
 	athensCanvas pathTransform restoreAfter: [
 		"Draw the label centered on the position"
-		athensCanvas pathTransform 
-			translateBy: position asIntegerPoint + ((self width / -2) @ (self height / 2)) asIntegerPoint.
+		athensCanvas pathTransform
+			translateBy: position asIntegerPoint;
+			translateBy: ((self width / -2) @ (self height / 2)) asIntegerPoint;
+			translateBy: (0 @ self descent negated) asIntegerPoint.
 			"scaleBy: (fontSize / 10)."
 		athensCanvas setFont: font.
 		athensCanvas setPaint: color.
@@ -50,7 +62,7 @@ TRLabelShape >> encompassingRectangle [
 	| w h |
 	w := self width.
 	h := self height.
-	^ (position - ((w @ h) / 2)) extent: (w @ h)
+	^ position + ((w / -2) @ (h / -2)) extent: (w @ h)
 ]
 
 { #category : #accessing }
