@@ -41,7 +41,7 @@ RTLabelTest >> testHeight2 [
 RTLabelTest >> testLabel [
 	| label1 label2 el |
 	label1 := RTLabel new.
-	label2 := RTLabel new text: [ :e | e model, '2' ].
+	label2 := RTLabel new textElement: [ :e | e model, '2' ].
 	el := RTElement on: 'hello'.
 	self assert: (label1 textFor: el) = 'hello'.
 	self assert: (label2 textFor: el) = 'hello2'.
@@ -50,7 +50,7 @@ RTLabelTest >> testLabel [
 { #category : #tests }
 RTLabelTest >> testLabelAndElement [
 	| label el |
-	label := RTLabel new text: [ :e | e model ].
+	label := RTLabel new textElement: [ :e | e model ].
 	el := label elementOn: 'hello'.
 	self assert: el width = (label widthFor: el)
 ]

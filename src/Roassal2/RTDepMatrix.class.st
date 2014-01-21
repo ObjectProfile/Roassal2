@@ -36,8 +36,11 @@ RTDepMatrix >> renderIn: aView [
 	vertical do: [ :v |
 		horizontal do: [ :h |
 			(function value: v value: h) ifTrue: [ 
-				el := (RTBox new size: 5; color: Color gray) element.
-				el translateTo: (x * 5) @ (y * 5).
+				| size |
+				"el := (RTBox new size: 5; color: Color gray) element."
+				el := shapeBuilder elementOn: nil.
+				size := el width.
+				el translateTo: (x * size) @ (y * size).
 				aView add: el.
 			].
 			x := x + 1.

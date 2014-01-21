@@ -64,7 +64,8 @@ RTShapedObject >> hasAttributes [
 { #category : #initialization }
 RTShapedObject >> initialize [
 	super initialize.
-	shape := RTNoShape new
+	shape := RTNoShape new.
+	trachelShape := TRNoShape instance
 ]
 
 { #category : #accessing }
