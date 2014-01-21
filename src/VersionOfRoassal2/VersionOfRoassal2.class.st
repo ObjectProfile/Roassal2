@@ -1278,3 +1278,14 @@ VersionOfRoassal2 >> version000072 [
 	at: #date put: '21 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000073 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.50';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.70';
+	at: #version put: '0.74';
+	at: #comment put: '0.74 : an element has always a tr shape. Tests are now all green';
+	at: #date put: '21 January 2014';
+	yourself
+]
