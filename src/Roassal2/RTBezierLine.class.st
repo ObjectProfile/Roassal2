@@ -14,8 +14,8 @@ RTBezierLine >> controllingElements [
 ]
 
 { #category : #'as yet unclassified' }
-RTBezierLine >> controllingElements: listof4Elements [
-	controllingElements := listof4Elements
+RTBezierLine >> controllingElements: listofElements [
+	controllingElements := listofElements
 ]
 
 { #category : #'as yet unclassified' }

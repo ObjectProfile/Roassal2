@@ -13,7 +13,13 @@ RTRotatedLabel >> angleFor: element [
 ]
 
 { #category : #'as yet unclassified' }
-RTRotatedLabel >> angleInDegree: aValueOrABlock [
+RTRotatedLabel >> angleInDegree: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self angleInDegreeElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #'as yet unclassified' }
+RTRotatedLabel >> angleInDegreeElement: aValueOrABlock [
 	"The argument will be evaluated against the model"
 	angle := aValueOrABlock
 ]

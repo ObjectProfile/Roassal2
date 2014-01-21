@@ -38,7 +38,13 @@ RTLabel >> initialize [
 ]
 
 { #category : #accessing }
-RTLabel >> text: aStringOrABlock [
+RTLabel >> text: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self textElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTLabel >> textElement: aStringOrABlock [
 
 	text := aStringOrABlock
 ]
