@@ -290,8 +290,6 @@ ConfigurationOfRoassal2 >> versionDevelopment: spec [
 			timestamp: '2013-05-09'.
 		
 		spec
-			package: 'MyProject-Core'  with: 'MyProject-Core-JohnDoe.152';
-			package: 'MyProject-Tests' with: 'MyProject-Tests-JohnDoe.173';
 			"note that for the 'dev' version we rely on the #development version of the external FuleMetalevel project"
 			project: 'FuelMetalevel'   with: #development ].
 ]
