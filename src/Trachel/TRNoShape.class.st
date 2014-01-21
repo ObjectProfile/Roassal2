@@ -4,8 +4,17 @@ This implements the Null Pattern for a Trachel shape.
 Class {
 	#name : #TRNoShape,
 	#superclass : #TRShape,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #Trachel
 }
+
+{ #category : #'as yet unclassified' }
+TRNoShape class >> instance [
+	instance ifNil: [ instance := self new ].
+	^ instance
+]
 
 { #category : #accessing }
 TRNoShape >> center [
