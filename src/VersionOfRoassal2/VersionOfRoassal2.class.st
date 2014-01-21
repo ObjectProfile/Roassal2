@@ -1267,3 +1267,14 @@ VersionOfRoassal2 >> version000071 [
 	at: #date put: '19 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000072 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-JurajKubelka.49';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.69';
+	at: #version put: '0.73';
+	at: #comment put: '0.73 : Rotated label shape. finally!';
+	at: #date put: '21 January 2014';
+	yourself
+]
