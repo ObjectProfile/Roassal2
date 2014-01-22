@@ -77,3 +77,46 @@ RTDependencyAnalyzerBuilderExample >> roassalAndTrachel2 [
 
 	b open
 ]
+
+{ #category : #examples }
+RTDependencyAnalyzerBuilderExample >> roassalAndTrachel3 [
+	"
+	self new roassalAndTrachel3
+	"
+
+	| b |
+	b := RTDependencyAnalyzerBuilder new. 
+	b shape circle
+				size: [ :cls | (cls numberOfMethods) max: 5 ];
+				fillColor: (Color red alpha: 0.3);
+				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
+	b addClasses: RTObject withAllSubclasses.
+	b addClasses: TRObject withAllSubclasses.
+	b 
+		dependencyFromAllClassesMatching: [ :cls | true ] 
+		toAllClassesMatching: [ :cls | true ].
+	b layout: (RTForceBasedLayout new charge: -50; length: 50).
+	b open.
+]
+
+{ #category : #examples }
+RTDependencyAnalyzerBuilderExample >> roassalAndTrachel4 [
+	"
+	self new roassalAndTrachel4
+	"
+
+	| b |
+	b := RTDependencyAnalyzerBuilder new. 
+	b shape circle
+				size: [ :cls | (cls numberOfMethods) max: 5 ];
+				fillColor: (Color red alpha: 0.3);
+				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
+	b addClasses: RTObject withAllSubclasses.
+	b addClasses: TRObject withAllSubclasses.
+	b 
+		dependencyFromAllClassesMatching: [ :cls | ('RT*' match: cls name) ] 
+		toAllClassesMatching: [ :cls | ('TR*' match: cls name) ].
+	b open.
+	b view @ RTDraggableView.
+	b view addAnimation: (RTSpringLayoutStepping new view: b view)
+]

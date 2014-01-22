@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'classesToAnalyze',
-		'dependencies'
+		'dependencies',
+		'layout'
 	],
 	#category : #'Roassal2-Builder-DependencyAnalyzer'
 }
@@ -32,6 +33,12 @@ RTDependencyAnalyzerBuilder >> initialize [
 	super initialize.
 	classesToAnalyze := OrderedCollection new.
 	dependencies := OrderedCollection new.
+	layout := RTClusterLayout new
+]
+
+{ #category : #accessing }
+RTDependencyAnalyzerBuilder >> layout: aLayout [
+	layout := aLayout
 ]
 
 { #category : #hooks }
@@ -50,7 +57,7 @@ RTDependencyAnalyzerBuilder >> renderIn: v [
 		using: (RTLine new color: (Color white alpha: 0.2)) inView: v.
 
 	"A nice layout"
-	RTClusterLayout on: v elements edges: v edges.
+	layout on: v elements edges: v edges.
 
 	"Add dependency edges"
 	depLinks := RTEdge 

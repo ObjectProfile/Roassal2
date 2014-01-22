@@ -21,7 +21,8 @@ RTSpringLayoutStepping >> initialize [
 
 { #category : #'as yet unclassified' }
 RTSpringLayoutStepping >> refresh [
-	layout step
+	layout step.
+	view canvas signalUpdate
 ]
 
 { #category : #'as yet unclassified' }
