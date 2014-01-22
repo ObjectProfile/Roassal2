@@ -111,7 +111,7 @@ RTForceBasedLayout >> accumulate: aQuad [
 																cx := cx + (e charge * e cx).
 																cy := cy + (e charge * e cy) ] ] ].
 												
-	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node position: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
+	aQuad node isNil ifFalse: [ aQuad leaf ifFalse: [ aQuad node translateTo: aQuad node position + (random next - 0.5 @ ( random next - 0.5)) ].
 								k := alpha * (self chargeOf: aQuad node).
 								aQuad charge: aQuad charge + k.
 								cx := cx + (k * aQuad node position x). 

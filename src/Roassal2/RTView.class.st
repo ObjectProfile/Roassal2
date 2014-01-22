@@ -101,6 +101,11 @@ RTView >> openInWindowSized: anExtentAsPoint [
 	^ self setUpCanvas openInWindowSized: anExtentAsPoint
 ]
 
+{ #category : #'as yet unclassified' }
+RTView >> openInWindowSized: anExtentAsPoint titled: aTitle [
+	^ self setUpCanvas openInWindowSized: anExtentAsPoint titled: aTitle
+]
+
 { #category : #'instance creation' }
 RTView >> openWithMenu [
 	self canvas addMenu: 'In' callback: [ RTZoomInMove on: self ].

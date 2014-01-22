@@ -216,7 +216,7 @@ RTElementTest >> testTrachelShape [
 { #category : #tests }
 RTElementTest >> testTranslationBy [
 	| el |
-	el := RTElement new.
+	el := RTBox element.
 	el translateBy: 15 @ 10.
 	self assert: el position = (15 @ 10).
 
@@ -228,7 +228,7 @@ RTElementTest >> testTranslationBy [
 { #category : #tests }
 RTElementTest >> testTranslationTo [
 	| el |
-	el := RTElement new.
+	el := RTBox element.
 	el translateTo: 15 @ 10.
 	self assert: el position = (15 @ 10)
 ]

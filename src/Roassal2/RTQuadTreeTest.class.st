@@ -36,8 +36,8 @@ RTQuadTreeTest >> setUp [
 	super setUp.
 	nodes := OrderedCollection new.
 	
-	(0 to: 10) do: [ :e | nodes add: (RTElement new translateTo: e @ e); 
-								add: (RTElement new translateTo: e @ (10 - e)) ].
+	(0 to: 10) do: [ :e | nodes add: (RTBox element translateTo: e @ e); 
+								add: (RTBox element translateTo: e @ (10 - e)) ].
 	
 	quad := RTQuadTree withAll: nodes.
 ]
@@ -48,7 +48,7 @@ RTQuadTreeTest >> testCreate [
 	| quadrants points |
 	points :=  Array with: 0@0 with: 0@5 with: 5@0 with: 5@5.
 	
-	nodes := points collect: [ :pos | RTElement new translateTo: pos ].
+	nodes := points collect: [ :pos | RTBox element translateTo: pos ].
 	quad := RTQuadTree withAll: nodes.
 	
 	quadrants := quad nodes.
@@ -70,7 +70,7 @@ RTQuadTreeTest >> testLeaf [
 RTQuadTreeTest >> testRectangle [
 	| points |
 	points := Array with:  0@5 with: 5@0 with: 10@5 with: 5@5.
-	nodes := points collect: [ :e | RTElement new translateTo: e ].
+	nodes := points collect: [ :e | RTBox element translateTo: e ].
 	quad := RTQuadTree withAll: nodes.
 	
 	self assert: quad origin = (0@0).
@@ -81,7 +81,7 @@ RTQuadTreeTest >> testRectangle [
 RTQuadTreeTest >> testSquare [
 	| points |
 	points := Array with:  0@5 with: 5@0 with: 10@5 with: 5@5.	
-	nodes := points collect: [ :pos | RTElement new translateTo: pos ].
+	nodes := points collect: [ :pos | RTBox element translateTo: pos ].
 	quad := RTQuadTree withAll: nodes.
 	
 	self assert: quad origin = (0@0).
