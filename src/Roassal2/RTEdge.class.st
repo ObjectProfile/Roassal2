@@ -233,10 +233,14 @@ RTEdge >> from: anElement [
 
 { #category : #actions }
 RTEdge >> remove [
-	to connectedEdges remove: self.
-	from connectedEdges remove: self.
-	view removeEdge: self.
-	view := nil
+	(to connectedEdges includes: self) 
+		ifTrue: [to connectedEdges remove: self].
+	(from connectedEdges includes: self)
+		ifTrue: [from connectedEdges remove: self].
+	(view isNil)
+		ifFalse: [  
+			view removeEdge: self.
+			view := nil]
 ]
 
 { #category : #accessing }
