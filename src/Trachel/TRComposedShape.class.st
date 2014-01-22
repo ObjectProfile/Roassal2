@@ -13,121 +13,133 @@ TRComposedShape class >> with: s1 with: s2 [
 	^ self new shape1: s1; shape2: s2; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRComposedShape >> addCallback: aCallback [
 	shape1 addCallback: aCallback.
 	shape2 addCallback: aCallback
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRComposedShape >> addedIn: aCanvas [
 	aCanvas addShape: shape1.
 	aCanvas addShape: shape2.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 TRComposedShape >> announce: anEvent [
 	shape1 announce: anEvent.
 	shape2 announce: anEvent.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> announcer [
 	self error: 'should not be called'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> announcer: anAnnouncer [
 	shape1 announcer: anAnnouncer.
 	shape2 announcer: anAnnouncer.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
 	shape1 canvas: aSurface.
 	shape2 canvas: aSurface
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 TRComposedShape >> computePath [
 	shape1 computePath.
 	shape2 computePath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRComposedShape >> drawOn: athensCanvas [
 
 	shape1 drawOn: athensCanvas.
 	shape2 drawOn: athensCanvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> element [
 	^ shape1 element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> element: anObject [
 	"anObject could be any kind of object. A shape has a reference to an object, typically the object odel that the trachel shape represents"
 	shape1 element: anObject.
 	shape2 element: anObject.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> encompassingRectangle [
 	^ Rectangle merging: (Array with: shape1 encompassingRectangle with: shape2 encompassingRectangle)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> height [
 	^ self encompassingRectangle height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRComposedShape >> includesPoint: aPoint [
 	^ (shape1 includesPoint: aPoint) or: [ shape2 includesPoint: aPoint ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
+TRComposedShape >> initialize [
+	super initialize.
+	shape1 := TRNoShape instance.
+	shape2 := TRNoShape instance.
+]
+
+{ #category : #events }
 TRComposedShape >> on: event do: aBlock [
 	shape1 announcer on: event do: aBlock.
 	shape2 announcer on: event do: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+TRComposedShape >> position [
+	^ (shape1 position + shape2 position) / 2
+]
+
+{ #category : #actions }
 TRComposedShape >> remove [
 	shape1 remove.
 	shape2 remove
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> shape1 [
 	^ shape1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> shape1: aTRShape [
 	shape1 := aTRShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> shape2 [
 	^ shape2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> shape2: aTRShape [
 	shape2 := aTRShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRComposedShape >> signalUpdate [
 	shape1 signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRComposedShape >> width [
 	^ self encompassingRectangle width
 ]

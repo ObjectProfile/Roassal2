@@ -318,6 +318,13 @@ TRCanvasTest >> testLine [
 
 ]
 
+{ #category : #shapes }
+TRCanvasTest >> testPositionWithShapes [
+
+	TRShape allSubclasses do: [ :c |
+		self assert: c new position = (0 @ 0) ]
+]
+
 { #category : #'fixed shape' }
 TRCanvasTest >> testRemovingFixedElement [
 	| c r |

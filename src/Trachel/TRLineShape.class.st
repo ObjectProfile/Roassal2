@@ -18,7 +18,7 @@ TRLineShape >> computePath [
 				lineTo: to ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRLineShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
@@ -62,6 +62,18 @@ TRLineShape >> from: aPoint to: anotherPoint color: aColor [
 { #category : #testing }
 TRLineShape >> includesPoint: aPoint [
 	^ aPoint onLineFrom: from to: to within: 3
+]
+
+{ #category : #'as yet unclassified' }
+TRLineShape >> initialize [
+	super initialize.
+	from := 0 @ 0.
+	to := 0 @ 0
+]
+
+{ #category : #accessing }
+TRLineShape >> position [
+	^ ((from + to) / 2)
 ]
 
 { #category : #accessing }

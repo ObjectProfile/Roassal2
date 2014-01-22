@@ -200,6 +200,19 @@ TRCanvas >> openInWindowSized: anExtentAsPoint [
 	^ window
 ]
 
+{ #category : #'instance creation' }
+TRCanvas >> openInWindowSized: anExtentAsPoint titled: aTitle [
+	| window |
+	window := self openInWindowSized: anExtentAsPoint.
+	window setLabel: aTitle.
+	^ window
+]
+
+{ #category : #'instance creation' }
+TRCanvas >> openTitled: aTitle [
+	^ self openInWindowSized: 500 @ 500 titled: aTitle
+]
+
 { #category : #animations }
 TRCanvas >> playAnimations [
 	| shouldClean |

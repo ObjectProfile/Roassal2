@@ -40,6 +40,12 @@ TRBezierShape >> encompassingRectangle [
 ]
 
 { #category : #'as yet unclassified' }
+TRBezierShape >> initialize [
+	super initialize.
+	listOfPoints := Array with: 0 @ 0 with: 0 @ 0
+]
+
+{ #category : #accessing }
 TRBezierShape >> points [
 	^ listOfPoints copy
 ]
@@ -55,6 +61,11 @@ TRBezierShape >> points: aListOfPoints color: aColor [
 	self points: aListOfPoints.
 	self strokePaint: aColor.
 	self color: aColor
+]
+
+{ #category : #accessing }
+TRBezierShape >> position [
+	^ self encompassingRectangle center
 ]
 
 { #category : #actions }

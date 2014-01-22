@@ -189,6 +189,11 @@ TRShape >> path [
 	^ path
 ]
 
+{ #category : #accessing }
+TRShape >> position [
+	self subclassReponsibility
+]
+
 { #category : #actions }
 TRShape >> pushBack [
 	canvas pushBack: self

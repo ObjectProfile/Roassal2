@@ -41,6 +41,11 @@ TRNoShape >> height [
 	^ 0
 ]
 
+{ #category : #accessing }
+TRNoShape >> position [
+	^ 0 @ 0
+]
+
 { #category : #actions }
 TRNoShape >> translateBy: aPoint [
 	"do nothing"

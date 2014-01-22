@@ -28,7 +28,7 @@ TRCanvasExample >> circle [
 	100 to: 200 by: 20 do: [ :i |
 		 c buildCircleFrom: 50 @ 50 to: i @ 100 color: (Color red alpha: 0.1).
 	].
-	c open.
+	c openTitled: 'Example with transparent circles'.
 	
 
 ]

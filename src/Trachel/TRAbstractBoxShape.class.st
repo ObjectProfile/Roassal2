@@ -140,6 +140,11 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 ]
 
 { #category : #accessing }
+TRAbstractBoxShape >> position [ 
+	^ rectangle center
+]
+
+{ #category : #accessing }
 TRAbstractBoxShape >> rectangle [
 	^ rectangle
 ]
