@@ -22,3 +22,8 @@ RTAnimation >> hasCompleted [
 RTAnimation >> refresh [
 
 ]
+
+{ #category : #actions }
+RTAnimation >> start [
+	"Do be overriden"
+]

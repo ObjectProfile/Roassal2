@@ -310,6 +310,27 @@ RTExample >> edition [
 	view open
 ]
 
+{ #category : #layout }
+RTExample >> forceBasedLayout [
+
+| v classes edges | 
+v := RTView new.
+classes := (RTEllipse new size: 10) elementsOn: Collection withAllSubclasses.
+classes @ RTDraggable.
+v addAll: classes.
+
+edges := RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass  to: #yourself  inView: v.
+
+edges do: [ :e | e trachelShape pushBack ].
+
+"RTForceBasedLayout on: v elements edges: v edges."
+v addAnimation: (RTSpringLayoutStepping new view: v).
+v @ RTDraggableView.
+v open.
+
+
+]
+
 { #category : #groups }
 RTExample >> group1 [
 	"self new group1"
@@ -818,6 +839,8 @@ RTExample >> smoothLayout [
 	v canvas addMenu: 'circle' callback: [ RTCircleLayout new translator: translator; scaleBy: 0.8; on: v elements. v canvas signalUpdate ].
 	
 	v canvas addMenu: 'radial' callback: [ RTRadialTreeLayout new translator: translator; on: v elements. v canvas signalUpdate ].
+	
+"	v canvas addMenu: 'spring' callback: [ RTForceBasedLayout new translator: translator; on: v elements. v canvas signalUpdate ]."
 	
 	
 	v addAll: (RTBox new elementsOn: (1 to: 100)).
