@@ -1,0 +1,175 @@
+Class {
+	#name : #RTDowserBuilderTest,
+	#superclass : #TestCase,
+	#instVars : [
+		'builder'
+	],
+	#category : #'Roassal2-Builder-Dowser'
+}
+
+{ #category : #initialization }
+RTDowserBuilderTest >> initialize [
+	builder := RTDowserBuilder new.
+	
+]
+
+{ #category : #initialization }
+RTDowserBuilderTest >> setUp [
+	super setUp.
+	builder := RTDowserBuilder new.
+	
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testAssignMissing1 [
+	builder left: (1 to: 20).
+	builder assignMissing: [:v |  v + 2] from: (builder left).
+	
+	self assert: builder right size equals: (builder left size). 
+	self assert: builder right size equals: (builder models size).
+	self assert: builder right first model equals: 3.
+	self assert: builder right last model equals: 22.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testAssignMissing2 [
+	builder left: (1 to: 20).
+	builder assignMissing: #ln from: (builder left).
+	
+	self assert: builder right size equals: (builder left size). 
+	self assert: builder right size equals: (builder models size).
+	self assert: builder right first model equals: 0.0.
+	self assert: builder right last model ceiling equals: 3.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testAssignMissing3 [
+	builder left: {'hola' . 'chao'}.
+	builder assignMissing: [:a | a asOrderedCollection] from: (builder left).
+	
+	self assert: builder right size equals: 5. "without duplicated letters"
+	self assert: builder right first model equals: $h.
+	self assert: builder right last model equals: $c.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testAssociation [
+	builder label: [ :c | c name asString].
+	builder height: #numberOfMethods.
+	builder color: #numberOfLinesOfCode.
+	builder onLeftAndRight: Number withAllSubclasses.
+	builder edgesTo: #allSubclasses.
+	
+	self assert: builder left size equals: (builder right size). 
+	self assert: builder left first outgoingEdges size equals: 0.
+	self assert: builder distance equals: 400.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testCheckFromTo [
+	|b1 b2 b3 b4|
+	b1 := [ :v | v + 1 ].
+	b2 := [ :a :b | a = (b - 1)].
+	b3 := #asString.
+	b4 := [ :a | 1 to: a ].
+	
+	self assert: (builder check: b1 from: 1 to: 2). 
+	self assert: ((builder check: b1 from: 2 to: 1) not).
+	self assert: (builder check: b2 from: 1 to: 2).
+	self assert: ((builder check: b2 from: 2 to: 1) not).
+	self assert: (builder check: b3 from: 1 to: '1').
+	self assert: ((builder check: b3 from: '1' to: 1) not).
+	self assert: (builder check: b4 from: 5 to: 2).
+	self assert: ((builder check: b4 from: 2 to: 5) not).
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testConstruction [
+	builder models: { 'a' . 'b' . 'c' }.
+	builder edgesTo: #yourself.
+	
+	self assert: builder labelLeft equals: #asString. 
+	self assert: builder left size equals: builder right size. 
+	self assert: builder viewWidth equals: 402. 
+	self assert: builder legend equals: 'Roassal Dowser'.
+	self assert: builder title equals: 'RoassalDowser'.
+	self assert: builder body equals: ''.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testControlPoint2With [
+	| e1 e2 e3 e4 p1 p2 p3 p4 |
+	e1 := ((ROElement on: 1) + (ROBox new)).
+	e2 := ((ROElement on: 2) + (ROBox new)).
+	e3 := ((ROElement on: 3) + (ROBox new)).
+	e4 := ((ROElement on: 4) + (ROBox new)).
+	e2 translateTo: 0@100.
+	e3 translateTo: 100@0.
+	e4 translateTo: 100@100.
+	p1 := builder controlPoint: e1 with: e4. 
+	p2 := builder controlPoint: e4 with: e1.
+	p3 := builder controlPoint: e2 with: e3.
+	p4 := builder controlPoint: e3 with: e2.
+	self assert: p1 x equals: 5.
+	self assert: p1 y equals: (205/2).
+	self assert: p2 x equals: 100.
+	self assert: p2 y equals: 0.
+	self assert: p3 x equals: 5.
+	self assert: p3 y equals: (5/2).
+	self assert: p4 x equals: 100.
+	self assert: p4 y equals: 100.			
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testControlPointWith [
+	| e1 e2 e3 e4 p1 p2 p3 p4 |
+	e1 := ((ROElement on: 1) + (ROBox new)).
+	e2 := ((ROElement on: 2) + (ROBox new)).
+	e3 := ((ROElement on: 3) + (ROBox new)).
+	e4 := ((ROElement on: 4) + (ROBox new)).
+	e2 translateTo: 0@100.
+	e3 translateTo: 100@0.
+	e4 translateTo: 100@100.
+	p1 := builder controlPoint: e1 with: e4. 
+	p2 := builder controlPoint: e4 with: e1.
+	p3 := builder controlPoint: e2 with: e3.
+	p4 := builder controlPoint: e3 with: e2.
+	self assert: p1 x equals: 5.
+	self assert: p1 y equals: (205/2).
+	self assert: p2 x equals: 100.
+	self assert: p2 y equals: 0.
+	self assert: p3 x equals: 5.
+	self assert: p3 y equals: (5/2).
+	self assert: p4 x equals: 100.
+	self assert: p4 y equals: 100.			
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testLeft [
+	builder left: (1 to: 20).
+	
+	self assert: builder right size equals: 0. 
+	self assert: builder left size equals: (builder models size). 
+	self assert: builder left first model equals: 1.
+	self assert: builder left last model equals: 20.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testLeftAndRight [
+	builder onLeftAndRight: (1 to: 20).
+	
+	self assert: builder left size equals: (builder right size). 
+	self assert: builder right size equals: (builder models size / 2). 
+	self assert: builder right first model equals: (builder left first model).
+	self assert: builder right last model equals: (builder left last model).
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testRight [
+	builder onLeftAndRight: (1 to: 20).
+	
+	self assert: builder left size equals: (builder right size). 
+	self assert: builder right size equals: (builder models size / 2). 
+	self assert: builder right first model equals: (builder left first model).
+	self assert: builder right last model equals: (builder left last model).
+]
