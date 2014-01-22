@@ -13,33 +13,40 @@ Class {
 
 { #category : #specs }
 MorphicRoassalAdapter class >> defaultSpec [
-	<spec>
-	
-	^ #(RTView)
+
+	^ #(RTViewForSpec
+		whenLastEventChangedDo: #(model whenLastEventChangedBlock))
 ]
 
 { #category : #private }
 MorphicRoassalAdapter >> adapt: aComposableModel [
 
 	super adapt: aComposableModel.
+	
 	view := widget.
-	canvas := widget setUpCanvas.
+	canvas := view setUpCanvas.
 	widget := canvas buildMorph.
 	widget
+		setProperty: #model toValue: self;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	
-	self applyScript
+	self basicApplyScript
 	
 ]
 
 { #category : #private }
 MorphicRoassalAdapter >> applyScript [
-	
+
 	self freeCanvas.
-	
-	self model script
-		cull: view
+	self basicApplyScript
+]
+
+{ #category : #private }
+MorphicRoassalAdapter >> basicApplyScript [
+
+	self model script 
+		cull: view 
 		cull: canvas.
 		
 	self widgetDo: [ :w | w startStepping ]
@@ -48,6 +55,23 @@ MorphicRoassalAdapter >> applyScript [
 { #category : #private }
 MorphicRoassalAdapter >> freeCanvas [
 	
-	view elements do: [ :e | view removeElement: e ].	
-	self widgetDo: [ :w | w changed ]
+	view := RTViewForSpec new
+		whenLastEventChangedDo: self whenLastEventChangedBlock;
+		yourself.
+	canvas := view setUpCanvas.
+	widget extent: canvas extent.
+
+	widget canvas: canvas.
+]
+
+{ #category : #protocol }
+MorphicRoassalAdapter >> view [
+
+	^ view
+]
+
+{ #category : #protocol }
+MorphicRoassalAdapter >> whenLastEventChangedBlock [
+
+	^ [ :evt | self model lastEvent: evt ]
 ]

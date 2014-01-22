@@ -5,7 +5,8 @@ Class {
 	#name : #RoassalModel,
 	#superclass : #AbstractWidgetModel,
 	#instVars : [
-		'script'
+		'script',
+		'lastEvent'
 	],
 	#category : #Roassal2Spec
 }
@@ -23,8 +24,21 @@ RoassalModel >> initialize [
 
 	super initialize.
 
-	script := [ :view :canvas | ] asValueHolder.
-	script whenChangedDo: [ self refresh ]
+	script := [ :v :canvas | ] asValueHolder.
+	script whenChangedDo: [ :s | self refresh ].
+	lastEvent := nil asValueHolder.
+]
+
+{ #category : #accessing }
+RoassalModel >> lastEvent [
+
+	^ lastEvent value
+]
+
+{ #category : #accessing }
+RoassalModel >> lastEvent: aBlock [
+
+	lastEvent value: aBlock
 ]
 
 { #category : #protocol }
@@ -43,4 +57,10 @@ RoassalModel >> script [
 RoassalModel >> script: aBlock [
 
 	script value: aBlock
+]
+
+{ #category : #'protocol-events' }
+RoassalModel >> whenLastEventChangedDo: aBlock [
+
+	lastEvent whenChangedDo: aBlock
 ]
