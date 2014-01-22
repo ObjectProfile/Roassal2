@@ -1344,3 +1344,14 @@ VersionOfRoassal2 >> version000078 [
 	at: #date put: '22 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000079 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.52';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.77';
+	at: #version put: '0.80';
+	at: #comment put: '0.80 : bug in RTQuadTree fixed';
+	at: #date put: '22 January 2014';
+	yourself
+]
