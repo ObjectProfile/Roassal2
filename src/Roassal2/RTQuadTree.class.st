@@ -46,7 +46,7 @@ y
 "
 Class {
 	#name : #RTQuadTree,
-	#superclass : #ROObject,
+	#superclass : #RTObject,
 	#instVars : [
 		'charge',
 		'x',
@@ -62,13 +62,13 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTQuadTree class >> withAll: aNodeCollection [
 
 	^ self withAll: aNodeCollection origin: (aNodeCollection collect: [:e | e position x]) min @ (aNodeCollection collect: [:e | e position y]) min corner: (aNodeCollection collect: [:e | e position x]) max @ (aNodeCollection collect: [:e | e position y]) max
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTQuadTree class >> withAll: aNodeCollection origin: aPoint corner: anotherPoint [
 
 	| dx dy root |
