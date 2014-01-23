@@ -1,3 +1,6 @@
+"
+A RTDowserBuilderTest is the TestClase for RTDowserBuilder.
+"
 Class {
 	#name : #RTDowserBuilderTest,
 	#superclass : #TestCase,
@@ -106,18 +109,18 @@ RTDowserBuilderTest >> testControlPoint2With [
 	e2 translateTo: 0@100.
 	e3 translateTo: 100@0.
 	e4 translateTo: 100@100.
-	p1 := builder controlPoint: e1 with: e4. 
-	p2 := builder controlPoint: e4 with: e1.
-	p3 := builder controlPoint: e2 with: e3.
-	p4 := builder controlPoint: e3 with: e2.
-	self assert: p1 x equals: 5.
-	self assert: p1 y equals: (205/2).
-	self assert: p2 x equals: 100.
-	self assert: p2 y equals: 0.
-	self assert: p3 x equals: 5.
-	self assert: p3 y equals: (5/2).
-	self assert: p4 x equals: 100.
-	self assert: p4 y equals: 100.			
+	p1 := builder controlPoint2: e1 with: e4. 
+	p2 := builder controlPoint2: e4 with: e1.
+	p3 := builder controlPoint2: e2 with: e3.
+	p4 := builder controlPoint2: e3 with: e2.
+	self assert: p1 x equals: 50.
+	self assert: p1 y equals: 25.
+	self assert: p2 x equals: 50.
+	self assert: p2 y equals: 75.
+	self assert: p3 x equals: 50.
+	self assert: p3 y equals: 75.
+	self assert: p4 x equals: 50.
+	self assert: p4 y equals: 25.
 ]
 
 { #category : #tests }
@@ -134,14 +137,33 @@ RTDowserBuilderTest >> testControlPointWith [
 	p2 := builder controlPoint: e4 with: e1.
 	p3 := builder controlPoint: e2 with: e3.
 	p4 := builder controlPoint: e3 with: e2.
-	self assert: p1 x equals: 5.
-	self assert: p1 y equals: (205/2).
-	self assert: p2 x equals: 100.
-	self assert: p2 y equals: 0.
-	self assert: p3 x equals: 5.
-	self assert: p3 y equals: (5/2).
-	self assert: p4 x equals: 100.
-	self assert: p4 y equals: 100.			
+	self assert: p1 x equals: 25.
+	self assert: p1 y equals: 0.
+	self assert: p2 x equals: 75.
+	self assert: p2 y equals: 100.
+	self assert: p3 x equals: 25.
+	self assert: p3 y equals: 100.
+	self assert: p4 x equals: 75.
+	self assert: p4 y equals: 0.			
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testGreyLines [
+	builder label: [ :c | c name asString].
+	builder height: #numberOfMethods.
+	builder color: #numberOfLinesOfCode.
+	builder onLeftAndRight: Number withAllSubclasses.
+	builder edgesTo: #allSubclasses.
+	
+	builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 0.
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 0.	
+
 ]
 
 { #category : #tests }
@@ -162,6 +184,120 @@ RTDowserBuilderTest >> testLeftAndRight [
 	self assert: builder right size equals: (builder models size / 2). 
 	self assert: builder right first model equals: (builder left first model).
 	self assert: builder right last model equals: (builder left last model).
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testLines1 [
+	builder label: [ :c | c name asString].
+	builder height: #numberOfMethods.
+	builder color: #numberOfLinesOfCode.
+	builder onLeftAndRight: Number withAllSubclasses.
+	builder edgesTo: #allSubclasses.
+	
+	builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseClick.
+	self assert: builder left first outgoingEdges size equals: 2.
+	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil. 
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseClick.
+	self assert: builder left first outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil. 
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 0.
+	builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseClick.
+	self assert: builder left first outgoingEdges size equals: 2.
+	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil.
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseClick.
+	self assert: builder left first outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil.
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 0.
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testLines2 [
+	builder label: [ :c | c name asString].
+	builder height: #numberOfMethods.
+	builder color: #numberOfLinesOfCode.
+	builder onLeftAndRight: Number withAllSubclasses.
+	builder edgesTo: #allSubclasses.
+	
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseClick.
+	self assert: builder left last outgoingEdges size equals: 16.
+	self assert: ((builder popups at: (builder left last) ifAbsent: [nil]) model) equals: 8. 
+	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 16.
+	builder left last announce: TRMouseClick.
+	self assert: builder left last outgoingEdges size equals: 8.
+	self assert: (builder popups at: (builder left last) ifAbsent: [nil]) equals: nil.
+	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 0.	
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseClick.
+	self assert: builder left last outgoingEdges size equals: 16.
+	self assert: ((builder popups at: (builder left last) ifAbsent: [nil]) model) equals: 8. 
+	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 16.
+	builder left last announce: TRMouseClick.
+	self assert: builder left last outgoingEdges size equals: 8.
+	self assert: (builder popups at: (builder left last) ifAbsent: [nil]) equals: nil.
+	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 0.	
+]
+
+{ #category : #tests }
+RTDowserBuilderTest >> testLines3 [
+	builder label: [ :c | c name asString].
+	builder height: #numberOfMethods.
+	builder color: #numberOfLinesOfCode.
+	builder onLeftAndRight: Number withAllSubclasses.
+	builder edgesTo: #allSubclasses.
+	
+	builder right last announce: TRMouseEnter.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right last announce: TRMouseClick.
+	self assert: builder right last outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder right last) ifAbsent: [nil]) equals: nil.
+	builder right last announce: TRMouseLeave.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right first announce: TRMouseEnter.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right last announce: TRMouseClick.
+	self assert: builder right last outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder right last) ifAbsent: [nil]) equals: nil.
+	builder right first announce: TRMouseLeave.
+	self assert: builder right last outgoingEdges size equals: 0.	
+	builder right last announce: TRMouseEnter.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right last announce: TRMouseClick.
+	self assert: builder right last outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder right last) ifAbsent: [nil]) equals: nil. 
+	builder right last announce: TRMouseLeave.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right last announce: TRMouseEnter.
+	self assert: builder right last outgoingEdges size equals: 0.
+	builder right last announce: TRMouseClick.
+	self assert: builder right last outgoingEdges size equals: 0.
+	self assert: (builder popups at: (builder right last) ifAbsent: [nil]) equals: nil.
+	builder right last announce: TRMouseLeave.
+	self assert: builder right last outgoingEdges size equals: 0.	
 ]
 
 { #category : #tests }
