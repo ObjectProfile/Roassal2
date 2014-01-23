@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTInteractionBuilder >> draggable [
 	| i |
 	i := RTDraggable new.
@@ -15,32 +15,13 @@ RTInteractionBuilder >> draggable [
 	^ i
 ]
 
-{ #category : #public }
-RTInteractionBuilder >> highlight [
-		
-	self highlightColored: Color blue
-]
-
-{ #category : #public }
-RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
-	
-	self when: TRMouseEnter do: [ :event | 
-		RTBlink 
-			highlight: event element
-			color: (aColorOrAOneArgBlockOrSymbol rtValue: event element model) ].
-
-	self when: TRMouseLeave do: [ :event | 
-		RTBlink
-			unhighlight: event element ].
-]
-
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTInteractionBuilder >> initialize [
 	super initialize.
 	interactions := OrderedCollection new
 ]
 
-{ #category : #interaction }
+{ #category : #'as yet unclassified' }
 RTInteractionBuilder >> popup [
 	| i |
 	i := RTPopup new.
@@ -48,14 +29,9 @@ RTInteractionBuilder >> popup [
 	^ i
 ]
 
-{ #category : #building }
+{ #category : #'as yet unclassified' }
 RTInteractionBuilder >> setUpElements: elements [
 	"elements is an RTGroup, that contains RTElement or RTEdges"
 	
 	interactions do: [ :int | elements @ int ]
-]
-
-{ #category : #'events-registering' }
-RTInteractionBuilder >> when: event do: block [
-	interactions add: [ :element | element on: event do: block ]
 ]

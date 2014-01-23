@@ -55,19 +55,6 @@ RTShapedObject >> attributes [
 ]
 
 { #category : #attributes }
-RTShapedObject >> hasAttribute: aKey [ 
-	"Return true if attributes includes aKey"
-	
-	^ attributes notNil and: [ attributes includesKey: aKey ]
-]
-
-{ #category : #attributes }
-RTShapedObject >> hasAttributeAt: aKey ifAbsentPut: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
-]
-
-{ #category : #attributes }
 RTShapedObject >> hasAttributes [ 
 	"Return true if at least one attributes is present"
 	

@@ -22,7 +22,7 @@ RTGroup >> addedIn: view [
 { #category : #public }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
+	^ self detect: [ :el | el model == anObject ] ifNone: [ nil ]
 ]
 
 { #category : #public }

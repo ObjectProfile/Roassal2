@@ -214,12 +214,6 @@ RTElementTest >> testTrachelShape [
 ]
 
 { #category : #tests }
-RTElementTest >> testTrachelShape2 [
-
-	self assert: RTElement new trachelShape notNil.
-]
-
-{ #category : #tests }
 RTElementTest >> testTranslationBy [
 	| el |
 	el := RTBox element.

@@ -13,11 +13,16 @@ RTShapeBuilderExample >> example01 [
 	v := RTView new.
 	builder := RTShapeBuilder new.
 	builder circle 
-				size: 50; 
-				fillColor: (Color purple alpha: 0.3);
+				size: 20; 
+				fillColor: (RTNColorLinearNormalizer new
+									context: (Collection withAllSubclasses);
+									command: #numberOfMethods;
+									lowColor: Color green;
+									highColor: Color red);
 				withText.
-	v addAll: (builder elementsOn: (1 to: 50)).
-	RTCellLayout on: v elements.
+				
+	v addAll: (builder elementsOn: Collection withAllSubclasses).
+	RTCellLayout new gapSize: 1; on: v elements.
 	v open
 ]
 
