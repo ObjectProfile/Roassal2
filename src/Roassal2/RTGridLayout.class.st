@@ -21,18 +21,17 @@ Class {
 { #category : #hook }
 RTGridLayout >> doExecute: elements [
 	| pointer lineItemCount lineItemSize maxLastLineHeight originalGapLeft originalGapTop |
-	originalGapLeft := 0.
-	originalGapTop := 0.
+	originalGapLeft := self paddingLeftFor: elements.
+	originalGapTop := self paddingTopFor: elements.
 	
 	pointer := originalGapLeft @ originalGapTop.
 	lineItemSize := self lineItemsCountBlock rtValue: elements.
 	lineItemCount := 0.
 	maxLastLineHeight := 0.
-
 	elements
 		do: [ :element | 
-			translator translateTopLeftOf: element to: pointer.
-			pointer := (pointer x + element width + self gapSize) @ pointer y.
+			translator translate: element to: (pointer "+ ((element width / 2) @ 0)" ).
+			pointer := (pointer x + (element width) + (self gapSize * 2)) @ pointer y.
 			lineItemCount := lineItemCount + 1.
 			maxLastLineHeight := maxLastLineHeight max: element height.
 			lineItemCount >= lineItemSize

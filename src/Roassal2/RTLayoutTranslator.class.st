@@ -20,17 +20,12 @@ RTLayoutTranslator class >> defaultClass [
 	^ self withAllSubclasses detect: #isDefault
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTLayoutTranslator >> nbCycles: anInteger [
 	"Do nothing"
 ]
 
-{ #category : #hook }
+{ #category : #'as yet unclassified' }
 RTLayoutTranslator >> translate: element to: newPosition [
 	self subclassResponsibility 
-]
-
-{ #category : #hook }
-RTLayoutTranslator >> translateTopLeftOf: element to: newPosition [
-	self translate: element to: (newPosition + (element extent / 2))
 ]

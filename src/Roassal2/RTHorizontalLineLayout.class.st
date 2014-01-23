@@ -96,5 +96,5 @@ RTHorizontalLineLayout >> positionOriginalPointer: elements [
 	self alignment == #center ifTrue: 
 		[ maxHeight := elements maxValue: #height.
 		delta := maxHeight / 2.0 ].
-	^ (0) @ ((0) + delta)
+	^ (self paddingLeftFor: elements) @ ((self paddingTopFor: elements) + delta)
 ]

@@ -27,6 +27,11 @@ RTBuilder >> interaction [
 	^ interactionBuilder
 ]
 
+{ #category : #accessing }
+RTBuilder >> interactionBuilder: anRTInteractionBuilder [
+	interactionBuilder := anRTInteractionBuilder
+]
+
 { #category : #'public-ui' }
 RTBuilder >> open [
 	^ self openIn: view
@@ -40,7 +45,7 @@ RTBuilder >> openIn: aView [
 
 { #category : #hooks }
 RTBuilder >> renderIn: aView [
-	"You may want to override this method to fill the view"
+	self subclassReponsibility
 ]
 
 { #category : #accessing }
@@ -49,6 +54,17 @@ RTBuilder >> shape [
 ]
 
 { #category : #accessing }
+RTBuilder >> shapeBuilder: anRTShapeBuilder [
+
+	shapeBuilder := anRTShapeBuilder
+]
+
+{ #category : #accessing }
 RTBuilder >> view [
 	^ view
+]
+
+{ #category : #accessing }
+RTBuilder >> view: aRTView [
+	view := aRTView
 ]

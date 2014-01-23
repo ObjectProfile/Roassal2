@@ -154,7 +154,10 @@ RTLayout >> initialize [
 	currentIteraction := 0.
 	maxInterations := 0.
 	iterationsToSendEvent := self defaultIterationsToSendEvent.
-
+	
+	paddingLeft := 5.
+	paddingRight := 5.
+	paddingTop := 5
 ]
 
 { #category : #accessing }
@@ -215,6 +218,28 @@ RTLayout >> on: eventClass do: aBlock [
 { #category : #hook }
 RTLayout >> on: elements edges: edges [
 	self applyOn: elements
+]
+
+{ #category : #accessing }
+RTLayout >> padding: anInteger [
+	self paddingTop: anInteger.
+	self paddingLeft: anInteger.
+	self paddingRight: anInteger. 
+]
+
+{ #category : #accessing }
+RTLayout >> paddingLeft [
+	^ paddingLeft
+]
+
+{ #category : #accessing }
+RTLayout >> paddingLeft: anInteger [
+	paddingLeft := anInteger
+]
+
+{ #category : #padding }
+RTLayout >> paddingLeftFor: elements [
+	^ paddingLeft
 ]
 
 { #category : #accessing }

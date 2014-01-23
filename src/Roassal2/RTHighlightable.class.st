@@ -44,8 +44,8 @@ RTHighlightable >> initializeElement: element [
 		on: TRMouseEnter
 		do: [ :e | 
 			self unhighlightRecordedShape.
-			self recordShape: e shape.
-			e shape color: self highlightedColor.
+			self recordShape: element shape.
+			element shape color: self highlightedColor.
 			e signalUpdate ].
 	element
 		on: TRMouseLeave

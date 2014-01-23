@@ -1,5 +1,10 @@
 Extension { #name : #BlockClosure }
 
+{ #category : #'*Roassal2' }
+BlockClosure >> initializeElement: aRTElement [ 
+	self value: aRTElement 
+]
+
 { #category : #'*Roassal2-Core' }
 BlockClosure >> rtValue: valueOrArray [
 	self numArgs = 0 ifTrue: [ ^ self value ].  
