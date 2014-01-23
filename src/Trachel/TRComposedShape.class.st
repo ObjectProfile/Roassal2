@@ -139,6 +139,12 @@ TRComposedShape >> signalUpdate [
 	shape1 signalUpdate
 ]
 
+{ #category : #'as yet unclassified' }
+TRComposedShape >> translateTo: aPoint [
+	shape1 translateTo: aPoint.
+	shape2 translateTo: aPoint.
+]
+
 { #category : #accessing }
 TRComposedShape >> width [
 	^ self encompassingRectangle width

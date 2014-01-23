@@ -19,25 +19,15 @@ TRConstraint class >> move: aShape below: anotherShape [
 ]
 
 { #category : #util }
-TRConstraint class >> move: aShape between: s1 and: s2 [
+TRConstraint class >> move: element between: el1 and: el2 [
 
-	^ aShape translateTo: ((s1 position + s2 position) / 2)
+	^ element translateTo: ((el1 position + el2 position) / 2)
 ]
 
 { #category : #util }
 TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
-	^ aShape translateTo: anotherShape center
+	aShape translateTo: anotherShape center
 
-]
-
-{ #category : #util }
-TRConstraint class >> move: aShape onTheLeftOf: anotherShape [
-	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ 0)
-]
-
-{ #category : #util }
-TRConstraint class >> move: aShape onTheRightOf: anotherShape [
-	^ aShape translateTo: anotherShape center + ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ 0)
 ]
 
 { #category : #util }
@@ -76,22 +66,6 @@ TRConstraint class >> stick: aShape onTheCenterOf: anotherShape [
 	self move: aShape onTheCenterOf: anotherShape. 
 	anotherShape addCallback: 
 		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheCenterOf: anotherShape ]) 
-	
-]
-
-{ #category : #public }
-TRConstraint class >> stick: aShape onTheLeftOf: anotherShape [
-	self move: aShape onTheLeftOf: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheLeftOf: anotherShape ]) 
-	
-]
-
-{ #category : #public }
-TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
-	self move: aShape onTheRightOf: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheRightOf: anotherShape ]) 
 	
 ]
 
