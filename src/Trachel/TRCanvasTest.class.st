@@ -37,11 +37,13 @@ TRCanvasTest >> testAddingAndRemoving [
 	self assert: canvas numberOfShapes = 0.
 ]
 
-{ #category : #animations }
+{ #category : #tests }
 TRCanvasTest >> testAddingAnimation [
-	canvas addAnimation: (RTLinearMove to: 50 @ 50 during: 2 on: RTBox element).
-	self assert: canvas hasAnimation.
-	self assert: canvas numberOfAnimations = 1
+	| c |
+	c := RTView new canvas.
+	c addAnimation: (RTLinearMove to: 50 @ 50 during: 2 on: RTBox element).
+	self assert: c hasAnimation.
+	self assert: c numberOfAnimations = 1
 ]
 
 { #category : #'back and front' }
