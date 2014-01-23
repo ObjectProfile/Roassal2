@@ -87,7 +87,7 @@ RTElement >> position [
 	^ position
 	"
 	^ trachelShape position
-	"
+"	
 ]
 
 { #category : #actions }

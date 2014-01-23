@@ -40,7 +40,7 @@ RTBuilder >> openIn: aView [
 
 { #category : #hooks }
 RTBuilder >> renderIn: aView [
-	self subclassReponsibility
+	"You may want to override this method to fill the view"
 ]
 
 { #category : #accessing }
