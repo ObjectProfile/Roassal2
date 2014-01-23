@@ -141,3 +141,18 @@ RTTextBuilderTest >> testOpeningOnText2 [
 	self assert: (elements anySatisfy: [ :el | el model = 'hello ' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 ]
+
+{ #category : #tests }
+RTTextBuilderTest >> testWordHighlight [
+	| element text |
+	builder := RTTextBuilder new.
+	text := 'hello'.
+	builder interaction highlightColored: Color blue.
+	builder addText: text.
+	element := builder view elementFromModel: text.
+	self assert: element trachelShape color = element shape defaultColor.
+	element announce: (TRMouseEnter new shape: element trachelShape).
+	self assert: element trachelShape color = Color blue.
+	element announce: (TRMouseLeave new shape: element trachelShape).
+	self assert: element trachelShape color = element shape defaultColor.
+]

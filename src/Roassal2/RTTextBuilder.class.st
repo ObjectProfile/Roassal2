@@ -53,7 +53,7 @@ RTTextBuilder >> buildText: aString in: element [
 { #category : #examples }
 RTTextBuilder >> example01Highlighting [
 	"
-	self new exampleHighlighting
+	self new example01Highlighting
 	"
 
 	| builder |
