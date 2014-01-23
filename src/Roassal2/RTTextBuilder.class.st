@@ -26,11 +26,12 @@ RTTextBuilder >> buildText: aText [
 
 { #category : #protocol }
 RTTextBuilder >> buildText: aString in: element [
-	| lines |
+	| lines normalizedString |
+	normalizedString := self normalizeString: aString.
 	lines := RTGroup new.
-	aString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
+	normalizedString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
 		| line lineString |
-		lineString := aString copyFrom: startLine to: endLine.
+		lineString := normalizedString copyFrom: startLine to: endLine.
 		line := RTGroup new.
 		lineString substringsDo: [ :startWord :endWord :endWordWithSpaces | 
 			| wordString wordElement |
@@ -97,6 +98,18 @@ RTTextBuilder >> initialize [
 
 	super initialize.
 	wordHook := [ :anElement :anInterval | nil ].
+]
+
+{ #category : #protected }
+RTTextBuilder >> normalizeString: aString [
+
+	^ String streamContents: [ :aStream |
+		aString do: [ :eachChar |
+			eachChar = Character tab
+				ifTrue: [ aStream nextPutAll: '    ' ]
+				ifFalse: [ aStream nextPut: eachChar ]
+			 ]		
+	]
 ]
 
 { #category : #hooks }
