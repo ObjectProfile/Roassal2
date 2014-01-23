@@ -50,8 +50,10 @@ RTNestTest >> testDifferentSizes [
 	self assert: el trachelShape width = 45.
 	self assert: el trachelShape height = 30.
 
-	self assert: innerElement1 position y = el position y.
-	self assert: innerElement2 position y = el position y.
+	self assert: innerElement1 position y = 45.
+	self assert: el position y = 50.
+	self assert: innerElement2 position y = 50.
+	self assert: 50 = el position y.
 ]
 
 { #category : #encompassing }
@@ -114,11 +116,11 @@ RTNestTest >> testSimpleExample [
 		on: el nest: (Array with: inner).
 
 	self assert: el position = (0 @ 0).
-	self assert: inner position = (0 @ 0).
+	self assert: inner position = ((1 / 2) @ (1 / 2)).
 
 	el translateTo: 100 @ 50.
 	self assert: el position = (100 @ 50).
-	self assert: inner position = (100 @ 50).
+	self assert: inner position =  ((201/2)@(101/2)).
 
 	self assert: el trachelShape hasCallback.
 
@@ -136,7 +138,7 @@ RTNestTest >> testWithTwoInnerNodes [
 	el translateTo: 100 @ 50.
 	shape := RTBox new color: (Color red alpha: 0.3).
 	innerElement := shape element.
-	innerElement2  := shape element.
+	innerElement2 := shape element.
 	
 	view add: innerElement.
 	view add: innerElement2.
@@ -150,9 +152,9 @@ RTNestTest >> testWithTwoInnerNodes [
 	
 	self assert: el position = (100 @ 50).
 
-	self assert: el trachelShape width = 30.
+	self assert: el trachelShape width = 25.
 	self assert: el trachelShape height = 15.
 	
-	self assert: (innerElement2 position - innerElement position) = (15 @ 0) 
+	self assert: (innerElement2 position - innerElement position) = (10 @ 0) 
 	
 ]

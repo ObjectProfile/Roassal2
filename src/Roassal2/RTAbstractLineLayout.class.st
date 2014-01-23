@@ -131,10 +131,11 @@ RTAbstractLineLayout >> doExecute: elements [
 	verticallyStretchable ifTrue: 
 		[ self doStretchVertical: elements ].
 	pointer := self positionOriginalPointer: elements.
+
 	elements do: 
 		[ :element |
 		delta := self deltaFor: element.
-		translator translate: element to: pointer - delta.
+		translator translateTopLeftOf: element to: pointer - delta.
 		pointer := self 
 					movePointer: pointer
 					accordingToFigure: element.

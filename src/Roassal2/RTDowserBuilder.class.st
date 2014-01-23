@@ -1,3 +1,6 @@
+"
+A RTDowserBuilder is Builder for Roassal2 that allows you to relate group of elements as columns using edges that represent the given relationship.
+"
 Class {
 	#name : #RTDowserBuilder,
 	#superclass : #Object,
@@ -366,8 +369,7 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 		on: TRMouseLeave
 		do: [ :event | |v|
 			v := true.
-			"Initialization missing, or add ifAbsent:[^false]"
-			(shadowEdges at: aNode) do: [ :e | e remove].
+			(shadowEdges at: aNode ifAbsent:[^false]) do: [ :e | e remove].
 			self view canvas signalUpdate.
 			overBody do: [ :e|  v := v or: [e]]. 
 			v ifFalse: [ bodyElement shape color: Color darkGray]].
@@ -617,12 +619,11 @@ RTDowserBuilder >> onLeftAndRight: aCollection [
 
 { #category : #'instance creation' }
 RTDowserBuilder >> open [
-	"self view title: (self title)."
 	(self view elements includes: (left anyOne)) ifFalse: [self view addAll: left].
 	(self view elements includes: (right anyOne)) ifFalse: [self view addAll: right].
 	self view @ RTVerticalDraggableView.
 	"self view canvas signalUpdate."
-	self view openInWindowSized: (self viewWidth) @ 500.
+	self view openInWindowSized: ((self viewWidth) @ 500) titled: (self title).
 ]
 
 { #category : #accessing }

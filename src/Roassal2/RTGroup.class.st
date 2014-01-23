@@ -31,6 +31,11 @@ RTGroup >> encompassingRectangle [
 ]
 
 { #category : #public }
+RTGroup >> extent [
+	^ self encompassingRectangle extent
+]
+
+{ #category : #public }
 RTGroup >> height [
 	^ self encompassingRectangle height
 ]

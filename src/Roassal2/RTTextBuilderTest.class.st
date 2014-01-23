@@ -118,7 +118,7 @@ RTTextBuilderTest >> testOpeningOnMultilineText3 [
 	| text |
 	text := (RTTextBuilderTest >> #testOpeningOnMultilineText3) getSource.
 	builder addText: text.
-	builder open .
+	builder open close.
 ]
 
 { #category : #tests }
