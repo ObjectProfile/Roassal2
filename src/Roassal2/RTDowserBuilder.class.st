@@ -1,3 +1,6 @@
+"
+A RTDowserBuilder is Builder for Roassal2 that allows you to relate group of elements as columns using edges that represent the given relationship.
+"
 Class {
 	#name : #RTDowserBuilder,
 	#superclass : #Object,

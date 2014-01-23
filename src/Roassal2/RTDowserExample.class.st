@@ -1,3 +1,7 @@
+"
+A RTDowserExample is a group of examples to show the different capabilities of RTDowserBuilder.
+
+"
 Class {
 	#name : #RTDowserExample,
 	#superclass : #Object,
