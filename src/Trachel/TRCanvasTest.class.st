@@ -140,6 +140,30 @@ TRCanvasTest >> testCenteredLabelShapes [
 	self assert: label1 encompassingRectangle = label2 encompassingRectangle
 ]
 
+{ #category : #shapes }
+TRCanvasTest >> testChangingBoxHeight [
+	| box |
+	box := TRBoxShape new.
+	self assert: box height = 0.
+	box height: 15.
+	self assert: box height = 15.
+	box height: 20.
+	self assert: box height = 20
+
+]
+
+{ #category : #shapes }
+TRCanvasTest >> testChangingBoxWidth [
+	| box |
+	box := TRBoxShape new.
+	self assert: box width = 0.
+	box width: 15.
+	self assert: box width = 15.
+	box width: 20.
+	self assert: box width = 20
+
+]
+
 { #category : #tests }
 TRCanvasTest >> testCircle [
 

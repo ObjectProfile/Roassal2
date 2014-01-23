@@ -123,6 +123,11 @@ TRAbstractBoxShape >> height [
 	^ rectangle height
 ]
 
+{ #category : #accessing }
+TRAbstractBoxShape >> height: newHeight [
+	rectangle := (rectangle center - (0 @ (newHeight / 2))) extent: (self extent x @ newHeight)
+]
+
 { #category : #testing }
 TRAbstractBoxShape >> includesPoint: aPoint [
 	^ rectangle containsPoint: aPoint
@@ -188,4 +193,9 @@ TRAbstractBoxShape >> triggerCallbacksForStep: aStep [
 { #category : #accessing }
 TRAbstractBoxShape >> width [
 	^ rectangle width
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> width: newWidth [
+	rectangle := (rectangle center - ((newWidth / 2) @ 0)) extent: (newWidth @ self extent y)
 ]
