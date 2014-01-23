@@ -28,6 +28,7 @@ RTGridLayout >> doExecute: elements [
 	lineItemSize := self lineItemsCountBlock rtValue: elements.
 	lineItemCount := 0.
 	maxLastLineHeight := 0.
+
 	elements
 		do: [ :element | 
 			translator translateTopLeftOf: element to: pointer.
