@@ -425,7 +425,7 @@ RTExample >> highlightSquare [
 	| view shape el |
 	view := RTView new.
 
-	shape := RTBox new size: [ :e | e model yourself ].
+	shape := RTBox new size: #yourself.
 	1 to: 100 do: [ :i |
 		el := shape elementOn: i.
 		el translateTo: 20 @ 20.

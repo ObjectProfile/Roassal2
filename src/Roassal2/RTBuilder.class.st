@@ -27,6 +27,11 @@ RTBuilder >> interaction [
 	^ interactionBuilder
 ]
 
+{ #category : #accessing }
+RTBuilder >> interactionBuilder: anRTInteractionBuilder [
+	interactionBuilder := anRTInteractionBuilder
+]
+
 { #category : #'public-ui' }
 RTBuilder >> open [
 	^ self openIn: view
@@ -49,6 +54,17 @@ RTBuilder >> shape [
 ]
 
 { #category : #accessing }
+RTBuilder >> shapeBuilder: anRTShapeBuilder [
+
+	shapeBuilder := anRTShapeBuilder
+]
+
+{ #category : #accessing }
 RTBuilder >> view [
 	^ view
+]
+
+{ #category : #accessing }
+RTBuilder >> view: aRTView [
+	view := aRTView
 ]

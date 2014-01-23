@@ -1,7 +1,3 @@
-"
-A RTDowserExample is a group of examples to show the different capabilities of RTDowserBuilder.
-
-"
 Class {
 	#name : #RTDowserExample,
 	#superclass : #Object,
@@ -147,7 +143,7 @@ RTDowserExample >> example3 [
 	builder := RTDowserBuilder new.
 	builder height:  [ :e | e numberOfLinesOfCode  / 10].
 	builder color: #numberOfMethods.
-	builder left: RTShape withAllSubclasses.
+	builder left: ROShape withAllSubclasses.
 	builder edgesTo: #referencedClasses.
 	builder open
 ]
@@ -207,11 +203,11 @@ RTDowserExample >> example7 [
 	builder right: (1 to: 20).
 	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ].
 	builder popupElement: [ :v | |elem elems|
-			elem := RTElement new.
+			elem := ROElement new.
 			elems := OrderedCollection new.
-			(((v model) - 5) to: ((v model) + 5)) do: [:n | |e| e := RTElement new. e addShape: RTBox blue. elems add: e. ].
+			(((v model) - 5) to: ((v model) + 5)) do: [:n | |e| e := ROElement new. e addShape: ROBox blue. elems add: e. ].
 			elem addAll: elems.
-			RTGridLayout on: elems.
+			ROGridLayout on: elems.
 			elem].
 	builder open
 ]
