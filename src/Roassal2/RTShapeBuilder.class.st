@@ -103,6 +103,11 @@ RTShapeBuilder >> shape: aRoassalShape [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> text [
+	shape := RTLabel new
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> withBorder [
 	self borderColor: Color black
 ]

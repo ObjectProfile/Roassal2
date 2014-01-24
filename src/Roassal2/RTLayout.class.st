@@ -33,10 +33,7 @@ Class {
 		'eventHandler',
 		'currentIteraction',
 		'maxInterations',
-		'iterationsToSendEvent',
-		'paddingLeft',
-		'paddingRight',
-		'paddingTop'
+		'iterationsToSendEvent'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -215,31 +212,6 @@ RTLayout >> on: eventClass do: aBlock [
 { #category : #hook }
 RTLayout >> on: elements edges: edges [
 	self applyOn: elements
-]
-
-{ #category : #accessing }
-RTLayout >> paddingRight [
-	^ paddingRight
-]
-
-{ #category : #accessing }
-RTLayout >> paddingRight: anInteger [
-	paddingRight := anInteger
-]
-
-{ #category : #accessing }
-RTLayout >> paddingTop [
-	^ paddingTop
-]
-
-{ #category : #accessing }
-RTLayout >> paddingTop: anInteger [
-	paddingTop := anInteger
-]
-
-{ #category : #padding }
-RTLayout >> paddingTopFor: elements [
-	^ paddingTop
 ]
 
 { #category : #utils }
