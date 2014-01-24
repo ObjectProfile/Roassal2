@@ -87,6 +87,7 @@ RTTextBuilder >> example03ShowCode [
 	| builder |
 	builder := RTTextBuilder new.
 	builder shape rectangle withBorder; color: (Color purple alpha: 0.2).
+	builder wordShape color: Color yellow.
 	builder wordInteraction  
 					highlight;
 					when: TRMouseClick do: [ :event | event element model inspect ].
