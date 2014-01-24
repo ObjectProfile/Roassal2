@@ -18,6 +18,7 @@ RTTextBuilder >> addText: aText [
 RTTextBuilder >> buildText: aText [
 	| el |
 	el := shapeBuilder elementOn: nil.
+	interactionBuilder setUpElements: el.
 	view add: el.
 	self buildText: aText in: el.
 	^ el
@@ -25,19 +26,19 @@ RTTextBuilder >> buildText: aText [
 
 { #category : #protocol }
 RTTextBuilder >> buildText: aString in: element [
-	| elements lines normalizedString |
-	normalizedString := self normalizeString: aString.
+	| elements lines |
 	lines := RTGroup new.
 	elements := OrderedCollection new.
-	normalizedString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
+	aString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
 		| line lineString |
-		lineString := normalizedString copyFrom: startLine to: endLine.
+		lineString := aString copyFrom: startLine to: endLine.
 		line := RTGroup new.
 		lineString substringsDo: [ :startWord :endWord :endWordWithSpaces | 
 			| wordString wordElement |
 			wordString := lineString copyFrom: startWord to: endWordWithSpaces.
-			wordElement := wordShapeBuilder elementOn: wordString.
+			wordElement := RTElement on: (self normalizeString: wordString).
 			wordHook value: wordElement value: ((startLine + startWord) to: (startLine + endWord)).
+			wordShapeBuilder setUpElements: wordElement.
 			wordInteractionBuilder setUpElements: wordElement.
 			line add: wordElement.
 			elements add: wordElement.

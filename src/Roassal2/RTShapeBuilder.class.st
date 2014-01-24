@@ -22,6 +22,12 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #building }
+RTShapeBuilder >> edgeFrom: element1 to: element2 [
+	self hasSetShape ifFalse: [ self line ].
+	^ shape edgeFrom: element1 to: element2
+]
+
+{ #category : #building }
 RTShapeBuilder >> elementOn: object [
 	self hasSetShape ifFalse: [ self rectangle ].
 	^ shape elementOn: object
@@ -88,6 +94,12 @@ RTShapeBuilder >> rectangle [
 { #category : #accessing }
 RTShapeBuilder >> reset [
 	shape := RTNoShape instance
+]
+
+{ #category : #building }
+RTShapeBuilder >> setUpElements: elements [
+	self hasSetShape ifFalse: [ self rectangle ].
+	^ elements + shape
 ]
 
 { #category : #accessing }
