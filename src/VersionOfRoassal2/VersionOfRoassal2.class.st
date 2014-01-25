@@ -1454,3 +1454,14 @@ VersionOfRoassal2 >> version000088 [
 	at: #date put: '23 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000089 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.58';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.89';
+	at: #version put: '0.90';
+	at: #comment put: '0.90 : added arcs, made by Samir Samir Saleh. Excellent work!';
+	at: #date put: '25 January 2014';
+	yourself
+]
