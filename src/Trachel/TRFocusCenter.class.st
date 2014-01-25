@@ -1,7 +1,7 @@
 Class {
 	#name : #TRFocusCenter,
 	#superclass : #TRFocusing,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #hooks }

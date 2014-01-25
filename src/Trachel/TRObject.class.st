@@ -1,5 +1,5 @@
 Class {
 	#name : #TRObject,
 	#superclass : #Object,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }

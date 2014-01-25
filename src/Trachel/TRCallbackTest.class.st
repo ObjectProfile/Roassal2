@@ -6,7 +6,7 @@ Class {
 		'circle1',
 		'circle2'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #'as yet unclassified' }

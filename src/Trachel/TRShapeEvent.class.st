@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shape'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #accessing }

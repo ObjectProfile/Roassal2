@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #'as yet unclassified' }

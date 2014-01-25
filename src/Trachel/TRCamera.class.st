@@ -6,7 +6,7 @@ Class {
 		'canvas',
 		'scale'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #public }

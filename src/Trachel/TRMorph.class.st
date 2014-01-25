@@ -9,7 +9,7 @@ Class {
 		'shouldRefresh',
 		'session'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #accessing }

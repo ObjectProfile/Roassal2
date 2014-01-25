@@ -1,5 +1,5 @@
 Class {
 	#name : #TRTest,
 	#superclass : #TestCase,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }

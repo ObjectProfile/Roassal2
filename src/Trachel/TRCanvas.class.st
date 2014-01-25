@@ -12,7 +12,7 @@ Class {
 		'announcer',
 		'color'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #animations }
@@ -64,6 +64,15 @@ TRCanvas >> announcer: anAnnouncer [
 { #category : #accessing }
 TRCanvas >> athensCanvas [
 	^ canvas
+]
+
+{ #category : #building }
+TRCanvas >> buildArcAlphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRadius: eR [
+	| shape |
+	shape := TRArcShape new.
+	shape alphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRadius: eR.
+	self addShape: shape.
+	^ shape
 ]
 
 { #category : #building }

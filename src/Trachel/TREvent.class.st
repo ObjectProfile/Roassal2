@@ -6,7 +6,7 @@ Class {
 		'position',
 		'morph'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #accessing }

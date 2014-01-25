@@ -24,7 +24,7 @@ Class {
 		'controlKeyPressed',
 		'shiftKeyPressed'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #accessing }

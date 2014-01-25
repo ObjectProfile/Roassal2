@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #public }

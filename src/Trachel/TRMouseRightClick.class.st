@@ -1,5 +1,5 @@
 Class {
 	#name : #TRMouseRightClick,
 	#superclass : #TRMouseClick,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }

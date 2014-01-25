@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'nullRectangle'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #public }

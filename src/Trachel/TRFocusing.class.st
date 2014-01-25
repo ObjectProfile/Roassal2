@@ -1,7 +1,7 @@
 Class {
 	#name : #TRFocusing,
 	#superclass : #TRObject,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #public }

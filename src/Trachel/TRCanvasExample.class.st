@@ -1,8 +1,160 @@
 Class {
 	#name : #TRCanvasExample,
 	#superclass : #TRObject,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
+
+{ #category : #arcs }
+TRCanvasExample >> arc [
+	"
+	self new arc
+	"
+	| c  shape|
+	c := TRCanvas new.
+	shape:= TRArcShape new.
+	shape alphaAngle:10  betaAngle: 80  innerRadius: 30 externalRadius: 150. 
+	shape color: Color blue.
+	c addShape: shape.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc0 [
+	"
+	self new arc0
+	"
+	| c shape |
+	c := TRCanvas new.
+	shape:= TRArcShape new.
+	shape alphaAngle:0  betaAngle: 360  innerRadius: 0 externalRadius: 100. 
+	shape color: Color blue.
+	c addShape: shape.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc2 [
+	"
+	self new arc
+	"
+	| c  shape1 shape2 shape3 shape4|
+	c := TRCanvas new.
+	shape1:= TRArcShape new.
+	shape2:= TRArcShape new.
+	shape3:= TRArcShape new.
+	shape4:= TRArcShape new.
+	shape1 alphaAngle:10  betaAngle: 80 innerRadius: 30 externalRadius: 150. 
+	shape1 color: Color blue.
+	shape2 alphaAngle:100  betaAngle: 170 innerRadius: 30 externalRadius: 150. 
+	shape2 color: Color green.
+	shape3 alphaAngle:190  betaAngle: 260 innerRadius: 30 externalRadius: 150. 
+	shape3 color: Color yellow.
+	shape4 alphaAngle:280  betaAngle: 350 innerRadius: 30 externalRadius: 150. 
+	shape4 color: Color red.
+	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc3 [
+	"
+	self new arc3
+	"
+	| c  shape1 shape2 shape3 shape4|
+	c := TRCanvas new.
+	shape1:= TRArcShape new.
+	shape2:= TRArcShape new.
+	shape3:= TRArcShape new.
+	shape4:= TRArcShape new.
+	shape1 alphaAngle:5  betaAngle: 85 innerRadius: 30 externalRadius: 150. 
+	shape1 color: Color blue.
+	shape2 alphaAngle:95  betaAngle: 175 innerRadius: 30 externalRadius: 150. 
+	shape2 color: Color green.
+	shape3 alphaAngle:185  betaAngle: 265 innerRadius: 30 externalRadius: 150. 
+	shape3 color: Color yellow.
+	shape4 alphaAngle:275  betaAngle: 355 innerRadius: 30 externalRadius: 150. 
+	shape4 color: Color red.
+	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc4 [
+	"
+	self new arc4
+	"
+	| c  shape1 shape2 shape3 shape4|
+	c := TRCanvas new.
+	shape1:= TRArcShape new.
+	shape2:= TRArcShape new.
+	shape3:= TRArcShape new.
+	shape4:= TRArcShape new.
+	shape1 alphaAngle:0  betaAngle: 90 innerRadius: 130 externalRadius: 150. 
+	shape1 color: Color blue.
+	shape2 alphaAngle:90  betaAngle: 180 innerRadius: 130 externalRadius: 150. 
+	shape2 color: Color green.
+	shape3 alphaAngle:180  betaAngle: 270 innerRadius: 130 externalRadius: 150. 
+	shape3 color: Color yellow.
+	shape4 alphaAngle:270  betaAngle: 360 innerRadius: 130 externalRadius: 150. 
+	shape4 color: Color red.
+	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc5 [
+	"
+	self new arc5
+	"
+	| c  shape1 shape2 shape3 shape4|
+	c := TRCanvas new.
+	shape1:= TRArcShape new.
+	shape2:= TRArcShape new.
+	shape3:= TRArcShape new.
+	shape4:= TRArcShape new.
+	shape1 alphaAngle:0  betaAngle: 90 innerRadius: 0 externalRadius: 150. 
+	shape1 color: Color blue.
+	shape2 alphaAngle:90  betaAngle: 180 innerRadius: 0 externalRadius: 150. 
+	shape2 color: Color green.
+	shape3 alphaAngle:180  betaAngle: 270 innerRadius: 0 externalRadius: 150. 
+	shape3 color: Color yellow.
+	shape4 alphaAngle:270  betaAngle: 360 innerRadius: 0 externalRadius: 150. 
+	shape4 color: Color red.
+	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c open.
+	
+
+]
+
+{ #category : #arcs }
+TRCanvasExample >> arc6 [
+	"
+	self new arc6
+	"
+	| c  shape shape2|
+	c := TRCanvas new.
+	shape:= TRArcShape new.
+	shape alphaAngle:10  betaAngle: 80  innerRadius: 30 externalRadius: 150. 
+	shape color: Color blue.
+	shape2:=TRBoxShape new.
+	shape2 rectangle: (shape topLeft corner: shape bottomRight).
+	shape2 color: Color red.
+	c addShape: shape.
+	c addShape: shape2.
+	c open.
+	
+
+]
 
 { #category : #examples }
 TRCanvasExample >> bezier [

@@ -1,5 +1,5 @@
 Class {
 	#name : #TRBoxShape,
 	#superclass : #TRAbstractBoxShape,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }

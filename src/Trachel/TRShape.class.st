@@ -10,7 +10,7 @@ Class {
 		'element',
 		'callbacks'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #actions }

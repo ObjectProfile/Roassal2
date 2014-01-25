@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'angle'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
 
 { #category : #hooks }

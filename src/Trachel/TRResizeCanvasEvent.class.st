@@ -1,5 +1,5 @@
 Class {
 	#name : #TRResizeCanvasEvent,
 	#superclass : #TREvent,
-	#category : #Trachel
+	#category : #'Trachel-Core'
 }
