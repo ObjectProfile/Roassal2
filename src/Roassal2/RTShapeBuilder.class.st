@@ -8,8 +8,19 @@ Class {
 }
 
 { #category : #shapes }
+RTShapeBuilder >> arc [
+	^ self shape: RTArc new
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> circle [
 	^ self shape: RTEllipse new
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> current [
+	"Return the shape currently built"
+	^ shape
 ]
 
 { #category : #'reflective operations' }
@@ -19,12 +30,6 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 	^ self shape 
 		perform: aMessage selector 
 		withArguments: aMessage arguments
-]
-
-{ #category : #building }
-RTShapeBuilder >> edgeFrom: element1 to: element2 [
-	self hasSetShape ifFalse: [ self line ].
-	^ shape edgeFrom: element1 to: element2
 ]
 
 { #category : #building }
@@ -96,12 +101,6 @@ RTShapeBuilder >> reset [
 	shape := RTNoShape instance
 ]
 
-{ #category : #building }
-RTShapeBuilder >> setUpElements: elements [
-	self hasSetShape ifFalse: [ self rectangle ].
-	^ elements + shape
-]
-
 { #category : #accessing }
 RTShapeBuilder >> shape [
 	"Return the shape currently built"
@@ -112,11 +111,6 @@ RTShapeBuilder >> shape [
 RTShapeBuilder >> shape: aRoassalShape [
 	shape := aRoassalShape.
 	
-]
-
-{ #category : #shapes }
-RTShapeBuilder >> text [
-	shape := RTLabel new
 ]
 
 { #category : #shapes }

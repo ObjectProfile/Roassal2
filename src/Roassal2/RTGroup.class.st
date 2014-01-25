@@ -27,9 +27,7 @@ RTGroup >> elementFromModel: anObject [
 
 { #category : #public }
 RTGroup >> encompassingRectangle [
-	^ self 
-		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]
-		ifNotEmpty: [ Rectangle merging: (self collect: #encompassingRectangle) ]
+	^ Rectangle merging: (self collect: #encompassingRectangle)
 ]
 
 { #category : #public }
@@ -45,11 +43,6 @@ RTGroup >> height [
 { #category : #public }
 RTGroup >> on: evt do: callback [
 	self do: [ :e | e on: evt do: callback ]
-]
-
-{ #category : #accessing }
-RTGroup >> position [
-	^ self encompassingRectangle center
 ]
 
 { #category : #public }
@@ -70,9 +63,9 @@ RTGroup >> translateBy: aPoint [
 
 { #category : #public }
 RTGroup >> translateTo: aPosition [
-	| center |
-	center := self encompassingRectangle center.
-	self translateBy: (aPosition - center)
+	| topLeft |
+	topLeft := self encompassingRectangle topLeft.
+	self translateBy: (aPosition - topLeft)
 ]
 
 { #category : #public }

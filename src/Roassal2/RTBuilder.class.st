@@ -9,14 +9,6 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #public }
-RTBuilder >> edgeFrom: source to: target [ 
-	| newEdge |
-	newEdge := shapeBuilder edgeFrom: source to: target.
-	view add: newEdge.
-	^ newEdge
-]
-
 { #category : #protected }
 RTBuilder >> elementsOn: collectionOfObjects [
 	^ shapeBuilder elementsOn: collectionOfObjects

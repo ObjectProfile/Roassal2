@@ -113,10 +113,10 @@ RTDependencyAnalyzerBuilderExample >> roassalAndTrachel4 [
 				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
 	b addClasses: RTObject withAllSubclasses.
 	b addClasses: TRObject withAllSubclasses.
-	b 
+"	b 
 		dependencyFromAllClassesMatching: [ :cls | ('RT*' match: cls name) ] 
 		toAllClassesMatching: [ :cls | ('TR*' match: cls name) ].
-	b open.
+"	b open.
 	b view @ RTDraggableView.
 	b view addAnimation: (RTSpringLayoutStepping new view: b view)
 ]

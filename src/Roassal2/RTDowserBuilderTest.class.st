@@ -126,10 +126,10 @@ RTDowserBuilderTest >> testControlPoint2With [
 { #category : #tests }
 RTDowserBuilderTest >> testControlPointWith [
 	| e1 e2 e3 e4 p1 p2 p3 p4 |
-	e1 := ((RTElement on: 1) + (RTBox new)).
-	e2 := ((RTElement on: 2) + (RTBox new)).
-	e3 := ((RTElement on: 3) + (RTBox new)).
-	e4 := ((RTElement on: 4) + (RTBox new)).
+	e1 := ((ROElement on: 1) + (ROBox new)).
+	e2 := ((ROElement on: 2) + (ROBox new)).
+	e3 := ((ROElement on: 3) + (ROBox new)).
+	e4 := ((ROElement on: 4) + (ROBox new)).
 	e2 translateTo: 0@100.
 	e3 translateTo: 100@0.
 	e4 translateTo: 100@100.
