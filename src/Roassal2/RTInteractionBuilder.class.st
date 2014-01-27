@@ -17,7 +17,6 @@ RTInteractionBuilder >> draggable [
 
 { #category : #public }
 RTInteractionBuilder >> highlight [
-		
 	self highlightColored: Color blue
 ]
 
@@ -40,7 +39,7 @@ RTInteractionBuilder >> initialize [
 	interactions := OrderedCollection new
 ]
 
-{ #category : #interaction }
+{ #category : #public }
 RTInteractionBuilder >> popup [
 	| i |
 	i := RTPopup new.
@@ -57,5 +56,5 @@ RTInteractionBuilder >> setUpElements: elements [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> when: event do: block [
-	interactions add: [ :element | element on: event do: block ]
+	interactions add: [ :element | element when: event do: block ]
 ]

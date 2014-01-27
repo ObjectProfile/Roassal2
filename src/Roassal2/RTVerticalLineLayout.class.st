@@ -82,7 +82,7 @@ RTVerticalLineLayout >> initialize [
 { #category : #hook }
 RTVerticalLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
 	
-	^ pointer setX: pointer x setY: pointer y + aNodeFigure height + self verticalGap
+	^ pointer x @ (pointer y + aNodeFigure height + self verticalGap)
 ]
 
 { #category : #hook }

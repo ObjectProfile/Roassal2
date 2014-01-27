@@ -352,7 +352,7 @@ RTDowserBuilder >> getNormalizerfrom: aDictionary [
 { #category : #'edge-management' }
 RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 	aNode
-		on: TRMouseEnter
+		when: TRMouseEnter
 		do: [ :event | 
 			shadowEdges at: aNode	
 				ifPresent: [ :v | v do: [ :e | self view add: e. e trachelShape pushBack]. 
@@ -366,7 +366,7 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 						color: self class defaultLightEdgeColor)].
 			bodyElement shape color: Color veryVeryLightGray].
 	aNode
-		on: TRMouseLeave
+		when: TRMouseLeave
 		do: [ :event | |v|
 			v := true.
 			(shadowEdges at: aNode ifAbsent:[^false]) do: [ :e | e remove].
@@ -491,7 +491,7 @@ RTDowserBuilder >> legend: aString [
 { #category : #'edge-management' }
 RTDowserBuilder >> lines: aNode in: aCollection to: links [
 	aNode
-		on: TRMouseClick
+		when: TRMouseClick
 		do: [ :event | 
 			edges at: aNode		
 				ifPresent: [ :v |

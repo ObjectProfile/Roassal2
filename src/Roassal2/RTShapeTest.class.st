@@ -54,7 +54,7 @@ RTShapeTest >> testComposingAndEvent [
 	e := RTElement on: 'hello'.
 	e + s1 + s2.
 	t := false.
-	e on: TRMouseClick do: [ :evt | t := true  ].
+	e when: TRMouseClick do: [ :evt | t := true  ].
 	v := RTView new.
 	v add: e.
 	

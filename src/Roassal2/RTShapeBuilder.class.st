@@ -33,6 +33,12 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #building }
+RTShapeBuilder >> edgeFrom: element1 to: element2 [
+	self hasSetShape ifFalse: [ self line ].
+	^ shape edgeFrom: element1 to: element2
+]
+
+{ #category : #building }
 RTShapeBuilder >> elementOn: object [
 	self hasSetShape ifFalse: [ self rectangle ].
 	^ shape elementOn: object
@@ -50,6 +56,22 @@ RTShapeBuilder >> hasSetShape [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> if: conditionBlock borderColor: colorBlock [
+	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
+	| oldBlockOrValue |
+	oldBlockOrValue := self borderColor.
+	^self borderColor: [ :aModel | (conditionBlock rtValue: aModel)
+									ifTrue: [ colorBlock rtValue: aModel ] 
+									ifFalse: [ 
+										"Having to create a new element is rather ugly. 
+										Ideally, the oldBlockOrValue has to be 'unwrapped' for the translation"
+										oldBlockOrValue rtValue: (RTElement on: aModel) ]].
+							
+						
+
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
 	| oldBlockOrValue |
@@ -60,6 +82,22 @@ RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 										"Having to create a new element is rather ugly. 
 										Ideally, the oldBlockOrValue has to be 'unwrapped' for the translation"
 										oldBlockOrValue rtValue: (RTElement on: aModel) ]].
+							
+						
+
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> ifElement: conditionBlock borderColor: colorBlock [
+	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
+	| oldBlockOrValue |
+	oldBlockOrValue := self borderColor.
+	^self borderColorElement: [ :anElement | (conditionBlock rtValue: anElement)
+									ifTrue: [ colorBlock rtValue: anElement ] 
+									ifFalse: [ 
+										"Having to create a new element is rather ugly. 
+										Ideally, the oldBlockOrValue has to be 'unwrapped' for the translation"
+										oldBlockOrValue rtValue: anElement ]].
 							
 						
 
@@ -101,6 +139,12 @@ RTShapeBuilder >> reset [
 	shape := RTNoShape instance
 ]
 
+{ #category : #building }
+RTShapeBuilder >> setUpElements: elements [
+	self hasSetShape ifFalse: [ self rectangle ].
+	^ elements + shape
+]
+
 { #category : #accessing }
 RTShapeBuilder >> shape [
 	"Return the shape currently built"
@@ -111,6 +155,11 @@ RTShapeBuilder >> shape [
 RTShapeBuilder >> shape: aRoassalShape [
 	shape := aRoassalShape.
 	
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> text [
+	shape := RTLabel new
 ]
 
 { #category : #shapes }

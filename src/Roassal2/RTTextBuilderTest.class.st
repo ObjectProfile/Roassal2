@@ -35,7 +35,7 @@ RTTextBuilderTest >> testAdditionalInformation [
 	builder wordHook: [ :anElement :anInterval | 
 								anElement model = 'hello ' 
 									ifTrue: [ anElement attributeAt: #myValue put: 'value' ] ]. 
-	builder interaction 
+	builder wordInteraction 
 				when: TRMouseClick 
 				do: [ :event | (event element hasAttribute: #myValue) 
 										ifTrue: [ trigger := true ] ].
@@ -64,7 +64,7 @@ RTTextBuilderTest >> testClickableWord [
 	| t element |
 	t := false.
 	 
-	builder interaction 
+	builder wordInteraction 
 					when: TRMouseClick do: [ :event | t := true ].
 	builder addText: 'hello'.
 	self deny: t.
@@ -147,7 +147,7 @@ RTTextBuilderTest >> testWordHighlight [
 	| element text |
 	builder := RTTextBuilder new.
 	text := 'hello'.
-	builder interaction highlightColored: Color blue.
+	builder wordInteraction highlightColored: Color blue.
 	builder addText: text.
 	element := builder view elementFromModel: text.
 	self assert: element trachelShape color = element shape defaultColor.

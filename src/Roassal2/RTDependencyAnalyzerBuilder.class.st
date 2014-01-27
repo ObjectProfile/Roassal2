@@ -48,7 +48,7 @@ RTDependencyAnalyzerBuilder >> renderIn: v [
 	| classes hierarchicalLinks depLinks |
 	classes := self elementsOn: classesToAnalyze.
 	classes @ RTDraggable @ RTPopup.
-	classes on: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
+	classes when: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
 
 	v addAll: classes.
 	hierarchicalLinks := RTEdge 

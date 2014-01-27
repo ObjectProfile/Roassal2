@@ -37,6 +37,12 @@ RTShapedObject >> attributeAt: aKey [
 ]
 
 { #category : #attributes }
+RTShapedObject >> attributeAt: aKey ifAbsent: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsent: aBlockClosure 
+]
+
+{ #category : #attributes }
 RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
 	
 	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
@@ -59,12 +65,6 @@ RTShapedObject >> hasAttribute: aKey [
 	"Return true if attributes includes aKey"
 	
 	^ attributes notNil and: [ attributes includesKey: aKey ]
-]
-
-{ #category : #attributes }
-RTShapedObject >> hasAttributeAt: aKey ifAbsentPut: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
 ]
 
 { #category : #attributes }
@@ -103,6 +103,14 @@ RTShapedObject >> renderOn: trachelCanvas [
 { #category : #accessing }
 RTShapedObject >> shape [
 	^ shape
+]
+
+{ #category : #announce }
+RTShapedObject >> testCaseAnnounce: evt [
+	"It is used for Test Cases because in that case evt does not know where it has been announced."
+	| evtInstance |
+	evtInstance := evt shape: self trachelShape.
+	self announce: evtInstance
 ]
 
 { #category : #accessing }
