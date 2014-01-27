@@ -8,8 +8,19 @@ Class {
 }
 
 { #category : #shapes }
+RTShapeBuilder >> arc [
+	^ self shape: RTArc new
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> circle [
 	^ self shape: RTEllipse new
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> current [
+	"Return the shape currently built"
+	^ shape
 ]
 
 { #category : #'reflective operations' }
