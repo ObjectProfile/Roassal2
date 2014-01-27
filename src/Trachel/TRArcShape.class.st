@@ -1,5 +1,16 @@
 "
-A TRArc is an class that makes all the drawing of arcs
+A TRArc is xxxxxxxxx. Wow. Much words. Such comment
+
+Instance Variables
+	endAngle:		<Object>
+	startAngle:		<Object>
+
+endAngle
+	- xxxxx
+
+startAngle
+	- xxxxx
+
 "
 Class {
 	#name : #TRArcShape,
@@ -76,9 +87,9 @@ TRArcShape >> computeBottomRight [
 	bottomRight:=pCollection max x @ pCollection min y
 ]
 
-{ #category : #computing }
+{ #category : #private }
 TRArcShape >> computeHeight [
-	height:=(self topLeft y - self bottomRight y) abs
+	^(self topLeft y - self bottomRight y) abs
 ]
 
 { #category : #hooks }
@@ -133,7 +144,7 @@ TRArcShape >> computeTopLeft [
 
 { #category : #computing }
 TRArcShape >> computeWidth [
-	width:=(self topLeft x - self bottomRight x) abs
+	^(self topLeft x - self bottomRight x) abs
 ]
 
 { #category : #drawing }
@@ -198,6 +209,7 @@ TRArcShape >> initialize [
 
 { #category : #accessing }
 TRArcShape >> position [
+	"Maybe something has to be done here... Not sure what to put"
 	^ 0 @ 0
 	
 ]

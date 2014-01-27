@@ -7,6 +7,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #'instance creation' }
+TRShapeEvent class >> shape: aTrachelShape [
+	^ self new shape: aTrachelShape; yourself
+]
+
 { #category : #accessing }
 TRShapeEvent >> element [
 	"Could be any object"
