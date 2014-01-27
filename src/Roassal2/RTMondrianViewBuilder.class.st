@@ -37,7 +37,8 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 		using: self edgeShape
 		inView: view 
 		scope: (RTGroup new addAll: topLevelNodes; yourself).
-	topLevelEdges addAll: es
+	topLevelEdges addAll: es.
+	^ es
 ]
 
 { #category : #'adding - edges' }

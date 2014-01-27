@@ -856,6 +856,39 @@ RTExample >> smoothLayout [
 	v open
 ]
 
+{ #category : #beziers }
+RTExample >> softviz01 [
+	"
+	self new softviz01
+	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
+	"
+| v inheritanceEdges shape |
+v := RTView new.
+shape := RTEllipse new color: (Color red alpha: 0.4); size: [ :e | e numberOfMethods / 5 max: 5].
+v addAll: (shape elementsOn: Collection withAllSubclasses).
+
+"Defining edges from inheritance"
+inheritanceEdges := 
+	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
+
+"Layout the whole thing"
+RTForceBasedLayout new 
+	userDefinedEdges: inheritanceEdges;
+	on: v elements.
+
+"Defining edges from dependencies"
+Collection withAllSubclasses do: [ :cls |
+cls methods do: [ :cm | 
+			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
+			
+		RTEdge buildEdgesFromAssociations: { cls -> depClass } using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
+].
+	
+"Open the view"
+v open
+
+]
+
 { #category : #animations }
 RTExample >> zooming [
 
