@@ -20,6 +20,24 @@ RTPopup class >> text: aBlockOrSymbol [
 	^ self new text: aBlockOrSymbol
 ]
 
+{ #category : #initialization }
+RTPopup >> createAndShowPopupFor: element event: event [
+	| popupPosition popup idealPosition |
+	self removeLastPopup.
+	
+	popup := self getNewPopupFor: element.
+	self lastPopup: popup.
+	
+	"The following is useful when testing"
+	event position isNil
+		ifTrue: [ idealPosition := element position ]
+		ifFalse: [ idealPosition := event position ].
+	popupPosition := self closestPositionOf: popup from: idealPosition inView: element view.
+
+	popup translateTopLeftTo: popupPosition.	
+
+]
+
 { #category : #hooks }
 RTPopup >> createElementFor: element [
 	| g |
@@ -28,7 +46,7 @@ RTPopup >> createElementFor: element [
 	^ g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTPopup >> getNewPopupFor: element [
 	| popupGroup |
 	popupGroup := self createPopupFor: element.
@@ -37,12 +55,13 @@ RTPopup >> getNewPopupFor: element [
 	^ popupGroup
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTPopup >> group: aTwoArgBlock [
+	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]"
 	groupBlock := aTwoArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTPopup >> initialize [
 	super initialize.
 	self text: #yourself

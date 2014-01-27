@@ -71,6 +71,13 @@ RTGroup >> translateTo: aPosition [
 ]
 
 { #category : #public }
+RTGroup >> translateTopLeftTo: aPosition [
+	| center |
+	center := self encompassingRectangle topLeft.
+	self translateBy: (aPosition - center)
+]
+
+{ #category : #public }
 RTGroup >> when: evt do: callback [
 	self do: [ :e | e when: evt do: callback ]
 ]
