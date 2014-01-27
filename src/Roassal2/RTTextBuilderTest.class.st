@@ -66,10 +66,10 @@ RTTextBuilderTest >> testClickableWord [
 	 
 	builder wordInteraction 
 					when: TRMouseClick do: [ :event | t := true ].
-	builder addText: 'hello'.
+	builder addText: 'hello world'.
 	self deny: t.
 	
-	element := builder view elementFromModel: 'hello'.
+	element := builder view elementFromModel: 'hello '.
 	element announce: TRMouseClick.
 	self assert: t
 ]
@@ -93,7 +93,7 @@ world'.
 	builder addText: text.
 	elements := builder view elements.
 	self assert: elements size = 3.
-	self assert: (elements anySatisfy: [ :el | el model isNil ]).
+	self assert: (elements anySatisfy: [ :el | el model = text ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'hello' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 ]
@@ -106,7 +106,7 @@ hola mundo'.
 	builder addText: text.
 	elements := builder view elements.
 	self assert: elements size = 5.
-	self assert: (elements anySatisfy: [ :el | el model isNil ]).
+	self assert: (elements anySatisfy: [ :el | el model = text ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'hello ' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'hola ' ]).
@@ -137,7 +137,7 @@ RTTextBuilderTest >> testOpeningOnText2 [
 	builder addText: text.
 	elements := builder view elements.
 	self assert: elements size = 3.
-	self assert: (elements anySatisfy: [ :el | el model isNil ]).
+	self assert: (elements anySatisfy: [ :el | el model = text ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'hello ' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 ]
@@ -146,10 +146,10 @@ RTTextBuilderTest >> testOpeningOnText2 [
 RTTextBuilderTest >> testWordHighlight [
 	| element text |
 	builder := RTTextBuilder new.
-	text := 'hello'.
+	text := 'hello world'.
 	builder wordInteraction highlightColored: Color blue.
 	builder addText: text.
-	element := builder view elementFromModel: text.
+	element := builder view elementFromModel: 'hello '.
 	self assert: element trachelShape color = element shape defaultColor.
 	element announce: (TRMouseEnter new shape: element trachelShape).
 	self assert: element trachelShape color = Color blue.
