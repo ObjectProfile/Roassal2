@@ -6,5 +6,5 @@ Class {
 
 { #category : #hooks }
 RTDraggable >> initializeElement: element [
-	element on: TRMouseDragging do: [ :e | e element translateBy: e step. e signalUpdate ]
+	element when: TRMouseDragging do: [ :e | e element translateBy: e step. e signalUpdate ]
 ]

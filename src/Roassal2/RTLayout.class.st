@@ -33,10 +33,7 @@ Class {
 		'eventHandler',
 		'currentIteraction',
 		'maxInterations',
-		'iterationsToSendEvent',
-		'paddingLeft',
-		'paddingRight',
-		'paddingTop'
+		'iterationsToSendEvent'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -205,41 +202,9 @@ RTLayout >> on: elements [
 	self applyOn: elements
 ]
 
-{ #category : #events }
-RTLayout >> on: eventClass do: aBlock [
-	"Register a block as an handler for eventClass"
-	
-	eventHandler when: eventClass do: aBlock.
-]
-
 { #category : #hook }
 RTLayout >> on: elements edges: edges [
 	self applyOn: elements
-]
-
-{ #category : #accessing }
-RTLayout >> paddingRight [
-	^ paddingRight
-]
-
-{ #category : #accessing }
-RTLayout >> paddingRight: anInteger [
-	paddingRight := anInteger
-]
-
-{ #category : #accessing }
-RTLayout >> paddingTop [
-	^ paddingTop
-]
-
-{ #category : #accessing }
-RTLayout >> paddingTop: anInteger [
-	paddingTop := anInteger
-]
-
-{ #category : #padding }
-RTLayout >> paddingTopFor: elements [
-	^ paddingTop
 ]
 
 { #category : #utils }
@@ -303,6 +268,13 @@ RTLayout >> translator [
 { #category : #accessing }
 RTLayout >> translator: t [
 	translator := t
+]
+
+{ #category : #events }
+RTLayout >> when: eventClass do: aBlock [
+	"Register a block as an handler for eventClass"
+	
+	eventHandler when: eventClass do: aBlock.
 ]
 
 { #category : #utils }

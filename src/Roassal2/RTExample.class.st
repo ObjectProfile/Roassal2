@@ -57,7 +57,7 @@ RTExample >> beziers02 [
 v := RTView new.
 classes := (RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses.
 classes @ RTDraggable @ RTPopup.
-classes on: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
+classes when: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
 v addAll: classes.
 hierarchicalLinks := RTEdge 
 	buildEdgesFromObjects: Collection withAllSubclasses 
@@ -101,7 +101,7 @@ RTExample >> blinking [
 	view := RTView new.
 	el := (RTBox new size: 100) element.
 	view add: el.
-	el on: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
+	el when: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
 	view open.
 	
 ]
@@ -251,7 +251,7 @@ RTExample >> edition [
 	selected := nil.
 	statusBar := nil.
 	
-	view on: TRMouseClick do: [ :evt |
+	view when: TRMouseClick do: [ :evt |
 		selected == #line ifTrue: [ 
 			| ex1 ex2 line |
 			ex1 := (RTBox new size: 10; color: (Color purple alpha: 0.2)) element. 
@@ -389,7 +389,7 @@ RTExample >> growingSquare [
 	el @ RTDraggable.
 	el translateTo: 100 @ 130.
 	
-	el on: TRMouseClick do: [ :evt |
+	el when: TRMouseClick do: [ :evt |
 		| t |
 		t := evt element trachelShape width + 5.
 		evt element trachelShape extent: t @ t. evt signalUpdate ].
@@ -429,9 +429,9 @@ RTExample >> highlightSquare [
 	1 to: 100 do: [ :i |
 		el := shape elementOn: i.
 		el translateTo: 20 @ 20.
-		el on: TRMouseEnter do: [ :e | e shape color: Color red. e signalUpdate ].
-		el on: TRMouseLeave do: [ :e | e shape color: Color gray. e signalUpdate ].
-		el on: TRMouseDragging do: [ :e | e shape translateBy: e step. e signalUpdate ].
+		el when: TRMouseEnter do: [ :e | e shape color: Color red. e signalUpdate ].
+		el when: TRMouseLeave do: [ :e | e shape color: Color gray. e signalUpdate ].
+		el when: TRMouseDragging do: [ :e | e shape translateBy: e step. e signalUpdate ].
 		view add: el.
 	].
 	RTGridLayout on: view elements.
@@ -578,7 +578,7 @@ RTExample >> nestedHierarchy [
 	inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: 100).
 	host := (RTBox new color: (Color yellow alpha: 0.1)) element.
 
-	inner do: [ :i | i on: TRMouseClick do: [:event | event model inspect ]  ].
+	inner do: [ :i | i when: TRMouseClick do: [:event | event model inspect ]  ].
 
 	view add: host.
 	view addAll: inner.
@@ -743,7 +743,7 @@ RTExample >> popup1 [
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
 	els @ (RTPopup new textElement: [ :e | e model printString ]).
 	els @ RTDraggable.
-	els on: TRMouseClick do: [ :evt | evt element inspect ].
+	els when: TRMouseClick do: [ :evt | evt element inspect ].
 	v addAll: els.
 	RTGridLayout on: els.
 	v open.
