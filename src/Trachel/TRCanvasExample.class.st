@@ -245,12 +245,12 @@ TRCanvasExample >> fixedRec [
 	c buildLineFrom: 50 @ 50 to: 80 @ 80 color: Color lightGreen.
 	
 	colors := Array with: Color red with: Color blue with: Color white.
-	r1 on: TRMouseClick do: [ :event | event shape color: colors atRandom. c signalUpdate ].
-	r2 on: TRMouseClick do: [ :event | r2 color: colors atRandom. c signalUpdate ].	
+	r1 when: TRMouseClick do: [ :event | event shape color: colors atRandom. c signalUpdate ].
+	r2 when: TRMouseClick do: [ :event | r2 color: colors atRandom. c signalUpdate ].	
 		
 	r2 setAsFixed.
 	
-	c on: TRMouseDragging do: [ :event | c camera translateBy: event step negated. c signalUpdate ].
+	c when: TRMouseDragging do: [ :event | c camera translateBy: event step negated. c signalUpdate ].
 	c open
 ]
 

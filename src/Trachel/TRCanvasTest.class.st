@@ -95,7 +95,7 @@ TRCanvasTest >> testCanvasAndEvent [
 	| c f |
 	c := TRCanvas new.
 	f := false.
-	c on: TRMouseClick do: [ :event | f := true ].
+	c when: TRMouseClick do: [ :event | f := true ].
 	self deny: f.
 	c announce: TRMouseMove.
 	self deny: f.
@@ -378,7 +378,7 @@ TRCanvasTest >> testResizing [
 
 	| t |
 	t := false.
-	canvas on: TRResizeCanvasEvent do: [ :evt | t := true ].
+	canvas when: TRResizeCanvasEvent do: [ :evt | t := true ].
 	canvas extent:  12 @ 12.
 	self assert: t
 ]
@@ -396,7 +396,7 @@ TRCanvasTest >> testShapeAndEvent [
 	| shape t |
 	shape := TRBoxShape new.
 	t := false.
-	shape on: TRMouseEnter do: [ :event | t := true ].
+	shape when: TRMouseEnter do: [ :event | t := true ].
 	self deny: t.
 	shape announce: TRMouseEnter new.
 	self assert: t
@@ -410,8 +410,8 @@ TRCanvasTest >> testShapeAndSharedAnnouncer [
 	shape1 announcer: shape2 announcer.
 	
 	t := 0.
-	shape1 on: TRMouseLeave do: [ :event | t := t + 1 ].
-	shape2 on: TRMouseEnter do: [ :event | t := t + 10 ].
+	shape1 when: TRMouseLeave do: [ :event | t := t + 1 ].
+	shape2 when: TRMouseEnter do: [ :event | t := t + 10 ].
 
 	shape1 announce: TRMouseEnter new.
 	shape2 announce: TRMouseLeave new.

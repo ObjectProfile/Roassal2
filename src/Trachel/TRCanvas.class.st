@@ -34,9 +34,9 @@ TRCanvas >> addMenu: aTitle callback: aBlock [
 	index := fixedShapes inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
 	lbl := TRLabelShape new text: aTitle; leftPosition: index @ 20.
 	lbl color: Color black.
-	lbl on: TRMouseClick do: [ :event | aBlock value ].
-	lbl on: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
-	lbl on: TRMouseLeave do: [ :event | lbl color: Color black. self signalUpdate ].
+	lbl when: TRMouseClick do: [ :event | aBlock value ].
+	lbl when: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
+	lbl when: TRMouseLeave do: [ :event | lbl color: Color black. self signalUpdate ].
 	self addFixedShape: lbl
 ]
 
@@ -190,11 +190,6 @@ TRCanvas >> numberOfShapes [
 	^ shapes size 
 ]
 
-{ #category : #events }
-TRCanvas >> on: event do: aBlock [
-	self announcer on: event do: aBlock
-]
-
 { #category : #'instance creation' }
 TRCanvas >> open [
 	^ self openInWindowSized: 500 @ 500
@@ -312,4 +307,9 @@ TRCanvas >> topLeft [
 	^ morph
 		ifNil:[ 0@0 ]
 		ifNotNil: [ morph topLeft ]
+]
+
+{ #category : #events }
+TRCanvas >> when: event do: aBlock [
+	self announcer when: event do: aBlock
 ]

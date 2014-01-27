@@ -178,11 +178,6 @@ TRShape >> isNotFixed [
 	^ self isMovable
 ]
 
-{ #category : #events }
-TRShape >> on: event do: aBlock [
-	self announcer on: event do: aBlock
-]
-
 { #category : #accessing }
 TRShape >> path [
 	path ifNil: [ self computePath ].
@@ -267,4 +262,9 @@ TRShape >> translateBy: aPoint [
 { #category : #actions }
 TRShape >> translateTo: aPoint [
 	self subclassResponsibility
+]
+
+{ #category : #events }
+TRShape >> when: event do: aBlock [
+	self announcer when: event do: aBlock
 ]

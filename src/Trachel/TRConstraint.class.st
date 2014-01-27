@@ -98,13 +98,13 @@ TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
 { #category : #public }
 TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
 	trachelShape canvas
-		on: TRResizeCanvasEvent
+		when: TRResizeCanvasEvent
 		do: [ :event | self moveAtTheBottomOfTheWindow: trachelShape ]
 ]
 
 { #category : #camera }
 TRConstraint class >> stickCameraToTheRightIn: trachelCanvas [
 	trachelCanvas
-		on: TRResizeCanvasEvent
+		when: TRResizeCanvasEvent
 		do: [ :event | self moveCameraToTheRightIn: trachelCanvas ]
 ]

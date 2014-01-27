@@ -97,12 +97,6 @@ TRComposedShape >> initialize [
 	shape2 := TRNoShape instance.
 ]
 
-{ #category : #events }
-TRComposedShape >> on: event do: aBlock [
-	shape1 announcer on: event do: aBlock.
-	shape2 announcer on: event do: aBlock
-]
-
 { #category : #accessing }
 TRComposedShape >> position [
 	^ (shape1 position + shape2 position) / 2
@@ -143,6 +137,12 @@ TRComposedShape >> signalUpdate [
 TRComposedShape >> translateTo: aPoint [
 	shape1 translateTo: aPoint.
 	shape2 translateTo: aPoint.
+]
+
+{ #category : #events }
+TRComposedShape >> when: event do: aBlock [
+	shape1 announcer when: event do: aBlock.
+	shape2 announcer when: event do: aBlock
 ]
 
 { #category : #accessing }
