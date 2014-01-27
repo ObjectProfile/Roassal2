@@ -41,14 +41,14 @@ RTHighlightable >> highlightedColor [
 { #category : #hooks }
 RTHighlightable >> initializeElement: element [
 	element
-		when: TRMouseEnter
+		on: TRMouseEnter
 		do: [ :e | 
 			self unhighlightRecordedShape.
 			self recordShape: element shape.
 			element shape color: self highlightedColor.
 			e signalUpdate ].
 	element
-		when: TRMouseLeave
+		on: TRMouseLeave
 		do: [ :e | 
 			self unhighlightRecordedShape.
 			e signalUpdate ]

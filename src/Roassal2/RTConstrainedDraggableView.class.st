@@ -38,7 +38,7 @@ RTConstrainedDraggableView >> initialize [
 RTConstrainedDraggableView >> initializeElement: aView [
 
 	aView canvas 
-		when: TRMouseDragging 
+		on: TRMouseDragging 
 		do: [ :e || translation |
 			translation := constraint value: e step negated.
 			aView canvas camera translateBy: translation.

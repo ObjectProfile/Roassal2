@@ -57,5 +57,5 @@ RTInteractionBuilder >> setUpElements: elements [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> when: event do: block [
-	interactions add: [ :element | element when: event do: block ]
+	interactions add: [ :element | element on: event do: block ]
 ]

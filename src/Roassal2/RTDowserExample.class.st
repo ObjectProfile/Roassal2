@@ -189,7 +189,7 @@ RTDowserExample >> example6 [
 	| builder | 
 	builder := RTDowserBuilder new.
 	builder left: (1 to: 20).
-	builder right: (RTObject withAllSubclasses).
+	builder right: (ROObject withAllSubclasses).
 	builder edgesFrom: [ :a :b | a numberOfSubclasses = b].
 	builder open
 ]

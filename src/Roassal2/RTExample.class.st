@@ -57,7 +57,7 @@ RTExample >> beziers02 [
 v := RTView new.
 classes := (RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses.
 classes @ RTDraggable @ RTPopup.
-classes when: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
+classes on: TRMouseEnter do: [ :evt | RTBlink outgoingEdgesOf: evt element ].
 v addAll: classes.
 hierarchicalLinks := RTEdge 
 	buildEdgesFromObjects: Collection withAllSubclasses 
@@ -101,7 +101,7 @@ RTExample >> blinking [
 	view := RTView new.
 	el := (RTBox new size: 100) element.
 	view add: el.
-	el when: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
+	el on: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
 	view open.
 	
 ]
@@ -251,7 +251,7 @@ RTExample >> edition [
 	selected := nil.
 	statusBar := nil.
 	
-	view when: TRMouseClick do: [ :evt |
+	view on: TRMouseClick do: [ :evt |
 		selected == #line ifTrue: [ 
 			| ex1 ex2 line |
 			ex1 := (RTBox new size: 10; color: (Color purple alpha: 0.2)) element. 
@@ -389,7 +389,7 @@ RTExample >> growingSquare [
 	el @ RTDraggable.
 	el translateTo: 100 @ 130.
 	
-	el when: TRMouseClick do: [ :evt |
+	el on: TRMouseClick do: [ :evt |
 		| t |
 		t := evt element trachelShape width + 5.
 		evt element trachelShape extent: t @ t. evt signalUpdate ].
@@ -429,9 +429,9 @@ RTExample >> highlightSquare [
 	1 to: 100 do: [ :i |
 		el := shape elementOn: i.
 		el translateTo: 20 @ 20.
-		el when: TRMouseEnter do: [ :e | e shape color: Color red. e signalUpdate ].
-		el when: TRMouseLeave do: [ :e | e shape color: Color gray. e signalUpdate ].
-		el when: TRMouseDragging do: [ :e | e shape translateBy: e step. e signalUpdate ].
+		el on: TRMouseEnter do: [ :e | e shape color: Color red. e signalUpdate ].
+		el on: TRMouseLeave do: [ :e | e shape color: Color gray. e signalUpdate ].
+		el on: TRMouseDragging do: [ :e | e shape translateBy: e step. e signalUpdate ].
 		view add: el.
 	].
 	RTGridLayout on: view elements.
@@ -578,7 +578,7 @@ RTExample >> nestedHierarchy [
 	inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: 100).
 	host := (RTBox new color: (Color yellow alpha: 0.1)) element.
 
-	inner do: [ :i | i when: TRMouseClick do: [:event | event model inspect ]  ].
+	inner do: [ :i | i on: TRMouseClick do: [:event | event model inspect ]  ].
 
 	view add: host.
 	view addAll: inner.
@@ -743,7 +743,7 @@ RTExample >> popup1 [
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
 	els @ (RTPopup new textElement: [ :e | e model printString ]).
 	els @ RTDraggable.
-	els when: TRMouseClick do: [ :evt | evt element inspect ].
+	els on: TRMouseClick do: [ :evt | evt element inspect ].
 	v addAll: els.
 	RTGridLayout on: els.
 	v open.
@@ -854,6 +854,39 @@ RTExample >> smoothLayout [
 	"RTGridLayout on: v elements."
 	RTTreeLayout new  on: v elements edges: v edges.
 	v open
+]
+
+{ #category : #beziers }
+RTExample >> softviz01 [
+	"
+	self new softviz01
+	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
+	"
+| v inheritanceEdges shape |
+v := RTView new.
+shape := RTEllipse new color: (Color red alpha: 0.4); size: [ :e | e numberOfMethods / 5 max: 5].
+v addAll: (shape elementsOn: Collection withAllSubclasses).
+
+"Defining edges from inheritance"
+inheritanceEdges := 
+	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
+
+"Layout the whole thing"
+RTForceBasedLayout new 
+	userDefinedEdges: inheritanceEdges;
+	on: v elements.
+
+"Defining edges from dependencies"
+Collection withAllSubclasses do: [ :cls |
+cls methods do: [ :cm | 
+			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
+			
+		RTEdge buildEdgesFromAssociations: { cls -> depClass } using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
+].
+	
+"Open the view"
+v open
+
 ]
 
 { #category : #animations }

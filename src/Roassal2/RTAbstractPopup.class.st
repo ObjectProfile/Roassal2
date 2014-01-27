@@ -116,16 +116,16 @@ RTAbstractPopup >> getNewPopupFor: element [
 RTAbstractPopup >> initializeElement: element [
 
 	element
-		when: TRMouseEnter
+		on: TRMouseEnter
 		do: [ :event | 
 			self createAndShowPopupFor: element event: event ].
 	element
-		when: TRMouseLeave
+		on: TRMouseLeave
 		do: [ :event | 
 			self removeLastPopup.
 			element trachelShape signalUpdate ].
 	element
-		when: TRMouseDragging
+		on: TRMouseDragging
 		do: [ :event | 
 			self removeLastPopup.
 			element trachelShape signalUpdate ]
