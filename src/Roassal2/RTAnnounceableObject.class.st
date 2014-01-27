@@ -31,6 +31,11 @@ RTAnnounceableObject >> announcer [
 ]
 
 { #category : #interaction }
+RTAnnounceableObject >> on: evt do: aBlock [
+	self announcer when: evt do: aBlock
+]
+
+{ #category : #interaction }
 RTAnnounceableObject >> when: evt do: aBlock [
 	self announcer when: evt do: aBlock
 ]
