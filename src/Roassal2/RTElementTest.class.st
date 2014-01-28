@@ -141,7 +141,17 @@ RTElementTest >> testPopupAndGroup [
 	el announce: (TRMouseEnter new position: 0 @ 0; shape: el trachelShape).
 	self assert: v numberOfElements equals: 11.
 
-	self assert: v canvas fixedShapes first position =  (22@22)
+	self assert: v canvas fixedShapes first position asIntegerPoint = (22@22)
+	
+]
+
+{ #category : #position }
+RTElementTest >> testPosition [
+
+	| el |
+	el := RTBox element.
+	el translateTo: 1.1234 @ 1.1234.
+	self assert: el position = (1.1234 @ 1.1234). 
 ]
 
 { #category : #tests }

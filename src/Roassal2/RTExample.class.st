@@ -19,18 +19,6 @@ RTExample >> animationTest [
 	^ view
 ]
 
-{ #category : #shapes }
-RTExample >> basic [
-	"
-	self new basic
-	"
-	
-	| view |
-	view := RTView new.
-	view add: (RTBox element translateTo: 20 @ 20; yourself).
-	view open
-]
-
 { #category : #beziers }
 RTExample >> beziers01 [
 
