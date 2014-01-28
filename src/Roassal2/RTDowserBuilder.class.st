@@ -5,6 +5,7 @@ Class {
 	#name : #RTDowserBuilder,
 	#superclass : #Object,
 	#instVars : [
+		'columns',
 		'view',
 		'models',
 		'title',
@@ -12,20 +13,14 @@ Class {
 		'body',
 		'bodyElement',
 		'overBody',
-		'left',
-		'right',
-		'labelLeft',
-		'labelRight',
-		'colorLeft',
-		'colorRight',
+		'labels',
+		'colors',
 		'edgeColor',
 		'viewWidth',
 		'distance',
-		'direction',
 		'popups',
 		'popupElement',
-		'heightLeft',
-		'heightRight',
+		'heights',
 		'width',
 		'lineShape',
 		'edges',
@@ -64,7 +59,13 @@ RTDowserBuilder class >> normalizerTop [
 	^ Color r: 0 g: (68/256) b: (27/256)
 ]
 
-{ #category : #'edge-management' }
+{ #category : #accessing }
+RTDowserBuilder >> addColumn: aCollection [
+	self models addAll: aCollection.
+	columns add: (self from: aCollection in: (columns size + 1))
+]
+
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> addLinesfrom: aNode toAll: aCollection from: anotherCollection color: aColor [
 	| ce1 ce2 ce3 ce4 p1 p2 p3 p4 lines |
 	lines := OrderedCollection new.
@@ -72,7 +73,7 @@ RTDowserBuilder >> addLinesfrom: aNode toAll: aCollection from: anotherCollectio
 		do: [ :l | | ed dif |
 			dif := (aNode position y + (aNode height / 2)) - (l position y + (l height / 2)).
 			(dif abs) < 5 
-				ifTrue: [ ed := (RTLine new color:aColor) edgeFrom: aNode to: l	]
+				ifTrue: [ ed := (RTLine new color: aColor) edgeFrom: aNode to: l	]
 				ifFalse: [  
 					p1 := self controlPoint: aNode with: l.
 					ce1 := self controlElement: p1.
@@ -84,19 +85,18 @@ RTDowserBuilder >> addLinesfrom: aNode toAll: aCollection from: anotherCollectio
 					ce3 := self controlElement: p3.
 					ed := self bezierLine: aNode to: l with: ce1 with: ce2 with: ce3 with: ce4 color: aColor 
 					].
-			lines add: ed.
+			lines add: {ed to . ed}.
 			view add: ed.
 			 ].
-	lines do: [ :l | l trachelShape pushBack ].
+	lines do: [ :l | l second trachelShape pushBack ].
 	self view canvas signalUpdate.
 	^lines
 ]
 
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> addPopup: element from: aCollection [
 	| pop |
 	element outgoingEdges isEmpty
-		ifTrue: [ Transcript show: 'hola' ] 
 		ifFalse: [ 
 			pop := self popupElement value: element.
 			pop model = 1 ifFalse: [  
@@ -109,22 +109,17 @@ RTDowserBuilder >> addPopup: element from: aCollection [
 		 
 ]
 
-{ #category : #relations }
-RTDowserBuilder >> assignMissing: aBlock from: aCollection [
-	| values aux otherCollection |
-	aCollection = left
-		ifTrue: [ otherCollection := right ]
-		ifFalse:[ otherCollection := left ].
+{ #category : #'private-relations' }
+RTDowserBuilder >> assignMissing: aBlock from: aNumber to: anotherNumber [
+	| values aux |
 	values := OrderedCollection new.
-	aux := aCollection collect: [ :l | (aBlock value: l model) ].
+	aux := (columns at: aNumber) collect: [ :l | (aBlock value: l model) ].
 	aux do: [ :e | (e isCollection not or: (e isString)) ifTrue: [values add: e] ifFalse: [values addAll: e] ].
 	values removeDuplicates.
-	otherCollection = left
-		ifTrue: [ left := (self from: values in: 'left') ]
-		ifFalse:[ right := (self from: values in: 'right')].
+	columns at: anotherNumber put: (self from: values in: anotherNumber)
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> bezierLine: anElement to: anotherElement with: controlPoint1 with: controlPoint2 with: controlPoint3 with: controlPoint4 color: aColor [
 	| line controls|
 	lineShape 
@@ -148,7 +143,7 @@ RTDowserBuilder >> body: aText [
 	body := aText
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> check: aBlock from: s to: f [
        | v r t |
 		r := false.
@@ -165,31 +160,11 @@ RTDowserBuilder >> check: aBlock from: s to: f [
 
 { #category : #accessing }
 RTDowserBuilder >> color: aColor [
-	self colorLeft: aColor.
-	self colorRight: aColor
+	colors ifNil: [colors := Dictionary new].
+	colors at: 1 put: aColor.
 ]
 
-{ #category : #accessing }
-RTDowserBuilder >> colorLeft [
-	^colorLeft
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> colorLeft: aMessage [
-	^colorLeft := aMessage
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> colorRight [
-	^colorRight
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> colorRight: aMessage [
-	^colorRight := aMessage
-]
-
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> controlElement: p1 [
 	| elem |
 	elem := (RTBox new color: Color transparent) element translateTo: p1.
@@ -197,7 +172,7 @@ RTDowserBuilder >> controlElement: p1 [
 	
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> controlPoint2: aNode with: anotherNode [
 	| p1 p2 |
 	p1 := aNode position.
@@ -213,7 +188,7 @@ RTDowserBuilder >> controlPoint2: aNode with: anotherNode [
 				ifFalse: [ (p1 x - ((p1 x - (p2 x)) / 2)) @ (p1 y - ((p1 y - (p2 y)) / 4))]] 
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> controlPoint: aNode with: anotherNode [
 	| p1 p2 |
 	p1 := aNode position.
@@ -245,86 +220,45 @@ RTDowserBuilder >> edgeColor: aColor [
 
 { #category : #'adding edges' }
 RTDowserBuilder >> edgesFrom: aBlock [
-	self edgesFromLeft: aBlock.
-	self edgesToLeft: aBlock.
-]
-
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesFromLeft:  aBlock [
-	left ifEmpty: [ left := self fromModel ].
-	right ifEmpty: [ self assignMissing: aBlock from: left ].
-	direction := 'from'.
-	self relationLeft: aBlock.
-	self view addAll: left.
-]
-
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesFromLeft: aBlock edgesFromRight: anotherBlock [
-	self edgesFromLeft: aBlock.
-	self edgesFromRight: anotherBlock.
-]
-
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesFromLeft: aBlock edgesToLeft: anotherBlock [
-	self edgesFromLeft: aBlock.
-	self edgesToLeft: anotherBlock.
-]
-
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesFromRight: aBlock [
-	right ifEmpty: [ right := self fromModel ].
-	left ifEmpty: [ self assignMissing: aBlock from: right ].
-	direction := 'from'.
-	self relationRight: aBlock.
-	self view addAll: right
+	(1 to: columns size - 1) 
+		do: [ :n |  
+			self edgesWith: aBlock from: n to: (n + 1).
+			self edgesWith: aBlock to: (n + 1) from: n].
 ]
 
 { #category : #'adding edges' }
 RTDowserBuilder >> edgesTo: aBlock [
-	self edgesToRight: aBlock.
-	self edgesFromRight: aBlock.
+	(1 to: columns size - 1) 
+		do: [ :n |  
+			self edgesWith: aBlock to: n from: (n + 1).
+			self edgesWith: aBlock from: (n + 1) to: n].
 ]
 
 { #category : #'adding edges' }
-RTDowserBuilder >> edgesToLeft:  aBlock [
-	right ifEmpty: [ right :=  self fromModel].
-	left ifEmpty: [ self assignMissing: aBlock from: right ].
-	direction := 'to'.
-	self relationRight: aBlock.
-	self view addAll: right.
+RTDowserBuilder >> edgesWith: aBlock from: aNumber to: anotherNumber [
+	(columns at: aNumber) 
+		ifEmpty: [ columns at: aNumber put: self fromModel ].
+	(columns at: anotherNumber) 
+		ifEmpty: [ self assignMissing: aBlock from: aNumber to: anotherNumber ].
+	self relation: aBlock with: aNumber with: anotherNumber direction: 'from'.
+	self view addAll: (columns at: aNumber).
 ]
 
 { #category : #'adding edges' }
-RTDowserBuilder >> edgesToLeft: aBlock edgesToRight: anotherBlock [
-	self edgesToLeft: aBlock.
-	self edgesToRight: anotherBlock.
+RTDowserBuilder >> edgesWith: aBlock to: aNumber from: anotherNumber [
+	(columns at: aNumber) 
+		ifEmpty: [ columns at: aNumber put: self fromModel ].
+	(columns at: anotherNumber) 
+		ifEmpty: [ self assignMissing: aBlock from: aNumber to: anotherNumber ].
+	self relation: aBlock with: aNumber with: anotherNumber direction: 'to'.
+	self view addAll: (columns at: aNumber).
 ]
 
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesToRight:  aBlock [
-	left ifEmpty: [ left := self fromModel].
-	right ifEmpty: [ self assignMissing: aBlock from: left ].
-	direction := 'to'.
-	self relationLeft: aBlock.
-	self view addAll: left.
-]
-
-{ #category : #'adding edges' }
-RTDowserBuilder >> edgesToRight: aBlock edgesFromRight: anotherBlock [
-	self edgesToRight: aBlock.
-	self edgesFromRight: anotherBlock.
-]
-
-{ #category : #'shape-managment' }
-RTDowserBuilder >> from: aCollection in: aString [
+{ #category : #'private-shape-managment' }
+RTDowserBuilder >> from: aCollection in: aNumber [
 	|h w dictionary normalizer c color height|
-	(aString = 'left')
-		ifTrue: [ color := self colorLeft.
-				 height := self heightLeft  ]
-		ifFalse: [ color := self colorRight.
-				 height := self heightRight ].
-	color ifNil: [ color := self colorRight].
-	height ifNil: [ height := self heightRight].
+	color := (colors at: (aNumber + 1) ifAbsent: [ colors at: 1 ]).
+	height := (heights at: (aNumber + 1) ifAbsent: [ heights at: 1 ]).
 	h := [ :v | [(height value: v)] on: Error do: [ 10 ] ].
 	w := [ :v | [(self width value: v)] on: Error do: [ 10 ] ].
 	color isColor 
@@ -339,23 +273,37 @@ RTDowserBuilder >> from: aCollection in: aString [
 		elem + (RTBox new height: (h value: m); width: (w value: m); color: (c value: m))]).
 ]
 
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> fromModel [
-	^(self from: (self models) in: 'left')
+	^(self from: (self models) in: 1)
 ]
 
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> getNormalizerfrom: aDictionary [
 	^(RTNColorLinearNormalizer inContext: (aDictionary values) lowColor: (self class normalizerBotom) highColor: (self class normalizerTop)).
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 	aNode
 		when: TRMouseEnter
 		do: [ :event | 
 			shadowEdges at: aNode	
-				ifPresent: [ :v | v do: [ :e | self view add: e. e trachelShape pushBack]. 
+				ifPresent: [ :v |
+					(v first second to = links first)
+						ifTrue: [  
+							v do: [ :e | 
+								self view add: e second.
+								e second from: aNode.
+								e second to: e first. 
+								e second trachelShape pushBack].							
+							]
+						ifFalse: [
+							v addAll: (self
+								addLinesfrom: aNode
+								toAll: links
+								from: aCollection
+								color: self class defaultLightEdgeColor) ]. 
 							self view canvas signalUpdate]
 				ifAbsent: [
 					shadowEdges at: aNode put: 
@@ -369,7 +317,7 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 		when: TRMouseLeave
 		do: [ :event | |v|
 			v := true.
-			(shadowEdges at: aNode ifAbsent:[^false]) do: [ :e | e remove].
+			(shadowEdges at: aNode ifAbsent:[^false]) do: [ :e | e second remove].
 			self view canvas signalUpdate.
 			overBody do: [ :e|  v := v or: [e]]. 
 			v ifFalse: [ bodyElement shape color: Color darkGray]].
@@ -377,36 +325,15 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 
 { #category : #accessing }
 RTDowserBuilder >> height: aBlock [
-	self heightLeft: aBlock.
-	self heightRight: aBlock.
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> heightLeft [
-	^heightLeft
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> heightLeft: aBlock [
-	heightLeft := aBlock
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> heightRight [
-	^heightRight
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> heightRight: aBlock [
-	heightRight := aBlock
+	heights ifNil: [heights := Dictionary new].
+	heights at: 1 put: aBlock.
 ]
 
 { #category : #initialization }
 RTDowserBuilder >> initialize [
 	view := RTView new.
 	models := OrderedCollection new.
-	left := OrderedCollection new.
-	right := OrderedCollection new.
+	columns := OrderedCollection new.
 	popups := Dictionary new.
 	edges := Dictionary new.
 	shadowEdges := Dictionary new.
@@ -427,55 +354,22 @@ RTDowserBuilder >> initialize [
 
 { #category : #accessing }
 RTDowserBuilder >> label: aMessage [
-	self labelLeft: aMessage.
-	self labelRight: aMessage
+	labels ifNil: [labels := Dictionary new].
+	labels at: 1 put: aMessage.
 ]
 
-{ #category : #accessing }
-RTDowserBuilder >> labelLeft [
-	^labelLeft
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> labelLeft: aMessage [
-	labelLeft := aMessage
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> labelRight [
-	^labelRight
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> labelRight: aMessage [
-	labelRight := aMessage
-]
-
-{ #category : #'shape-managment' }
-RTDowserBuilder >> labels: aCollection [
+{ #category : #'private-shape-managment' }
+RTDowserBuilder >> labels: aNumber [
 	| maxWidth label|
 	maxWidth := 0.
-	(aCollection = left) 
-		ifTrue: [ label := self labelLeft ]
-		ifFalse: [ label := self labelRight ].
-	aCollection do: [:l | | lab | 
+	label := (labels at: (aNumber + 1) ifAbsent: [labels at: 1]).
+	(columns at: aNumber) do: [:l | | lab | 
 		lab := (RTElement on: (label value: l model)) + RTLabel.
 		lab @ RTHighlightable.
 		maxWidth := maxWidth max: (lab width).
 		self view add: lab.
-		self stick: lab on: l from: aCollection].
+		self stick: lab on: l from: (columns at: aNumber)].
 	^maxWidth 
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> left [
-	^left
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> left: aCollection [
-	self models addAll: aCollection.
-	left := self from: aCollection in: 'left'.
 ]
 
 { #category : #accessing }
@@ -488,25 +382,38 @@ RTDowserBuilder >> legend: aString [
 	legend := aString 
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> lines: aNode in: aCollection to: links [
 	aNode
 		when: TRMouseClick
 		do: [ :event | 
 			edges at: aNode		
 				ifPresent: [ :v |
-					((v isEmpty not) and: [ v first trachelShape isInACanvas])
-						ifTrue: [ | val |
+					(v first second to = links first)
+						ifTrue: [ 
+							((v isEmpty not) and: [ v first second trachelShape isInACanvas])
+							ifTrue: [ | val |
 								val := false.
-								v do: [ :e | e remove].
+								v do: [ :e | e second remove].
 								self removePopup: aNode.
 								overBody at: aNode put: false.
 								overBody do: [ :e|  val := val or: [e]]. 
 								val ifFalse: [ bodyElement shape color: Color darkGray]]
-						ifFalse: [v do: [ :e | self view add: e. e trachelShape pushBack]. 
-								self addPopup: aNode from: aCollection.
-								overBody at: aNode put: true. 
-								bodyElement shape color: Color veryVeryLightGray].
+							ifFalse: [
+								v do: [ :e | 
+									self view add: e second.
+									e second from: aNode.
+									e second to: e first.
+									e second trachelShape pushBack]. 
+									self addPopup: aNode from: aCollection.
+									overBody at: aNode put: true. 
+									bodyElement shape color: Color veryVeryLightGray]]
+						ifFalse:[
+							v addAll: (self
+											addLinesfrom: aNode
+											toAll: links
+											from: aCollection
+											color: self edgeColor)].
 					self view canvas signalUpdate]
 				ifAbsent: [
 					edges at: aNode put: 
@@ -520,16 +427,12 @@ RTDowserBuilder >> lines: aNode in: aCollection to: links [
 					bodyElement shape color: Color veryVeryLightGray]]
 ]
 
-{ #category : #'edge-management' }
-RTDowserBuilder >> linesFrom: aCollection with: aBlock [
-	| otherCollection  |
-	aCollection = left
-		ifTrue: [ otherCollection := right ]
-		ifFalse: [ otherCollection := left ].
+{ #category : #'private-edge-management' }
+RTDowserBuilder >> linesFrom: aCollection to: anotherCollection with: aBlock [
 	aCollection
 		do: [ :n1 | 
 			| links |
-			links := self linksFrom: n1 with: aBlock to: otherCollection.
+			links := self linksFrom: n1 with: aBlock to: anotherCollection.
 			self
 				lines: n1
 				in: aCollection
@@ -540,16 +443,12 @@ RTDowserBuilder >> linesFrom: aCollection with: aBlock [
 				to: links ].
 ]
 
-{ #category : #'edge-management' }
-RTDowserBuilder >> linesTo: aCollection with: aBlock [
-	| otherCollection |
-	aCollection = left
-		ifTrue: [ otherCollection := right ]
-		ifFalse: [ otherCollection := left ].
+{ #category : #'private-edge-management' }
+RTDowserBuilder >> linesTo: aCollection from: anotherCollection with: aBlock [
 	aCollection
 		do: [ :n1 | 
 			| links |
-			links := self linksTo: n1 with: aBlock to: otherCollection.
+			links := self linksTo: n1 with: aBlock to: anotherCollection.
 			self
 				lines: n1
 				in: aCollection
@@ -560,7 +459,7 @@ RTDowserBuilder >> linesTo: aCollection with: aBlock [
 				to: links ].
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> linksFrom: aNode with: aBlock to: otherCollection [
 	| links aux |
 	aux := otherCollection
@@ -578,7 +477,7 @@ RTDowserBuilder >> linksFrom: aNode with: aBlock to: otherCollection [
 	^ links
 ]
 
-{ #category : #'edge-management' }
+{ #category : #'private-edge-management' }
 RTDowserBuilder >> linksTo: aNode with: aBlock to: otherCollection [
 	| links aux |
 	aux := otherCollection
@@ -596,6 +495,21 @@ RTDowserBuilder >> linksTo: aNode with: aBlock to: otherCollection [
 	^ links
 ]
 
+{ #category : #'private-relations' }
+RTDowserBuilder >> makeBlock: aBlock [
+	| newBlock |
+	aBlock isBlock
+		ifTrue: [ newBlock := aBlock ]
+		ifFalse: [ 
+			newBlock := [ :a :b | 
+			| v |
+			v := aBlock value: a.
+			(v includes: b)
+				ifTrue: [ true ]
+				ifFalse: [ v = b ] ] ].
+	^ newBlock
+]
+
 { #category : #accessing }
 RTDowserBuilder >> models [
 	^models
@@ -611,18 +525,11 @@ RTDowserBuilder >> octopiEdges [
 	lineShape := true.
 ]
 
-{ #category : #accessing }
-RTDowserBuilder >> onLeftAndRight: aCollection [
-	self left: aCollection.
-	self right: aCollection.
-]
-
 { #category : #'instance creation' }
 RTDowserBuilder >> open [
-	(self view elements includes: (left anyOne)) ifFalse: [self view addAll: left].
-	(self view elements includes: (right anyOne)) ifFalse: [self view addAll: right].
+	columns do: [:c |  (self view elements includes: (c anyOne)) ifFalse: [self view addAll: c] ].
 	self view @ RTVerticalDraggableView.
-	"self view canvas signalUpdate."
+	self view canvas signalUpdate.
 	self view openInWindowSized: ((self viewWidth) @ 500) titled: (self title).
 ]
 
@@ -641,109 +548,76 @@ RTDowserBuilder >> popups [
 	^popups
 ]
 
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> positionateTowers [
-	| maxwl maxwr maxl maxr max leg legTrans leftTrans rightTrans bod|
+	|maxWidths maxHeight legendElement legTrans translations accum bod|
+	translations := OrderedCollection new.
 	
-	maxl := (left collect: [ :l | l height ]) max.
-	maxr := (right collect: [ :l | l height ]) max.
-	max := maxl max: maxr.
+	maxHeight := (columns collect: [ :c | (c collect: [ :l | l height ]) max]) max.
 
-	RTVerticalLineLayout on: left.
-	RTVerticalLineLayout on: right.	
+	columns do: [ :c | RTVerticalLineLayout on: c ].	
 	
-	maxwl := self labels: left.
-	maxwr := self labels: right.
+	maxWidths := (1 to: columns size) collect: [ :n | self labels: n].
 	
-	distance := ((self models size * max ln * 5) max: 300) min: 400.	
+	distance := ((self models size * maxHeight ln * 5) max: 300) min: 400.	
 
-	leg := (RTElement on: (self legend)) +  (RTLabel new height: 18).
-	self view add: leg.
-	legTrans := (maxwl + 40 + (distance / 2) - (leg position x)) max: 0.
-	leg translateBy: legTrans @ 0.
+	legendElement := (RTElement on: (self legend)) +  (RTLabel new height: 18).
+	self view add: legendElement.
+	legTrans := (((maxWidths at: 1) / 2) + (maxWidths allButLast sum / 2) + (columns size * 20)
+				+ (((columns size - 1) * distance) / 2) - (legendElement position x)) max: 0.
+	legendElement translateBy: legTrans @ 0.
 	
-	legTrans = 0
-		ifTrue: [ leftTrans :=  (leg position x) - ((distance / 2) + maxwl).
-				 rightTrans := (leftTrans + distance) ]
-		ifFalse: [ leftTrans :=  (maxwl + 30).
-				 rightTrans := (maxwl + distance + 30)].
-	left do: [ :e | e translateBy: leftTrans @ ((e height/2) + 40) ].
-	right do: [ :e | e translateBy: rightTrans @ ((e height/2) + 40) ].	
-	
+	accum := (maxWidths at: 1) + 30.
+	translations add: accum.
+	(2 to: columns size) do: [ :n | | translation |
+			translation := accum + distance.
+			accum := translation + (maxWidths at: n) + 30. 
+			translations add: translation].
+		
+	1 to: (columns size) do: [ :n | (columns at: n) do: [ :e | e translateBy: (translations at: n) @ 40 ]].	
+
 	bod := (RTElement on: (self body)) +  (RTLabel new color: Color darkGray).
 	bodyElement := bod.
 	"bod width: distance."
 	self view add: bod.
-	bod translateBy: (maxwl + 60 @ 30 ).
+	bod translateBy: ((maxWidths at: 1)  + 60 @ 30 ).
 	"bod forward: (bod view)."
 	"bod on: TREvent do: [:e | bod parentAnnounce: e]."
 	
-	viewWidth := distance + maxwl + maxwr + 80  max: (leg width).
+	viewWidth := distance + (maxWidths sum)  + (columns size * 40)  max: (legendElement width).
 	
 	^ distance
 ]
 
-{ #category : #relations }
-RTDowserBuilder >> relation: aBlock [	
-	self relationLeft: aBlock.
-	self relationRight: aBlock.
-]
-
-{ #category : #relations }
-RTDowserBuilder >> relationLeft: aBlock [
+{ #category : #'private-relations' }
+RTDowserBuilder >> relation: aBlock	with: aNumber with: anotherNumber direction: aString [
 	| newBlock |
-	aBlock isBlock 
-		ifTrue: [ newBlock	:= aBlock ]
-		ifFalse: 	[ newBlock := [ :a :b | |v|
-				v := (aBlock value: a).
-				(v includes: b) ifTrue: [true] ifFalse: [v = b] ]]. 
+	newBlock := self makeBlock: aBlock.
 	self distance isNil ifTrue: [ distance := self positionateTowers].
-	direction = 'to' 
-		ifTrue: [ self linesTo: left with: newBlock]
-		ifFalse: [ self linesFrom: left with: newBlock]
+	aString = 'to' 
+		ifTrue: [ self linesTo: (columns at: aNumber) from: (columns at: anotherNumber) with: newBlock]
+		ifFalse: [ self linesFrom: (columns at: aNumber) to: (columns at: anotherNumber) with: newBlock]
 ]
 
-{ #category : #relations }
-RTDowserBuilder >> relationRight: aBlock [	
-	| newBlock |
-	aBlock isBlock 
-		ifTrue: [ newBlock	:= aBlock ]
-		ifFalse: 	[ newBlock := [ :a :b | |v|
-				v := (aBlock value: a).
-				(v includes: b) ifTrue: [true] ifFalse: [v = b] ]]. 
-	self distance isNil ifTrue: [ distance := self positionateTowers].
-	direction = 'to' 
-		ifTrue: [ self linesTo: right with: newBlock]
-		ifFalse: [ self linesFrom: right with: newBlock]
-]
-
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> removePopup: element [
 	(popups at: element ifAbsent:[^false]) remove. 
 ]
 
-{ #category : #accessing }
-RTDowserBuilder >> right [
-	^ right
-]
-
-{ #category : #accessing }
-RTDowserBuilder >> right: aCollection [
-	self models addAll: aCollection.
-	right := self from: aCollection in: 'right'.
-]
-
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> stick: aLabel on: anElement from: aCollection [
-	(aCollection = left)
+	(aCollection = (columns at: 1))
 		ifTrue: [ TRConstraint stick: (aLabel trachelShape) onTheLeftOf: (anElement trachelShape) ]
-		ifFalse: [ TRConstraint stick: (aLabel trachelShape) onTheRightOf: (anElement trachelShape) ]
+		ifFalse: [ 
+			(aCollection = (columns at: (columns size)))
+				ifTrue: [ TRConstraint stick: (aLabel trachelShape) onTheRightOf: (anElement trachelShape) ]
+				ifFalse: [ TRConstraint stick: (aLabel trachelShape) above: (anElement trachelShape) ]]
 	
 ]
 
-{ #category : #'shape-managment' }
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> stickTop: aLabel on: anElement from: aCollection [
-	(aCollection = left)
+	(aCollection = (columns at: 1))
 						ifTrue:  [ aLabel translateTo: anElement position + 
 							((anElement width + (aLabel width) + 5) @ ((anElement height / 2) - (aLabel height)))]
 						ifFalse: [ aLabel translateTo: anElement position + 
