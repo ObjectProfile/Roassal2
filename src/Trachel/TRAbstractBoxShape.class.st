@@ -19,7 +19,7 @@ TRAbstractBoxShape class >> nullRectangle [
 
 { #category : #accessing }
 TRAbstractBoxShape >> center [
-	^ rectangle center
+	^ self position
 ]
 
 { #category : #hooks }
@@ -108,6 +108,7 @@ TRAbstractBoxShape >> fromRectangle: r [
 	| oldTopLeft |
 	oldTopLeft := rectangle topLeft.
 	rectangle := r.
+	position := rectangle center.
 	self triggerCallbacksForStep: (r topLeft - oldTopLeft).
 	self resetPath
 ]
@@ -125,7 +126,7 @@ TRAbstractBoxShape >> height [
 
 { #category : #accessing }
 TRAbstractBoxShape >> height: newHeight [
-	rectangle := (rectangle center - (0 @ (newHeight / 2))) extent: (self extent x @ newHeight)
+	rectangle := (position - (0 @ (newHeight / 2))) extent: (self extent x @ newHeight)
 ]
 
 { #category : #testing }
@@ -142,11 +143,6 @@ TRAbstractBoxShape >> initialize [
 { #category : #public }
 TRAbstractBoxShape >> leftPosition: aPosition [
 	self position: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
-]
-
-{ #category : #accessing }
-TRAbstractBoxShape >> position [ 
-	^ rectangle center
 ]
 
 { #category : #accessing }
@@ -171,6 +167,7 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #actions }
 TRAbstractBoxShape >> translateBy: aPoint [
+	super translateBy: aPoint.
 	rectangle := (rectangle topLeft + aPoint) extent: rectangle extent.
 	self triggerCallbacksForStep: aPoint
 ]
@@ -178,6 +175,7 @@ TRAbstractBoxShape >> translateBy: aPoint [
 { #category : #actions }
 TRAbstractBoxShape >> translateTo: aPoint [
 	| oldTopLeft |
+	super translateTo: aPoint.
 	oldTopLeft := rectangle topLeft.
 	rectangle := (aPoint - (self extent / 2)) extent: self extent.
 	self triggerCallbacksForStep: (rectangle topLeft - oldTopLeft)
@@ -197,5 +195,5 @@ TRAbstractBoxShape >> width [
 
 { #category : #accessing }
 TRAbstractBoxShape >> width: newWidth [
-	rectangle := (rectangle center - ((newWidth / 2) @ 0)) extent: (newWidth @ self extent y)
+	rectangle := (position - ((newWidth / 2) @ 0)) extent: (newWidth @ self extent y)
 ]

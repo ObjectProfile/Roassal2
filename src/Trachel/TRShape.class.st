@@ -8,7 +8,8 @@ Class {
 		'strokePaint',
 		'announcer',
 		'element',
-		'callbacks'
+		'callbacks',
+		'position'
 	],
 	#category : #'Trachel-Core'
 }
@@ -151,8 +152,8 @@ TRShape >> includesPoint: aPoint [
 TRShape >> initialize [
 	super initialize.
 	color := Color gray.
-	strokePaint := Color black.	
-	
+	strokePaint := Color black.	 
+	position := 0 @ 0.
 ]
 
 { #category : #testing }
@@ -186,7 +187,7 @@ TRShape >> path [
 
 { #category : #accessing }
 TRShape >> position [
-	self subclassReponsibility
+	^ position
 ]
 
 { #category : #actions }
@@ -256,12 +257,12 @@ TRShape >> strokePaint: aColor [
 
 { #category : #actions }
 TRShape >> translateBy: aPoint [
-	self subclassResponsibility
+	position := position + aPoint
 ]
 
 { #category : #actions }
 TRShape >> translateTo: aPoint [
-	self subclassResponsibility
+	position := aPoint
 ]
 
 { #category : #events }

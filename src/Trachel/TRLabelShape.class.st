@@ -3,7 +3,6 @@ Class {
 	#superclass : #TRShape,
 	#instVars : [
 		'text',
-		'position',
 		'font',
 		'fontSize'
 	],
@@ -94,7 +93,6 @@ TRLabelShape >> includesPoint: aPoint [
 { #category : #initialization }
 TRLabelShape >> initialize [
 	super initialize.
-	position := 0 @ 0.
 	text := 'Trachel label'.
 	self fontSize: self defaultFontSize
 ]
