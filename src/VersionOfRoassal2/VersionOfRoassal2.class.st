@@ -1498,3 +1498,14 @@ VersionOfRoassal2 >> version000092 [
 	at: #date put: '27 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000093 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.63';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.100';
+	at: #version put: '0.94';
+	at: #comment put: '0.94 : merged with Juraj extension of the text builder. Added a new animation (resize). fixed bug ';
+	at: #date put: '28 January 2014';
+	yourself
+]
