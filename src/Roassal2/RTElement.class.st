@@ -3,9 +3,7 @@ Class {
 	#superclass : #RTShapedObject,
 	#instVars : [
 		'position',
-		'connectedEdges',
-		'incomingEdges',
-		'outgoingEdges'
+		'connectedEdges'
 	],
 	#category : #'Roassal2-Core'
 }

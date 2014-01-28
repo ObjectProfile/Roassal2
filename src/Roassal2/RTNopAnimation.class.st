@@ -13,11 +13,6 @@ RTNopAnimation >> addedIn: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas
 ]
 
-{ #category : #accessing }
-RTNopAnimation >> after: aBlock [
-	animatedValue finishCallback: aBlock
-]
-
 { #category : #testing }
 RTNopAnimation >> hasCompleted [
 	^ animatedValue hasCompleted
