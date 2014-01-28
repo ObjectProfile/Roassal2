@@ -1520,3 +1520,14 @@ VersionOfRoassal2 >> version000094 [
 	at: #date put: '28 January 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000095 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.64';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.102';
+	at: #version put: '0.96';
+	at: #comment put: '0.96 : removed the position variable from RTElement';
+	at: #date put: '28 January 2014';
+	yourself
+]
