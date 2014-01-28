@@ -168,17 +168,26 @@ TRArcShape >> includesPoint: aPoint [
 	| pDistanceOrigin pointAngle inside aAngle bAngle |
 	((alphaAngle) = (betaAngle)) ifTrue:[ ^ false ].
 	inside:=true.
-	aAngle:=alphaAngle \\  360.
-	bAngle:=betaAngle \\  360.
+	(alphaAngle % 360 = 0 ) 
+		ifFalse:[aAngle:=alphaAngle \\  360]
+		ifTrue:[aAngle:=alphaAngle].
+	(betaAngle % 360 = 0 )
+		ifFalse:[bAngle:=betaAngle \\  360]
+		ifTrue:[bAngle:= betaAngle].
 	pointAngle:= ((aPoint x @ aPoint y negated) angleWith: self center) radiansToDegrees \\  360.
 	pDistanceOrigin:=(aPoint squaredDistanceTo: self center) sqrt.
 	((pDistanceOrigin < innerRadius) or: (pDistanceOrigin > externalRadius))
 	ifTrue:[^false].
+	(pointAngle % 360 = 0 )
+		ifTrue:[
+			(aAngle % 360 = 0) ifTrue:[^true].
+			(bAngle % 360 = 0) ifTrue:[^true]].
 	(aAngle < bAngle)
 	ifTrue:[
 		(pointAngle >= aAngle) ifTrue:[ inside:=inside not ].
 		(pointAngle <= bAngle) ifTrue:[ inside:=inside not ] ]
 	ifFalse:[
+		(bAngle = 0) ifTrue:[bAngle:=360].
 		(pointAngle <= aAngle) ifTrue:[ inside:=inside not ].
 		(pointAngle <= bAngle) ifTrue:[ inside:=inside not ] ].
 	^ inside
