@@ -19,7 +19,8 @@ Class {
 TRCanvas >> addAnimation: anAnimation [
 	animations add: anAnimation.
 	anAnimation addedIn: self.
-	anAnimation start
+	anAnimation start.
+	self signalUpdate
 ]
 
 { #category : #building }
