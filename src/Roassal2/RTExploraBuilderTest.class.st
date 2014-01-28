@@ -116,7 +116,7 @@ RTExploraBuilderTest >> testTwoWayExpansion [
 	self assert: builder view numberOfElements = 5.
 	
 	el2 announce: TRMouseLeftClick.
-	self assert: builder view numberOfElements = 16.
+	self assert: builder view numberOfElements = 17.
 	
 	node1 element announce: TRMouseRightClick.
 	self assert: builder view numberOfElements = 4.
