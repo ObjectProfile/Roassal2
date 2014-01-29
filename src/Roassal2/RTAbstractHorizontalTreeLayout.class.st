@@ -54,7 +54,7 @@ RTAbstractHorizontalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLaye
 		treeSize := each height
 			max: (self layout: (self computeChildrenFor: each) atPoint: childrenPosition @ y atLayer: aNumber + 1).
 		middleOfTree := y + (treeSize / 2.0) - (each height / 2.0).
-		translator translate: each to: (x @ middleOfTree).
+		translator translateTopLeftOf: each to: (x @ middleOfTree).
 		y := y + treeSize + self verticalGap.
 		self step ].
 	^ y - aPoint y - self verticalGap
@@ -64,9 +64,9 @@ RTAbstractHorizontalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLaye
 RTAbstractHorizontalTreeLayout >> rearrangeByLayers: aGraph [
 	| cursor layerDepthSize |
 	cursor := self leftGap.
-	nodesByLayer do: [:eachSetOfNodes |
-		layerDepthSize := eachSetOfNodes inject: 0 into: [:max :eachNode | 
-			translator translate: eachNode to: (cursor @ eachNode bounds top).
+	nodesByLayer do: [ :eachSetOfNodes |
+		layerDepthSize := eachSetOfNodes inject: 0 into: [ :max :eachNode | 
+			translator translateTopLeftOf: eachNode to: (cursor @ eachNode encompassingRectangle top).
 			max max: eachNode width ].
 		cursor := cursor + layerDepthSize + self horizontalGap ]
 ]
