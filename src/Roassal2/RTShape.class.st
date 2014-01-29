@@ -120,6 +120,7 @@ RTShape >> trachelShapeFor: element [
 { #category : #hooks }
 RTShape >> updateFor: edgeOrElement [
 	self updateFor: edgeOrElement trachelShape: edgeOrElement trachelShape
+
 ]
 
 { #category : #hooks }

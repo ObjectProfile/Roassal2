@@ -24,10 +24,11 @@ RTEllipse >> trachelShapeFor: anElement [
 
 { #category : #rendering }
 RTEllipse >> updateFor: anElement trachelShape: trachelShape [
+	| rec ex |
 	"This is a bit ugly... We need to find a better way"
 	trachelShape isNil ifTrue: [ ^ self ].
-"	ex := (self widthFor: anElement) @ (self heightFor: anElement).
+	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	trachelShape rectangle: rec.
-"	trachelShape strokePaint: (self borderColorFor: anElement).
+	trachelShape strokePaint: (self borderColorFor: anElement).
 ]

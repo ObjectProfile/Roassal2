@@ -8,28 +8,27 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'reset shape' }
+{ #category : #'as yet unclassified' }
 RTHighlightable class >> highlightedColor [
 	^ Color blue
 ]
 
-{ #category : #'reset shape' }
+{ #category : #'as yet unclassified' }
 RTHighlightable class >> lastColor [
 	^ lastColor
 ]
 
-{ #category : #'reset shape' }
+{ #category : #'as yet unclassified' }
 RTHighlightable class >> lastColor: aColor [
-	self assert: [ aColor notNil ].
 	lastColor := aColor
 ]
 
-{ #category : #'reset shape' }
+{ #category : #'as yet unclassified' }
 RTHighlightable class >> lastHighlightedShape [
 	^ lastHighlightedShape
 ]
 
-{ #category : #'reset shape' }
+{ #category : #'as yet unclassified' }
 RTHighlightable class >> lastHighlightedShape: aTrachelShape [
 	lastHighlightedShape := aTrachelShape
 ]
@@ -45,8 +44,8 @@ RTHighlightable >> initializeElement: element [
 		when: TRMouseEnter
 		do: [ :e | 
 			self unhighlightRecordedShape.
-			self recordShape: element trachelShape.
-			element trachelShape color: self highlightedColor.
+			self recordShape: element shape.
+			element shape color: self highlightedColor.
 			e signalUpdate ].
 	element
 		when: TRMouseLeave
@@ -55,14 +54,14 @@ RTHighlightable >> initializeElement: element [
 			e signalUpdate ]
 ]
 
-{ #category : #actions }
+{ #category : #'as yet unclassified' }
 RTHighlightable >> recordShape: aShape [
 	self class lastHighlightedShape: aShape.
 	self class lastColor: aShape color
 
 ]
 
-{ #category : #actions }
+{ #category : #'as yet unclassified' }
 RTHighlightable >> unhighlightRecordedShape [
 	self class lastHighlightedShape isNil ifTrue: [ ^ self ].
 	self class lastHighlightedShape color: self class lastColor.
