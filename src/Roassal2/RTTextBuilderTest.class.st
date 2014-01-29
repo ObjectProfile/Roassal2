@@ -33,7 +33,7 @@ RTTextBuilderTest >> testAdditionalInformation [
 	text := 'hello world'.
 	trigger := false.
 	builder wordHook: [ :anElement :anInterval | 
-								anElement model = 'hello ' 
+								anElement model = 'hello' 
 									ifTrue: [ anElement attributeAt: #myValue put: 'value' ] ]. 
 	builder wordInteraction 
 				when: TRMouseClick 
@@ -41,7 +41,7 @@ RTTextBuilderTest >> testAdditionalInformation [
 										ifTrue: [ trigger := true ] ].
 	builder addText: text.
 
-	elHello := builder view elementFromModel: 'hello '.
+	elHello := builder view elementFromModel: 'hello'.
 	elWorld := builder view elementFromModel: 'world'.
 	
 	self assert: (elHello hasAttribute: #myValue).
@@ -69,7 +69,7 @@ RTTextBuilderTest >> testClickableWord [
 	builder addText: 'hello world'.
 	self deny: t.
 	
-	element := builder view elementFromModel: 'hello '.
+	element := builder view elementFromModel: 'hello'.
 	element announce: TRMouseClick.
 	self assert: t
 ]
@@ -105,11 +105,11 @@ RTTextBuilderTest >> testOpeningOnMultilineText2 [
 hola mundo'.
 	builder addText: text.
 	elements := builder view elements.
-	self assert: elements size = 5.
+	self assert: elements size = 7.
 	self assert: (elements anySatisfy: [ :el | el model = text ]).
-	self assert: (elements anySatisfy: [ :el | el model = 'hello ' ]).
+	self assert: (elements anySatisfy: [ :el | el model = 'hello' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
-	self assert: (elements anySatisfy: [ :el | el model = 'hola ' ]).
+	self assert: (elements anySatisfy: [ :el | el model = 'hola' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'mundo' ]).
 ]
 
@@ -124,10 +124,10 @@ RTTextBuilderTest >> testOpeningOnMultilineText3 [
 { #category : #tests }
 RTTextBuilderTest >> testOpeningOnText [
 	builder addText: 'hello world'.
-	self assert: builder view numberOfElements = 3.
+	self assert: builder view numberOfElements = 4.
 	
 	builder addText: 'hello world'.
-	self assert: builder view numberOfElements = 6.
+	self assert: builder view numberOfElements = 8.
 ]
 
 { #category : #tests }
@@ -136,9 +136,10 @@ RTTextBuilderTest >> testOpeningOnText2 [
 	text := 'hello world'.
 	builder addText: text.
 	elements := builder view elements.
-	self assert: elements size = 3.
+	self assert: elements size = 4.
 	self assert: (elements anySatisfy: [ :el | el model = text ]).
-	self assert: (elements anySatisfy: [ :el | el model = 'hello ' ]).
+	self assert: (elements anySatisfy: [ :el | el model = 'hello' ]).
+	self assert: (elements anySatisfy: [ :el | el model = ' ' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 ]
 
@@ -149,7 +150,7 @@ RTTextBuilderTest >> testWordHighlight [
 	text := 'hello world'.
 	builder wordInteraction highlightColored: Color blue.
 	builder addText: text.
-	element := builder view elementFromModel: 'hello '.
+	element := builder view elementFromModel: 'hello'.
 	self assert: element trachelShape color = element shape defaultColor.
 	element announce: (TRMouseEnter new shape: element trachelShape).
 	self assert: element trachelShape color = Color blue.

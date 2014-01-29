@@ -30,12 +30,13 @@ RTTextBuilder >> buildText: aString in: element [
 	lines := RTGroup new.
 	elements := OrderedCollection new.
 	aString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
-		| line lineString |
+		| line lineString wordStrings startWord endWord |
 		lineString := aString copyFrom: startLine to: endLine.
 		line := RTGroup new.
-		lineString substringsDo: [ :startWord :endWord :endWordWithSpaces | 
-			| wordString wordElement |
-			wordString := lineString copyFrom: startWord to: endWordWithSpaces.
+		wordStrings := lineString findTokens: Character separators keep: Character separators. 
+		startWord := 1.
+		wordStrings do: [ :wordString | |  wordElement |
+			endWord := startWord + wordString size.
 			wordElement := RTElement on: (self normalizeString: wordString).
 			wordHook value: wordElement value: ((startLine + startWord) to: (startLine + endWord)).
 			wordShapeBuilder setUpElements: wordElement.
@@ -43,6 +44,7 @@ RTTextBuilder >> buildText: aString in: element [
 			line add: wordElement.
 			elements add: wordElement.
 			view add: wordElement.
+			startWord := endWord + 1.
 		].
 		RTHorizontalLineLayout new gapSize: 0; on: line.
 		lines add: line.
