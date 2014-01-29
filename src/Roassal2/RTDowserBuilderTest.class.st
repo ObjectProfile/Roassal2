@@ -92,8 +92,7 @@ RTDowserBuilderTest >> testConstruction [
 	builder edgesTo: #yourself.
 	
 	self assert: builder labelLeft equals: #asString. 
-	self assert: builder left size equals: builder right size. 
-	self assert: builder viewWidth equals: 622. 
+	self assert: builder left size equals: builder right size.  
 	self assert: builder legend equals: 'Roassal Dowser'.
 	self assert: builder title equals: 'RoassalDowser'.
 	self assert: builder body equals: ''.
