@@ -5,7 +5,6 @@ Class {
 		'borderWidth',
 		'fillColor',
 		'scale',
-		'position',
 		'paths',
 		'pathPoints',
 		'points',
@@ -185,10 +184,9 @@ TRSVGPath >> separateSubPaths: someCurves [
 
 { #category : #actions }
 TRSVGPath >> translateTo: aPoint [
-	|disp|
-	super translateTo: aPoint.
+	| disp |
 	disp := (aPoint - position) / scale.
-	position := aPoint.
+	super translateTo: aPoint.
 	self curves: (self curves collect: [ :c |
 		c key -> (c value collect: [ :p | p + disp ])]).
 	rectangle := rectangle translateBy: disp.
