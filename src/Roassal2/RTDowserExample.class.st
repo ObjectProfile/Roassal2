@@ -8,25 +8,91 @@ Class {
 	#category : #'Roassal2-Builder-Dowser'
 }
 
-{ #category : #'as yet unclassified' }
-RTDowserExample >> example01 [
+{ #category : #basic }
+RTDowserExample >> basic [
 	"
-	self new example01
+	self new basic
 	"
 	|a |
 	a := RTDowserBuilder new.
 	a addColumn: { 'a' . 'b' . 'c' }.
 	a addColumn: { 'a' . 'b' . 'c' }.
 	a addColumn: { 'a' . 'b' . 'c' }.
-	a body: 'a b c a b c'.
 	a edgesTo: #yourself.
 	a open.
 ]
 
 { #category : #duoDowser }
-RTDowserExample >> example1 [
+RTDowserExample >> coolStuff [
 	"
-	self new example1
+	self new coolStuff 
+	"
+	| builder |
+
+	builder := RTDuoDowserBuilder new.
+	builder legend: 'Compiler instance variables usage'.
+	builder labelRight: [:a | a selector asString]. 
+	builder left: Compiler instanceVariables.
+	builder right: Compiler methods.
+	builder edgesTo: [ :a :b | b referredInstVars includes: a  ].
+	builder open
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> customPopup [
+	"
+	self new customPopup
+	"
+	| builder |
+
+	builder := RTDuoDowserBuilder new.
+	builder legend: 'Example of a relation between two set of integers'.
+	builder left: (1 to: 10).
+	builder right: (1 to: 20).
+	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ].
+	builder popupElement: [ :v | |elem elems|
+			elem := RTElement new.
+			elems := OrderedCollection new.
+			(((v model) - 5) to: ((v model) + 5)) do: [:n | |e| e := RTElement new. e addShape: RTBox blue. elems add: e. ].
+			elem addAll: elems.
+			RTGridLayout on: elems.
+			elem].
+	builder open
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> differentRelations [
+	"
+	self new differentRelations
+	"
+	| builder |
+
+	builder := RTDuoDowserBuilder new.
+	builder legend: 'Example of a relation between two set of integers'.
+	builder left: (1 to: 10).
+	builder right: (1 to: 20).
+	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ] edgesToLeft: [ :v | (v / 2) ].
+	builder octopiEdges.
+	builder open
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> doubleParameterRelation [
+	"
+	self new doubleParameterRelation
+	"
+	| builder | 
+	builder := RTDuoDowserBuilder new.
+	builder left: (1 to: 20).
+	builder right: (RTObject withAllSubclasses).
+	builder edgesFrom: [ :a :b | a numberOfSubclasses = b].
+	builder open
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> duoBasic [
+	"
+	self new duoBasic
 	"
 	|a |
 	a := RTDuoDowserBuilder new.
@@ -37,9 +103,24 @@ RTDowserExample >> example1 [
 ]
 
 { #category : #duoDowser }
-RTDowserExample >> example10 [
+RTDowserExample >> inferedRight [
 	"
-	self new example10
+	self new inferedRight
+	"
+	| builder |
+
+	builder := RTDuoDowserBuilder new.
+	builder height:  [ :e | e numberOfLinesOfCode  / 10].
+	builder color: #numberOfMethods.
+	builder left: RTShape withAllSubclasses.
+	builder edgesTo: #referencedClasses.
+	builder open
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> ironMaiden [
+	"
+	self new ironMaiden
 	"
 	|builder maiden1 maiden2 |
 	
@@ -83,48 +164,11 @@ RTDowserExample >> example10 [
 	builder := RTDuoDowserBuilder new.
 	builder title: 'Iron Maiden'.
 	builder legend: 'Concerts around the world per year'.
-	builder body: 'Iron Maiden are an English heavy metal band 
-formed in Leyton, east London, in 1975 by 
-bassist and primary songwriter Steve Harris. 
-The band''s discography has grown to 
-thirty-seven albums, including fifteen studio 
-albums, eleven live albums, four EPs, and 
-seven compilations.
-
-Pioneers of the New Wave of British Heavy 
-Metal, Iron Maiden achieved initial success 
-during the early 1980s. After several line-up 
-changes, the band went on to release a 
-series of US and UK platinum and gold 
-albums, including 1982''s The Number of the 
-Beast, 1983''s Piece of Mind, 1984''s 
-Powerslave, 1985''s live release Live After 
-Death, 1986''s Somewhere in Time and 
-1988''s Seventh Son of a Seventh Son. 
-Since the return of lead vocalist Bruce 
-Dickinson and guitarist Adrian Smith in 1999, 
-the band have undergone a resurgence in 
-popularity, with their latest studio offering, 
-The Final Frontier, peaking at No. 1 in 28 
-different countries and receiving 
-widespread critical acclaim.
-
-Considered one of the most successful 
-heavy metal bands in history, Iron Maiden 
-have sold over 85 million records worldwide 
-with little radio or television support. The 
-band won the Ivor Novello Award for 
-international achievement in 2002, and were 
-also inducted into the Hollywood RockWalk in 
-Sunset Boulevard, Los Angeles, California 
-during their United States tour in 2005. As of 
-October 2013, the band have played over 
-2000 live shows throughout their career. For 
-the past 35 years, the band have been 
-supported by their famous mascot, "Eddie", 
-who has appeared on almost all of their album 
-and single covers, as well as in their live 
-shows.'.
+	builder body: 'Iron Maiden are an English heavy metal band formed in Leyton, east London, in 1975 by bassist and primary songwriter Steve Harris. 
+The band''s discography has grown to thirty-seven albums, including fifteen studio albums, eleven live albums, four EPs, and seven compilations.
+Pioneers of the New Wave of British Heavy Metal, Iron Maiden achieved initial success during the early 1980s. After several line-up changes, the band went on to release a series of US and UK platinum and gold albums, including 1982''s The Number of the Beast, 1983''s Piece of Mind, 1984''s Powerslave, 1985''s live release Live After Death, 1986''s Somewhere in Time and 1988''s Seventh Son of a Seventh Son. Since the return of lead vocalist Bruce Dickinson and guitarist Adrian Smith in 1999, the band have undergone a resurgence in popularity, with their latest studio offering, The Final Frontier, peaking at No. 1 in 28 different countries and receiving widespread critical acclaim. Considered one of the most successful heavy metal bands in history, Iron Maiden have sold over 85 million records worldwide 
+with little radio or television support. The band won the Ivor Novello Award for international achievement in 2002, and were also inducted into the Hollywood RockWalk in Sunset Boulevard, Los Angeles, California during their United States tour in 2005. As of October 2013, the band have played over 2000 live shows throughout their career. For the past 35 years, the band have been supported by their famous mascot, ''Eddie'', who has appeared on almost all of their album 
+and single covers, as well as in their live shows.'.
 	builder colorLeft: #second.
 	builder colorRight: #value.
 	builder heightLeft: #second.
@@ -137,10 +181,28 @@ shows.'.
 	builder open.
 ]
 
-{ #category : #duoDowser }
-RTDowserExample >> example2 [
+{ #category : #basic }
+RTDowserExample >> manyRelations [
 	"
-	self new example2
+	self new manyRelations
+	"
+	|builder |
+	builder := RTDowserBuilder new.
+	builder legend: 'Four Columns'.
+	builder addColumn: (1 to: 10).
+	builder addColumn: (1 to: 10).
+	builder addColumn: (1 to: 10).
+	builder addColumn: (1 to: 10).
+	builder edgesWith: [ :v | (v - 5) to: (v + 5) ] from: 1 to: 2.
+	builder edgesWith: [ :v | (v - 2) to: (v + 2) ] from: 2 to: 3.
+	builder edgesWith: [ :v | (v / 2) ] from: 3 to: 4.
+	builder open.
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> numberSubclasses [
+	"
+	self new numberSubclasses
 	"
 	| a |
 	a := RTDuoDowserBuilder new.
@@ -153,104 +215,9 @@ RTDowserExample >> example2 [
 ]
 
 { #category : #duoDowser }
-RTDowserExample >> example3 [
+RTDowserExample >> santas [
 	"
-	self new example3
-	"
-	| builder |
-
-	builder := RTDuoDowserBuilder new.
-	builder height:  [ :e | e numberOfLinesOfCode  / 10].
-	builder color: #numberOfMethods.
-	builder left: RTShape withAllSubclasses.
-	builder edgesTo: #referencedClasses.
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example4 [
-	"
-	self new example4
-	"
-	| builder |
-
-	builder := RTDuoDowserBuilder new.
-	builder legend: 'Example of a relation between two set of integers'.
-	builder left: (1 to: 10).
-	builder right: (1 to: 20).
-	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ] edgesToLeft: [ :v | (v / 2) ].
-	builder octopiEdges.
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example5 [
-	"
-	self new example5
-	"
-	| builder | 
-	builder := RTDuoDowserBuilder new.
-	builder legend: 'Power'.
-	builder onLeftAndRight: (1 to: 20).
-	builder edgesTo: [ :v | v * v].
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example6 [
-	"
-	self new example6
-	"
-	| builder | 
-	builder := RTDuoDowserBuilder new.
-	builder left: (1 to: 20).
-	builder right: (RTObject withAllSubclasses).
-	builder edgesFrom: [ :a :b | a numberOfSubclasses = b].
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example7 [
-	"
-	self new example7
-	"
-	| builder |
-
-	builder := RTDuoDowserBuilder new.
-	builder legend: 'Example of a relation between two set of integers'.
-	builder left: (1 to: 10).
-	builder right: (1 to: 20).
-	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ].
-	builder popupElement: [ :v | |elem elems|
-			elem := RTElement new.
-			elems := OrderedCollection new.
-			(((v model) - 5) to: ((v model) + 5)) do: [:n | |e| e := RTElement new. e addShape: RTBox blue. elems add: e. ].
-			elem addAll: elems.
-			RTGridLayout on: elems.
-			elem].
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example8 [
-	"
-	self new example8 
-	"
-	| builder |
-
-	builder := RTDuoDowserBuilder new.
-	builder legend: 'Compiler instance variables usage'.
-	builder labelRight: [:a | a selector asString]. 
-	builder left: Compiler instanceVariables.
-	builder right: Compiler methods.
-	builder edgesTo: [ :a :b | b referredInstVars includes: a  ].
-	builder open
-]
-
-{ #category : #duoDowser }
-RTDowserExample >> example9 [
-	"
-	self new example9
+	self new santas
 	"
 	|builder hohoho|
 	
@@ -265,4 +232,17 @@ RTDowserExample >> example9 [
 	builder labelLeft: #key.
 	builder edgesTo: #value.
 	builder open.
+]
+
+{ #category : #duoDowser }
+RTDowserExample >> singleParameterRelation [
+	"
+	self new singleParameterRelation
+	"
+	| builder | 
+	builder := RTDuoDowserBuilder new.
+	builder legend: 'Power'.
+	builder onLeftAndRight: (1 to: 20).
+	builder edgesTo: [ :v | v * v].
+	builder open
 ]

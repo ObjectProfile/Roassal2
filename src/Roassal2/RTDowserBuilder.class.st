@@ -164,6 +164,12 @@ RTDowserBuilder >> color: aColor [
 	colors at: 1 put: aColor.
 ]
 
+{ #category : #accessing }
+RTDowserBuilder >> color: aColor at: aNumber [
+	colors ifNil: [colors := Dictionary new].
+	colors at: aNumber put: aColor.
+]
+
 { #category : #'private-edge-management' }
 RTDowserBuilder >> controlElement: p1 [
 	| elem |
@@ -255,6 +261,25 @@ RTDowserBuilder >> edgesWith: aBlock to: aNumber from: anotherNumber [
 ]
 
 { #category : #'private-shape-managment' }
+RTDowserBuilder >> fixText: aText [
+	|results accumulator oldAccumulator texts|
+	results := OrderedCollection new.
+	texts := aText subStrings: ' '.
+	accumulator := ''.
+	texts do: [ :text |
+		oldAccumulator := accumulator.
+		accumulator := accumulator, ' ', text.
+		(accumulator size > 40)
+			ifTrue: [ 
+				results add: oldAccumulator. 
+				accumulator := text].
+	].
+	results add: accumulator.
+	^results
+	
+]
+
+{ #category : #'private-shape-managment' }
 RTDowserBuilder >> from: aCollection in: aNumber [
 	|h w dictionary normalizer c color height|
 	color := (colors at: (aNumber + 1) ifAbsent: [ colors at: 1 ]).
@@ -290,7 +315,7 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 		do: [ :event | 
 			shadowEdges at: aNode	
 				ifPresent: [ :v |
-					(v first second to = links first)
+					(v isNotEmpty and: [v first second to = links first])
 						ifTrue: [  
 							v do: [ :e | 
 								self view add: e second.
@@ -304,7 +329,8 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 								toAll: links
 								from: aCollection
 								color: self class defaultLightEdgeColor) ]. 
-							self view canvas signalUpdate]
+							self view canvas signalUpdate.
+							bodyElement trachelShape pushBack.]
 				ifAbsent: [
 					shadowEdges at: aNode put: 
 					(self
@@ -312,21 +338,30 @@ RTDowserBuilder >> greyLinesfrom: aNode in: aCollection to: links [
 						toAll: links
 						from: aCollection
 						color: self class defaultLightEdgeColor)].
-			bodyElement shape color: Color veryVeryLightGray].
+			"bodyElement shape color: Color veryVeryLightGray."
+			bodyElement trachelShape pushBack.].
 	aNode
 		when: TRMouseLeave
 		do: [ :event | |v|
 			v := true.
-			(shadowEdges at: aNode ifAbsent:[^false]) do: [ :e | e second remove].
+			shadowEdges at: aNode	
+				ifPresent: [ :node | node do: [ :e | e second remove]].
 			self view canvas signalUpdate.
 			overBody do: [ :e|  v := v or: [e]]. 
-			v ifFalse: [ bodyElement shape color: Color darkGray]].
+			v ifFalse: [ bodyElement shape color: Color darkGray].
+			bodyElement trachelShape pushBack.].
 ]
 
 { #category : #accessing }
 RTDowserBuilder >> height: aBlock [
 	heights ifNil: [heights := Dictionary new].
 	heights at: 1 put: aBlock.
+]
+
+{ #category : #accessing }
+RTDowserBuilder >> height: aBlock at: aNumber [
+	heights ifNil: [heights := Dictionary new].
+	heights at: aNumber put: aBlock.
 ]
 
 { #category : #initialization }
@@ -356,6 +391,12 @@ RTDowserBuilder >> initialize [
 RTDowserBuilder >> label: aMessage [
 	labels ifNil: [labels := Dictionary new].
 	labels at: 1 put: aMessage.
+]
+
+{ #category : #accessing }
+RTDowserBuilder >> label: aMessage at: aNumber [
+	labels ifNil: [labels := Dictionary new].
+	labels at: aNumber put: aMessage.
 ]
 
 { #category : #'private-shape-managment' }
@@ -389,31 +430,40 @@ RTDowserBuilder >> lines: aNode in: aCollection to: links [
 		do: [ :event | 
 			edges at: aNode		
 				ifPresent: [ :v |
-					(v first second to = links first)
-						ifTrue: [ 
-							((v isEmpty not) and: [ v first second trachelShape isInACanvas])
-							ifTrue: [ | val |
-								val := false.
-								v do: [ :e | e second remove].
-								self removePopup: aNode.
-								overBody at: aNode put: false.
-								overBody do: [ :e|  val := val or: [e]]. 
-								val ifFalse: [ bodyElement shape color: Color darkGray]]
-							ifFalse: [
-								v do: [ :e | 
-									self view add: e second.
-									e second from: aNode.
-									e second to: e first.
-									e second trachelShape pushBack]. 
-									self addPopup: aNode from: aCollection.
-									overBody at: aNode put: true. 
-									bodyElement shape color: Color veryVeryLightGray]]
-						ifFalse:[
-							v addAll: (self
-											addLinesfrom: aNode
-											toAll: links
-											from: aCollection
-											color: self edgeColor)].
+					(v isNotEmpty)
+						ifTrue: [
+							(v first second to = links first)
+								ifTrue: [  
+									( v first second trachelShape isInACanvas)
+										ifTrue: [ | val |
+											val := false.
+											v do: [ :e | e second remove].
+											self removePopup: aNode.
+											overBody at: aNode put: false.
+											overBody do: [ :e|  val := val or: [e]]. 
+											val ifFalse: [ "bodyElement shape color: Color darkGray"]]
+										ifFalse: [ 
+											v do: [ :e | 
+												self view add: e second.
+												e second from: aNode.
+												e second to: e first.
+												e second trachelShape pushBack]. 
+											self addPopup: aNode from: aCollection.
+											overBody at: aNode put: true. 
+											"bodyElement shape color: Color veryVeryLightGray"]]
+								ifFalse:[
+									(v last second to = links last)
+												ifFalse: [ 						
+													v addAll: (self
+														addLinesfrom: aNode
+														toAll: links
+														from: aCollection
+														color: self edgeColor).
+													edges at: aNode put: v.
+													self addPopup: aNode from: aCollection.
+													overBody at: aNode put: true.
+													"bodyElement shape color: Color veryVeryLightGray"]]].
+					bodyElement trachelShape pushBack.
 					self view canvas signalUpdate]
 				ifAbsent: [
 					edges at: aNode put: 
@@ -422,9 +472,12 @@ RTDowserBuilder >> lines: aNode in: aCollection to: links [
 						toAll: links
 						from: aCollection
 						color: self edgeColor).
-					self addPopup: aNode from: aCollection.
-					overBody at: aNode put: true. 
-					bodyElement shape color: Color veryVeryLightGray]]
+					((shadowEdges at: aNode) size = ((edges at:aNode) size))
+						ifTrue: [  
+							self addPopup: aNode from: aCollection.
+							overBody at: aNode put: true.
+							"bodyElement shape color: Color veryVeryLightGray"].
+					bodyElement trachelShape pushBack.]]
 ]
 
 { #category : #'private-edge-management' }
@@ -473,7 +526,7 @@ RTDowserBuilder >> linksFrom: aNode with: aBlock to: otherCollection [
 			s := e second model.
 			v := self check: aBlock from: f to: s.
 			v ].
-	links := links collect: [ :l | l first].
+	links := links collect: [ :l | l first ].
 	^ links
 ]
 
@@ -550,12 +603,12 @@ RTDowserBuilder >> popups [
 
 { #category : #'private-shape-managment' }
 RTDowserBuilder >> positionateTowers [
-	|maxWidths maxHeight legendElement legTrans translations accum bod|
+	|maxWidths maxHeight legendElement legTrans translations accum bod bodyParts|
 	translations := OrderedCollection new.
 	
 	maxHeight := (columns collect: [ :c | (c collect: [ :l | l height ]) max]) max.
 
-	columns do: [ :c | RTVerticalLineLayout on: c ].	
+	columns do: [ :c | (RTVerticalLineLayout withGap: 10) on: c ].	
 	
 	maxWidths := (1 to: columns size) collect: [ :n | self labels: n].
 	
@@ -574,17 +627,21 @@ RTDowserBuilder >> positionateTowers [
 			accum := translation + (maxWidths at: n) + 30. 
 			translations add: translation].
 		
-	1 to: (columns size) do: [ :n | (columns at: n) do: [ :e | e translateBy: (translations at: n) @ 40 ]].	
+	1 to: (columns size) do: [ :n | (columns at: n) do: [ :e | e translateBy: (translations at: n) @ 40]].	
 
-	bod := (RTElement on: (self body)) +  (RTLabel new color: Color darkGray).
-	bodyElement := bod.
-	"bod width: distance."
-	self view add: bod.
-	bod translateBy: ((maxWidths at: 1)  + 60 @ 30 ).
-	"bod forward: (bod view)."
-	"bod on: TREvent do: [:e | bod parentAnnounce: e]."
+	bodyParts := ((self fixText: (self body )) collect: [ :t | (RTElement on: t) +  (RTLabel new color: Color veryLightGray)]).
+	bod := (RTElement new) + (RTBox new color: Color lightGray).
 	
-	viewWidth := distance + (maxWidths sum)  + (columns size * 40)  max: (legendElement width).
+	RTNest new layout: RTVerticalLineLayout new; on: bod nest: bodyParts.
+	bodyElement := bod.
+	self view add: bod.
+	self view addAll: bodyParts.
+	bodyParts do: [ :b | b on: TREvent do: [:e | self view announce: e] ].
+	bod on: TREvent do: [:e | self view announce: e].
+	
+	viewWidth := (columns size * distance) + (maxWidths sum) max: (legendElement width).
+	bod translateTo: ( ((maxWidths at: 1) + distance - (bod width / 2) ) @ ((bodyParts first height) * (bodyParts size))).
+	bod trachelShape pushBack.
 	
 	^ distance
 ]
