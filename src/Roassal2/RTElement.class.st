@@ -3,9 +3,7 @@ Class {
 	#superclass : #RTShapedObject,
 	#instVars : [
 		'position',
-		'connectedEdges',
-		'incomingEdges',
-		'outgoingEdges'
+		'connectedEdges'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -66,8 +64,7 @@ RTElement >> incomingEdges [
 { #category : #initialization }
 RTElement >> initialize [
 	super initialize.
-	
-	position := 0 @ 0
+
 ]
 
 { #category : #testing }
@@ -84,10 +81,11 @@ RTElement >> outgoingEdges [
 
 { #category : #accessing }
 RTElement >> position [
+"
 	^ position
 	"
 	^ trachelShape position
-"	
+	
 ]
 
 { #category : #actions }
@@ -106,12 +104,6 @@ RTElement >> translateBy: delta [
 { #category : #actions }
 RTElement >> translateTo: newPosition [
 	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
-"	(self position - newPosition) abs < (1 @ 1)
-		ifTrue: [ ^ self ].
-"		
-
-	"Difficult here. On some point, we need to remove the position variable in RTElement"
-	position := newPosition.
 	trachelShape translateTo: newPosition.
 	
 	self connectedEdges do: [ :edge | edge update ].

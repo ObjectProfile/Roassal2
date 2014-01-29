@@ -12,21 +12,21 @@ Class {
 
 { #category : #initialization }
 RTDowserBuilderTest >> initialize [
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	
 ]
 
 { #category : #initialization }
 RTDowserBuilderTest >> setUp [
 	super setUp.
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testAssignMissing1 [
 	builder left: (1 to: 20).
-	builder assignMissing: [:v |  v + 2] from: (builder left).
+	builder assignMissing: [:v |  v + 2] from: 1 to: 2.
 	
 	self assert: builder right size equals: (builder left size). 
 	self assert: builder right size equals: (builder models size).
@@ -34,10 +34,10 @@ RTDowserBuilderTest >> testAssignMissing1 [
 	self assert: builder right last model equals: 22.
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testAssignMissing2 [
 	builder left: (1 to: 20).
-	builder assignMissing: #ln from: (builder left).
+	builder assignMissing: #ln from: 1 to: 2.
 	
 	self assert: builder right size equals: (builder left size). 
 	self assert: builder right size equals: (builder models size).
@@ -45,17 +45,17 @@ RTDowserBuilderTest >> testAssignMissing2 [
 	self assert: builder right last model ceiling equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testAssignMissing3 [
 	builder left: {'hola' . 'chao'}.
-	builder assignMissing: [:a | a asOrderedCollection] from: (builder left).
+	builder assignMissing: [:a | a asOrderedCollection] from: 1 to: 2.
 	
 	self assert: builder right size equals: 5. "without duplicated letters"
 	self assert: builder right first model equals: $h.
 	self assert: builder right last model equals: $c.
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testAssociation [
 	builder label: [ :c | c name asString].
 	builder height: #numberOfMethods.
@@ -68,7 +68,7 @@ RTDowserBuilderTest >> testAssociation [
 	self assert: builder distance equals: 400.
 ]
 
-{ #category : #tests }
+{ #category : #basic }
 RTDowserBuilderTest >> testCheckFromTo [
 	|b1 b2 b3 b4|
 	b1 := [ :v | v + 1 ].
@@ -86,7 +86,7 @@ RTDowserBuilderTest >> testCheckFromTo [
 	self assert: ((builder check: b4 from: 2 to: 5) not).
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testConstruction [
 	builder models: { 'a' . 'b' . 'c' }.
 	builder edgesTo: #yourself.
@@ -99,7 +99,7 @@ RTDowserBuilderTest >> testConstruction [
 	self assert: builder body equals: ''.
 ]
 
-{ #category : #tests }
+{ #category : #basic }
 RTDowserBuilderTest >> testControlPoint2With [
 	| e1 e2 e3 e4 p1 p2 p3 p4 |
 	e1 := ((RTElement on: 1) + (RTBox new)).
@@ -123,7 +123,7 @@ RTDowserBuilderTest >> testControlPoint2With [
 	self assert: p4 y equals: 25.
 ]
 
-{ #category : #tests }
+{ #category : #basic }
 RTDowserBuilderTest >> testControlPointWith [
 	| e1 e2 e3 e4 p1 p2 p3 p4 |
 	e1 := ((RTElement on: 1) + (RTBox new)).
@@ -147,7 +147,7 @@ RTDowserBuilderTest >> testControlPointWith [
 	self assert: p4 y equals: 0.			
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testGreyLines [
 	builder label: [ :c | c name asString].
 	builder height: #numberOfMethods.
@@ -162,11 +162,19 @@ RTDowserBuilderTest >> testGreyLines [
 	builder left last announce: TRMouseEnter.
 	self assert: builder left last outgoingEdges size equals: 8.
 	builder left last announce: TRMouseLeave.
+	self assert: builder left last outgoingEdges size equals: 0.
+		builder left first announce: TRMouseEnter.
+	self assert: builder left first outgoingEdges size equals: 1.
+	builder left first announce: TRMouseLeave.
+	self assert: builder left first outgoingEdges size equals: 0.
+	builder left last announce: TRMouseEnter.
+	self assert: builder left last outgoingEdges size equals: 8.
+	builder left last announce: TRMouseLeave.
 	self assert: builder left last outgoingEdges size equals: 0.	
 
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testLeft [
 	builder left: (1 to: 20).
 	
@@ -176,7 +184,7 @@ RTDowserBuilderTest >> testLeft [
 	self assert: builder left last model equals: 20.
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testLeftAndRight [
 	builder onLeftAndRight: (1 to: 20).
 	
@@ -186,7 +194,7 @@ RTDowserBuilderTest >> testLeftAndRight [
 	self assert: builder right last model equals: (builder left last model).
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testLines1 [
 	builder label: [ :c | c name asString].
 	builder height: #numberOfMethods.
@@ -202,9 +210,9 @@ RTDowserBuilderTest >> testLines1 [
 	builder left first announce: TRMouseLeave.
 	self assert: builder left first outgoingEdges size equals: 1.
 	builder left first announce: TRMouseEnter.
-	self assert: builder left first outgoingEdges size equals: 1.
+	self assert: builder left first outgoingEdges size equals: 2.
 	builder left first announce: TRMouseClick.
-	self assert: builder left first outgoingEdges size equals: 0.
+	self assert: builder left first outgoingEdges size equals: 1.
 	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil. 
 	builder left first announce: TRMouseLeave.
 	self assert: builder left first outgoingEdges size equals: 0.
@@ -216,15 +224,15 @@ RTDowserBuilderTest >> testLines1 [
 	builder left first announce: TRMouseLeave.
 	self assert: builder left first outgoingEdges size equals: 1.
 	builder left first announce: TRMouseEnter.
-	self assert: builder left first outgoingEdges size equals: 1.
+	self assert: builder left first outgoingEdges size equals: 2.
 	builder left first announce: TRMouseClick.
-	self assert: builder left first outgoingEdges size equals: 0.
+	self assert: builder left first outgoingEdges size equals: 1.
 	self assert: (builder popups at: (builder left first) ifAbsent: [nil]) equals: nil.
 	builder left first announce: TRMouseLeave.
 	self assert: builder left first outgoingEdges size equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testLines2 [
 	builder label: [ :c | c name asString].
 	builder height: #numberOfMethods.
@@ -243,7 +251,7 @@ RTDowserBuilderTest >> testLines2 [
 	self assert: builder left last outgoingEdges size equals: 16.
 	builder left last announce: TRMouseClick.
 	self assert: builder left last outgoingEdges size equals: 8.
-	self assert: (builder popups at: (builder left last) ifAbsent: [nil]) equals: nil.
+	self assert: ((builder popups at: (builder left last) ifAbsent: [nil]) model) equals: 8. 
 	builder left last announce: TRMouseLeave.
 	self assert: builder left last outgoingEdges size equals: 0.	
 	builder left last announce: TRMouseEnter.
@@ -257,12 +265,12 @@ RTDowserBuilderTest >> testLines2 [
 	self assert: builder left last outgoingEdges size equals: 16.
 	builder left last announce: TRMouseClick.
 	self assert: builder left last outgoingEdges size equals: 8.
-	self assert: (builder popups at: (builder left last) ifAbsent: [nil]) equals: nil.
+	self assert: ((builder popups at: (builder left last) ifAbsent: [nil]) model) equals: 8.
 	builder left last announce: TRMouseLeave.
 	self assert: builder left last outgoingEdges size equals: 0.	
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testLines3 [
 	builder label: [ :c | c name asString].
 	builder height: #numberOfMethods.
@@ -300,7 +308,7 @@ RTDowserBuilderTest >> testLines3 [
 	self assert: builder right last outgoingEdges size equals: 0.	
 ]
 
-{ #category : #tests }
+{ #category : #duoDowser }
 RTDowserBuilderTest >> testRight [
 	builder onLeftAndRight: (1 to: 20).
 	

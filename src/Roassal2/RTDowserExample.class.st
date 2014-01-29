@@ -8,20 +8,35 @@ Class {
 	#category : #'Roassal2-Builder-Dowser'
 }
 
-{ #category : #examples }
+{ #category : #'as yet unclassified' }
+RTDowserExample >> example01 [
+	"
+	self new example01
+	"
+	|a |
+	a := RTDowserBuilder new.
+	a addColumn: { 'a' . 'b' . 'c' }.
+	a addColumn: { 'a' . 'b' . 'c' }.
+	a addColumn: { 'a' . 'b' . 'c' }.
+	a body: 'a b c a b c'.
+	a edgesTo: #yourself.
+	a open.
+]
+
+{ #category : #duoDowser }
 RTDowserExample >> example1 [
 	"
 	self new example1
 	"
 	|a |
-	a := RTDowserBuilder new.
+	a := RTDuoDowserBuilder new.
 	a left: { 'a' . 'b' . 'c' }.
 	a body: 'a b c a b c'.
 	a edgesTo: #yourself.
 	a open.
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example10 [
 	"
 	self new example10
@@ -65,7 +80,7 @@ RTDowserExample >> example10 [
 { 1976 . 34 . { 'United Kingdom' }}}.
 	maiden2 := {'United States' -> 686 . 'United Kingdom' -> 538 . 'Germany' -> 154 . 'Canada' -> 111 . 'France' -> 109 . 'Japan' -> 70 . 'Italy' -> 70 . 'Spain' -> 68 . 'Sweden'	-> 39 . 'Australia' -> 32 . 'Brazil' -> 32 . 'Netherlands' -> 28 . 'Finland' -> 24 . 'Belgium' -> 24 . 'Poland' -> 23 . 'Switzerland' -> 22 . 'Denmark' -> 19 . 'Norway' -> 18 . 'Mexico' -> 17 . 'Portugal' -> 16 . 'Greece' -> 13 . 'Czech Republic' -> 11 . 'Austria' -> 11 . 'Hungary' -> 10 . 'Argentina' -> 10 . 'Ireland' -> 8 . 'Russia' -> 8 . 'Chile' -> 7 . 'Serbia' -> 5 . 'Slovenia' -> 5 . 'Slovakia' -> 5 . 'Croatia' -> 4 . 'Romania' -> 4 .'Colombia' -> 4 . 'Turkey' -> 4 . 'New Zealand' -> 3 . 'Venezuela' -> 3 . 'India' -> 3 . 'Israel' -> 3 . 'South Africa' -> 3 . 'Puerto Rico' -> 3. 'United Arab Emirates' -> 2 . 'Indonesia' -> 2 . 'Bulgaria'	-> 2 . 'Peru' -> 2 . 'Iceland' -> 2 . 'Costa Rica' -> 2 . 'South Korea' -> 1 . 'Uruguay' -> 1 . 'Ecuador' -> 1 . 'Estonia' -> 1 . 'Malta' -> 1 . 'Singapore' -> 1 . 'Paraguay' -> 1}.
 	
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder title: 'Iron Maiden'.
 	builder legend: 'Concerts around the world per year'.
 	builder body: 'Iron Maiden are an English heavy metal band 
@@ -122,13 +137,13 @@ shows.'.
 	builder open.
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example2 [
 	"
 	self new example2
 	"
 	| a |
-	a := RTDowserBuilder new.
+	a := RTDuoDowserBuilder new.
 	a label: [ :c | c name asString].
 	a height: #numberOfMethods.
 	a color: #numberOfLinesOfCode.
@@ -137,14 +152,14 @@ RTDowserExample >> example2 [
 	a open.
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example3 [
 	"
 	self new example3
 	"
 	| builder |
 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder height:  [ :e | e numberOfLinesOfCode  / 10].
 	builder color: #numberOfMethods.
 	builder left: RTShape withAllSubclasses.
@@ -152,14 +167,14 @@ RTDowserExample >> example3 [
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example4 [
 	"
 	self new example4
 	"
 	| builder |
 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder legend: 'Example of a relation between two set of integers'.
 	builder left: (1 to: 10).
 	builder right: (1 to: 20).
@@ -168,40 +183,40 @@ RTDowserExample >> example4 [
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example5 [
 	"
 	self new example5
 	"
 	| builder | 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder legend: 'Power'.
 	builder onLeftAndRight: (1 to: 20).
 	builder edgesTo: [ :v | v * v].
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example6 [
 	"
 	self new example6
 	"
 	| builder | 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder left: (1 to: 20).
 	builder right: (RTObject withAllSubclasses).
 	builder edgesFrom: [ :a :b | a numberOfSubclasses = b].
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example7 [
 	"
 	self new example7
 	"
 	| builder |
 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder legend: 'Example of a relation between two set of integers'.
 	builder left: (1 to: 10).
 	builder right: (1 to: 20).
@@ -216,14 +231,14 @@ RTDowserExample >> example7 [
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example8 [
 	"
 	self new example8 
 	"
 	| builder |
 
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder legend: 'Compiler instance variables usage'.
 	builder labelRight: [:a | a selector asString]. 
 	builder left: Compiler instanceVariables.
@@ -232,7 +247,7 @@ RTDowserExample >> example8 [
 	builder open
 ]
 
-{ #category : #examples }
+{ #category : #duoDowser }
 RTDowserExample >> example9 [
 	"
 	self new example9
@@ -241,7 +256,7 @@ RTDowserExample >> example9 [
 	
 	hohoho := {'Afghanistan' -> 'Baba Chaghaloo'.'Albania' -> 'Babadimri'. 'Argentina' -> 'Papá Noel'. 'Armenia' -> 'Gaghant Baba'. 'Belgium' -> 'Pere Noel'. 'Bosnia and Herzegovina' -> 'Deda Mraz'. 'Bolivia' -> 'Papá Noel'. 'Brazil' -> 'Papai Noel'. 'Bulgaria' -> 'Dyado Koleda'. 'Canada' -> 'Santa Claus'. 'Chile' -> 'Viejo Pascuero'. 'China' -> 'Dun Che Lao Ren'. 'Colombia' -> 'Papá Noel'. 'Denmark' -> 'Julemanden'. 'Ecuador' -> 'Papá Noel'. 'Egypt' -> 'Papa Noël'. 'France' -> 'Pere Noel'. 'French Canada' -> 'Père Noël'. 'Finland' -> 'Joulupukki'. 'Germany' -> 'Weihnachtsmann'. 'Hawaii' -> 'Kanakaloka'. 'Hungary' -> 'Mikulas'. 'Iran' -> 'Baba Noel'. 'Iraq' -> 'Vader Kersfees'. 'Ireland' -> 'Daidí na Nollaig'. 'Italy' -> 'Babbo Natale'. 'Jamaica' -> 'Santa Claus'. 'Japan' -> 'Hoteiosho'. 'Lithuania' -> 'Kaledu Senelis'. 'Malta' -> 'San Niklaw'. 'Netherlands' -> 'Kerstman'. 'Norway' -> 'Julenissen'. 'Perú' -> 'Papá Noel'. 'Poland' -> 'Swiety Mikolaj'. 'Portugal' -> 'Pai Natal'. 'Romania' -> 'Mos Craciun'. 'Russia' -> 'Ded Moroz'. 'Serbia' -> 'Deda Mraz'. 'Scottish Highlands' -> 'Daidaín na Nollaig'. 'South Africa' -> 'Vader Kersfees'. 'Spain' -> 'Papá Noel'. 'Sweden' -> 'Jultomten'. 'Turkey' -> 'Noel Baba'. 'United Kingdom' -> 'Father Christmas'. 'US' -> 'Santa Claus'}.
 	
-	builder := RTDowserBuilder new.
+	builder := RTDuoDowserBuilder new.
 	builder title: 'Merry Christmas'.
 	builder legend: 'Santa Claus over the World'.
 	builder colorLeft: (Color green).

@@ -13,6 +13,11 @@ RTAnimation >> addedIn: trachelCanvas [
 	"do nothing"
 ]
 
+{ #category : #accessing }
+RTAnimation >> after: aBlock [
+
+]
+
 { #category : #testing }
 RTAnimation >> hasCompleted [
 	self subclassResponsibility
