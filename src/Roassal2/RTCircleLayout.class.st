@@ -43,6 +43,6 @@ RTCircleLayout >> doExecute: elements [
 			| point |
 			point := center + (Point r: rad theta: angle).
 			angle := angle + angleIncrement.
-			translator translate: each to: point.
+			translator translateTopLeftOf: each to: point.
 			self step ]
 ]

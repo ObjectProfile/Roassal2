@@ -92,9 +92,9 @@ RTNestTest >> testInner [
 	RTTreeLayout new on: (Array with: el1 with: el2) edges: view edges.
 	RTNest new on: host nest: (Array with: el1 with: el2).
 
-	self assert: el1 position = (0.0@ -12).	
-	self assert: el2 position = (0.0@13).
-	self assert: host position = (0@0).
+	self assert: el1 position equals: (0.5@ (-25/2)).	
+	self assert: el2 position equals: (0.5@(25/2)).
+	self assert: host position equals: (0@0).
 ]
 
 { #category : #tests }

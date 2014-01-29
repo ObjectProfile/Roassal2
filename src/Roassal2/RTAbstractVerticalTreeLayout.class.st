@@ -38,7 +38,7 @@ RTAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer:
 		treeSize := each width
 			max: (self layout: (self computeChildrenFor: each) atPoint: x @ childrenPosition atLayer: aNumber + 1).
 		middleOfTree := x + (treeSize / 2.0) - (each width / 2.0).
-		translator translate: each to: middleOfTree @ y.
+		translator translateTopLeftOf: each to: middleOfTree @ y.
 		x := x + treeSize + self horizontalGap.
 		self step ].
 	^ x - aPoint x - self horizontalGap

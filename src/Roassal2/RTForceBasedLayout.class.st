@@ -144,7 +144,7 @@ RTForceBasedLayout >> doExecute: nodeElements [
 	
 	alpha := 0.
 	
-	nodes do: [ :e | translator translate: e to: e position ].
+	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
 	
 ]
 
@@ -324,7 +324,7 @@ RTForceBasedLayout >> step [
 		quad := RTQuadTree withAll: nodes.
 		self accumulate: quad.
 		nodes do: [ :e | (self isFixed: e) ifFalse: [ self repulse: e from: quad ]
-										 ifTrue: [ translator translate: e to: (fixedNodes at: e) ] ].
+										 ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
 
 		nodes do: [ :e | old := e position .
 						e translateTo: (old x - (( (oldPositions at: e) x - old x ) * friction)) @ (old y - (( (oldPositions at: e) y - old y ) * friction)).
