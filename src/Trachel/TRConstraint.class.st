@@ -20,8 +20,7 @@ TRConstraint class >> move: aShape below: anotherShape [
 
 { #category : #util }
 TRConstraint class >> move: aShape between: s1 and: s2 [
-
-	^ aShape translateTo: ((s1 position + s2 position) / 2)
+	^ aShape translateTo: (s1 position + s2 position) /2 
 ]
 
 { #category : #util }
@@ -69,6 +68,16 @@ TRConstraint class >> stick: aShape below: anotherShape [
 		(TRTranslationCallback block: [ :shape :step | self move: aShape below: anotherShape ]) 
 	
 	
+]
+
+{ #category : #public }
+TRConstraint class >> stick: aShape between: s1 and: s2 [
+	| callback |
+	self move: aShape between: s1 and: s2.
+	
+	callback := TRTranslationCallback block: [ :shape :step | self move: aShape between: s1 and: s2 ].
+	s1 addCallback: callback.
+	s2 addCallback: callback
 ]
 
 { #category : #public }
