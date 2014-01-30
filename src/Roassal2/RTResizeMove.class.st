@@ -8,17 +8,17 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTResizeMove >> after: aBlock [
 	animatedValue finishCallback: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTResizeMove >> hasCompleted [
 	^ animatedValue hasCompleted
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTResizeMove >> refresh [
 	| t |
 	t := animatedValue value.
@@ -27,19 +27,24 @@ RTResizeMove >> refresh [
 	element trachelShape canvas signalUpdate.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTResizeMove >> start [
 	animatedValue start
 ]
 
-{ #category : #'as yet unclassified' }
-RTResizeMove >> toExtent: toExtent on: anElement [
+{ #category : #public }
+RTResizeMove >> toExtent: toExtent during: numberOfSeconds on: anElement [
 	
 	element := anElement.
 	originalExtent := anElement trachelShape extent.
 	animatedValue := VIAnimatedValue new
 									evaluator: [ :t | originalExtent interpolateTo: toExtent at: t ];
-									timer: (VITimer new cycleLength: 1);
+									timer: (VITimer new cycleLength: numberOfSeconds);
 									yourself.
 	
+]
+
+{ #category : #public }
+RTResizeMove >> toExtent: toExtent on: anElement [
+	^ self toExtent: toExtent during: 1 on: anElement
 ]
