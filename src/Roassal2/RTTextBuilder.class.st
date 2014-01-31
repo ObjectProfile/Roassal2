@@ -2,6 +2,7 @@ Class {
 	#name : #RTTextBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
+		'hook',
 		'wordHook',
 		'wordInteractionBuilder',
 		'wordShapeBuilder'
@@ -56,7 +57,9 @@ RTTextBuilder >> buildText: aString in: element [
 { #category : #protocol }
 RTTextBuilder >> buildText: aText model: anObject [
 	| el |
-	el := shapeBuilder elementOn: anObject.
+	el := RTElement on: anObject.
+	hook value: el.
+	shapeBuilder setUpElements: el.
 	interactionBuilder setUpElements: el.
 	view add: el.
 	self buildText: aText in: el.
@@ -129,6 +132,11 @@ RTTextBuilder >> example04ShowCodeAsBoxes [
 	builder open
 ]
 
+{ #category : #accessing }
+RTTextBuilder >> hook: aOneArgBlock [
+	hook := aOneArgBlock
+]
+
 { #category : #initialization }
 RTTextBuilder >> initialize [
 
@@ -137,6 +145,7 @@ RTTextBuilder >> initialize [
 	wordShapeBuilder text.
 	wordInteractionBuilder := RTInteractionBuilder new.
 	wordHook := [ :anElement :anInterval | nil ].
+	hook := [ :anElement | nil ].
 ]
 
 { #category : #protected }

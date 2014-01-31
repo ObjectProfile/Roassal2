@@ -82,14 +82,13 @@ RTNColorLinearNormalizer >> blend: aColor with: aColorValue weight: wt [
 	supplied ColorValue."
 	"Simply interpolates in RGB space."
 
-	| rv gv bv invWt av |
+	| rv gv bv invWt |
 	
 	invWt := 1-wt.
 	rv := ((aColor red * invWt) + ((aColorValue red)*wt)) "rounded".
 	gv := ((aColor green  * invWt) + ((aColorValue green)*wt)) "rounded".
-	bv := ((aColor blue * invWt) + ((aColorValue blue)*wt)) "rounded".
-	av := ((aColor alpha * invWt) + ((aColorValue alpha)*wt)).
-	^Color r: rv g: gv b: bv alpha: av
+	bv := ((aColor blue *invWt)+ ((aColorValue blue)*wt)) "rounded".
+	^Color r: rv g: gv b: bv
 ]
 
 { #category : #accessing }

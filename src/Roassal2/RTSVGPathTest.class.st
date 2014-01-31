@@ -1,6 +1,6 @@
 Class {
 	#name : #RTSVGPathTest,
-	#superclass : #RTTest,
+	#superclass : #TestCase,
 	#category : #'Roassal2-Core'
 }
 
