@@ -10,25 +10,11 @@ Class {
 }
 
 { #category : #public }
-RTBuilder >> addElementOn: anObject [
-	| element |
-	element := self elementOn: anObject.
-	interactionBuilder setUpElements: element.
-	view add: element.
-	^ element
-]
-
-{ #category : #public }
 RTBuilder >> edgeFrom: source to: target [ 
 	| newEdge |
 	newEdge := shapeBuilder edgeFrom: source to: target.
 	view add: newEdge.
 	^ newEdge
-]
-
-{ #category : #protected }
-RTBuilder >> elementOn: anObject [
-	^ shapeBuilder elementOn: anObject
 ]
 
 { #category : #protected }
@@ -63,13 +49,6 @@ RTBuilder >> open [
 RTBuilder >> openIn: aView [
 	self renderIn: aView.
 	^ aView open
-]
-
-{ #category : #copying }
-RTBuilder >> postCopy [
-	super postCopy.
-	shapeBuilder := shapeBuilder copy.
-	interactionBuilder := interactionBuilder copy.
 ]
 
 { #category : #hooks }

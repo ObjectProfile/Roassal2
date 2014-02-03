@@ -124,6 +124,16 @@ RTMondrianViewBuilderTest >> testNoShape [
 ]
 
 { #category : #basic }
+RTMondrianViewBuilderTest >> testNodeAreDraggablePerDefault [
+
+	| el |
+	el := builder node: 'hello'.
+	self assert: el position = (0 @ 0).
+	el announce: (TRMouseDragging step: 10 @ 5).
+	self assert: el position = (10 @ 5).
+]
+
+{ #category : #basic }
 RTMondrianViewBuilderTest >> testTopLevel [
 	builder nodes: (1 to: 5).
 	builder nodes: (1 to: 5).

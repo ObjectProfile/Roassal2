@@ -21,6 +21,9 @@ RTAnnounceableObject >> addInteraction: anInteractionClassOrInstance [
 
 { #category : #announce }
 RTAnnounceableObject >> announce: evt [
+	| t |
+	t := evt asAnnouncement.
+	t shape: self trachelShape.
 	self announcer announce: evt
 ]
 

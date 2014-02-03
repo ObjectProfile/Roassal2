@@ -119,6 +119,12 @@ RTMondrianViewBuilder >> layout: aLayout [
 	layout := aLayout
 ]
 
+{ #category : #'adding - nodes' }
+RTMondrianViewBuilder >> node: anObject [
+	"Add a new node to the view"
+	^ (self nodes: (Array with: anObject)) first
+]
+
 { #category : #private }
 RTMondrianViewBuilder >> nodeShape [
 	^ shapeBuilder shape
