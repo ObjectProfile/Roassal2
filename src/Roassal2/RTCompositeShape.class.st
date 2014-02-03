@@ -13,9 +13,16 @@ RTCompositeShape class >> with: s1 with: s2 [
 	^ self new shape1: s1; shape2: s2; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTCompositeShape >> heightFor: anElement [
 	^ (shape1 heightFor: anElement) max: (shape2 heightFor: anElement)
+]
+
+{ #category : #copying }
+RTCompositeShape >> postCopy [
+	super postCopy.
+	shape1 := shape1 copy.
+	shape2 := shape2 copy.
 ]
 
 { #category : #accessing }
@@ -38,7 +45,7 @@ RTCompositeShape >> shape2: aRTShape [
 	shape2 := aRTShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTCompositeShape >> trachelShapeFor: anElement [
 	| s1 s2 max |
 	s1 := shape1 trachelShapeFor: anElement.
@@ -51,13 +58,13 @@ RTCompositeShape >> trachelShapeFor: anElement [
 			with: s2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTCompositeShape >> updateFor: anElement [
 	shape1 updateFor: anElement trachelShape: anElement trachelShape shape1.
 	shape2 updateFor: anElement trachelShape: anElement trachelShape shape2.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTCompositeShape >> widthFor: anElement [
 	^ (shape1 widthFor: anElement) max: (shape2 widthFor: anElement)
 ]

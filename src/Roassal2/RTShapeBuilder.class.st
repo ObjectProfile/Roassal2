@@ -129,6 +129,12 @@ RTShapeBuilder >> line [
 	^ self shape: RTLine new
 ]
 
+{ #category : #copying }
+RTShapeBuilder >> postCopy [
+	super postCopy.
+	shape := shape copy.
+]
+
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
 	^ self shape: RTBox new

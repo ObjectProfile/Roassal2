@@ -47,6 +47,12 @@ RTInteractionBuilder >> popup [
 	^ i
 ]
 
+{ #category : #copying }
+RTInteractionBuilder >> postCopy [
+	super postCopy.
+	interactions := interactions copy.
+]
+
 { #category : #building }
 RTInteractionBuilder >> setUpElements: elements [
 	"elements is an RTGroup, that contains RTElement or RTEdges"
