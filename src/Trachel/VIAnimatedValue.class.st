@@ -122,6 +122,6 @@ VIAnimatedValue >> timer: anObject [
 { #category : #accessing }
 VIAnimatedValue >> value [
 	" evaluate the value of receiver at current time "
-		self animationDidFinish.
+	self animationDidFinish.
 	^ evaluator value: timer value
 ]
