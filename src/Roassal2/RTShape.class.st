@@ -113,8 +113,16 @@ RTShape >> instance [
 ]
 
 { #category : #hooks }
-RTShape >> trachelShapeFor: element [
-	self subclassResponsibility
+RTShape >> trachelShapeClass [
+	self subclassResponsibility 
+]
+
+{ #category : #public }
+RTShape >> trachelShapeFor: anElement [
+	| trachelShape |
+	trachelShape := self trachelShapeClass new.
+	self updateFor: anElement trachelShape: trachelShape.
+	^ trachelShape
 ]
 
 { #category : #hooks }

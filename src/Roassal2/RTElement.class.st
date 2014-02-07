@@ -81,9 +81,6 @@ RTElement >> outgoingEdges [
 
 { #category : #accessing }
 RTElement >> position [
-"
-	^ position
-	"
 	^ trachelShape position
 	
 ]
@@ -107,8 +104,7 @@ RTElement >> translateTo: newPosition [
 	trachelShape translateTo: newPosition.
 	
 	self connectedEdges do: [ :edge | edge update ].
-	self update
-
+	trachelShape resetPath
 ]
 
 { #category : #accessing }

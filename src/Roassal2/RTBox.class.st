@@ -5,25 +5,17 @@ Class {
 }
 
 { #category : #hooks }
-RTBox >> trachelShapeFor: anElement [
-	| shape rec ex |
-	ex := (self widthFor: anElement) @ (self heightFor: anElement).
-	rec := (anElement position - (ex / 2)) extent: ex.
-
-	shape := TRBoxShape new.
-	shape fromRectangle: rec color: (self colorFor: anElement).
-	shape strokePaint: (self borderColorFor: anElement).
-	^ shape
+RTBox >> trachelShapeClass [
+	^ TRBoxShape
 ]
 
 { #category : #rendering }
 RTBox >> updateFor: anElement trachelShape: trachelShape [
-	| |
+	| ex |
 	trachelShape isNil ifTrue: [ ^ self ].
-	 
-"	ex := trachelShape width @ trachelShape height.
-	rec := (anElement position - (ex / 2)) extent: ex.
-	trachelShape fromRectangle: rec.
-"
+	ex := (self widthFor: anElement) @ (self heightFor: anElement).
+	trachelShape extent: ex.
+	trachelShape color: (self colorFor: anElement).
 	trachelShape strokePaint: (self borderColorFor: anElement).
+
 ]

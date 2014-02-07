@@ -141,10 +141,13 @@ RTBlink >> nbOfSecondsLightOn [
 
 { #category : #public }
 RTBlink >> on: element [
+	| anim |
 	self highlight: element.
-	^ RTNopAnimation new
-		waitFor: self nbOfSecondsLightOn;
-		after: [ self unhighlight: element ]
+	anim := RTNopAnimation new
+		waitFor: self nbOfSecondsLightOn after: [ self unhighlight: element ].
+	element view addAnimation: anim.
+	anim start.
+	^ anim
 ]
 
 { #category : #util }

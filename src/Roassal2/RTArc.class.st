@@ -121,14 +121,18 @@ RTArc >> thickness: aBlockOrAValue [
 ]
 
 { #category : #hooks }
-RTArc >> trachelShapeFor: anElement [
-	| shape |
-	shape := TRArcShape new.
-	shape 
+RTArc >> trachelShapeClass [
+	^ TRArcShape
+]
+
+{ #category : #hooks }
+RTArc >> updateFor: anElement trachelShape: trachelShape [
+	trachelShape isNil ifTrue: [ ^ self ].
+	trachelShape 
 		alphaAngle: (self alphaAngleFor: anElement) 
 		betaAngle: (self betaAngleFor: anElement)  
 		innerRadius: (self innerRadiusFor: anElement) 
 		externalRadius: (self externalRadiusFor: anElement).
-	shape color: (self colorFor: anElement).
-	^ shape
+	trachelShape color: (self colorFor: anElement).
+	^ trachelShape
 ]
