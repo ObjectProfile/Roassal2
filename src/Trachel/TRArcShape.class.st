@@ -48,10 +48,10 @@ TRArcShape >> center: aPoint [
 TRArcShape >> computeBottomRight [
 	|aA bA iR eR p1 p2 p3 p4 pR pQ1 pB pQ2 pL pQ3 pT pQ4 pCollection|
 	pCollection:= OrderedCollection new.
-	aA:=(alphaAngle \\ 360) degreesToRadians .
-	bA:=(betaAngle \\ 360) degreesToRadians .
-	iR:= innerRadius.
-	eR:= externalRadius.
+	aA:=(alphaAngle value \\ 360) degreesToRadians .
+	bA:=(betaAngle value \\ 360) degreesToRadians .
+	iR:= innerRadius value.
+	eR:= externalRadius value.
 	p1:= (iR*aA cos)@(iR*aA sin) .
 	p2:= (iR*bA cos)@(iR*bA sin) .
 	p3:= (eR*aA cos)@(eR*aA sin).
@@ -78,38 +78,41 @@ TRArcShape >> computeBottomRight [
 
 { #category : #computing }
 TRArcShape >> computeHeight [
-	height:=(self topLeft y - self bottomRight y) abs
+	height := (self topLeft y - self bottomRight y) abs
 ]
 
 { #category : #hooks }
 TRArcShape >> computePath [
-	|aAngle bAngle|
-	aAngle:=alphaAngle degreesToRadians .
-	bAngle:=betaAngle  degreesToRadians .
+	| i e aAngle bAngle |
 	canvas ifNil: [ ^ self ].
-	path := self athensCanvas
-				createPath: [ :builder | 
-					builder
-						absolute;
-						moveTo: ((innerRadius * (aAngle cos)) @ (innerRadius * (aAngle sin)));
-						arcTo: ((innerRadius * (bAngle cos)) @ (innerRadius * (bAngle sin))) angle: bAngle - aAngle cw: true;
-						ccwArcTo: ((externalRadius * (bAngle cos)) @ (externalRadius * (bAngle sin))) angle: 0 degreesToRadians;
-						ccwArcTo: ((externalRadius * (aAngle cos)) @ (externalRadius * (aAngle sin)))angle: bAngle - aAngle;
-						ccwArcTo: ((innerRadius * (aAngle cos)) @ (innerRadius * (aAngle sin)))angle: 0 degreesToRadians ]
+	aAngle:=alphaAngle value degreesToRadians.
+	bAngle:=betaAngle value degreesToRadians.
+	i := innerRadius value.
+	e := externalRadius value.
+	path := 
+self athensCanvas
+	createPath: [ :builder | 
+		builder
+			absolute;
+			moveTo: ((i * (aAngle cos)) @ (i * (aAngle sin)));
+			arcTo: ((i * (bAngle cos)) @ (i * (bAngle sin))) angle: bAngle - aAngle cw: true;
+			ccwArcTo: ((e * (bAngle cos)) @ (e * (bAngle  sin))) angle: 0;
+			ccwArcTo: ((e * (aAngle  cos)) @ (e * (aAngle  sin))) angle: bAngle  - aAngle  ;
+			ccwArcTo: ((i * (aAngle  cos)) @ (i * (aAngle  sin))) angle: 0 ]
 ]
 
 { #category : #computing }
 TRArcShape >> computeTopLeft [
 	|aA bA iR eR p1 p2 p3 p4 pR pQ1 pB pQ2 pL pQ3 pT pQ4 pCollection|
 	pCollection:= OrderedCollection new.
-	aA:=(alphaAngle \\ 360) degreesToRadians .
-	bA:=(betaAngle \\ 360) degreesToRadians .
-	iR:= innerRadius.
-	eR:= externalRadius.
-	p1:= (iR*aA cos)@(iR*aA sin) .
-	p2:= (iR*bA cos)@(iR*bA sin) .
+	aA:=(alphaAngle value \\ 360) degreesToRadians.
+	bA:=(betaAngle value \\ 360) degreesToRadians.
+	iR:= innerRadius value.
+	eR:= externalRadius value.
+	p1:= (iR*aA cos)@(iR*aA sin).
+	p2:= (iR*bA cos)@(iR*bA sin).
 	p3:= (eR*aA cos)@(eR*aA sin).
-	p4:=(eR*bA cos)@(eR*bA sin) .
+	p4:=(eR*bA cos)@(eR*bA sin).
 	pR:=(eR*0 cos) @ (eR*0 sin).
 	pQ1:=(eR*(Float pi /4) cos)@(eR*(Float pi /4) sin).
 	pB:=(eR*(Float pi /2) cos)@(eR*(Float pi /2) sin).
@@ -166,22 +169,22 @@ TRArcShape >> height [
 { #category : #testing }
 TRArcShape >> includesPoint: aPoint [
 	| pDistanceOrigin pointAngle inside aAngle bAngle |
-	((alphaAngle) = (betaAngle)) ifTrue:[ ^ false ].
+	(alphaAngle value = betaAngle value) ifTrue: [ ^ false ].
 	inside:=true.
-	(alphaAngle % 360 = 0 ) 
-		ifFalse:[aAngle:=alphaAngle \\  360]
-		ifTrue:[aAngle:=alphaAngle].
-	(betaAngle % 360 = 0 )
-		ifFalse:[bAngle:=betaAngle \\  360]
-		ifTrue:[bAngle:= betaAngle].
+	(alphaAngle value % 360 = 0 ) 
+		ifFalse: [ aAngle := alphaAngle value \\  360 ]
+		ifTrue: [ aAngle := alphaAngle value ].
+	(betaAngle value % 360 = 0 )
+		ifFalse: [ bAngle := betaAngle value \\  360 ]
+		ifTrue: [ bAngle := betaAngle value ].
 	pointAngle:= ((aPoint x @ aPoint y negated) angleWith: self center) radiansToDegrees \\  360.
-	pDistanceOrigin:=(aPoint squaredDistanceTo: self center) sqrt.
-	((pDistanceOrigin < innerRadius) or: (pDistanceOrigin > externalRadius))
-	ifTrue:[^false].
+	pDistanceOrigin := (aPoint squaredDistanceTo: self center) sqrt.
+	((pDistanceOrigin < innerRadius value) or: (pDistanceOrigin > externalRadius value))
+		ifTrue: [ ^ false ].
 	(pointAngle % 360 = 0 )
 		ifTrue:[
-			(aAngle % 360 = 0) ifTrue:[^true].
-			(bAngle % 360 = 0) ifTrue:[^true]].
+			(aAngle % 360 = 0) ifTrue: [^ true ].
+			(bAngle % 360 = 0) ifTrue: [ ^ true ] ].
 	(aAngle < bAngle)
 	ifTrue:[
 		(pointAngle >= aAngle) ifTrue:[ inside:=inside not ].

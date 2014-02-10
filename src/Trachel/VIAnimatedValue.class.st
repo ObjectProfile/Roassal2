@@ -18,8 +18,12 @@ Class {
 }
 
 { #category : #grouping }
-VIAnimatedValue >> + aVIAnimatedValue [ 
-	self error: 'Not supported yet'
+VIAnimatedValue >> + aValue [
+
+	^ [ self value + aValue value ]
+
+"	self error: 'Not supported yet'"
+
 "	^VIAnimatedGroup new 
 		add:self;
 		add:aVIAnimatedValue."
@@ -32,6 +36,13 @@ VIAnimatedValue >> , aVIAnimatedValue [
 		add:self;
 		add:aVIAnimatedValue.
 	"
+]
+
+{ #category : #grouping }
+VIAnimatedValue >> - aValue [
+
+	^ [ self value - aValue value ]
+
 ]
 
 { #category : #actions }
