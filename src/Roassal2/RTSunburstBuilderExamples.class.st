@@ -68,7 +68,14 @@ RTSunburstBuilderExamples >> basic10 [
 	data := { 'Chile' -> { 'Santiago' . 'Iquique' } . 'France' -> { 'Paris' . 'Nice' } }.
 	b := RTSunburstBuilder new.
 
-	b explore: data using: [ :o | o class == Association ifTrue: [ o value ] ifFalse: [ o isString ifTrue: [ #() ] ifFalse:  [o ]  ] ].
+	b 
+		explore: data 
+		using: [ :o | 
+			o class == Association 
+				ifTrue: [ o value ] 
+				ifFalse: [ o isString 
+									ifTrue: [ #() ] 
+									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
 	b open
 ]
