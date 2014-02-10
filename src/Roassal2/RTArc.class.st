@@ -28,7 +28,7 @@ RTArc >> alphaAngleElement: anObject [
 
 { #category : #computing }
 RTArc >> alphaAngleFor: anElement [
-	^ alphaAngle rtValue: anElement
+	^ (alphaAngle rtValue: anElement)
 ]
 
 { #category : #accessing }
@@ -49,13 +49,13 @@ RTArc >> betaAngleElement: angleInRadian [
 
 { #category : #computing }
 RTArc >> betaAngleFor: anElement [
-	^ betaAngle rtValue: anElement
+	^ (betaAngle rtValue: anElement)
 ]
 
 { #category : #accessing }
 RTArc >> encompassingRectangle [
 
-	^ 0@0 extent: 40 @ 50
+	^ 0 @ 0 extent: 40 @ 50
 ]
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ RTArc >> externalRadiusElement: aValue [
 
 { #category : #computing }
 RTArc >> externalRadiusFor: anElement [
-	^ externalRadius rtValue: anElement
+	^ (externalRadius rtValue: anElement)
 ]
 
 { #category : #initialization }
@@ -106,13 +106,13 @@ RTArc >> innerRadiusElement: anObject [
 
 { #category : #computing }
 RTArc >> innerRadiusFor: anElement [
-	^ innerRadius rtValue: anElement
+	^ (innerRadius rtValue: anElement)
 ]
 
 { #category : #accessing }
 RTArc >> outerAngle: o innerAngle: i [
-	self alphaAngle: [ :obj | o rtValue: obj ].
-	self betaAngle: [ :obj | (o rtValue: obj) + (i rtValue: obj)]
+	self alphaAngle: [ :obj | (o rtValue: obj) ].
+	self betaAngle: [ :obj | (o rtValue: obj) + (i rtValue: obj) ]
 ]
 
 { #category : #accessing }
