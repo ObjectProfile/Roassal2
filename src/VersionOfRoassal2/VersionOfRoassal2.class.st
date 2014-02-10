@@ -1641,3 +1641,14 @@ VersionOfRoassal2 >> version000105 [
 	at: #date put: '10 February 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000106 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.70';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.119';
+	at: #version put: '0.107';
+	at: #comment put: '0.107 : Added a small example in Trachel, about animated argc';
+	at: #date put: '10 February 2014';
+	yourself
+]
