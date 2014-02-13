@@ -68,3 +68,16 @@ RTMondrianViewBuilderExample >> nesting [
 "	b horizontalLineLayout."
 	b open
 ]
+
+{ #category : #example }
+RTMondrianViewBuilderExample >> radialTreeLayout [
+
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape circle size: 10.
+	b nodes: (1 to: 100).
+	b edgesFrom: [ :v | v // 2 ].
+	b radialTreeLayout.
+	b open
+
+]

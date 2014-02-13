@@ -96,12 +96,12 @@ RTView >> open [
 	^ self setUpCanvas open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #opening }
 RTView >> openInWindowSized: anExtentAsPoint [
 	^ self setUpCanvas openInWindowSized: anExtentAsPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #opening }
 RTView >> openInWindowSized: anExtentAsPoint titled: aTitle [
 	^ self setUpCanvas openInWindowSized: anExtentAsPoint titled: aTitle
 ]

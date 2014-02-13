@@ -84,6 +84,18 @@ RTMondrianViewBuilder >> edgesFrom: object toAll: objects [
 
 ]
 
+{ #category : #'adding - edges' }
+RTMondrianViewBuilder >> edgesFromAssociations: associations [
+
+	^ self edges: associations from: #key to: #value
+
+]
+
+{ #category : #layout }
+RTMondrianViewBuilder >> forceBasedLayout [
+	self layout: RTForceBasedLayout new
+]
+
 { #category : #layout }
 RTMondrianViewBuilder >> gridLayout [
 	self layout: RTGridLayout
@@ -193,6 +205,11 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 RTMondrianViewBuilder >> open [
 	self applyLayout.
 	^ view open
+]
+
+{ #category : #layout }
+RTMondrianViewBuilder >> radialTreeLayout [
+	^ self layout: RTRadialTreeLayout new
 ]
 
 { #category : #initialization }

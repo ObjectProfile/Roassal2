@@ -62,6 +62,16 @@ RTMondrianViewBuilderTest >> testEdgesFromToAll [
 ]
 
 { #category : #layout }
+RTMondrianViewBuilderTest >> testForceBasedLayout [
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape rectangle.
+	b nodes: (1 to: 5).
+	b forceBasedLayout.
+	b applyLayout
+]
+
+{ #category : #layout }
 RTMondrianViewBuilderTest >> testLayoutAndTreeLayout [
 	| view |
 	builder nodes: (Array with: 'hello') forEach: [ :e |
@@ -131,6 +141,33 @@ RTMondrianViewBuilderTest >> testNodeAreDraggablePerDefault [
 	self assert: el position = (0 @ 0).
 	el announce: (TRMouseDragging step: 10 @ 5).
 	self assert: el position = (10 @ 5).
+]
+
+{ #category : #basic }
+RTMondrianViewBuilderTest >> testOrderingTopLevelNodesAndEdges [
+
+	| v c shapes |
+	builder nodes: (1 to: 2).
+	builder edgesFromAssociations: (Array with: 1 -> 2).
+	v := builder view.
+	self assert: v numberOfElements = 2.
+	self assert: v numberOfEdges = 1.
+	
+	c := v canvas.
+	self assert: c numberOfShapes = 3.
+
+	shapes := c shapes.
+	"self assert: shapes first class == TRLineShape."
+]
+
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testRadialTreeLayout [
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape rectangle.
+	b nodes: (1 to: 5).
+	b radialTreeLayout.
+	b applyLayout
 ]
 
 { #category : #basic }
