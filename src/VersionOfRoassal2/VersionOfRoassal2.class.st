@@ -1652,3 +1652,14 @@ VersionOfRoassal2 >> version000106 [
 	at: #date put: '10 February 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000107 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.71';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.120';
+	at: #version put: '0.108';
+	at: #comment put: '0.108 : worked a bit on the Mondrian builder';
+	at: #date put: '13 February 2014';
+	yourself
+]
