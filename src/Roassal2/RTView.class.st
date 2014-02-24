@@ -131,3 +131,9 @@ RTView >> setUpCanvas [
 	trCanvas camera focusOnCenter.
 	^ trCanvas
 ]
+
+{ #category : #'accessing-computed' }
+RTView >> trachelShape [
+
+	^ TRNoShape instance
+]

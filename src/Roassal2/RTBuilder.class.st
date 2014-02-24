@@ -72,6 +72,11 @@ RTBuilder >> postCopy [
 	interactionBuilder := interactionBuilder copy.
 ]
 
+{ #category : #'public-ui' }
+RTBuilder >> render [
+	self renderIn: self view
+]
+
 { #category : #hooks }
 RTBuilder >> renderIn: aView [
 	"You may want to override this method to fill the view"
