@@ -35,6 +35,13 @@ RTSunburstBuilder >> initialize [
 				color:  [ :o | Color random ]
 ]
 
+{ #category : #'public-ui' }
+RTSunburstBuilder >> open [
+	view addAll: visitor arcs.
+	visitor lines do: [ :line | view  canvas addShape: line].
+	^ self openIn: view
+]
+
 { #category : #configuration }
 RTSunburstBuilder >> radialSpacing: anInteger [
 	self visitor radialSpacing: anInteger
@@ -51,13 +58,6 @@ RTSunburstBuilder >> recurse: parentNode using: aBlock [
 		n model: childObject.
 		parentNode addChild: n.
 		self recurse: n using: aBlock ]
-]
-
-{ #category : #'as yet unclassified' }
-RTSunburstBuilder >> renderIn: aView [
-	aView addAll: visitor arcs.
-	visitor lines do: [ :line | aView canvas addShape: line].
-	
 ]
 
 { #category : #accessing }
