@@ -158,6 +158,22 @@ RTExample >> cellLayout3 [
 	view open
 ]
 
+{ #category : #layout }
+RTExample >> circleLayout [
+	"
+	self new circleLayout
+	"
+	| v els |
+	v := RTView new.
+	els := RTBox new size: 10; elementsOn: (1 to: 100).
+	v addAll: els.
+	els @ RTDraggable.
+	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2 ] to: #yourself using: (RTLine new color: (Color blue alpha: 0.4); withVerticallAttachPoint; yourself) inView: v.
+	RTCircleLayout new initialRadius: 260; on: v elements.
+	v @ RTDraggableView.
+	v open
+]
+
 { #category : #shapes }
 RTExample >> circles [
 	"
@@ -748,6 +764,29 @@ RTExample >> newYear2014 [
 	view openInWindowSized: 800 @ 450
 ]
 
+{ #category : #normalizers }
+RTExample >> normalizer01 [
+	"
+	self new normalizer01
+	"
+	| v es n |
+	v := RTView new.
+	n := RTGrayLinearColor new 
+				command: #asInteger; 
+				scope: ($a to: $z).
+				
+	es := RTBox new
+				size: 15;
+				color: n;
+				elementsOn: ($a to: $z).
+				
+	v addAll: es.
+	es @ RTPopup.
+	RTGridLayout on: es.
+
+	v open
+]
+
 { #category : #layout }
 RTExample >> numbers [
 
@@ -978,6 +1017,37 @@ cls methods do: [ :cm |
 "Open the view"
 v open
 
+]
+
+{ #category : #'software visualization' }
+RTExample >> systemComplexity [
+	"
+	self new systemComplexity
+	"
+
+	| v els edges |
+	v := RTView new.
+	els := RTBox new 
+				height: [ :c | c numberOfMethods max: 5 ];
+				borderColor: Color black;
+				width: [ :c | c numberOfVariables * 5 max: 5 ];
+				color: (RTGrayLinearColor new command: #numberOfLinesOfCode; scope: Collection withAllSubclasses);
+				elementsOn: Collection withAllSubclasses.
+	v addAll: els.
+	els @ RTDraggable @ RTPopup.
+
+	edges := RTEdge 
+			buildEdgesFromObjects: Collection withAllSubclasses 
+			from: #superclass 
+			to: #yourself 
+			using: (RTLine new withVerticallAttachPoint; yourself) 
+			inView: v.
+	edges do: #moveBehindItsExtremities.
+
+	RTTreeLayout on: v elements.
+
+	v @ RTDraggableView.
+	v open
 ]
 
 { #category : #animations }

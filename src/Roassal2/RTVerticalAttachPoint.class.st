@@ -7,7 +7,7 @@ Class {
 { #category : #'public - hooks' }
 RTVerticalAttachPoint >> endingPointOf: aRTEdge [
 	^ (aRTEdge to position 
-		- (0 @ (aRTEdge from height / 2))) asIntegerPoint
+		- (0 @ (aRTEdge to height / 2))) asIntegerPoint
 ]
 
 { #category : #'public - hooks' }

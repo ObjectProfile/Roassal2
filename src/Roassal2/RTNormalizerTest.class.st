@@ -1,159 +1,40 @@
-"
-A RONormalizerTest is xxxxxxxxx.
-
-"
 Class {
 	#name : #RTNormalizerTest,
 	#superclass : #RTTest,
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #identity }
-RTNormalizerTest >> testBeginingAtBlue [
+{ #category : #'gray color' }
+RTNormalizerTest >> testGray [
 
-	| n |
-	n := RTNIdentityNormalizer beginingAtBlue.
-	self assert: n nextColor = Color blue
-]
-
-{ #category : #identity }
-RTNormalizerTest >> testBeginingAtRed [
-
-	| n |
-	n := RTNIdentityNormalizer beginingAtRed.
-	self assert: n nextColor = Color red
-]
-
-{ #category : #'explicit identity' }
-RTNormalizerTest >> testExplicitIdentity [
-	| normalizer colorOne colorTwo |
+	| n es v |
+	v := RTView new.
+	es := RTBox elementsOn: (0 to: 255).
+	v addAll: es.
 	
-	normalizer := RTNExplicitIdentityNormalizer 
-						withCommand: #last 
-						withColors: (Array with: Color blue with: Color white with: Color red) 
-						withDefaultColor: Color green.
-						
-	colorOne := normalizer rtValue: 'alex'.
-	colorTwo := normalizer rtValue: 'suffix'.
-	self assert: (colorOne = colorTwo)
-
-
+	n := RTGrayLinearColor new.
+	n command: #yourself.
+	n scope: (0 to: 255).
+	
+	self assert: (n rtValue: es first model) = Color white.
+	self assert: (n rtValue: (es at: 100) model) = ( (Color r: 0.612 g: 0.612 b: 0.612 alpha: 1.0)).
 ]
 
-{ #category : #'as yet unclassified' }
-RTNormalizerTest >> testExplicitIdentity2 [
-	| normalizer |
+{ #category : #'gray color' }
+RTNormalizerTest >> testOnCharacters [
+
+	| es n |
+	n := RTGrayLinearColor new 
+				command: #asInteger; 
+				scope: ($a to: $z).
+				
+	es := RTBox new
+				color: n;
+				elementsOn: ($a to: $z).
+
+	self assert: n max = $z asInteger.
+	self assert: n min = $a asInteger.
 	
-	normalizer := RTNExplicitIdentityNormalizer
-					withCommand: #yourself
-					withColors: (Array with: Color blue with: Color white with: Color red) 
-					withDefaultColor: Color green.						
-
-	self assert: (normalizer rtValue: 1) = Color blue.
-	self assert: (normalizer rtValue: 2) = Color white.
-	self assert: (normalizer rtValue: 3) = Color red.
-	self assert: (normalizer rtValue: -1) = Color green.
-	self assert: (normalizer rtValue: 1000) = Color green.
-]
-
-{ #category : #'explicit identity' }
-RTNormalizerTest >> testExplicitIdentity3Initialization [
-	| normalizer colors |
-	
-	colors := Array with: Color blue with: Color white with: Color red.
-	normalizer := RTNExplicitIdentityNormalizer
-					withCommand: #yourself
-					withColors: colors
-					withDefaultColor: Color green.						
-											
-	self assert: (normalizer rtValue: 1) = Color blue.
-	self assert: (normalizer rtValue: 2) = Color white.
-	self assert: (normalizer rtValue: 3) = Color red.
-	self assert: (normalizer rtValue: 4) = Color green.
-]
-
-{ #category : #linear }
-RTNormalizerTest >> testGradient [
-	| normalizer |
-
-	normalizer := RTNColorLinearNormalizer inContext: #(0 1 2 3 4 5 6 7 8 9 10) lowColor: Color yellow highColor: Color red.
-	self assert: (normalizer maximumValue: nil) = 10.
-	self assert: (normalizer rtValue: 10) =  (Color r: 1.0 g: 0.0 b: 0.0). 
-	self assert: (normalizer rtValue: 1) = (Color r: 1.0 g: 0.900012 b: 0.0).
-	self assert: (normalizer rtValue: 0) =  (Color r: 1.0 g: 1.0 b: 0.0)
-]
-
-{ #category : #identity }
-RTNormalizerTest >> testIdentity [
-	| colorOne colorTwo normalizer |
-	
-	normalizer := RTNIdentityNormalizer new.
-	colorOne := normalizer rtValue: 1.
-	colorTwo := normalizer rtValue: 2.
-	self deny: colorOne = colorTwo.
-
-	colorOne := normalizer rtValue: 12.
-	colorTwo := normalizer rtValue: 12.
-	self assert: colorOne = colorTwo.
-]
-
-{ #category : #identity }
-RTNormalizerTest >> testIdentityModulo [
-	"This checks that there is no exception if there are more identities than colors"
-
-	1 to: 150 do: [:index | RTNIdentityNormalizer new rtValue: index]
-]
-
-{ #category : #identity }
-RTNormalizerTest >> testIdentityWithCommand [
-	| colorOne colorTwo normalizer |
-	
-	normalizer := RTNIdentityNormalizer withCommand: #last.
-	colorOne := normalizer rtValue: 'bob'.
-	colorTwo := normalizer rtValue: 'tom'.
-	self deny: colorOne = colorTwo.
-
-	colorOne := normalizer rtValue: 'anna'.
-	colorTwo := normalizer rtValue: 'maria'.
-	self assert: colorOne = colorTwo.
-]
-
-{ #category : #multiple }
-RTNormalizerTest >> testMultipleLinearNormalizer [
-	| normalizer |
-
-	normalizer := RTMultipleColorLinearNormalizer 
-					valueRange: #(5 10 15) colorRange: (Array with: Color blue with: Color white with: Color red) .
-	
-	self assert: (normalizer rtValue: 5) =  (Color r: 0.0 g: 0.0 b: 1.0).
-	self assert: (normalizer rtValue: 6) =  (Color r: 0.2 g: 0.2 b: 1.0). 
-	self assert: (normalizer rtValue: 15) = (Color r: 1.0 g: 0.0 b: 0.0)
-]
-
-{ #category : #linear }
-RTNormalizerTest >> testNumberLinearNormalizer [
-	| normalizer |
-	normalizer := RTNumberLinearNormalizer inContext: (1 to: 10) withCommand: [:entity | entity * 1000 ].
-	self assert: (normalizer rtValue: 100) = 10.
-	
-	normalizer := RTNumberLinearNormalizer inContext: (1 to: 100) withCommand: [:entity | entity * 1000 ].
-	self assert: (normalizer rtValue: 100) = 1.
-	
-	normalizer := RTNumberLinearNormalizer inContext: (1 to: 100) withCommand: [:entity | entity ].
-	self assert: (normalizer rtValue: 100) = 1.
-
-]
-
-{ #category : #linear }
-RTNormalizerTest >> testValueLinearNormalizer [
-
-	| normalizer |
-	normalizer := RTValueLinearNormalizer inContext: (0 to: 10) withCommand: [:entity | entity ].
-	self assert: (normalizer rtValue: 10) = 1.
-	
-	normalizer := RTValueLinearNormalizer inContext: (0 to: 10) withCommand: [:entity | entity * 1000 ].
-	self assert: (normalizer rtValue: 100) = 10.
-	
-	normalizer := RTValueLinearNormalizer inContext: (99 to: 100) withCommand: [:entity | entity ].
-	self assert: (normalizer rtValue: 101) = 2.
+	self assert: es first trachelShape color = Color white.
+	self assert: es last trachelShape color = Color black.
 ]
