@@ -31,7 +31,7 @@ TRRotatedLabelShape >> drawOn: athensCanvas [
 { #category : #accessing }
 TRRotatedLabelShape >> encompassingRectangle [
 
-	| w h transformation translation notRotatedRectangle rotatedRectangle topLeft topRight bottomRight bottomLeft |
+	| w h transformation translation notRotatedRectangle rotatedRectangle topLeft topRight bottomRight bottomLeft p1 p2 p3 p4 |
 	w := self notRotatedWidth.
 	h := self notRotatedHeight.
 	transformation := AthensAffineTransform new 
@@ -42,11 +42,15 @@ TRRotatedLabelShape >> encompassingRectangle [
 	topRight := transformation transform: notRotatedRectangle topRight.
 	bottomRight := transformation transform: notRotatedRectangle bottomRight.
 	bottomLeft := transformation transform: notRotatedRectangle bottomLeft.
+	
+	p1 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
+	p2 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
+	p3 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
+	p4 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
+	
 	rotatedRectangle := 
-		({ topLeft x. topRight x. bottomRight x. bottomLeft x} min @
-		{ topLeft y. topRight y. bottomRight y. bottomLeft y} min) corner:
-		({ topLeft x. topRight x. bottomRight x. bottomLeft x} max @
-		{ topLeft y. topRight y. bottomRight y. bottomLeft y} max).
+		(p1 min @ p2 min) corner:
+		(p3 max @ p4 max).
 	translation := AthensAffineTransform new
 					translateBy: position asIntegerPoint.
 	^ (translation transform: rotatedRectangle topLeft)

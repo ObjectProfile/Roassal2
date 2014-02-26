@@ -328,11 +328,6 @@ TRMorph >> stepTime [
 	^ 20
 ]
 
-{ #category : #accessing }
-TRMorph >> trachelCanvas [
-	^ trachelCanvas
-]
-
 { #category : #testing }
 TRMorph >> wantsSteps [
 	^ trachelCanvas hasAnimation 

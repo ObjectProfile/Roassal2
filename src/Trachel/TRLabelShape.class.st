@@ -17,8 +17,7 @@ TRLabelShape class >> defaultFontSize [
 { #category : #configuration }
 TRLabelShape class >> getFontForSize: aNumber [
 
-   ^ LogicalFont familyName: StandardFonts defaultFont familyName pointSize: aNumber
-
+	^ LogicalFont familyName: 'Arial' pointSize: aNumber
 ]
 
 { #category : #configuration }

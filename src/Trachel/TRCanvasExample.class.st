@@ -183,11 +183,17 @@ TRCanvasExample >> arc6 [
 { #category : #examples }
 TRCanvasExample >> bezier [
 
-	| t |
+	| t points |
+	points := OrderedCollection new.
+	points add: 50 @ 50.
+	points add: 150 @ 20.
+	points add: 120 @ 130.
+	points add: 50 @ 150.
+	points add: 80 @ 80.
 	t := TRCanvas new.
 	t addShape: (TRLineShape  new from: 50 @ 50 to: 130 @ 20).
 	t addShape: (TRBezierShape new 
-		points: {50 @ 50 . 150 @ 20 . 120 @ 130 . 50 @ 150 . 80 @ 80}; 
+		points: points; 
 			strokePaint: Color purple).
 	t open
 ]
@@ -235,11 +241,17 @@ TRCanvasExample >> fiveLabelFlowers [
 	"
 	self new fiveLabelFlowers.
 	"
-	| t label box |
+	| t label box points |
 	t := TRCanvas new.
 	t color: Color white.
 
-	{0 @ 0. 150 @ 150. -150 @ -150. 150 @ -150. -150 @ 150} do: [ :position |
+	points := OrderedCollection new.
+	points add: 0 @ 0.
+	points add: 150 @ 150.
+	points add: -150 @ -150.
+	points add: 150 @ -150.
+	points add: -150 @ 150.
+	points do: [ :position |
 		1 to: 180 by: 25 do: [ :angle |
 			box := TRBoxShape new.
 			box from: position -1 to: position + 1.

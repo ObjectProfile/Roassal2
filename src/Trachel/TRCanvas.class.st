@@ -140,6 +140,22 @@ TRCanvas >> extent: aPoint [
 	self announce: TRResizeCanvasEvent
 ]
 
+{ #category : #action }
+TRCanvas >> firstElementOf: aCollection [ 
+	"Return the first element of aCollection that will be displayed. This method assume that all elements contained in aCollection belong to shapes. It also assumes that aCollection is not empty"
+	| lastElement lastIndex |
+	lastElement := aCollection first.
+	lastIndex := shapes indexOf: lastElement.
+	aCollection do: [ :e |
+		| v |
+		v := shapes indexOf: e.
+		(v < lastIndex) ifTrue: [ 
+			lastElement := e.
+			lastIndex := v ]
+		 ].
+	^ lastElement
+]
+
 { #category : #accessing }
 TRCanvas >> fixedShapes [
 	^ fixedShapes
@@ -160,7 +176,7 @@ TRCanvas >> initialize [
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
-	color := Color transparent.
+	color := Color lightGray.
 ]
 
 { #category : #testing }
@@ -233,6 +249,29 @@ TRCanvas >> playAnimations [
 { #category : #building }
 TRCanvas >> privateAdd: shape [
 	shapes add: shape
+]
+
+{ #category : #actions }
+TRCanvas >> push: aShape behind: anotherShape [
+	shapes remove: aShape.
+	shapes add: aShape before: anotherShape
+]
+
+{ #category : #action }
+TRCanvas >> push: aTRBoxShape behindAll: aCollection [ 
+	"Move the first argument, which is supposely be contained in the shapes variable, before all elements contained in aCollection"
+	| firstElement |
+	firstElement := self firstElementOf: aCollection.
+	self push: aTRBoxShape behind: firstElement
+]
+
+{ #category : #action }
+TRCanvas >> pushAll: elements1 behindAll: elements2 [ 
+	"Move all elements in elements1, which are supposely contained in the shapes variable, before all elements contained in elements2"
+	| firstElement |
+	firstElement := self firstElementOf: elements2.
+	elements1 do: [ :e |
+		self push: e behind: firstElement ]
 ]
 
 { #category : #actions }

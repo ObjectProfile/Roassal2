@@ -70,6 +70,6 @@ TRBezierShape >> position [
 
 { #category : #actions }
 TRBezierShape >> translateBy: aPoint [
-	listOfPoints := listOfPoints collect: [ :p | p:=p+aPoint ]
+	listOfPoints := listOfPoints collect: [ :p | p + aPoint ]
 
 ]

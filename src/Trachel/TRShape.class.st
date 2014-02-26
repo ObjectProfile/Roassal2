@@ -198,6 +198,16 @@ TRShape >> pushBack [
 ]
 
 { #category : #actions }
+TRShape >> pushBehind: aShape [
+	canvas push: self behind: aShape
+]
+
+{ #category : #actions }
+TRShape >> pushBehindAll: manyShapes [
+	canvas push: self behindAll: manyShapes
+]
+
+{ #category : #actions }
 TRShape >> pushFront [
 	canvas pushFront: self
 	
