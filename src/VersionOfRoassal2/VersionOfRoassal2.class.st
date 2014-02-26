@@ -1663,3 +1663,14 @@ VersionOfRoassal2 >> version000107 [
 	at: #date put: '13 February 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000108 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.72';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.122';
+	at: #version put: '0.109';
+	at: #comment put: '0.109 : Working on the normalizer, and making Trachel compatible with Amber';
+	at: #date put: '26 February 2014';
+	yourself
+]
