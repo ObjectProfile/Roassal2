@@ -52,6 +52,8 @@ RTTextBuilder >> buildText: aString in: element [
 	].
 	RTVerticalLineLayout new gapSize: 0; on: lines.
 	RTNest new on: element nest: elements.
+	element attributeAt: #nestedElements put: elements.
+	^ elements
 ]
 
 { #category : #protocol }

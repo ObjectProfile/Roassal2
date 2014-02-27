@@ -38,6 +38,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 		inView: view 
 		scope: (RTGroup new addAll: topLevelNodes; yourself).
 	topLevelEdges addAll: es.
+	es do: #moveBehindItsExtremities.
 	^ es
 ]
 
@@ -69,7 +70,8 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 		using: self edgeShape
 		inView: view 
 		scope: (RTGroup new addAll: topLevelNodes; yourself).
-	topLevelEdges addAll: es
+	topLevelEdges addAll: es.
+	es do: #moveBehindItsExtremities
 ]
 
 { #category : #'adding - edges' }
@@ -258,6 +260,7 @@ RTMondrianViewBuilder >> topLevelObjects [
 
 { #category : #layout }
 RTMondrianViewBuilder >> treeLayout [
+	self view edges do: [ :e | e shape withVerticallAttachPoint ].
 	self layout: RTTreeLayout new
 ]
 
