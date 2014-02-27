@@ -81,25 +81,6 @@ RTSunburstBuilderExamples >> basic10 [
 ]
 
 { #category : #examples }
-RTSunburstBuilderExamples >> basic11WithGradient [
-	"
-	self new basic11WithGradient
-	"	
-	| b |
-	b := RTSunburstBuilder new.
-	b angularSpacing: 2.
-	b radialSpacing: 2.
-	b shape current colorElement: [ :e | (RTNColorLinearNormalizer
-			inContext: (1 to: 8)
-			lowColor: (Color r:0.8 g:0.8 b:1)
-			highColor: (Color r:0 g:0 b:0.3)) rtValue: (e attributes at: #sbDepth) ].
-	b 
-		explore: RTObject using: #subclasses.
-	b view @ RTDraggableView.
-	b open
-]
-
-{ #category : #examples }
 RTSunburstBuilderExamples >> basic2 [
 	"
 	self new basic2
