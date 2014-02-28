@@ -5,7 +5,8 @@ Class {
 		'hook',
 		'wordHook',
 		'wordInteractionBuilder',
-		'wordShapeBuilder'
+		'wordShapeBuilder',
+		'padding'
 	],
 	#category : #'Roassal2-Builder-TextBuilder'
 }
@@ -29,7 +30,7 @@ RTTextBuilder >> buildText: aText [
 RTTextBuilder >> buildText: aString in: element [
 	| elements lines |
 	lines := RTGroup new.
-	elements := OrderedCollection new.
+	elements := RTGroup new.
 	aString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
 		| line lineString wordStrings startWord endWord |
 		lineString := aString copyFrom: startLine to: endLine.
@@ -51,7 +52,7 @@ RTTextBuilder >> buildText: aString in: element [
 		lines add: line.
 	].
 	RTVerticalLineLayout new gapSize: 0; on: lines.
-	RTNest new on: element nest: elements.
+	RTNest new padding: padding; on: element nest: elements.
 	element attributeAt: #nestedElements put: elements.
 	^ elements
 ]
@@ -68,72 +69,6 @@ RTTextBuilder >> buildText: aText model: anObject [
 	^ el
 ]
 
-{ #category : #examples }
-RTTextBuilder >> example01Highlighting [
-	"
-	self new example01Highlighting
-	"
-
-	| builder |
-	builder := RTTextBuilder new.
-	builder wordInteraction highlightColored: Color blue.
-	builder addText: 'hello world'.
-	builder open
-]
-
-{ #category : #examples }
-RTTextBuilder >> example02ClickableWord [
-	"
-	self new example02ClickableWord
-	"
-
-	| builder |
-	builder := RTTextBuilder new.
-	builder wordInteraction  
-					highlightColored: Color blue;
-					when: TRMouseClick do: [ :event | event element model inspect ].
-	builder addText: 'hello world', String cr, 'hola mundo'.
-	builder open
-]
-
-{ #category : #examples }
-RTTextBuilder >> example03ShowCode [
-	"
-	self new example03ShowCode
-	"
-
-	| builder |
-	builder := RTTextBuilder new.
-	builder shape rectangle withBorder; color: (Color purple alpha: 0.2).
-	builder wordShape color: Color yellow.
-	builder wordInteraction  
-					highlight;
-					when: TRMouseClick do: [ :event | event element model inspect ].
-	builder addText: (RTTextBuilder>>#example03ShowCode) getSource.
-	builder open
-]
-
-{ #category : #examples }
-RTTextBuilder >> example04ShowCodeAsBoxes [
-	"
-	self new example04ShowCodeAsBoxes
-	"
-
-	| builder |
-	builder := RTTextBuilder new.
-	builder shape rectangle withBorder color: (Color white alpha: 0.2).		
-	builder wordShape rectangle 
-								height: 3; 
-								width: [ :model | model size + 3 ];
-								color: Color yellow.
-	builder wordInteraction  
-					highlight;
-					popup;
-					when: TRMouseClick do: [ :event | event element model inspect ].
-	builder addText: (RTTextBuilder>>#example03ShowCode) getSource.
-	builder open
-]
-
 { #category : #accessing }
 RTTextBuilder >> hook: aOneArgBlock [
 	hook := aOneArgBlock
@@ -148,6 +83,7 @@ RTTextBuilder >> initialize [
 	wordInteractionBuilder := RTInteractionBuilder new.
 	wordHook := [ :anElement :anInterval | nil ].
 	hook := [ :anElement | nil ].
+	padding := 5.
 ]
 
 { #category : #protected }
@@ -160,6 +96,16 @@ RTTextBuilder >> normalizeString: aString [
 				ifFalse: [ aStream nextPut: eachChar ]
 			 ]		
 	]
+]
+
+{ #category : #accessing }
+RTTextBuilder >> padding [
+	^ padding
+]
+
+{ #category : #accessing }
+RTTextBuilder >> padding: aNumber [
+	padding := aNumber
 ]
 
 { #category : #hooks }
