@@ -269,6 +269,11 @@ RTMondrianViewBuilder >> use [
 	^ shapeBuilder ifNil: [ shapeBuilder := RTShapeBuilder new ]
 ]
 
+{ #category : #layout }
+RTMondrianViewBuilder >> verticalLineLayout [
+	^ self layout: RTVerticalLineLayout new
+]
+
 { #category : #accessing }
 RTMondrianViewBuilder >> view [
 	^ view

@@ -7,6 +7,28 @@ Class {
 	#category : #'Roassal2-Builder-TextBuilder'
 }
 
+{ #category : #asserting }
+RTTextBuilderTest >> assertModel: anObject1 position: aSymbol1 equals: anObject2 position: aSymbol2 [ 
+	| position1 position2 |
+	position1 := aSymbol1 cull: (self encompassingRectangleFromModel: anObject1).
+	position2 := aSymbol2 cull: (self encompassingRectangleFromModel: anObject2).
+	self assert: (((position1 isNumber) and: [ position2 isNumber ])
+					or: [ (position1 isPoint) and: [ position2 isPoint ] ]).
+	position1 isNumber
+		ifTrue: [ self assert: (position1 - position2) abs <= 1 ]
+		ifFalse: [ self assert: (position1 - position2) abs <= (1 @ 1) ].
+]
+
+{ #category : #accessing }
+RTTextBuilderTest >> elementFromModel: anObject [ 
+	^ builder view elementFromModel: anObject
+]
+
+{ #category : #accessing }
+RTTextBuilderTest >> encompassingRectangleFromModel: anObject [
+	^ (self elementFromModel: anObject) encompassingRectangle
+]
+
 { #category : #tests }
 RTTextBuilderTest >> fixme_testWordHighlight [
 	| element text |
@@ -75,6 +97,13 @@ RTTextBuilderTest >> testClickableWord [
 ]
 
 { #category : #tests }
+RTTextBuilderTest >> testExamples [
+	RTTextBuilderExamples selectors do: [ :eachSelector |
+		(RTTextBuilderExamples new perform: eachSelector) delete.
+	]
+]
+
+{ #category : #tests }
 RTTextBuilderTest >> testOpening [
 
 	builder open close
@@ -111,6 +140,21 @@ hola mundo'.
 	self assert: (elements anySatisfy: [ :el | el model = 'world' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'hola' ]).
 	self assert: (elements anySatisfy: [ :el | el model = 'mundo' ]).
+]
+
+{ #category : #tests }
+RTTextBuilderTest >> testOpeningOnMultilineText2Position [
+	| spaces text |
+	text := 'hello world
+hola mundo'.
+	builder addText: text.
+	spaces := builder view elements select: [ :each | each model = ' ' ].
+	
+	self assertModel: 'hello' position: #top equals: 'world' position: #top.
+	self assertModel: 'hola' position: #top equals: 'mundo' position: #top.
+	self assertModel: 'hello' position: #left equals: 'hola' position: #left.
+	self assertModel: 'hello' position: #bottom equals: 'hola' position: #top.
+	self assertModel: text position: [:rectangle | rectangle topLeft + 5 ] equals: 'hello' position: #topLeft.
 ]
 
 { #category : #tests }

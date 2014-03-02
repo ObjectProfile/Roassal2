@@ -134,7 +134,7 @@ RTSunburstBuilderExamples >> basic2 [
 	nc1 addChild: nc11.
 	b := RTSunburstBuilder new.
 	b shape current 
-				colorElement: [ :el | Color gray256: ((el attributeAt: #sbDepth ifAbsent: [ 0 ]) * 60) ].
+				colorElement: [ :el | Color grayScale256: ((el attributeAt: #sbDepth ifAbsent: [ 0 ]) * 60) ].
 
 	n accept: b visitor.
 	"b visitor arcs do: [ :el |  el trachelShape color: (Color gray256: ((el attributeAt: #sbDepth ifAbsent: [ 0 ]) * 60)) ]."
@@ -150,7 +150,7 @@ RTSunburstBuilderExamples >> basic3 [
 	| b |
 	b := RTSunburstBuilder new.
 	b shape current 
-				colorElement: [ :el | Color gray256: ((el attributeAt: #sbDepth ifAbsent: [ 0 ]) * 30) ].
+				colorElement: [ :el | Color grayScale256: ((el attributeAt: #sbDepth ifAbsent: [ 0 ]) * 30) ].
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
