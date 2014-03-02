@@ -50,11 +50,6 @@ RTShapeBuilder >> elementsOn: objects [
 	^ shape elementsOn: objects
 ]
 
-{ #category : #shapes }
-RTShapeBuilder >> ellipse [
-	shape := RTEllipse new
-]
-
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape
@@ -127,11 +122,6 @@ RTShapeBuilder >> ifElement: conditionBlock fillColor: colorBlock [
 { #category : #initialization }
 RTShapeBuilder >> initialize [
 	self reset
-]
-
-{ #category : #shapes }
-RTShapeBuilder >> label [
-	shape := RTLabel new
 ]
 
 { #category : #shapes }

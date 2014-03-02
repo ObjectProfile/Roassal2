@@ -2,8 +2,7 @@ Class {
 	#name : #RTNest,
 	#superclass : #RTObject,
 	#instVars : [
-		'layout',
-		'padding'
+		'layout'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -13,7 +12,7 @@ RTNest >> centerOn: backElement elements: elements [
 	| encompassingRectangle off |
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
-	backElement trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
+	backElement trachelShape extent: (encompassingRectangle width + (5 * 2)) @ (encompassingRectangle height + (5 * 2)).
 
 	off := backElement encompassingRectangle center - encompassingRectangle center. 
 	off := off asIntegerPoint.
@@ -31,7 +30,6 @@ RTNest >> encompassingRectangleOf: elements [
 { #category : #initialization }
 RTNest >> initialize [
 	super initialize.
-	padding := 5.
 
 ]
 
@@ -65,14 +63,4 @@ RTNest >> on: backElement nest: elements [
 	self centerOn: backElement elements: elements.
 	self makeElements: elements draggableBy: backElement.
 
-]
-
-{ #category : #accessing }
-RTNest >> padding [
-	^ padding
-]
-
-{ #category : #accessing }
-RTNest >> padding: aNumber [
-	padding := aNumber
 ]
