@@ -1696,3 +1696,14 @@ VersionOfRoassal2 >> version000110 [
 	at: #date put: '26 February 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000111 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.76';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.124';
+	at: #version put: '0.112';
+	at: #comment put: '0.112 : added utility method in CityBuilder, in the map category';
+	at: #date put: '2 March 2014';
+	yourself
+]
