@@ -44,9 +44,11 @@ RTMapBuilder >> cities: strings [
 
 { #category : #adding }
 RTMapBuilder >> cities: objects named: aBlockOrSymbol [
-	cities := objects collect: [ :o | o copy ].
+
+	"Not sure why we need to copy each object"
+	cities addAll: (objects collect: [ :o | o copy ]).
 	cityBuilder name: aBlockOrSymbol.
-	^ cityBuilder.
+	^ cityBuilder
 ]
 
 { #category : #adding }
@@ -95,7 +97,7 @@ RTMapBuilder >> geoDistanceBetween: aPoint and: anotherPoint [
 RTMapBuilder >> initialize [
 	super initialize.
 	countries := #().
-	cities := #().
+	cities := OrderedCollection new.
 	cityBuilder := RTCityBuilder new.
 	cityBuilder mapBuilder: self.
 	routeBuilder := RTRouteBuilder new.
