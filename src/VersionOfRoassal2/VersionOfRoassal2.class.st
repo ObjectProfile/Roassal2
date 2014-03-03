@@ -1740,3 +1740,14 @@ VersionOfRoassal2 >> version000114 [
 	at: #date put: '3 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000115 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.76';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.129';
+	at: #version put: '0.116 : Fix comments for exporting to Amber';
+	at: #comment put: '0.116 : Fix comments for exporting to Amber';
+	at: #date put: '3 March 2014';
+	yourself
+]
