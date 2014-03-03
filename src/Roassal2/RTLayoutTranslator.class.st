@@ -17,7 +17,7 @@ RTLayoutTranslator class >> default [
 
 { #category : #'as yet unclassified' }
 RTLayoutTranslator class >> defaultClass [
-	^ self withAllSubclasses detect: #isDefault
+	^ self allSubclasses detect: #isDefault
 ]
 
 { #category : #accessing }
