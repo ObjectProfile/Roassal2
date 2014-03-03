@@ -104,6 +104,24 @@ RTTextBuilderTest >> testExamples [
 ]
 
 { #category : #tests }
+RTTextBuilderTest >> testHookIntervals [
+	| text words intervals |
+	words := OrderedCollection new.
+	intervals := OrderedCollection new.
+	text := 'my whole text', String cr, 'a b c'.
+	builder wordHook: [ :anElement :anInterval | 
+		words add: anElement model.
+		intervals add: anInterval. ].
+	builder addText: text.
+	self assert: words asArray equals: { 'my'. ' '. 'whole'. ' '. 'text'. 'a'. ' '. 'b'. ' '. 'c' }.
+	self 
+		assert: intervals asArray 
+		equals: { (1 to: 2). (3 to: 3). (4 to: 8). (9 to: 9). (10 to: 13). 
+					(15 to: 15). (16 to: 16). (17 to: 17). (18 to: 18). (19 to: 19). }.
+					
+]
+
+{ #category : #tests }
 RTTextBuilderTest >> testOpening [
 
 	builder open close
