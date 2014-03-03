@@ -1729,3 +1729,14 @@ VersionOfRoassal2 >> version000113 [
 	at: #date put: '2 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000114 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.76';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.128';
+	at: #version put: '0.115';
+	at: #comment put: '0.115 : added an example about universities using DBPedia';
+	at: #date put: '3 March 2014';
+	yourself
+]
