@@ -36,7 +36,17 @@ RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
 { #category : #initialization }
 RTInteractionBuilder >> initialize [
 	super initialize.
+	self initializeInteractions.
+]
+
+{ #category : #initialization }
+RTInteractionBuilder >> initializeInteractions [
 	interactions := OrderedCollection new
+]
+
+{ #category : #public }
+RTInteractionBuilder >> noInteractions [
+	self initializeInteractions.
 ]
 
 { #category : #public }
