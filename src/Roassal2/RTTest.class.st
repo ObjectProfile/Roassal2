@@ -13,10 +13,10 @@ Note that you need to have Trachel also exported
 
 | exporter rootClasses soleClasses |
 exporter := P2AExporterV11 new.
-rootClasses := Array with: RTAnnounceableObject.
+rootClasses := Array with: RTAnnounceableObject with: RTLayout.
 rootClasses do: [ :c |
 	c withAllSubclasses do: [ :cc | exporter addClass: cc ] ].
-soleClasses := { RTObject . RTShape . RTAbstractElementShape . RTBox . RTEllipse . RTAbstractLine . RTLine . RTNoShape }.
+soleClasses := { RTObject . RTGroup. RTShape . RTAbstractElementShape . RTBox . RTEllipse . RTAbstractLine . RTLine . RTNoShape . RTLayoutTranslator . RTDirectLayoutTranslator}.
 soleClasses do: [ :cc | exporter addClass: cc ].
 exporter fileOutAsString
 

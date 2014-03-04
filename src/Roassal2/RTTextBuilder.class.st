@@ -36,17 +36,17 @@ RTTextBuilder >> buildText: aString in: element [
 		lineString := aString copyFrom: startLine to: endLine.
 		line := RTGroup new.
 		wordStrings := lineString findTokens: Character separators keep: Character separators. 
-		startWord := 0.
+		startWord := 1.
 		wordStrings do: [ :wordString | |  wordElement |
 			endWord := startWord + wordString size.
 			wordElement := RTElement on: (self normalizeString: wordString).
-			wordHook value: wordElement value: ((startLine + startWord) to: (startLine + endWord - 1)).
+			wordHook value: wordElement value: ((startLine + startWord) to: (startLine + endWord)).
 			wordShapeBuilder setUpElements: wordElement.
 			wordInteractionBuilder setUpElements: wordElement.
 			line add: wordElement.
 			elements add: wordElement.
 			view add: wordElement.
-			startWord := endWord.
+			startWord := endWord + 1.
 		].
 		RTHorizontalLineLayout new gapSize: 0; on: line.
 		lines add: line.
