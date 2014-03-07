@@ -108,6 +108,12 @@ TRComposedShape >> remove [
 	shape2 remove
 ]
 
+{ #category : #actions }
+TRComposedShape >> resetPath [
+	shape1 resetPath.
+	shape2 resetPath.
+]
+
 { #category : #accessing }
 TRComposedShape >> shape1 [
 	^ shape1
@@ -133,7 +139,7 @@ TRComposedShape >> signalUpdate [
 	shape1 signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRComposedShape >> translateTo: aPoint [
 	shape1 translateTo: aPoint.
 	shape2 translateTo: aPoint.
