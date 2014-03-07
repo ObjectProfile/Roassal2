@@ -18,7 +18,7 @@ RTSVGPathTest >> testIncludesPointBasic [
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
 	res := '{#m->{(100.0@100.0)}. #l->{(300.0@100.0)}. #l->{(200.0@300.0)}. #l->{(100.0@100.0)}}'.
-	p1 := (RTSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') processPath asString.
+	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') processPath asString.
 	self assert: p1 = res.
 	
 	"

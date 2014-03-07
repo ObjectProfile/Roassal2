@@ -126,6 +126,11 @@ RTShapedObject >> update [
 
 ]
 
+{ #category : #rendering }
+RTShapedObject >> updateShape [
+	shape updateFor: self.
+]
+
 { #category : #accessing }
 RTShapedObject >> view [
 	^ view

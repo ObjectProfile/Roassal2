@@ -80,17 +80,10 @@ RTBezierLine >> setControllingElementsFromFollowFor: anEdge [
 ]
 
 { #category : #'as yet unclassified' }
-RTBezierLine >> trachelShape [
-	|  shape aPoint anotherPoint aColor |
-	shape := TRBezierShape new.
-	shape from: aPoint to: anotherPoint color: aColor.
-	^ shape
-]
-
-{ #category : #'as yet unclassified' }
 RTBezierLine >> trachelShapeFor: anEdge [
 	| shape |
 	shape := TRBezierShape new.
+	shape width: (self widthFor: anEdge).
 	shape points: (self getListOfPointsForTrachel: anEdge).
 	shape strokePaint: (self colorFor: anEdge).
 	controllingElements do: [ :e | e addConnectedEdge: anEdge ].
@@ -100,6 +93,8 @@ RTBezierLine >> trachelShapeFor: anEdge [
 { #category : #'as yet unclassified' }
 RTBezierLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape resetPath. 
+	trachelShape strokePaint: (self colorFor: edge).
+	trachelShape width: (self widthFor: edge).
 	trachelShape points: (self getListOfPointsForTrachel: edge).
 
 ]

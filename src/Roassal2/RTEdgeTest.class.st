@@ -30,6 +30,31 @@ RTEdgeTest >> testBasic [
 	self assert: edge trachelShape color notNil
 ]
 
+{ #category : #tests }
+RTEdgeTest >> testBezierColorAndWidth [
+	| v shape l els |
+	
+	v := RTView new.
+	shape := RTEllipse new size: 10; color: (Color red alpha: 0.3).
+	els := (shape elementsOn: (1 to: 4)).
+	v addAll: els .
+	RTHorizontalLineLayout on: v elements.
+	(els at: 1) translateBy: 0 @ 100.
+	(els at: 2) translateBy: 100 @ 0.
+	(els at: 3) translateBy: 200 @ 100.
+	(els at: 4) translateBy: 300 @ 0.
+
+	l := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
+	v add: l.
+	l shape width: 5.
+	l shape color: Color green.
+	
+	self assert: l trachelShape width = 1.
+	l updateShape.
+	self assert: l trachelShape width = 5.
+	self assert: l trachelShape strokePaint = Color green.
+]
+
 { #category : #'tests - building' }
 RTEdgeTest >> testBuildingFromAssociations [
 
@@ -73,6 +98,25 @@ RTEdgeTest >> testIncomingAndOutgoingEdges [
 
 	self assert: (el1 outgoingEdges includes: edge).
 	self assert: (el2 incomingEdges includes: edge).
+]
+
+{ #category : #tests }
+RTEdgeTest >> testLineColorAndWidth [
+	| v e1 e2 l |
+	v := RTView new.
+	e1 := RTElement new.
+	e2 := RTElement new.
+	e1 + (RTBox new size: 10).
+	e2 + (RTBox new size: 10).
+	l := RTLine edgeFrom: e1 to: e2.
+	e2 translateBy: 50 @ 40.
+	l shape width: 10.
+	l shape color: Color red.
+	v addAll: {e1. e2. l}.
+	self assert: l trachelShape width = 1.
+	l updateShape.
+	self assert: l trachelShape width = 10.
+	self assert: l trachelShape color = Color red.
 ]
 
 { #category : #'pushing back' }

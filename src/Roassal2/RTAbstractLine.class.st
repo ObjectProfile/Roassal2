@@ -32,6 +32,7 @@ RTAbstractLine >> endingPointOf: anEdge [
 RTAbstractLine >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
+	width := 1.
 ]
 
 { #category : #'attach point' }
@@ -43,8 +44,20 @@ RTAbstractLine >> startingPointOf: anEdge [
 RTAbstractLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape from: (attachPoint startingPointOf: edge).
 	trachelShape to: (attachPoint endingPointOf: edge).
+	trachelShape color: (self colorFor: edge).
+	trachelShape width: (self widthFor: edge).
 	trachelShape resetPath
 
+]
+
+{ #category : #public }
+RTAbstractLine >> width: aBlockOrValue [
+	width := aBlockOrValue
+]
+
+{ #category : #public }
+RTAbstractLine >> widthFor: anElement [
+	^ width rtValue: anElement
 ]
 
 { #category : #'attach point' }
