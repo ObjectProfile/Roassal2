@@ -47,15 +47,9 @@ RTCompositeShape >> shape2: aRTShape [
 
 { #category : #hooks }
 RTCompositeShape >> trachelShapeFor: anElement [
-	| s1 s2 max |
-	s1 := shape1 trachelShapeFor: anElement.
-	s2 := shape2 trachelShapeFor: anElement.
-	max := s1 encompassingRectangle extent max: s2 encompassingRectangle extent.
-	s1 extent: max.
-	s2 extent: max.
 	^ TRComposedShape 
-			with: s1 
-			with: s2
+			with: (shape1 trachelShapeFor: anElement) 
+			with: (shape2 trachelShapeFor: anElement)
 ]
 
 { #category : #hooks }
