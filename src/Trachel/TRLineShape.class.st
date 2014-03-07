@@ -2,6 +2,7 @@ Class {
 	#name : #TRLineShape,
 	#superclass : #TRShape,
 	#instVars : [
+		'width',
 		'from',
 		'to'
 	],
@@ -22,9 +23,9 @@ TRLineShape >> computePath [
 TRLineShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
-		athensCanvas
-			setStrokePaint: strokePaint;
-			drawShape: self path  ]
+		athensCanvas setShape: self path.
+		(athensCanvas setStrokePaint: color) width: width.
+		athensCanvas draw  ]
 		"(athensCanvas setStrokePaint: strokePaint) width: (1.5 / (scale )) asInteger."
 ]
 
@@ -91,4 +92,14 @@ TRLineShape >> to: aPoint [
 TRLineShape >> translateBy: aPoint [
 	from := from + aPoint.
 	to := to + aPoint
+]
+
+{ #category : #accessing }
+TRLineShape >> width [
+	^ width
+]
+
+{ #category : #accessing }
+TRLineShape >> width: aNumber [
+	width := aNumber
 ]

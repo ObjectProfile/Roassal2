@@ -2,6 +2,7 @@ Class {
 	#name : #TRBezierShape,
 	#superclass : #TRShape,
 	#instVars : [
+		'width',
 		'listOfPoints'
 	],
 	#category : #'Trachel-Core'
@@ -28,10 +29,10 @@ TRBezierShape >> computePath [
 TRBezierShape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
-			
-		athensCanvas
-			setStrokePaint: strokePaint;
-			drawShape: self path  ]
+		
+		athensCanvas setShape: self path.
+		(athensCanvas setStrokePaint: strokePaint) width: width.
+		athensCanvas draw  ]
 ]
 
 { #category : #accessing }
@@ -72,4 +73,14 @@ TRBezierShape >> position [
 TRBezierShape >> translateBy: aPoint [
 	listOfPoints := listOfPoints collect: [ :p | p + aPoint ]
 
+]
+
+{ #category : #accessing }
+TRBezierShape >> width [
+	^ width
+]
+
+{ #category : #accessing }
+TRBezierShape >> width: anObject [
+	width := anObject
 ]
