@@ -45,6 +45,14 @@ RTInteractionBuilder >> initializeInteractions [
 ]
 
 { #category : #public }
+RTInteractionBuilder >> menu [
+	| i |
+	i := RTMenuActivable new.
+	interactions add: i. 
+	^ i
+]
+
+{ #category : #public }
 RTInteractionBuilder >> noInteractions [
 	self initializeInteractions.
 ]
