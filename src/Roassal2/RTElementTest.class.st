@@ -201,16 +201,33 @@ RTElementTest >> testSameNullShape [
 	self assert: RTNoShape element shape == RTElement new shape.
 ]
 
-{ #category : #tests }
+{ #category : #events }
 RTElementTest >> testSharedAnnouncer [
 
-	| e v |
+	| e v a |
 	e := RTBox element.
 	self assert: e announcer ~~ e trachelShape announcer.
+	a := e announcer.
 	
 	v := RTView new.
 	v add: e.
 	self assert: e announcer == e trachelShape announcer.
+	self assert: a == e trachelShape announcer
+]
+
+{ #category : #events }
+RTElementTest >> testSharedAnnouncerAndComposedShapes [
+
+	| e s1 s2 v |
+	s1 := RTBox new.
+	s2 := RTEllipse new.
+	
+	e := (s1 + s2) element.
+	v := RTView new.
+	v add: e.
+	self assert: e announcer == e trachelShape shape1 announcer.
+	self assert: e announcer == e trachelShape shape2 announcer.
+	
 ]
 
 { #category : #tests }
