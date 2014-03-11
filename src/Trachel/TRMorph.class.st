@@ -204,7 +204,7 @@ TRMorph >> rtMouseClick: evt [
 	evt blueButtonChanged
 		ifTrue: [ ev := TRMouseClick new ].
 
-	shape := self shapeForPositionInPixels: relativePosition.
+	shape := self shapeWithActionForPositionInPixels: relativePosition.
 	ev commandKeyPressed: evt commandKeyPressed.
 	ev controlKeyPressed: evt controlKeyPressed.
 	ev shiftKeyPressed: evt shiftPressed.
@@ -222,7 +222,7 @@ TRMorph >> rtMouseDragBegin: evt [
 	eventBeginingDragging := evt copy.
 	
 	relativePosition := self relativePositionFor: evt.
-	shapeBeingPointed := self shapeForPositionInPixels: relativePosition
+	shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition
 ]
 
 { #category : #'event-processed' }
@@ -239,7 +239,7 @@ TRMorph >> rtMouseDragging: evt [
 	step := evt position - eventBeginingDragging position.
 
 	shapeBeingPointed ifNil: 
-		[ shapeBeingPointed := self shapeForPositionInPixels: relativePosition ].
+		[ shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition ].
 	
 	event := TRMouseDragging new 
 				morph: self;
@@ -263,7 +263,7 @@ TRMorph >> rtMouseEnter: evt [
 	
 	relativePosition := self relativePositionFor: evt.
 
-	shape := self shapeForPositionInPixels: relativePosition.
+	shape := self shapeWithActionForPositionInPixels: relativePosition.
 	ev := TRMouseEnter new.
 	ev position: relativePosition.
 	ev shape: shape.
@@ -277,7 +277,7 @@ TRMorph >> rtMouseLeave: evt [
 	| position ev shape |
 	
 	position := self relativePositionFor: evt.
-	shape := self shapeForPositionInPixels: position.
+	shape := self shapeWithActionForPositionInPixels: position.
 	ev := TRMouseLeave new.
 	ev position: position.
 	ev shape: shape.
@@ -291,7 +291,7 @@ TRMorph >> rtMouseMoving: evt [
 
 	| relativePosition ev shape |
 	relativePosition := self relativePositionFor: evt.	
-	shape := self shapeForPositionInPixels: relativePosition.
+	shape := self shapeWithActionForPositionInPixels: relativePosition.
 
 	ev := TRMouseMove new.
 	ev position: relativePosition.
@@ -302,13 +302,19 @@ TRMorph >> rtMouseMoving: evt [
 
 { #category : #'event-processed' }
 TRMorph >> shapeForEvent: anEvent [	
-	^ self shapeForPositionInPixels: (self relativePositionFor: anEvent)
+	^ self shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 
 { #category : #accessing }
 TRMorph >> shapeForPositionInPixels: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPositionInPixels: point
+]
+
+{ #category : #accessing }
+TRMorph >> shapeWithActionForPositionInPixels: point [
+	"Return the shape with event handler located that contains point"
+	 ^ trachelCanvas shapeWithActionForPositionInPixels: point
 ]
 
 { #category : #signalling }

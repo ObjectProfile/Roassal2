@@ -144,6 +144,11 @@ TRShape >> hasCallback [
 ]
 
 { #category : #testing }
+TRShape >> hasEventCallback [
+	^ announcer notNil
+]
+
+{ #category : #testing }
 TRShape >> includesPoint: aPoint [
 	^ false
 ]

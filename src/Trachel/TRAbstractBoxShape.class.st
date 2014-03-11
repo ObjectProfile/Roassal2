@@ -24,36 +24,12 @@ TRAbstractBoxShape >> center [
 
 { #category : #hooks }
 TRAbstractBoxShape >> computePath [
-	canvas ifNil: [ ^ self ].
-	path := self athensCanvas
-		createPath: [ :builder | 
-			builder
-				absolute;
-				moveTo: rectangle topLeft;
-				lineTo: rectangle topRight;
-				lineTo: rectangle bottomRight;
-				lineTo: rectangle bottomLeft;
-				lineTo: rectangle topLeft.
-				"moveTo: -1 @ -1;
-				lineTo: 1 @ -1;
-				lineTo: 1 @ 1;
-				lineTo: -1 @ 1;
-				lineTo: -1 @ -1" ]
+	self subclassResponsibility
 ]
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawOn: athensCanvas [
-	self shouldBeDrawn
-		ifFalse: [ ^ self ].
-	athensCanvas pathTransform
-		restoreAfter: [ 
-			"athensCanvas pathTransform
-				translateBy: rectangle center;
-				scaleBy: rectangle extent / 2."
-			athensCanvas
-				setPaint: color;
-				drawShape: self path.
-			self drawStrokeIfNecessaryOn: athensCanvas ]
+	self subclassResponsibility
 ]
 
 { #category : #drawing }
@@ -132,7 +108,7 @@ TRAbstractBoxShape >> height: newHeight [
 
 { #category : #testing }
 TRAbstractBoxShape >> includesPoint: aPoint [
-	^ rectangle containsPoint: aPoint
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
