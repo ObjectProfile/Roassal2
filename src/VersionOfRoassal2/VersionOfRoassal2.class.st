@@ -1762,3 +1762,35 @@ VersionOfRoassal2 >> version000116 [
 	at: #date put: '4 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000117 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.81';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.137';
+	at: #version put: '0.118';
+	at: #comment put: '0.118 : 0.118 : Roassal2-JurajKubelka.136
+- It adds RTInteractionBuilder>>menu
+
+Roassal2-SergioMaass.135
+- Small refactoring: passed some responsibility from Roassal to Trachel
+
+Roassal2-JurajKubelka.133:
+- Refactoring: now TRSVGPath does the parsing of the SVG instead of RTSVGPath.
+- Added RTShapedObject>>updateShape for updating a shaped object''s trachelShape, and modified RTBezierLine and RTAbstractLine for them to update their width and color when reconstructing their trachel shape.
+- Added a few tests.
+
+Roassal2-JurajKubelka.133 : It adds RTMenuActivable
+
+Trachel-SergioMaass.80
+- Small refactoring: passed some responsibility from Roassal to Trachel
+
+Trachel-SergioMaass.79
+- Refactoring: now TRSVGPath does the parsing of the SVG instead of RTSVGPath.
+- Added the possibility of changing line''s and bezier''s width
+
+Trachel-JurajKubelka.78: It adds TRUtil and TRMorphWidgetFactory.
+ Trachel-JurajKubelka.77: It adds TRComposedShape>>resetPath.';
+	at: #date put: '11 March 2014';
+	yourself
+]
