@@ -1,0 +1,81 @@
+"
+A RTGrayLinearColor is xxxxxxxxx.
+
+Instance Variables
+	max:		<Object>
+	min:		<Object>
+	scope:		<Object>
+
+max
+	- xxxxx
+
+min
+	- xxxxx
+
+scope
+	- xxxxx
+
+"
+Class {
+	#name : #RTMultiLinearColor,
+	#superclass : #RTAbstractNormalizer,
+	#instVars : [
+		'colors'
+	],
+	#category : #'Roassal2-ColorNormalizer'
+}
+
+{ #category : #accessing }
+RTMultiLinearColor >> colors: anArrayOfColors [
+	colors := anArrayOfColors
+]
+
+{ #category : #accessing }
+RTMultiLinearColor >> indexesFor: f [
+	"f - float is between 0.0 and 1.0. Return an array of length two"
+	| nbColors v i1 i2      |
+	nbColors := colors size.
+	
+	v := f * (nbColors - 1).
+	i1 := v integerPart + 1.
+	i2 := i1 + 1.
+	
+	^ Array with: i1 with: i2
+]
+
+{ #category : #initialization }
+RTMultiLinearColor >> initialize [
+	super initialize.
+	colors := (Array with: Color red with: Color blue with: Color green)
+]
+
+{ #category : #accessing }
+RTMultiLinearColor >> level: f [
+	"f - float is between 0.0 and 1.0"
+	| arr v c1 c2 nr ng nb i1 i2 nbColors ff |
+	arr := self indexesFor: f.
+	nbColors := colors size.
+	v := f * (nbColors - 1).
+	
+	i1 := arr first.
+	i2 := arr second.
+	
+	i1 >= colors size ifTrue: [ ^ colors last ].
+	c1 := colors at: (i1).
+	c2 := colors at: (i2).
+	
+	ff := f - (i1 - 1 / nbColors).
+	nr := (c2 red - c1 red) * ff + c1 red.
+	ng := (c2 green - c1 green) * ff + c1 green.
+	nb := (c2 blue - c1 blue) * ff + c1 blue.
+	
+	^ Color r: nr g: ng  b: nb
+]
+
+{ #category : #accessing }
+RTMultiLinearColor >> rtValue: anObject [
+	| intensity v |	
+	v := command rtValue: anObject.
+	"v ranges from 0.0 to 1.0"
+	^ Color r: intensity g: intensity b: intensity
+]
