@@ -20,19 +20,30 @@ RTSVGVisitor class >> visit: view on: stream canvas: aRectangle [
 
 { #category : #utils }
 RTSVGVisitor >> addCurves: points [
-	points size <= 2
-		ifTrue: [ 
+	"false"points size >= 3
+		ifTrue: [
+			(1 to: points size // 2) do: [ :i | 
+					stream
+						nextPutAll: ('S<1p>,<2p> ' expandMacrosWith: (points at: 2*i - 1) x rounded with: (points at: 2*i - 1)  y rounded);
+						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: (points at: 2*i)  x rounded with: (points at: 2*i) y rounded) 		
+				].
 			stream
-				nextPutAll: ('Q<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
-				nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points second x rounded with: points second y rounded) ]
-		ifFalse: [
-			stream 
-					nextPutAll: ('C<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded).			 
-			points allButFirst allButLast do: [ :p |
-				stream 
-					nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p x rounded with: p y rounded)].
-			stream
-				nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points last x rounded with: points last y rounded) ]
+				nextPut: $".
+			]
+		ifFalse: [		
+			points size == 2
+				ifTrue: [  
+					stream
+						nextPutAll: ('Q<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
+						nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points second x rounded with: points second y rounded) 
+					] .			
+			points size ">= 3"== 3
+				ifTrue: [  
+					stream
+						nextPutAll: ('C<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
+						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: points second x rounded with: points second y rounded);
+						nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points last x rounded with: points last y rounded) 
+					] ]
 ]
 
 { #category : #utils }
@@ -299,7 +310,7 @@ RTSVGVisitor >> visitBezierShape: aBezierShape [
 	|points|
 	points:= aBezierShape points copy.
 	points := points collect: [ :p | self alignPoint: p].
-	self drawBezierLine: points width: (aBezierShape width) color: (aBezierShape color)
+	self drawBezierLine: points width: (aBezierShape width) color: (aBezierShape strokePaint)
 ]
 
 { #category : #visitor }
@@ -354,7 +365,7 @@ RTSVGVisitor >> visitLineShape: aLine [
 	|startingPoint endingPoint|
 	startingPoint := self alignPoint: (aLine from).
 	endingPoint := self alignPoint: (aLine to).
-	self drawLine: startingPoint to: endingPoint width: 1 color: (aLine color).
+	self drawLine: startingPoint to: endingPoint width: 1 color: (aLine strokePaint).
 ]
 
 { #category : #visitor }

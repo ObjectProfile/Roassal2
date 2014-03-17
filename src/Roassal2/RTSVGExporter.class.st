@@ -37,7 +37,7 @@ RTSVGExporter >> addEnd [
 { #category : #svg }
 RTSVGExporter >> addStart: bounds [
 	| background |
-	background := Color lightGray"(self view canvas color)".
+	background := Color veryLightGray"(self view canvas color)".
 	stream
 		nextPutAll: '<svg  xmlns="http://www.w3.org/2000/svg" ';
 		nextPutAll:  ('width="<1p>px" height="<2p>px" ' expandMacrosWith: ((bounds width + 2) rounded) with: ((bounds height + 2) rounded));
