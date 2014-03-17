@@ -11,21 +11,34 @@ Class {
 	#instVars : [
 		'view',
 		'stream',
+		'fileName',
 		'backgroundColor'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> exportBuilderAsSVG: aRTBuilder [
+RTSVGExporter class >> exportBuilderAsHTML: aRTBuilder [
 
-	^self exportViewAsSVG: (aRTBuilder view)
+	^self exportViewAsHTML: (aRTBuilder view)
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> exportViewAsSVG: aRTView [ 
+RTSVGExporter class >> exportViewAsHTML: aRTView [ 
 
-	^ self new view: aRTView; interactiveExportWithExtension: '.svg'
+	^ self new view: aRTView; exportToFile
+]
+
+{ #category : #'as yet unclassified' }
+RTSVGExporter class >> interactiveExportBuilderAsHTML: aRTBuilder [
+
+	^self exportViewAsHTML: (aRTBuilder view)
+]
+
+{ #category : #'as yet unclassified' }
+RTSVGExporter class >> interactiveExportViewAsHTML: aRTView [ 
+
+	^ self new view: aRTView; interactiveExportToFile
 ]
 
 { #category : #svg }
@@ -80,6 +93,29 @@ RTSVGExporter >> exportOnStream: fileStream [
 	self addEnd.
 ]
 
+{ #category : #exporting }
+RTSVGExporter >> exportToFile [
+
+	| fileStream |
+	
+	fileStream := (FileSystem disk workingDirectory / (self fileName,'.svg')) writeStream.
+	[ self exportOnStream: fileStream ] 
+		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
+]
+
+{ #category : #accessing }
+RTSVGExporter >> fileName [
+	fileName = nil
+		ifTrue: [ fileName := (Time current asString  copyReplaceAll: ':' with: '') squeezeOutNumber asString.
+			 fileName := 'output',fileName.].
+	^ fileName
+]
+
+{ #category : #accessing }
+RTSVGExporter >> fileName: anObject [
+	fileName := anObject
+]
+
 { #category : #util }
 RTSVGExporter >> fixedEncompassingRectangle [
  	| shapes canvas |
@@ -101,7 +137,7 @@ RTSVGExporter >> initialize [
 ]
 
 { #category : #exporting }
-RTSVGExporter >> interactiveExportWithExtension: fileExtension [
+RTSVGExporter >> interactiveExportToFile [
 
 	| fileStream fileRef |
 	

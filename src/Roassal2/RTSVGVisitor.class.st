@@ -20,15 +20,19 @@ RTSVGVisitor class >> visit: view on: stream canvas: aRectangle [
 
 { #category : #utils }
 RTSVGVisitor >> addCurves: points [
-	"false"points size >= 3
+	points size >= 3
 		ifTrue: [
-			(1 to: points size // 2) do: [ :i | 
+			stream
+				nextPut: $S.
+			(1 to: points size - 1) do: [ :i | |p1 p2|
+					p1 := (points at: i).
+					p2 := ((points at: i) + (points at: i + 1) / 2 ).
 					stream
-						nextPutAll: ('S<1p>,<2p> ' expandMacrosWith: (points at: 2*i - 1) x rounded with: (points at: 2*i - 1)  y rounded);
-						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: (points at: 2*i)  x rounded with: (points at: 2*i) y rounded) 		
+						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p1 x rounded with: p1 y rounded);
+						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p2 x rounded with: p2 y rounded) 		
 				].
 			stream
-				nextPut: $".
+				nextPutAll: ('L<1p>,<2p>"' expandMacrosWith: points last x rounded with: points last y rounded).
 			]
 		ifFalse: [		
 			points size == 2
@@ -37,7 +41,7 @@ RTSVGVisitor >> addCurves: points [
 						nextPutAll: ('Q<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
 						nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points second x rounded with: points second y rounded) 
 					] .			
-			points size ">= 3"== 3
+			points size == 3
 				ifTrue: [  
 					stream
 						nextPutAll: ('C<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);

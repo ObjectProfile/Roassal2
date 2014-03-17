@@ -11,33 +11,58 @@ Class {
 	#instVars : [
 		'view',
 		'stream',
+		'fileName',
 		'title'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLExporter class >> exportBuilderAsSVG: aRTBuilder [
+RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder [
 
-	^self exportViewAsSVG: (aRTBuilder view)
+	^self exportViewAsHTML: (aRTBuilder view)
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLExporter class >> exportBuilderAsSVG: aRTBuilder title: aString [
+RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder title: aString [
 
-	^self exportViewAsSVG: (aRTBuilder view) title: aString
+	^self exportViewAsHTML: (aRTBuilder view) title: aString
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLExporter class >> exportViewAsSVG: aRTView [ 
+RTHTMLExporter class >> exportViewAsHTML: aRTView [ 
 
-	^ self new view: aRTView; interactiveExportWithExtension: '.html'
+	^ self new view: aRTView; exportToFile
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLExporter class >> exportViewAsSVG: aRTView title: aString [
+RTHTMLExporter class >> exportViewAsHTML: aRTView title: aString [
 
-	^ self new view: aRTView; title: aString; interactiveExportWithExtension: '.html'
+	^ self new view: aRTView; title: aString; exportToFile
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> interactiveExportBuilderAsHTML: aRTBuilder [
+
+	^self exportViewAsHTML: (aRTBuilder view)
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> interactiveExportBuilderAsHTML: aRTBuilder title: aString [
+
+	^self exportViewAsHTML: (aRTBuilder view) title: aString
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView [ 
+
+	^ self new view: aRTView; interactiveExportToFile
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView title: aString [
+
+	^ self new view: aRTView; title: aString; interactiveExportToFile
 ]
 
 { #category : #html }
@@ -66,13 +91,36 @@ RTHTMLExporter >> exportOnStream: fileStream [
 	self addEnd.
 ]
 
+{ #category : #exporting }
+RTHTMLExporter >> exportToFile [
+
+	| fileStream |
+	
+	fileStream := (FileSystem disk workingDirectory / (self fileName,'.html')) writeStream.
+	[ self exportOnStream: fileStream ] 
+		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> fileName [
+	fileName = nil
+		ifTrue: [ fileName := (Time current asString  copyReplaceAll: ':' with: '') squeezeOutNumber asString.
+			 fileName := 'output',fileName.].
+	^ fileName
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> fileName: anObject [
+	fileName := anObject
+]
+
 { #category : #initialization }
 RTHTMLExporter >> initialize [
 	title := 'HTML Export'
 ]
 
 { #category : #exporting }
-RTHTMLExporter >> interactiveExportWithExtension: fileExtension [
+RTHTMLExporter >> interactiveExportToFile [
 
 	| fileStream fileRef |
 	

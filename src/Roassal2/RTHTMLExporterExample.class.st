@@ -9,6 +9,8 @@ Class {
 
 { #category : #example }
 RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
+	
+	"self new exampleDependencyAnalyzerBuilder"
 
 	| b |	
 	b := RTDependencyAnalyzerBuilder new. 
@@ -24,12 +26,13 @@ RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
 
 	b open.
 	"This line does the export"
-	RTHTMLExporter exportBuilderAsSVG: b title: 'Roassal and Trachel'
+	RTHTMLExporter exportBuilderAsHTML: b title: 'Roassal and Trachel'
 ]
 
 { #category : #example }
 RTHTMLExporterExample >> exampleMapBuilder [
 
+	"self new exampleMapBuilder"
 	| b countries cn |	
 	b := RTMapBuilder new.	
 		
@@ -45,5 +48,5 @@ RTHTMLExporterExample >> exampleMapBuilder [
 	b withPopup: [ :c | (c at: 1) asString, ': ',(((c at: 2) / 1000000 asFloat roundTo: 0.001) asString, ' Million') ].
 	b open.
 	"This line does the export"
-	RTHTMLExporter exportBuilderAsSVG: b title: 'World Population'
+	RTHTMLExporter exportBuilderAsHTML: b title: 'World Population'
 ]

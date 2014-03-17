@@ -8,19 +8,22 @@ Class {
 }
 
 { #category : #example }
-RTSVGExporterExample >> exampleGraphET [
+RTSVGExporterExample >> exampleDependencyAnalyzerBuilder [
 	
-	| diagram |	
-	diagram := GETDiagramBuilder new.
-	diagram 	horizontalBarDiagram
-				models: #(0.2 0.5 2 0.3 0.51 1);
-				color: [ :x | x <= 0.5 ifTrue: [ Color blue alpha: 0.2 ] ifFalse: [Color blue alpha: 0.5]];
-				valueAxisLine;
-				baseAxisLine;
-				addValueDecorator: (GETRegularTickDecorator new numberOfTicks: 5);
-				addValueDecorator: (GETRotatedLabelDecorator new diagonal numberOfLabels: 5).
+	"self new exampleDependencyAnalyzerBuilder"
+	| b |	
+	b := RTDependencyAnalyzerBuilder new. 
+	b shape circle
+				size: [ :cls | cls numberOfMethods max: 5 ];
+				fillColor: (Color red alpha: 0.3);
+				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
+	b addClasses: RTObject withAllSubclasses.
+	b addClasses: TRObject withAllSubclasses.
+	b 
+		dependencyFromAllClassesMatching: [ :cls | ('RT*' match: cls name) ] 
+		toAllClassesMatching: [ :cls | ('TR*' match: cls name) ].
 
-	diagram open.
+	b open.
 	"This line does the export"
-	RTSVGExporter exportBuilderAsSVG: diagram.
+	RTSVGExporter exportBuilderAsHTML: b.
 ]
