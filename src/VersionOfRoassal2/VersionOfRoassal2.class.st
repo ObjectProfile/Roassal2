@@ -1805,3 +1805,14 @@ VersionOfRoassal2 >> version000118 [
 	at: #date put: '17 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000119 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-RicardoJacas.83';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.141';
+	at: #version put: '0.120';
+	at: #comment put: '0.120 : added an improvement in the shape builder. Make it specific for Mondrian';
+	at: #date put: '17 March 2014';
+	yourself
+]
