@@ -23,7 +23,7 @@ RTMondrianViewBuilder >> clusterLayout [
 
 { #category : #hooks }
 RTMondrianViewBuilder >> createShapeBuilder [
-	^ RTBoundedShapeBuilder new
+	^ RTMondrianShapeBuilder new
 ]
 
 { #category : #'adding - edges' }
