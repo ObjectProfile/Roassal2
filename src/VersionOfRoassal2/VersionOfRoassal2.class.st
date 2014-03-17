@@ -1816,3 +1816,14 @@ VersionOfRoassal2 >> version000119 [
 	at: #date put: '17 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000120 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-RicardoJacas.83';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.142';
+	at: #version put: '0.121';
+	at: #comment put: '0.121 : improvement in the SVGExporter';
+	at: #date put: '17 March 2014';
+	yourself
+]
