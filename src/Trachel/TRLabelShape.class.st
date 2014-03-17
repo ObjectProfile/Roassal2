@@ -26,6 +26,11 @@ TRLabelShape class >> widthOfText: aString fontSize: aNumber [
 	^ (self getFontForSize: aNumber) widthOfString: aString
 ]
 
+{ #category : #visitor }
+TRLabelShape >> accept: aVisitor [
+	aVisitor visitLabelShape: self
+]
+
 { #category : #accessing }
 TRLabelShape >> ascent [
 	^ font ascent

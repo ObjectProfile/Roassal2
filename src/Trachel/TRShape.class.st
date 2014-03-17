@@ -14,6 +14,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRShape >> accept: aVisitor [
+	aVisitor visitShape: self
+]
+
 { #category : #actions }
 TRShape >> addCallback: aCallback [
 	callbacks ifNil: [ callbacks := OrderedCollection new ].

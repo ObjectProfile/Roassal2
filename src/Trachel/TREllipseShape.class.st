@@ -4,6 +4,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TREllipseShape >> accept: aVisitor [
+	aVisitor visitEllipseShape: self
+]
+
 { #category : #hooks }
 TREllipseShape >> computePath [
 	canvas ifNil: [ ^ self ].

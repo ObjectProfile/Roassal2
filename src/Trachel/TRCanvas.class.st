@@ -15,6 +15,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRCanvas >> accept: aVisitor [
+	aVisitor visitCanvas: self
+]
+
 { #category : #animations }
 TRCanvas >> addAnimation: anAnimation [
 	animations add: anAnimation.

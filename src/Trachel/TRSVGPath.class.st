@@ -16,6 +16,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRSVGPath >> accept: aVisitor [
+	aVisitor visitSVGPath: self
+]
+
 { #category : #accessing }
 TRSVGPath >> angle [
 	^ rotationAngle
@@ -114,6 +119,11 @@ TRSVGPath >> initialize [
 TRSVGPath >> path: aPathString [
 	pathStr := aPathString.
 	self updateCurves: self curves.
+]
+
+{ #category : #accessing }
+TRSVGPath >> pathString [
+	^pathStr
 ]
 
 { #category : #'as yet unclassified' }

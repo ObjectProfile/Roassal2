@@ -4,6 +4,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRBoxShape >> accept: aVisitor [
+	aVisitor visitBoxShape: self
+]
+
 { #category : #'as yet unclassified' }
 TRBoxShape >> computePath [
 	canvas ifNil: [ ^ self ].

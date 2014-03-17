@@ -16,6 +16,11 @@ TRNoShape class >> instance [
 	^ instance
 ]
 
+{ #category : #visitor }
+TRNoShape >> accept: aVisitor [
+	aVisitor visitNoShape: self
+]
+
 { #category : #accessing }
 TRNoShape >> center [
 	0@0

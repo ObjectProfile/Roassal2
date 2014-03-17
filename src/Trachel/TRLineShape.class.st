@@ -9,6 +9,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRLineShape >> accept: aVisitor [
+	aVisitor visitLineShape: self
+]
+
 { #category : #hooks }
 TRLineShape >> computePath [
 	path := self athensCanvas

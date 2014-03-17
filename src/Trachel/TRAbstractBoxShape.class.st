@@ -17,6 +17,11 @@ TRAbstractBoxShape class >> nullRectangle [
 	^ nullRectangle
 ]
 
+{ #category : #visitor }
+TRAbstractBoxShape >> accept: aVisitor [
+	aVisitor visitAbstractBoxShape: self
+]
+
 { #category : #accessing }
 TRAbstractBoxShape >> center [
 	^ self position

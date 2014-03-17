@@ -8,6 +8,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRBezierShape >> accept: aVisitor [
+	aVisitor visitBezierShape: self
+]
+
 { #category : #hooks }
 TRBezierShape >> computePath [
 	path := self athensCanvas

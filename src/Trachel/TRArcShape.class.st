@@ -19,6 +19,16 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRArcShape >> accept: aVisitor [
+	aVisitor visitArcShape: self
+]
+
+{ #category : #accessing }
+TRArcShape >> alphaAngle [
+	^alphaAngle
+]
+
 { #category : #initialization }
 TRArcShape >> alphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRadius: eR [
 	alphaAngle := stAngle.
@@ -26,6 +36,11 @@ TRArcShape >> alphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRad
 	innerRadius := iR.
 	externalRadius := eR 
 	
+]
+
+{ #category : #accessing }
+TRArcShape >> betaAngle [
+	^betaAngle
 ]
 
 { #category : #accessing }
@@ -161,6 +176,11 @@ TRArcShape >> encompassingRectangle [
 ]
 
 { #category : #accessing }
+TRArcShape >> externalRadius [
+	^externalRadius  
+]
+
+{ #category : #accessing }
 TRArcShape >> height [
 	self computeHeight.
 	^ height
@@ -206,6 +226,11 @@ TRArcShape >> initialize [
 	innerRadius := 0.
 	alphaAngle := 0.
 	betaAngle := 0
+]
+
+{ #category : #accessing }
+TRArcShape >> innerRadius [
+	^innerRadius 
 ]
 
 { #category : #accessing }

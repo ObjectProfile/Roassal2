@@ -7,6 +7,16 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #'as yet unclassified' }
+TRRotatedLabelShape >> accept: aVisitor [
+	aVisitor visitRotatedLabelShape: self
+]
+
+{ #category : #accessing }
+TRRotatedLabelShape >> angle [
+	^angle
+]
+
 { #category : #accessing }
 TRRotatedLabelShape >> angleInDegree: anAngle [
 	angle := anAngle
