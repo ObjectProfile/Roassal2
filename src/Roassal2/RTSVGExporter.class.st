@@ -10,7 +10,8 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'view',
-		'stream'
+		'stream',
+		'backgroundColor'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
@@ -36,16 +37,29 @@ RTSVGExporter >> addEnd [
 
 { #category : #svg }
 RTSVGExporter >> addStart: bounds [
-	| background |
-	background := Color veryLightGray"(self view canvas color)".
 	stream
 		nextPutAll: '<svg  xmlns="http://www.w3.org/2000/svg" ';
 		nextPutAll:  ('width="<1p>px" height="<2p>px" ' expandMacrosWith: ((bounds width + 2) rounded) with: ((bounds height + 2) rounded));
-		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);" ' expandMacrosWith: (background red * 256) rounded with: (background green * 256) rounded with: (background blue * 256) rounded );
+		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
 		nextPutAll: String cr;
 		nextPut: Character tab;
 		nextPutAll: 'xmlns:xlink="http://www.w3.org/1999/xlink">';
 		nextPutAll: String cr
+]
+
+{ #category : #accessing }
+RTSVGExporter >> backgroundColor [
+	^ backgroundColor
+]
+
+{ #category : #accessing }
+RTSVGExporter >> backgroundColor: aColor [
+	backgroundColor := aColor
+]
+
+{ #category : #configuration }
+RTSVGExporter >> defaultBackgroundColor [
+	^ Color veryLightGray
 ]
 
 { #category : #svg }
@@ -78,6 +92,12 @@ RTSVGExporter >> fixedEncompassingRectangle [
 				canvas := canvas merge: rect.
 				 ].
 	^canvas 
+]
+
+{ #category : #initialization }
+RTSVGExporter >> initialize [
+	super initialize.
+	backgroundColor := self defaultBackgroundColor
 ]
 
 { #category : #exporting }
