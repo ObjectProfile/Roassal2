@@ -1794,3 +1794,14 @@ Trachel-JurajKubelka.78: It adds TRUtil and TRMorphWidgetFactory.
 	at: #date put: '11 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000118 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.82';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.138';
+	at: #version put: '0.119';
+	at: #comment put: '0.119 : added RTBoundedShapeBuilder and updated RTMondrianViewBuilder.';
+	at: #date put: '17 March 2014';
+	yourself
+]
