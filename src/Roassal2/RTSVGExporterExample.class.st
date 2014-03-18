@@ -25,5 +25,5 @@ RTSVGExporterExample >> exampleDependencyAnalyzerBuilder [
 
 	b open.
 	"This line does the export"
-	RTSVGExporter exportBuilderAsSVG: b filename:'hola'.
+	RTSVGExporter exportBuilderAsSVG: b filename:'exampleDependencyAnalyzerBuilder'.
 ]
