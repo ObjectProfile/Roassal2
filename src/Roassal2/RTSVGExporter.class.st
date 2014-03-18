@@ -18,25 +18,37 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> exportBuilderAsHTML: aRTBuilder [
+RTSVGExporter class >> exportBuilderAsSVG: aRTBuilder [
 
-	^self exportViewAsHTML: (aRTBuilder view)
+	^self exportViewAsSVG: (aRTBuilder view)
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> exportViewAsHTML: aRTView [ 
+RTSVGExporter class >> exportBuilderAsSVG: aRTBuilder filename: aString [
+
+	^self exportViewAsSVG: (aRTBuilder view) filename: aString
+]
+
+{ #category : #'as yet unclassified' }
+RTSVGExporter class >> exportViewAsSVG: aRTView [ 
 
 	^ self new view: aRTView; exportToFile
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> interactiveExportBuilderAsHTML: aRTBuilder [
+RTSVGExporter class >> exportViewAsSVG: aRTView filename: aString [
 
-	^self exportViewAsHTML: (aRTBuilder view)
+	^ self new view: aRTView; fileName: aString; exportToFile
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGExporter class >> interactiveExportViewAsHTML: aRTView [ 
+RTSVGExporter class >> interactiveExportBuilderAsSVG: aRTBuilder [
+
+	^self exportViewAsSVG: (aRTBuilder view)
+]
+
+{ #category : #'as yet unclassified' }
+RTSVGExporter class >> interactiveExportViewAsSVG: aRTView [ 
 
 	^ self new view: aRTView; interactiveExportToFile
 ]

@@ -134,7 +134,7 @@ RTSVGVisitor >> drawBezierLine: points width: aSmallInteger color: aColor [
 	self addCurves: points allButFirst.
 	stream
 		nextPutAll:
-				('style="fill:none;stroke:rgb(<1p>,<2p>,<3p>);'
+				(' style="fill:none;stroke:rgb(<1p>,<2p>,<3p>);'
 						expandMacrosWith: (aColor red * 256) rounded
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
