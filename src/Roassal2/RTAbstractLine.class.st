@@ -13,6 +13,11 @@ RTAbstractLine class >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
+{ #category : #visitor }
+RTAbstractLine >> accept: aVisitor [
+	aVisitor visitLine: self
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> attachPoint: aRTAttachPoint [
 	attachPoint := aRTAttachPoint.

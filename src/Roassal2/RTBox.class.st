@@ -4,6 +4,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #visitor }
+RTBox >> accept: aVisitor [
+	aVisitor visitBox: self
+]
+
 { #category : #hooks }
 RTBox >> trachelShapeClass [
 	^ TRBoxShape

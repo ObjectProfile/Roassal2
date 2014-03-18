@@ -19,6 +19,11 @@ RTElement class >> on: anObject [
 	^ self new model: anObject; yourself
 ]
 
+{ #category : #visitor }
+RTElement >> accept: aVisitor [
+	aVisitor visitElement: self
+]
+
 { #category : #initialization }
 RTElement >> addConnectedEdge: anEdge [
 	[  anEdge class == RTEdge ] assert.

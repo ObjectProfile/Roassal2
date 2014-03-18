@@ -10,6 +10,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #visitor }
+RTView >> accept: aVisitor [
+	aVisitor visitView: self
+]
+
 { #category : #adding }
 RTView >> add: anElementOrAnEdge [
 	anElementOrAnEdge addedIn: self.

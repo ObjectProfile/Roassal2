@@ -14,6 +14,11 @@ RTDependencyAnalyzerBuilder >> addClasses: classes [
 	classesToAnalyze addAll: classes
 ]
 
+{ #category : #'as yet unclassified' }
+RTDependencyAnalyzerBuilder >> createView [
+	^ super createView @ RTDraggableView
+]
+
 { #category : #public }
 RTDependencyAnalyzerBuilder >> dependencyFromAllClassesMatching: blockFrom toAllClassesMatching: blockTo [
 
@@ -54,7 +59,7 @@ RTDependencyAnalyzerBuilder >> renderIn: v [
 	hierarchicalLinks := RTEdge 
 		buildEdgesFromObjects: classesToAnalyze 
 		from: #superclass to: #yourself 
-		using: (RTLine new color: (Color white alpha: 0.2)) inView: v.
+		using: (RTLine new color: (Color lightGray alpha: 0.2)) inView: v.
 
 	"A nice layout"
 	layout on: v elements edges: v edges.
