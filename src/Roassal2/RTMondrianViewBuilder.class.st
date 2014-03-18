@@ -21,18 +21,6 @@ RTMondrianViewBuilder >> clusterLayout [
 	self layout: RTClusterLayout new
 ]
 
-{ #category : #hooks }
-RTMondrianViewBuilder >> createShapeBuilder [
-	^ RTMondrianShapeBuilder new
-]
-
-{ #category : #'adding - edges' }
-RTMondrianViewBuilder >> edgeFromAssociation: association [
-
-	^ self edges: (Array with: association) from: #key to: #value
-
-]
-
 { #category : #private }
 RTMondrianViewBuilder >> edgeShape [
 	^ lineShapeBuilder shape
@@ -242,7 +230,7 @@ RTMondrianViewBuilder >> resetLineShapeBuilder [
 
 { #category : #initialization }
 RTMondrianViewBuilder >> resetShapeBuilder [
-	shapeBuilder := self createShapeBuilder.
+	shapeBuilder := RTShapeBuilder new.
 	shapeBuilder rectangle
 						fillColor: Color white;
 						borderColor: Color black. 

@@ -10,11 +10,6 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #visitor }
-RTView >> accept: aVisitor [
-	aVisitor visitView: self
-]
-
 { #category : #adding }
 RTView >> add: anElementOrAnEdge [
 	anElementOrAnEdge addedIn: self.
@@ -56,6 +51,12 @@ RTView >> addMenu: aTitle callback: aBlock [
 RTView >> canvas [
 	"Return the trachel canvas on which everything is drawn"
 	^ trCanvas
+]
+
+{ #category : #actions }
+RTView >> edgeFromModel: anObject [
+	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ edges detect: [ :edge | edge model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }

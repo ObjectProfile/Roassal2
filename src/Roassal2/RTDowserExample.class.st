@@ -39,6 +39,28 @@ RTDowserExample >> coolStuff [
 ]
 
 { #category : #duoDowser }
+RTDowserExample >> customPopup [
+	"
+	self new customPopup
+	"
+	| builder |
+
+	builder := RTDuoDowserBuilder new.
+	builder legend: 'Example of a relation between two set of integers'.
+	builder left: (1 to: 10).
+	builder right: (1 to: 20).
+	builder edgesFromLeft: [ :v | (v - 5) to: (v + 5) ].
+	builder popupElement: [ :v | |elem elems|
+			elem := RTElement new.
+			elems := OrderedCollection new.
+			(((v model) - 5) to: ((v model) + 5)) do: [:n | |e| e := RTElement new. e addShape: RTBox blue. elems add: e. ].
+			elem addAll: elems.
+			RTGridLayout on: elems.
+			elem].
+	builder open
+]
+
+{ #category : #duoDowser }
 RTDowserExample >> differentRelations [
 	"
 	self new differentRelations
@@ -190,7 +212,6 @@ RTDowserExample >> numberSubclasses [
 	a onLeftAndRight: Number withAllSubclasses.
 	a edgesTo: #allSubclasses.
 	a open.
-	a inspect.
 ]
 
 { #category : #duoDowser }

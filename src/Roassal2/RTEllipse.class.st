@@ -4,11 +4,6 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #visitor }
-RTEllipse >> accept: aVisitor [
-	aVisitor visitEllipse: self
-]
-
 { #category : #initialization }
 RTEllipse >> initialize [
 	super initialize.

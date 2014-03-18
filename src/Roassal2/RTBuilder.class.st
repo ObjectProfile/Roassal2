@@ -18,21 +18,6 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
-{ #category : #hooks }
-RTBuilder >> createInteractionBuilder [
-	^ RTInteractionBuilder new
-]
-
-{ #category : #hooks }
-RTBuilder >> createShapeBuilder [
-	^ RTShapeBuilder new
-]
-
-{ #category : #hooks }
-RTBuilder >> createView [
-	^ RTView new
-]
-
 { #category : #public }
 RTBuilder >> edgeFrom: source to: target [ 
 	| newEdge |
@@ -54,9 +39,9 @@ RTBuilder >> elementsOn: collectionOfObjects [
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.
-	view := self createView.
-	shapeBuilder := self createShapeBuilder.
-	interactionBuilder := self createInteractionBuilder
+	view := RTView new.
+	shapeBuilder := RTShapeBuilder new.
+	interactionBuilder := RTInteractionBuilder new.
 ]
 
 { #category : #accessing }
