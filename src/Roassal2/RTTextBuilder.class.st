@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal2-Builder-TextBuilder'
 }
 
+{ #category : #accessing }
+RTTextBuilder class >> nestedElementsAttribute [
+	^ #nestedElements
+]
+
 { #category : #protocol }
 RTTextBuilder >> addText: aText [
 	^ self buildText: aText.
@@ -53,7 +58,7 @@ RTTextBuilder >> buildText: aString in: element [
 	].
 	RTVerticalLineLayout new gapSize: 0; on: lines.
 	RTNest new padding: padding; on: element nest: elements.
-	element attributeAt: #nestedElements put: elements.
+	element attributeAt: self nestedElementsAttribute put: elements.
 	^ elements
 ]
 
@@ -84,6 +89,11 @@ RTTextBuilder >> initialize [
 	wordHook := [ :anElement :anInterval | nil ].
 	hook := [ :anElement | nil ].
 	padding := 5.
+]
+
+{ #category : #accessing }
+RTTextBuilder >> nestedElementsAttribute [
+	^ self class nestedElementsAttribute
 ]
 
 { #category : #protected }
