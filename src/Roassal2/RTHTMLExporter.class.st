@@ -12,7 +12,8 @@ Class {
 		'view',
 		'stream',
 		'fileName',
-		'title'
+		'title',
+		'interactions'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -21,6 +22,18 @@ Class {
 RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder [
 
 	^self exportViewAsHTML: (aRTBuilder view)
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder filename: aString [
+
+	^self exportViewAsHTML: (aRTBuilder view) filename: aString 
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder filename: aString title: anotherString [
+
+	^self exportViewAsHTML: (aRTBuilder view) filename: aString title: anotherString
 ]
 
 { #category : #'as yet unclassified' }
@@ -36,9 +49,21 @@ RTHTMLExporter class >> exportViewAsHTML: aRTView [
 ]
 
 { #category : #'as yet unclassified' }
+RTHTMLExporter class >> exportViewAsHTML: aRTView filename: aString [
+
+	^ self new view: aRTView filename: aString; exportToFile
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLExporter class >> exportViewAsHTML: aRTView filename: aString title: anotherString [
+
+	^ self new view: aRTView filename: aString title: anotherString; exportToFile
+]
+
+{ #category : #'as yet unclassified' }
 RTHTMLExporter class >> exportViewAsHTML: aRTView title: aString [
 
-	^ self new view: aRTView; title: aString; exportToFile
+	^ self new view: aRTView title: aString; exportToFile
 ]
 
 { #category : #'as yet unclassified' }
@@ -62,7 +87,7 @@ RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView [
 { #category : #'as yet unclassified' }
 RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView title: aString [
 
-	^ self new view: aRTView; title: aString; interactiveExportToFile
+	^ self new view: aRTView title: aString; interactiveExportToFile
 ]
 
 { #category : #html }
@@ -78,16 +103,43 @@ RTHTMLExporter >> addStart [
 			nextPutAll: ('<!DOCTYPE html>', String cr);
 			nextPutAll: ('<html>', String cr);
 			nextPut: Character tab;
+			nextPutAll: ('<head>', String cr);
+			nextPut: Character tab;
+			nextPut: Character tab;
+			nextPutAll: ('<script type="text/javascript">', String cr).
+		interactions do: [:i | i addFunctions: stream].
+		stream
+			nextPut: Character tab;
+			nextPut: Character tab;
+			nextPutAll: ('</script>', String cr);
+			nextPut: Character tab;
+			nextPutAll: ('</head>', String cr);
+			nextPut: Character tab;
 			nextPutAll: ('<body>', String cr);
 			nextPut: Character tab;
 			nextPutAll: ('<h1>', self title,'</h1>', String cr).
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> builder: aBuilder filename: aString [
+	self view: aBuilder view; fileName: aString.
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> builder: aBuilder filename: aString title: anotherString [
+	self builder: aBuilder filename: aString; title: anotherString.
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> builder: aBuilder title: aString [
+	self view: aBuilder view; title: aString.
 ]
 
 { #category : #exporting }
 RTHTMLExporter >> exportOnStream: fileStream [
 	self stream: fileStream.
 	self addStart.
-	RTSVGExporter new view: self view; exportOnStream: self stream.
+	RTInteractiveSVGExporter new view: self view; interactions: self interactions; exportOnStream: self stream.
 	self addEnd.
 ]
 
@@ -116,7 +168,18 @@ RTHTMLExporter >> fileName: anObject [
 
 { #category : #initialization }
 RTHTMLExporter >> initialize [
-	title := 'HTML Export'
+	title := 'HTML Export'.
+	interactions := OrderedCollection new.
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> interactions [
+	^ interactions
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> interactions: anObject [
+	interactions := anObject
 ]
 
 { #category : #exporting }
@@ -164,4 +227,19 @@ RTHTMLExporter >> view [
 { #category : #accessing }
 RTHTMLExporter >> view: anObject [
 	view := anObject
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> view: aView filename: aString [
+	self view: aView; fileName: aString.
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> view: aView filename: aString title: anotherString [
+	self view: aView filename: aString; title: anotherString.
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> view: aView title: aString [
+	self view: aView; title: aString.
 ]
