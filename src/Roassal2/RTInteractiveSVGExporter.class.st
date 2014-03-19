@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal2-Exporter-HTML'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTInteractiveSVGExporter >> exportOnStream: fileStream [
 	|bounds|
 	bounds := self fixedEncompassingRectangle.

@@ -10,15 +10,15 @@ Class {
 { #category : #'as yet unclassified' }
 RTHTMLHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
 	|highlight|
-	highlight := self new targets: aRTShape; color: aColor; yourself. 
-	anHTMLExporter interactions add: highlight.
+	highlight := self on: anHTMLExporter targets: aRTShape.
+	highlight  color: aColor.
 	^highlight
 ]
 
 { #category : #adding }
 RTHTMLHightlight >> addEventHandlers: aStream id: aString element: element [
 	aStream
-		nextPutAll: 'onmouseover="hightlight(id);" onmouseout="unHightlight(id);"'
+		nextPutAll: 'onmouseover="hightlight(''',aString,''');" onmouseout="unHightlight(''',aString,''');"'
 ]
 
 { #category : #adding }

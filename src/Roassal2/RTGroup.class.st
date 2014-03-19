@@ -14,6 +14,11 @@ RTGroup >> @ interaction [
 	self do: [ :e | e @ interaction ]
 ]
 
+{ #category : #visitor }
+RTGroup >> accept: aRTVisitor [
+	self  do: [ :e | e trachelShape accept: aRTVisitor]
+]
+
 { #category : #public }
 RTGroup >> addedIn: view [
 	self do: [ :e | view add: e ]

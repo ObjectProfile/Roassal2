@@ -2,42 +2,56 @@ Class {
 	#name : #RTHTMLPopup,
 	#superclass : #RTHTMLInteraction,
 	#instVars : [
-		'text',
-		'fontSize',
-		'color'
+		'click',
+		'color',
+		'position'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLPopup class >> on: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
+RTHTMLPopup class >> on: anHTMLExporter color: aColor targets: aRTShape [
 	|popup|
-	popup := self new targets: aRTShape; text: aString; color: aColor; fontSize: aNumber; yourself. 
-	anHTMLExporter interactions add: popup.
+	popup := self on: anHTMLExporter targets: aRTShape.
+	popup color: aColor.
 	^popup
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLPopup class >> on: anHTMLExporter text: aString targets: aRTShape [
+RTHTMLPopup class >> onClick: anHTMLExporter color: aColor targets: aRTShape [
 	|popup|
-	popup := self new targets: aRTShape; text: aString; yourself. 
-	anHTMLExporter interactions add: popup.
+	popup := self on: anHTMLExporter targets: aRTShape.
+	popup click: true.
+	popup color: aColor.
+	^popup
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLPopup class >> onClick: anHTMLExporter targets: aRTShape [
+	|popup|
+	popup := self on: anHTMLExporter targets: aRTShape.
+	popup click: true.
 	^popup
 ]
 
 { #category : #adding }
 RTHTMLPopup >> addEventHandlers: aStream id: aString element: aRTElement [
-	| center |
-	center := aRTElement trachelShape position.
-	aStream
-		nextPutAll: String cr,'<text id="',aString,'pop" x="',center x asString,'" y="',center y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'" visibility="hidden">',(self text value: aRTElement model),'
-    <set attributeName="visibility" from="hidden" to="visible" begin="',aString,'.mouseover" end="',aString,'.mouseout"/>
-  </text>'
+	self subclassResponsibility 
 ]
 
 { #category : #adding }
 RTHTMLPopup >> addFunctions: aStream [
 	"do nothing"
+]
+
+{ #category : #accessing }
+RTHTMLPopup >> click [
+	^ click
+]
+
+{ #category : #accessing }
+RTHTMLPopup >> click: anObject [
+	click := anObject
 ]
 
 { #category : #accessing }
@@ -50,31 +64,34 @@ RTHTMLPopup >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #accessing }
-RTHTMLPopup >> fontSize [
-	^ fontSize
-]
-
-{ #category : #accessing }
-RTHTMLPopup >> fontSize: anObject [
-	fontSize := anObject
-]
-
 { #category : #initialization }
 RTHTMLPopup >> initialize [
-	text := #asString.
-	fontSize := 12.
+	click := false.
 	color := Color black.
 	contained := false.
 	external := true.
+	position := [ :element | element trachelShape position ].
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLPopup >> mouseAction: aString [
+	^click 
+		ifTrue: ["Still does not work"
+	'
+    <set id="',aString,'s" attributeName="visibility" from="visible" to="hidden" begin="',aString,'.click"/>
+  '			  ]
+		ifFalse: [  
+	'
+    <set attributeName="visibility" from="hidden" to="visible" begin="',aString,'.mouseover" end="',aString,'.mouseout"/>
+  ']
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> text [
-	^text
+RTHTMLPopup >> position [
+	^ position
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> text: aSymbolOrBlock [
-	text := aSymbolOrBlock
+RTHTMLPopup >> position: anObject [
+	position := anObject
 ]

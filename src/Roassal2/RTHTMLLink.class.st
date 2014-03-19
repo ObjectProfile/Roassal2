@@ -10,8 +10,8 @@ Class {
 { #category : #'as yet unclassified' }
 RTHTMLLink class >> on: anHTMLExporter link: anHref targets: aRTShape [
 	|link|
-	link := self new targets: aRTShape; link: anHref; yourself. 
-	anHTMLExporter interactions add: link.
+	link :=  self on: anHTMLExporter targets: aRTShape. 
+	link link: anHref. 
 	^link
 ]
 

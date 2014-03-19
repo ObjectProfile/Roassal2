@@ -97,7 +97,7 @@ RTHTMLExporterExample >> exampleWithPopup [
 	b open.
 	"exporter part"
 	exporter := RTHTMLExporter new builder: b filename: 'WorldPopulation' title: 'World Population'; yourself.
-	RTHTMLPopup on: exporter text:#first targets: TRSVGPath.
+	RTHTMLTextPopup on: exporter text:#first targets: TRSVGPath.
 	exporter exportToFile.  
 ]
 
@@ -123,7 +123,7 @@ RTHTMLExporterExample >> exampleWithPopupAndHighlight [
 	"exporter part"
 	exporter := RTHTMLExporter new builder: b filename: 'WorldPopulation' title: 'World Population'; yourself.
 	RTHTMLHightlight on: exporter color: Color red targets: TRSVGPath.
-	RTHTMLPopup on: exporter text:#first color: Color white size: 15 targets: TRSVGPath.
+	RTHTMLTextPopup on: exporter text:#first color: Color white size: 15 targets: TRSVGPath.
 	exporter exportToFile.  
 ]
 
@@ -149,7 +149,7 @@ RTHTMLExporterExample >> exampleWithPopupAndHighlightAndLink [
 	"exporter part"
 	exporter := RTHTMLExporter new builder: b filename: 'WorldPopulation' title: 'World Population'; yourself.
 	RTHTMLHightlight on: exporter color: Color red targets: TRSVGPath.
-	RTHTMLPopup on: exporter text:#first color: Color white size: 15 targets: TRSVGPath.
+	RTHTMLTextPopup on: exporter text:#first color: Color white size: 15 targets: TRSVGPath.
 	RTHTMLLink on: exporter link:[:l | 'http://en.wikipedia.org/wiki/', l first] targets: TRSVGPath.
 	exporter exportToFile.  
 ]

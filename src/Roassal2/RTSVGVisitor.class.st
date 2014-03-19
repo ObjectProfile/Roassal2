@@ -11,14 +11,30 @@ Class {
 		'afterStream',
 		'canvas',
 		'count',
-		'interactions'
+		'interactions',
+		'center'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #visitor }
+RTSVGVisitor class >> visit: view on: stream [
+	self new view: view; stream: stream; visit; yourself.
+]
+
+{ #category : #visitor }
 RTSVGVisitor class >> visit: view on: stream canvas: aRectangle [
 	self new view: view; stream: stream; canvas: aRectangle; visit; yourself.
+]
+
+{ #category : #visitor }
+RTSVGVisitor class >> visit: view on: stream center: aPoint [
+	self new view: view; stream: stream; center: aPoint; visit; yourself.
+]
+
+{ #category : #visitor }
+RTSVGVisitor class >> visit: view on: stream with: interactions [
+	self new view: view; stream: stream; interactions: interactions; visit; yourself.
 ]
 
 { #category : #visitor }
@@ -99,8 +115,8 @@ RTSVGVisitor >> afterStream: anObject [
 { #category : #utils }
 RTSVGVisitor >> alignLine: aLine [
 	|distanceX distanceY fromX fromY|
-	distanceX := canvas topLeft x negated + 1.
-	distanceY := canvas topLeft y negated + 1.
+	distanceX := canvas topLeft x negated + center x.
+	distanceY := canvas topLeft y negated + center y.
 	fromX := aLine from x + distanceX.
 	fromY := aLine from y + distanceY.
 	^(TRLineShape new from: fromX@fromY; to: (fromX + aLine to x) @ (fromY + aLine to y))
@@ -110,8 +126,8 @@ RTSVGVisitor >> alignLine: aLine [
 { #category : #utils }
 RTSVGVisitor >> alignPoint: aPoint [
 	|distanceX distanceY originX originY|
-	distanceX := canvas topLeft x negated + 1.
-	distanceY := canvas topLeft y negated + 1.
+	distanceX := canvas topLeft x negated + center x.
+	distanceY := canvas topLeft y negated + center y.
 	originX := aPoint x + distanceX.
 	originY := aPoint y + distanceY.
 	^originX@originY
@@ -121,8 +137,8 @@ RTSVGVisitor >> alignPoint: aPoint [
 { #category : #utils }
 RTSVGVisitor >> alignRectangle: aRectangle [
 	|distanceX distanceY originX originY|
-	distanceX := canvas topLeft x negated + 1.
-	distanceY := canvas topLeft y negated + 1.
+	distanceX := canvas topLeft x negated + center x.
+	distanceY := canvas topLeft y negated + center y.
 	originX := aRectangle topLeft x + distanceX.
 	originY := aRectangle topLeft y + distanceY.
 	^Rectangle origin: originX@originY corner: (originX + aRectangle width) @ (originY + aRectangle height)
@@ -139,6 +155,16 @@ RTSVGVisitor >> canvas [
 RTSVGVisitor >> canvas: aCanvas [
 
 	canvas := aCanvas.
+]
+
+{ #category : #accessing }
+RTSVGVisitor >> center [
+	^center
+]
+
+{ #category : #accessing }
+RTSVGVisitor >> center: aPoint [
+	center := aPoint
 ]
 
 { #category : #accessing }
@@ -342,6 +368,20 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color an
 ]
 
 { #category : #utils }
+RTSVGVisitor >> fixedEncompassingRectangle [
+ 	| shapes |
+	shapes := self view canvas shapes.
+	canvas := shapes first encompassingRectangle.
+	shapes do: [ :s| |rect|
+				rect := s encompassingRectangle.
+				rect height < 0 
+					ifTrue: [ rect := Rectangle origin: rect bottomLeft corner: rect topRight].
+				canvas := canvas merge: rect.
+				 ].
+	^canvas 
+]
+
+{ #category : #utils }
 RTSVGVisitor >> getPointFrom: center angle: anAngle radius: aNumber [
 	|x y|
 	x := (center x + (anAngle cos * aNumber)) rounded.
@@ -352,7 +392,8 @@ RTSVGVisitor >> getPointFrom: center angle: anAngle radius: aNumber [
 { #category : #initialization }
 RTSVGVisitor >> initialize [
 	afterStream := OrderedCollection new.
-	closings := OrderedCollection new.
+	interactions := OrderedCollection new.
+	center := 1@1.
 ]
 
 { #category : #accessing }
@@ -372,6 +413,12 @@ RTSVGVisitor >> makePositive: anAngle [
 		ifTrue: [ result := anAngle + 360 ]
 		ifFalse: [ result := anAngle ].
 	^ result
+]
+
+{ #category : #visitor }
+RTSVGVisitor >> setCanvas [
+	self canvas = nil
+		ifTrue: [ self fixedEncompassingRectangle ]
 ]
 
 { #category : #accessing }
@@ -407,8 +454,9 @@ RTSVGVisitor >> view: aView [
 
 { #category : #visitor }
 RTSVGVisitor >> visit [
+	self setCanvas.
 	self visitView: self view.
-	self afterStream do: [ :s | s value: 1 ].
+	self afterStream do: [ :s | s value: 1 ]
 ]
 
 { #category : #visitor }
@@ -475,6 +523,11 @@ RTSVGVisitor >> visitEllipseShape: anEllipse [
 		color: fillColor 
 		borderWidth: 1 
 		borderColor: borderColor 
+]
+
+{ #category : #visitor }
+RTSVGVisitor >> visitGroup: aRTGroup [
+	aRTGroup accept: self.
 ]
 
 { #category : #visitor }
