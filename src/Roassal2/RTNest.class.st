@@ -8,8 +8,12 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #utility }
+{ #category : #public }
 RTNest >> centerOn: backElement elements: elements [
+	"Public method. This method does the following actions:
+		- resize the backElement to encompasse all the elements
+		- translate all the elements on top of backElement"
+		
 	| encompassingRectangle off |
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
