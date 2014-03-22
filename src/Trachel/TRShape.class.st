@@ -150,7 +150,7 @@ TRShape >> hasCallback [
 
 { #category : #testing }
 TRShape >> hasEventCallback [
-	^ announcer notNil
+	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
 { #category : #testing }

@@ -297,6 +297,7 @@ TRMorph >> rtMouseMoving: evt [
 	ev position: relativePosition.
 	ev shape: shape.
 	ev morph: self.
+	ev canvas: trachelCanvas.
 	shape announce: ev
 ]
 

@@ -44,6 +44,12 @@ TREvent >> position: aPoint [
 ]
 
 { #category : #accessing }
+TREvent >> positionFromCamera [
+	"Return the position from the camera. I.e., 0 @ 0 is at the center of the window"
+	^ canvas camera fromPixelToSpace: self position
+]
+
+{ #category : #accessing }
 TREvent >> signalUpdate [
 	morph notNil ifTrue: [ morph changed ]
 	
