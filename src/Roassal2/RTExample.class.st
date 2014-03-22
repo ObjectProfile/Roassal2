@@ -175,6 +175,27 @@ RTExample >> circleLayout [
 ]
 
 { #category : #shapes }
+RTExample >> circleWaves [
+	"
+	self new circleWaves
+	"
+	"Inspired from http://haptic-data.com/toxiclibsjs/examples/ColorWaves_raphael.html"
+	
+	| nbOfCircles  v shape mousePos |
+	nbOfCircles := 25.
+	
+	mousePos := 50 @ 50.
+	v := RTView new.
+	shape := RTEllipse new sizeElement: [ :el | ((el position - mousePos) r abs / 3) min: 50 ]; color: (Color blue alpha: 0.4).
+	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
+	RTGridLayout on: v elements.
+	
+	v on: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	
+	v open
+]
+
+{ #category : #shapes }
 RTExample >> circles [
 	"
 	self new circles
@@ -221,6 +242,33 @@ RTExample >> clusterLayout [
 	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
 	RTClusterLayout on: v elements edges: v edges.
 	v edges do: [ :e | e trachelShape pushBack ].
+	v open
+]
+
+{ #category : #shapes }
+RTExample >> colorWaves [
+	"
+	self new colorWaves
+	"
+	"Inspired from http://haptic-data.com/toxiclibsjs/examples/ColorWaves_raphael.html"
+	
+	| nbOfCircles normalizer v shape mousePos |
+	nbOfCircles := 25.
+	
+	mousePos := 50 @ 50.
+	normalizer := RTMultiLinearColor new. 
+	v := RTView new.
+	shape := RTEllipse new 
+					sizeElement: [ :el | ((el position - mousePos) r abs / 3) min: 50 ]; 
+					colorElement: [ :el | 
+						| va|
+						va := ((((el position - mousePos) r abs / 3) min: 50) / 50).
+						(normalizer level: va) alpha: 0.4 ].
+	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
+	RTGridLayout on: v elements.
+	
+	v on: TRMouseMove do: [ :evt | mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	
 	v open
 ]
 

@@ -30,6 +30,11 @@ RTMultiLinearColor >> colors: anArrayOfColors [
 	colors := anArrayOfColors
 ]
 
+{ #category : #initialization }
+RTMultiLinearColor >> defaultColors [
+	^ Array with: Color red with: Color blue with: Color green
+]
+
 { #category : #accessing }
 RTMultiLinearColor >> indexesFor: f [
 	"f - float is between 0.0 and 1.0. Return an array of length two"
@@ -46,7 +51,7 @@ RTMultiLinearColor >> indexesFor: f [
 { #category : #initialization }
 RTMultiLinearColor >> initialize [
 	super initialize.
-	colors := (Array with: Color red with: Color blue with: Color green)
+	colors := self defaultColors
 ]
 
 { #category : #accessing }
