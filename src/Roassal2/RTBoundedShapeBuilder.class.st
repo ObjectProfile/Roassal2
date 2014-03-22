@@ -18,7 +18,7 @@ RTBoundedShapeBuilder >> minimumSize [
 	^ 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBoundedShapeBuilder >> size: aBlock [
 	^ super size: [ :v | (aBlock rtValue: v) max: self minimumSize ]
 ]

@@ -149,6 +149,15 @@ RTMondrianViewBuilderTest >> testNestingSmallTree [
 	 
 ]
 
+{ #category : #nesting }
+RTMondrianViewBuilderTest >> testNestingWithEmptyContent [
+
+	| elements |
+	elements := builder nodes: #(1 2 ) forEach: [ :each | ].
+	self assert: elements size = 2.
+	self assert: elements second trachelShape rectangle extent = (10 @ 10)
+]
+
 { #category : #basic }
 RTMondrianViewBuilderTest >> testNoShape [
 

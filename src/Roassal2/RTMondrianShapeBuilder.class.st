@@ -6,7 +6,13 @@ Class {
 
 { #category : #shapes }
 RTMondrianShapeBuilder >> circle [
-	^ super rectangle withBorder
+	^ super rectangle
+		withBorder
+]
+
+{ #category : #shapes }
+RTMondrianShapeBuilder >> defaultColor [
+	^ Color white
 ]
 
 { #category : #shapes }

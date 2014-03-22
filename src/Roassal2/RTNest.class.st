@@ -27,6 +27,7 @@ RTNest >> centerOn: backElement elements: elements [
 { #category : #utility }
 RTNest >> encompassingRectangleOf: elements [
 	| encompassingRectangle |
+	elements isEmpty ifTrue: [ ^ (0 @ 0) extent: (0 @ 0) ]. 
 	encompassingRectangle := elements anyOne encompassingRectangle.
 	elements do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
 	^ encompassingRectangle 

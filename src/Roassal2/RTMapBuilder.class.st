@@ -51,6 +51,11 @@ RTMapBuilder >> cities: objects named: aBlockOrSymbol [
 	^ cityBuilder
 ]
 
+{ #category : #accessing }
+RTMapBuilder >> cityBuilder [
+	^ cityBuilder
+]
+
 { #category : #adding }
 RTMapBuilder >> cityObjects [
 	^ cities
