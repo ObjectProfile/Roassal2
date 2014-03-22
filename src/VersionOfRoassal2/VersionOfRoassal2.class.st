@@ -1871,3 +1871,14 @@ VersionOfRoassal2 >> version000124 [
 	at: #date put: '22 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000125 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.84';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.155';
+	at: #version put: '0.126';
+	at: #comment put: '0.126 : added the color wave example';
+	at: #date put: '22 March 2014';
+	yourself
+]
