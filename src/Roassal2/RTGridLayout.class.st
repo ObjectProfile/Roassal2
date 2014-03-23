@@ -37,7 +37,7 @@ RTGridLayout >> doExecute: elements [
 			maxLastLineHeight := maxLastLineHeight max: element height.
 			lineItemCount >= lineItemSize
 				ifTrue: [ 
-					pointer := originalGapLeft @ (pointer y + (self gapSize * 2) + maxLastLineHeight).
+					pointer := originalGapLeft @ (pointer y + (self gapSize) + maxLastLineHeight).
 					
 					maxLastLineHeight := 0.
 					lineItemCount := 0 ].

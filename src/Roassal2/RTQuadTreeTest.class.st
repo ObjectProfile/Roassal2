@@ -14,7 +14,7 @@ quad
 "
 Class {
 	#name : #RTQuadTreeTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'nodes',
 		'quad'
