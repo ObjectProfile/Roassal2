@@ -971,6 +971,61 @@ view open
 
 ]
 
+{ #category : #popup }
+RTExample >> popupWithLegend [
+	"
+	self new popupWithLegend
+	"
+
+| view |
+
+view := RTMondrianViewBuilder new.
+view interaction noInteractions.
+
+view interaction popup group: [ :group :el |
+	
+	| background elements cls legend1 legend2 | 
+	elements := RTGroup new.
+	background := (RTBox new color: (Color green alpha: 0.8)) element.
+	
+	el model timesRepeat: [ 
+			cls := RTEllipse.
+			50 atRandom > 25
+				ifTrue: [ cls := RTBox ].
+			elements add: (cls new size: 10; color: (Color purple alpha: 0.5)) element
+			].
+	RTGridLayout on: elements.
+	
+	
+	"Legend Good"
+	legend1 := RTGroup new.
+	legend1 add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
+	legend1 add: (RTLabel elementOn: '= Good').
+	RTHorizontalLineLayout on: legend1.
+	
+	"Legend Bad"
+	legend2 := RTGroup new.
+	legend2 add: (RTEllipse new size: 10; color: (Color purple alpha: 0.5)) element.
+	legend2 add: (RTLabel elementOn: '= Bad').
+	RTHorizontalLineLayout on: legend2.
+	
+	RTVerticalLineLayout new gapSize: 0; on: (Array with: legend1 with: legend2 with: elements). 
+	
+		RTNest new centerOn: background elements: (Array with: legend1 with: legend2 with: elements).
+
+	
+	group add: background.
+	group addAll: legend1.
+	group addAll: legend2.
+	group addAll: elements ].
+
+
+view shape rectangle size: #yourself.
+view nodes: (1 to:50).
+view gridLayout.
+view open
+]
+
 { #category : #labels }
 RTExample >> rotatingLabels [
 	"
@@ -1141,6 +1196,46 @@ RTExample >> systemComplexity [
 
 	v @ RTDraggableView.
 	v open
+]
+
+{ #category : #fun }
+RTExample >> worm [
+	"
+	self new worm
+	"
+
+| v s e last lineLength callback nbOfElements head |
+v := RTView new.
+s := RTEllipse new 
+				size: [ :m | m * 10 ]; 
+				color: (Color blue alpha: 0.4).
+nbOfElements := 10.
+last := nil.
+1 to: nbOfElements do: [ :i | 
+	e := (s elementOn: i).
+	v add: e.		
+	last ifNotNil: [ v add: (RTLine new edgeFrom: e to: last) ].
+	last := e.		
+].
+
+lineLength := 40.
+
+callback := TRTranslationCallback 
+	block: [ :shape :step | 
+			| diff alpha dist |
+			(shape element outgoingEdges collect: #to) do: [ :el | 
+				diff := shape position - el position.
+				alpha := diff theta.
+				dist := ((diff x * diff x) + (diff y * diff y)) sqrt. 
+				el translateBy: (alpha cos * (dist - lineLength)) @ (alpha sin * (dist - lineLength)) ] ].
+ 
+v elements do: [ :el | el trachelShape addCallback: callback ].
+
+head := v elements last.
+v when: TRMouseMove do: [ :evt | 
+	head translateBy: (evt positionFromCamera - head position) / 10.
+	v canvas signalUpdate ].
+v open
 ]
 
 { #category : #animations }
