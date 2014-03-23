@@ -189,6 +189,12 @@ TRShape >> isNotFixed [
 	^ self isMovable
 ]
 
+{ #category : #actions }
+TRShape >> noBorder [
+	"Remove the border from the shape"
+	self strokePaint: nil
+]
+
 { #category : #accessing }
 TRShape >> path [
 	path ifNil: [ self computePath ].

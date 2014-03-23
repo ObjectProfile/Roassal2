@@ -210,7 +210,7 @@ TRMorph >> rtMouseClick: evt [
 	ev shiftKeyPressed: evt shiftPressed.
 	ev shape: shape.
 	ev morph: self.
-	
+	ev canvas: trachelCanvas.
 	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
 	shape announce: ev.
 	
@@ -253,7 +253,7 @@ TRMorph >> rtMouseDragging: evt [
 "
 	event position: relativePosition.
 	shapeBeingPointed announce: event.
-
+	event canvas: trachelCanvas.
 	eventBeginingDragging := evt copy.
 ]
 
@@ -268,6 +268,7 @@ TRMorph >> rtMouseEnter: evt [
 	ev position: relativePosition.
 	ev shape: shape.
 	ev morph: self.
+	ev canvas: trachelCanvas.
 	shape announce: ev.
 
 ]
@@ -282,6 +283,7 @@ TRMorph >> rtMouseLeave: evt [
 	ev position: position.
 	ev shape: shape.
 	ev morph: self.
+	ev canvas: trachelCanvas.
 	shape announce: ev
 
 ]
