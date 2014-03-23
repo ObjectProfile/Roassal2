@@ -1882,3 +1882,14 @@ VersionOfRoassal2 >> version000125 [
 	at: #date put: '22 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000126 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.85';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.156';
+	at: #version put: '0.127';
+	at: #comment put: '0.127 : bug with gridLayout fixed. The space between elements is constant now';
+	at: #date put: '23 March 2014';
+	yourself
+]
