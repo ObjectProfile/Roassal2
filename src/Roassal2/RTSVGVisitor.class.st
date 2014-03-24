@@ -230,7 +230,8 @@ RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger colo
 						expandMacrosWith: (aColor red * 256) rounded
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
-		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger).
+		nextPutAll: ('stroke-width:<1p>;' expandMacrosWith: aSmallInteger);
+		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha).
 	self addContainedInteractions: ('bezier',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
@@ -248,7 +249,8 @@ RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger 
 		nextPutAll: ('x1="<1p>" y1="<2p>" ' expandMacrosWith: aPoint x rounded  with: aPoint y rounded);
 		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded );
 		nextPutAll: ('style="stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
-		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger ).
+		nextPutAll: ('stroke-width:<1p> ' expandMacrosWith: aSmallInteger );
+		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha).
 	self addContainedInteractions: ('line',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.

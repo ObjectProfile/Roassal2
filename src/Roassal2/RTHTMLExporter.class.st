@@ -169,7 +169,7 @@ RTHTMLExporter >> exportOnStream: fileStream [
 RTHTMLExporter >> exportToFile [
 
 	| fileStream |
-	
+	(FileSystem disk workingDirectory / (self fileName,'.html')) delete.
 	fileStream := (FileSystem disk workingDirectory / (self fileName,'.html')) writeStream.
 	[ self exportOnStream: fileStream ] 
 		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
