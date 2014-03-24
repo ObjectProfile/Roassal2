@@ -346,8 +346,9 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	self addContainedInteractions:('text',id)  element: element.
 	stream					
 		nextPutAll: '>';
+		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
 		nextPutAll: aByteString ;
-		nextPutAll: '</text>';
+		nextPutAll: '</tspan></text>';
 		nextPutAll: String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions:('text',id)  element: element.
