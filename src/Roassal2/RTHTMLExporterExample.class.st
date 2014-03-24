@@ -12,7 +12,7 @@ RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
 	
 	"self new exampleDependencyAnalyzerBuilder"
 
-	| b |	
+	| b exporter |	
 	b := RTDependencyAnalyzerBuilder new. 
 	b shape circle
 				size: [ :cls | cls numberOfMethods max: 5 ];
@@ -25,8 +25,13 @@ RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
 		toAllClassesMatching: [ :cls | ('TR*' match: cls name) ].
 
 	b open.
+	
 	"This line does the export"
-	RTHTMLExporter exportBuilderAsHTML: b title: 'Roassal and Trachel'
+	exporter := RTHTMLExporter new builder: b filename: 'Dependencies' title: 'Dependencies between Roassal2 and Trachel'; yourself.
+	RTHTMLHightlight on: exporter color: Color blue targets: TREllipseShape.
+	RTHTMLTextPopup on: exporter text:#name color: Color white size: 15 targets: TREllipseShape.
+	exporter exportToFile.  
+	
 ]
 
 { #category : #example }
