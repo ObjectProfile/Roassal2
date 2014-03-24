@@ -269,9 +269,14 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 		nextPutAll: ('cx= "<1p>" cy="<2p>" ' expandMacrosWith: aCenter x rounded  with: aCenter y rounded);
 		nextPutAll: ('rx="<1p>" ry="<2p>" ' expandMacrosWith: (w/ 2) rounded with: (h /2) rounded);
 		nextPutAll: ('style="fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red *256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
-		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: aColor alpha);	
-		nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded ); 
-		nextPutAll: ('stroke-width: <1p>" ' expandMacrosWith: aSmallInteger).
+		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: aColor alpha).
+	aColor4 = nil
+		ifTrue: [ 
+			stream nextPutAll: '"'] 
+		ifFalse: [  
+			stream	
+				nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded );
+				nextPutAll: ('stroke-width: <1p>" ' expandMacrosWith: aSmallInteger)].
 	self addContainedInteractions: ('ellipse', id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
@@ -314,7 +319,7 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 		nextPutAll: 'style="';
 		nextPutAll: ('fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (fillColor red * 256) rounded with: (fillColor green * 256) rounded with: (fillColor blue * 256) rounded);
 		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: fillColor alpha).	
-		aSmallInteger > 0 
+		(aSmallInteger > 0 or: aColor ~= nil)
 			ifTrue: [
 				stream 
 					nextPutAll: (';stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded);
@@ -495,7 +500,6 @@ RTSVGVisitor >> visitBoxShape: aBox [
 		ifTrue: [ fillColor := Color r: 0 g: 0 b: 0]
 		ifFalse: [ fillColor := aBox color].
 	((aBox strokePaint) isNil)
-		ifTrue: [ borderColor := fillColor]
 		ifFalse: [ borderColor := aBox strokePaint].
 	box := self alignRectangle: (aBox encompassingRectangle).
 	self drawRectangle: aBox element
@@ -517,7 +521,6 @@ RTSVGVisitor >> visitEllipseShape: anEllipse [
 		ifTrue: [ fillColor := Color r: 0 g: 0 b: 0]
 		ifFalse: [ fillColor := anEllipse color].
 	((anEllipse strokePaint) isNil)
-		ifTrue: [ borderColor := fillColor]
 		ifFalse: [ borderColor := anEllipse strokePaint].
 	box := self alignRectangle: (anEllipse rectangle).
 	self drawOval: anEllipse element 
