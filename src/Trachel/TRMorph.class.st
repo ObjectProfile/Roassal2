@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 TRMorph >> canvas: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas.
-	surface := AthensCairoSurface extent: aTrachelCanvas extent
+	surface := AthensCairoSurface extent: (aTrachelCanvas extent) asIntegerPoint
 ]
 
 { #category : #'session management' }
