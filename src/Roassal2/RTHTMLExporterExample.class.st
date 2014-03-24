@@ -27,9 +27,11 @@ RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
 	b open.
 	
 	"This line does the export"
-	exporter := RTHTMLExporter new builder: b filename: 'Dependencies' title: 'Dependencies between Roassal2 and Trachel'; yourself.
+	exporter := RTHTMLExporter new 
+							backgroundColor: Color white;
+							builder: b filename: 'Dependencies' title: 'Dependencies between Roassal2 and Trachel'; yourself.
 	RTHTMLHightlight on: exporter color: Color blue targets: TREllipseShape.
-	RTHTMLTextPopup on: exporter text:#name color: Color white size: 15 targets: TREllipseShape.
+	RTHTMLTextPopup on: exporter text:#name color: Color black size: 15 targets: TREllipseShape.
 	exporter exportToFile.  
 	
 ]
