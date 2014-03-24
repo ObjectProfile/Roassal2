@@ -2,7 +2,7 @@ Class {
 	#name : #RTHTMLInteraction,
 	#superclass : #RTObject,
 	#instVars : [
-		'targets',
+		'target',
 		'contained',
 		'external'
 	],
@@ -11,14 +11,25 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTHTMLInteraction class >> on: anHTMLExporter targets: aRTShape [
-	|interaction|
-	interaction := self new targets: aRTShape; yourself. 
-	anHTMLExporter interactions add: interaction.
-	^interaction
+	| generator |
+	generator := [ :e |  self new target: e;  yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
+]
+
+{ #category : #'as yet unclassified' }
+RTHTMLInteraction class >> on: anHTMLExporter targets: aRTShape generator: generator [
+	| interaction |
+	anHTMLExporter view elements
+		do: [ :e | 
+			e trachelShape class = aRTShape
+				ifTrue: [ 
+					interaction := generator value: e.
+					anHTMLExporter interactions at: e ifAbsent: [ anHTMLExporter interactions at: e put: OrderedCollection new ].
+					(anHTMLExporter interactions at: e) add: interaction ] ]
 ]
 
 { #category : #adding }
-RTHTMLInteraction >> addEventHandlers: aStream id: aString element: aRTElement [
+RTHTMLInteraction >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
 	self subclassResponsibility 
 ]
 
@@ -38,11 +49,11 @@ RTHTMLInteraction >> external [
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> targets [
-	^ targets
+RTHTMLInteraction >> target [
+	^ target
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> targets: anObject [
-	targets := anObject
+RTHTMLInteraction >> target: anObject [
+	target := anObject
 ]

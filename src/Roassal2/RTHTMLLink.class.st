@@ -9,14 +9,13 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTHTMLLink class >> on: anHTMLExporter link: anHref targets: aRTShape [
-	|link|
-	link :=  self on: anHTMLExporter targets: aRTShape. 
-	link link: anHref. 
-	^link
+	| generator |
+	generator := [ :e |  self new target: e; link: anHref; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLLink >> addEventHandlers: aStream id: aString element: aRTElement [
+RTHTMLLink >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	aStream
 		nextPutAll: '<a xlink:href="',(self link value: aRTElement model),'" target="_blank">'.
 	"return the missing closing"

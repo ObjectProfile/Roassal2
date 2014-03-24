@@ -8,12 +8,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLElementPopup >> addEventHandlers: aStream id: aString element: aRTElement [
-	| center visitor myElement|
+RTHTMLElementPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
+	| visitor myElement|
 	myElement := (self element value: aRTElement ).
-	center := self position value: aRTElement.
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
-	visitor := RTSVGVisitor new stream: aStream; center: center; yourself.
+	visitor := RTSVGVisitor new stream: aStream; center: aNumber; yourself.
 	visitor canvas: myElement encompassingRectangle.
 	visitor visitElement: myElement.
 	aStream 

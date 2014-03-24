@@ -9,39 +9,39 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTHTMLHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
-	|highlight|
-	highlight := self on: anHTMLExporter targets: aRTShape.
-	highlight  color: aColor.
-	^highlight
+	| generator |
+	generator := [ :e |  self new target: e; color: aColor; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLHightlight >> addEventHandlers: aStream id: aString element: element [
+RTHTMLHightlight >> addEventHandlers: aStream id: aString element: element center: aNumber [
 	aStream
-		nextPutAll: 'onmouseover="hightlight(''',aString,''');" onmouseout="unHightlight(''',aString,''');"'
+		nextPutAll: 'onmouseover="hightlight',target class name asString,'(''',aString,''');" onmouseout="unHightlight',target class name asString,'(''',aString,''');"'
 ]
 
 { #category : #adding }
 RTHTMLHightlight >> addFunctions: aStream [
-	| attr |
+	| attr  tname|
 	attr := self targetAttribute.
+	tname := target class name asString.
 	aStream
-		nextPutAll: '			var currentId;
-			var color;
-			function hightlight(id) {
+		nextPutAll: '			var currentId',tname,';
+			var color',tname,';
+			function hightlight',tname,'(id) {
 				var affected = document.getElementById(id);
-				if (color == affected.style["',attr,'"] || color == null) {
-					color = affected.style["',attr,'"];
-					currentId = id;
+				if (color',tname,' == affected.style["',attr,'"] || color',tname,' == null) {
+					color',tname,' = affected.style["',attr,'"];
+					currentId',tname,' = id;
 					affected.style["',attr,'"] = "',self color asHTMLColor,'";
 				}
 			}
-			function unHightlight(id) {
-				if (currentId != id)
+			function unHightlight',tname,'(id) {
+				if (currentId',tname,' != id)
 					return;
 				var affected = document.getElementById(id);
-				affected.style["',attr,'"] = color;
-				color = null;
+				affected.style["',attr,'"] = color',tname,';
+				color',tname,' = null;
 			}'.
 ]
 
@@ -64,12 +64,12 @@ RTHTMLHightlight >> initialize [
 
 { #category : #adding }
 RTHTMLHightlight >> targetAttribute [
-	self targets = TRArcShape ifTrue: [ ^'fill' ].
-	self targets = TRBezierShape ifTrue: [ ^'stroke' ].
-	self targets = TRBoxShape ifTrue: [ ^'fill' ].
-	self targets = TREllipseShape ifTrue: [ ^'fill' ].
-	self targets = TRLabelShape ifTrue: [ ^'fill' ].
-	self targets = TRLineShape ifTrue: [ ^'stroke' ].
-	self targets = TRRotatedLabelShape ifTrue: [ ^'fill' ].
-	self targets = TRSVGPath ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
 ]

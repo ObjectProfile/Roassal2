@@ -11,31 +11,27 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTHTMLPopup class >> on: anHTMLExporter color: aColor targets: aRTShape [
-	|popup|
-	popup := self on: anHTMLExporter targets: aRTShape.
-	popup color: aColor.
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; color: aColor; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
 RTHTMLPopup class >> onClick: anHTMLExporter color: aColor targets: aRTShape [
-	|popup|
-	popup := self on: anHTMLExporter targets: aRTShape.
-	popup click: true.
-	popup color: aColor.
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; color: aColor; click: true; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
 RTHTMLPopup class >> onClick: anHTMLExporter targets: aRTShape [
-	|popup|
-	popup := self on: anHTMLExporter targets: aRTShape.
-	popup click: true.
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; click: true; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLPopup >> addEventHandlers: aStream id: aString element: aRTElement [
+RTHTMLPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
 	self subclassResponsibility 
 ]
 

@@ -43,11 +43,12 @@ RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectang
 ]
 
 { #category : #utils }
-RTSVGVisitor >> addContainedInteractions: id element: element target: aRTShapeClass [
-	interactions
-		do: [ :i | 
-			(i targets = aRTShapeClass and: i contained = true)
-				ifTrue: [ i addEventHandlers: stream id: id  element: element] ]
+RTSVGVisitor >> addContainedInteractions: id element: element [
+	| aNumber |
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
+	(interactions at: element ifAbsent: [OrderedCollection new]) 
+		do: [ :i |	 i contained = true
+			ifTrue: [ i addEventHandlers: stream id: id  element: element center: aNumber] ]
 ]
 
 { #category : #utils }
@@ -83,22 +84,23 @@ RTSVGVisitor >> addCurves: points [
 ]
 
 { #category : #utils }
-RTSVGVisitor >> addEmbeddingInteractions: id element: element target: aRTShapeClass [
-	|closings|
+RTSVGVisitor >> addEmbeddingInteractions: id element: element [
+	|closings aNumber |
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
 	closings := OrderedCollection new.
-	interactions
-		do: [ :i | 
-			(i targets = aRTShapeClass and: (i external = false and: i contained = false))
-				ifTrue: [closings add: (i addEventHandlers: stream id: id  element: element)]].
+	(interactions at: element ifAbsent: [OrderedCollection new]) 
+		do: [ :i |	 (i external = false and: i contained = false)
+			ifTrue: [ closings add: (i addEventHandlers: stream id: id  element: element center: aNumber)] ].
 	^(closings reverse)
 ]
 
 { #category : #utils }
-RTSVGVisitor >> addExternalInteractions: id element: element target: aRTShapeClass [
-	interactions
-		do: [ :i | 
-			(i targets = aRTShapeClass and: i external = true)
-				ifTrue: [ self afterStream add: [:e | i addEventHandlers: stream id: id  element: element] ]]
+RTSVGVisitor >> addExternalInteractions: id element: element [
+	| aNumber |
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
+	(interactions at: element ifAbsent: [OrderedCollection new]) 
+		do: [ :i |	 i external = true
+			ifTrue: [ self afterStream add: [:e | i addEventHandlers: stream id: id  element: element center: aNumber] ]]
 ]
 
 { #category : #accessing }
@@ -178,7 +180,7 @@ RTSVGVisitor >> count [
 ]
 
 { #category : #drawing }
-RTSVGVisitor >> drawArc: element center: center innerRadius: aNumber outterRadius: anotherNumber alphaAngle: anAngle betaAngle: anotherAngle color: aColor [
+RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadius: anotherNumber alphaAngle: anAngle betaAngle: anotherAngle color: aColor [
 	| start end p1 p2 aAngle bAngle sweepFlag alpha beta id closings|
 	id := self count asString.
 	alpha := self makePositive: anAngle.
@@ -188,11 +190,11 @@ RTSVGVisitor >> drawArc: element center: center innerRadius: aNumber outterRadiu
 		ifFalse: [ sweepFlag := 0 ].
 	aAngle := self toRadian: alpha.
 	bAngle := self toRadian: beta.
-	start := self getPointFrom: center angle: aAngle radius: aNumber.
-	end := self getPointFrom: center angle: bAngle radius: aNumber.
-	p1 := self getPointFrom: center angle: aAngle radius: anotherNumber.
-	p2 := self getPointFrom: center angle: bAngle radius: anotherNumber.
-	closings := self addEmbeddingInteractions: 'arc' , id  element: element target: TRArcShape.
+	start := self getPointFrom: aCenter angle: aAngle radius: aNumber.
+	end := self getPointFrom: aCenter angle: bAngle radius: aNumber.
+	p1 := self getPointFrom: aCenter angle: aAngle radius: anotherNumber.
+	p2 := self getPointFrom: aCenter angle: bAngle radius: anotherNumber.
+	closings := self addEmbeddingInteractions: 'arc' , id  element: element.
 	stream
 		nextPutAll: '<path id="arc' , id , '" ';
 		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: start x with: start y);
@@ -207,17 +209,17 @@ RTSVGVisitor >> drawArc: element center: center innerRadius: aNumber outterRadiu
 						expandMacrosWith: (aColor red * 256) rounded
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded).
-	self addContainedInteractions: 'arc' , id element: element target: TRArcShape.
+	self addContainedInteractions: 'arc' , id element: element.
 	stream nextPutAll: '/>' , String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: 'arc' , id element: element target: TRArcShape.
+	self addExternalInteractions: 'arc' , id element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger color: aColor [
 	|id closings|
 	id := self count asString.
-	closings := self addEmbeddingInteractions: 'bezier' , id  element: element target: TRBezierShape.
+	closings := self addEmbeddingInteractions: 'bezier' , id  element: element.
 	stream
 		nextPutAll: '<path id="bezier',id,'" ';
 		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: (points at: 1) x rounded with: (points at: 1) y rounded).
@@ -229,52 +231,52 @@ RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger colo
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
 		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger).
-	self addContainedInteractions: ('bezier',id) element: element target: TRBezierShape.
+	self addContainedInteractions: ('bezier',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('bezier',id) element: element target: TRBezierShape.
+	self addExternalInteractions: ('bezier',id) element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger color: aColor [ 
 	|id closings|
 	id := self count asString.
-	closings := self addEmbeddingInteractions: 'line' , id  element: element target: TRLineShape.
+	closings := self addEmbeddingInteractions: 'line' , id  element: element.
 	stream 
 		nextPutAll: '<line id="line',id,'" ';
 		nextPutAll: ('x1="<1p>" y1="<2p>" ' expandMacrosWith: aPoint x rounded  with: aPoint y rounded);
 		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded );
 		nextPutAll: ('style="stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
 		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger ).
-	self addContainedInteractions: ('line',id) element: element target: TRLineShape.
+	self addContainedInteractions: ('line',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('line',id) element: element target: TRLineShape.
+	self addExternalInteractions: ('line',id) element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSmallInteger borderColor: aColor4 [ 
-	|center w h id closings|
+	|aCenter w h id closings|
 	id := self count asString.
-	center := aRectangle center.
+	aCenter := aRectangle center.
 	w := aRectangle width.
 	h := aRectangle height.
-	closings := self addEmbeddingInteractions: 'ellipse' , id  element: element target: TREllipseShape.
+	closings := self addEmbeddingInteractions: 'ellipse' , id  element: element.
 	stream 
 		nextPutAll: '<ellipse id="ellipse',id,'" ';
-		nextPutAll: ('cx= "<1p>" cy="<2p>" ' expandMacrosWith: center x rounded  with: center y rounded);
+		nextPutAll: ('cx= "<1p>" cy="<2p>" ' expandMacrosWith: aCenter x rounded  with: aCenter y rounded);
 		nextPutAll: ('rx="<1p>" ry="<2p>" ' expandMacrosWith: (w/ 2) rounded with: (h /2) rounded);
 		nextPutAll: ('style="fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red *256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
 		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: aColor alpha);	
 		nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded ); 
 		nextPutAll: ('stroke-width: <1p>" ' expandMacrosWith: aSmallInteger).
-	self addContainedInteractions: ('ellipse', id) element: element target: TREllipseShape.
+	self addContainedInteractions: ('ellipse', id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('ellipse', id)  element: element target: TREllipseShape.
+	self addExternalInteractions: ('ellipse', id)  element: element.
 ]
 
 { #category : #drawing }
@@ -283,7 +285,7 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 	id := self count asString.
 	distanceX := canvas topLeft x negated + 1.
 	distanceY := canvas topLeft y negated + 1.
-	closings := self addEmbeddingInteractions: 'p' , id  element: element target: TRSVGPath.
+	closings := self addEmbeddingInteractions: 'p' , id  element: element.
  	stream 
 		nextPutAll: '<path id="p',id,'" ';
 		nextPutAll: ('d="',pathString,'" ');
@@ -293,18 +295,18 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger );
 		nextPutAll: ('transform="translate(<1p>,<2p>) ' expandMacrosWith: distanceX with: distanceY);
 		nextPutAll: ('scale(<1p>)" ' expandMacrosWith: anInteger ).
-	self addContainedInteractions: ('p',id) element: element target: TRSVGPath.
+	self addContainedInteractions: ('p',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('p',id) element: element target: TRSVGPath.
+	self addExternalInteractions: ('p',id) element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor borderWidth: aSmallInteger borderColor: aColor [ 
 	|id closings|
 	id := self count asString.
-	closings := self addEmbeddingInteractions: 'rect' , id  element: element target: TRBoxShape.
+	closings := self addEmbeddingInteractions: 'rect' , id  element: element.
 	stream
 		nextPutAll: '<rect id="rect',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>"' expandMacrosWith: (aRectangle topLeft x rounded) with: (aRectangle topLeft y rounded) );
@@ -319,11 +321,11 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 					nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger)
 			]
 			ifFalse: [stream nextPutAll: '" '].
-	self addContainedInteractions: ('rect',id) element: element target: TRBoxShape.
+	self addContainedInteractions: ('rect',id) element: element.
 	stream					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('rect',id) element: element target: TRBoxShape. 
+	self addExternalInteractions: ('rect',id) element: element. 
 ]
 
 { #category : #drawing }
@@ -331,19 +333,19 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	|p id closings|
 	id := self count asString.
 	p := aPoint.
-	closings := self addEmbeddingInteractions: 'text' , id  element: element target: TRLabelShape.
+	closings := self addEmbeddingInteractions: 'text' , id  element: element.
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded).
-	self addContainedInteractions:('text',id)  element: element target: TRLabelShape.
+	self addContainedInteractions:('text',id)  element: element.
 	stream					
 		nextPutAll: '>';
 		nextPutAll: aByteString ;
 		nextPutAll: '</text>';
 		nextPutAll: String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions:('text',id)  element: element target: TRLabelShape.
+	self addExternalInteractions:('text',id)  element: element.
 ]
 
 { #category : #drawing }
@@ -351,20 +353,20 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color an
 	|p id closings|
 	id := self count asString.
 	p := aPoint.
-	closings := self addEmbeddingInteractions: 'text' , id  element: element target: TRRotatedLabelShape.
+	closings := self addEmbeddingInteractions: 'text' , id  element: element.
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
 		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)" ' expandMacrosWith: angle with: p x rounded with: p y rounded).
-	self addContainedInteractions: ('text',id) element: element target: TRRotatedLabelShape.
+	self addContainedInteractions: ('text',id) element: element.
 	stream					
 		nextPutAll: '>';
 		nextPutAll: aByteString ;
 		nextPutAll: '</text>';
 		nextPutAll: String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('text',id) element: element target: TRRotatedLabelShape.
+	self addExternalInteractions: ('text',id) element: element.
 ]
 
 { #category : #utils }
@@ -382,17 +384,17 @@ RTSVGVisitor >> fixedEncompassingRectangle [
 ]
 
 { #category : #utils }
-RTSVGVisitor >> getPointFrom: center angle: anAngle radius: aNumber [
+RTSVGVisitor >> getPointFrom: aCenter angle: anAngle radius: aNumber [
 	|x y|
-	x := (center x + (anAngle cos * aNumber)) rounded.
-	y := (center y + (anAngle sin * aNumber)) rounded.
+	x := (aCenter x + (anAngle cos * aNumber)) rounded.
+	y := (aCenter y + (anAngle sin * aNumber)) rounded.
 	^  x@y
 ]
 
 { #category : #initialization }
 RTSVGVisitor >> initialize [
 	afterStream := OrderedCollection new.
-	interactions := OrderedCollection new.
+	interactions := Dictionary new.
 	center := 1@1.
 ]
 

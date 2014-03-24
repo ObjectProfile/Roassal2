@@ -10,42 +10,36 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTHTMLTextPopup class >> on: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
-	|popup|
-	popup := self on: anHTMLExporter color: aColor targets: aRTShape.
-	popup text: aString;  fontSize: aNumber.
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
 RTHTMLTextPopup class >> on: anHTMLExporter text: aString targets: aRTShape [
-	|popup|
-	popup := self on: anHTMLExporter targets: aRTShape.
-	popup text: aString. 
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; text: aString; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
 RTHTMLTextPopup class >> onClick: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
-	|popup|
-	popup := self onClick: anHTMLExporter color: aColor targets: aRTShape.
-	popup text: aString;  fontSize: aNumber.
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; click: true; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
 RTHTMLTextPopup class >> onClick: anHTMLExporter text: aString targets: aRTShape [
-	|popup|
-	popup := self onClick: anHTMLExporter targets: aRTShape.
-	popup text: aString. 
-	^popup
+	| generator |
+	generator := [ :e |  self new target: e; text: aString; click: true; yourself ].
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement [
-	| center |
-	center := self position value: aRTElement.
+RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	aStream
-		nextPutAll: String cr,'<text id="',aString,'pop" x="',center x asString,'" y="',center y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'" visibility="hidden">',(self text value: aRTElement model),(self mouseAction: aString),'</text>'
+		nextPutAll: String cr,'<text id="',aString,'pop" x="',aNumber x asString,'" y="',aNumber y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'" visibility="hidden">',(self text value: aRTElement model),(self mouseAction: aString),'</text>'
 ]
 
 { #category : #accessing }

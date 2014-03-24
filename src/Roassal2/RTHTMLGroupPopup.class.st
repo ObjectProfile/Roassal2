@@ -8,12 +8,11 @@ Class {
 }
 
 { #category : #adding }
-RTHTMLGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement [
-	| center visitor myGroup|
+RTHTMLGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
+	| visitor myGroup |
 	myGroup := (self group value: aRTElement ).
-	center := self position value: aRTElement.
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
-	visitor := RTSVGVisitor new stream: aStream; center: center; yourself.
+	visitor := RTSVGVisitor new stream: aStream; center: aNumber; yourself.
 	visitor canvas: myGroup encompassingRectangle.
 	visitor visitGroup: myGroup.
 	aStream 

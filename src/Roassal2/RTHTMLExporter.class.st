@@ -13,7 +13,9 @@ Class {
 		'stream',
 		'fileName',
 		'title',
-		'interactions'
+		'interactions',
+		'backgroundColor',
+		'functions'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -107,7 +109,12 @@ RTHTMLExporter >> addStart [
 			nextPut: Character tab;
 			nextPut: Character tab;
 			nextPutAll: ('<script type="text/javascript">', String cr).
-		interactions do: [:i | i addFunctions: stream].
+		interactions keysAndValuesDo: [ :k :l | l do: [ :i | 
+				(functions includes: { k class .  i class})
+					ifFalse: [ 
+						i addFunctions: stream.
+						functions add: { k class .  i class}
+						]]].
 		stream
 			nextPut: Character tab;
 			nextPut: Character tab;
@@ -118,6 +125,16 @@ RTHTMLExporter >> addStart [
 			nextPutAll: ('<body>', String cr);
 			nextPut: Character tab;
 			nextPutAll: ('<h1>', self title,'</h1>', String cr).
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> backgroundColor [
+	^ backgroundColor
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> backgroundColor: anObject [
+	backgroundColor := anObject
 ]
 
 { #category : #accessing }
@@ -135,11 +152,16 @@ RTHTMLExporter >> builder: aBuilder title: aString [
 	self view: aBuilder view; title: aString.
 ]
 
+{ #category : #configuration }
+RTHTMLExporter >> defaultBackgroundColor [
+	^ Color veryLightGray
+]
+
 { #category : #exporting }
 RTHTMLExporter >> exportOnStream: fileStream [
 	self stream: fileStream.
 	self addStart.
-	RTInteractiveSVGExporter new view: self view; interactions: self interactions; exportOnStream: self stream.
+	RTInteractiveSVGExporter new view: self view; interactions: self interactions; backgroundColor: self backgroundColor;  exportOnStream: self stream.
 	self addEnd.
 ]
 
@@ -169,7 +191,9 @@ RTHTMLExporter >> fileName: anObject [
 { #category : #initialization }
 RTHTMLExporter >> initialize [
 	title := 'HTML Export'.
-	interactions := OrderedCollection new.
+	interactions := Dictionary new.
+	functions := OrderedCollection new.
+	backgroundColor := self defaultBackgroundColor.
 ]
 
 { #category : #accessing }
