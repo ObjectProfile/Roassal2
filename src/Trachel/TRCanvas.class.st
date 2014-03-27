@@ -46,6 +46,24 @@ TRCanvas >> addMenu: aTitle callback: aBlock [
 	self addFixedShape: lbl
 ]
 
+{ #category : #menu }
+TRCanvas >> addMenuAsSVG: aTitle callback: aBlock [
+	^ self addMenuAsSVG: aTitle scale: 1.0 callback: aBlock
+]
+
+{ #category : #menu }
+TRCanvas >> addMenuAsSVG: aTitle scale: scaleAsFloat callback: aBlock [
+	| icon index |
+	index := fixedShapes inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
+	icon := TRSVGPath new path: aTitle.
+	icon scale: scaleAsFloat.
+	icon color: Color black.
+	icon when: TRMouseClick do: [ :event | aBlock value ].
+	icon when: TRMouseEnter do: [ :event | icon color: Color blue. self signalUpdate ].
+	icon when: TRMouseLeave do: [ :event | icon color: Color black. self signalUpdate ].
+	self addFixedShape: icon
+]
+
 { #category : #building }
 TRCanvas >> addShape: shape [
 	shape addedIn: self
