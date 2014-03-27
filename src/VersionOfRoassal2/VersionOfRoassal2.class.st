@@ -1948,3 +1948,14 @@ VersionOfRoassal2 >> version000131 [
 	at: #date put: '24 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000132 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.87';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.164';
+	at: #version put: '0.133';
+	at: #comment put: '0.133 : fixed the Mondrian shape builder for edges';
+	at: #date put: '27 March 2014';
+	yourself
+]
