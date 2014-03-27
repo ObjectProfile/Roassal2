@@ -5,8 +5,7 @@ Class {
 		'topLevelNodes',
 		'nesting',
 		'topLevelEdges',
-		'layout',
-		'lineShapeBuilder'
+		'layout'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
@@ -33,22 +32,20 @@ RTMondrianViewBuilder >> edgeFromAssociation: association [
 
 ]
 
-{ #category : #private }
-RTMondrianViewBuilder >> edgeShape [
-	^ lineShapeBuilder shape
-]
-
 { #category : #'adding - edges' }
 RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
-
 	| es |
-	es := RTEdge 
-		buildEdgesFromObjects: objects 
-		from: fromBlock 
-		to: toBlock 
-		using: self edgeShape
-		inView: view 
-		scope: (RTGroup new addAll: topLevelNodes; yourself).
+	self setLineShapeIfNecessary.
+	es := RTEdge
+		buildEdgesFromObjects: objects
+		from: fromBlock
+		to: toBlock
+		using: self nodeShape
+		inView: view
+		scope:
+			(RTGroup new
+				addAll: topLevelNodes;
+				yourself).
 	topLevelEdges addAll: es.
 	es do: #moveBehindItsExtremities.
 	^ es
@@ -63,7 +60,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 	For example:
 	  aView edges: someFamixInvocations from: #sender toAll: #candidates
 
-	Or:
+	Or: 
 	
 	| collection |
 	collection := #(1 2 3 4 5 6 7 8 9 10).
@@ -75,13 +72,15 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 	aToBlock should return a collection, edges will be drawn from the entity returned by aFromBlock to this collection"
 	
 	| es |
+	self setLineShapeIfNecessary.
 	es := RTEdge 
 		buildEdgesFromObjects: objects 
 		from: fromBlock 
 		toAll: toAllBlock 
-		using: self edgeShape
+		using: shapeBuilder current  "self edgeShape"
 		inView: view 
-		scope: (RTGroup new addAll: topLevelNodes; yourself).
+		scope: (RTGroup new addAll: view elements; yourself).
+		"scope: (RTGroup new addAll: topLevelNodes; yourself)."
 	topLevelEdges addAll: es.
 	es do: #moveBehindItsExtremities
 ]
@@ -125,7 +124,6 @@ RTMondrianViewBuilder >> initialize [
 	super initialize.
 	self resetView.
 	self resetShapeBuilder.
-	self resetLineShapeBuilder.
 	self resetInteractionBuilder.
 	
 	topLevelNodes := OrderedCollection new.
@@ -234,13 +232,6 @@ RTMondrianViewBuilder >> resetInteractionBuilder [
 ]
 
 { #category : #initialization }
-RTMondrianViewBuilder >> resetLineShapeBuilder [
-	lineShapeBuilder := RTShapeBuilder new.
-	lineShapeBuilder line
-		color: Color gray 
-]
-
-{ #category : #initialization }
 RTMondrianViewBuilder >> resetShapeBuilder [
 	shapeBuilder := self createShapeBuilder.
 	shapeBuilder rectangle
@@ -253,6 +244,12 @@ RTMondrianViewBuilder >> resetView [
 	view := RTView new.
 	view @ RTDraggableView.
 	view canvas color: Color white
+]
+
+{ #category : #'adding - edges' }
+RTMondrianViewBuilder >> setLineShapeIfNecessary [
+	(self nodeShape class inheritsFrom: RTAbstractLine)
+		ifFalse: [ self shape line ]
 ]
 
 { #category : #accessing }
