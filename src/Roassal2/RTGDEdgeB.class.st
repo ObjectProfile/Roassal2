@@ -1,0 +1,59 @@
+Class {
+	#name : #RTGDEdgeB,
+	#superclass : #Object,
+	#instVars : [
+		'conditionalShapes',
+		'graphBuilder'
+	],
+	#category : #'Roassal2-Builder-Graph'
+}
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> createEdgesFor: object [
+	"| shape |
+	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
+	^ shape elementOn: object
+	"
+	| el v toElements res |
+	v := graphBuilder view.
+	el := v elementFromModel: object.
+	conditionalShapes do: [ :arr | 
+		(arr first rtValue: object)
+			ifTrue: [ 
+				res := arr second rtValue: object.
+				res isCollection ifFalse: [ res := Array with: res ].
+				toElements := OrderedCollection new.
+				res do: [ :o | 
+					| t | 
+					t := (v elementFromModel: o). 
+					t ifNotNil: [ toElements add: t ] ].
+				^ toElements collect: [ :e | arr third edgeFrom: el to: e ] ] ].
+				
+	^ nil
+]
+
+{ #category : #accessing }
+RTGDEdgeB >> graphBuilder [
+	^ graphBuilder
+]
+
+{ #category : #accessing }
+RTGDEdgeB >> graphBuilder: aGraphBuilder [
+	graphBuilder := aGraphBuilder
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> if: condition connectedTo: toBlock [
+	^ self if: condition connectedTo: toBlock shape: RTLine new
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> if: condition connectedTo: toBlock shape: aShape [
+	conditionalShapes add: (Array with: condition with: toBlock with: aShape)
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> initialize [
+	super initialize.
+	conditionalShapes := OrderedCollection new
+]
