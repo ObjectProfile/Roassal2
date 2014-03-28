@@ -232,8 +232,6 @@ TRShape >> pushFront [
 
 { #category : #actions }
 TRShape >> remove [
-	"Return true if I am in a canvas"
-	
 	"Do nothing if the line is not already in a canvas"
 	self isInACanvas ifFalse: [ ^ self ]. 
 	canvas removeShape: self
