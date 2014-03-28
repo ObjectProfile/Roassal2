@@ -30,8 +30,8 @@ RTGraphBuilder >> addEdgesForObject: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> applyLayout [
-
-	layout executeOn: view elements
+	layout executeOn: view 
+	"layout on: view elements edges: view edges"
 ]
 
 { #category : #'as yet unclassified' }
@@ -39,7 +39,7 @@ RTGraphBuilder >> cleanAndAddEdges [
 	"This is an expensive method"
 	
 	"Remove all the edges of the view"
-	view edges do: [ :e | e trachelShape remove ].
+	view edges copy do: [ :e | e remove ].
 
 	view elements do: [ :element |
 		self addEdgesForObject: element model ]

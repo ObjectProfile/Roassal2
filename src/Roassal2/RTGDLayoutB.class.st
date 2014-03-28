@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTGDLayoutB >> executeOn: elements [
+RTGDLayoutB >> executeOn: view [
 	| condition layout elementsToLayout |
 	conditionalLayout do: [ :array |
 		condition := array first.
 		layout := array second.
 		
-		elementsToLayout := elements select: [ :e | condition rtValue: e model ].
-		layout on: elementsToLayout.
+		elementsToLayout := view elements select: [ :e | condition rtValue: e model ].
+		layout on: elementsToLayout edges: view edges.
 		]
 ]
 

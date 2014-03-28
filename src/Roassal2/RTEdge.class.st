@@ -179,6 +179,11 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock inView: view [
+	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new inView: view scope: (RTGroup withAll: view elements)
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"

@@ -59,7 +59,7 @@ RTGraphBuilderExamples >> vissoft01 [
 		if: [ :obj | obj isBehavior ] connectedTo: [ :c | c subclasses ].
 
 	b layout 
-		for: [ :cls | cls isBehavior ] use: (RTForceBasedLayout new).
+		for: [ :cls | cls isBehavior ] use: (RTTreeLayout new).
 		
 	b addAll: (RTShape withAllSubclasses).
 	b open
