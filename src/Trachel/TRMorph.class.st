@@ -66,6 +66,12 @@ TRMorph >> drawOn: aCanvas [
 ]
 
 { #category : #'events-processing' }
+TRMorph >> handleKeystroke: anEvent [
+	
+	self rtKeyStroke: anEvent.
+]
+
+{ #category : #'events-processing' }
 TRMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
 	self rtMouseMoving: anEvent.
@@ -93,6 +99,12 @@ TRMorph >> handleMouseOver: anEvent [
 			shapeBeingPointed := currentElement.
 			self rtMouseEnter: anEvent ].
 
+]
+
+{ #category : #'events-processing' }
+TRMorph >> handlesKeyboard: evt [
+
+	^true
 ]
 
 { #category : #'event handling' }
@@ -191,6 +203,25 @@ TRMorph >> relativePositionFor: evt [
 	"Return the position within the window"
 	^ evt position - self bounds origin
 	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
+]
+
+{ #category : #'event-processed' }
+TRMorph >> rtKeyStroke: evt [
+	| relativePosition ev  shape |
+	
+	(evt commandKeyPressed and: [ evt keyCharacter = $w ]) ifTrue: [ self owner delete ].
+	relativePosition := self relativePositionFor: evt.
+	
+	ev := TRKeyDown new keyValue: evt keyValue.
+	shape := self shapeWithActionForPositionInPixels: relativePosition.
+
+	ev shape: shape.
+	ev morph: self.
+	ev canvas: trachelCanvas.
+	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
+
+	shape announce: ev.
+
 ]
 
 { #category : #'event-processed' }
@@ -335,6 +366,13 @@ TRMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds. This default implementation requests that the 'step' method be called once every second."
 
 	^ 20
+]
+
+{ #category : #'events-processing' }
+TRMorph >> takesKeyboardFocus [
+	"Answer whether the receiver can normally take keyboard focus."
+
+	^ true
 ]
 
 { #category : #accessing }
