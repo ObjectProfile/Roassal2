@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTMetricMap >> allCountriesColor: aColor [
+	^ self countries: RTSVGPath countries color: aColor
+
+]
+
+{ #category : #'as yet unclassified' }
 RTMetricMap >> convertIntoSVGCountryName: aName [
 	| normalizedName |
 	aName = 'Mauritius' ifTrue: [ ^ #Mauritania ].
