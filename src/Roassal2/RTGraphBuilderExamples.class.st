@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple01 [
 	"
 	self new simple01
@@ -22,7 +22,7 @@ RTGraphBuilderExamples >> simple01 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple02 [
 	"
 	self new simple02
@@ -35,7 +35,7 @@ RTGraphBuilderExamples >> simple02 [
 		if: [ :cls | cls numberOfMethods >= 15 ] shape: (RTEllipse new size: 40; color: Color red).
 
 	b edge
-		if: [ :cls | cls numberOfMethods >= 15 ] connectedTo: [ :c | c subclasses ].
+		if: [ :cls | cls numberOfMethods >= 15 ] connectTo: [ :c | c subclasses ].
 
 	b layout 
 		for: [ :cls | cls numberOfMethods >= 15 ] use: (RTTreeLayout new);
@@ -44,7 +44,7 @@ RTGraphBuilderExamples >> simple02 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01
@@ -56,7 +56,28 @@ RTGraphBuilderExamples >> vissoft01 [
 		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]; color: (Color blue alpha: 0.3)).
 
 	b edge
-		if: [ :obj | obj isBehavior ] connectedTo: [ :c | c subclasses ].
+		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ].
+
+	b layout 
+		for: [ :cls | cls isBehavior ] use: (RTTreeLayout new).
+		
+	b addAll: (RTShape withAllSubclasses).
+	b open
+]
+
+{ #category : #examples }
+RTGraphBuilderExamples >> vissoft02 [
+	"
+	self new vissoft02
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]; color: (Color blue alpha: 0.3)).
+
+	b edge
+		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
 
 	b layout 
 		for: [ :cls | cls isBehavior ] use: (RTTreeLayout new).

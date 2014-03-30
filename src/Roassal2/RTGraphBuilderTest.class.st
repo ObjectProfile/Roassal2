@@ -20,7 +20,7 @@ RTGraphBuilderTest >> testEdge [
 		if: [ :o | true ] shape: (RTEllipse new size: 10; color: Color blue).
 
 	b edge
-		if: [ :obj | obj = 1 ] connectedTo: [ :o | o + 1 ] shape: (RTLine new color: Color blue).
+		if: [ :obj | obj = 1 ] connectTo: [ :o | o + 1 ] shape: (RTLine new color: Color blue).
 	b addAll: (1 to: 2).
 	
 	self assert: b view numberOfElements = 2.

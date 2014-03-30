@@ -43,12 +43,12 @@ RTGDEdgeB >> graphBuilder: aGraphBuilder [
 ]
 
 { #category : #'as yet unclassified' }
-RTGDEdgeB >> if: condition connectedTo: toBlock [
-	^ self if: condition connectedTo: toBlock shape: RTLine new
+RTGDEdgeB >> if: condition connectTo: toBlock [
+	^ self if: condition connectTo: toBlock shape: RTLine new
 ]
 
 { #category : #'as yet unclassified' }
-RTGDEdgeB >> if: condition connectedTo: toBlock shape: aShape [
+RTGDEdgeB >> if: condition connectTo: toBlock shape: aShape [
 	conditionalShapes add: (Array with: condition with: toBlock with: aShape)
 ]
 
