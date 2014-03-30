@@ -18,6 +18,12 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
+{ #category : #public }
+RTBuilder >> cleanView [
+	view edges copy do: #remove.
+	view elements copy do: #remove.
+]
+
 { #category : #hooks }
 RTBuilder >> createInteractionBuilder [
 	^ RTInteractionBuilder new

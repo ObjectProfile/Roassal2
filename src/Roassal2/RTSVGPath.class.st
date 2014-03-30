@@ -923,7 +923,7 @@ RTSVGPath >> path: aPathAsString [
 	path := aPathAsString.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSVGPath >> rotate: anAngle [
 	rotation := anAngle.
 ]

@@ -7,12 +7,12 @@ Class {
 	#category : #'Roassal2-Builder-Map'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTMapBuilderTest >> setUp [
 	builder := RTMapBuilder new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testCities [
 	|stgo brasilia saopaulo|
 	stgo := #('Santiago' 6027000).
@@ -30,7 +30,7 @@ RTMapBuilderTest >> testCities [
 	self assert: builder view elements fifth model = saopaulo.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testCityEvolution [
 	| myCities santiago |
 	myCities := #(
@@ -57,7 +57,7 @@ RTMapBuilderTest >> testCityEvolution [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testCountries [
 	| chile france |
 	chile := #('Chile').
@@ -71,7 +71,7 @@ RTMapBuilderTest >> testCountries [
 	self assert: builder view elements second model == france.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testGeoLength [
 	| santiago paris distance error vdm |
 	
@@ -90,7 +90,7 @@ RTMapBuilderTest >> testGeoLength [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testPixelsToGeoTransformations [
 	|santiago stgoPixels paris parisPixels pixelsToGeo|
 	
@@ -108,7 +108,7 @@ RTMapBuilderTest >> testPixelsToGeoTransformations [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMapBuilderTest >> testRoutes [
 	builder countries: #('Chile' 'Brazil').
 	builder cities: #('Santiago' 'Brasilia' 'Sao Paulo').
