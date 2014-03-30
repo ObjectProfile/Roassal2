@@ -2014,3 +2014,14 @@ VersionOfRoassal2 >> version000137 [
 	at: #date put: '30 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000138 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.89';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.170';
+	at: #version put: '0.139';
+	at: #comment put: '0.139 : Started to work on a read eval loop for Roassal. Improved the example of the map builder';
+	at: #date put: '30 March 2014';
+	yourself
+]
