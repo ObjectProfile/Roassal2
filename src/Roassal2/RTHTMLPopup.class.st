@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'click',
 		'color',
-		'position'
+		'position',
+		'bounds'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -41,6 +42,16 @@ RTHTMLPopup >> addFunctions: aStream [
 ]
 
 { #category : #accessing }
+RTHTMLPopup >> bounds [
+	^ bounds
+]
+
+{ #category : #accessing }
+RTHTMLPopup >> bounds: anObject [
+	bounds := anObject
+]
+
+{ #category : #accessing }
 RTHTMLPopup >> click [
 	^ click
 ]
@@ -62,14 +73,16 @@ RTHTMLPopup >> color: anObject [
 
 { #category : #initialization }
 RTHTMLPopup >> initialize [
+	super initialize.
 	click := false.
 	color := Color black.
 	contained := false.
 	external := true.
+	self type: 'popup'.
 	position := [ :element | element trachelShape position ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTHTMLPopup >> mouseAction: aString [
 	^click 
 		ifTrue: ["Still does not work"
@@ -90,4 +103,14 @@ RTHTMLPopup >> position [
 { #category : #accessing }
 RTHTMLPopup >> position: anObject [
 	position := anObject
+]
+
+{ #category : #accessing }
+RTHTMLPopup >> xBound [
+	^1
+]
+
+{ #category : #accessing }
+RTHTMLPopup >> yBound [
+	^1
 ]

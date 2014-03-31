@@ -85,6 +85,8 @@ RTHTMLExporterExample >> exampleWithHightlight [
 
 { #category : #example }
 RTHTMLExporterExample >> exampleWithMetricMap [
+	
+	"self new exampleWithMetricMap"
 
 | b table exporter |
 b := RTMetricMap new.

@@ -168,11 +168,12 @@ RTHTMLExporter >> exportOnStream: fileStream [
 { #category : #exporting }
 RTHTMLExporter >> exportToFile [
 
-	| fileStream |
-	(FileSystem disk workingDirectory / (self fileName,'.html')) delete.
-	fileStream := (FileSystem disk workingDirectory / (self fileName,'.html')) writeStream.
-	[ self exportOnStream: fileStream ] 
-		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
+	| file  |
+	file := (FileSystem disk workingDirectory / (self fileName,'.html')).
+	file exists ifTrue: [file delete].
+	file := (FileSystem disk workingDirectory / (self fileName,'.html')) writeStream.
+	[ self exportOnStream: file ] 
+		ensure: [ file notNil ifTrue: [ file close ] ]
 ]
 
 { #category : #accessing }
