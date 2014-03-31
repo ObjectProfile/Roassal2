@@ -17,32 +17,46 @@ RTHTMLHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
 { #category : #adding }
 RTHTMLHightlight >> addEventHandlers: aStream id: aString element: element center: aNumber [
 	aStream
-		nextPutAll: 'onmouseover="hightlight',target class name asString,'(''',aString,''');" onmouseout="unHightlight',target class name asString,'(''',aString,''');"'
+		nextPutAll: 'hightlight '
 ]
 
 { #category : #adding }
 RTHTMLHightlight >> addFunctions: aStream [
-	| attr  tname|
+	| attr  |
 	attr := self targetAttribute.
-	tname := target class name asString.
 	aStream
-		nextPutAll: '			var currentId',tname,';
-			var color',tname,';
-			function hightlight',tname,'(id) {
-				var affected = document.getElementById(id);
-				if (color',tname,' == affected.style["',attr,'"] || color',tname,' == null) {
-					color',tname,' = affected.style["',attr,'"];
-					currentId',tname,' = id;
+		nextPutAll: '			var color;
+			function hightlight(evt) {
+				if (evt.target.id == "BackDrop")
+					return;
+				if (!evt.target.classList.contains("hightlight"))
+					return;
+				var affected = evt.target;
+				if (color == affected.style["',attr,'"] || color == null) {
+					color = affected.style["',attr,'"];
 					affected.style["',attr,'"] = "',self color asHTMLColor,'";
 				}
-			}
-			function unHightlight',tname,'(id) {
-				if (currentId',tname,' != id)
+			};
+			
+			function unHightlight(evt) {
+				if (evt.target.id == "BackDrop")
 					return;
-				var affected = document.getElementById(id);
-				affected.style["',attr,'"] = color',tname,';
-				color',tname,' = null;
-			}'.
+				if (!evt.target.classList.contains("hightlight"))
+					return;
+				var affected = evt.target;
+				affected.style["',attr,'"] = color;
+				color = null;
+			}';
+		nextPutAll: String cr.
+]
+
+{ #category : #adding }
+RTHTMLHightlight >> addGlobalHandlers: aStream [
+	aStream
+		nextPutAll: '
+	onmouseover="hightlight(evt)"
+	onmouseout="unHightlight(evt)"
+'
 ]
 
 { #category : #accessing }
