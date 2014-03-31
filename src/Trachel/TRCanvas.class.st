@@ -299,8 +299,15 @@ TRCanvas >> pushAll: elements1 behindAll: elements2 [
 
 { #category : #actions }
 TRCanvas >> pushBack: aShape [
-	shapes remove: aShape.
-	shapes addFirst: aShape
+	(shapes includes: aShape)
+		ifTrue: [ 	
+				shapes remove: aShape.
+				shapes addFirst: aShape ].
+
+	(fixedShapes includes: aShape)
+		ifTrue: [ 	
+				fixedShapes remove: aShape.
+				fixedShapes addFirst: aShape ]
 ]
 
 { #category : #actions }

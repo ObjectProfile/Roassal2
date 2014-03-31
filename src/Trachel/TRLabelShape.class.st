@@ -36,6 +36,11 @@ TRLabelShape >> ascent [
 	^ font ascent
 ]
 
+{ #category : #accessing }
+TRLabelShape >> center [
+	^ self position
+]
+
 { #category : #initialization }
 TRLabelShape >> defaultFontSize [
 	^ self class defaultFontSize
