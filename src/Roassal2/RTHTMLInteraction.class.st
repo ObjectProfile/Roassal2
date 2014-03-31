@@ -2,7 +2,6 @@ Class {
 	#name : #RTHTMLInteraction,
 	#superclass : #RTObject,
 	#instVars : [
-		'type',
 		'target',
 		'contained',
 		'external'
@@ -39,11 +38,6 @@ RTHTMLInteraction >> addFunctions: aStream [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
-RTHTMLInteraction >> addGlobalHandlers: aStream [
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 RTHTMLInteraction >> contained [
 	^contained
@@ -54,12 +48,6 @@ RTHTMLInteraction >> external [
 	^external
 ]
 
-{ #category : #'as yet unclassified' }
-RTHTMLInteraction >> initialize [
-	super initialize.
-	self type: 'interaction'
-]
-
 { #category : #accessing }
 RTHTMLInteraction >> target [
 	^ target
@@ -68,14 +56,4 @@ RTHTMLInteraction >> target [
 { #category : #accessing }
 RTHTMLInteraction >> target: anObject [
 	target := anObject
-]
-
-{ #category : #accessing }
-RTHTMLInteraction >> type [
-	^ type
-]
-
-{ #category : #accessing }
-RTHTMLInteraction >> type: anObject [
-	type := anObject
 ]

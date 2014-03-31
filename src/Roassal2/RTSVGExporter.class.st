@@ -108,12 +108,11 @@ RTSVGExporter >> exportOnStream: fileStream [
 { #category : #exporting }
 RTSVGExporter >> exportToFile [
 
-	| file |
-	file := (FileSystem disk workingDirectory / (self fileName,'.svg')).
-	file exists ifTrue: [ file delete ].
-	file := (FileSystem disk workingDirectory / (self fileName,'.svg')) writeStream.
-	[ self exportOnStream: file ] 
-		ensure: [ file notNil ifTrue: [ file close ] ]
+	| fileStream |
+	(FileSystem disk workingDirectory / (self fileName,'.html')) delete.
+	fileStream := (FileSystem disk workingDirectory / (self fileName,'.svg')) writeStream.
+	[ self exportOnStream: fileStream ] 
+		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
 ]
 
 { #category : #accessing }

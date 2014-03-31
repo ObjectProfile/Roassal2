@@ -27,11 +27,6 @@ RTHTMLLink >> addFunctions: aStream [
 	"do nothing"
 ]
 
-{ #category : #adding }
-RTHTMLLink >> addGlobalHandlers: aStream [
-	"do nothing"
-]
-
 { #category : #accessing }
 RTHTMLLink >> initialize [
 	link := [:a |'http://objectprofile.com/'].

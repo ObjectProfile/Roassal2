@@ -52,17 +52,9 @@ RTHTMLTextPopup class >> onClick: anHTMLExporter text: aString targets: aRTShape
 ]
 
 { #category : #adding }
-RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
-	|rText xOverflow yOverflow x y|
-	rText := (self text value: aRTElement model) asString.
-	x := aPoint x.
-	y := aPoint y.
-	xOverflow := aPoint x - bounds width + ((StrikeFont familyName: self font size: self fontSize)  widthOfString: rText).
-	yOverflow := aPoint y - bounds height + self fontSize.
-	xOverflow >= 0 ifTrue: [ x:= x - xOverflow ].
-	yOverflow >= 0 ifTrue: [ y:= y - yOverflow ].
+RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	aStream
-		nextPutAll: String cr,'<text id="',aString,'pop" x="',x asString,'" y="',y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'" visibility="hidden"><tspan font-family = "',self font,'">',rText,(self mouseAction: aString),'</tspan></text>'
+		nextPutAll: String cr,'<text id="',aString,'pop" x="',aNumber x asString,'" y="',aNumber y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'" visibility="hidden"><tspan font-family = "',self font,'">',(self text value: aRTElement model),(self mouseAction: aString),'</tspan></text>'
 ]
 
 { #category : #configuration }
@@ -106,9 +98,4 @@ RTHTMLTextPopup >> text [
 { #category : #accessing }
 RTHTMLTextPopup >> text: aSymbolOrBlock [
 	text := aSymbolOrBlock
-]
-
-{ #category : #accessing }
-RTHTMLTextPopup >> yBound [
-	^fontSize
 ]
