@@ -31,3 +31,8 @@ RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new
 ]
+
+{ #category : #public }
+RTGDNodeB >> shape: aShape [
+	^ self if: true shape: aShape
+]

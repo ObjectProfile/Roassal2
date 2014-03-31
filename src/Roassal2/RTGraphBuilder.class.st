@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'node',
 		'edge',
-		'layout'
+		'layout',
+		'global'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -12,12 +13,19 @@ Class {
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> add: anObject [
 	view add: (self createElementFor: anObject).
-	self cleanAndAddEdges
+	self cleanAndAddEdges.
+	global executeOn: self view
 ]
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> addAll: objects [
-	objects do: [ :o | self add: o ]
+	objects do: [ :anObject |
+		view add: (self createElementFor: anObject) ].
+	self cleanAndAddEdges.
+	global executeOn: self view
+
+	"SLOW!"
+	"objects do: [ :o | self add: o ]"
 ]
 
 { #category : #'as yet unclassified' }
@@ -69,11 +77,17 @@ RTGraphBuilder >> edge [
 ]
 
 { #category : #'as yet unclassified' }
+RTGraphBuilder >> global [
+	^ global
+]
+
+{ #category : #'as yet unclassified' }
 RTGraphBuilder >> initialize [
 	super initialize.
 	node := RTGDNodeB new.
 	edge := RTGDEdgeB new graphBuilder: self; yourself.
-	layout := RTGDLayoutB new
+	layout := RTGDLayoutB new.
+	global := RTGDGlobalB new.
 ]
 
 { #category : #'as yet unclassified' }
