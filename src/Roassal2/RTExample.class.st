@@ -1243,7 +1243,7 @@ RTExample >> zooming [
 
 	| v |
 	v := RTView new.
-	v add: (RTBox new size: 40) element @ RTHighlightable @ RTDraggable.
+	v add: (RTBox new size: 40) element.
 
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].

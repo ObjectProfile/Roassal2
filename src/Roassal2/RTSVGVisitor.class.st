@@ -42,6 +42,11 @@ RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectang
 	self new view: view; stream: stream; interactions: interactions; canvas: aRectangle; visit; yourself.
 ]
 
+{ #category : #visitor }
+RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectangle center: aPoint [
+	self new view: view; stream: stream; interactions: interactions; canvas: aRectangle; center: aPoint; visit; yourself.
+]
+
 { #category : #utils }
 RTSVGVisitor >> addContainedInteractions: id element: element [
 	| aNumber |
@@ -208,9 +213,12 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 				('style="fill:rgb(<1p>,<2p>,<3p>);" '
 						expandMacrosWith: (aColor red * 256) rounded
 						with: (aColor green * 256) rounded
-						with: (aColor blue * 256) rounded).
+						with: (aColor blue * 256) rounded);
+		nextPutAll: 'class="'.
 	self addContainedInteractions: 'arc' , id element: element.
-	stream nextPutAll: '/>' , String cr.
+	stream
+		nextPutAll: '"';
+		nextPutAll: '/>' , String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: 'arc' , id element: element.
 ]
@@ -231,9 +239,11 @@ RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger colo
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
 		nextPutAll: ('stroke-width:<1p>;' expandMacrosWith: aSmallInteger);
-		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha).
+		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha);
+		nextPutAll: 'class="'.
 	self addContainedInteractions: ('bezier',id) element: element.
-	stream					
+	stream
+		nextPutAll: '"';					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('bezier',id) element: element.
@@ -250,9 +260,11 @@ RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger 
 		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded );
 		nextPutAll: ('style="stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
 		nextPutAll: ('stroke-width:<1p> ' expandMacrosWith: aSmallInteger );
-		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha).
+		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha);
+		nextPutAll: 'class="'.
 	self addContainedInteractions: ('line',id) element: element.
-	stream					
+	stream
+		nextPutAll: '"';				
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('line',id) element: element.
@@ -279,8 +291,11 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 			stream	
 				nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded );
 				nextPutAll: ('stroke-width: <1p>" ' expandMacrosWith: aSmallInteger)].
+			stream
+				nextPutAll: 'class="'.
 	self addContainedInteractions: ('ellipse', id) element: element.
-	stream					
+	stream
+		nextPutAll: '"';				
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('ellipse', id)  element: element.
@@ -301,9 +316,11 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 		nextPutAll: ('stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (borderColor red * 256) rounded with: (borderColor green * 256) rounded with: (borderColor blue * 256) rounded );
 		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger );
 		nextPutAll: ('transform="translate(<1p>,<2p>) ' expandMacrosWith: distanceX with: distanceY);
-		nextPutAll: ('scale(<1p>)" ' expandMacrosWith: anInteger ).
+		nextPutAll: ('scale(<1p>)" ' expandMacrosWith: anInteger );
+		nextPutAll: 'class="'.
 	self addContainedInteractions: ('p',id) element: element.
-	stream					
+	stream
+		nextPutAll: '"';				
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('p',id) element: element.
@@ -328,8 +345,11 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 					nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger)
 			]
 			ifFalse: [stream nextPutAll: '" '].
+	stream
+		nextPutAll: 'class="'.
 	self addContainedInteractions: ('rect',id) element: element.
-	stream					
+	stream
+		nextPutAll: '"';				
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('rect',id) element: element. 
@@ -344,9 +364,11 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
-		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded).
+		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
+		nextPutAll: 'class="'.
 	self addContainedInteractions:('text',id)  element: element.
-	stream					
+	stream
+		nextPutAll: '"';		
 		nextPutAll: '>';
 		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
 		nextPutAll: aByteString ;
@@ -366,12 +388,15 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color an
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
-		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)" ' expandMacrosWith: angle with: p x rounded with: p y rounded).
-	self addContainedInteractions: ('text',id) element: element.
-	stream					
+		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)" ' expandMacrosWith: angle with: p x rounded with: p y rounded);
+		nextPutAll: 'class="'.
+	self addContainedInteractions:('text',id)  element: element.
+	stream
+		nextPutAll: '"';		
 		nextPutAll: '>';
+		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
 		nextPutAll: aByteString ;
-		nextPutAll: '</text>';
+		nextPutAll: '</tspan></text>';
 		nextPutAll: String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('text',id) element: element.

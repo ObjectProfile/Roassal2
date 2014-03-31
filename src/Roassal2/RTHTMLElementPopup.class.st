@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Exporter-HTML'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTHTMLElementPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
 	| visitor myElement|
 	myElement := (self element value: aRTElement ).
@@ -30,7 +30,7 @@ RTHTMLElementPopup >> element: anObject [
 	element := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTHTMLElementPopup >> initialize [
 	super initialize.
 	element := [ :m | (RTElement  on: m) + (RTBox new color: Color blue; yourself)]
