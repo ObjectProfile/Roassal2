@@ -8,7 +8,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 TRComposedShape class >> with: s1 with: s2 [
 	|max|
 	max := s1 encompassingRectangle extent max: s2 encompassingRectangle extent.
@@ -82,6 +82,13 @@ TRComposedShape >> element: anObject [
 { #category : #accessing }
 TRComposedShape >> encompassingRectangle [
 	^ Rectangle merging: (Array with: shape1 encompassingRectangle with: shape2 encompassingRectangle)
+]
+
+{ #category : #'as yet unclassified' }
+TRComposedShape >> extent: anExtent [
+
+	shape1 extent: anExtent.
+	shape2 extent: anExtent
 ]
 
 { #category : #accessing }
