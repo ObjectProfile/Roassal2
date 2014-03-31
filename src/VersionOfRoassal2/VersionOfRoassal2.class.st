@@ -2047,3 +2047,14 @@ VersionOfRoassal2 >> version000140 [
 	at: #date put: '31 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000141 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.91';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.172';
+	at: #version put: '0.142';
+	at: #comment put: '0.142 : fixed an important bug about scaling and the camera. Thanks To Ronie about this!';
+	at: #date put: '31 March 2014';
+	yourself
+]
