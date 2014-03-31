@@ -2025,3 +2025,14 @@ VersionOfRoassal2 >> version000138 [
 	at: #date put: '30 March 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000139 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.89';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.171';
+	at: #version put: '0.140';
+	at: #comment put: '0.140 : added exampleWithMetricMap in RTHTMLExporterExample';
+	at: #date put: '31 March 2014';
+	yourself
+]
