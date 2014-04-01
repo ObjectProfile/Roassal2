@@ -174,7 +174,7 @@ TRCanvasTest >> testComposing [
 	| s1 s2 c trCanvas |
 	s1 := TRBoxShape new.
 	s2 := TRBoxShape new.
-	c := TRComposedShape with: s1 with: s2.
+	c := TRCompositeShape with: s1 with: s2.
 	trCanvas := TRCanvas new.
 	trCanvas addShape: c.
 	self assert: trCanvas numberOfShapes = 2.

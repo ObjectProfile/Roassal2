@@ -11,7 +11,7 @@ TRShapeTest >> testExtendingAComposite [
 	c := TRCanvas new.
 	s1 := TRBoxShape new size: 50.
 	s2 := TRBoxShape new size: 40.
-	cs := TRComposedShape with: s1 with: s2.
+	cs := TRCompositeShape with: s1 with: s2.
 	c addShape: cs.
 	cs extent: 100 @ 80.
 	
