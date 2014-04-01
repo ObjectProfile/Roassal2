@@ -338,13 +338,13 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 		nextPutAll: 'style="';
 		nextPutAll: ('fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (fillColor red * 256) rounded with: (fillColor green * 256) rounded with: (fillColor blue * 256) rounded);
 		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: fillColor alpha).	
-		(aSmallInteger > 0 or: aColor ~= nil)
-			ifTrue: [
+		(aColor = nil or: aSmallInteger <= 0)
+			ifFalse: [
 				stream 
 					nextPutAll: (';stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded);
 					nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger)
 			]
-			ifFalse: [stream nextPutAll: '" '].
+			ifTrue: [stream nextPutAll: '" '].
 	stream
 		nextPutAll: 'class="'.
 	self addContainedInteractions: ('rect',id) element: element.
