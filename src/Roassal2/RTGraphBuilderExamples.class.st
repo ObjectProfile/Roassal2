@@ -115,7 +115,33 @@ RTGraphBuilderExamples >> vissoft03 [
 	| b |
 	b := RTGraphBuilder new.
 	b node
-		shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
+		shape: (RTEllipse new size: #numberOfMethods).
+
+	b edge
+		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+
+	b layout 
+		use: (RTForceBasedLayout new).
+
+	b global
+		minSize: 10;
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+
+	b addAll: (RTObject withAllSubclasses).
+	b open
+]
+
+{ #category : #examples }
+RTGraphBuilderExamples >> vissoft04 [
+	"
+	self new vissoft04
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		shape: (RTEllipse new size: #numberOfMethods);
+		whenMouseOverShowEdges: [ :cls | cls dependentClasses ].
 
 	b edge
 		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
@@ -124,6 +150,7 @@ RTGraphBuilderExamples >> vissoft03 [
 		use: (RTTreeLayout new).
 
 	b global
+		minSize: 10;
 		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
