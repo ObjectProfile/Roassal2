@@ -49,7 +49,8 @@ RTInteractiveSVGExporter >> addStart: bounds [
 	stream				
 		nextPutAll: '    ]]></script>';
 		nextPutAll: String cr;
-		nextPutAll: '<rect id="BackDrop" x="-10%" y="-10%" width="110%" height="110%" fill="none" pointer-events="all" />';		
+		nextPutAll: '<rect id="BackDrop" x="-10%" y="-10%" width="110%" height="110%" fill="none" pointer-events="all" />';
+		nextPutAll: '<svg id="Wrapper"/>';		
 		nextPutAll: String cr
 ]
 
