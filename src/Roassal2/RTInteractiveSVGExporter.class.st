@@ -11,7 +11,7 @@ Class {
 		'functions',
 		'globals'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #svg }

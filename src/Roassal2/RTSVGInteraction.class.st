@@ -1,5 +1,5 @@
 Class {
-	#name : #RTHTMLInteraction,
+	#name : #RTSVGInteraction,
 	#superclass : #RTObject,
 	#instVars : [
 		'type',
@@ -7,18 +7,18 @@ Class {
 		'contained',
 		'external'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLInteraction class >> on: anHTMLExporter targets: aRTShape [
+RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e;  yourself ].
 	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLInteraction class >> on: anHTMLExporter targets: aRTShape generator: generator [
+RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape generator: generator [
 	| interaction |
 	anHTMLExporter view elements
 		do: [ :e | 
@@ -30,52 +30,52 @@ RTHTMLInteraction class >> on: anHTMLExporter targets: aRTShape generator: gener
 ]
 
 { #category : #adding }
-RTHTMLInteraction >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
+RTSVGInteraction >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
 	self subclassResponsibility 
 ]
 
 { #category : #adding }
-RTHTMLInteraction >> addFunctions: aStream [
+RTSVGInteraction >> addFunctions: aStream [
 	self subclassResponsibility
 ]
 
 { #category : #adding }
-RTHTMLInteraction >> addGlobalHandlers: aStream [
+RTSVGInteraction >> addGlobalHandlers: aStream [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> contained [
+RTSVGInteraction >> contained [
 	^contained
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> external [
+RTSVGInteraction >> external [
 	^external
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLInteraction >> initialize [
+RTSVGInteraction >> initialize [
 	super initialize.
 	self type: 'interaction'
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> target [
+RTSVGInteraction >> target [
 	^ target
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> target: anObject [
+RTSVGInteraction >> target: anObject [
 	target := anObject
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> type [
+RTSVGInteraction >> type [
 	^ type
 ]
 
 { #category : #accessing }
-RTHTMLInteraction >> type: anObject [
+RTSVGInteraction >> type: anObject [
 	type := anObject
 ]

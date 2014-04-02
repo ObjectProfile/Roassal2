@@ -1,17 +1,17 @@
 Class {
-	#name : #RTHTMLDragAndDrop,
-	#superclass : #RTHTMLInteraction,
-	#category : #'Roassal2-Exporter-HTML'
+	#name : #RTSVGDragAndDrop,
+	#superclass : #RTSVGInteraction,
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }
-RTHTMLDragAndDrop >> addEventHandlers: aStream id: aString element: element center: aNumber [
+RTSVGDragAndDrop >> addEventHandlers: aStream id: aString element: element center: aNumber [
 	aStream
 		nextPutAll: 'dragdrop '
 ]
 
 { #category : #adding }
-RTHTMLDragAndDrop >> addFunctions: aStream [
+RTSVGDragAndDrop >> addFunctions: aStream [
 	aStream
 		nextPutAll: '				var SVGDocument = null;
 		var SVGRoot = null;
@@ -121,7 +121,7 @@ RTHTMLDragAndDrop >> addFunctions: aStream [
 ]
 
 { #category : #adding }
-RTHTMLDragAndDrop >> addGlobalHandlers: aStream [
+RTSVGDragAndDrop >> addGlobalHandlers: aStream [
 	aStream
 		nextPutAll: '
 	onload="GADInit(evt)"
@@ -132,7 +132,7 @@ RTHTMLDragAndDrop >> addGlobalHandlers: aStream [
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLDragAndDrop >> initialize [
+RTSVGDragAndDrop >> initialize [
 	super initialize.
 	contained := true.
 	external := false.

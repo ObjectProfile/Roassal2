@@ -1,83 +1,83 @@
 Class {
-	#name : #RTHTMLPopup,
-	#superclass : #RTHTMLInteraction,
+	#name : #RTSVGPopup,
+	#superclass : #RTSVGInteraction,
 	#instVars : [
 		'click',
 		'color',
 		'position',
 		'bounds'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLPopup class >> on: anHTMLExporter color: aColor targets: aRTShape [
+RTSVGPopup class >> on: anHTMLExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; yourself ].
 	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLPopup class >> onClick: anHTMLExporter color: aColor targets: aRTShape [
+RTSVGPopup class >> onClick: anHTMLExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; click: true; yourself ].
 	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLPopup class >> onClick: anHTMLExporter targets: aRTShape [
+RTSVGPopup class >> onClick: anHTMLExporter targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; click: true; yourself ].
 	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
+RTSVGPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
 	self subclassResponsibility 
 ]
 
 { #category : #adding }
-RTHTMLPopup >> addFunctions: aStream [
+RTSVGPopup >> addFunctions: aStream [
 	"do nothing"
 ]
 
 { #category : #adding }
-RTHTMLPopup >> addGlobalHandlers: aStream [
+RTSVGPopup >> addGlobalHandlers: aStream [
 	"do nothing"
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> bounds [
+RTSVGPopup >> bounds [
 	^ bounds
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> bounds: anObject [
+RTSVGPopup >> bounds: anObject [
 	bounds := anObject
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> click [
+RTSVGPopup >> click [
 	^ click
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> click: anObject [
+RTSVGPopup >> click: anObject [
 	click := anObject
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> color [
+RTSVGPopup >> color [
 	^ color
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> color: anObject [
+RTSVGPopup >> color: anObject [
 	color := anObject
 ]
 
 { #category : #initialization }
-RTHTMLPopup >> initialize [
+RTSVGPopup >> initialize [
 	super initialize.
 	click := false.
 	color := Color black.
@@ -88,7 +88,7 @@ RTHTMLPopup >> initialize [
 ]
 
 { #category : #adding }
-RTHTMLPopup >> mouseAction: aString [
+RTSVGPopup >> mouseAction: aString [
 	^click 
 		ifTrue: ["Still does not work"
 	'
@@ -101,21 +101,21 @@ RTHTMLPopup >> mouseAction: aString [
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> position [
+RTSVGPopup >> position [
 	^ position
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> position: anObject [
+RTSVGPopup >> position: anObject [
 	position := anObject
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> xBound [
+RTSVGPopup >> xBound [
 	^1
 ]
 
 { #category : #accessing }
-RTHTMLPopup >> yBound [
+RTSVGPopup >> yBound [
 	^1
 ]
