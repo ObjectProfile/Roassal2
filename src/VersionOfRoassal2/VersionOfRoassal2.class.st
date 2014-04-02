@@ -2091,3 +2091,14 @@ VersionOfRoassal2 >> version000144 [
 	at: #date put: '2 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000145 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.95';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.181';
+	at: #version put: '0.146';
+	at: #comment put: '0.146 : improved the stroke width for circles';
+	at: #date put: '2 April 2014';
+	yourself
+]
