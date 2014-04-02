@@ -39,6 +39,11 @@ RTHTMLInteraction >> addFunctions: aStream [
 	self subclassResponsibility
 ]
 
+{ #category : #adding }
+RTHTMLInteraction >> addGlobalHandlers: aStream [
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 RTHTMLInteraction >> contained [
 	^contained

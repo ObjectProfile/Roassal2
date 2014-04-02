@@ -29,3 +29,8 @@ RTGDLayoutB >> initialize [
 	super initialize.
 	conditionalLayout := OrderedCollection new
 ]
+
+{ #category : #'as yet unclassified' }
+RTGDLayoutB >> use: aLayout [
+	^ self for: true use: aLayout
+]
