@@ -231,7 +231,7 @@ RTEdge >> from [
 
 { #category : #accessing }
 RTEdge >> from: anElement [
-	from ifNotNil: [ :element | element removeConnectedEdge: self ].
+	
 	from := anElement.
 	anElement addConnectedEdge: self
 ]
@@ -262,7 +262,7 @@ RTEdge >> to [
 
 { #category : #accessing }
 RTEdge >> to: anElement [
-	to ifNotNil: [ :element | element removeConnectedEdge: self ].
+	
 	to := anElement.
 	anElement addConnectedEdge: self
 ]
