@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
+RTSVGHightlight class >> on: anExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
