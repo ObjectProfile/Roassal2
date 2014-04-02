@@ -41,11 +41,6 @@ RTHTMLPopup >> addFunctions: aStream [
 	"do nothing"
 ]
 
-{ #category : #adding }
-RTHTMLPopup >> addGlobalHandlers: aStream [
-	"do nothing"
-]
-
 { #category : #accessing }
 RTHTMLPopup >> bounds [
 	^ bounds

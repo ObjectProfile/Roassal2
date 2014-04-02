@@ -47,7 +47,7 @@ RTCompositeShape >> shape2: aRTShape [
 
 { #category : #hooks }
 RTCompositeShape >> trachelShapeFor: anElement [
-	^ TRCompositeShape 
+	^ TRComposedShape 
 			with: (shape1 trachelShapeFor: anElement) 
 			with: (shape2 trachelShapeFor: anElement)
 ]

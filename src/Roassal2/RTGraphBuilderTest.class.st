@@ -29,23 +29,6 @@ RTGraphBuilderTest >> testEdge [
 ]
 
 { #category : #tests }
-RTGraphBuilderTest >> testGlobalNormalization [
-
-	b := RTGraphBuilder new.
-	b node
-		if: true shape: (RTEllipse new size: 30).
-
-	b global
-		for: true normalizeColor: #yourself using: (Array with: Color green with: Color red).
-
-	b addAll: (1 to: 20).
-	b render.
-	
-	self assert: b view elements first trachelShape color = Color green.
-	self assert: b view elements last trachelShape color red > 0.95.
-]
-
-{ #category : #tests }
 RTGraphBuilderTest >> testNode [
 
 	| e4 e6 |

@@ -14,7 +14,8 @@ Class {
 		'fileName',
 		'title',
 		'interactions',
-		'backgroundColor'
+		'backgroundColor',
+		'functions'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -104,6 +105,23 @@ RTHTMLExporter >> addStart [
 			nextPutAll: ('<!DOCTYPE html>', String cr);
 			nextPutAll: ('<html>', String cr);
 			nextPut: Character tab;
+			nextPutAll: ('<head>', String cr);
+			nextPut: Character tab;
+			nextPut: Character tab;
+			nextPutAll: ('<script type="text/javascript">', String cr).
+		interactions keysAndValuesDo: [ :k :l | l do: [ :i | 
+				(functions includes: { k class .  i class})
+					ifFalse: [ 
+						i addFunctions: stream.
+						functions add: { k class .  i class}
+						]]].
+		stream
+			nextPut: Character tab;
+			nextPut: Character tab;
+			nextPutAll: ('</script>', String cr);
+			nextPut: Character tab;
+			nextPutAll: ('</head>', String cr);
+			nextPut: Character tab;
 			nextPutAll: ('<body>', String cr);
 			nextPut: Character tab;
 			nextPutAll: ('<h1>', self title,'</h1>', String cr).
@@ -175,6 +193,7 @@ RTHTMLExporter >> fileName: anObject [
 RTHTMLExporter >> initialize [
 	title := 'HTML Export'.
 	interactions := Dictionary new.
+	functions := OrderedCollection new.
 	backgroundColor := self defaultBackgroundColor.
 ]
 

@@ -78,11 +78,6 @@ RTMultiLinearColor >> level: f [
 ]
 
 { #category : #accessing }
-RTMultiLinearColor >> numberOfColors [
-	^ colors size
-]
-
-{ #category : #accessing }
 RTMultiLinearColor >> rtValue: anObject [
 	| intensity v |	
 	v := command rtValue: anObject.
