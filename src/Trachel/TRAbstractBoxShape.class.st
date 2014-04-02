@@ -43,8 +43,7 @@ TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 	scale := self canvas camera scale.
 	^ strokePaint
 		ifNotNil: [ 
-			"4 / (rectangle extent x + 10)"
-			(athensCanvas setStrokePaint: strokePaint) width: (1.5 / (scale )) asInteger.
+			(athensCanvas setStrokePaint: strokePaint) width: (self strokeWidth / (scale )) asFloat.
 			athensCanvas drawShape: path ]
 ]
 
@@ -145,6 +144,11 @@ TRAbstractBoxShape >> shouldBeDrawn [
 { #category : #accessing }
 TRAbstractBoxShape >> size: v [
 	^ self extent: v @ v
+]
+
+{ #category : #hooks }
+TRAbstractBoxShape >> strokeWidth [
+	^ 1.5
 ]
 
 { #category : #actions }
