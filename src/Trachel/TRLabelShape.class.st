@@ -108,11 +108,6 @@ TRLabelShape >> initialize [
 	self fontSize: self defaultFontSize
 ]
 
-{ #category : #public }
-TRLabelShape >> leftPosition: aPosition [
-	self position: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
-]
-
 { #category : #accessing }
 TRLabelShape >> position [
 	^ position
@@ -142,6 +137,16 @@ TRLabelShape >> text: aText on: aPosition [
 { #category : #public }
 TRLabelShape >> translateBy: step [
 	position := position + step.
+]
+
+{ #category : #public }
+TRLabelShape >> translateLeftTo: aPosition [
+	self translateTo: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
+]
+
+{ #category : #public }
+TRLabelShape >> translateRightTo: aPosition [
+	self translateTo: (aPosition + ((self width / -2) @ 0) ) asIntegerPoint
 ]
 
 { #category : #public }

@@ -124,7 +124,7 @@ TRCanvasTest >> testCenteredLabelShapes [
 
 	label2 := TRLabelShape new.
 	label2 text: 'hello'.
-	label2 leftPosition: label1 encompassingRectangle leftCenter.
+	label2 translateLeftTo: label1 encompassingRectangle leftCenter.
 	
 	"
 	TRCanvas new addShape: label1; addShape: label2; open
