@@ -2113,3 +2113,14 @@ VersionOfRoassal2 >> version000146 [
 	at: #date put: '2 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000147 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.97';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.182';
+	at: #version put: '0.148';
+	at: #comment put: '0.148 : moved bitmap directlly into AstroCloud';
+	at: #date put: '2 April 2014';
+	yourself
+]
