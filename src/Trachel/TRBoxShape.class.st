@@ -9,7 +9,7 @@ TRBoxShape >> accept: aVisitor [
 	aVisitor visitBoxShape: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 TRBoxShape >> computePath [
 	canvas ifNil: [ ^ self ].
 	path := self athensCanvas
@@ -28,7 +28,7 @@ TRBoxShape >> computePath [
 				lineTo: -1 @ -1" ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
 		ifFalse: [ ^ self ].
@@ -43,18 +43,18 @@ TRBoxShape >> drawOn: athensCanvas [
 			self drawStrokeIfNecessaryOn: athensCanvas ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRBoxShape >> includesPoint: aPoint [
 	^ rectangle containsPoint: aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRBoxShape >> translateBy: aPoint [
 	super translateBy: aPoint.
 	self resetPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRBoxShape >> translateTo: aPoint [
 	super translateTo: aPoint.
 	self resetPath
