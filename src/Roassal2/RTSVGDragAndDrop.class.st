@@ -19,7 +19,6 @@ RTSVGDragAndDrop >> addFunctions: aStream [
 		var GrabPoint = null;
 		var BackDrop = null;
 		var DragTarget = null;
-		var Wrapper = null;
 		function GADInit(evt)
 		{
 			SVGDocument = evt.target.ownerDocument;
@@ -27,7 +26,6 @@ RTSVGDragAndDrop >> addFunctions: aStream [
    		TrueCoords = SVGRoot.createSVGPoint();
    		GrabPoint = SVGRoot.createSVGPoint();
    		BackDrop = SVGDocument.getElementById("BackDrop");
-		Wrapper = SVGDocument.getElementById("Wrapper");
 		}
 		function Grab(evt)
 		{

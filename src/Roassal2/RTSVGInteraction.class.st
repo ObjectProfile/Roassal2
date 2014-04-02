@@ -11,22 +11,22 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGInteraction class >> on: anExporter targets: aRTShape [
+RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e;  yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGInteraction class >> on: anExporter targets: aRTShape generator: generator [
+RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape generator: generator [
 	| interaction |
-	anExporter view elements
+	anHTMLExporter view elements
 		do: [ :e | 
 			e trachelShape class = aRTShape
 				ifTrue: [ 
 					interaction := generator value: e.
-					anExporter interactions at: e ifAbsent: [ anExporter interactions at: e put: OrderedCollection new ].
-					(anExporter interactions at: e) add: interaction ] ]
+					anHTMLExporter interactions at: e ifAbsent: [ anHTMLExporter interactions at: e put: OrderedCollection new ].
+					(anHTMLExporter interactions at: e) add: interaction ] ]
 ]
 
 { #category : #adding }
