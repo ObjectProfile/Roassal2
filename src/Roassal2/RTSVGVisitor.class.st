@@ -212,11 +212,11 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 		nextPutAll: ('A<1p>,<2p> 0 <3p>,0 ' expandMacrosWith: aNumber with: aNumber with: sweepFlag);
 		nextPutAll: ('<1p>,<2p>z" ' expandMacrosWith: start x with: start y);
 		nextPutAll:
-				('style="fill:rgb(<1p>,<2p>,<3p>);" '
+				('style="fill:rgb(<1p>,<2p>,<3p>);"'
 						expandMacrosWith: (aColor red * 256) rounded
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
-		nextPutAll: 'class="'.
+		nextPutAll: ' class="'.
 	self addContainedInteractions: 'arc' , id element: element.
 	stream
 		nextPutAll: '"';
@@ -243,8 +243,8 @@ RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger colo
 						with: (aColor green * 256) rounded
 						with: (aColor blue * 256) rounded);
 		nextPutAll: ('stroke-width:<1p>;' expandMacrosWith: aSmallInteger);
-		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha);
-		nextPutAll: 'class="'.
+		nextPutAll: ('stroke-opacity:<1p>"' expandMacrosWith: aColor alpha);
+		nextPutAll: ' class="'.
 	self addContainedInteractions: ('bezier',id) element: element.
 	stream
 		nextPutAll: '"';					
@@ -266,8 +266,8 @@ RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger 
 		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded );
 		nextPutAll: ('style="stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
 		nextPutAll: ('stroke-width:<1p> ' expandMacrosWith: aSmallInteger );
-		nextPutAll: ('stroke-opacity:<1p>" ' expandMacrosWith: aColor alpha);
-		nextPutAll: 'class="'.
+		nextPutAll: ('stroke-opacity:<1p>"' expandMacrosWith: aColor alpha);
+		nextPutAll: ' class="'.
 	self addContainedInteractions: ('line',id) element: element.
 	stream
 		nextPutAll: '"';				
@@ -297,9 +297,9 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 		ifFalse: [  
 			stream	
 				nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded );
-				nextPutAll: ('stroke-width: <1p>" ' expandMacrosWith: aSmallInteger)].
+				nextPutAll: ('stroke-width: <1p>"' expandMacrosWith: aSmallInteger)].
 			stream
-				nextPutAll: 'class="'.
+				nextPutAll: ' class="'.
 	self addContainedInteractions: ('ellipse', id) element: element.
 	stream
 		nextPutAll: '"';				
@@ -324,8 +324,8 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 		nextPutAll: ('stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (borderColor red * 256) rounded with: (borderColor green * 256) rounded with: (borderColor blue * 256) rounded );
 		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger );
 		nextPutAll: ('transform="translate(<1p>,<2p>) ' expandMacrosWith: distanceX with: distanceY);
-		nextPutAll: ('scale(<1p>)" ' expandMacrosWith: anInteger );
-		nextPutAll: 'class="'.
+		nextPutAll: ('scale(<1p>)"' expandMacrosWith: anInteger );
+		nextPutAll: ' class="'.
 	self addContainedInteractions: ('p',id) element: element.
 	stream
 		nextPutAll: '"';				
@@ -353,9 +353,9 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 					nextPutAll: (';stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded);
 					nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger)
 			]
-			ifFalse: [stream nextPutAll: '" '].
+			ifFalse: [stream nextPutAll: '"'].
 	stream
-		nextPutAll: 'class="'.
+		nextPutAll: ' class="'.
 	self addContainedInteractions: ('rect',id) element: element.
 	stream
 		nextPutAll: '"';				
@@ -374,8 +374,8 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
-		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
-		nextPutAll: 'class="'.
+		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)"' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
+		nextPutAll: ' class="'.
 	self addContainedInteractions:('text',id)  element: element.
 	stream
 		nextPutAll: '"';		
@@ -399,8 +399,8 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color an
 		nextPutAll: '<text id="text',id,'" ';
 		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
-		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)" ' expandMacrosWith: angle with: p x rounded with: p y rounded);
-		nextPutAll: 'class="'.
+		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)"' expandMacrosWith: angle with: p x rounded with: p y rounded);
+		nextPutAll: ' class="'.
 	self addContainedInteractions:('text',id)  element: element.
 	stream
 		nextPutAll: '"';		
