@@ -115,7 +115,9 @@ RTGraphBuilderExamples >> vissoft02 [
 	| b |
 	b := RTGraphBuilder new.
 	b node
-		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]);
+		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
+
+	b global
 		normalizeColor: [ :cls | cls numberOfMethods ] using: (Array with: Color green with: Color red).
 
 	b edge
