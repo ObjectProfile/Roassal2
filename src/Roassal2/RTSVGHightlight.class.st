@@ -23,7 +23,7 @@ RTSVGHightlight >> addEventHandlers: aStream id: aString element: element center
 { #category : #adding }
 RTSVGHightlight >> addFunctions: aStream [
 	| attr  |
-	attr := self targetAttribute.
+	attr := self targetColorAttribute.
 	aStream
 		nextPutAll: '			var color;
 			function hightlight(evt) {
@@ -75,16 +75,4 @@ RTSVGHightlight >> initialize [
 	contained := true.
 	external := false.
 	self type: 'hightlight'.
-]
-
-{ #category : #adding }
-RTSVGHightlight >> targetAttribute [
-	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
-	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
-	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
 ]

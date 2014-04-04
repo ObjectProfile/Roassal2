@@ -21,7 +21,7 @@ RTSVGBoxedTextPopup >> addEventHandlers: aStream id: aString element: aRTElement
 	rectangle := TRLabelShape new text: rText; encompassingRectangle.
 	aStream
 		nextPutAll: '<g id="',aString,'pop" " visibility="hidden">';
-		nextPutAll: String cr,'<rect x="',(x - (rectangle width/5)) asString,'" y="',(y - (rectangle height / 2))  asString,'" width="',rectangle width asString,'" height="',rectangle height asString,'"  style="fill:',self backgroundColor asHTMLColor,'; stroke:',self borderColor asHTMLColor,';stroke-width:1"/>';
+		nextPutAll: String cr,'<rect x="',(x - (rectangle width/10)) asString,'" y="',(y - (3 *rectangle height / 4))  asString,'" width="',rectangle width asString,'" height="',rectangle height asString,'"  style="fill:',self backgroundColor asHTMLColor,'; stroke:',self borderColor asHTMLColor,';stroke-width:1"/>';
 		nextPutAll: String cr,'<text id="',aString,'pop" x="',x asString,'" y="',y asString,'" font-size="',self fontSize asString,'" style="fill:',self color asHTMLColor,'"><tspan font-family = "',self font,'">',rText,'</tspan></text>';
 		nextPutAll: String cr, (self mouseAction: aString), '</g>' 
 ]

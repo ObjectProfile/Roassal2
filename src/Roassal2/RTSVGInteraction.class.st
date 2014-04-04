@@ -70,6 +70,30 @@ RTSVGInteraction >> target: anObject [
 	target := anObject
 ]
 
+{ #category : #adding }
+RTSVGInteraction >> targetColorAttribute [
+	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
+]
+
+{ #category : #adding }
+RTSVGInteraction >> targetNameAttribute [
+	self target trachelShape class = TRArcShape ifTrue: [ ^'arc' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'bezier' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'rect' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'ellipse' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'text' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'line' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'text' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'p' ].
+]
+
 { #category : #accessing }
 RTSVGInteraction >> type [
 	^ type

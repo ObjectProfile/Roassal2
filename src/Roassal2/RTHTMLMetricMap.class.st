@@ -14,6 +14,7 @@ RTHTMLMetricMap >> addCustomizations [
 	exporter
 		title: 'MetricMap';
 		fileName: 'metricmap'.
+	menus keysAndValuesDo: [ :k  :v | RTSVGButton on: exporter name: k values: [ :e |  (v select: [ :i | e = i first ]) first third rtValue: e] targets: TRSVGPath ].
 	RTSVGBoxedTextPopup on: exporter targets: TRSVGPath.
 ]
 
@@ -67,15 +68,12 @@ RTHTMLMetricMap >> countries: countryNames color: aColor [
 
 { #category : #adding }
 RTHTMLMetricMap >> countries: collection named: selectorOrBlockForName [
-	"Display a list of countries"
-	"E.g., countries: #(#('France' 50) #('Germany' 80)) named: #first"
 	collection do: [ :country |
 		| elem |
 		elem := (RTSVGPath new
 			path: (RTSVGPath perform: (selectorOrBlockForName rtValue: country) asSymbol);
 			fillColor: Color random;
 			scale: 1) elementOn: (country asString).
-		elem @ RTPopup.
 		view add: elem.
 	].
 ]

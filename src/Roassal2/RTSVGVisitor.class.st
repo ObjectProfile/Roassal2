@@ -10,7 +10,6 @@ Class {
 		'stream',
 		'afterStream',
 		'canvas',
-		'count',
 		'interactions',
 		'center',
 		'names'
@@ -175,20 +174,10 @@ RTSVGVisitor >> center: aPoint [
 	center := aPoint
 ]
 
-{ #category : #accessing }
-RTSVGVisitor >> count [
-	|return |
-	count = nil 
-		ifTrue: [count := 0].
-	return := count.
-	count := count + 1.
-	^return
-]
-
 { #category : #drawing }
 RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadius: anotherNumber alphaAngle: anAngle betaAngle: anotherAngle color: aColor [
 	| start end p1 p2 aAngle bAngle sweepFlag alpha beta id closings|
-	id := self count asString.
+	id := element identityHash asString.
 	names at: element put: id.
 	alpha := self makePositive: anAngle.
 	beta := self makePositive: anotherAngle.
@@ -279,7 +268,7 @@ RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger 
 { #category : #drawing }
 RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSmallInteger borderColor: aColor4 [ 
 	|aCenter w h id closings|
-	id := self count asString.
+	id := element identityHash asString.
 	names at: element put: id.
 	aCenter := aRectangle center.
 	w := aRectangle width.
@@ -311,10 +300,10 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 { #category : #drawing }
 RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor: fillColor borderColor: borderColor scale: anInteger [
 	| distanceX distanceY id closings|
-	id := self count asString.
+	id := element identityHash asString.
 	names at: element put: id.
-	distanceX := canvas topLeft x negated + 1.
-	distanceY := canvas topLeft y negated + 1.
+	distanceX := center x.
+	distanceY := center y.
 	closings := self addEmbeddingInteractions: 'p' , id  element: element.
  	stream 
 		nextPutAll: '<path id="p',id,'" ';
@@ -337,7 +326,7 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 { #category : #drawing }
 RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor borderWidth: aSmallInteger borderColor: aColor [ 
 	|id closings|
-	id := self count asString.
+	id := element identityHash asString.
 	names at: element put: id.
 	closings := self addEmbeddingInteractions: 'rect' , id  element: element.
 	stream
@@ -366,14 +355,15 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 
 { #category : #drawing }
 RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
-	|p id closings|
-	id := self count asString.
+	|p id closings box|
+	id := element identityHash asString.
 	names at: element put: id.
 	p := aPoint.
 	closings := self addEmbeddingInteractions: 'text' , id  element: element.
+	box := TRLabelShape new text: self fixedName; encompassingRectangle.
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
-		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
+		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: (p x + (box width /10)) rounded  with:  (p y +  (3*box height/4)) rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)"' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
 		nextPutAll: ' class="'.
 	self addContainedInteractions:('text',id)  element: element.
@@ -390,14 +380,15 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 
 { #category : #drawing }
 RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color angle: angle [
-	|p id closings|
-	id := self count asString.
+	|p id closings box|
+	id := element identityHash  asString.
 	names at: element put: id.
 	p := aPoint.
 	closings := self addEmbeddingInteractions: 'text' , id  element: element.
+	box := TRLabelShape new text: self fixedName; encompassingRectangle.
 	stream 
 		nextPutAll: '<text id="text',id,'" ';
-		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: p x rounded  with:  p y rounded);
+		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: (p x + (box width /10)) rounded  with:  (p y +  (3*box height/4)) rounded);
 		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
 		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)"' expandMacrosWith: angle with: p x rounded with: p y rounded);
 		nextPutAll: ' class="'.
