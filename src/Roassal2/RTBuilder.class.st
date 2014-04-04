@@ -36,7 +36,7 @@ RTBuilder >> createShapeBuilder [
 
 { #category : #hooks }
 RTBuilder >> createView [
-	^ RTView new
+	^ RTView new setDefaultMenu
 ]
 
 { #category : #public }

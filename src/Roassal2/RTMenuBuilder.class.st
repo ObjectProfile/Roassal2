@@ -42,6 +42,11 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor [
 	^ lbl
 ]
 
+{ #category : #hooks }
+RTMenuBuilder >> createView [
+	^ RTView new
+]
+
 { #category : #utility }
 RTMenuBuilder >> getLabelNamed: aName [
 	| labels |

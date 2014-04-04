@@ -45,11 +45,7 @@ RTView >> addElement: anElement [
 { #category : #menu }
 RTView >> addMenu: aTitle callback: aBlock [
 	self canvas addMenu: aTitle callback: aBlock
-	"| el |
-	el := RTLabel elementOn: aTitle.
-	el on: TRMouseClick do: [ :event | aBlock value ].
-	self add: el.
-	el trachelShape setAsFixed"
+
 ]
 
 { #category : #accessing }
@@ -58,7 +54,7 @@ RTView >> canvas [
 	^ trCanvas
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #actions }
 RTView >> edgeFromModel: anObject [
 	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ edges detect: [ :edge | edge model = anObject ] ifNone: [ nil ]
@@ -69,7 +65,7 @@ RTView >> edges [
 	^ edges copy
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #actions }
 RTView >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]
@@ -135,6 +131,16 @@ RTView >> removeEdge: anEdge [
 RTView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
 	anElement trachelShape remove.
+]
+
+{ #category : #menu }
+RTView >> setDefaultMenu [
+	"Simply add some useful menu"
+	| b |
+	b := RTMenuBuilder new view: self.
+	b menu: 'Zoom' submenu: '+' background: Color red callback: [ RTZoomInMove on: self ].
+	b menu: 'Zoom' submenu: '-' background: Color red callback: [ RTZoomOutMove on: self ].
+	b render
 ]
 
 { #category : #initialization }

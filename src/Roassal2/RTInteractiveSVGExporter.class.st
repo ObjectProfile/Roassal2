@@ -67,7 +67,6 @@ RTInteractiveSVGExporter >> exportOnStream: fileStream [
 { #category : #initialization }
 RTInteractiveSVGExporter >> initialize [
 	super initialize.
-	interactions := Dictionary new.
 	marginX := 0.
 	marginY := 0.
 	functions := OrderedCollection new.
