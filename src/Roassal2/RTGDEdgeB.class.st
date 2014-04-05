@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTGDEdgeB >> connectTo: toBlock [
+	^ self if: true connectTo: toBlock
+]
+
+{ #category : #'as yet unclassified' }
 RTGDEdgeB >> createEdgesFor: object [
 	"| shape |
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.

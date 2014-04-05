@@ -38,7 +38,8 @@ RTGraphBuilder >> addEdgesForObject: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> applyLayout [
-	layout executeOn: view 
+	layout executeOn: view.
+	view edges do: [ :e | e trachelShape pushBack ]
 	"layout on: view elements edges: view edges"
 ]
 

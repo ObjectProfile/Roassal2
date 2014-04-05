@@ -82,11 +82,6 @@ RTSVGExporter >> backgroundColor: aColor [
 	backgroundColor := aColor
 ]
 
-{ #category : #accessing }
-RTSVGExporter >> builder: builder filename: aName [
-	self view: builder view filename: aName
-]
-
 { #category : #configuration }
 RTSVGExporter >> defaultBackgroundColor [
 	^ Color veryLightGray
@@ -201,10 +196,4 @@ RTSVGExporter >> view [
 RTSVGExporter >> view: aView [
 	
 	view := aView.
-]
-
-{ #category : #accessing }
-RTSVGExporter >> view: aView filename: aName [
-	self view: aView.
-	self fileName: aName.
 ]
