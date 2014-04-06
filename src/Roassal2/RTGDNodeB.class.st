@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'conditionalShapes',
-		'forWhenMouseOverShowEdges'
+		'interaction'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -20,7 +20,7 @@ RTGDNodeB >> createElementFor: object [
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
 	element := shape elementOn: object.
 
-	forWhenMouseOverShowEdges do: [ :array |
+	interaction do: [ :array |
 		| condition blockEdgeCreation |
 		condition := array first.
 		blockEdgeCreation := array second.
@@ -34,7 +34,7 @@ self flag: #TODO.
 RTGDNodeB >> for: conditional whenMouseOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
-	forWhenMouseOverShowEdges add: (Array with: conditional with: aBlock)
+	interaction add: (Array with: conditional with: aBlock)
 ]
 
 { #category : #public }
@@ -46,7 +46,7 @@ RTGDNodeB >> if: condition shape: aShape [
 RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
-	forWhenMouseOverShowEdges := OrderedCollection new.
+	interaction := OrderedCollection new.
 ]
 
 { #category : #public }
@@ -59,4 +59,13 @@ RTGDNodeB >> whenMouseOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
 	^ self for: true whenMouseOverShowEdges: aBlock
+]
+
+{ #category : #'public-interaction' }
+RTGDNodeB >> whenOverHighlight: aBlock [
+	"When the mouse is over a node, highlight the elements returned by the block.
+	 The block takes as argument the model on which the mouse is pointing to"
+	interaction add: [ :anElement | 
+		anElement when: TRMouseEnter do: [ :el | self highlightFor: el using: aBlock ].
+		anElement when: TRMouseLeave do: [ :el | self unhighlightFor: el using: aBlock ]. ]
 ]

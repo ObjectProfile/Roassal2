@@ -10,45 +10,45 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> on: anExporter text: aString color: aColor font: aFont size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anHTMLExporter text: aString color: aColor font: aFont size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; font: aFont; fontSize: aNumber; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> on: anExporter text: aString color: aColor size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> on: anExporter text: aString font: aFont size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anHTMLExporter text: aString font: aFont size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; font: aFont; fontSize: aNumber; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> on: anExporter text: aString targets: aRTShape [
+RTSVGTextPopup class >> on: anHTMLExporter text: aString targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> onClick: anExporter text: aString color: aColor size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> onClick: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; click: true; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGTextPopup class >> onClick: anExporter text: aString targets: aRTShape [
+RTSVGTextPopup class >> onClick: anHTMLExporter text: aString targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; click: true; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }

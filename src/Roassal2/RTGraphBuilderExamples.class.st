@@ -86,6 +86,24 @@ RTGraphBuilderExamples >> simple04 [
 ]
 
 { #category : #examples }
+RTGraphBuilderExamples >> simple05WithInteraction [
+
+	"
+	self new simple05WithInteraction
+	"
+	
+	| g |
+	g := RTGraphBuilder new.
+	
+	g node 
+		shape: (RTEllipse new size: 20) + RTLabel;
+		whenOverHighlight: [ :v | { v - 1 . v . v + 1 } ].
+	g layout use: RTFlowLayout new.
+	g addAll: (1 to: 50).
+	g open
+]
+
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01

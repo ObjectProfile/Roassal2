@@ -533,6 +533,21 @@ RTExample >> growingSquares [
 	view open
 ]
 
+{ #category : #interaction }
+RTExample >> highlight [
+	" self new highlight "
+		
+	| v es |
+	v := RTView new.
+	es := ((RTBox new size: 30)" + RTLabel") elementsOn: (1 to: 16).
+
+	es @ (RTHighlightable highlight: [:vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4} ]).
+
+	RTGridLayout on: es.
+	v addAll: es.
+	v open
+]
+
 { #category : #shapes }
 RTExample >> highlightSquare [
 	"

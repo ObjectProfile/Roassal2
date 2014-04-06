@@ -5,7 +5,8 @@ Class {
 		'node',
 		'edge',
 		'layout',
-		'global'
+		'global',
+		'interaction'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
