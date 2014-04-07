@@ -2,10 +2,11 @@ Class {
 	#name : #RTGDNodeB,
 	#superclass : #Object,
 	#instVars : [
+		'graph',
 		'conditionalShapes',
-		'interaction',
 		'withPopup',
-		'draggableNodes'
+		'draggableNodes',
+		'nodeProperties'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -21,7 +22,7 @@ RTGDNodeB >> createElementFor: object [
 	| shape element |
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
 	element := shape elementOn: object.
-	interaction do: [ :aBlock | aBlock value: element ].
+	nodeProperties do: [ :aBlock | aBlock value: element ].
 	self setPopupAndDraggableOn: element.
 	^ element
 ]
@@ -32,9 +33,14 @@ RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
 	This will be used to draw edges"
 	"interaction add: (Array with: conditional with: aBlock)"
 
-	interaction add: [ :anElement | 
+	nodeProperties add: [ :anElement | 
 		(conditional rtValue: anElement model)
 			ifTrue: [ anElement @ (RTShowEdge new connectTo: aBlock) ] ]
+]
+
+{ #category : #accessing }
+RTGDNodeB >> graph: aGraphBuilder [
+	graph := aGraphBuilder 
 ]
 
 { #category : #'public-shape' }
@@ -46,9 +52,19 @@ RTGDNodeB >> if: condition shape: aShape [
 RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
-	interaction := OrderedCollection new.
+	nodeProperties := OrderedCollection new.
 	withPopup := true.
 	draggableNodes := true
+]
+
+{ #category : #'public-shape' }
+RTGDNodeB >> labelled [
+	"Gives a label to each node"
+	nodeProperties add: [ :el |
+		| lbl |
+		lbl := TRLabelShape new text: el model asString.
+		graph view canvas addShape: lbl.
+		TRConstraint stick: lbl below: el trachelShape ]
 ]
 
 { #category : #'public-interaction' }
@@ -78,7 +94,7 @@ RTGDNodeB >> shape: aShape [
 RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"
-	interaction add: [ :anElement | 
+	nodeProperties add: [ :anElement | 
 		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
 ]
 

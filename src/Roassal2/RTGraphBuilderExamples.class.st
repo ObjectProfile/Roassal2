@@ -244,3 +244,59 @@ RTGraphBuilderExamples >> vissoft05 [
 	b addAll: (RTObject withAllSubclasses).
 	b open
 ]
+
+{ #category : #examples }
+RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
+	"
+	self new vissoft06HierarchicalBundleEdges
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		shape: (RTEllipse new size: #numberOfMethods);
+		whenOverShowEdges: [ :cls | cls dependentClasses ];
+		labelled.
+
+	b edge
+		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+
+	b layout 
+		use: (RTForceBasedLayout new charge: -150).
+
+	b global
+		minSize: 10;
+		alphaColor: 0.4;
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+
+	b addAll: (RTObject withAllSubclasses).
+	b open
+]
+
+{ #category : #examples }
+RTGraphBuilderExamples >> vissoft07WithLabel [
+	"
+	self new vissoft07WithLabel
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		shape: (RTEllipse new size: #numberOfMethods);
+		whenOverShowEdges: [ :cls | cls dependentClasses ];
+		labelled.
+
+	b edge
+		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+
+	b layout 
+		use: (RTForceBasedLayout new charge: -150).
+
+	b global
+		minSize: 10;
+		alphaColor: 0.4;
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+
+	b addAll: (RTObject withAllSubclasses).
+	b open
+]

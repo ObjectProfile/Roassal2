@@ -5,10 +5,18 @@ Class {
 		'conditionalShapes',
 		'minSize',
 		'maxSize',
-		'normalizeSize'
+		'normalizeSize',
+		'alphaColor'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
+
+{ #category : #'as yet unclassified' }
+RTGDGlobalB >> alphaColor: aFloat [
+	"aFloat = 1.0 no color transparency"
+	"aFloat = 0.0 fully transparent"
+	 alphaColor := aFloat
+]
 
 { #category : #'as yet unclassified' }
 RTGDGlobalB >> executeOn: aView [
@@ -60,7 +68,8 @@ RTGDGlobalB >> executeOn: aView [
 		aView elements do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
-					ifTrue: [ el trachelShape color: (normalizer level: (((metricBlock rtValue: el model) - min) / max)) ].
+					ifTrue: [ el trachelShape color: ((normalizer level: (((metricBlock rtValue: el model) - min) / max)) alpha: alphaColor) ]
+					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
 			
 				"Set the min and max size"
 					self minAndMaxSizeOf: el
@@ -84,7 +93,8 @@ RTGDGlobalB >> for: condition normalizeSize: metricBlock min: minValue max: maxV
 RTGDGlobalB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
-	normalizeSize := OrderedCollection new
+	normalizeSize := OrderedCollection new.
+	alphaColor := 1.0
 ]
 
 { #category : #'as yet unclassified' }
