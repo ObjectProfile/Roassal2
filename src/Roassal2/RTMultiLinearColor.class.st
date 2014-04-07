@@ -57,7 +57,7 @@ RTMultiLinearColor >> initialize [
 { #category : #accessing }
 RTMultiLinearColor >> level: f [
 	"f - float is between 0.0 and 1.0"
-	| arr v c1 c2 nr ng nb i1 i2 nbColors ff |
+	| arr v c1 c2 nr ng nb na i1 i2 nbColors ff |
 	arr := self indexesFor: f.
 	nbColors := colors size.
 	v := f * (nbColors - 1).
@@ -69,12 +69,14 @@ RTMultiLinearColor >> level: f [
 	c1 := colors at: (i1).
 	c2 := colors at: (i2).
 	
-	ff := f - (i1 - 1 / nbColors).
+	"ff := f - (i1 - 1 / nbColors)."
+	ff := (f - (i1 - 1 / (nbColors - 1))) * (nbColors - 1).
 	nr := (c2 red - c1 red) * ff + c1 red.
 	ng := (c2 green - c1 green) * ff + c1 green.
 	nb := (c2 blue - c1 blue) * ff + c1 blue.
+	na := (c2 alpha - c1 alpha) * ff + c1 alpha.
 	
-	^ Color r: nr g: ng  b: nb
+	^ Color r: nr g: ng  b: nb alpha: na
 ]
 
 { #category : #accessing }

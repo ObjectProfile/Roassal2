@@ -11,22 +11,22 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape [
+RTSVGInteraction class >> on: anExporter targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e;  yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGInteraction class >> on: anHTMLExporter targets: aRTShape generator: generator [
+RTSVGInteraction class >> on: anExporter targets: aRTShape generator: generator [
 	| interaction |
-	anHTMLExporter view elements
+	anExporter view elements
 		do: [ :e | 
 			e trachelShape class = aRTShape
 				ifTrue: [ 
 					interaction := generator value: e.
-					anHTMLExporter interactions at: e ifAbsent: [ anHTMLExporter interactions at: e put: OrderedCollection new ].
-					(anHTMLExporter interactions at: e) add: interaction ] ]
+					anExporter interactions at: e ifAbsent: [ anExporter interactions at: e put: OrderedCollection new ].
+					(anExporter interactions at: e) add: interaction ] ]
 ]
 
 { #category : #adding }
@@ -54,7 +54,7 @@ RTSVGInteraction >> external [
 	^external
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSVGInteraction >> initialize [
 	super initialize.
 	self type: 'interaction'
@@ -68,6 +68,30 @@ RTSVGInteraction >> target [
 { #category : #accessing }
 RTSVGInteraction >> target: anObject [
 	target := anObject
+]
+
+{ #category : #adding }
+RTSVGInteraction >> targetColorAttribute [
+	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
+]
+
+{ #category : #adding }
+RTSVGInteraction >> targetNameAttribute [
+	self target trachelShape class = TRArcShape ifTrue: [ ^'arc' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'bezier' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'rect' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'ellipse' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'text' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'line' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'text' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'p' ].
 ]
 
 { #category : #accessing }
