@@ -76,6 +76,11 @@ TRLabelShape >> encompassingRectangle [
 ]
 
 { #category : #accessing }
+TRLabelShape >> extent [
+	^ self encompassingRectangle extent
+]
+
+{ #category : #accessing }
 TRLabelShape >> font [
 	^ font
 ]
