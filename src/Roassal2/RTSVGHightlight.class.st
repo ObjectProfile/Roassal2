@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
+RTSVGHightlight class >> on: anExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
@@ -23,7 +23,7 @@ RTSVGHightlight >> addEventHandlers: aStream id: aString element: element center
 { #category : #adding }
 RTSVGHightlight >> addFunctions: aStream [
 	| attr  |
-	attr := self targetAttribute.
+	attr := self targetColorAttribute.
 	aStream
 		nextPutAll: '			var color;
 			function hightlight(evt) {
@@ -74,16 +74,5 @@ RTSVGHightlight >> initialize [
 	color := Color red.
 	contained := true.
 	external := false.
-]
-
-{ #category : #adding }
-RTSVGHightlight >> targetAttribute [
-	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
-	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
-	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
-	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
+	self type: 'hightlight'.
 ]

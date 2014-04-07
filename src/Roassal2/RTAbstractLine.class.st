@@ -8,14 +8,9 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTAbstractLine class >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
-]
-
-{ #category : #public }
-RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
 ]
 
 { #category : #visitor }

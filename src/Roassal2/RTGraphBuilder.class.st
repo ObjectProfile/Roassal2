@@ -62,8 +62,10 @@ RTGraphBuilder >> createEdgesFor: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> createElementFor: anObject [
-	^ node createElementFor: anObject
-
+	| el |
+	el := node createElementFor: anObject.
+	el @ RTPopup @ RTDraggable.
+	^ el
 ]
 
 { #category : #'as yet unclassified' }
@@ -85,8 +87,6 @@ RTGraphBuilder >> global [
 RTGraphBuilder >> initialize [
 	super initialize.
 	node := RTGDNodeB new.
-	node graph: self.
-	
 	edge := RTGDEdgeB new graphBuilder: self; yourself.
 	layout := RTGDLayoutB new.
 	global := RTGDGlobalB new.
