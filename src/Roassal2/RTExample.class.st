@@ -541,7 +541,7 @@ RTExample >> highlight [
 	v := RTView new.
 	es := ((RTBox new size: 30)" + RTLabel") elementsOn: (1 to: 16).
 
-	es @ (RTHighlightable highlight: [:vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4} ]).
+	es @ (RTHighlightable highlight: [ :vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4 } ]).
 
 	RTGridLayout on: es.
 	v addAll: es.

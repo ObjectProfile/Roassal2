@@ -11,24 +11,24 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGPopup class >> on: anExporter color: aColor targets: aRTShape [
+RTSVGPopup class >> on: anHTMLExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGPopup class >> onClick: anExporter color: aColor targets: aRTShape [
+RTSVGPopup class >> onClick: anHTMLExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; click: true; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGPopup class >> onClick: anExporter targets: aRTShape [
+RTSVGPopup class >> onClick: anHTMLExporter targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; click: true; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }

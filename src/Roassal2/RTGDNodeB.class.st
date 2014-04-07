@@ -20,13 +20,9 @@ RTGDNodeB >> createElementFor: object [
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
 	element := shape elementOn: object.
 
-	interaction do: [ :array |
-		| condition blockEdgeCreation |
-		condition := array first.
-		blockEdgeCreation := array second.
-		(condition rtValue: object) ifTrue: [  ]
-		].
-self flag: #TODO.
+	interaction 
+		do: [ :aBlock | aBlock value: element ].
+
 	^ element
 ]
 
@@ -66,6 +62,6 @@ RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"
 	interaction add: [ :anElement | 
-		anElement when: TRMouseEnter do: [ :el | self highlightFor: el using: aBlock ].
-		anElement when: TRMouseLeave do: [ :el | self unhighlightFor: el using: aBlock ]. ]
+	self haltOnce.
+		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
 ]
