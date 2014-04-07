@@ -2179,3 +2179,14 @@ VersionOfRoassal2 >> version000152 [
 	at: #date put: '6 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000153 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.99';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.188';
+	at: #version put: '0.154';
+	at: #comment put: '0.154 : Issue 393:	Composed shape and highlighting is not working';
+	at: #date put: '7 April 2014';
+	yourself
+]
