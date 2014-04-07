@@ -6,7 +6,7 @@ Class {
 
 { #category : #public }
 RTGroup >> + aShape [
-	self do: [ :e | e + aShape ]
+	self addShape: aShape
 ]
 
 { #category : #public }
@@ -17,6 +17,11 @@ RTGroup >> @ interaction [
 { #category : #visitor }
 RTGroup >> accept: aRTVisitor [
 	self  do: [ :e | e trachelShape accept: aRTVisitor]
+]
+
+{ #category : #public }
+RTGroup >> addShape: aShape [
+	self do: [ :e | e addShape: aShape ]
 ]
 
 { #category : #public }
