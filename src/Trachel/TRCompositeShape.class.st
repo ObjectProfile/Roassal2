@@ -54,6 +54,18 @@ TRCompositeShape >> canvas: aSurface [
 	shape2 canvas: aSurface
 ]
 
+{ #category : #'as yet unclassified' }
+TRCompositeShape >> color [
+	^ shape1 color
+	"shape2 color: aColor."
+]
+
+{ #category : #'as yet unclassified' }
+TRCompositeShape >> color: aColor [
+	shape1 color: aColor.
+	"shape2 color: aColor."
+]
+
 { #category : #hooks }
 TRCompositeShape >> computePath [
 	shape1 computePath.
