@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'conditionalShapes',
-		'interaction'
+		'interaction',
+		'withPopup',
+		'draggableNodes'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -19,21 +21,23 @@ RTGDNodeB >> createElementFor: object [
 	| shape element |
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
 	element := shape elementOn: object.
-
-	interaction 
-		do: [ :aBlock | aBlock value: element ].
-
+	interaction do: [ :aBlock | aBlock value: element ].
+	self setPopupAndDraggableOn: element.
 	^ element
 ]
 
-{ #category : #public }
-RTGDNodeB >> for: conditional whenMouseOverShowEdges: aBlock [
+{ #category : #'public-interaction' }
+RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
-	interaction add: (Array with: conditional with: aBlock)
+	"interaction add: (Array with: conditional with: aBlock)"
+
+	interaction add: [ :anElement | 
+		(conditional rtValue: anElement model)
+			ifTrue: [ anElement @ (RTShowEdge new connectTo: aBlock) ] ]
 ]
 
-{ #category : #public }
+{ #category : #'public-shape' }
 RTGDNodeB >> if: condition shape: aShape [
 	conditionalShapes add: (Array with: condition with: aShape)
 ]
@@ -43,18 +47,31 @@ RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
 	interaction := OrderedCollection new.
+	withPopup := true.
+	draggableNodes := true
 ]
 
-{ #category : #public }
+{ #category : #'public-interaction' }
+RTGDNodeB >> noPopup [
+	withPopup := false
+]
+
+{ #category : #'public-interaction' }
+RTGDNodeB >> notDraggable [
+	draggableNodes := false
+]
+
+{ #category : #hooks }
+RTGDNodeB >> setPopupAndDraggableOn: element [
+	withPopup
+		ifTrue: [ element @ RTPopup ].
+	draggableNodes
+		ifTrue: [ element @ RTDraggable ]
+]
+
+{ #category : #'public-shape' }
 RTGDNodeB >> shape: aShape [
 	^ self if: true shape: aShape
-]
-
-{ #category : #public }
-RTGDNodeB >> whenMouseOverShowEdges: aBlock [
-	"aBlock, when evaluated against an element return a model or a collection of models. 
-	This will be used to draw edges"
-	^ self for: true whenMouseOverShowEdges: aBlock
 ]
 
 { #category : #'public-interaction' }
@@ -62,6 +79,12 @@ RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"
 	interaction add: [ :anElement | 
-	self haltOnce.
 		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
+]
+
+{ #category : #'public-interaction' }
+RTGDNodeB >> whenOverShowEdges: aBlock [
+	"aBlock, when evaluated against an element return a model or a collection of models. 
+	This will be used to draw edges"
+	^ self for: true whenOverShowEdges: aBlock
 ]

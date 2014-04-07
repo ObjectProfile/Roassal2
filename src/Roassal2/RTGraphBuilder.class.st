@@ -62,10 +62,8 @@ RTGraphBuilder >> createEdgesFor: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> createElementFor: anObject [
-	| el |
-	el := node createElementFor: anObject.
-	el @ RTPopup @ RTDraggable.
-	^ el
+	^ node createElementFor: anObject
+
 ]
 
 { #category : #'as yet unclassified' }

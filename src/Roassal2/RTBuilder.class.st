@@ -57,6 +57,14 @@ RTBuilder >> elementsOn: collectionOfObjects [
 	^ shapeBuilder elementsOn: collectionOfObjects
 ]
 
+{ #category : #protected }
+RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
+	| els |
+	els := shapeBuilder elementsOn: collectionOfObjects.
+	interactionBuilder setUpElements: els.
+	^ els
+]
+
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.
