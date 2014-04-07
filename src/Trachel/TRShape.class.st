@@ -238,12 +238,6 @@ TRShape >> remove [
 ]
 
 { #category : #actions }
-TRShape >> removeCallback: aCallback ifAbsent: anErrorBlock [
-	callbacks ifNil: [ ^ self ].
-	callbacks remove: aCallback ifAbsent: anErrorBlock
-]
-
-{ #category : #actions }
 TRShape >> resetPath [
 	path := nil
 ]
