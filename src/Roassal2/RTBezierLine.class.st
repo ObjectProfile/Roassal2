@@ -8,6 +8,24 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'control points' }
+RTBezierLine >> centerOfElements: elements [
+
+	| center intermediaryElement |
+	(elements isNil or: [ elements isEmpty ]) ifTrue: [ ^ self ].
+	
+	center := (RTGroup withAll: elements) center.
+	intermediaryElement := RTBox element.
+	intermediaryElement translateTo: center.
+	self controllingElements: (Array with: intermediaryElement).
+
+]
+
+{ #category : #'control points' }
+RTBezierLine >> centerOfObjects: objects inView: view [
+	^ self centerOfElements: (view elementsFromModels: objects)
+]
+
 { #category : #accessing }
 RTBezierLine >> controllingElements [
 	^ controllingElements

@@ -33,6 +33,11 @@ RTAbstractLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
+{ #category : #public }
+RTAbstractLine >> edgesFrom: el1 toAll: el2 [
+	^ (RTEdge from: el1 toAll: el2) addShape: self
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> endingPointOf: anEdge [
 	^ attachPoint endingPointOf: anEdge
