@@ -70,12 +70,11 @@ TRLineShape >> includesPoint: aPoint [
 	^ aPoint onLineFrom: from to: to within: 3
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 TRLineShape >> initialize [
 	super initialize.
 	from := 0 @ 0.
-	to := 0 @ 0.
-	width := 1.
+	to := 0 @ 0
 ]
 
 { #category : #accessing }

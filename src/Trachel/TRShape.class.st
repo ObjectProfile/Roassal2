@@ -9,7 +9,7 @@ Class {
 		'announcer',
 		'element',
 		'callbacks',
-		'position'
+		'matrix'
 	],
 	#category : #'Trachel-Core'
 }
@@ -81,7 +81,7 @@ TRShape >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #hooks }
+{ #category : #private }
 TRShape >> computePath [
 	self subclassResponsibility
 ]
@@ -110,8 +110,11 @@ TRShape >> drawEncompassingRectangleOn: athensCanvas color: aColor [
 
 { #category : #drawing }
 TRShape >> drawOn: athensCanvas [
-
-	athensCanvas pathTransform restoreAfter: [
+	| pt |
+	pt := athensCanvas pathTransform.
+	pt restoreAfter: [
+		pt scaleBy: matrix sx @ matrix sy.
+		
 		athensCanvas
 			setPaint: color;
 			drawShape: self path.
@@ -162,8 +165,9 @@ TRShape >> includesPoint: aPoint [
 TRShape >> initialize [
 	super initialize.
 	color := Color gray.
-	strokePaint := Color black.	 
-	position := 0 @ 0.
+	strokePaint := Color black.
+	matrix := AthensAffineTransform new.
+	self position: 0 @ 0.
 ]
 
 { #category : #testing }
@@ -189,13 +193,18 @@ TRShape >> isNotFixed [
 	^ self isMovable
 ]
 
+{ #category : #accessing }
+TRShape >> matrix [
+	^ matrix
+]
+
 { #category : #actions }
 TRShape >> noBorder [
 	"Remove the border from the shape"
 	self strokePaint: nil
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 TRShape >> path [
 	path ifNil: [ self computePath ].
 	^ path
@@ -203,7 +212,21 @@ TRShape >> path [
 
 { #category : #accessing }
 TRShape >> position [
-	^ position
+	^ matrix x @ matrix y
+]
+
+{ #category : #accessing }
+TRShape >> position: aPosition [
+	matrix translation: aPosition
+]
+
+{ #category : #transformations }
+TRShape >> preScaleBy: aPoint [ 
+	| preMatrix |
+	preMatrix := AthensAffineTransform new.
+	preMatrix scaleBy: aPoint.
+	preMatrix multiplyBy: matrix.
+	matrix := preMatrix
 ]
 
 { #category : #actions }
@@ -243,9 +266,19 @@ TRShape >> removeCallback: aCallback ifAbsent: anErrorBlock [
 	callbacks remove: aCallback ifAbsent: anErrorBlock
 ]
 
-{ #category : #actions }
+{ #category : #private }
 TRShape >> resetPath [
 	path := nil
+]
+
+{ #category : #transformations }
+TRShape >> rotateByDegrees: angle [ 
+	matrix rotateByDegrees: angle 
+]
+
+{ #category : #transformations }
+TRShape >> scaleBy: anInteger [ 
+	matrix scaleBy: anInteger.
 ]
 
 { #category : #actions }
@@ -287,12 +320,23 @@ TRShape >> strokePaint: aColor [
 
 { #category : #actions }
 TRShape >> translateBy: aPoint [
-	position := position + aPoint
+	self position: self position + aPoint.
+	self triggerCallbacksForStep: aPoint
 ]
 
 { #category : #actions }
 TRShape >> translateTo: aPoint [
-	position := aPoint
+	| oldPosition |
+	oldPosition := self position.
+	self position: aPoint.
+	self triggerCallbacksForStep: (self position - oldPosition)
+]
+
+{ #category : #actions }
+TRShape >> triggerCallbacksForStep: aStep [
+	"aStep is a point that represents a translation step"
+	callbacks ifNil: [ ^ self ].
+	callbacks do: [ :c | c block value: self value: aStep ]
 ]
 
 { #category : #events }

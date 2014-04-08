@@ -184,13 +184,6 @@ TRCanvas >> fixedShapes [
 	^ fixedShapes
 ]
 
-{ #category : #actions }
-TRCanvas >> focusOnCenterScaled [
-	| max |
-	max := morph width min: morph height.
-	camera focusOnCenterScaled: max.
-]
-
 { #category : #animations }
 TRCanvas >> hasAnimation [
 	"True is at least one animation is running"
@@ -382,12 +375,11 @@ TRCanvas >> shapeWithActionForPosition: position [
 TRCanvas >> shapeWithActionForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| pos |
 	fixedShapes reverseDo: [ :s | 
 		((s includesPoint: position) and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
-	pos := self camera fromPixelToSpace: position.
+
 	shapes reverseDo: [ :s | 
-		((s includesPoint: pos) 
+		((s includesPoint: (self camera fromPixelToSpace: position)) 
 			and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
 	^ self
 ]
