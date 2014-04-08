@@ -9,18 +9,26 @@ TRBoxShape >> accept: aVisitor [
 	aVisitor visitBoxShape: self
 ]
 
-{ #category : #hooks }
+{ #category : #private }
 TRBoxShape >> computePath [
 	canvas ifNil: [ ^ self ].
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: rectangle topLeft;
+				moveTo: rectangle extent / -2;
+				lineTo: (rectangle width / 2) @ (rectangle height / -2);
+				lineTo: (rectangle width / 2) @ (rectangle height / 2);
+				lineTo: (rectangle width / -2) @ (rectangle height / 2);
+				lineTo: rectangle extent / -2.
+
+
+"				moveTo: rectangle topLeft;
 				lineTo: rectangle topRight;
 				lineTo: rectangle bottomRight;
 				lineTo: rectangle bottomLeft;
 				lineTo: rectangle topLeft.
+"				
 				"moveTo: -1 @ -1;
 				lineTo: 1 @ -1;
 				lineTo: 1 @ 1;
@@ -32,11 +40,13 @@ TRBoxShape >> computePath [
 TRBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
 		ifFalse: [ ^ self ].
+	self drawEncompassingRectangleOn: athensCanvas.
 	athensCanvas pathTransform
 		restoreAfter: [ 
-			"athensCanvas pathTransform
-				translateBy: rectangle center;
-				scaleBy: rectangle extent / 2."
+			athensCanvas pathTransform
+				multiplyBy: matrix.
+				"translateBy: rectangle center;"
+				"scaleBy: matrix sx @ matrix sy.."
 			athensCanvas
 				setPaint: color;
 				drawShape: self path.
@@ -45,17 +55,8 @@ TRBoxShape >> drawOn: athensCanvas [
 
 { #category : #testing }
 TRBoxShape >> includesPoint: aPoint [
-	^ rectangle containsPoint: aPoint
-]
-
-{ #category : #actions }
-TRBoxShape >> translateBy: aPoint [
-	super translateBy: aPoint.
-	self resetPath
-]
-
-{ #category : #actions }
-TRBoxShape >> translateTo: aPoint [
-	super translateTo: aPoint.
-	self resetPath
+	| newPoint |
+	Transcript show: aPoint; cr.
+	newPoint := matrix inverseTransform: aPoint.
+	^ rectangle containsPoint: newPoint.
 ]

@@ -54,13 +54,13 @@ TRCompositeShape >> canvas: aSurface [
 	shape2 canvas: aSurface
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRCompositeShape >> color [
 	^ shape1 color
 	"shape2 color: aColor."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRCompositeShape >> color: aColor [
 	shape1 color: aColor.
 	"shape2 color: aColor."
@@ -96,7 +96,7 @@ TRCompositeShape >> encompassingRectangle [
 	^ Rectangle merging: (Array with: shape1 encompassingRectangle with: shape2 encompassingRectangle)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRCompositeShape >> extent: anExtent [
 
 	shape1 extent: anExtent.
@@ -131,7 +131,7 @@ TRCompositeShape >> remove [
 	shape2 remove
 ]
 
-{ #category : #actions }
+{ #category : #private }
 TRCompositeShape >> resetPath [
 	shape1 resetPath.
 	shape2 resetPath.

@@ -141,7 +141,7 @@ TRSVGPath >> processCurves [
 		pathPoints add: pts.
 	].
 	points := pathPoints inject: #() into: [ :acc :next | acc, next ].
-	position := self encompassingRectangle center.
+	self position: self encompassingRectangle center.
 ]
 
 { #category : #'as yet unclassified' }
@@ -275,7 +275,7 @@ TRSVGPath >> separateSubPaths: someCurves [
 { #category : #actions }
 TRSVGPath >> translateTo: aPoint [
 	| disp |
-	disp := (aPoint - position) / scale.
+	disp := (aPoint - self position) / scale.
 	super translateTo: aPoint.
 	self updateCurves: (self curves collect: [ :c |
 		c key -> (c value collect: [ :p | p + disp ])]).

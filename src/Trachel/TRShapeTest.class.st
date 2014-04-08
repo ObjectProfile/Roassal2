@@ -5,6 +5,35 @@ Class {
 }
 
 { #category : #composite }
+TRShapeTest >> testBoxTransformation [
+
+	| canvas box |
+	canvas := TRCanvas new.
+	box := TRBoxShape new size: 10.
+	canvas addShape: box.
+	"regular rectangle"
+	self assert: box encompassingRectangle equals: (-5 @ -5 corner: 5 @ 5).
+	self assert: (box includesPoint: 0 @ 0).
+	self deny: (box includesPoint: 10 @ 10).
+	"translated rectangle"
+	box translateTo: 10@10.
+	self assert: box encompassingRectangle equals: (5 @ 5 corner: 15 @ 15).
+	self assert: (box includesPoint: 5 @ 5).
+	self deny: (box includesPoint: 4 @ 10).
+	"rotated rectangle"
+	box rotateByDegrees: 45.
+	self assert: box encompassingRectangle rounded equals: (3 @ 3 corner: 17 @ 17).
+	self assert: (box includesPoint: 10 @ 4).
+	self deny: (box includesPoint: 6 @ 6).
+	"scaled rectangle"
+	box scaleBy: 2.
+	self assert: box encompassingRectangle rounded equals: (-4 @ -4 corner: 24 @ 24).
+	self assert: (box includesPoint: 10 @ -3).
+	self deny: (box includesPoint: 0 @ 0).
+
+]
+
+{ #category : #composite }
 TRShapeTest >> testChangingColorOfAComposite [
 
 	| c s1 s2 cs |
@@ -16,7 +45,36 @@ TRShapeTest >> testChangingColorOfAComposite [
 	cs color: Color red.
 	
 	self assert: s1 color = Color red.
-	self assert: s2 color ~= Color red.
+	self assert: s2 color = Color red.
+]
+
+{ #category : #composite }
+TRShapeTest >> testEllipseTransformation [
+
+	| canvas box |
+	canvas := TRCanvas new.
+	box := TREllipseShape new size: 10.
+	canvas addShape: box.
+	"regular rectangle"
+	self assert: box encompassingRectangle equals: (-5 @ -5 corner: 5 @ 5).
+	self assert: (box includesPoint: 0 @ 0).
+	self deny: (box includesPoint: 10 @ 10).
+	"translated rectangle"
+	box translateTo: 10@10.
+	self assert: box encompassingRectangle equals: (5 @ 5 corner: 15 @ 15).
+	self assert: (box includesPoint: 5 @ 5).
+	self deny: (box includesPoint: 4 @ 10).
+	"rotated rectangle"
+	box rotateByDegrees: 45.
+	self assert: box encompassingRectangle rounded equals: (3 @ 3 corner: 17 @ 17).
+	self assert: (box includesPoint: 10 @ 4).
+	self deny: (box includesPoint: 6 @ 6).
+	"scaled rectangle"
+	box scaleBy: 2.
+	self assert: box encompassingRectangle rounded equals: (-4 @ -4 corner: 24 @ 24).
+	self assert: (box includesPoint: 10 @ -3).
+	self deny: (box includesPoint: 0 @ 0).
+
 ]
 
 { #category : #composite }
