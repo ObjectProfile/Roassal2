@@ -2256,3 +2256,20 @@ VersionOfRoassal2 >> version000159 [
 	at: #date put: '8 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000160 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-RicardoJacas.102';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.195';
+	at: #version put: '0.161';
+	at: #comment put: '0.161 : Merged with Name: Trachel-RicardoJacas.102
+Author: RicardoJacas
+Time: 7 April 2014, 4:45:35.764509 pm
+UUID: 4468e43f-f42d-9c40-9f44-d028992d5711
+Ancestors: Trachel-JurajKubelka.101, Trachel-AlexandreBergel.101
+
+Added ArrowedLine';
+	at: #date put: '8 April 2014';
+	yourself
+]
