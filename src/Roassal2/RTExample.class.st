@@ -499,27 +499,33 @@ RTExample >> groupZooming [
 	"
 	self new groupZooming
 	"
-| v els1 els2 els hl vl el extent |
-v := RTView new.
-el := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
-els1 := (RTBox new size: #yourself) elementsOn: #(20 50).
-els2 := (RTBox new size: #yourself) elementsOn: #(30 40).
-els := RTGroup with: els1 with: els2.
-els @ RTDraggable.
-el @ RTDraggable.
-hl := RTHorizontalLineLayout new gapSize: 1; alignLeft.
-hl on: els1; on: els2.
-vl := RTVerticalLineLayout new gapSize: 1; alignLeft.
-vl on: els.
-RTNest new padding: 1; on: el nest: els.
-v add: el; add: els.
-els2 := RTGroup with: el with: els.
-extent := els2 extent.
-v addMenu: 'Smaller' callback: [ v addAnimation: (RTResizeMove new toExtent: els2 extent * 0.6 during: 0.3 on: els2) ].
-v addMenu: 'Bigger' callback: [ v addAnimation: (RTResizeMove new toExtent: els2 extent * 1.4 during: 0.3 on: els2) ].
-v addMenu: 'original' callback: [ els2 extent: extent. v signalUpdate ].
-v addMenu: 'half' callback: [ els2 extent: extent / 2. v signalUpdate ].
-^ v open
+	| view firstGroup secondGroup bothGroups mainElement originalExtent mainWithNested |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
+	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTNest new padding: 1; on: mainElement nest: bothGroups.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	view add: mainWithNested.
+	"define menu and their actions"
+	originalExtent := mainWithNested extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 0.6 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 1.4 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
+	^ view open
 ]
 
 { #category : #animations }
