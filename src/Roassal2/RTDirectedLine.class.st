@@ -6,22 +6,28 @@ Class {
 
 { #category : #hooks }
 RTDirectedLine >> pointsFrom: from To: to [
-	| point mid dist points |
+	| point1 point2 dist1 dist2 mid  points |
 	mid := ((to x + from x) / 2) @ ((to y + from y) / 2).
+	point1 := from rotateBy: (Float pi /16) about: mid.
+	point2 := from rotateBy: (15*(Float pi /16)) about: mid.	
 	from x > to x
 		ifTrue: [
-			point := from rotateBy: (Float pi /2) about: mid.
-			dist := point dist: mid. 
-			point := point + (dist/2).
+			dist1 := point1 dist: mid.
+			dist2 := point2 dist: mid. 	
+			"point1 := point1 + (dist1/2).
+			point2 := point2 + (dist1/2)."
 			points := {from.
-			point.
+			point1.
+			point2.
 			to} asOrderedCollection ]
 		ifFalse: [  
-			point := from rotateBy: (Float pi /2) about: mid.
-			dist := point dist: mid.
-			point := point - (dist/2).
+			dist1 := point1 dist: mid.
+			dist2 := point2 dist: mid. 				
+			"point1 := point1 - (dist1/2).
+			point2 := point2 - (dist1/2)."
 			points := {to.
-			point.
+			point2.
+			point1.
 			from} asOrderedCollection ].
 	^ points
 ]

@@ -45,7 +45,7 @@ RTInteractiveSVGExporter >> addStart: bounds [
 						]]].		
 	stream
 		nextPutAll:  ('width="<1p>px" height="<2p>px" ' expandMacrosWith: ((bounds width + 1 + marginX + paddingX) rounded) with: ((bounds height + 1 + marginY + paddingY) rounded));
-		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
+		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);float:left" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
 		nextPutAll: String cr;
 		nextPut: Character tab;
 		nextPutAll: 'xmlns:xlink="http://www.w3.org/1999/xlink">';
