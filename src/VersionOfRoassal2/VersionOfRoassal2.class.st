@@ -2245,3 +2245,14 @@ VersionOfRoassal2 >> version000158 [
 	at: #date put: '8 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000159 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.101';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.194';
+	at: #version put: '0.160';
+	at: #comment put: '0.160 : added example about the camera control';
+	at: #date put: '8 April 2014';
+	yourself
+]
