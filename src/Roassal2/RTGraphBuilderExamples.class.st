@@ -255,7 +255,7 @@ RTGraphBuilderExamples >> vissoft05 [
 		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
 
 	b layout 
-		use: (RTForceBasedLayout new).
+		use: (RTForceBasedLayout new charge: -180).
 
 	b global
 		minSize: 10;
