@@ -2223,3 +2223,14 @@ VersionOfRoassal2 >> version000156 [
 	at: #date put: '7 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000157 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.101';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.192';
+	at: #version put: '0.158';
+	at: #comment put: '0.158 : added examples about dynamic edges, including with curvy edges. Cleaned a bit the code of RTShowEdge';
+	at: #date put: '8 April 2014';
+	yourself
+]
