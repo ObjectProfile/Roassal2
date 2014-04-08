@@ -160,6 +160,11 @@ RTView >> setUpCanvas [
 	^ trCanvas
 ]
 
+{ #category : #convenient }
+RTView >> signalUpdate [
+	^ self canvas signalUpdate
+]
+
 { #category : #'accessing-computed' }
 RTView >> trachelShape [
 
