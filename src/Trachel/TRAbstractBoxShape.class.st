@@ -145,16 +145,6 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 	self position: (aPosition - ((self width / -2) @ 0))
 ]
 
-{ #category : #accessing }
-TRAbstractBoxShape >> rectangle [
-	^ rectangle
-]
-
-{ #category : #accessing }
-TRAbstractBoxShape >> rectangle: newRectangle [
-	self fromRectangle: newRectangle
-]
-
 { #category : #testing }
 TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]

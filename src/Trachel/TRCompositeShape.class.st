@@ -63,7 +63,7 @@ TRCompositeShape >> color [
 { #category : #accessing }
 TRCompositeShape >> color: aColor [
 	shape1 color: aColor.
-	"shape2 color: aColor."
+	shape2 color: aColor.
 ]
 
 { #category : #hooks }

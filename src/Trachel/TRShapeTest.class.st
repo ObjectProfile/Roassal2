@@ -137,7 +137,7 @@ TRShapeTest >> testEllipseTransformation [
 	self assert: ellipse width equals: ellipse encompassingRectangle width.
 	self assert: ellipse height equals: ellipse encompassingRectangle height.
 	self assert: ellipse extent equals: ellipse encompassingRectangle extent.
-	self assert: (ellipse includesPoint: 5 @ 5).
+	self assert: (ellipse includesPoint: 7 @ 7).
 	self deny: (ellipse includesPoint: 4 @ 10).
 	"rotated rectangle"
 	ellipse rotateByDegrees: 45.
@@ -147,7 +147,7 @@ TRShapeTest >> testEllipseTransformation [
 	self assert: ellipse width equals: ellipse encompassingRectangle width.
 	self assert: ellipse height equals: ellipse encompassingRectangle height.
 	self assert: ellipse extent equals: ellipse encompassingRectangle extent.
-	self assert: (ellipse includesPoint: 10 @ 4).
+	self assert: (ellipse includesPoint: 10 @ 7).
 	self deny: (ellipse includesPoint: 6 @ 6).
 	"scaled rectangle"
 	ellipse scaleBy: 2.
@@ -157,7 +157,7 @@ TRShapeTest >> testEllipseTransformation [
 	self assert: ellipse width equals: ellipse encompassingRectangle width.
 	self assert: ellipse height equals: ellipse encompassingRectangle height.
 	self assert: ellipse extent equals: ellipse encompassingRectangle extent.
-	self assert: (ellipse includesPoint: 10 @ -3).
+	self assert: (ellipse includesPoint: 10 @ 0).
 	self deny: (ellipse includesPoint: 0 @ 0).
 	"translated rectangle"
 	ellipse translateTo: 20 @ 20.
@@ -167,7 +167,7 @@ TRShapeTest >> testEllipseTransformation [
 	self assert: ellipse width equals: ellipse encompassingRectangle width.
 	self assert: ellipse height equals: ellipse encompassingRectangle height.
 	self assert: ellipse extent equals: ellipse encompassingRectangle extent.
-	self assert: (ellipse includesPoint: 20 @ 7).
+	self assert: (ellipse includesPoint: 20 @ 14).
 	self deny: (ellipse includesPoint: 10 @ 10).
 	"back to regular rectangle"
 	ellipse rotateByDegrees: -45.
@@ -178,7 +178,7 @@ TRShapeTest >> testEllipseTransformation [
 	self assert: ellipse width equals: ellipse encompassingRectangle width.
 	self assert: ellipse height equals: ellipse encompassingRectangle height.
 	self assert: ellipse extent equals: ellipse encompassingRectangle extent.
-	self assert: (ellipse includesPoint: 16 @ 16).
+	self assert: (ellipse includesPoint: 17 @ 17).
 	self deny: (ellipse includesPoint: 10 @ 10).
 	"set width"
 	ellipse width: 20.

@@ -171,7 +171,7 @@ TRCanvasExample >> arc6 [
 	shape alphaAngle:10  betaAngle: 80  innerRadius: 30 externalRadius: 150. 
 	shape color: Color blue.
 	shape2:=TRBoxShape new.
-	shape2 rectangle: (shape topLeft corner: shape bottomRight).
+	shape2 fromRectangle: (shape topLeft corner: shape bottomRight).
 	shape2 color: Color red.
 	c addShape: shape.
 	c addShape: shape2.
