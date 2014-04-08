@@ -97,6 +97,12 @@ RTElement >> remove [
 	view := nil 
 ]
 
+{ #category : #initialization }
+RTElement >> removeConnectedEdge: anEdge [
+	[  anEdge class == RTEdge ] assert.
+	self connectedEdges remove: anEdge ifAbsent: [ "Some RTDowserBuilderTest tests failed." ]
+]
+
 { #category : #actions }
 RTElement >> translateBy: delta [
 	"Translate the element by an incremental step. If I am connected to some edges, the edges are also updated."
