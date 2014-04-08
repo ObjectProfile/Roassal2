@@ -74,7 +74,7 @@ TRAbstractBoxShape >> encompassingRectangle [
 
 { #category : #accessing }
 TRAbstractBoxShape >> extent [
-	^ self rectangle extent
+	^ self encompassingRectangle extent
 ]
 
 { #category : #geometry }
@@ -125,8 +125,9 @@ TRAbstractBoxShape >> height [
 
 { #category : #accessing }
 TRAbstractBoxShape >> height: newHeight [
-	rectangle := (rectangle center - (0 @ (newHeight / 2))) extent: (self extent x @ newHeight).
-	self resetPath
+	rectangle := (0@0 extent: rectangle width @ newHeight) 
+						translateBy: (rectangle width @ newHeight) / -2.
+	self resetPath.
 ]
 
 { #category : #testing }
@@ -177,6 +178,7 @@ TRAbstractBoxShape >> width [
 
 { #category : #accessing }
 TRAbstractBoxShape >> width: newWidth [
-	rectangle := (rectangle center - ((newWidth / 2) @ 0)) extent: (newWidth @ self extent y).
+	rectangle := (0@0 extent: newWidth @ rectangle height) 
+						translateBy: (newWidth @ rectangle height) / -2.
 	self resetPath.
 ]
