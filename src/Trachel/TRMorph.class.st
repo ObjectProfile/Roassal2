@@ -295,6 +295,7 @@ TRMorph >> rtMouseEnter: evt [
 	relativePosition := self relativePositionFor: evt.
 
 	shape := self shapeWithActionForPositionInPixels: relativePosition.
+
 	ev := TRMouseEnter new.
 	ev position: relativePosition.
 	ev shape: shape.
