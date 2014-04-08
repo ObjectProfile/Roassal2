@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGLink class >> on: anExporter link: anHref targets: aRTShape [
+RTSVGLink class >> on: anHTMLExporter link: anHref targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; link: anHref; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
@@ -35,7 +35,6 @@ RTSVGLink >> addGlobalHandlers: aStream [
 { #category : #accessing }
 RTSVGLink >> initialize [
 	link := [:a |'http://objectprofile.com/'].
-	self type: 'link'.
 	contained := false.
 	external := false.
 ]

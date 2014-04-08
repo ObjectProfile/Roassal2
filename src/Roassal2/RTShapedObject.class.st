@@ -92,14 +92,9 @@ RTShapedObject >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey [
-	^ self attributes removeKey: aKey
-]
-
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
-	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
+{ #category : #transformations }
+RTShapedObject >> preScaleBy: aPoint [ 
+	trachelShape preScaleBy: aPoint
 ]
 
 { #category : #rendering }
@@ -110,6 +105,11 @@ RTShapedObject >> renderOn: trachelCanvas [
 	trachelShape element: self
 ]
 
+{ #category : #transformations }
+RTShapedObject >> scaleBy: aPoint [ 
+	trachelShape scaleBy: aPoint
+]
+
 { #category : #accessing }
 RTShapedObject >> shape [
 	^ shape
@@ -117,7 +117,7 @@ RTShapedObject >> shape [
 
 { #category : #signalling }
 RTShapedObject >> signalUpdate [
-	^ trachelShape signalUpdate
+	trachelShape signalUpdate
 ]
 
 { #category : #announce }

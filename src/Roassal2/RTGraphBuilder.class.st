@@ -6,8 +6,7 @@ Class {
 		'edge',
 		'layout',
 		'global',
-		'interaction',
-		'bundleConnectToElements'
+		'interaction'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }

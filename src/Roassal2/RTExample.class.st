@@ -272,39 +272,6 @@ RTExample >> colorWaves [
 	v open
 ]
 
-{ #category : #edges }
-RTExample >> dynamicEdges01 [
-	"
-	self new dynamicEdges01
-	"
-
-| v es |
-v := RTView new.
-es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
-v addAll: es.
-RTCircleLayout new initialRadius: 150; on: es.
-
-es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
-
-v open
-]
-
-{ #category : #edges }
-RTExample >> dynamicEdges02 [
-	"
-	self new dynamicEdges02
-	"
-| v es |
-v := RTView new.
-es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
-v addAll: es.
-RTCircleLayout new initialRadius: 150; on: es.
-
-es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: [ :el | RTBezierLine new centerOfObjects: (el model - 5 to: el model +5) inView: v; color: (Color blue alpha: 0.4) ] ).
-
-v open
-]
-
 { #category : #shapes }
 RTExample >> edges [
 	"
@@ -695,25 +662,6 @@ RTExample >> manySquares [
 	view open
 ]
 
-{ #category : #camera }
-RTExample >> movingCamera [
-	"
-	self new movingCamera
-	"
-		
-	| v menu |
-	v := RTView new.
-	v add: (RTEllipse new size: 50) element.
-
-	menu := RTMenuBuilder new view: v.
-	menu menu: '<-' callback: [ v canvas camera translateBy: -10 @ 0. v signalUpdate ].
-	menu menu: '->' callback: [ v canvas camera translateBy: 10 @ 0. v signalUpdate ].
-	menu menu: 'V' callback: [ v canvas camera translateBy: 0 @ 10. v signalUpdate ].
-	menu menu: '^' callback: [ v canvas camera translateBy: 0 @ -10. v signalUpdate ].
-	 
-	v open
-]
-
 { #category : #nesting }
 RTExample >> multipleNesting [
 	" 
@@ -921,7 +869,7 @@ RTExample >> normalizer01 [
 
 { #category : #layout }
 RTExample >> numbers [
-	"self new numbers"
+
 	| view elements |
 	view := RTView new.	
 	elements := RTBox elementsOn: (1 to: 100).

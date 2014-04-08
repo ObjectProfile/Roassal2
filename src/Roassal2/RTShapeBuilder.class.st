@@ -149,7 +149,7 @@ RTShapeBuilder >> linearFillColor: block within: groupOfObjects [
 	groupOfObjects isEmpty ifTrue: [ ^ Color red ].
 	
 	max := groupOfObjects maxValue: block.
-	self current color: [ :v | Color grayScale256: 256 - ((block rtValue: v) max: max in: (1 to: 256)) ]
+	self current color: [ :v | Color gray256: 256 - ((block rtValue: v) max: max in: (1 to: 256)) ]
 ]
 
 { #category : #copying }

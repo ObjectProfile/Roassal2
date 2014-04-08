@@ -18,12 +18,6 @@ RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
 	^ (RTEdge from: el1 toAll: el2) addShape: self
 ]
 
-{ #category : #'as yet unclassified' }
-RTAbstractLine >> + anotherShape [
-	anotherShape line: self.
-	^ RTCompositeShape with: self with: anotherShape instance
-]
-
 { #category : #visitor }
 RTAbstractLine >> accept: aVisitor [
 	aVisitor visitLine: self
@@ -37,11 +31,6 @@ RTAbstractLine >> attachPoint: aRTAttachPoint [
 { #category : #public }
 RTAbstractLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
-]
-
-{ #category : #public }
-RTAbstractLine >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
 ]
 
 { #category : #'attach point' }

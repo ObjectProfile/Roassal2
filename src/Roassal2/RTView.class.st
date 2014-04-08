@@ -54,7 +54,7 @@ RTView >> canvas [
 	^ trCanvas
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #actions }
 RTView >> edgeFromModel: anObject [
 	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ edges detect: [ :edge | edge model = anObject ] ifNone: [ nil ]
@@ -65,7 +65,7 @@ RTView >> edges [
 	^ edges copy
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #actions }
 RTView >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]
@@ -74,17 +74,6 @@ RTView >> elementFromModel: anObject [
 { #category : #accessing }
 RTView >> elements [
 	^ elements copy
-]
-
-{ #category : #'accessing-computed' }
-RTView >> elementsFromModels: objects [
-	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
-	| answer t |
-	answer := RTGroup new.
-	objects do: [ :o |
-		t := self elementFromModel: o.
-		t notNil ifTrue: [ answer add: t ] ].
-	^ answer
 ]
 
 { #category : #initialization }
@@ -160,9 +149,9 @@ RTView >> setUpCanvas [
 	^ trCanvas
 ]
 
-{ #category : #convenient }
+{ #category : #signalling }
 RTView >> signalUpdate [
-	^ self canvas signalUpdate
+	trCanvas signalUpdate
 ]
 
 { #category : #'accessing-computed' }

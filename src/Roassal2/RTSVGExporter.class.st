@@ -65,7 +65,7 @@ RTSVGExporter >> addStart: bounds [
 	stream
 		nextPutAll: '<svg  xmlns="http://www.w3.org/2000/svg" ';
 		nextPutAll:  ('width="<1p>px" height="<2p>px" ' expandMacrosWith: ((bounds width + 2) rounded) with: ((bounds height + 2) rounded));
-		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);float:left" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
+		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
 		nextPutAll: String cr;
 		nextPut: Character tab;
 		nextPutAll: 'xmlns:xlink="http://www.w3.org/1999/xlink">';
@@ -82,14 +82,9 @@ RTSVGExporter >> backgroundColor: aColor [
 	backgroundColor := aColor
 ]
 
-{ #category : #accessing }
-RTSVGExporter >> builder: builder filename: aName [
-	self view: builder view filename: aName
-]
-
 { #category : #configuration }
 RTSVGExporter >> defaultBackgroundColor [
-	^ Color white
+	^ Color veryLightGray
 ]
 
 { #category : #svg }
@@ -201,10 +196,4 @@ RTSVGExporter >> view [
 RTSVGExporter >> view: aView [
 	
 	view := aView.
-]
-
-{ #category : #accessing }
-RTSVGExporter >> view: aView filename: aName [
-	self view: aView.
-	self fileName: aName.
 ]

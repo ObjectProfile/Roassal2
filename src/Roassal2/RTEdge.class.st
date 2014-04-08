@@ -185,11 +185,6 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 ]
 
 { #category : #'public - edge construction' }
-RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view [ 
-	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
-]
-
-{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
@@ -242,7 +237,7 @@ RTEdge >> from [
 
 { #category : #accessing }
 RTEdge >> from: anElement [
-	from ifNotNil: [ :element | element removeConnectedEdge: self ].
+	
 	from := anElement.
 	anElement addConnectedEdge: self
 ]
@@ -273,7 +268,7 @@ RTEdge >> to [
 
 { #category : #accessing }
 RTEdge >> to: anElement [
-	to ifNotNil: [ :element | element removeConnectedEdge: self ].
+	
 	to := anElement.
 	anElement addConnectedEdge: self
 ]

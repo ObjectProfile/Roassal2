@@ -13,6 +13,7 @@ Class {
 RTBuilder >> addElementOn: anObject [
 	| element |
 	element := self elementOn: anObject.
+	interactionBuilder setUpElements: element.
 	view add: element.
 	^ element
 ]
@@ -48,18 +49,12 @@ RTBuilder >> edgeFrom: source to: target [
 
 { #category : #protected }
 RTBuilder >> elementOn: anObject [
-	| element |
-	element := shapeBuilder elementOn: anObject.
-	interactionBuilder setUpElements: element.
-	^ element
+	^ shapeBuilder elementOn: anObject
 ]
 
 { #category : #protected }
 RTBuilder >> elementsOn: collectionOfObjects [
-	| elements |
-	elements := shapeBuilder elementsOn: collectionOfObjects.
-	interactionBuilder setUpElements: elements.
-	^ elements
+	^ shapeBuilder elementsOn: collectionOfObjects
 ]
 
 { #category : #protected }
