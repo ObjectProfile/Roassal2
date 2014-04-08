@@ -125,9 +125,7 @@ TRAbstractBoxShape >> height [
 
 { #category : #accessing }
 TRAbstractBoxShape >> height: newHeight [
-	rectangle := (0@0 extent: rectangle width @ newHeight) 
-						translateBy: (rectangle width @ newHeight) / -2.
-	self resetPath.
+	self extent: rectangle width @ newHeight
 ]
 
 { #category : #testing }
@@ -178,7 +176,5 @@ TRAbstractBoxShape >> width [
 
 { #category : #accessing }
 TRAbstractBoxShape >> width: newWidth [
-	rectangle := (0@0 extent: newWidth @ rectangle height) 
-						translateBy: (newWidth @ rectangle height) / -2.
-	self resetPath.
+	self extent: newWidth @ rectangle height.
 ]
