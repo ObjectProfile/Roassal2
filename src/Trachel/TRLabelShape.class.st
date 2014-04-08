@@ -57,7 +57,7 @@ TRLabelShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [
 		"Draw the label centered on the position"
 		athensCanvas pathTransform
-			translateBy: self position asIntegerPoint;
+			translateBy: position asIntegerPoint;
 			translateBy: ((self width / -2) @ (self height / 2)) asIntegerPoint;
 			translateBy: (0 @ self descent negated) asIntegerPoint.
 			"scaleBy: (fontSize / 10)."
@@ -72,7 +72,7 @@ TRLabelShape >> encompassingRectangle [
 	| w h |
 	w := self width.
 	h := self height.
-	^ self position + ((w / -2) @ (h / -2)) extent: (w @ h)
+	^ position + ((w / -2) @ (h / -2)) extent: (w @ h)
 ]
 
 { #category : #accessing }
@@ -114,6 +114,16 @@ TRLabelShape >> initialize [
 ]
 
 { #category : #accessing }
+TRLabelShape >> position [
+	^ position
+]
+
+{ #category : #accessing }
+TRLabelShape >> position: aPosition [
+	position := aPosition
+]
+
+{ #category : #accessing }
 TRLabelShape >> text [
 	^ text
 ]
@@ -130,6 +140,11 @@ TRLabelShape >> text: aText on: aPosition [
 ]
 
 { #category : #public }
+TRLabelShape >> translateBy: step [
+	position := position + step.
+]
+
+{ #category : #public }
 TRLabelShape >> translateLeftTo: aPosition [
 	self translateTo: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
 ]
@@ -137,6 +152,11 @@ TRLabelShape >> translateLeftTo: aPosition [
 { #category : #public }
 TRLabelShape >> translateRightTo: aPosition [
 	self translateTo: (aPosition + ((self width / -2) @ 0) ) asIntegerPoint
+]
+
+{ #category : #public }
+TRLabelShape >> translateTo: aPoint [
+	position := aPoint
 ]
 
 { #category : #accessing }

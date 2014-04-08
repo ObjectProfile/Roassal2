@@ -27,20 +27,14 @@ TRAbstractBoxShape >> center [
 	^ self position
 ]
 
+{ #category : #hooks }
+TRAbstractBoxShape >> computePath [
+	self subclassResponsibility
+]
+
 { #category : #drawing }
 TRAbstractBoxShape >> drawOn: athensCanvas [
-	self shouldBeDrawn
-		ifFalse: [ ^ self ].
-	self drawEncompassingRectangleOn: athensCanvas.
-	athensCanvas pathTransform
-		restoreAfter: [ 
-			athensCanvas pathTransform
-				multiplyBy: matrix;
-				scaleBy: rectangle extent.
-			athensCanvas 
-				setPaint: color;
-				drawShape: self path.
-			self drawStrokeIfNecessaryOn: athensCanvas ]
+	self subclassResponsibility
 ]
 
 { #category : #drawing }
@@ -55,34 +49,21 @@ TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 
 { #category : #accessing }
 TRAbstractBoxShape >> encompassingRectangle [
-
-	| rotatedRectangle topLeft topRight bottomRight bottomLeft p1 p2 p3 p4 |
-	topLeft := matrix transform: rectangle topLeft.
-	topRight := matrix transform: rectangle topRight.
-	bottomRight := matrix transform: rectangle bottomRight.
-	bottomLeft := matrix transform: rectangle bottomLeft.
-	
-	p1 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
-	p2 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
-	p3 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
-	p4 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
-	
-	rotatedRectangle := 
-		(p1 min @ p2 min) corner:
-		(p3 max @ p4 max).
-	^ rotatedRectangle
+	^ self rectangle
 ]
 
 { #category : #accessing }
 TRAbstractBoxShape >> extent [
-	^ self encompassingRectangle extent
+	^ self rectangle extent
 ]
 
 { #category : #geometry }
 TRAbstractBoxShape >> extent: anExtent [
+	| center |
 	anExtent = self extent ifTrue: [ ^ self ].
-	rectangle := (0@0 - (anExtent / 2)) extent: anExtent.
-	self resetPath.
+	center := rectangle center.
+	rectangle := (center - (anExtent / 2)) extent: anExtent.
+	self resetPath
 ]
 
 { #category : #public }
@@ -104,13 +85,13 @@ TRAbstractBoxShape >> from: aPoint to: anotherPoint color: aColor [
 ]
 
 { #category : #public }
-TRAbstractBoxShape >> fromRectangle: newRectangle [
-	| step |
-	step := newRectangle center - self position.
-	rectangle := newRectangle translateBy: newRectangle center negated.
-	self position: newRectangle center.
-	self resetPath.
-	self triggerCallbacksForStep: step.
+TRAbstractBoxShape >> fromRectangle: r [
+	| oldTopLeft |
+	oldTopLeft := rectangle topLeft.
+	rectangle := r.
+	position := rectangle center.
+	self triggerCallbacksForStep: (r topLeft - oldTopLeft).
+	self resetPath
 ]
 
 { #category : #public }
@@ -121,12 +102,12 @@ TRAbstractBoxShape >> fromRectangle: r color: aColor [
 
 { #category : #accessing }
 TRAbstractBoxShape >> height [
-	^ self encompassingRectangle height
+	^ rectangle height
 ]
 
 { #category : #accessing }
 TRAbstractBoxShape >> height: newHeight [
-	self extent: rectangle width @ newHeight
+	rectangle := (position - (0 @ (newHeight / 2))) extent: (self extent x @ newHeight)
 ]
 
 { #category : #testing }
@@ -142,7 +123,17 @@ TRAbstractBoxShape >> initialize [
 
 { #category : #public }
 TRAbstractBoxShape >> leftPosition: aPosition [
-	self position: (aPosition - ((self width / -2) @ 0))
+	self position: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> rectangle [
+	^ rectangle
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> rectangle: r [
+	self fromRectangle: r
 ]
 
 { #category : #testing }
@@ -160,12 +151,35 @@ TRAbstractBoxShape >> strokeWidth [
 	^ 1.5
 ]
 
+{ #category : #actions }
+TRAbstractBoxShape >> translateBy: aPoint [
+	super translateBy: aPoint.
+	rectangle := (rectangle topLeft + aPoint) extent: rectangle extent.
+	self triggerCallbacksForStep: aPoint
+]
+
+{ #category : #actions }
+TRAbstractBoxShape >> translateTo: aPoint [
+	| oldTopLeft |
+	super translateTo: aPoint.
+	oldTopLeft := rectangle topLeft.
+	rectangle := (aPoint - (self extent / 2)) extent: self extent.
+	self triggerCallbacksForStep: (rectangle topLeft - oldTopLeft)
+]
+
+{ #category : #actions }
+TRAbstractBoxShape >> triggerCallbacksForStep: aStep [
+	"aStep is a point that represents a translation step"
+	callbacks ifNil: [ ^ self ].
+	callbacks do: [ :c | c block value: self value: aStep ]
+]
+
 { #category : #accessing }
 TRAbstractBoxShape >> width [
-	^ self encompassingRectangle width
+	^ rectangle width
 ]
 
 { #category : #accessing }
 TRAbstractBoxShape >> width: newWidth [
-	self extent: newWidth @ rectangle height.
+	rectangle := (position - ((newWidth / 2) @ 0)) extent: (newWidth @ self extent y)
 ]

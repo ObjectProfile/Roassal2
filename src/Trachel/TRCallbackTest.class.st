@@ -9,7 +9,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #running }
+{ #category : #'as yet unclassified' }
 TRCallbackTest >> setUp [
 
 	canvas := TRCanvas new.
@@ -17,7 +17,7 @@ TRCallbackTest >> setUp [
 	circle2 := canvas buildCircleFrom: 200 @ 200 to: 240 @ 230 color: (Color blue alpha: 0.1).	
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 TRCallbackTest >> testCallback [
 	| callback v s  |
 	callback := TRTranslationCallback 
@@ -25,11 +25,10 @@ TRCallbackTest >> testCallback [
 									v := shape. s := step ].
 	circle1 addCallback: callback.
 
-	self assert: circle1 position = (0 @ 0).
 	circle1 translateTo: 20 @ 30.
 	self assert: v == circle1.
 	self assert: v center = (20 @ 30).
-	self assert: s = (20 @ 30).
+	self assert: s = (-65 @ -30).
 
 	v := nil.
 	circle1 translateBy: 5 @ 3.
@@ -39,7 +38,7 @@ TRCallbackTest >> testCallback [
 	
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 TRCallbackTest >> testHasCallBack [
 
 	self deny: TREllipseShape new hasCallback.

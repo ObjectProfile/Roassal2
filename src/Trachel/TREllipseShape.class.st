@@ -16,11 +16,39 @@ TREllipseShape >> computePath [
 				createPath: [ :builder | 
 					builder
 						absolute;
-						moveTo: 0 @ 0.5;
-						ccwArcTo: 0.5 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0.0 @ -0.5 angle: 90 degreesToRadians;
-						ccwArcTo: -0.5 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0 @ 0.5 angle: 90 degreesToRadians ]
+						moveTo: 0 @ 1;
+						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
+						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ]
+"	path := canvas
+		cacheAt: self
+		ifAbsentPut: [ 
+			canvas
+				createPath: [ :builder | 
+					builder
+						absolute;
+						moveTo: 0 @ 1;
+						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
+						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ] ]"
+]
+
+{ #category : #drawing }
+TREllipseShape >> drawOn: athensCanvas [
+	self shouldBeDrawn ifFalse: [ ^ self ].
+	athensCanvas pathTransform restoreAfter: [
+		athensCanvas pathTransform 
+			translateBy: rectangle center;
+			scaleBy: rectangle extent / 2.
+
+		athensCanvas
+			setPaint: color;
+			drawShape: self path.
+
+		self drawStrokeIfNecessaryOn: athensCanvas
+		]
 ]
 
 { #category : #public }
@@ -32,15 +60,8 @@ TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
 
 { #category : #testing }
 TREllipseShape >> includesPoint: aPoint [
-	"Implementation is taken over from EllipseMorph>>containsPoint:"
-	| invertedPoint radius other delta xOverY |
-	invertedPoint := matrix inverseTransform: aPoint.
-	(rectangle containsPoint: invertedPoint) ifFalse: [ ^ false ]. "quick elimination"
-	radius := rectangle height asFloat / 2.
-	other := rectangle width asFloat / 2.
-	delta := invertedPoint - rectangle topLeft - (other@radius).
-	xOverY := rectangle width asFloat / rectangle height asFloat.
-	^ (delta x asFloat / xOverY) squared + delta y squared <= radius squared
+	"We could aternatively translate rectangle by position"
+	^ rectangle containsPoint: (aPoint)
 ]
 
 { #category : #hooks }

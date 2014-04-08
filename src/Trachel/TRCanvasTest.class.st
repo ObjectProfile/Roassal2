@@ -68,10 +68,10 @@ TRCanvasTest >> testBox [
 	| rec box |
 	rec := (50 @ 50 extent: 100 @ 50).
 	box := canvas buildRectangle: rec color: Color purple.
-	self assert: box encompassingRectangle center = rec center.
+	self assert: box rectangle center = rec center.
 
 	box extent: 20 @ 20.
-	self assert: box encompassingRectangle center = rec center.
+	self assert: box rectangle center = rec center.
 ]
 
 { #category : #camera }
@@ -271,7 +271,7 @@ TRCanvasTest >> testInitialization [
 
 	| circle |
 	circle := TREllipseShape new.
-	self assert: circle encompassingRectangle = TRAbstractBoxShape nullRectangle
+	self assert: circle rectangle = TRAbstractBoxShape nullRectangle
 ]
 
 { #category : #label }
@@ -493,10 +493,10 @@ TRCanvasTest >> testShapingElement [
 	| circle |
 	circle := canvas buildCircleFrom: 20 @ 20 to: 100 @ 80 color: Color red.
 
-	self assert: circle encompassingRectangle = ((20 @ 20) corner: (100 @ 80)).
+	self assert: circle rectangle = ((20 @ 20) corner: (100 @ 80)).
 	
 	circle translateBy: -20 @ -20.
-	self assert: circle encompassingRectangle = ((0 @ 0) corner: (80 @ 60)).
+	self assert: circle rectangle = ((0 @ 0) corner: (80 @ 60)).
 ]
 
 { #category : #'should be drawn' }

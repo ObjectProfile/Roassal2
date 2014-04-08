@@ -28,7 +28,7 @@ TRRotatedLabelShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [
 		"Draw the label centered on the position"
 		athensCanvas pathTransform 
-			translateBy: self position asIntegerPoint;
+			translateBy: position asIntegerPoint;
 			rotateByDegrees: angle value;
 			translateBy: ((self notRotatedWidth value / -2) @ (self notRotatedHeight value / 2)) asIntegerPoint;
 			translateBy: (0 @ font descent negated) asIntegerPoint.
@@ -62,7 +62,7 @@ TRRotatedLabelShape >> encompassingRectangle [
 		(p1 min @ p2 min) corner:
 		(p3 max @ p4 max).
 	translation := AthensAffineTransform new
-					translateBy: self position asIntegerPoint.
+					translateBy: position asIntegerPoint.
 	^ (translation transform: rotatedRectangle topLeft)
 	 	corner: (translation transform: rotatedRectangle bottomRight)
 	
