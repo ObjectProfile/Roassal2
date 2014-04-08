@@ -8,14 +8,6 @@ Class {
 }
 
 { #category : #public }
-RTInteractionBuilder >> decoration [
-	| i |
-	i := RTDecoration new.
-	interactions add: i. 
-	^ i
-]
-
-{ #category : #public }
 RTInteractionBuilder >> draggable [
 	| i |
 	i := RTDraggable new.

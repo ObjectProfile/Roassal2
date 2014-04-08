@@ -869,7 +869,7 @@ RTExample >> normalizer01 [
 
 { #category : #layout }
 RTExample >> numbers [
-	"self new numbers"
+
 	| view elements |
 	view := RTView new.	
 	elements := RTBox elementsOn: (1 to: 100).

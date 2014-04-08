@@ -3,22 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'conditionalShapes',
-		'graphBuilder',
-		'bundleConnectToElements'
+		'graphBuilder'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
-
-{ #category : #'as yet unclassified' }
-RTGDEdgeB >> bundleConnectTo: aBlock [
-	^ self bundleConnectToElements: [ :anEl | 
-		(aBlock rtValue: anEl model) collect: [ :o | graphBuilder view elementFromModel: o ] ]
-]
-
-{ #category : #'as yet unclassified' }
-RTGDEdgeB >> bundleConnectToElements: aBlock [
-	bundleConnectToElements add: aBlock
-]
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: toBlock [
@@ -72,6 +60,5 @@ RTGDEdgeB >> if: condition connectTo: toBlock shape: aShape [
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> initialize [
 	super initialize.
-	conditionalShapes := OrderedCollection new.
-	bundleConnectToElements := OrderedCollection new
+	conditionalShapes := OrderedCollection new
 ]

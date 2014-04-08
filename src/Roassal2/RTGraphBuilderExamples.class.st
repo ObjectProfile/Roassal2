@@ -124,26 +124,6 @@ RTGraphBuilderExamples >> simple06AddingEdge [
 ]
 
 { #category : #examples }
-RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
-	"
-	self new simple07HierarchicalBundleEdge
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-
-	b node shape: (RTEllipse new  size: 30) + RTLabel.
-
-	b edge bundleConnectTo: [ :v | #(1 2 3) copyWithout: v ].
-
-	b layout use: (RTCircleLayout new).
-		 
-	b addAll: (1 to: 3).
-
-	b open
-]
-
-{ #category : #examples }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01
