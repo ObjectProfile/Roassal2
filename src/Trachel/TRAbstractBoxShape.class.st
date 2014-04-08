@@ -36,7 +36,7 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 		restoreAfter: [ 
 			athensCanvas pathTransform
 				multiplyBy: matrix;
-				scaleBy: rectangle extent / 2.
+				scaleBy: rectangle extent.
 			athensCanvas 
 				setPaint: color;
 				drawShape: self path.

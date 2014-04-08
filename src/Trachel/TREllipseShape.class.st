@@ -16,39 +16,11 @@ TREllipseShape >> computePath [
 				createPath: [ :builder | 
 					builder
 						absolute;
-						moveTo: 0 @ 1;
-						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
-						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ]
-"	path := canvas
-		cacheAt: self
-		ifAbsentPut: [ 
-			canvas
-				createPath: [ :builder | 
-					builder
-						absolute;
-						moveTo: 0 @ 1;
-						ccwArcTo: 1.0 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0.0 @ -1.0 angle: 90 degreesToRadians;
-						ccwArcTo: -1.0 @ 0.0 angle: 90 degreesToRadians;
-						ccwArcTo: 0 @ 1.0 angle: 90 degreesToRadians ] ]"
-]
-
-{ #category : #drawing }
-TREllipseShape >> drawOn: athensCanvas [
-	self shouldBeDrawn ifFalse: [ ^ self ].
-	athensCanvas pathTransform restoreAfter: [
-		athensCanvas pathTransform 
-			translateBy: rectangle center;
-			scaleBy: rectangle extent / 2.
-
-		athensCanvas
-			setPaint: color;
-			drawShape: self path.
-
-		self drawStrokeIfNecessaryOn: athensCanvas
-		]
+						moveTo: 0 @ 0.5;
+						ccwArcTo: 0.5 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0.0 @ -0.5 angle: 90 degreesToRadians;
+						ccwArcTo: -0.5 @ 0.0 angle: 90 degreesToRadians;
+						ccwArcTo: 0 @ 0.5 angle: 90 degreesToRadians ]
 ]
 
 { #category : #public }
@@ -60,8 +32,9 @@ TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
 
 { #category : #testing }
 TREllipseShape >> includesPoint: aPoint [
-	"We could aternatively translate rectangle by position"
-	^ rectangle containsPoint: (aPoint)
+	| invertedPoint |
+	invertedPoint := matrix inverseTransform: aPoint.
+	^ rectangle containsPoint: invertedPoint.
 ]
 
 { #category : #hooks }

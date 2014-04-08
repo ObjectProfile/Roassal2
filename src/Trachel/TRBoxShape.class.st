@@ -16,17 +16,16 @@ TRBoxShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: -1 @ -1;
-				lineTo: 1 @ -1;
-				lineTo: 1 @ 1;
-				lineTo: -1 @ 1;
-				lineTo: -1 @ -1. ]
+				moveTo: -0.5 @ -0.5;
+				lineTo: 0.5 @ -0.5;
+				lineTo: 0.5 @ 0.5;
+				lineTo: -0.5 @ 0.5;
+				lineTo: -0.5 @ -0.5 ]
 ]
 
 { #category : #testing }
 TRBoxShape >> includesPoint: aPoint [
-	| newPoint |
-	Transcript show: aPoint; cr.
-	newPoint := matrix inverseTransform: aPoint.
-	^ rectangle containsPoint: newPoint.
+	| invertedPoint |
+	invertedPoint := matrix inverseTransform: aPoint.
+	^ rectangle containsPoint: invertedPoint.
 ]
