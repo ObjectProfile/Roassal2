@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSVGViewPopup class >> on: anHTMLExporter view: aRTView targets: aRTShape [
+RTSVGViewPopup class >> on: anExporter view: aRTView targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; view: aRTView; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGViewPopup class >> onClick: anHTMLExporter view: aRTView targets: aRTShape [
+RTSVGViewPopup class >> onClick: anExporter view: aRTView targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; click: true; view: aRTView; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }

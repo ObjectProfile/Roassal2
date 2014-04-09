@@ -132,7 +132,7 @@ RTMapBuilder >> open [
 		].
 
 		periodLabel := TRLabelShape new
-			leftPosition: 30@20;
+			translateLeftTo: 30@20;
 			text: (cityBuilder evolutionPeriod at: cityBuilder step) asString;
 			color: Color black.
 		self view canvas addFixedShape: periodLabel.

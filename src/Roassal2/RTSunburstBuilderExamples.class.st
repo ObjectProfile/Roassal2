@@ -81,6 +81,27 @@ RTSunburstBuilderExamples >> basic10 [
 ]
 
 { #category : #examples }
+RTSunburstBuilderExamples >> basic11 [
+	"
+	self new basic11
+	"	
+	| b data |
+	data := { 'Chile' -> { 'Santiago' . 'Iquique' } . 'France' -> { 'Paris' . 'Nice' } }.
+	b := RTSunburstBuilder new.
+	b visitor interactions add: RTFadeInteraction.
+	b 
+		explore: data 
+		using: [ :o | 
+			o class == Association 
+				ifTrue: [ o value ] 
+				ifFalse: [ o isString 
+									ifTrue: [ #() ] 
+									ifFalse:  [ o ] ] ].
+	b view @ RTDraggableView.
+	b open
+]
+
+{ #category : #examples }
 RTSunburstBuilderExamples >> basic11WithGradient [
 	"
 	self new basic11WithGradient

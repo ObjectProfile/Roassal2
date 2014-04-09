@@ -45,11 +45,7 @@ RTView >> addElement: anElement [
 { #category : #menu }
 RTView >> addMenu: aTitle callback: aBlock [
 	self canvas addMenu: aTitle callback: aBlock
-	"| el |
-	el := RTLabel elementOn: aTitle.
-	el on: TRMouseClick do: [ :event | aBlock value ].
-	self add: el.
-	el trachelShape setAsFixed"
+
 ]
 
 { #category : #accessing }
@@ -78,6 +74,17 @@ RTView >> elementFromModel: anObject [
 { #category : #accessing }
 RTView >> elements [
 	^ elements copy
+]
+
+{ #category : #'accessing-computed' }
+RTView >> elementsFromModels: objects [
+	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	| answer t |
+	answer := RTGroup new.
+	objects do: [ :o |
+		t := self elementFromModel: o.
+		t notNil ifTrue: [ answer add: t ] ].
+	^ answer
 ]
 
 { #category : #initialization }
@@ -137,10 +144,25 @@ RTView >> removeElement: anElement [
 	anElement trachelShape remove.
 ]
 
+{ #category : #menu }
+RTView >> setDefaultMenu [
+	"Simply add some useful menu"
+	| b |
+	b := RTMenuBuilder new view: self.
+	b menu: 'Zoom' submenu: '+' background: Color red callback: [ RTZoomInMove on: self ].
+	b menu: 'Zoom' submenu: '-' background: Color red callback: [ RTZoomOutMove on: self ].
+	b render
+]
+
 { #category : #initialization }
 RTView >> setUpCanvas [
 	trCanvas camera focusOnCenter.
 	^ trCanvas
+]
+
+{ #category : #convenient }
+RTView >> signalUpdate [
+	^ self canvas signalUpdate
 ]
 
 { #category : #'accessing-computed' }

@@ -272,6 +272,39 @@ RTExample >> colorWaves [
 	v open
 ]
 
+{ #category : #edges }
+RTExample >> dynamicEdges01 [
+	"
+	self new dynamicEdges01
+	"
+
+| v es |
+v := RTView new.
+es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
+v addAll: es.
+RTCircleLayout new initialRadius: 150; on: es.
+
+es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
+
+v open
+]
+
+{ #category : #edges }
+RTExample >> dynamicEdges02 [
+	"
+	self new dynamicEdges02
+	"
+| v es |
+v := RTView new.
+es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
+v addAll: es.
+RTCircleLayout new initialRadius: 150; on: es.
+
+es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: [ :el | RTBezierLine new centerOfObjects: (el model - 5 to: el model +5) inView: v; color: (Color blue alpha: 0.4) ] ).
+
+v open
+]
+
 { #category : #shapes }
 RTExample >> edges [
 	"
@@ -494,6 +527,81 @@ RTExample >> group1 [
 	view open
 ]
 
+{ #category : #groups }
+RTExample >> groupZooming [
+	"
+	self new groupZooming
+	"
+	| view firstGroup secondGroup bothGroups mainElement originalExtent mainWithNested |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
+	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTNest new padding: 1; on: mainElement nest: bothGroups.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	view add: mainWithNested.
+	"define menu and their actions"
+	originalExtent := mainWithNested extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 0.6 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 1.4 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
+	^ view open
+]
+
+{ #category : #groups }
+RTExample >> groupZooming2 [
+	"
+	self new groupZooming2
+	"
+	| view firstGroup secondGroup bothGroups 
+		mainElement originalExtent mainWithNested anotherElement 
+		line |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); element.
+	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	anotherElement := RTEllipse new size: 20; color: (Color green alpha: 0.3); element.
+	line := RTLine new color: Color brown; attachPoint: RTHorizontalAttachPoint new; 
+				edgeFrom: anotherElement to: mainElement.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTGridLayout on: (Array with: anotherElement with: mainElement).
+	RTNest new padding: 1; on: mainElement nest: bothGroups.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	anotherElement @ RTDraggable.
+	view add: mainWithNested; add: anotherElement; add: line.
+	"define menu and their actions"
+	originalExtent := mainWithNested extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 0.6 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 1.4 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
+	^ view open
+]
+
 { #category : #animations }
 RTExample >> growingSquare [
 	" 
@@ -531,6 +639,21 @@ RTExample >> growingSquares [
 	RTGridLayout on: view elements.
 	
 	view open
+]
+
+{ #category : #interaction }
+RTExample >> highlight [
+	" self new highlight "
+		
+	| v es |
+	v := RTView new.
+	es := ((RTBox new size: 30)" + RTLabel") elementsOn: (1 to: 16).
+
+	es @ (RTHighlightable highlight: [ :vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4 } ]).
+
+	RTGridLayout on: es.
+	v addAll: es.
+	v open
 ]
 
 { #category : #shapes }
@@ -645,6 +768,25 @@ RTExample >> manySquares [
 	RTGridLayout new gapSize: 1; on: view elements.
 	
 	view open
+]
+
+{ #category : #camera }
+RTExample >> movingCamera [
+	"
+	self new movingCamera
+	"
+		
+	| v menu |
+	v := RTView new.
+	v add: (RTEllipse new size: 50) element.
+
+	menu := RTMenuBuilder new view: v.
+	menu menu: '<-' callback: [ v canvas camera translateBy: -10 @ 0. v signalUpdate ].
+	menu menu: '->' callback: [ v canvas camera translateBy: 10 @ 0. v signalUpdate ].
+	menu menu: 'V' callback: [ v canvas camera translateBy: 0 @ 10. v signalUpdate ].
+	menu menu: '^' callback: [ v canvas camera translateBy: 0 @ -10. v signalUpdate ].
+	 
+	v open
 ]
 
 { #category : #nesting }
@@ -854,7 +996,7 @@ RTExample >> normalizer01 [
 
 { #category : #layout }
 RTExample >> numbers [
-
+	"self new numbers"
 	| view elements |
 	view := RTView new.	
 	elements := RTBox elementsOn: (1 to: 100).

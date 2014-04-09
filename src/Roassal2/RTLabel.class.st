@@ -71,9 +71,7 @@ RTLabel >> trachelShapeFor: anElement [
 { #category : #rendering }
 RTLabel >> updateFor: anElement trachelShape: trachelShape [	
 	trachelShape isNil ifTrue: [ ^ self ].
-"	ex := (self widthFor: anElement) @ (self heightFor: anElement).
-	rec := (anElement position - (ex / 2)) extent: ex.
-"	trachelShape 
+	trachelShape 
 		color: (self colorFor: anElement);
 		text: (self textFor: anElement) on: anElement position
 ]

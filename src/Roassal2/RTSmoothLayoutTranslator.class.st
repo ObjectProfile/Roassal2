@@ -32,7 +32,7 @@ RTSmoothLayoutTranslator >> hasCompleted [
 RTSmoothLayoutTranslator >> initialize [ 
 	super initialize.
 	
-	"The amount of view refresh we need to complete the transition"
+	"The amount of seconds we need to complete the transition"
 	nbCycles := 2
 ]
 

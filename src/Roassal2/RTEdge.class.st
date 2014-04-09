@@ -47,6 +47,7 @@ RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inVie
 { #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock [
 	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operates on the model of the elements"
 
 	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine
 ]
@@ -184,6 +185,11 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view [ 
+	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
@@ -210,6 +216,11 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 { #category : #public }
 RTEdge class >> from: fromEl to: toEl [
 	^ self new from: fromEl; to: toEl; yourself
+]
+
+{ #category : #public }
+RTEdge class >> from: fromEl toAll: toEls [
+	^ RTGroup withAll: (toEls collect: [ :e | self from: fromEl to: e ])
 ]
 
 { #category : #public }

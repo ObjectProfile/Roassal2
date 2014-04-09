@@ -18,7 +18,6 @@ RTBuilder class >> nestedElementsAttribute [
 RTBuilder >> addElementOn: anObject [
 	| element |
 	element := self elementOn: anObject.
-	interactionBuilder setUpElements: element.
 	view add: element.
 	^ element
 ]
@@ -41,7 +40,7 @@ RTBuilder >> createShapeBuilder [
 
 { #category : #hooks }
 RTBuilder >> createView [
-	^ RTView new
+	^ RTView new setDefaultMenu
 ]
 
 { #category : #public }
@@ -54,12 +53,26 @@ RTBuilder >> edgeFrom: source to: target [
 
 { #category : #protected }
 RTBuilder >> elementOn: anObject [
-	^ shapeBuilder elementOn: anObject
+	| element |
+	element := shapeBuilder elementOn: anObject.
+	interactionBuilder setUpElements: element.
+	^ element
 ]
 
 { #category : #protected }
 RTBuilder >> elementsOn: collectionOfObjects [
-	^ shapeBuilder elementsOn: collectionOfObjects
+	| elements |
+	elements := shapeBuilder elementsOn: collectionOfObjects.
+	interactionBuilder setUpElements: elements.
+	^ elements
+]
+
+{ #category : #protected }
+RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
+	| els |
+	els := shapeBuilder elementsOn: collectionOfObjects.
+	interactionBuilder setUpElements: els.
+	^ els
 ]
 
 { #category : #initialization }
