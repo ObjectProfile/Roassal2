@@ -2273,3 +2273,14 @@ Added ArrowedLine';
 	at: #date put: '8 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000161 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-JurajKubelka.113';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.204';
+	at: #version put: '0.162';
+	at: #comment put: '0.162 : worked a lot on the builder';
+	at: #date put: '9 April 2014';
+	yourself
+]
