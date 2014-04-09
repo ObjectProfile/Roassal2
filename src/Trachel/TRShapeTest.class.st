@@ -110,7 +110,7 @@ TRShapeTest >> testChangingColorOfAComposite [
 	cs color: Color red.
 	
 	self assert: s1 color = Color red.
-	self assert: s2 color = Color red.
+	self assert: s2 color ~= Color red.
 ]
 
 { #category : #composite }

@@ -60,6 +60,24 @@ TRCamera >> focusOnCenter [
 	self translateTo: self encompassingRectangle center
 ]
 
+{ #category : #actions }
+TRCamera >> focusOnCenterScaled [
+	self focusOnCenterScaled: 500.
+	
+	
+]
+
+{ #category : #actions }
+TRCamera >> focusOnCenterScaled: aFactor [
+	| sc rec max |
+	
+	canvas numberOfShapes = 0 ifTrue: [ ^ self ].
+	rec := self encompassingRectangle.
+	max := rec width max: rec height.
+	sc := aFactor / max.
+	self scale: sc.
+]
+
 { #category : #convertion }
 TRCamera >> fromPixelToSpace: aPoint [
 	| tr |
