@@ -31,7 +31,6 @@ TRAbstractBoxShape >> center [
 TRAbstractBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
 		ifFalse: [ ^ self ].
-	self drawEncompassingRectangleOn: athensCanvas.
 	athensCanvas pathTransform
 		restoreAfter: [ 
 			athensCanvas pathTransform
@@ -157,7 +156,7 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
-	^ 1.5
+	^ 0.05
 ]
 
 { #category : #accessing }
