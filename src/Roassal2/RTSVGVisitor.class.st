@@ -550,12 +550,6 @@ RTSVGVisitor >> visitCanvas: aCanvas [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitCompositeShape: aCompositeShape [
-	aCompositeShape shape1 accept: self.
-	aCompositeShape shape2 accept: self.
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitEllipseShape: anEllipse [	
 	|borderColor fillColor box|
 	((anEllipse color) isNil)
@@ -563,7 +557,7 @@ RTSVGVisitor >> visitEllipseShape: anEllipse [
 		ifFalse: [ fillColor := anEllipse color].
 	((anEllipse strokePaint) isNil)
 		ifFalse: [ borderColor := anEllipse strokePaint].
-	box := self alignRectangle: (anEllipse encompassingRectangle).
+	box := self alignRectangle: (anEllipse rectangle).
 	self drawOval: anEllipse element 
 		box: box
 		color: fillColor 

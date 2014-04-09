@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple01 [
 	"
 	self new simple01
@@ -22,7 +22,7 @@ RTGraphBuilderExamples >> simple01 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple02 [
 	"
 	self new simple02
@@ -44,7 +44,7 @@ RTGraphBuilderExamples >> simple02 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple03 [
 	"
 	self new simple03
@@ -63,7 +63,7 @@ RTGraphBuilderExamples >> simple03 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple04 [
 	"
 	self new simple04
@@ -85,7 +85,7 @@ RTGraphBuilderExamples >> simple04 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple05WithInteraction [
 
 	"
@@ -104,7 +104,7 @@ RTGraphBuilderExamples >> simple05WithInteraction [
 	g open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple06AddingEdge [
 
 	"
@@ -123,7 +123,7 @@ RTGraphBuilderExamples >> simple06AddingEdge [
 	g open
 ]
 
-{ #category : #examples }
+{ #category : #simples }
 RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 	"
 	self new simple07HierarchicalBundleEdge
@@ -143,7 +143,7 @@ RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01
@@ -164,7 +164,7 @@ RTGraphBuilderExamples >> vissoft01 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft02 [
 	"
 	self new vissoft02
@@ -188,7 +188,7 @@ RTGraphBuilderExamples >> vissoft02 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft03 [
 	"
 	self new vissoft03
@@ -213,7 +213,7 @@ RTGraphBuilderExamples >> vissoft03 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft04 [
 	"
 	self new vissoft04
@@ -239,7 +239,7 @@ RTGraphBuilderExamples >> vissoft04 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft05 [
 	"
 	self new vissoft05
@@ -265,7 +265,7 @@ RTGraphBuilderExamples >> vissoft05 [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 	"
 	self new vissoft06HierarchicalBundleEdges
@@ -293,7 +293,7 @@ RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 	b open
 ]
 
-{ #category : #examples }
+{ #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft07WithLabel [
 	"
 	self new vissoft07WithLabel
@@ -318,5 +318,32 @@ RTGraphBuilderExamples >> vissoft07WithLabel [
 		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
+	b open
+]
+
+{ #category : #'software visualization' }
+RTGraphBuilderExamples >> vissoft08DepAnalysis [
+	"
+	self new vissoft08DepAnalysis
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		if: [ :c | 'RT*' match: c name ] color: Color red;
+		if: [ :c | 'TR*' match: c name ] color: Color purple.
+		
+	b edge connectTo: #subclasses usedInLayout: true.
+
+	b layout cluster.
+
+	b global
+		alphaColor: 0.4;
+		normalizeSize: #numberOfMethods min: 5 max: 60.
+
+	b addAll: RTObject withAllSubclasses.
+	b addAll: TRObject withAllSubclasses.
+	b addAll: TREvent withAllSubclasses.
+
 	b open
 ]

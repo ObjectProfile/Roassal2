@@ -64,3 +64,62 @@ RTGraphBuilderTest >> testNode [
 	self assert: e6 shape class == RTEllipse.
 	self assert: e6 trachelShape color = Color red.
 ]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSmallExample [
+
+	| positions |
+	b node shape: RTEllipse new.
+	b layout use: RTGridLayout new.
+	b addAll: (1 to: 20).
+	b applyLayout.
+	
+	positions  := ((Array new: 20) at: 1 put: ((2.5@2.5)); at: 2 put: ((12.5@2.5)); at: 3 put: ((22.5@2.5)); at: 4 put: ((32.5@2.5)); at: 5 put: ((42.5@2.5)); at: 6 put: ((2.5@12.5)); at: 7 put: ((12.5@12.5)); at: 8 put: ((22.5@12.5)); at: 9 put: ((32.5@12.5)); at: 10 put: ((42.5@12.5)); at: 11 put: ((2.5@22.5)); at: 12 put: ((12.5@22.5)); at: 13 put: ((22.5@22.5)); at: 14 put: ((32.5@22.5)); at: 15 put: ((42.5@22.5)); at: 16 put: ((2.5@32.5)); at: 17 put: ((12.5@32.5)); at: 18 put: ((22.5@32.5)); at: 19 put: ((32.5@32.5)); at: 20 put: ((42.5@32.5)); yourself).
+	
+	self assert: ((b view elements collect: #position) asArray = positions)
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSmallExampleWithEdges [
+
+	| positions |
+	b node shape: RTEllipse new.
+	b edge connectTo: [ :v | v + 1 ].
+	b layout use: RTGridLayout new.
+	b addAll: (1 to: 20).
+	b applyLayout.
+	
+	positions := ((Array new: 19) at: 1 put: ((Array new: 2) at: 1 put: ((2.5@2.5)); at: 2 put: ((12.5@2.5)); yourself); at: 2 put: ((Array new: 2) at: 1 put: ((12.5@2.5)); at: 2 put: ((22.5@2.5)); yourself); at: 3 put: ((Array new: 2) at: 1 put: ((22.5@2.5)); at: 2 put: ((32.5@2.5)); yourself); at: 4 put: ((Array new: 2) at: 1 put: ((32.5@2.5)); at: 2 put: ((42.5@2.5)); yourself); at: 5 put: ((Array new: 2) at: 1 put: ((42.5@2.5)); at: 2 put: ((2.5@12.5)); yourself); at: 6 put: ((Array new: 2) at: 1 put: ((2.5@12.5)); at: 2 put: ((12.5@12.5)); yourself); at: 7 put: ((Array new: 2) at: 1 put: ((12.5@12.5)); at: 2 put: ((22.5@12.5)); yourself); at: 8 put: ((Array new: 2) at: 1 put: ((22.5@12.5)); at: 2 put: ((32.5@12.5)); yourself); at: 9 put: ((Array new: 2) at: 1 put: ((32.5@12.5)); at: 2 put: ((42.5@12.5)); yourself); at: 10 put: ((Array new: 2) at: 1 put: ((42.5@12.5)); at: 2 put: ((2.5@22.5)); yourself); at: 11 put: ((Array new: 2) at: 1 put: ((2.5@22.5)); at: 2 put: ((12.5@22.5)); yourself); at: 12 put: ((Array new: 2) at: 1 put: ((12.5@22.5)); at: 2 put: ((22.5@22.5)); yourself); at: 13 put: ((Array new: 2) at: 1 put: ((22.5@22.5)); at: 2 put: ((32.5@22.5)); yourself); at: 14 put: ((Array new: 2) at: 1 put: ((32.5@22.5)); at: 2 put: ((42.5@22.5)); yourself); at: 15 put: ((Array new: 2) at: 1 put: ((42.5@22.5)); at: 2 put: ((2.5@32.5)); yourself); at: 16 put: ((Array new: 2) at: 1 put: ((2.5@32.5)); at: 2 put: ((12.5@32.5)); yourself); at: 17 put: ((Array new: 2) at: 1 put: ((12.5@32.5)); at: 2 put: ((22.5@32.5)); yourself); at: 18 put: ((Array new: 2) at: 1 put: ((22.5@32.5)); at: 2 put: ((32.5@32.5)); yourself); at: 19 put: ((Array new: 2) at: 1 put: ((32.5@32.5)); at: 2 put: ((42.5@32.5)); yourself); yourself).
+	 
+	self assert: (b view edges collect: [ :e | Array with: e from position with: e to position ]) asArray = positions
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSmallExampleWithEdgesAndLayout [
+
+	| positions |
+	b node shape: RTEllipse new.
+	b edge connectTo: [ :v | v + 1 ] usedInLayout: false.
+	b layout use: RTTreeLayout new.
+	b addAll: (1 to: 20).
+	b applyLayout.
+	
+	positions := ((Array new: 19) at: 1 put: ((Array new: 2) at: 1 put: ((7.5@7.5)); at: 2 put: ((15.5@7.5)); yourself); at: 2 put: ((Array new: 2) at: 1 put: ((15.5@7.5)); at: 2 put: ((23.5@7.5)); yourself); at: 3 put: ((Array new: 2) at: 1 put: ((23.5@7.5)); at: 2 put: ((31.5@7.5)); yourself); at: 4 put: ((Array new: 2) at: 1 put: ((31.5@7.5)); at: 2 put: ((39.5@7.5)); yourself); at: 5 put: ((Array new: 2) at: 1 put: ((39.5@7.5)); at: 2 put: ((47.5@7.5)); yourself); at: 6 put: ((Array new: 2) at: 1 put: ((47.5@7.5)); at: 2 put: ((55.5@7.5)); yourself); at: 7 put: ((Array new: 2) at: 1 put: ((55.5@7.5)); at: 2 put: ((63.5@7.5)); yourself); at: 8 put: ((Array new: 2) at: 1 put: ((63.5@7.5)); at: 2 put: ((71.5@7.5)); yourself); at: 9 put: ((Array new: 2) at: 1 put: ((71.5@7.5)); at: 2 put: ((79.5@7.5)); yourself); at: 10 put: ((Array new: 2) at: 1 put: ((79.5@7.5)); at: 2 put: ((87.5@7.5)); yourself); at: 11 put: ((Array new: 2) at: 1 put: ((87.5@7.5)); at: 2 put: ((95.5@7.5)); yourself); at: 12 put: ((Array new: 2) at: 1 put: ((95.5@7.5)); at: 2 put: ((103.5@7.5)); yourself); at: 13 put: ((Array new: 2) at: 1 put: ((103.5@7.5)); at: 2 put: ((111.5@7.5)); yourself); at: 14 put: ((Array new: 2) at: 1 put: ((111.5@7.5)); at: 2 put: ((119.5@7.5)); yourself); at: 15 put: ((Array new: 2) at: 1 put: ((119.5@7.5)); at: 2 put: ((127.5@7.5)); yourself); at: 16 put: ((Array new: 2) at: 1 put: ((127.5@7.5)); at: 2 put: ((135.5@7.5)); yourself); at: 17 put: ((Array new: 2) at: 1 put: ((135.5@7.5)); at: 2 put: ((143.5@7.5)); yourself); at: 18 put: ((Array new: 2) at: 1 put: ((143.5@7.5)); at: 2 put: ((151.5@7.5)); yourself); at: 19 put: ((Array new: 2) at: 1 put: ((151.5@7.5)); at: 2 put: ((159.5@7.5)); yourself); yourself).
+	 
+	self assert: (b view edges collect: [ :e | Array with: e from position with: e to position ]) asArray = positions
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSmallExampleWithEdgesAndLayout2 [
+
+	| positions |
+	b node shape: RTEllipse new.
+	b edge connectTo: [ :v | v + 1 ] usedInLayout: true.
+	b layout use: RTTreeLayout new.
+	b addAll: (1 to: 20).
+	b applyLayout.
+	
+	positions := ((Array new: 19) at: 1 put: ((Array new: 2) at: 1 put: ((7.5@7.5)); at: 2 put: ((7.5@32.5)); yourself); at: 2 put: ((Array new: 2) at: 1 put: ((7.5@32.5)); at: 2 put: ((7.5@57.5)); yourself); at: 3 put: ((Array new: 2) at: 1 put: ((7.5@57.5)); at: 2 put: ((7.5@82.5)); yourself); at: 4 put: ((Array new: 2) at: 1 put: ((7.5@82.5)); at: 2 put: ((7.5@107.5)); yourself); at: 5 put: ((Array new: 2) at: 1 put: ((7.5@107.5)); at: 2 put: ((7.5@132.5)); yourself); at: 6 put: ((Array new: 2) at: 1 put: ((7.5@132.5)); at: 2 put: ((7.5@157.5)); yourself); at: 7 put: ((Array new: 2) at: 1 put: ((7.5@157.5)); at: 2 put: ((7.5@182.5)); yourself); at: 8 put: ((Array new: 2) at: 1 put: ((7.5@182.5)); at: 2 put: ((7.5@207.5)); yourself); at: 9 put: ((Array new: 2) at: 1 put: ((7.5@207.5)); at: 2 put: ((7.5@232.5)); yourself); at: 10 put: ((Array new: 2) at: 1 put: ((7.5@232.5)); at: 2 put: ((7.5@257.5)); yourself); at: 11 put: ((Array new: 2) at: 1 put: ((7.5@257.5)); at: 2 put: ((7.5@282.5)); yourself); at: 12 put: ((Array new: 2) at: 1 put: ((7.5@282.5)); at: 2 put: ((7.5@307.5)); yourself); at: 13 put: ((Array new: 2) at: 1 put: ((7.5@307.5)); at: 2 put: ((7.5@332.5)); yourself); at: 14 put: ((Array new: 2) at: 1 put: ((7.5@332.5)); at: 2 put: ((7.5@357.5)); yourself); at: 15 put: ((Array new: 2) at: 1 put: ((7.5@357.5)); at: 2 put: ((7.5@382.5)); yourself); at: 16 put: ((Array new: 2) at: 1 put: ((7.5@382.5)); at: 2 put: ((7.5@407.5)); yourself); at: 17 put: ((Array new: 2) at: 1 put: ((7.5@407.5)); at: 2 put: ((7.5@432.5)); yourself); at: 18 put: ((Array new: 2) at: 1 put: ((7.5@432.5)); at: 2 put: ((7.5@457.5)); yourself); at: 19 put: ((Array new: 2) at: 1 put: ((7.5@457.5)); at: 2 put: ((7.5@482.5)); yourself); yourself).
+	 
+	self assert: (b view edges collect: [ :e | Array with: e from position with: e to position ]) asArray = positions
+]

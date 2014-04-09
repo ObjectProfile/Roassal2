@@ -1,6 +1,6 @@
 Class {
 	#name : #RTGDNodeB,
-	#superclass : #Object,
+	#superclass : #RTGDElement,
 	#instVars : [
 		'graph',
 		'conditionalShapes',
@@ -40,7 +40,12 @@ RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
 
 { #category : #accessing }
 RTGDNodeB >> graph: aGraphBuilder [
-	graph := aGraphBuilder 
+	self graphBuilder: aGraphBuilder
+]
+
+{ #category : #'public-shape' }
+RTGDNodeB >> if: condition color: aColor [
+	^ self if: condition shape: (RTEllipse new color: aColor)
 ]
 
 { #category : #'public-shape' }
@@ -63,7 +68,7 @@ RTGDNodeB >> labelled [
 	nodeProperties add: [ :el |
 		| lbl |
 		lbl := TRLabelShape new text: el model asString.
-		graph view canvas addShape: lbl.
+		graphBuilder view canvas addShape: lbl.
 		TRConstraint stick: lbl below: el trachelShape ]
 ]
 

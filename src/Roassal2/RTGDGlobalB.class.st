@@ -1,6 +1,6 @@
 Class {
 	#name : #RTGDGlobalB,
-	#superclass : #Object,
+	#superclass : #RTGDElement,
 	#instVars : [
 		'conditionalShapes',
 		'minSize',
@@ -74,9 +74,14 @@ RTGDGlobalB >> executeOn: aView [
 				"Set the min and max size"
 					self minAndMaxSizeOf: el
 			].
-		 ]
+		 ].
 	
+	"Set the transparency"
+	aView elements do: [ :el | 
+		el trachelShape color: (el trachelShape color alpha: alphaColor) ].
 	
+
+
 ]
 
 { #category : #'as yet unclassified' }

@@ -78,6 +78,16 @@ RTGraphBuilder >> edge [
 ]
 
 { #category : #'as yet unclassified' }
+RTGraphBuilder >> edgesForLayout [
+	^ edge edgesForLayout
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilder >> edgesUsedByLayout [
+	^ edge edgesUsedByLayout
+]
+
+{ #category : #'as yet unclassified' }
 RTGraphBuilder >> global [
 	^ global
 ]
@@ -86,11 +96,16 @@ RTGraphBuilder >> global [
 RTGraphBuilder >> initialize [
 	super initialize.
 	node := RTGDNodeB new.
-	node graph: self.
+	node graphBuilder: self.
 	
 	edge := RTGDEdgeB new graphBuilder: self; yourself.
+	edge graphBuilder: self.
+	
 	layout := RTGDLayoutB new.
+	layout graphBuilder: self.
+	
 	global := RTGDGlobalB new.
+	global graphBuilder: self.
 ]
 
 { #category : #'as yet unclassified' }

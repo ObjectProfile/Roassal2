@@ -10,14 +10,25 @@ RTDirectedLine >> pointsFrom: from To: to [
 	mid := ((to x + from x) / 2) @ ((to y + from y) / 2).
 	point1 := from rotateBy: (Float pi /16) about: mid.
 	point2 := from rotateBy: (15*(Float pi /16)) about: mid.	
-	dist1 := point1 dist: mid.
-	dist2 := point2 dist: mid. 	
-	"point1 := point1 + (dist1/2).
-	point2 := point2 + (dist1/2)."
-	points := {from.
-	point1.
-	point2.
-	to} asOrderedCollection.
+	from x > to x
+		ifTrue: [
+			dist1 := point1 dist: mid.
+			dist2 := point2 dist: mid. 	
+			"point1 := point1 + (dist1/2).
+			point2 := point2 + (dist1/2)."
+			points := {from.
+			point1.
+			point2.
+			to} asOrderedCollection ]
+		ifFalse: [  
+			dist1 := point1 dist: mid.
+			dist2 := point2 dist: mid. 				
+			"point1 := point1 - (dist1/2).
+			point2 := point2 - (dist1/2)."
+			points := {to.
+			point2.
+			point1.
+			from} asOrderedCollection ].
 	^ points
 ]
 

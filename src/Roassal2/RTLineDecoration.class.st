@@ -53,17 +53,16 @@ RTLineDecoration >> trachelShapeFor: anEdge [
 { #category : #hooks }
 RTLineDecoration >> updateFor: edge trachelShape: trachelShape [
 	| f |
-	f := (attachPoint startingPointOf: edge).
+	f := (attachPoint endingPointOf: edge).
 	(line ~= nil)
-		ifTrue: [ | tShape |
-			tShape := edge trachelShape shape1.
-			tShape class = TRBezierShape 
-				ifTrue: [	f := tShape points allButLast last ]].
-	trachelShape from: f.
-	trachelShape to: (attachPoint endingPointOf: edge).
+		ifTrue: [ 
+			trachelShape class = TRBezierShape 
+				ifTrue: [	f := trachelShape points allButLast last ]].
+	trachelShape from: (attachPoint startingPointOf: edge).
+	trachelShape to: f.
 	trachelShape color: (self colorFor: edge).
 	trachelShape width: (self widthFor: edge).
-	trachelShape resetPath.
+	trachelShape resetPath
 
 ]
 

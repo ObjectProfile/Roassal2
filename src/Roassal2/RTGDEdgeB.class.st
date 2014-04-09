@@ -1,32 +1,63 @@
 Class {
 	#name : #RTGDEdgeB,
-	#superclass : #Object,
+	#superclass : #RTGDElement,
 	#instVars : [
 		'conditionalShapes',
-		'graphBuilder',
-		'bundleConnectToElements'
+		'bundleConnectToElements',
+		'edgesForLayout',
+		'edgesUsedByLayout'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> bundleConnectTo: aBlock [
 	^ self bundleConnectToElements: [ :anEl | 
 		(aBlock rtValue: anEl model) collect: [ :o | graphBuilder view elementFromModel: o ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> bundleConnectToElements: aBlock [
 	bundleConnectToElements add: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> connectTo: toBlock [
 	^ self if: true connectTo: toBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock color: aColor [
+	^ self connectTo: toBlock shape: (RTLine new color: aColor)
+	
+]
+
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock color: aColor usedInLayout: flagLayout [
+	^ self connectTo: toBlock shape: (RTLine new color: aColor) usedInLayout: flagLayout
+	
+]
+
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock shape: aShape [
+	^ self if: true connectTo: toBlock shape: aShape
+]
+
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock shape: aShape usedInLayout: flagLayout [
+	^ self if: true connectTo: toBlock shape: aShape usedInLayout: flagLayout
+]
+
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock usedInLayout: aFlag [
+	^ self if: true connectTo: toBlock usedInLayout: aFlag
+]
+
+{ #category : #private }
 RTGDEdgeB >> createEdgesFor: object [
+	"Return the list of edges for the object. Note that the edges are not added in the view"
+	
+	"NOTE :: THIS METHOD NEEDS TO BE UPDATED. IT IS REALLY REALLY UGLY"
 	| el v toElements res answer shape center |
 	answer := OrderedCollection new.
 	v := graphBuilder view.
@@ -44,6 +75,24 @@ RTGDEdgeB >> createEdgesFor: object [
 					t := (v elementFromModel: o). 
 					t ifNotNil: [ toElements add: t ] ].
 				answer addAll: (toElements collect: [ :e | arr third edgeFrom: el to: e ]) ] ].
+
+
+	"Edges taken into account for the layout"
+	edgesForLayout do: [ :arr | 
+		(arr first rtValue: object)
+			ifTrue: [ 
+				| edges |
+				res := arr second rtValue: object.
+				res isCollection ifFalse: [ res := Array with: res ].
+				toElements := OrderedCollection new.
+				res do: [ :o | 
+					| t | 
+					t := (v elementFromModel: o). 
+					t ifNotNil: [ toElements add: t ] ].
+				
+				edges := toElements collect: [ :e | arr third edgeFrom: el to: e ].
+				edgesUsedByLayout addAll: edges.
+				answer addAll: edges ] ].
 
 
 	"Bezier shapes"
@@ -65,16 +114,16 @@ RTGDEdgeB >> createEdgesFor: object [
 ]
 
 { #category : #accessing }
-RTGDEdgeB >> graphBuilder [
-	^ graphBuilder
+RTGDEdgeB >> edgesForLayout [
+	^ edgesForLayout
 ]
 
 { #category : #accessing }
-RTGDEdgeB >> graphBuilder: aGraphBuilder [
-	graphBuilder := aGraphBuilder
+RTGDEdgeB >> edgesUsedByLayout [
+	^ edgesUsedByLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> if: condition bundleConnectTo: aBlock [
 	^ self bundleConnectToElements: [ :anEl | 
 		(condition rtValue: anEl model)
@@ -82,7 +131,7 @@ RTGDEdgeB >> if: condition bundleConnectTo: aBlock [
 			ifFalse: [ #() ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> if: condition bundleConnectToElements: aBlock [
 	bundleConnectToElements add: [ :anEl | 
 		(condition rtValue: anEl model)
@@ -92,19 +141,35 @@ RTGDEdgeB >> if: condition bundleConnectToElements: aBlock [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> if: condition connectTo: toBlock [
 	^ self if: condition connectTo: toBlock shape: RTLine new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> if: condition connectTo: toBlock shape: aShape [
 	conditionalShapes add: (Array with: condition with: toBlock with: aShape)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTGDEdgeB >> if: condition connectTo: toBlock shape: aShape usedInLayout: flagLayout [
+	flagLayout 
+		ifTrue: 
+			[ edgesForLayout add: (Array with: condition with: toBlock with: aShape) ]
+		ifFalse: 
+			[ conditionalShapes add: (Array with: condition with: toBlock with: aShape) ]
+]
+
+{ #category : #public }
+RTGDEdgeB >> if: condition connectTo: toBlock usedInLayout: aFlag [
+	^ self if: condition connectTo: toBlock shape: RTLine new usedInLayout: aFlag
+]
+
+{ #category : #initialization }
 RTGDEdgeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
-	bundleConnectToElements := OrderedCollection new
+	bundleConnectToElements := OrderedCollection new.
+	edgesForLayout := OrderedCollection new.
+	edgesUsedByLayout := OrderedCollection new.
 ]
