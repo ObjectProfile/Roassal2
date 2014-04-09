@@ -44,7 +44,7 @@ RTSVGExporter class >> exportViewAsSVG: aRTView filename: aString [
 { #category : #'as yet unclassified' }
 RTSVGExporter class >> interactiveExportBuilderAsSVG: aRTBuilder [
 
-	^self interactiveExportViewAsSVG: (aRTBuilder view)
+	^self exportViewAsSVG: (aRTBuilder view)
 ]
 
 { #category : #'as yet unclassified' }
