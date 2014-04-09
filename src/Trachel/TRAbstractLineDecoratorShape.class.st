@@ -5,7 +5,8 @@ Class {
 		'size',
 		'to',
 		'from',
-		'width'
+		'width',
+		'open'
 	],
 	#category : #'Trachel-Core'
 }
@@ -59,8 +60,10 @@ TRAbstractLineDecoratorShape >> defaultWidth [
 TRAbstractLineDecoratorShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [ 
 		athensCanvas setShape: self path.
-		athensCanvas setPaint: color.
-		athensCanvas draw.
+		open 
+			ifFalse: [
+			athensCanvas setPaint: color.
+			athensCanvas draw].
 		(athensCanvas setStrokePaint: strokePaint) width: self width.
 		athensCanvas draw ]
 ]
@@ -87,6 +90,7 @@ TRAbstractLineDecoratorShape >> initialize [
 	color := self defaultColor.
 	strokePaint := self defaultColor.
 	width := 1.
+	open := false.
 ]
 
 { #category : #accessing }

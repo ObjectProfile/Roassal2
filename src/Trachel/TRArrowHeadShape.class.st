@@ -1,5 +1,5 @@
 Class {
-	#name : #TRArrowShape,
+	#name : #TRArrowHeadShape,
 	#superclass : #TRAbstractLineDecoratorShape,
 	#instVars : [
 		'left',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #hooks }
-TRArrowShape >> computePath [
+TRArrowHeadShape >> computePath [
 	| vector r u unit middle |
 	vector := self to - self from. 
 	r := vector r.
@@ -24,13 +24,8 @@ TRArrowShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: left;
-				lineTo: self to;
-				lineTo: right. ]
-]
-
-{ #category : #initialization }
-TRArrowShape >> initialize [
-	super initialize.
-	open := true.
+				moveTo: self to;
+				lineTo: left;
+				lineTo: right;
+				lineTo: self to. ]
 ]
