@@ -528,6 +528,47 @@ RTExample >> groupZooming [
 	^ view open
 ]
 
+{ #category : #groups }
+RTExample >> groupZooming2 [
+	"
+	self new groupZooming2
+	"
+	| view firstGroup secondGroup bothGroups 
+		mainElement originalExtent mainWithNested anotherElement 
+		line |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); element.
+	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	anotherElement := RTEllipse new size: 20; color: (Color green alpha: 0.3); element.
+	line := RTLine new color: Color brown; attachPoint: RTHorizontalAttachPoint new; 
+				edgeFrom: anotherElement to: mainElement.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTGridLayout on: (Array with: anotherElement with: mainElement).
+	RTNest new padding: 1; on: mainElement nest: bothGroups.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	anotherElement @ RTDraggable.
+	view add: mainWithNested; add: anotherElement; add: line.
+	"define menu and their actions"
+	originalExtent := mainWithNested extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 0.6 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainWithNested extent * 1.4 
+													during: 0.3 on: mainWithNested) ].
+	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
+	^ view open
+]
+
 { #category : #animations }
 RTExample >> growingSquare [
 	" 
