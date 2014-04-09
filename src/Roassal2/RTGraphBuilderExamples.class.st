@@ -124,6 +124,26 @@ RTGraphBuilderExamples >> simple06AddingEdge [
 ]
 
 { #category : #examples }
+RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
+	"
+	self new simple07HierarchicalBundleEdge
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b node shape: (RTEllipse new  size: 30) + RTLabel.
+
+	b edge if: [:v | v = 1 ] bundleConnectTo: [ :v | #(2 3) ].
+
+	b layout use: (RTCircleLayout new).
+		 
+	b addAll: (1 to: 3).
+
+	b open
+]
+
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01
@@ -235,7 +255,7 @@ RTGraphBuilderExamples >> vissoft05 [
 		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
 
 	b layout 
-		use: (RTForceBasedLayout new).
+		use: (RTForceBasedLayout new charge: -180).
 
 	b global
 		minSize: 10;
@@ -255,14 +275,14 @@ RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 	b := RTGraphBuilder new.
 	b node
 		shape: (RTEllipse new size: #numberOfMethods);
-		whenOverShowEdges: [ :cls | cls dependentClasses ];
-		labelled.
+		whenOverShowEdges: [ :cls | cls dependentClasses ].
 
 	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+		if: [ :obj | obj isBehavior ] bundleConnectTo: [ :c | c subclasses ].
 
 	b layout 
-		use: (RTForceBasedLayout new charge: -150).
+		use: (RTTreeLayout new ).
+		"use: (RTForceBasedLayout new charge: -150)."
 
 	b global
 		minSize: 10;

@@ -2,7 +2,8 @@ Class {
 	#name : #RTShowEdge,
 	#superclass : #RTInteraction,
 	#instVars : [
-		'connectToElements'
+		'connectToElements',
+		'shape'
 	],
 	#classInstVars : [
 		'lastHighlightedElements',
@@ -10,23 +11,6 @@ Class {
 	],
 	#category : #'Roassal2-Core'
 }
-
-{ #category : #public }
-RTShowEdge class >> highlight: aBlock [
-	"aBlock return an element or a list of elements to highlight"
-	^ self new highlight: aBlock
-]
-
-{ #category : #public }
-RTShowEdge class >> highlightElements: aBlock [
-	"aBlock return an element or a list of elements to highlight"
-	^ self new highlightElements: aBlock
-]
-
-{ #category : #'reset shape' }
-RTShowEdge class >> highlightedColor [
-	^ Color blue
-]
 
 { #category : #'reset shape' }
 RTShowEdge class >> lastHighlightedElements [
@@ -40,6 +24,7 @@ RTShowEdge class >> lastHighlightedElements: elements [
 
 { #category : #public }
 RTShowEdge >> connectTo: aBlock [
+	"aBlock accepts an object and returns a list of objects"
 	"aBlock return an object or a list of objects to highlight"
 	connectToElements := [ :el | 
 		| objects |
@@ -50,6 +35,7 @@ RTShowEdge >> connectTo: aBlock [
 
 { #category : #public }
 RTShowEdge >> connectToElements: aBlock [
+	"aBlock accepts a element and returns a list of elements"
 	"aBlock return an element or a list of elements to highlight"
 	connectToElements := aBlock
 ]
@@ -71,7 +57,7 @@ RTShowEdge >> doShowEdges: element [
 
 	t := (connectToElements rtValue: element).
 	t := t copyWithout: nil.
-	edges := RTLine edgesFrom: element toAll: t.
+	edges := (shape rtValue: element) edgesFrom: element toAll: t.
 	element view addAll: edges.
 	element attributes at: #showEdges put: edges.
 	self class lastHighlightedElements: edges
@@ -85,7 +71,8 @@ RTShowEdge >> highlightedColor [
 { #category : #initialize }
 RTShowEdge >> initialize [
 	super initialize.
-	connectToElements := [ :el | Array with: el ]
+	connectToElements := [ :el | Array with: el ].
+	self shape: RTLine
 ]
 
 { #category : #hooks }
@@ -115,10 +102,15 @@ RTShowEdge >> removeAllAddedEdges [
 	self class lastHighlightedElements: nil
 ]
 
-{ #category : #actions }
-RTShowEdge >> unhighlightRecordedElement: anElement [
-	(anElement attributes includesKey: #originalColor)
-		ifFalse: [ ^ self ].
-	anElement trachelShape color: (anElement attributes at: #originalColor).
-	anElement attributes removeKey: #originalColor
+{ #category : #accessing }
+RTShowEdge >> shape [
+	"Return the line shape"
+	^ shape
+]
+
+{ #category : #accessing }
+RTShowEdge >> shape: aLineShapeOrABlock [
+	"Set the line shape used to draw the edges"
+	"The argument is rtValued against the element to display"
+	shape := aLineShapeOrABlock
 ]

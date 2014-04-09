@@ -3,10 +3,22 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'conditionalShapes',
-		'graphBuilder'
+		'graphBuilder',
+		'bundleConnectToElements'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> bundleConnectTo: aBlock [
+	^ self bundleConnectToElements: [ :anEl | 
+		(aBlock rtValue: anEl model) collect: [ :o | graphBuilder view elementFromModel: o ] ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> bundleConnectToElements: aBlock [
+	bundleConnectToElements add: aBlock
+]
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: toBlock [
@@ -15,13 +27,12 @@ RTGDEdgeB >> connectTo: toBlock [
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> createEdgesFor: object [
-	"| shape |
-	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
-	^ shape elementOn: object
-	"
-	| el v toElements res |
+	| el v toElements res answer shape center |
+	answer := OrderedCollection new.
 	v := graphBuilder view.
 	el := v elementFromModel: object.
+	
+	"Normal shapes"
 	conditionalShapes do: [ :arr | 
 		(arr first rtValue: object)
 			ifTrue: [ 
@@ -32,9 +43,25 @@ RTGDEdgeB >> createEdgesFor: object [
 					| t | 
 					t := (v elementFromModel: o). 
 					t ifNotNil: [ toElements add: t ] ].
-				^ toElements collect: [ :e | arr third edgeFrom: el to: e ] ] ].
-				
-	^ nil
+				answer addAll: (toElements collect: [ :e | arr third edgeFrom: el to: e ]) ] ].
+
+
+	"Bezier shapes"
+	bundleConnectToElements do: [ :block |
+		| intermediaryElement |
+		toElements := (block rtValue: el) copyWithout: nil.
+ 
+		shape := RTBezierLine new.
+		center := (RTGroup withAll: toElements) center.
+		intermediaryElement := (RTBox new color: Color red) element.
+		intermediaryElement translateTo: center.
+		
+		"el view add: intermediaryElement."
+		
+		shape controllingElements: (Array with: intermediaryElement).
+		answer addAll: (shape edgesFrom: el toAll: toElements). 
+	].
+	^ answer
 ]
 
 { #category : #accessing }
@@ -45,6 +72,24 @@ RTGDEdgeB >> graphBuilder [
 { #category : #accessing }
 RTGDEdgeB >> graphBuilder: aGraphBuilder [
 	graphBuilder := aGraphBuilder
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> if: condition bundleConnectTo: aBlock [
+	^ self bundleConnectToElements: [ :anEl | 
+		(condition rtValue: anEl model)
+			ifTrue: [ (aBlock rtValue: anEl model) collect: [ :o | graphBuilder view elementFromModel: o ] ]
+			ifFalse: [ #() ] ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> if: condition bundleConnectToElements: aBlock [
+	bundleConnectToElements add: [ :anEl | 
+		(condition rtValue: anEl model)
+			ifTrue: [ (aBlock rtValue: anEl model) collect: [ :o | graphBuilder view elementFromModel: o ] ]
+			ifFalse: [ #() ] ]
+		
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -60,5 +105,6 @@ RTGDEdgeB >> if: condition connectTo: toBlock shape: aShape [
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> initialize [
 	super initialize.
-	conditionalShapes := OrderedCollection new
+	conditionalShapes := OrderedCollection new.
+	bundleConnectToElements := OrderedCollection new
 ]

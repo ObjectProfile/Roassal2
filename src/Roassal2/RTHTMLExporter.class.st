@@ -14,7 +14,9 @@ Class {
 		'fileName',
 		'title',
 		'interactions',
-		'backgroundColor'
+		'backgroundColor',
+		'withCode',
+		'code'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -93,6 +95,8 @@ RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView title: aString [
 
 { #category : #html }
 RTHTMLExporter >> addEnd [
+		withCode 
+			ifTrue: [ stream nextPutAll: '<pre><code style="background-color:rgb(192,192,192); float: left; overflow:scroll;max-width:50%;">', self code,'</code></pre></div>',String cr].
 		stream
 			nextPutAll: ('</body>', String cr);
 			nextPutAll: ('</html>').
@@ -106,7 +110,7 @@ RTHTMLExporter >> addStart [
 			nextPut: Character tab;
 			nextPutAll: ('<body>', String cr);
 			nextPut: Character tab;
-			nextPutAll: ('<h1>', self title,'</h1>', String cr).
+			nextPutAll: ('<h1>', self title,'</h1>', String cr,'<div>').
 ]
 
 { #category : #accessing }
@@ -134,9 +138,20 @@ RTHTMLExporter >> builder: aBuilder title: aString [
 	self view: aBuilder view; title: aString.
 ]
 
+{ #category : #accessing }
+RTHTMLExporter >> code [
+	^code
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> code: aString [
+	code := aString.
+	withCode := true.
+]
+
 { #category : #configuration }
 RTHTMLExporter >> defaultBackgroundColor [
-	^ Color veryLightGray
+	^ Color white
 ]
 
 { #category : #exporting }
@@ -176,6 +191,7 @@ RTHTMLExporter >> initialize [
 	title := 'HTML Export'.
 	interactions := Dictionary new.
 	backgroundColor := self defaultBackgroundColor.
+	withCode := false.
 ]
 
 { #category : #accessing }
