@@ -16,7 +16,7 @@ RTElementTest >> testAddingABoxAndEllipse [
 	view add: el1; add: el2.
 	
 	self assert: el1 position = (50 @ 40).
-	self assert: el1 encompassingRectangle = ((30@30) corner: (70@50))
+	self assert: el1 trachelShape rectangle = ((30@30) corner: (70@50))
 ]
 
 { #category : #view }
@@ -79,7 +79,7 @@ RTElementTest >> testDraggingCircle [
 	el translateBy: 100 @ 50.
 	self assert: el position = (100 @ 50).
 	
-	self assert: el trachelShape encompassingRectangle = ((80@30) corner: (120@70))
+	self assert: el trachelShape rectangle = ((80@30) corner: (120@70))
 ]
 
 { #category : #tests }

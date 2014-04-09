@@ -92,21 +92,6 @@ RTShapedObject >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #transformations }
-RTShapedObject >> preScaleBy: aPoint [ 
-	trachelShape preScaleBy: aPoint
-]
-
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey [
-	^ self attributes removeKey: aKey
-]
-
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
-	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
-]
-
 { #category : #rendering }
 RTShapedObject >> renderOn: trachelCanvas [
 	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
@@ -115,19 +100,9 @@ RTShapedObject >> renderOn: trachelCanvas [
 	trachelShape element: self
 ]
 
-{ #category : #transformations }
-RTShapedObject >> scaleBy: aPoint [ 
-	trachelShape scaleBy: aPoint
-]
-
 { #category : #accessing }
 RTShapedObject >> shape [
 	^ shape
-]
-
-{ #category : #signalling }
-RTShapedObject >> signalUpdate [
-	^ trachelShape signalUpdate
 ]
 
 { #category : #announce }

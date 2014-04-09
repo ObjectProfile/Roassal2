@@ -2,11 +2,8 @@ Class {
 	#name : #RTGDNodeB,
 	#superclass : #Object,
 	#instVars : [
-		'graph',
 		'conditionalShapes',
-		'withPopup',
-		'draggableNodes',
-		'nodeProperties'
+		'forWhenMouseOverShowEdges'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -22,28 +19,25 @@ RTGDNodeB >> createElementFor: object [
 	| shape element |
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
 	element := shape elementOn: object.
-	nodeProperties do: [ :aBlock | aBlock value: element ].
-	self setPopupAndDraggableOn: element.
+
+	forWhenMouseOverShowEdges do: [ :array |
+		| condition blockEdgeCreation |
+		condition := array first.
+		blockEdgeCreation := array second.
+		(condition rtValue: object) ifTrue: [  ]
+		].
+self flag: #TODO.
 	^ element
 ]
 
-{ #category : #'public-interaction' }
-RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
+{ #category : #public }
+RTGDNodeB >> for: conditional whenMouseOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
-	"interaction add: (Array with: conditional with: aBlock)"
-
-	nodeProperties add: [ :anElement | 
-		(conditional rtValue: anElement model)
-			ifTrue: [ anElement @ (RTShowEdge new connectTo: aBlock) ] ]
+	forWhenMouseOverShowEdges add: (Array with: conditional with: aBlock)
 ]
 
-{ #category : #accessing }
-RTGDNodeB >> graph: aGraphBuilder [
-	graph := aGraphBuilder 
-]
-
-{ #category : #'public-shape' }
+{ #category : #public }
 RTGDNodeB >> if: condition shape: aShape [
 	conditionalShapes add: (Array with: condition with: aShape)
 ]
@@ -52,55 +46,17 @@ RTGDNodeB >> if: condition shape: aShape [
 RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
-	nodeProperties := OrderedCollection new.
-	withPopup := true.
-	draggableNodes := true
+	forWhenMouseOverShowEdges := OrderedCollection new.
 ]
 
-{ #category : #'public-shape' }
-RTGDNodeB >> labelled [
-	"Gives a label to each node"
-	nodeProperties add: [ :el |
-		| lbl |
-		lbl := TRLabelShape new text: el model asString.
-		graph view canvas addShape: lbl.
-		TRConstraint stick: lbl below: el trachelShape ]
-]
-
-{ #category : #'public-interaction' }
-RTGDNodeB >> noPopup [
-	withPopup := false
-]
-
-{ #category : #'public-interaction' }
-RTGDNodeB >> notDraggable [
-	draggableNodes := false
-]
-
-{ #category : #hooks }
-RTGDNodeB >> setPopupAndDraggableOn: element [
-	withPopup
-		ifTrue: [ element @ RTPopup ].
-	draggableNodes
-		ifTrue: [ element @ RTDraggable ]
-]
-
-{ #category : #'public-shape' }
+{ #category : #public }
 RTGDNodeB >> shape: aShape [
 	^ self if: true shape: aShape
 ]
 
-{ #category : #'public-interaction' }
-RTGDNodeB >> whenOverHighlight: aBlock [
-	"When the mouse is over a node, highlight the elements returned by the block.
-	 The block takes as argument the model on which the mouse is pointing to"
-	nodeProperties add: [ :anElement | 
-		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
-]
-
-{ #category : #'public-interaction' }
-RTGDNodeB >> whenOverShowEdges: aBlock [
+{ #category : #public }
+RTGDNodeB >> whenMouseOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
-	^ self for: true whenOverShowEdges: aBlock
+	^ self for: true whenMouseOverShowEdges: aBlock
 ]
