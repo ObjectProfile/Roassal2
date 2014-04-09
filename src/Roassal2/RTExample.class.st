@@ -99,22 +99,6 @@ hierarchicalLinks do: [ :e | e trachelShape pushBack ].
 v openWithMenu
 ]
 
-{ #category : #beziers }
-RTExample >> beziersWithArrow [
-
-	"self new beziersWithArrow"
-	| v shape  edge els |
-	v := RTView new.
-	shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
-	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
-	v addAll: els .
-	RTHorizontalLineLayout on: v elements.
-	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTArrowHead new) ).
-	v add: edge.
-
-	v open
-]
-
 { #category : #animations }
 RTExample >> blinking [
 	"

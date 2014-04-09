@@ -18,7 +18,7 @@ RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
 	^ (RTEdge from: el1 toAll: el2) addShape: self
 ]
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTAbstractLine >> + anotherShape [
 	anotherShape line: self.
 	^ RTCompositeShape with: self with: anotherShape instance

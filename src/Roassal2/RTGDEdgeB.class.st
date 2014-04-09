@@ -39,6 +39,29 @@ RTGDEdgeB >> connectTo: toBlock color: aColor usedInLayout: flagLayout [
 ]
 
 { #category : #public }
+RTGDEdgeB >> connectTo: toBlock scopedTo: aScopeBlock color: aColor usedInLayout: flagLayout [
+	"
+	toBlock : take as argument a model, and return a list of another models
+	aScopeBlock : take as argument a model (obtained from the result of applying toBlock)
+	aColor : Color of the edge
+	"
+	^ self connectTo: [ :object | (toBlock rtValue: object) select: aScopeBlock ] shape: (RTLine new color: aColor) usedInLayout: flagLayout
+	
+]
+
+{ #category : #public }
+RTGDEdgeB >> connectTo: toBlock scopedTo: aScopeBlock follow: aFollowBlock color: aColor usedInLayout: flagLayout [
+	"
+	toBlock : take as argument a model, and return a list of another models
+	aScopeBlock : take as argument a model (obtained from the result of applying toBlock)
+	aColor : Color of the edge
+	aFollowBlock : a block on which an element will be evaluated against. This makes the curve follow a particular path
+	"
+	^ self connectTo: [ :object | (toBlock rtValue: object) select: aScopeBlock ] shape: (RTBezierLine new  color: aColor; follow: aFollowBlock) usedInLayout: flagLayout
+	
+]
+
+{ #category : #public }
 RTGDEdgeB >> connectTo: toBlock shape: aShape [
 	^ self if: true connectTo: toBlock shape: aShape
 ]

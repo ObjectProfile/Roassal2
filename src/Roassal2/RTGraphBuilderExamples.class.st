@@ -333,7 +333,12 @@ RTGraphBuilderExamples >> vissoft08DepAnalysis [
 		if: [ :c | 'RT*' match: c name ] color: Color red;
 		if: [ :c | 'TR*' match: c name ] color: Color purple.
 		
-	b edge connectTo: #subclasses usedInLayout: true.
+	b edge 
+		connectTo: #subclasses usedInLayout: true;
+		connectTo: #dependentClasses 
+			scopedTo: [ :c | 'TR*' match: c name ] 
+			color: (Color blue alpha: 0.4) 
+			usedInLayout: false.
 
 	b layout cluster.
 
