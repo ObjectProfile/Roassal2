@@ -9,6 +9,11 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
+{ #category : #accessing }
+RTBuilder class >> nestedElementsAttribute [
+	^ #nestedElements
+]
+
 { #category : #public }
 RTBuilder >> addElementOn: anObject [
 	| element |
@@ -86,6 +91,11 @@ RTBuilder >> interaction [
 { #category : #accessing }
 RTBuilder >> interactionBuilder: anRTInteractionBuilder [
 	interactionBuilder := anRTInteractionBuilder
+]
+
+{ #category : #accessing }
+RTBuilder >> nestedElementsAttribute [
+	^ self class nestedElementsAttribute
 ]
 
 { #category : #'public-ui' }

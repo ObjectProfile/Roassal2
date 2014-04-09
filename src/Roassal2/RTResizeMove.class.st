@@ -22,9 +22,8 @@ RTResizeMove >> hasCompleted [
 RTResizeMove >> refresh [
 	| t |
 	t := animatedValue value.
-	element trachelShape extent: t.
-	element trachelShape resetPath.
-	element trachelShape canvas signalUpdate.
+	element extent: t.
+	element signalUpdate.
 ]
 
 { #category : #actions }
@@ -36,7 +35,7 @@ RTResizeMove >> start [
 RTResizeMove >> toExtent: toExtent during: numberOfSeconds on: anElement [
 	
 	element := anElement.
-	originalExtent := anElement trachelShape extent.
+	originalExtent := anElement extent.
 	animatedValue := VIAnimatedValue new
 									evaluator: [ :t | originalExtent interpolateTo: toExtent at: t ];
 									timer: (VITimer new cycleLength: numberOfSeconds);

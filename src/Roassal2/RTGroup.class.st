@@ -52,6 +52,11 @@ RTGroup >> extent [
 	^ self encompassingRectangle extent
 ]
 
+{ #category : #geometry }
+RTGroup >> extent: aPoint [ 
+	self preScaleBy: aPoint / self extent 
+]
+
 { #category : #public }
 RTGroup >> height [
 	^ self encompassingRectangle height
@@ -60,6 +65,11 @@ RTGroup >> height [
 { #category : #accessing }
 RTGroup >> position [
 	^ self encompassingRectangle center
+]
+
+{ #category : #transformations }
+RTGroup >> preScaleBy: aPoint [ 
+	self do: [ :each | each preScaleBy: aPoint ]
 ]
 
 { #category : #public }
@@ -71,6 +81,17 @@ RTGroup >> remove [
 RTGroup >> renderOn: trCanvas [ 
 	"Not sure whether this method is necessary..."
 	self do: [ :e | e renderOn: trCanvas ]
+]
+
+{ #category : #transformations }
+RTGroup >> scaleBy: aPoint [ 
+	self do: [ :each | each scaleBy: aPoint ]
+]
+
+{ #category : #signalling }
+RTGroup >> signalUpdate [
+	self ifEmpty: [ ^ self ].
+	self first signalUpdate.
 ]
 
 { #category : #public }
