@@ -2317,3 +2317,14 @@ VersionOfRoassal2 >> version000164 [
 	at: #date put: '10 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000165 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-FaviolaMolina.116';
+	at: 'Roassal2' put: 'Roassal2-FaviolaMolina.208';
+	at: #version put: '0.166';
+	at: #comment put: '0.166 : merged with Ricardo. Added the bitmap support. No idea why it was not added before';
+	at: #date put: '10 April 2014';
+	yourself
+]
