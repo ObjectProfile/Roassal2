@@ -1,0 +1,130 @@
+Class {
+	#name : #TRAbstractLineDecoratorShape,
+	#superclass : #TRShape,
+	#instVars : [
+		'size',
+		'to',
+		'from',
+		'width',
+		'open'
+	],
+	#category : #'Trachel-Core'
+}
+
+{ #category : #'as yet unclassified' }
+TRAbstractLineDecoratorShape class >> from: aPoint to: anotherPoint width: aNumber size: anotherNumber color: aColor stroke: anotherColor [
+	^self new from: aPoint; to: anotherPoint; width: aNumber; size: anotherNumber; color: aColor; strokePaint: anotherColor.
+]
+
+{ #category : #'as yet unclassified' }
+TRAbstractLineDecoratorShape class >> fromEdge: anEdge size: aNumber [
+	^self fromLine: anEdge trachelShape size: aNumber
+]
+
+{ #category : #'as yet unclassified' }
+TRAbstractLineDecoratorShape class >> fromEdge: anEdge size: aNumber color: aColor [
+	^self fromLine: anEdge trachelShape size: aNumber color: aColor 
+]
+
+{ #category : #'as yet unclassified' }
+TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber [
+	^self from: aTRLine from to: aTRLine to width: aTRLine width size: aNumber color: aTRLine color stroke: aTRLine strokePaint.
+]
+
+{ #category : #'as yet unclassified' }
+TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber color: aColor [
+	^self from: aTRLine from to: aTRLine to width: aTRLine width size: aNumber color: aColor stroke: aTRLine strokePaint.
+]
+
+{ #category : #hooks }
+TRAbstractLineDecoratorShape >> computePath [
+	self subclassResponsibility
+]
+
+{ #category : #defaults }
+TRAbstractLineDecoratorShape >> defaultColor [
+	^ Color white
+]
+
+{ #category : #defaults }
+TRAbstractLineDecoratorShape >> defaultSize [
+	^ 10
+]
+
+{ #category : #defaults }
+TRAbstractLineDecoratorShape >> defaultWidth [
+	^ 1
+]
+
+{ #category : #drawing }
+TRAbstractLineDecoratorShape >> drawOn: athensCanvas [
+	athensCanvas pathTransform restoreAfter: [ 
+		athensCanvas setShape: self path.
+		open 
+			ifFalse: [
+			athensCanvas setPaint: color.
+			athensCanvas draw].
+		(athensCanvas setStrokePaint: strokePaint) width: self width.
+		athensCanvas draw ]
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> encompassingRectangle [
+	^ Rectangle encompassing: (Array with: from with: to)
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> from [
+	^ from
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> from: anObject [
+	from := anObject
+]
+
+{ #category : #initialization }
+TRAbstractLineDecoratorShape >> initialize [
+	super initialize.
+	size := self defaultSize.
+	color := self defaultColor.
+	strokePaint := self defaultColor.
+	width := 1.
+	open := false.
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> mySize [
+	^ size
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> size: anObject [
+	anObject  = nil 
+		ifTrue: [ size := self defaultSize. ]
+		ifFalse: [ size := anObject ]
+	
+	
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> to [
+	^ to
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> to: anObject [
+	to := anObject
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> width [
+	^ width
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> width: anObject [
+	anObject  = nil 
+		ifTrue: [ width := self defaultWidth. ]
+		ifFalse: [ width := anObject ]
+]

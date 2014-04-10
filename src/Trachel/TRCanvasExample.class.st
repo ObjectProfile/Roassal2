@@ -171,7 +171,7 @@ TRCanvasExample >> arc6 [
 	shape alphaAngle:10  betaAngle: 80  innerRadius: 30 externalRadius: 150. 
 	shape color: Color blue.
 	shape2:=TRBoxShape new.
-	shape2 rectangle: (shape topLeft corner: shape bottomRight).
+	shape2 fromRectangle: (shape topLeft corner: shape bottomRight).
 	shape2 color: Color red.
 	c addShape: shape.
 	c addShape: shape2.
@@ -393,6 +393,18 @@ TRCanvasExample >> rec1 [
 	c buildRectangle: ((50 @ 50) extent: (150 @ 75)) color: Color red.
 	c buildRectangle: ((80 @ 80) extent: (150 @ 75)) color: Color lightGreen.
 	c buildLineFrom: 50 @ 50 to: 80 @ 80 color: Color lightGreen.
+	c open
+]
+
+{ #category : #examples }
+TRCanvasExample >> recSimple [
+	"
+	self new recSimple
+	"
+
+	| c |
+	c := TRCanvas new.
+	c buildRectangle: ((50 @ 50) extent: (150 @ 75)) color: Color red.
 	c open
 ]
 

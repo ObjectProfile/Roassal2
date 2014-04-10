@@ -14,22 +14,18 @@ TRBitmapShape >> at: aPosition put: aColor [
 
 { #category : #accessing }
 TRBitmapShape >> center [
-	^ position
+	^ self position
 ]
 
 { #category : #drawing }
 TRBitmapShape >> drawOn: athensCanvas [
 	"self drawEncompassingRectangleOn: athensCanvas color: (Color gray alpha: 0.1)."
- 	| paint |
+	
 	athensCanvas pathTransform restoreAfter: [
 		"athensCanvas pathTransform translateBy: (self center - (self extent / 2)) asFloatPoint."
 		athensCanvas pathTransform translateBy: self encompassingRectangle topLeft asFloatPoint.
-	"	self form ifNotNil: [ athensCanvas setPaint: self form ]."
-		self form ifNotNil: [ 
-			paint := ( athensCanvas cacheAt: self form
-	   			 ifAbsentPut: [ (self form asAthensPaintOn: athensCanvas) ]).
-			athensCanvas setPaint: paint.
-			athensCanvas draw ] ] 
+		self form ifNotNil: [ athensCanvas setPaint: self form ].
+		athensCanvas draw ]
 	
 ]
 
@@ -38,7 +34,7 @@ TRBitmapShape >> encompassingRectangle [
 	| w h |
 	w := self width.
 	h := self height.
-	^ position + ((w / -2) @ (h / -2)) extent: (w @ h)
+	^ self position + ((w / -2) @ (h / -2)) extent: (w @ h)
 ]
 
 { #category : #'mode constants' }

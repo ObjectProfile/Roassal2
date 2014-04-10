@@ -17,6 +17,11 @@ TRCompositeShape class >> with: s1 with: s2 [
 	^ self new shape1: s1; shape2: s2; yourself
 ]
 
+{ #category : #'as yet unclassified' }
+TRCompositeShape >> accept: aVisitor [
+	aVisitor visitCompositeShape: self
+]
+
 { #category : #actions }
 TRCompositeShape >> addCallback: aCallback [
 	shape1 addCallback: aCallback.
@@ -54,6 +59,18 @@ TRCompositeShape >> canvas: aSurface [
 	shape2 canvas: aSurface
 ]
 
+{ #category : #accessing }
+TRCompositeShape >> color [
+	^ shape1 color
+	"shape2 color: aColor."
+]
+
+{ #category : #accessing }
+TRCompositeShape >> color: aColor [
+	shape1 color: aColor.
+	"shape2 color: aColor."
+]
+
 { #category : #hooks }
 TRCompositeShape >> computePath [
 	shape1 computePath.
@@ -84,7 +101,7 @@ TRCompositeShape >> encompassingRectangle [
 	^ Rectangle merging: (Array with: shape1 encompassingRectangle with: shape2 encompassingRectangle)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRCompositeShape >> extent: anExtent [
 
 	shape1 extent: anExtent.
@@ -119,7 +136,7 @@ TRCompositeShape >> remove [
 	shape2 remove
 ]
 
-{ #category : #actions }
+{ #category : #private }
 TRCompositeShape >> resetPath [
 	shape1 resetPath.
 	shape2 resetPath.
