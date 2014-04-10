@@ -1,14 +1,14 @@
 Class {
-	#name : #RTSVGGroupPopup,
-	#superclass : #RTSVGPopup,
+	#name : #RTHTMLGroupPopup,
+	#superclass : #RTHTMLPopup,
 	#instVars : [
 		'group'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #adding }
-RTSVGGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
+RTHTMLGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	| visitor myGroup |
 	myGroup := (self group value: aRTElement ).
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
@@ -21,17 +21,17 @@ RTSVGGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement cen
 ]
 
 { #category : #accessing }
-RTSVGGroupPopup >> group [
+RTHTMLGroupPopup >> group [
 	^ group
 ]
 
 { #category : #accessing }
-RTSVGGroupPopup >> group: anObject [
+RTHTMLGroupPopup >> group: anObject [
 	group := anObject
 ]
 
 { #category : #initialization }
-RTSVGGroupPopup >> initialize [
+RTHTMLGroupPopup >> initialize [
 	super initialize.
 	group := [ :m | RTGroup new add: ((RTElement on: m) + (RTBox new color: Color blue; yourself)); yourself]
 ]

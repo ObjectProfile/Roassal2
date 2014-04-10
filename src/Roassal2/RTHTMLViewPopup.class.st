@@ -1,28 +1,28 @@
 Class {
-	#name : #RTSVGViewPopup,
-	#superclass : #RTSVGPopup,
+	#name : #RTHTMLViewPopup,
+	#superclass : #RTHTMLPopup,
 	#instVars : [
 		'view'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #'as yet unclassified' }
-RTSVGViewPopup class >> on: anExporter view: aRTView targets: aRTShape [
+RTHTMLViewPopup class >> on: anHTMLExporter view: aRTView targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; view: aRTView; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGViewPopup class >> onClick: anExporter view: aRTView targets: aRTShape [
+RTHTMLViewPopup class >> onClick: anHTMLExporter view: aRTView targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; click: true; view: aRTView; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTSVGViewPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
+RTHTMLViewPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
 	RTSVGVisitor visit: (self view value: aRTElement model) on: aStream center: aNumber.
 	aStream 
@@ -31,17 +31,17 @@ RTSVGViewPopup >> addEventHandlers: aStream id: aString element: aRTElement cent
 ]
 
 { #category : #initialization }
-RTSVGViewPopup >> initialize [
+RTHTMLViewPopup >> initialize [
 	super initialize.
 	view := [ :m | RTView new add: ((RTElement on: m) + (RTBox new color: Color blue; yourself))]
 ]
 
 { #category : #accessing }
-RTSVGViewPopup >> view [
+RTHTMLViewPopup >> view [
 	^ view
 ]
 
 { #category : #accessing }
-RTSVGViewPopup >> view: anObject [
+RTHTMLViewPopup >> view: anObject [
 	view := anObject
 ]

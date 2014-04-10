@@ -1,27 +1,11 @@
 Class {
 	#name : #RTGDLayoutB,
-	#superclass : #RTGDElement,
+	#superclass : #Object,
 	#instVars : [
 		'conditionalLayout'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
-
-{ #category : #'as yet unclassified' }
-RTGDLayoutB >> cluster [
-
-	self use: (RTClusterLayout new)
-]
-
-{ #category : #'as yet unclassified' }
-RTGDLayoutB >> edgesForLayout [
-	^ self graphBuilder edgesForLayout
-]
-
-{ #category : #'as yet unclassified' }
-RTGDLayoutB >> edgesUsedByLayout [
-	^ self graphBuilder edgesUsedByLayout
-]
 
 { #category : #'as yet unclassified' }
 RTGDLayoutB >> executeOn: view [
@@ -31,7 +15,7 @@ RTGDLayoutB >> executeOn: view [
 		layout := array second.
 		
 		elementsToLayout := view elements select: [ :e | condition rtValue: e model ].
-		layout on: elementsToLayout edges: self edgesUsedByLayout
+		layout on: elementsToLayout edges: view edges.
 		]
 ]
 

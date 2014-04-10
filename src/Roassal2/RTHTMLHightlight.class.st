@@ -1,29 +1,29 @@
 Class {
-	#name : #RTSVGHightlight,
-	#superclass : #RTSVGInteraction,
+	#name : #RTHTMLHightlight,
+	#superclass : #RTHTMLInteraction,
 	#instVars : [
 		'color'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #'as yet unclassified' }
-RTSVGHightlight class >> on: anExporter color: aColor targets: aRTShape [
+RTHTMLHightlight class >> on: anHTMLExporter color: aColor targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; color: aColor; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTSVGHightlight >> addEventHandlers: aStream id: aString element: element center: aNumber [
+RTHTMLHightlight >> addEventHandlers: aStream id: aString element: element center: aNumber [
 	aStream
 		nextPutAll: 'hightlight '
 ]
 
 { #category : #adding }
-RTSVGHightlight >> addFunctions: aStream [
+RTHTMLHightlight >> addFunctions: aStream [
 	| attr  |
-	attr := self targetColorAttribute.
+	attr := self targetAttribute.
 	aStream
 		nextPutAll: '			var color;
 			function hightlight(evt) {
@@ -51,7 +51,7 @@ RTSVGHightlight >> addFunctions: aStream [
 ]
 
 { #category : #adding }
-RTSVGHightlight >> addGlobalHandlers: aStream [
+RTHTMLHightlight >> addGlobalHandlers: aStream [
 	aStream
 		nextPutAll: '
 	onmouseover="hightlight(evt)"
@@ -60,19 +60,30 @@ RTSVGHightlight >> addGlobalHandlers: aStream [
 ]
 
 { #category : #accessing }
-RTSVGHightlight >> color [
+RTHTMLHightlight >> color [
 	^ color
 ]
 
 { #category : #accessing }
-RTSVGHightlight >> color: anObject [
+RTHTMLHightlight >> color: anObject [
 	color := anObject
 ]
 
 { #category : #initialization }
-RTSVGHightlight >> initialize [
+RTHTMLHightlight >> initialize [
 	color := Color red.
 	contained := true.
 	external := false.
-	self type: 'hightlight'.
+]
+
+{ #category : #adding }
+RTHTMLHightlight >> targetAttribute [
+	self target trachelShape class = TRArcShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRBezierShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRBoxShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TREllipseShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
+	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
+	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
 ]

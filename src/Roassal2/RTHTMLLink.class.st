@@ -1,21 +1,21 @@
 Class {
-	#name : #RTSVGLink,
-	#superclass : #RTSVGInteraction,
+	#name : #RTHTMLLink,
+	#superclass : #RTHTMLInteraction,
 	#instVars : [
 		'link'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #'as yet unclassified' }
-RTSVGLink class >> on: anExporter link: anHref targets: aRTShape [
+RTHTMLLink class >> on: anHTMLExporter link: anHref targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; link: anHref; yourself ].
-	self on: anExporter targets: aRTShape generator: generator
+	self on: anHTMLExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTSVGLink >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
+RTHTMLLink >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	aStream
 		nextPutAll: '<a xlink:href="',(self link value: aRTElement model),'" target="_blank">'.
 	"return the missing closing"
@@ -23,29 +23,28 @@ RTSVGLink >> addEventHandlers: aStream id: aString element: aRTElement center: a
 ]
 
 { #category : #adding }
-RTSVGLink >> addFunctions: aStream [
+RTHTMLLink >> addFunctions: aStream [
 	"do nothing"
 ]
 
 { #category : #adding }
-RTSVGLink >> addGlobalHandlers: aStream [
+RTHTMLLink >> addGlobalHandlers: aStream [
 	"do nothing"
 ]
 
 { #category : #accessing }
-RTSVGLink >> initialize [
+RTHTMLLink >> initialize [
 	link := [:a |'http://objectprofile.com/'].
-	self type: 'link'.
 	contained := false.
 	external := false.
 ]
 
 { #category : #accessing }
-RTSVGLink >> link [
+RTHTMLLink >> link [
 	^ link
 ]
 
 { #category : #accessing }
-RTSVGLink >> link: anObject [
+RTHTMLLink >> link: anObject [
 	link := anObject
 ]

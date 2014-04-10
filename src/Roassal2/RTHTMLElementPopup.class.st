@@ -1,14 +1,14 @@
 Class {
-	#name : #RTSVGElementPopup,
-	#superclass : #RTSVGPopup,
+	#name : #RTHTMLElementPopup,
+	#superclass : #RTHTMLPopup,
 	#instVars : [
 		'element'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-HTML'
 }
 
 { #category : #adding }
-RTSVGElementPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
+RTHTMLElementPopup >> addEventHandlers: aStream id: aString element: aRTElement  center: aNumber [
 	| visitor myElement|
 	myElement := (self element value: aRTElement ).
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
@@ -21,17 +21,17 @@ RTSVGElementPopup >> addEventHandlers: aStream id: aString element: aRTElement  
 ]
 
 { #category : #accessing }
-RTSVGElementPopup >> element [
+RTHTMLElementPopup >> element [
 	^ element
 ]
 
 { #category : #accessing }
-RTSVGElementPopup >> element: anObject [
+RTHTMLElementPopup >> element: anObject [
 	element := anObject
 ]
 
 { #category : #initialization }
-RTSVGElementPopup >> initialize [
+RTHTMLElementPopup >> initialize [
 	super initialize.
 	element := [ :m | (RTElement  on: m) + (RTBox new color: Color blue; yourself)]
 ]

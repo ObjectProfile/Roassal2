@@ -9,15 +9,11 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #accessing }
-RTBuilder class >> nestedElementsAttribute [
-	^ #nestedElements
-]
-
 { #category : #public }
 RTBuilder >> addElementOn: anObject [
 	| element |
 	element := self elementOn: anObject.
+	interactionBuilder setUpElements: element.
 	view add: element.
 	^ element
 ]
@@ -40,7 +36,7 @@ RTBuilder >> createShapeBuilder [
 
 { #category : #hooks }
 RTBuilder >> createView [
-	^ RTView new setDefaultMenu
+	^ RTView new
 ]
 
 { #category : #public }
@@ -53,26 +49,12 @@ RTBuilder >> edgeFrom: source to: target [
 
 { #category : #protected }
 RTBuilder >> elementOn: anObject [
-	| element |
-	element := shapeBuilder elementOn: anObject.
-	interactionBuilder setUpElements: element.
-	^ element
+	^ shapeBuilder elementOn: anObject
 ]
 
 { #category : #protected }
 RTBuilder >> elementsOn: collectionOfObjects [
-	| elements |
-	elements := shapeBuilder elementsOn: collectionOfObjects.
-	interactionBuilder setUpElements: elements.
-	^ elements
-]
-
-{ #category : #protected }
-RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
-	| els |
-	els := shapeBuilder elementsOn: collectionOfObjects.
-	interactionBuilder setUpElements: els.
-	^ els
+	^ shapeBuilder elementsOn: collectionOfObjects
 ]
 
 { #category : #initialization }
@@ -91,11 +73,6 @@ RTBuilder >> interaction [
 { #category : #accessing }
 RTBuilder >> interactionBuilder: anRTInteractionBuilder [
 	interactionBuilder := anRTInteractionBuilder
-]
-
-{ #category : #accessing }
-RTBuilder >> nestedElementsAttribute [
-	^ self class nestedElementsAttribute
 ]
 
 { #category : #'public-ui' }

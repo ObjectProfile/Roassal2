@@ -1,27 +1,12 @@
 Class {
 	#name : #RTHighlightable,
 	#superclass : #RTInteraction,
-	#instVars : [
-		'highlightElements'
-	],
 	#classInstVars : [
-		'lastHighlightedElements',
+		'lastHighlightedShape',
 		'lastColor'
 	],
 	#category : #'Roassal2-Core'
 }
-
-{ #category : #public }
-RTHighlightable class >> highlight: aBlock [
-	"aBlock return an element or a list of elements to highlight"
-	^ self new highlight: aBlock
-]
-
-{ #category : #public }
-RTHighlightable class >> highlightElements: aBlock [
-	"aBlock return an element or a list of elements to highlight"
-	^ self new highlightElements: aBlock
-]
 
 { #category : #'reset shape' }
 RTHighlightable class >> highlightedColor [
@@ -29,54 +14,24 @@ RTHighlightable class >> highlightedColor [
 ]
 
 { #category : #'reset shape' }
-RTHighlightable class >> lastHighlightedElements [
-	^ lastHighlightedElements
+RTHighlightable class >> lastColor [
+	^ lastColor
 ]
 
 { #category : #'reset shape' }
-RTHighlightable class >> lastHighlightedElements: elements [
-	lastHighlightedElements := elements
+RTHighlightable class >> lastColor: aColor [
+	self assert: [ aColor notNil ].
+	lastColor := aColor
 ]
 
-{ #category : #actions }
-RTHighlightable >> doHighlight: element [
-	| t |
-	self unhighlightRecordedElements.
-
-	t := (highlightElements rtValue: element).
-	t := t copyWithout: nil.
-	t do: [ :el |
-		self recordElement: el.
-		el trachelShape color: self highlightedColor ].
-	element attributes at: #highlightedElements put: t.
-	self class lastHighlightedElements: t
+{ #category : #'reset shape' }
+RTHighlightable class >> lastHighlightedShape [
+	^ lastHighlightedShape
 ]
 
-{ #category : #actions }
-RTHighlightable >> doUnhighlight: element [
-	(element attributes includesKey: #highlightedElements)
-		ifFalse: [ ^ self ].
-
-	(element attributes at: #highlightedElements) do: [ :el |
-		self unhighlightRecordedElement: el ].
-
-	element attributes removeKey: #highlightedElements
-]
-
-{ #category : #public }
-RTHighlightable >> highlight: aBlock [
-	"aBlock return an object or a list of objects to highlight"
-	highlightElements := [ :el | 
-		| objects |
-		objects := aBlock rtValue: el model.
-		(objects collect: [ :o | el view elementFromModel: o ]) copyWithout: nil
-		]
-]
-
-{ #category : #public }
-RTHighlightable >> highlightElements: aBlock [
-	"aBlock return an element or a list of elements to highlight"
-	highlightElements := aBlock
+{ #category : #'reset shape' }
+RTHighlightable class >> lastHighlightedShape: aTrachelShape [
+	lastHighlightedShape := aTrachelShape
 ]
 
 { #category : #configuration }
@@ -84,43 +39,32 @@ RTHighlightable >> highlightedColor [
 	^ self class highlightedColor
 ]
 
-{ #category : #initialize }
-RTHighlightable >> initialize [
-	super initialize.
-	highlightElements := [ :el | Array with: el ]
-]
-
 { #category : #hooks }
 RTHighlightable >> initializeElement: element [
 	element
 		when: TRMouseEnter
 		do: [ :e | 
-			self doHighlight: element.
+			self unhighlightRecordedShape.
+			self recordShape: element trachelShape.
+			element trachelShape color: self highlightedColor.
 			e signalUpdate ].
 	element
 		when: TRMouseLeave
 		do: [ :e | 
-			self doUnhighlight: element.
+			self unhighlightRecordedShape.
 			e signalUpdate ]
 ]
 
 { #category : #actions }
-RTHighlightable >> recordElement: anElement [
-	anElement attributes at: #originalColor put: (anElement trachelShape color)
+RTHighlightable >> recordShape: aShape [
+	self class lastHighlightedShape: aShape.
+	self class lastColor: aShape color
 
 ]
 
 { #category : #actions }
-RTHighlightable >> unhighlightRecordedElement: anElement [
-	(anElement attributes includesKey: #originalColor)
-		ifFalse: [ ^ self ].
-	anElement trachelShape color: (anElement attributes at: #originalColor).
-	anElement attributes removeKey: #originalColor
-]
-
-{ #category : #actions }
-RTHighlightable >> unhighlightRecordedElements [
-	self class lastHighlightedElements ifNil: [ ^ self ].
-	self class lastHighlightedElements do: [ :el | self unhighlightRecordedElement: el ].
-	self class lastHighlightedElements: nil
+RTHighlightable >> unhighlightRecordedShape [
+	self class lastHighlightedShape isNil ifTrue: [ ^ self ].
+	self class lastHighlightedShape color: self class lastColor.
+	self class lastHighlightedShape: nil
 ]
