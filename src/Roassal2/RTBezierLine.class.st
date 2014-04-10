@@ -8,28 +8,46 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
+RTBezierLine >> centerOfElements: elements [
+
+	| center intermediaryElement |
+	(elements isNil or: [ elements isEmpty ]) ifTrue: [ ^ self ].
+	
+	center := (RTGroup withAll: elements) center.
+	intermediaryElement := RTBox element.
+	intermediaryElement translateTo: center.
+	self controllingElements: (Array with: intermediaryElement).
+
+]
+
+{ #category : #'control points' }
+RTBezierLine >> centerOfObjects: objects inView: view [
+	^ self centerOfElements: (view elementsFromModels: objects)
+]
+
+{ #category : #accessing }
 RTBezierLine >> controllingElements [
 	^ controllingElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBezierLine >> controllingElements: listofElements [
 	controllingElements := listofElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBezierLine >> follow: aBlockOrASymbol [
 
 	follow := aBlockOrASymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
 RTBezierLine >> getControllingElementsFromFollowFor: anEdge [
 	^ self getControllingElementsFromFollowFor: anEdge using: follow
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
 RTBezierLine >> getControllingElementsFromFollowFor: anEdge using: followBlock [
 	| l1 l2 |
 	l1 := self getFollowersOf: anEdge from using: followBlock.
@@ -39,7 +57,7 @@ RTBezierLine >> getControllingElementsFromFollowFor: anEdge using: followBlock [
 	^ l1 , l2 reversed allButFirst
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
 RTBezierLine >> getFollowersOf: aNode using: followBlock [
 	| answer view t |
 	answer := OrderedCollection new.
@@ -52,7 +70,7 @@ RTBezierLine >> getFollowersOf: aNode using: followBlock [
 	^ answer asArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
 RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	| listOfPoints |
 	listOfPoints := OrderedCollection new.
@@ -60,26 +78,34 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	
 	follow ifNotNil: 
 		[ self setControllingElementsFromFollowFor: anEdge ].
-
+	
 	controllingElements ifNotEmpty: 
-		[ listOfPoints addAll: (controllingElements collect: #position) ].
+		[ |cElements|
+			cElements := controllingElements collect: #position.
+			cElements isNotEmpty ifTrue: [ 
+				(cElements first = anEdge from position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButFirst].
+				(cElements last = anEdge to position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButLast]].
+			listOfPoints addAll: cElements
+		].
 		
 	listOfPoints add: anEdge to position.
 	^ listOfPoints
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTBezierLine >> initialize [
 	super initialize.
 	controllingElements := #()
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'control points' }
 RTBezierLine >> setControllingElementsFromFollowFor: anEdge [
 	controllingElements := self getControllingElementsFromFollowFor: anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTBezierLine >> trachelShapeFor: anEdge [
 	| shape |
 	shape := TRBezierShape new.
@@ -90,7 +116,7 @@ RTBezierLine >> trachelShapeFor: anEdge [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTBezierLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape resetPath. 
 	trachelShape strokePaint: (self colorFor: edge).

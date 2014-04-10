@@ -5,7 +5,9 @@ Class {
 		'node',
 		'edge',
 		'layout',
-		'global'
+		'global',
+		'interaction',
+		'bundleConnectToElements'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -38,7 +40,8 @@ RTGraphBuilder >> addEdgesForObject: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> applyLayout [
-	layout executeOn: view 
+	layout executeOn: view.
+	view edges do: [ :e | e trachelShape pushBack ]
 	"layout on: view elements edges: view edges"
 ]
 
@@ -60,10 +63,8 @@ RTGraphBuilder >> createEdgesFor: anObject [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> createElementFor: anObject [
-	| el |
-	el := node createElementFor: anObject.
-	el @ RTPopup @ RTDraggable.
-	^ el
+	^ node createElementFor: anObject
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -77,6 +78,16 @@ RTGraphBuilder >> edge [
 ]
 
 { #category : #'as yet unclassified' }
+RTGraphBuilder >> edgesForLayout [
+	^ edge edgesForLayout
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilder >> edgesUsedByLayout [
+	^ edge edgesUsedByLayout
+]
+
+{ #category : #'as yet unclassified' }
 RTGraphBuilder >> global [
 	^ global
 ]
@@ -85,9 +96,16 @@ RTGraphBuilder >> global [
 RTGraphBuilder >> initialize [
 	super initialize.
 	node := RTGDNodeB new.
+	node graphBuilder: self.
+	
 	edge := RTGDEdgeB new graphBuilder: self; yourself.
+	edge graphBuilder: self.
+	
 	layout := RTGDLayoutB new.
+	layout graphBuilder: self.
+	
 	global := RTGDGlobalB new.
+	global graphBuilder: self.
 ]
 
 { #category : #'as yet unclassified' }

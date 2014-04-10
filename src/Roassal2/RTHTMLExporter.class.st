@@ -14,7 +14,8 @@ Class {
 		'fileName',
 		'title',
 		'interactions',
-		'backgroundColor'
+		'backgroundColor',
+		'code'
 	],
 	#category : #'Roassal2-Exporter-HTML'
 }
@@ -134,16 +135,26 @@ RTHTMLExporter >> builder: aBuilder title: aString [
 	self view: aBuilder view; title: aString.
 ]
 
+{ #category : #accessing }
+RTHTMLExporter >> code [
+	^code
+]
+
+{ #category : #accessing }
+RTHTMLExporter >> code: aString [
+	code := aString
+]
+
 { #category : #configuration }
 RTHTMLExporter >> defaultBackgroundColor [
-	^ Color veryLightGray
+	^ Color white
 ]
 
 { #category : #exporting }
 RTHTMLExporter >> exportOnStream: fileStream [
 	self stream: fileStream.
 	self addStart.
-	RTInteractiveSVGExporter new view: self view; interactions: self interactions; backgroundColor: self backgroundColor;  exportOnStream: self stream.
+	RTInteractiveSVGExporter new view: self view; interactions: self interactions; backgroundColor: self backgroundColor; code: self code;  exportOnStream: self stream.
 	self addEnd.
 ]
 
@@ -176,6 +187,7 @@ RTHTMLExporter >> initialize [
 	title := 'HTML Export'.
 	interactions := Dictionary new.
 	backgroundColor := self defaultBackgroundColor.
+	withCode := false.
 ]
 
 { #category : #accessing }

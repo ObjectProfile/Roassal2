@@ -1,58 +1,58 @@
 Class {
-	#name : #RTHTMLTextPopup,
-	#superclass : #RTHTMLPopup,
+	#name : #RTSVGTextPopup,
+	#superclass : #RTSVGPopup,
 	#instVars : [
 		'text',
 		'font',
 		'fontSize'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> on: anHTMLExporter text: aString color: aColor font: aFont size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anExporter text: aString color: aColor font: aFont size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; font: aFont; fontSize: aNumber; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> on: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anExporter text: aString color: aColor size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> on: anHTMLExporter text: aString font: aFont size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> on: anExporter text: aString font: aFont size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; font: aFont; fontSize: aNumber; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> on: anHTMLExporter text: aString targets: aRTShape [
+RTSVGTextPopup class >> on: anExporter text: aString targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> onClick: anHTMLExporter text: aString color: aColor size: aNumber targets: aRTShape [
+RTSVGTextPopup class >> onClick: anExporter text: aString color: aColor size: aNumber targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; color: aColor; fontSize: aNumber; click: true; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #'as yet unclassified' }
-RTHTMLTextPopup class >> onClick: anHTMLExporter text: aString targets: aRTShape [
+RTSVGTextPopup class >> onClick: anExporter text: aString targets: aRTShape [
 	| generator |
 	generator := [ :e |  self new target: e; text: aString; click: true; yourself ].
-	self on: anHTMLExporter targets: aRTShape generator: generator
+	self on: anExporter targets: aRTShape generator: generator
 ]
 
 { #category : #adding }
-RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
+RTSVGTextPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aPoint [
 	|rText xOverflow yOverflow x y|
 	rText := (self text value: aRTElement model) asString.
 	x := aPoint x.
@@ -66,32 +66,32 @@ RTHTMLTextPopup >> addEventHandlers: aStream id: aString element: aRTElement cen
 ]
 
 { #category : #configuration }
-RTHTMLTextPopup >> defaultFont [
+RTSVGTextPopup >> defaultFont [
 	^'Arial, Helvetica, sans-serif'
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> font [
+RTSVGTextPopup >> font [
 	^ font
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> font: anObject [
+RTSVGTextPopup >> font: anObject [
 	font := anObject
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> fontSize [
+RTSVGTextPopup >> fontSize [
 	^ fontSize
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> fontSize: anObject [
+RTSVGTextPopup >> fontSize: anObject [
 	fontSize := anObject
 ]
 
 { #category : #initialization }
-RTHTMLTextPopup >> initialize [
+RTSVGTextPopup >> initialize [
 	super initialize.
 	text := #asString.
 	fontSize := 12.
@@ -99,16 +99,16 @@ RTHTMLTextPopup >> initialize [
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> text [
+RTSVGTextPopup >> text [
 	^text
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> text: aSymbolOrBlock [
+RTSVGTextPopup >> text: aSymbolOrBlock [
 	text := aSymbolOrBlock
 ]
 
 { #category : #accessing }
-RTHTMLTextPopup >> yBound [
+RTSVGTextPopup >> yBound [
 	^fontSize
 ]

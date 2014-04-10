@@ -7,7 +7,8 @@ Class {
 		'node',
 		'builder',
 		'radialSpacing',
-		'angularSpacing'
+		'angularSpacing',
+		'interactions'
 	],
 	#category : #'Roassal2-Builder-Sunburst'
 }
@@ -60,8 +61,10 @@ RTSunburstNodeVisitor >> createArc [
 	el attributeAt: #sbDepth put: node depth.
 	el attributeAt: #sbParent put: node parent.
 	el attributeAt: #sbChildren put: node children.
+	
 	el + arc.
-	el @ RTPopup.
+	node element: el.
+	interactions do: [:i | el @ i ].
 	
 	^ el
 	
@@ -84,8 +87,15 @@ RTSunburstNodeVisitor >> createLine [
 RTSunburstNodeVisitor >> initialize [
 	arcs:= OrderedCollection new.
 	lines:= OrderedCollection new.
+	interactions := OrderedCollection new.
+	interactions add: RTPopup.
 	angularSpacing:=0.
 	radialSpacing:=0
+]
+
+{ #category : #accessing }
+RTSunburstNodeVisitor >> interactions [
+	^ interactions
 ]
 
 { #category : #accessing }

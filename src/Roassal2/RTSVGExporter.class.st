@@ -12,7 +12,12 @@ Class {
 		'view',
 		'stream',
 		'fileName',
-		'backgroundColor'
+		'backgroundColor',
+		'code',
+		'canvasWidth',
+		'canvasHeight',
+		'finalWidth',
+		'finalHeight'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
@@ -44,13 +49,49 @@ RTSVGExporter class >> exportViewAsSVG: aRTView filename: aString [
 { #category : #'as yet unclassified' }
 RTSVGExporter class >> interactiveExportBuilderAsSVG: aRTBuilder [
 
-	^self exportViewAsSVG: (aRTBuilder view)
+	^self interactiveExportViewAsSVG: (aRTBuilder view)
 ]
 
 { #category : #'as yet unclassified' }
 RTSVGExporter class >> interactiveExportViewAsSVG: aRTView [ 
 
 	^ self new view: aRTView; interactiveExportToFile
+]
+
+{ #category : #svg }
+RTSVGExporter >> addCanvasColor [
+	stream
+		nextPutAll:
+			('style="background-color: rgb(<1p>,<2p>,<3p>);float:left" '
+				expandMacrosWith: (backgroundColor red * 256) rounded
+				with: (backgroundColor green * 256) rounded
+				with: (backgroundColor blue * 256) rounded)
+]
+
+{ #category : #svg }
+RTSVGExporter >> addCanvasSize: bounds [
+	|pair|
+	pair := self getFinalBounds: bounds.
+	stream 
+		nextPutAll: ('width="<1p>px" height="<2p>px" ' expandMacrosWith: pair first with: pair second).
+]
+
+{ #category : #svg }
+RTSVGExporter >> addCode [
+	| lines hightStart step|
+	code ifNil: [ ^self ].
+	lines := code lines allButFirst.
+	step := (TRLabelShape new
+					text: lines first;
+						encompassingRectangle) height.
+	hightStart := (step / 2) rounded. 
+	stream
+		nextPutAll:
+				'<rect  x="',canvasWidth asString,'" y="',0 asString,'" width="',((3*(finalWidth - canvasWidth)/4) rounded) asString,'" height="',finalHeight asString,'" fill="rgb(192,192,192)" />' , String cr.
+	lines do: [ :l |  
+		stream
+			nextPutAll: String cr,'<text x="',(canvasWidth + 5) asString,'" y="',hightStart asString,'" font-size="12"><tspan font-family = "Arial, Helvetica, sans-serif" xml:space="preserve">',l,'</tspan></text>'.
+		hightStart := hightStart + step]
 ]
 
 { #category : #svg }
@@ -62,10 +103,21 @@ RTSVGExporter >> addEnd [
 
 { #category : #svg }
 RTSVGExporter >> addStart: bounds [
+	self addVersion.
+	self addCanvasSize: bounds.
+	self addCanvasColor.
+	self addXLinkVersion.
+	self addCode.
+]
+
+{ #category : #svg }
+RTSVGExporter >> addVersion [
+	stream nextPutAll: '<svg  xmlns="http://www.w3.org/2000/svg" '
+]
+
+{ #category : #svg }
+RTSVGExporter >> addXLinkVersion [
 	stream
-		nextPutAll: '<svg  xmlns="http://www.w3.org/2000/svg" ';
-		nextPutAll:  ('width="<1p>px" height="<2p>px" ' expandMacrosWith: ((bounds width + 2) rounded) with: ((bounds height + 2) rounded));
-		nextPutAll: ('style="background-color: rgb(<1p>,<2p>,<3p>);" ' expandMacrosWith: (backgroundColor red * 256) rounded with: (backgroundColor green * 256) rounded with: (backgroundColor blue * 256) rounded );
 		nextPutAll: String cr;
 		nextPut: Character tab;
 		nextPutAll: 'xmlns:xlink="http://www.w3.org/1999/xlink">';
@@ -82,17 +134,19 @@ RTSVGExporter >> backgroundColor: aColor [
 	backgroundColor := aColor
 ]
 
-{ #category : #configuration }
-RTSVGExporter >> defaultBackgroundColor [
-	^ Color veryLightGray
+{ #category : #accessing }
+RTSVGExporter >> builder: builder filename: aName [
+	self view: builder view filename: aName
 ]
 
-{ #category : #svg }
-RTSVGExporter >> endGroup [
+{ #category : #accessing }
+RTSVGExporter >> code: aString [
+	code := aString
+]
 
-	stream 
-		nextPutAll: '</g>';
-		nextPutAll: String cr.
+{ #category : #configuration }
+RTSVGExporter >> defaultBackgroundColor [
+	^ Color white
 ]
 
 { #category : #exporting }
@@ -143,6 +197,33 @@ RTSVGExporter >> fixedEncompassingRectangle [
 	^canvas 
 ]
 
+{ #category : #svg }
+RTSVGExporter >> getFinalBounds: bounds [
+	canvasWidth := (bounds width + 2) rounded.
+	canvasHeight := (bounds height + 2) rounded.
+	finalWidth := canvasWidth.
+	finalHeight  := canvasHeight.
+	code = nil
+		ifFalse: [ | maxW line w h|
+			maxW := 0.
+			line := ''.
+			code lines do: [ :l | 
+				maxW := maxW max: l size.
+				maxW = l size
+					ifTrue: [ line := l ].	
+				].
+			w := (TRLabelShape new
+					text: line;
+						width).
+			h := (TRLabelShape new
+					text: line;
+						height).
+			finalWidth := canvasWidth  + w.
+			finalHeight := canvasHeight max: (h * code lines size) 			
+			  ].
+	^{finalWidth . finalHeight}	
+]
+
 { #category : #initialization }
 RTSVGExporter >> initialize [
 	super initialize.
@@ -164,14 +245,6 @@ RTSVGExporter >> interactiveExportToFile [
 	fileStream := fileRef writeStream.
 	[ self exportOnStream: fileStream ] 
 		ensure: [ fileStream notNil ifTrue: [ fileStream close ] ]
-]
-
-{ #category : #svg }
-RTSVGExporter >> startGroup [
-
-	stream 
-		nextPutAll: '<g>';
-		nextPutAll: String cr.
 ]
 
 { #category : #accessing }
@@ -196,4 +269,10 @@ RTSVGExporter >> view [
 RTSVGExporter >> view: aView [
 	
 	view := aView.
+]
+
+{ #category : #accessing }
+RTSVGExporter >> view: aView filename: aName [
+	self view: aView.
+	self fileName: aName.
 ]

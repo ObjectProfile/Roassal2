@@ -8,9 +8,20 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAbstractLine class >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
+]
+
+{ #category : #public }
+RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
+	^ (RTEdge from: el1 toAll: el2) addShape: self
+]
+
+{ #category : #public }
+RTAbstractLine >> + anotherShape [
+	anotherShape line: self.
+	^ RTCompositeShape with: self with: anotherShape instance
 ]
 
 { #category : #visitor }
@@ -26,6 +37,11 @@ RTAbstractLine >> attachPoint: aRTAttachPoint [
 { #category : #public }
 RTAbstractLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
+]
+
+{ #category : #public }
+RTAbstractLine >> edgesFrom: el1 toAll: el2 [
+	^ (RTEdge from: el1 toAll: el2) addShape: self
 ]
 
 { #category : #'attach point' }
