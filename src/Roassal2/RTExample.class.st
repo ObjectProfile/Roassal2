@@ -289,6 +289,94 @@ RTExample >> colorWaves [
 ]
 
 { #category : #edges }
+RTExample >> directedEdges01 [
+	"
+	self new directedEdges01
+	"
+
+| v classesRoassal classesTrachel shape1 shape2 |
+v := RTView new.
+v @ RTDraggableView.
+
+shape1 := RTEllipse new size: #numberOfMethods; color: (Color gray alpha: 0.3).
+shape2 := RTEllipse new size: #numberOfMethods; color: (Color pink alpha: 0.3).
+classesRoassal := shape1 elementsOn: (RTObject withAllSubclasses).
+classesTrachel := shape2 elementsOn: (TRObject withAllSubclasses).
+
+classesRoassal@ RTPopup.
+
+classesTrachel @ RTPopup.
+
+v addAll: classesRoassal.
+v addAll: classesTrachel.
+
+"RTEdge 
+	buildEdgesFromObjects: RTObject withAllSubclasses 
+	from: #yourself 
+	toAll: [ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ] 
+	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
+"
+RTEdge 
+	buildEdgesFromObjects: RTObject withAllSubclasses 
+	from: #yourself 
+	toAll: [ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ] 
+	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
+
+"RTGridLayout on: classesRoassal.
+RTGridLayout on: classesTrachel."
+
+"RTCircleLayout new initialRadius: 250; on: classesRoassal.
+RTCircleLayout new initialRadius: 150; on: classesTrachel.
+"
+
+RTHorizontalLineLayout new gapSize: 1;on: classesRoassal, classesTrachel.
+
+"TRConstraint move: classesRoassal onTheRightOf: classesTrachel."
+"TRConstraint move: classesRoassal onTheCenterOf: classesTrachel."
+
+v open
+]
+
+{ #category : #edges }
+RTExample >> directedEdges02 [
+	"
+	self new directedEdges02
+	"
+
+| v elements1 elements2 objects1 objects2 shape1 shape2 assocs |
+
+objects1 := 1 to: 5.
+objects2 := 6 to: 10.
+assocs := { 1 -> 5 . 2 -> 6 . 6 -> 10  . 10 -> 2}.
+
+
+v := RTView new.
+v @ RTDraggableView.
+
+shape1 := RTEllipse new size: 10; color: (Color gray alpha: 0.3).
+shape2 := RTEllipse new size: 10; color: (Color pink alpha: 0.3).
+elements1 := shape1 elementsOn: objects1.
+elements2 := shape2 elementsOn: objects2.
+
+elements1 @ RTPopup.
+elements2 @ RTPopup.
+
+v addAll: elements1.
+v addAll: elements2.
+
+RTEdge 
+	buildEdgesFromObjects: assocs
+	from: #key
+	to:  #value 
+	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
+
+
+RTHorizontalLineLayout new gapSize: 1;on: elements1, elements2.
+
+v open
+]
+
+{ #category : #edges }
 RTExample >> dynamicEdges01 [
 	"
 	self new dynamicEdges01
