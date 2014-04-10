@@ -15,7 +15,6 @@ Class {
 		'title',
 		'interactions',
 		'backgroundColor',
-		'withCode',
 		'code'
 	],
 	#category : #'Roassal2-Exporter-HTML'
@@ -95,8 +94,6 @@ RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView title: aString [
 
 { #category : #html }
 RTHTMLExporter >> addEnd [
-		withCode 
-			ifTrue: [ stream nextPutAll: '<pre><code style="background-color:rgb(192,192,192); float: left; overflow:scroll;max-width:50%;">', self code,'</code></pre></div>',String cr].
 		stream
 			nextPutAll: ('</body>', String cr);
 			nextPutAll: ('</html>').
@@ -110,7 +107,7 @@ RTHTMLExporter >> addStart [
 			nextPut: Character tab;
 			nextPutAll: ('<body>', String cr);
 			nextPut: Character tab;
-			nextPutAll: ('<h1>', self title,'</h1>', String cr,'<div>').
+			nextPutAll: ('<h1>', self title,'</h1>', String cr).
 ]
 
 { #category : #accessing }
@@ -145,8 +142,7 @@ RTHTMLExporter >> code [
 
 { #category : #accessing }
 RTHTMLExporter >> code: aString [
-	code := aString.
-	withCode := true.
+	code := aString
 ]
 
 { #category : #configuration }
@@ -158,7 +154,7 @@ RTHTMLExporter >> defaultBackgroundColor [
 RTHTMLExporter >> exportOnStream: fileStream [
 	self stream: fileStream.
 	self addStart.
-	RTInteractiveSVGExporter new view: self view; interactions: self interactions; backgroundColor: self backgroundColor;  exportOnStream: self stream.
+	RTInteractiveSVGExporter new view: self view; interactions: self interactions; backgroundColor: self backgroundColor; code: self code;  exportOnStream: self stream.
 	self addEnd.
 ]
 
