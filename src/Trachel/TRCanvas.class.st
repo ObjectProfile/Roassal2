@@ -38,7 +38,7 @@ TRCanvas >> addFixedShape: shape [
 TRCanvas >> addMenu: aTitle callback: aBlock [
 	| lbl index |
 	index := fixedShapes inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
-	lbl := TRLabelShape new text: aTitle; translateLeftTo: index @ 20.
+	lbl := TRLabelShape new text: aTitle; leftPosition: index @ 20.
 	lbl color: Color black.
 	lbl when: TRMouseClick do: [ :event | aBlock value ].
 	lbl when: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
@@ -182,13 +182,6 @@ TRCanvas >> firstElementOf: aCollection [
 { #category : #accessing }
 TRCanvas >> fixedShapes [
 	^ fixedShapes
-]
-
-{ #category : #actions }
-TRCanvas >> focusOnCenterScaled [
-	| max |
-	max := morph width min: morph height.
-	camera focusOnCenterScaled: max.
 ]
 
 { #category : #animations }
@@ -382,12 +375,11 @@ TRCanvas >> shapeWithActionForPosition: position [
 TRCanvas >> shapeWithActionForPositionInPixels: position [
 	"position is in pixel, it corresponds to the physical location in the window.
 	e.g., 0 @ 0 is top left of the window"
-	| pos |
 	fixedShapes reverseDo: [ :s | 
 		((s includesPoint: position) and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
-	pos := self camera fromPixelToSpace: position.
+
 	shapes reverseDo: [ :s | 
-		((s includesPoint: pos) 
+		((s includesPoint: (self camera fromPixelToSpace: position)) 
 			and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
 	^ self
 ]

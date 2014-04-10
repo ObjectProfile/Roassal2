@@ -32,12 +32,6 @@ TRCamera >> canvas: aTrachelCanvas [
 	canvas := aTrachelCanvas
 ]
 
-{ #category : #convertion }
-TRCamera >> distanceFromPixelToSpace: aPoint [
-	^ (aPoint / self scale) asFloatPoint
-	"^ AthensAffineTransform new scaleBy: (1 / self scale) asFloat; translation: aPoint; transform: aPoint"
-]
-
 { #category : #utility }
 TRCamera >> encompassingRectangle [
 
@@ -58,24 +52,6 @@ TRCamera >> focusOnCenter [
 	"Do nothing if no shape are present"
 	canvas numberOfShapes = 0 ifTrue: [ ^ self ]. 
 	self translateTo: self encompassingRectangle center
-]
-
-{ #category : #actions }
-TRCamera >> focusOnCenterScaled [
-	self focusOnCenterScaled: 500.
-	
-	
-]
-
-{ #category : #actions }
-TRCamera >> focusOnCenterScaled: aFactor [
-	| sc rec max |
-	
-	canvas numberOfShapes = 0 ifTrue: [ ^ self ].
-	rec := self encompassingRectangle.
-	max := rec width max: rec height.
-	sc := aFactor / max.
-	self scale: sc.
 ]
 
 { #category : #convertion }
