@@ -35,3 +35,14 @@ TREllipseShape >> includesPoint: aPoint [
 	xOverY := rectangle width asFloat / rectangle height asFloat.
 	^ (delta x asFloat / xOverY) squared + delta y squared <= radius squared
 ]
+
+{ #category : #drawing }
+TREllipseShape >> preDrawOn: athensCanvas [
+	athensCanvas pathTransform
+		scaleBy: rectangle extent asFloatPoint
+]
+
+{ #category : #'as yet unclassified' }
+TREllipseShape >> strokeWidth [
+	^ 0.005
+]

@@ -34,8 +34,8 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform
 		restoreAfter: [ 
 			athensCanvas pathTransform
-				multiplyBy: matrix asFloatTransform;
-				scaleBy: rectangle extent asFloatPoint.
+				multiplyBy: matrix asFloatTransform.
+			self preDrawOn: athensCanvas.
 			athensCanvas 
 				setPaint: color;
 				drawShape: self path.
@@ -144,6 +144,10 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 	self position: (aPosition - ((self width / -2) @ 0))
 ]
 
+{ #category : #drawing }
+TRAbstractBoxShape >> preDrawOn: athensCanvas [
+]
+
 { #category : #testing }
 TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]
@@ -156,7 +160,7 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
-	^ 0.05
+	^ 1
 ]
 
 { #category : #accessing }
