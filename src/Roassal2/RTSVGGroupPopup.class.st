@@ -7,10 +7,17 @@ Class {
 	#category : #'Roassal2-Exporter-SVG'
 }
 
+{ #category : #'as yet unclassified' }
+RTSVGGroupPopup class >> on: anExporter targets: aRTShape group: aGroupBlock [
+	| generator |
+	generator := [ :e |  self new target: e; group: aGroupBlock;  yourself ].
+	self on: anExporter targets: aRTShape generator: generator
+]
+
 { #category : #adding }
 RTSVGGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement center: aNumber [
 	| visitor myGroup |
-	myGroup := (self group value: aRTElement ).
+	myGroup := (self group value: RTGroup new value: aRTElement).
 	aStream nextPutAll: '<g visibility="hidden">', String cr.
 	visitor := RTSVGVisitor new stream: aStream; center: aNumber; yourself.
 	visitor canvas: myGroup encompassingRectangle.

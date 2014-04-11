@@ -103,11 +103,12 @@ RTSVGExporter >> addEnd [
 
 { #category : #svg }
 RTSVGExporter >> addStart: bounds [
-	self addVersion.
-	self addCanvasSize: bounds.
-	self addCanvasColor.
-	self addXLinkVersion.
-	self addCode.
+	self 
+		addVersion;
+		addCanvasSize: bounds;
+		addCanvasColor;
+		addXLinkVersion;
+		addCode.
 ]
 
 { #category : #svg }

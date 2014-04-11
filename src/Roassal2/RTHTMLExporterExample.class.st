@@ -9,7 +9,7 @@ Class {
 
 { #category : #example }
 RTHTMLExporterExample >> exampleDependencyAnalyzerBuilder [
-	
+	"self new exampleDependencyAnalyzerBuilder"	
 
 	| b exporter |	
 	b := RTDependencyAnalyzerBuilder new. 
