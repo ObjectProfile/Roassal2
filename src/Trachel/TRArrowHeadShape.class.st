@@ -8,6 +8,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRArrowHeadShape >> accept: aVisitor [
+	aVisitor visitArrowHeadShape: self
+]
+
 { #category : #hooks }
 TRArrowHeadShape >> computePath [
 	| vector r u unit middle |
@@ -28,4 +33,10 @@ TRArrowHeadShape >> computePath [
 				lineTo: left;
 				lineTo: right;
 				lineTo: self to. ]
+]
+
+{ #category : #initialization }
+TRArrowHeadShape >> initialize [
+	super initialize.
+	self type: 1.
 ]

@@ -6,7 +6,8 @@ Class {
 		'to',
 		'from',
 		'width',
-		'open'
+		'open',
+		'type'
 	],
 	#category : #'Trachel-Core'
 }
@@ -34,6 +35,11 @@ TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber [
 { #category : #'as yet unclassified' }
 TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber color: aColor [
 	^self from: aTRLine from to: aTRLine to width: aTRLine width size: aNumber color: aColor stroke: aTRLine strokePaint.
+]
+
+{ #category : #visitor }
+TRAbstractLineDecoratorShape >> accept: aVisitor [
+	aVisitor visitAbstractLineDecorationShape: self
 ]
 
 { #category : #hooks }
@@ -91,6 +97,7 @@ TRAbstractLineDecoratorShape >> initialize [
 	strokePaint := self defaultColor.
 	width := 1.
 	open := false.
+	type := 0.
 ]
 
 { #category : #accessing }
@@ -115,6 +122,16 @@ TRAbstractLineDecoratorShape >> to [
 { #category : #accessing }
 TRAbstractLineDecoratorShape >> to: anObject [
 	to := anObject
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> type [
+	^ type
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> type: anObject [
+	type := anObject
 ]
 
 { #category : #accessing }

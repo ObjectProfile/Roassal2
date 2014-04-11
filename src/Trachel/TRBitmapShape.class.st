@@ -7,6 +7,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRBitmapShape >> accept: aVisitor [
+	aVisitor visitBitMapShape: self
+]
+
 { #category : #accessing }
 TRBitmapShape >> at: aPosition put: aColor [
 	self form getCanvas fillRectangle: (aPosition extent: 1 @ 1) color: aColor
