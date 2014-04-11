@@ -2339,3 +2339,14 @@ VersionOfRoassal2 >> version000166 [
 	at: #date put: '10 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000167 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-FaviolaMolina.116';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.210';
+	at: #version put: '0.168';
+	at: #comment put: '0.168 : worked on the graph builder';
+	at: #date put: '11 April 2014';
+	yourself
+]
