@@ -11,7 +11,6 @@ Class {
 		'afterStream',
 		'canvas',
 		'interactions',
-		'markers',
 		'center',
 		'names'
 	],
@@ -48,7 +47,7 @@ RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectang
 	self new view: view; stream: stream; interactions: interactions; canvas: aRectangle; center: aPoint; visit; yourself.
 ]
 
-{ #category : #interactions }
+{ #category : #utils }
 RTSVGVisitor >> addContainedInteractions: id element: element [
 	| aNumber |
 	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
@@ -71,25 +70,25 @@ RTSVGVisitor >> addCurves: points [
 						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p2 x rounded with: p2 y rounded) 		
 				].
 			stream
-				nextPutAll: ('L<1p>,<2p>" ' expandMacrosWith: points last x rounded with: points last y rounded).
+				nextPutAll: ('L<1p>,<2p>"' expandMacrosWith: points last x rounded with: points last y rounded).
 			]
 		ifFalse: [		
 			points size == 2
 				ifTrue: [  
 					stream
 						nextPutAll: ('Q<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
-						nextPutAll: ('<1p>,<2p>" ' expandMacrosWith: points second x rounded with: points second y rounded) 
+						nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points second x rounded with: points second y rounded) 
 					] .			
 			points size == 3
 				ifTrue: [  
 					stream
 						nextPutAll: ('C<1p>,<2p> ' expandMacrosWith: points first x rounded with: points first y rounded);
 						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: points second x rounded with: points second y rounded);
-						nextPutAll: ('<1p>,<2p>" ' expandMacrosWith: points last x rounded with: points last y rounded) 
+						nextPutAll: ('<1p>,<2p>"' expandMacrosWith: points last x rounded with: points last y rounded) 
 					] ]
 ]
 
-{ #category : #interactions }
+{ #category : #utils }
 RTSVGVisitor >> addEmbeddingInteractions: id element: element [
 	|closings aNumber |
 	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
@@ -100,115 +99,13 @@ RTSVGVisitor >> addEmbeddingInteractions: id element: element [
 	^(closings reverse)
 ]
 
-{ #category : #interactions }
+{ #category : #utils }
 RTSVGVisitor >> addExternalInteractions: id element: element [
 	| aNumber |
 	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
 	(interactions at: element ifAbsent: [OrderedCollection new]) 
 		do: [ :i |	 i external = true
 			ifTrue: [ self afterStream add: [:e | i addEventHandlers: stream id: id  element: element center: aNumber] ]]
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addFillColor: color [
-	color = nil
-		ifTrue: [
-			stream
-				nextPutAll: 'fill:none; '
-			  ]
-		ifFalse: [  
-			stream
-				nextPutAll:
-					('fill:rgb(<1p>,<2p>,<3p>); '
-						expandMacrosWith: (color red * 256) rounded
-						with: (color green * 256) rounded
-						with: (color blue * 256) rounded)]
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addFillOpacity: fillColor [
-	stream nextPutAll: ('fill-opacity:<1p>; ' expandMacrosWith: fillColor alpha)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addMarker: aLineDecoration [
-	stream nextPutAll: 'marker-end = "url(#marker' , (self getDecorationId: aLineDecoration) , ')" '
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addPath: pathString [
-	stream nextPutAll: 'd="' , pathString , '" '
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addPositionCX: x cy: y rx: rx ry: ry [
-	stream
-		nextPutAll:
-				('cx="<1p>" cy="<2p>" rx="<3p>" ry="<4p>" ' expandMacrosWith: x with: y with: rx with: ry).
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addPositionFrom: aPoint to: aPoint2 [
-	stream
-		nextPutAll: ('x1="<1p>" y1="<2p>" ' expandMacrosWith: aPoint x rounded with: aPoint y rounded);
-		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addPositionX: x y: y [
-	stream
-		nextPutAll:
-				('x="<1p>" y="<2p>" ' expandMacrosWith: x with: y).
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addRotation: angle point: point [
-	stream nextPutAll: ('rotate(<1p>,<2p>,<3p>) ' expandMacrosWith: angle with: point x rounded with: point y rounded)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addScale: anInteger [
-	stream nextPutAll: ('scale(<1p>) ' expandMacrosWith: anInteger)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addStringWithFont: aByteString [
-	stream
-		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
-		nextPutAll: aByteString;
-		nextPutAll: '</tspan>'
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addStrokeColor: aColor [
-	stream
-		nextPutAll:
-			('stroke:rgb(<1p>,<2p>,<3p>); '
-				expandMacrosWith: (aColor red * 256) rounded
-				with: (aColor green * 256) rounded
-				with: (aColor blue * 256) rounded)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addStrokeOpacity: aColor [
-	stream nextPutAll: ('stroke-opacity:<1p>; ' expandMacrosWith: aColor alpha)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addStrokeWidth: aSmallInteger [
-	stream nextPutAll: ('stroke-width:<1p>; ' expandMacrosWith: aSmallInteger)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addTranslation: point [
-	stream nextPutAll: ('translate(<1p>,<2p>) ' expandMacrosWith: point x rounded with: point y rounded)
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> addWidth: x height: y [
-	stream
-		nextPutAll:
-				('width="<1p>" height="<2p>" ' expandMacrosWith: x with: y).
 ]
 
 { #category : #accessing }
@@ -222,7 +119,7 @@ RTSVGVisitor >> afterStream: anObject [
 	afterStream := anObject
 ]
 
-{ #category : #alignment }
+{ #category : #utils }
 RTSVGVisitor >> alignLine: aLine [
 	|distanceX distanceY fromX fromY|
 	distanceX := canvas topLeft x negated + center x.
@@ -233,7 +130,7 @@ RTSVGVisitor >> alignLine: aLine [
 	
 ]
 
-{ #category : #alignment }
+{ #category : #utils }
 RTSVGVisitor >> alignPoint: aPoint [
 	|distanceX distanceY originX originY|
 	distanceX := canvas topLeft x negated + center x.
@@ -244,7 +141,7 @@ RTSVGVisitor >> alignPoint: aPoint [
 	
 ]
 
-{ #category : #alignment }
+{ #category : #utils }
 RTSVGVisitor >> alignRectangle: aRectangle [
 	|distanceX distanceY originX originY|
 	distanceX := canvas topLeft x negated + center x.
@@ -277,28 +174,6 @@ RTSVGVisitor >> center: aPoint [
 	center := aPoint
 ]
 
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> closeDef [
-	stream nextPutAll: '/>' , String cr
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> closeDef: type [ 
-	stream 
-		nextPutAll: '</',type,'>';
-		nextPutAll: String cr
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> closeDefWithContent [
-	stream nextPutAll: '>' , String cr
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> closeTag [
-	stream nextPutAll: '" '
-]
-
 { #category : #drawing }
 RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadius: anotherNumber alphaAngle: anAngle betaAngle: anotherAngle color: aColor [
 	| start end p1 p2 aAngle bAngle sweepFlag alpha beta id closings|
@@ -326,9 +201,10 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 		nextPutAll: ('A<1p>,<2p> 0 <3p>,0 ' expandMacrosWith: aNumber with: aNumber with: sweepFlag);
 		nextPutAll: ('<1p>,<2p>z" ' expandMacrosWith: start x with: start y);
 		nextPutAll:
-				('style="').
-	self addFillColor: aColor.
-	stream
+				('style="fill:rgb(<1p>,<2p>,<3p>);"'
+						expandMacrosWith: (aColor red * 256) rounded
+						with: (aColor green * 256) rounded
+						with: (aColor blue * 256) rounded);
 		nextPutAll: ' class="'.
 	self addContainedInteractions: 'arc' , id element: element.
 	stream
@@ -339,190 +215,54 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 ]
 
 { #category : #drawing }
-RTSVGVisitor >> drawArrow: id borderColor: anotherColor width: aNumber size: anotherNumber [ 
-	|xExtent yExtent|
-	xExtent := 10.
-	yExtent := 10.
-	self openDef: 'marker' label: 'marker' id: id. 
-	stream
-		nextPutAll:  ('viewBox = "0 0 <1p> <2p>" ' expandMacrosWith: xExtent with: yExtent);
-		nextPutAll:  ('refX = "<1p>" refY = "<2p>" ' expandMacrosWith: xExtent with: ((yExtent/2) rounded));
-		nextPutAll:  ('markerWidth = "<1p>" markerHeight = "<1p>" ' expandMacrosWith: anotherNumber);
-		nextPutAll: 'orient = "auto">',String cr.
-	stream
-		nextPutAll: '<path d="';
-		nextPutAll: ('M 0 0 L <1p> <2p> L 0 <1p> "' expandMacrosWith: xExtent with: ((yExtent/2) rounded)).
-	self startStyle.
-	self addFillColor: nil.
-	self addStrokeColor: anotherColor.
-	self addStrokeWidth: aNumber.
-	self closeTag.
-	self closeDef.
-	self closeDef: 'marker'.
-]
-
-{ #category : #drawing }
-RTSVGVisitor >> drawArrowHead: id color: aColor borderColor: anotherColor width: aNumber size: anotherNumber [ 
-	|xExtent yExtent|
-	xExtent := 10.
-	yExtent := 10.
-	self openDef: 'marker' label: 'marker' id: id. 
-	stream
-		nextPutAll:  ('viewBox = "0 0 <1p> <2p>" ' expandMacrosWith: xExtent with: yExtent);
-		nextPutAll:  ('refX = "<1p>" refY = "<2p>" ' expandMacrosWith: xExtent with: ((yExtent/2) rounded));
-		nextPutAll:  ('markerWidth = "<1p>" markerHeight = "<1p>" ' expandMacrosWith: anotherNumber);
-		nextPutAll: 'orient = "auto">',String cr.
-	stream
-		nextPutAll: '<path d="';
-		nextPutAll: ('M 0 0 L <1p> <2p> L 0 <1p> z"' expandMacrosWith: xExtent with: ((yExtent/2) rounded)).
-	self startStyle.
-	self addFillColor: aColor.
-	self addStrokeColor: anotherColor.
-	self addStrokeWidth: aNumber.
-	self closeTag.
-	self closeDef.
-	self closeDef: 'marker'.
-]
-
-{ #category : #drawing }
 RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger color: aColor [
 	|id closings from to|
 	from := names at: (element from).
 	to := names at: (element to).
 	id := from,'_',to.
 	closings := self addEmbeddingInteractions: 'bezier' , id  element: element.
-	self openDef: 'path' label: 'bezier' id: id. 
 	stream
-		nextPutAll: 'name="bezier[]" ';
+		nextPutAll: '<path id="bezier',id,'" name="bezier[]" ';
 		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: (points at: 1) x rounded with: (points at: 1) y rounded).
 	self addCurves: points allButFirst.
-	self startStyle.
-	self addFillColor: nil.
-	self addStrokeColor: aColor.
-	self addStrokeOpacity: aColor.
-	self addStrokeWidth: aSmallInteger.
-	self closeTag.
-	self startClass.
-	self addContainedInteractions: ('bezier',id) element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('bezier',id) element: element.
-]
-
-{ #category : #drawing }
-RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger color: aColor decoration: aLineDecoration [
-	|id closings from to|
-	from := names at: (element from).
-	to := names at: (element to).
-	id := from,'_',to.
-	closings := self addEmbeddingInteractions: 'bezier' , id  element: element.
-	self openDef: 'path' label: 'bezier' id: id. 
 	stream
-		nextPutAll: 'name="bezier[]" ';
-		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: (points at: 1) x rounded with: (points at: 1) y rounded).
-	self addCurves: points allButFirst.
-	self startStyle.
-	self addFillColor: nil.
-	self addStrokeColor: aColor.
-	self addStrokeOpacity: aColor.
-	self addStrokeWidth: aSmallInteger.
-	self closeTag.
-	self addMarker: aLineDecoration.
-	self startClass.
-	self addContainedInteractions: ('bezier',id) element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('bezier',id) element: element.
-]
-
-{ #category : #drawing }
-RTSVGVisitor >> drawBitMap: element form: form box: aRectangle [
-	|id closings|
-	id := element identityHash asString.
-	names at: element put: id.
-	closings := self addEmbeddingInteractions: 'bitmap' , id  element: element.
-	stream
-		nextPutAll: '<image id="bitmap',id,'" ';
-		nextPutAll: ('x="<1p>" y="<2p>"' expandMacrosWith: (aRectangle topLeft x rounded) with: (aRectangle topLeft y rounded) );
-		nextPutAll: (' height="<1p>" width="<2p>" ' expandMacrosWith: (aRectangle height rounded) with: (aRectangle width rounded));
-		nextPutAll: ' xlink:href="data:image/png;base64,',form,'" ';
+		nextPutAll:
+				(' style="fill:none;stroke:rgb(<1p>,<2p>,<3p>);'
+						expandMacrosWith: (aColor red * 256) rounded
+						with: (aColor green * 256) rounded
+						with: (aColor blue * 256) rounded);
+		nextPutAll: ('stroke-width:<1p>;' expandMacrosWith: aSmallInteger);
+		nextPutAll: ('stroke-opacity:<1p>"' expandMacrosWith: aColor alpha);
 		nextPutAll: ' class="'.
-	self addContainedInteractions: ('bitmap',id) element: element.
+	self addContainedInteractions: ('bezier',id) element: element.
 	stream
-		nextPutAll: '"';				
+		nextPutAll: '"';					
 		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: ('bitmap',id) element: element. 
-]
-
-{ #category : #drawing }
-RTSVGVisitor >> drawDiamond: id color: aColor borderColor: anotherColor width: aNumber size: anotherNumber [ 
-	|xExtent yExtent|
-	xExtent := 10.
-	yExtent := 10.
-	self openDef: 'marker' label: 'marker' id: id. 
-	stream
-		nextPutAll:  ('viewBox = "0 0 <1p> <2p>" ' expandMacrosWith: xExtent with: yExtent);
-		nextPutAll:  ('refX = "<1p>" refY = "<2p>" ' expandMacrosWith: xExtent with: ((yExtent/2) rounded));
-		nextPutAll:  ('markerWidth = "<1p>" markerHeight = "<2p>" ' expandMacrosWith: (3 *anotherNumber) with: anotherNumber);
-		nextPutAll: 'orient = "auto">',String cr.
-	stream
-		nextPutAll: '<path d="';
-		nextPutAll: ('M 0 0 L <1p> <2p> L 0 <3p> L -<1p> <2p> z"' expandMacrosWith: xExtent with: ((yExtent/2) rounded) with: yExtent).
-	self startStyle.
-	self addFillColor: aColor.
-	self addStrokeColor: anotherColor.
-	self addStrokeWidth: aNumber.
-	self closeTag.
-	self closeDef.
-	self closeDef: 'marker'.
+	self addExternalInteractions: ('bezier',id) element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger color: aColor [ 
-	| id closings from to |
-	from := names at: element from.
-	to := names at: element to.
-	id := from , '_' , to.
-	closings := self addEmbeddingInteractions: 'line' , id element: element.
-	self openDef: 'line' label: 'line' id: id.
-	self addPositionFrom: aPoint to: aPoint2.
-	self startStyle.
-	self addStrokeColor: aColor.
-	self addStrokeOpacity: aColor.
-	self addStrokeWidth: aSmallInteger.
-	self closeTag.
-	self startClass.
-	self addContainedInteractions: 'line' , id element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: 'line' , id element: element
-]
-
-{ #category : #drawing }
-RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger color: aColor decoration: aLineDecoration [
-	| id closings from to |
-	from := names at: element from.
-	to := names at: element to.
-	id := from , '_' , to.
-	closings := self addEmbeddingInteractions: 'line' , id element: element.
-	self openDef: 'line' label: 'line' id: id.
-	self addPositionFrom: aPoint to: aPoint2.
-	self startStyle.
-	self addStrokeColor: aColor.
-	self addStrokeOpacity: aColor.
-	self addStrokeWidth: aSmallInteger.
-	self closeTag.
-	self addMarker: aLineDecoration.
-	self startClass.
-	self addContainedInteractions: 'line' , id element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: 'line' , id element: element
+	|id closings from to|
+	from := names at: (element from).
+	to := names at: (element to).
+	id := from,'_',to.
+	closings := self addEmbeddingInteractions: 'line' , id  element: element.
+	stream 
+		nextPutAll: '<line id="line',id,'" ';
+		nextPutAll: ('x1="<1p>" y1="<2p>" ' expandMacrosWith: aPoint x rounded  with: aPoint y rounded);
+		nextPutAll: ('x2="<1p>" y2="<2p>" ' expandMacrosWith: aPoint2 x rounded with: aPoint2 y rounded );
+		nextPutAll: ('style="stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
+		nextPutAll: ('stroke-width:<1p> ' expandMacrosWith: aSmallInteger );
+		nextPutAll: ('stroke-opacity:<1p>"' expandMacrosWith: aColor alpha);
+		nextPutAll: ' class="'.
+	self addContainedInteractions: ('line',id) element: element.
+	stream
+		nextPutAll: '"';				
+		nextPutAll: '/>',String cr.
+	closings do: [ :c | stream nextPutAll: c].
+	self addExternalInteractions: ('line',id) element: element.
 ]
 
 { #category : #drawing }
@@ -534,75 +274,83 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 	w := aRectangle width.
 	h := aRectangle height.
 	closings := self addEmbeddingInteractions: 'ellipse' , id  element: element.
-	self openDef: 'ellipse' label: 'ellipse' id: id. 
-	self addPositionCX: (aCenter x rounded) cy: (aCenter y rounded) rx: ((w/ 2) rounded) ry: ((h /2) rounded).
-	self startStyle.
-	self addFillColor: aColor.
-	self addFillOpacity: aColor.
-	(aSmallInteger > 0 and: aColor4 ~= nil)
+	stream 
+		nextPutAll: '<ellipse id="ellipse',id,'" ';
+		nextPutAll: ('cx= "<1p>" cy="<2p>" ' expandMacrosWith: aCenter x rounded  with: aCenter y rounded);
+		nextPutAll: ('rx="<1p>" ry="<2p>" ' expandMacrosWith: (w/ 2) rounded with: (h /2) rounded);
+		nextPutAll: ('style="fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red *256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded );
+		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: aColor alpha).
+	aColor4 = nil
 		ifTrue: [ 
-			self addStrokeColor: aColor4.
-			self addStrokeWidth: aSmallInteger ].
-	self closeTag.
-	self startClass.
+			stream nextPutAll: '"'] 
+		ifFalse: [  
+			stream	
+				nextPutAll: ('stroke: rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor4 red *256) rounded with: (aColor4 green * 256) rounded with: (aColor4 blue * 256) rounded );
+				nextPutAll: ('stroke-width: <1p>"' expandMacrosWith: aSmallInteger)].
+			stream
+				nextPutAll: ' class="'.
 	self addContainedInteractions: ('ellipse', id) element: element.
-	self closeTag.
-	self closeDef.
+	stream
+		nextPutAll: '"';				
+		nextPutAll: '/>',String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions: ('ellipse', id)  element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor: fillColor borderColor: borderColor scale: anInteger [
-	| distanceX distanceY id closings |
+	| distanceX distanceY id closings|
 	id := element identityHash asString.
 	names at: element put: id.
 	distanceX := center x.
 	distanceY := center y.
-	closings := self addEmbeddingInteractions: 'p' , id element: element.
-	self openDef: 'path' label: 'p' id: id.
-	self addPath: pathString.
-	self startStyle.
-	self addFillColor: fillColor.
-	self addFillOpacity: fillColor.
-	self addStrokeColor: borderColor.
-	self addStrokeWidth: aSmallInteger.
-	self closeTag.
-	self transformStart.
-	self addTranslation: distanceX @ distanceY.
-	self addScale: anInteger.
-	self closeTag.
-	self startClass.
-	self addContainedInteractions: 'p' , id element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: 'p' , id element: element
+	closings := self addEmbeddingInteractions: 'p' , id  element: element.
+ 	stream 
+		nextPutAll: '<path id="p',id,'" ';
+		nextPutAll: ('d="',pathString,'" ');
+		nextPutAll: ('style="fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (fillColor red * 256) rounded with: (fillColor green * 256) rounded with: (fillColor blue * 256) rounded);
+		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: fillColor alpha);		
+		nextPutAll: ('stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (borderColor red * 256) rounded with: (borderColor green * 256) rounded with: (borderColor blue * 256) rounded );
+		nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger );
+		nextPutAll: ('transform="translate(<1p>,<2p>) ' expandMacrosWith: distanceX with: distanceY);
+		nextPutAll: ('scale(<1p>)"' expandMacrosWith: anInteger );
+		nextPutAll: ' class="'.
+	self addContainedInteractions: ('p',id) element: element.
+	stream
+		nextPutAll: '"';				
+		nextPutAll: '/>',String cr.
+	closings do: [ :c | stream nextPutAll: c].
+	self addExternalInteractions: ('p',id) element: element.
 ]
 
 { #category : #drawing }
-RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor borderWidth: aSmallInteger borderColor: aColor [
-	| id closings |
+RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor borderWidth: aSmallInteger borderColor: aColor [ 
+	|id closings|
 	id := element identityHash asString.
 	names at: element put: id.
-	closings := self addEmbeddingInteractions: 'rect' , id element: element.
-	self openDef: 'rect' label: 'rect' id: id.
-	self addPositionX: aRectangle topLeft x rounded y: aRectangle topLeft y rounded.
-	self addWidth: aRectangle width rounded height: aRectangle height rounded.
-	self startStyle.
-	self addFillColor: fillColor.
-	self addFillOpacity: fillColor.
-	(aSmallInteger > 0 and: aColor ~= nil)
-		ifTrue: [ 
-			self addStrokeColor: aColor.
-			self addStrokeWidth: aSmallInteger ].
-	self closeTag.
-	self startClass.
-	self addContainedInteractions: 'rect' , id element: element.
-	self closeTag.
-	self closeDef.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: 'rect' , id element: element
+	closings := self addEmbeddingInteractions: 'rect' , id  element: element.
+	stream
+		nextPutAll: '<rect id="rect',id,'" ';
+		nextPutAll: ('x="<1p>" y="<2p>"' expandMacrosWith: (aRectangle topLeft x rounded) with: (aRectangle topLeft y rounded) );
+		nextPutAll: (' height="<1p>" width="<2p>" ' expandMacrosWith: (aRectangle height rounded) with: (aRectangle width rounded));
+		nextPutAll: 'style="';
+		nextPutAll: ('fill:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (fillColor red * 256) rounded with: (fillColor green * 256) rounded with: (fillColor blue * 256) rounded);
+		nextPutAll: ('fill-opacity:<1p>;' expandMacrosWith: fillColor alpha).	
+		(aSmallInteger > 0 and: aColor ~= nil)
+			ifTrue: [
+				stream 
+					nextPutAll: (';stroke:rgb(<1p>,<2p>,<3p>);' expandMacrosWith: (aColor red * 256) rounded with: (aColor green * 256) rounded with: (aColor blue * 256) rounded);
+					nextPutAll: ('stroke-width:<1p>" ' expandMacrosWith: aSmallInteger)
+			]
+			ifFalse: [stream nextPutAll: '"'].
+	stream
+		nextPutAll: ' class="'.
+	self addContainedInteractions: ('rect',id) element: element.
+	stream
+		nextPutAll: '"';				
+		nextPutAll: '/>',String cr.
+	closings do: [ :c | stream nextPutAll: c].
+	self addExternalInteractions: ('rect',id) element: element. 
 ]
 
 { #category : #drawing }
@@ -613,52 +361,50 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	p := aPoint.
 	closings := self addEmbeddingInteractions: 'text' , id  element: element.
 	box := TRLabelShape new text: aByteString; encompassingRectangle.
-	
-	self openDef: 'text' label: 'text' id: id.
-	self addPositionX: (p x - (box width / 5)) rounded y: (p y + (box height / 4)) rounded.
-	self startStyle.
-	self addFillColor: color.
-	self closeTag.
-	self startClass.
+	stream 
+		nextPutAll: '<text id="text',id,'" ';
+		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: (p x - (box width /5)) rounded  with:  (p y +  (box height/4)) rounded);
+		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)"' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
+		nextPutAll: ' class="'.
 	self addContainedInteractions:('text',id)  element: element.
-	self closeTag.
-	self closeDefWithContent.
-	self addStringWithFont: aByteString.
-	self closeDef: 'text'. 
+	stream
+		nextPutAll: '"';		
+		nextPutAll: '>';
+		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
+		nextPutAll: aByteString ;
+		nextPutAll: '</tspan></text>';
+		nextPutAll: String cr.
 	closings do: [ :c | stream nextPutAll: c].
 	self addExternalInteractions:('text',id)  element: element.
 ]
 
 { #category : #drawing }
 RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color angle: angle [
-	| p id closings box |
-	id := element identityHash asString.
+	|p id closings box|
+	id := element identityHash  asString.
 	names at: element put: id.
 	p := aPoint.
-	closings := self addEmbeddingInteractions: 'text' , id element: element.
-	box := TRLabelShape new
-		text: aByteString;
-		encompassingRectangle.
-		
-	self openDef: 'text' label: 'text' id: id.
-	self addPositionX: (p x - (box width / 5)) rounded y: (p y + (box height / 4)) rounded.
-	self startStyle.
-	self addFillColor: color.
-	self closeTag.
-	self transformStart.
-	self addRotation: angle point: p.
-	self closeTag.
-	self startClass.
-	self addContainedInteractions: 'text' , id element: element.
-	self closeTag.
-	self closeDefWithContent.
-	self addStringWithFont: aByteString.
-	self closeDef: 'text'. 
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: 'text' , id element: element
+	closings := self addEmbeddingInteractions: 'text' , id  element: element.
+	box := TRLabelShape new text: aByteString; encompassingRectangle.
+	stream 
+		nextPutAll: '<text id="text',id,'" ';
+		nextPutAll: ('x="<1p>" y="<2p>" ' expandMacrosWith: (p x - (box width /5)) rounded  with:  (p y +  (box height/4)) rounded);
+		nextPutAll: ('fill="rgb(<1p>,<2p>,<3p>)" ' expandMacrosWith: (color red * 256) rounded  with: (color green * 256) rounded with: (color blue * 256) rounded);
+		nextPutAll: ('transform="rotate(<1p>,<2p>,<3p>)"' expandMacrosWith: angle with: p x rounded with: p y rounded);
+		nextPutAll: ' class="'.
+	self addContainedInteractions:('text',id)  element: element.
+	stream
+		nextPutAll: '"';		
+		nextPutAll: '>';
+		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
+		nextPutAll: aByteString ;
+		nextPutAll: '</tspan></text>';
+		nextPutAll: String cr.
+	closings do: [ :c | stream nextPutAll: c].
+	self addExternalInteractions: ('text',id) element: element.
 ]
 
-{ #category : #alignment }
+{ #category : #utils }
 RTSVGVisitor >> fixedEncompassingRectangle [
  	| shapes |
 	shapes := self view canvas shapes.
@@ -673,27 +419,6 @@ RTSVGVisitor >> fixedEncompassingRectangle [
 ]
 
 { #category : #utils }
-RTSVGVisitor >> getCorrespondingLine: decorator from: lines [
-	lines do: [ :l |
-		^(l class = TRBezierShape) 
-			ifTrue: [ decorator to = l points last ifTrue: [ lines remove: l. {l . decorator} ] ]
-			ifFalse: [ decorator to = l to ifTrue: [ lines remove: l. {l . decorator} ] ].
-		 ]
-]
-
-{ #category : #utils }
-RTSVGVisitor >> getDecorationId: aLineDecorationShape [
-	|t w c s lw|
-	t := aLineDecorationShape type.
-	w := aLineDecorationShape mySize.
-	c := aLineDecorationShape color.
-	s := aLineDecorationShape strokePaint.
-	lw := aLineDecorationShape width.
-	^(t asString, w asString, ((c red * 256) + (s red * 256)) rounded asString, ((c green * 256) + (s green * 256)) rounded asString, ((c blue * 256) + (s blue * 256)) rounded asString, lw asString)
-	
-]
-
-{ #category : #utils }
 RTSVGVisitor >> getPointFrom: aCenter angle: anAngle radius: aNumber [
 	|x y|
 	x := (aCenter x + (anAngle cos * aNumber)) rounded.
@@ -705,7 +430,6 @@ RTSVGVisitor >> getPointFrom: aCenter angle: anAngle radius: aNumber [
 RTSVGVisitor >> initialize [
 	afterStream := OrderedCollection new.
 	interactions := Dictionary new.
-	markers := OrderedCollection new.
 	center := 1@1.
 	names := Dictionary new.
 ]
@@ -729,35 +453,10 @@ RTSVGVisitor >> makePositive: anAngle [
 	^ result
 ]
 
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> openDef: type label: label id: id [
-	stream nextPutAll: '<',type,' id="',label , id , '" '
-]
-
-{ #category : #utils }
-RTSVGVisitor >> separateDecorated: lines decorations: decorations [
-	|decorated|
-	decorated := OrderedCollection new.
-	decorations do: [ :d | 
-		decorated add: (self getCorrespondingLine: d from: lines).
-		].
-	^decorated
-]
-
 { #category : #visitor }
 RTSVGVisitor >> setCanvas [
 	self canvas = nil
 		ifTrue: [ self fixedEncompassingRectangle ]
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> startClass [
-	stream nextPutAll: 'class="'
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> startStyle [
-	stream nextPutAll: 'style="'
 ]
 
 { #category : #accessing }
@@ -777,11 +476,6 @@ RTSVGVisitor >> toRadian: anAngle [
 	| result |
 	result := Float pi * anAngle / 180.
 	^ result
-]
-
-{ #category : #'drawing-primitives' }
-RTSVGVisitor >> transformStart [
-	stream nextPutAll: 'transform="'
 ]
 
 { #category : #accessing }
@@ -810,12 +504,6 @@ RTSVGVisitor >> visitAbstractLine: anAbstractLine [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
-	anAbstractLineDecoration accept: anAbstractLineDecoration
-	
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitArcShape: aShape [
 	|center|
 	center := self alignPoint: (aShape center).
@@ -829,61 +517,11 @@ RTSVGVisitor >> visitArcShape: aShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitArrowHeadShape: arrowHeadShape [
-	| aid color bColor w s|
-	aid := self getDecorationId: arrowHeadShape.
-	color := arrowHeadShape color.
-	bColor := arrowHeadShape strokePaint.
-	w := arrowHeadShape width.
-	s := arrowHeadShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			self drawArrowHead: aid color: color borderColor: bColor width: w size: s.
-			markers add: aid. 
-			]
-		
-	
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitArrowShape: arrowShape [
-	| aid bColor w s|
-	aid := self getDecorationId: arrowShape.
-	bColor := arrowShape strokePaint.
-	w := arrowShape width.
-	s := arrowShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			self drawArrow: aid borderColor: bColor width: w size: s.
-			markers add: aid. 
-			]
-		
-	
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitBezierShape: aBezierShape [
 	|points|
 	points:= aBezierShape points copy.
 	points := points collect: [ :p | self alignPoint: p].
 	self drawBezierLine: (aBezierShape element) points: points width: (aBezierShape width) color: (aBezierShape strokePaint)
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitBezierShape: aBezierShape with: aLineDecoration [
-	|points|
-	points:= aBezierShape points copy.
-	points := points collect: [ :p | self alignPoint: p].
-	self drawBezierLine: (aBezierShape element) points: points width: (aBezierShape width) color: (aBezierShape strokePaint) decoration: aLineDecoration
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitBitMapShape: aBitmapShape [
-	| form box|
-	form := aBitmapShape form.
-	box := self alignRectangle: (aBitmapShape encompassingRectangle).
-	self drawBitMap: aBitmapShape element form: form box: box.
-	
 ]
 
 { #category : #visitor }
@@ -904,45 +542,17 @@ RTSVGVisitor >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor >> visitCanvas: aCanvas [
-	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes lineClasses lineDecorationClasses|
-	lineClasses := {TRLineShape . TRBezierShape}.	
-	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
-	elementShapes := aCanvas shapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
-	edgeShapes := (aCanvas shapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.
-	decorationShapes := aCanvas shapes select: [ :e |  lineDecorationClasses includes: e class].
-	decoratedEdgeShapes := self separateDecorated: edgeShapes decorations: decorationShapes.
-	
-	stream 
-		nextPutAll: '<defs>'.
-	decorationShapes do: [:s | s accept: self ].
-	stream 
-		nextPutAll: '</defs>'.	
+	|elementShapes edgeShapes|
+	elementShapes := aCanvas shapes reject: [ :e |  e class = TRLineShape or: (e class = TRBezierShape) ].
+	edgeShapes := aCanvas shapes select: [ :e |  e class = TRLineShape or: (e class = TRBezierShape) ].
 	elementShapes do:[:s | s accept: self].
 	edgeShapes do:[:s | s accept: self].
-	decoratedEdgeShapes do:[:p | p first accept: self with: p second].
 ]
 
 { #category : #visitor }
 RTSVGVisitor >> visitCompositeShape: aCompositeShape [
 	aCompositeShape shape1 accept: self.
 	aCompositeShape shape2 accept: self.
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitDiamondShape: diamondShape [
-	| aid color bColor w s|
-	aid := self getDecorationId: diamondShape.
-	color := diamondShape color.
-	bColor := diamondShape strokePaint.
-	w := diamondShape width.
-	s := diamondShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			self drawDiamond: aid color: color borderColor: bColor width: w size: s.
-			markers add: aid. 
-			]
-		
-	
 ]
 
 { #category : #visitor }
@@ -982,14 +592,6 @@ RTSVGVisitor >> visitLineShape: aLine [
 	startingPoint := self alignPoint: (aLine from).
 	endingPoint := self alignPoint: (aLine to).
 	self drawLine: (aLine element) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint).
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitLineShape: aLine with: aLineDecoration [
-	|startingPoint endingPoint|
-	startingPoint := self alignPoint: (aLine from).
-	endingPoint := self alignPoint: (aLine to).
-	self drawLine: (aLine element) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint) decoration: aLineDecoration.
 ]
 
 { #category : #visitor }

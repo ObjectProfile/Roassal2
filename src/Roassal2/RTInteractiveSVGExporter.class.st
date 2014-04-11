@@ -81,16 +81,15 @@ RTInteractiveSVGExporter >> addScript [
 
 { #category : #svg }
 RTInteractiveSVGExporter >> addStart: bounds [
-	self 
-		addVersion;
-		addMarginsAndGlobals: bounds;
-		addCanvasSize: bounds;
-		addCanvasColor;
-		addXLinkVersion;
-		addScript;
-		selfAddHelperElements;
-		addButtons;
-		addCode.
+	self addVersion.
+	self addMarginsAndGlobals: bounds.
+	self addCanvasSize: bounds.
+	self addCanvasColor.
+	self addXLinkVersion.
+	self addScript.
+	self selfAddHelperElements.
+	self addButtons.
+	self addCode.
 ]
 
 { #category : #exporting }

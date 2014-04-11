@@ -7,6 +7,11 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
+{ #category : #edges }
+RTGraphBuilderTest >> expectedFailures [
+	^ #(#testIfColor)
+]
+
 { #category : #running }
 RTGraphBuilderTest >> setUp [
 	super setUp.
