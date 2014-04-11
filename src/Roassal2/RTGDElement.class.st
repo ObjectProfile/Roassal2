@@ -2,7 +2,8 @@ Class {
 	#name : #RTGDElement,
 	#superclass : #RTObject,
 	#instVars : [
-		'graphBuilder'
+		'graphBuilder',
+		'properties'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -15,4 +16,10 @@ RTGDElement >> graphBuilder [
 { #category : #accessing }
 RTGDElement >> graphBuilder: anObject [
 	graphBuilder := anObject
+]
+
+{ #category : #'as yet unclassified' }
+RTGDElement >> initialize [
+	super initialize.
+	properties := OrderedCollection new
 ]

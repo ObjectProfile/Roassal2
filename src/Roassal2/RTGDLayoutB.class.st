@@ -7,10 +7,9 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #convenient }
 RTGDLayoutB >> cluster [
-
-	self use: (RTClusterLayout new)
+	^ self use: (RTClusterLayout new)
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,7 +36,13 @@ RTGDLayoutB >> executeOn: view [
 
 { #category : #'as yet unclassified' }
 RTGDLayoutB >> for: condition use: aLayout [
-	conditionalLayout add: (Array with: condition with: aLayout)
+	conditionalLayout add: (Array with: condition with: aLayout).
+	^ aLayout
+]
+
+{ #category : #convenient }
+RTGDLayoutB >> grid [
+	^ self use: RTGridLayout new
 ]
 
 { #category : #'as yet unclassified' }

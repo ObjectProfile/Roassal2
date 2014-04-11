@@ -143,6 +143,60 @@ RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 	b open
 ]
 
+{ #category : #simples }
+RTGraphBuilderExamples >> simple08ColoredEdge [
+	"
+	self new simple08ColoredEdge
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b edge 
+		connectTo: [ :v | v + 1 ];
+		if: [:f :t | t = 2 ] color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
+
+	b open
+]
+
+{ #category : #simples }
+RTGraphBuilderExamples >> simple09HighlightOutgoingEdges [
+	"
+	self new simple09HighlightOutgoingEdges
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b edge 
+		connectTo: [ :v | v + 1 ];
+		if: [:f :t | t = 2 ] color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
+
+	b open
+]
+
+{ #category : #simples }
+RTGraphBuilderExamples >> simple10IfColorAndCurvedEdges [
+	"
+	self new simple10IfColorAndCurvedEdges
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b edge 
+		 connectTo: [ :v | v + 2 ] follow: [ :v | v + 1 ];
+		if: [:f :t | f = 1 ] color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
+
+	b open
+]
+
 { #category : #'software visualization' }
 RTGraphBuilderExamples >> vissoft01 [
 	"
@@ -378,6 +432,41 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 	b global
 		alphaColor: 0.4;
 		normalizeSize: #numberOfMethods min: 5 max: 60.
+
+	b addAll: RTObject withAllSubclasses.
+	b addAll: TRObject withAllSubclasses.
+	b addAll: TREvent withAllSubclasses.
+
+	b open
+]
+
+{ #category : #'software visualization' }
+RTGraphBuilderExamples >> vissoft10DepAnalysisWithCurved [
+	"
+	self new vissoft10DepAnalysisWithCurved
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+	b node
+		if: [ :c | c inheritsFrom: RTLayout ] color: Color red;
+		if: [ :c | c inheritsFrom: TREvent ] color: Color green;
+		if: [ :c | c inheritsFrom: RTShape ] color: Color purple.
+		
+	b edge 
+		connectTo: #subclasses usedInLayout: true;
+		connectTo: #dependentClasses 
+			scopedTo: [ :c | 'TR*' match: c name ] 
+			follow: #superclass
+			color: (Color blue alpha: 0.4) 
+			usedInLayout: false;
+		if: [ :f :t | f inheritsFrom: RTLayout ] color: Color red.
+
+	b layout cluster.
+
+	b global
+		alphaColor: 0.4;
+		normalizeSize: #numberOfMethods min: 15 max: 60.
 
 	b addAll: RTObject withAllSubclasses.
 	b addAll: TRObject withAllSubclasses.

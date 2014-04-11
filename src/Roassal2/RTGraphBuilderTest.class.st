@@ -14,6 +14,12 @@ RTGraphBuilderTest >> setUp [
 ]
 
 { #category : #tests }
+RTGraphBuilderTest >> testDefaultNodeShape [
+
+	b add: 10
+]
+
+{ #category : #tests }
 RTGraphBuilderTest >> testEdge [
 
 	b node
@@ -43,6 +49,18 @@ RTGraphBuilderTest >> testGlobalNormalization [
 	
 	self assert: b view elements first trachelShape color = Color green.
 	self assert: b view elements last trachelShape color red > 0.95.
+]
+
+{ #category : #edges }
+RTGraphBuilderTest >> testIfColor [
+
+	b edge 
+		connectTo: [ :v | v + 1 ];
+		if: [:f :t | t = 2 ] color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
+	
+	self assert: (b view elementFromModel: 2) incomingEdges first trachelShape color = Color red
 ]
 
 { #category : #tests }

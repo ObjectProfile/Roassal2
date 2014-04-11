@@ -39,6 +39,11 @@ RTGDEdgeB >> connectTo: toBlock color: aColor usedInLayout: flagLayout [
 ]
 
 { #category : #public }
+RTGDEdgeB >> connectTo: toBlock follow: aFollowBlock [
+	^ self if: true connectTo: toBlock follow: aFollowBlock
+]
+
+{ #category : #public }
 RTGDEdgeB >> connectTo: toBlock scopedTo: aScopeBlock color: aColor usedInLayout: flagLayout [
 	"
 	toBlock : take as argument a model, and return a list of another models
@@ -133,6 +138,8 @@ RTGDEdgeB >> createEdgesFor: object [
 		shape controllingElements: (Array with: intermediaryElement).
 		answer addAll: (shape edgesFrom: el toAll: toElements). 
 	].
+	answer do: [ :edge | properties do: [ :aBlock | aBlock value: edge ] ].
+
 	^ answer
 ]
 
@@ -165,8 +172,30 @@ RTGDEdgeB >> if: condition bundleConnectToElements: aBlock [
 ]
 
 { #category : #public }
+RTGDEdgeB >> if: aTwoArgsBlock color: aColor [
+	"aTwoArgsBlock follows the patterns [ :fromModel :toModel | true or false ]"
+
+	properties 
+		add: [ :edge | 
+				| old |
+				old := edge shape color.
+				edge shape colorElement: 
+							[ :anEdge | (aTwoArgsBlock value: anEdge from model value: anEdge to model) 
+												ifTrue: [ aColor ] 
+												ifFalse: [ old rtValue: anEdge ] ] ]
+
+"	properties add: [ :edge | (aTwoArgsBlock value: edge from model value: edge to model) 
+											ifTrue: [ edge trachelShape color: aColor ] ]" 
+]
+
+{ #category : #public }
 RTGDEdgeB >> if: condition connectTo: toBlock [
 	^ self if: condition connectTo: toBlock shape: RTLine new
+]
+
+{ #category : #public }
+RTGDEdgeB >> if: condition connectTo: toBlock follow: aFollowBlock [
+	^ self if: condition connectTo: toBlock shape: (RTBezierLine new follow: aFollowBlock)
 ]
 
 { #category : #public }

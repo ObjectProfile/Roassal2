@@ -20,11 +20,16 @@ RTGDNodeB >> conditionalShapes [
 { #category : #hooks }
 RTGDNodeB >> createElementFor: object [
 	| shape element |
-	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ]) second.
+	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ] ifNone: [ Array with: nil with: self defaultShape ]) second.
 	element := shape elementOn: object.
 	nodeProperties do: [ :aBlock | aBlock value: element ].
 	self setPopupAndDraggableOn: element.
 	^ element
+]
+
+{ #category : #initialization }
+RTGDNodeB >> defaultShape [
+	^ RTEllipse new size: 15
 ]
 
 { #category : #'public-interaction' }
@@ -41,6 +46,10 @@ RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
 { #category : #accessing }
 RTGDNodeB >> graph: aGraphBuilder [
 	self graphBuilder: aGraphBuilder
+]
+
+{ #category : #'public-interaction' }
+RTGDNodeB >> highlightOutgoingEdges [
 ]
 
 { #category : #'public-shape' }
@@ -101,6 +110,12 @@ RTGDNodeB >> whenOverHighlight: aBlock [
 	 The block takes as argument the model on which the mouse is pointing to"
 	nodeProperties add: [ :anElement | 
 		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
+]
+
+{ #category : #'public-interaction' }
+RTGDNodeB >> whenOverHighlightOutgoingEdges [
+	nodeProperties add: [ :anElement | 
+		RTBlink highlightElements: anElement outgoingEdges ]
 ]
 
 { #category : #'public-interaction' }
