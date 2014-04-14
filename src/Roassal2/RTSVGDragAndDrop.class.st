@@ -114,6 +114,8 @@ RTSVGDragAndDrop >> addFunctions: aStream [
 
 		function GetTrueCoords(evt)
 		{
+		if (SVGRoot == null)
+			return; 		
    		var newScale = SVGRoot.currentScale;
    		var translation = SVGRoot.currentTranslate;
    		TrueCoords.x = (evt.clientX - translation.x)/newScale;

@@ -41,11 +41,6 @@ RTGDLayoutB >> for: condition use: aLayout [
 ]
 
 { #category : #convenient }
-RTGDLayoutB >> forceBased [
-	^ self use: RTForceBasedLayout new
-]
-
-{ #category : #convenient }
 RTGDLayoutB >> grid [
 	^ self use: RTGridLayout new
 ]
