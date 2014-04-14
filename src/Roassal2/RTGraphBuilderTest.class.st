@@ -7,9 +7,9 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #running }
+{ #category : #edges }
 RTGraphBuilderTest >> expectedFailures [
-	^ #( #testIfColor )
+	^ #(#testIfColor)
 ]
 
 { #category : #running }
