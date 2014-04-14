@@ -77,13 +77,14 @@ RTGraphBuilderExamples >> simple04 [
 	| b |
 	b := RTGraphBuilder new.
 
-	b node shape: RTEllipse new.
+	b nodes shape: RTEllipse new.
 
 	b layout use: (RTFlowLayout new maxWidth: 500).
 
 	b global 
 		normalizeSize: #numberOfMethods min: 5 max: 90.
-		 
+	b global
+		normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red).
 
 	b addAll: (Collection withAllSubclasses).
 
