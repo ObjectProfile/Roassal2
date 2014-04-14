@@ -173,9 +173,11 @@ RTSVGVisitor >> addScale: anInteger [
 
 { #category : #'drawing-primitives' }
 RTSVGVisitor >> addStringWithFont: aByteString [
+	| converter |
+	converter := RTSVGStringConverter new.
 	stream
 		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
-		nextPutAll: aByteString;
+		nextPutAll: (converter convertString: aByteString);
 		nextPutAll: '</tspan>'
 ]
 

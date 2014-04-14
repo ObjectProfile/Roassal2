@@ -12,12 +12,15 @@ RTGraphBuilderExamples >> simple01 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: [ :obj | obj < 15 ] shape: (RTEllipse new size: 20; color: Color blue);
-		if: [ :obj | obj >= 15 ] shape: (RTEllipse new size: 10; color: Color red).
+	b nodes
+		if: [ :obj | obj < 15 ]; shape: (RTEllipse new size: 20; color: Color blue).
+	b nodes
+		if: [ :obj | obj >= 15 ]; shape: (RTEllipse new size: 10; color: Color red).
+		
 	b layout 
-		for: [ :obj | obj < 15 ] use: (RTCircleLayout new);
-		for: [ :obj | obj >= 15 ] use: (RTGridLayout new).
+		if: [ :obj | obj < 15 ]; use: (RTCircleLayout new).
+	b layout
+		if: [ :obj | obj >= 15 ]; use: (RTGridLayout new).
 	b addAll: (1 to: 20).
 	b open
 ]
@@ -30,16 +33,19 @@ RTGraphBuilderExamples >> simple02 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: [ :cls | cls numberOfMethods < 15 ] shape: (RTEllipse new size: 20; color: Color blue);
-		if: [ :cls | cls numberOfMethods >= 15 ] shape: (RTEllipse new size: 40; color: Color red).
+	b nodes
+		if: [ :cls | cls numberOfMethods < 15 ]; shape: (RTEllipse new size: 20; color: Color blue).
+	b nodes
+		if: [ :cls | cls numberOfMethods >= 15 ]; shape: (RTEllipse new size: 40; color: Color red).
 
-	b edge
-		if: [ :cls | cls numberOfMethods >= 15 ] connectTo: [ :c | c subclasses ].
+	b edges
+		if: [ :cls | cls numberOfMethods >= 15 ];
+		connectTo: [ :c | c subclasses ].
 
 	b layout 
-		for: [ :cls | cls numberOfMethods >= 15 ] use: (RTTreeLayout new);
-		for: [ :cls | cls numberOfMethods < 15 ] use: (RTGridLayout new).
+		if: [ :cls | cls numberOfMethods >= 15 ]; use: (RTTreeLayout new).
+	b layout
+		if: [ :cls | cls numberOfMethods < 15 ]; use: (RTGridLayout new).
 	b addAll: (RTShape withAllSubclasses).
 	b open
 ]
@@ -52,11 +58,10 @@ RTGraphBuilderExamples >> simple03 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: true shape: (RTEllipse new size: 30).
+	b nodes shape: (RTEllipse new size: 30).
 
 	b global
-		for: true normalizeColor: #yourself using: (Array with: Color green with: Color red).
+		normalizeColor: #yourself using: (Array with: Color green with: Color red).
 
 	b layout use: RTGridLayout new.
 	b addAll: (1 to: 20).

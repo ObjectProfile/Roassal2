@@ -27,11 +27,12 @@ RTGraphBuilderTest >> testDefaultNodeShape [
 { #category : #tests }
 RTGraphBuilderTest >> testEdge [
 
-	b node
-		if: [ :o | true ] shape: (RTEllipse new size: 10; color: Color blue).
+	b nodes color: Color blue.
 
-	b edge
-		if: [ :obj | obj = 1 ] connectTo: [ :o | o + 1 ] shape: (RTLine new color: Color blue).
+	b edges
+		if: [ :obj | obj = 1 ];
+		connectTo: [ :o | o + 1 ];
+		shape: (RTLine new color: Color blue).
 	b addAll: (1 to: 2).
 	
 	self assert: b view numberOfElements = 2.
@@ -43,11 +44,10 @@ RTGraphBuilderTest >> testEdge [
 RTGraphBuilderTest >> testGlobalNormalization [
 
 	b := RTGraphBuilder new.
-	b node
-		if: true shape: (RTEllipse new size: 30).
+	b nodes shape: (RTEllipse new size: 30).
 
 	b global
-		for: true normalizeColor: #yourself using: (Array with: Color green with: Color red).
+		normalizeColor: #yourself using: (Array with: Color green with: Color red).
 
 	b addAll: (1 to: 20).
 	b render.
@@ -72,15 +72,18 @@ RTGraphBuilderTest >> testIfColor [
 RTGraphBuilderTest >> testNode [
 
 	| e4 e6 |
-	b node
-		if: [ :obj | obj < 5 ] shape: (RTEllipse new size: 10; color: Color blue);
-		if: [ :obj | obj >= 5 ] shape: (RTEllipse new size: 10; color: Color red).
+	b nodes
+		if: [ :obj | obj < 5 ];
+		shape: (RTBox new size: 10; color: Color blue).
+	b nodes
+		if: [ :obj | obj >= 5 ];
+		shape: (RTEllipse new size: 10; color: Color red).
 	b addAll: (1 to: 10).
 	
 	self assert: b view numberOfElements = 10.
 
 	e4 := b view elementFromModel: 4.
-	self assert: e4 shape class == RTEllipse.
+	self assert: e4 shape class == RTBox.
 	self assert: e4 trachelShape color = Color blue.
 	
 	e6 := b view elementFromModel: 6.
@@ -89,10 +92,68 @@ RTGraphBuilderTest >> testNode [
 ]
 
 { #category : #tests }
+RTGraphBuilderTest >> testNode2 [
+	b nodes
+		if: [ :obj | obj < 5 ];
+		shape: (RTBox new size: 10; color: Color blue).
+	b nodes
+		if: [ :obj | obj >= 5 ];
+		shape: (RTEllipse new size: 10; color: Color red).
+
+	
+	self assert: ((b getNodeFor: 4) shape color rtValue: RTElement new) = Color blue.
+	self assert: ((b getNodeFor: 5) shape color rtValue: RTElement new) = Color red.
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSimpleNodes [
+
+	b nodes shape: RTEllipse new.
+	b addAll: #(1 2 3).
+	
+	self assert: b view numberOfElements equals: 3.
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSimpleNodes02 [
+
+	b nodes shape: RTEllipse new.
+	b add: 5.
+	
+	self assert: b view numberOfElements equals: 1.
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSimpleNodes03 [
+
+	b nodes shape: RTEllipse.
+	b add: 5.
+	
+	self assert: b view numberOfElements equals: 1.
+	self assert: b view elements first shape class equals: RTEllipse.
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testSimpleNodes04If [
+
+	b nodes 
+		shape: RTEllipse;
+		if: [ :v | v < 5 ].
+	b nodes 
+		shape: RTBox;
+		if: [ :v | v > 5 ].
+	b addAll: #(4 6).
+	
+	self assert: b view numberOfElements equals: 2.
+	self assert: b view elements first shape class equals: RTEllipse.
+	self assert: b view elements second shape class equals: RTBox.
+]
+
+{ #category : #tests }
 RTGraphBuilderTest >> testSmallExample [
 
 	| positions |
-	b node shape: RTEllipse new.
+	b nodes shape: RTEllipse.
 	b layout use: RTGridLayout new.
 	b addAll: (1 to: 20).
 	b applyLayout.
@@ -106,8 +167,8 @@ RTGraphBuilderTest >> testSmallExample [
 RTGraphBuilderTest >> testSmallExampleWithEdges [
 
 	| positions |
-	b node shape: RTEllipse new.
-	b edge connectTo: [ :v | v + 1 ].
+	b nodes shape: RTEllipse new.
+	b edges connectTo: [ :v | v + 1 ].
 	b layout use: RTGridLayout new.
 	b addAll: (1 to: 20).
 	b applyLayout.
@@ -121,8 +182,9 @@ RTGraphBuilderTest >> testSmallExampleWithEdges [
 RTGraphBuilderTest >> testSmallExampleWithEdgesAndLayout [
 
 	| positions |
-	b node shape: RTEllipse new.
-	b edge connectTo: [ :v | v + 1 ] usedInLayout: false.
+	b nodes shape: RTEllipse new.
+	b edges 
+		connectTo: [ :v | v + 1 ].
 	b layout use: RTTreeLayout new.
 	b addAll: (1 to: 20).
 	b applyLayout.
@@ -136,8 +198,8 @@ RTGraphBuilderTest >> testSmallExampleWithEdgesAndLayout [
 RTGraphBuilderTest >> testSmallExampleWithEdgesAndLayout2 [
 
 	| positions |
-	b node shape: RTEllipse new.
-	b edge connectTo: [ :v | v + 1 ] usedInLayout: true.
+	b nodes shape: RTEllipse new.
+	b edges connectTo: [ :v | v + 1 ]; useInLayout.
 	b layout use: RTTreeLayout new.
 	b addAll: (1 to: 20).
 	b applyLayout.
