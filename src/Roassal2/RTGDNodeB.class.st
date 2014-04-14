@@ -2,19 +2,27 @@ Class {
 	#name : #RTGDNodeB,
 	#superclass : #RTGDElement,
 	#instVars : [
+		'graph',
 		'conditionalShapes',
 		'withPopup',
-		'draggableNodes'
+		'draggableNodes',
+		'nodeProperties'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
+
+{ #category : #accessing }
+RTGDNodeB >> conditionalShapes [
+	"Return a collection of arrays. Each array has a size of 2. First is a condition, second is a shape"
+	^ conditionalShapes
+]
 
 { #category : #hooks }
 RTGDNodeB >> createElementFor: object [
 	| shape element |
 	shape := (conditionalShapes detect: [ :arr | arr first rtValue: object ] ifNone: [ Array with: nil with: self defaultShape ]) second.
 	element := shape elementOn: object.
-	self initializePropertiesOn: element.
+	nodeProperties do: [ :aBlock | aBlock value: element ].
 	self setPopupAndDraggableOn: element.
 	^ element
 ]
@@ -30,7 +38,7 @@ RTGDNodeB >> for: conditional whenOverShowEdges: aBlock [
 	This will be used to draw edges"
 	"interaction add: (Array with: conditional with: aBlock)"
 
-	self addProperty: [ :anElement | 
+	nodeProperties add: [ :anElement | 
 		(conditional rtValue: anElement model)
 			ifTrue: [ anElement @ (RTShowEdge new connectTo: aBlock) ] ]
 ]
@@ -58,6 +66,7 @@ RTGDNodeB >> if: condition shape: aShape [
 RTGDNodeB >> initialize [
 	super initialize.
 	conditionalShapes := OrderedCollection new.
+	nodeProperties := OrderedCollection new.
 	withPopup := true.
 	draggableNodes := true
 ]
@@ -65,7 +74,7 @@ RTGDNodeB >> initialize [
 { #category : #'public-shape' }
 RTGDNodeB >> labelled [
 	"Gives a label to each node"
-	self addProperty: [ :el |
+	nodeProperties add: [ :el |
 		| lbl |
 		lbl := TRLabelShape new text: el model asString.
 		graphBuilder view canvas addShape: lbl.
@@ -99,13 +108,13 @@ RTGDNodeB >> shape: aShape [
 RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"
-	self addProperty: [ :anElement | 
+	nodeProperties add: [ :anElement | 
 		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
 ]
 
 { #category : #'public-interaction' }
 RTGDNodeB >> whenOverHighlightOutgoingEdges [
-	self addProperty: [ :anElement | 
+	nodeProperties add: [ :anElement | 
 		RTBlink highlightElements: anElement outgoingEdges ]
 ]
 

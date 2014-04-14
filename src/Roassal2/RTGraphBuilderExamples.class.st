@@ -460,7 +460,7 @@ RTGraphBuilderExamples >> vissoft10DepAnalysisWithCurved [
 			follow: #superclass
 			color: (Color blue alpha: 0.4) 
 			usedInLayout: false;
-		if: [ :f :t | f inheritsFrom: RTShape ] color: Color red.
+		if: [ :f :t | f inheritsFrom: RTLayout ] color: Color red.
 
 	b layout cluster.
 
@@ -473,34 +473,4 @@ RTGraphBuilderExamples >> vissoft10DepAnalysisWithCurved [
 	b addAll: TREvent withAllSubclasses.
 
 	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft11DependencyGraph [
-	"
-	self new vissoft11DependencyGraph
-	"
-
-|b |
-
-b := RTGraphBuilder new.
-
-b node
-	if: [ :c | c inheritsFrom: RTLayout ] shape: (RTEllipse new color: Color red; yourself);
-	if: [ :c | c inheritsFrom: RTShape ] shape: (RTEllipse new color: Color green; yourself);
-	if: [ :c | c inheritsFrom: RTBuilder ] shape: (RTEllipse new color: Color blue; yourself).
-
-b edge
-	connectTo: #dependentClasses.
-
-b layout forceBased charge: -100.
-
-b global 
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 15 max: 30.
-
-b addAll: RTObject withAllSubclasses.
-
-b applyLayout.
-b view
 ]
