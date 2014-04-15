@@ -17,76 +17,95 @@ Class {
 		'backgroundColor',
 		'code'
 	],
+	#classInstVars : [
+		'directory'
+	],
 	#category : #'Roassal2-Exporter-HTML'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'file system' }
+RTHTMLExporter class >> defaultDirectory [
+	directory := FileSystem disk workingDirectory.
+]
+
+{ #category : #'file system' }
+RTHTMLExporter class >> directory [
+	directory ifNil: [ self defaultDirectory ].
+	^directory
+]
+
+{ #category : #'file system' }
+RTHTMLExporter class >> directory: aDirectory [
+	directory :=  aDirectory
+]
+
+{ #category : #exporting }
 RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder [
 
 	^self exportViewAsHTML: (aRTBuilder view)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder filename: aString [
 
 	^self exportViewAsHTML: (aRTBuilder view) filename: aString 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder filename: aString title: anotherString [
 
 	^self exportViewAsHTML: (aRTBuilder view) filename: aString title: anotherString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportBuilderAsHTML: aRTBuilder title: aString [
 
 	^self exportViewAsHTML: (aRTBuilder view) title: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportViewAsHTML: aRTView [ 
 
 	^ self new view: aRTView; exportToFile
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportViewAsHTML: aRTView filename: aString [
 
 	^ self new view: aRTView filename: aString; exportToFile
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportViewAsHTML: aRTView filename: aString title: anotherString [
 
 	^ self new view: aRTView filename: aString title: anotherString; exportToFile
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #exporting }
 RTHTMLExporter class >> exportViewAsHTML: aRTView title: aString [
 
 	^ self new view: aRTView title: aString; exportToFile
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interactiveExport }
 RTHTMLExporter class >> interactiveExportBuilderAsHTML: aRTBuilder [
 
 	^self exportViewAsHTML: (aRTBuilder view)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interactiveExport }
 RTHTMLExporter class >> interactiveExportBuilderAsHTML: aRTBuilder title: aString [
 
 	^self exportViewAsHTML: (aRTBuilder view) title: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interactiveExport }
 RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView [ 
 
 	^ self new view: aRTView; interactiveExportToFile
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interactiveExport }
 RTHTMLExporter class >> interactiveExportViewAsHTML: aRTView title: aString [
 
 	^ self new view: aRTView title: aString; interactiveExportToFile
@@ -161,10 +180,11 @@ RTHTMLExporter >> exportOnStream: fileStream [
 { #category : #exporting }
 RTHTMLExporter >> exportToFile [
 
-	| file  |
-	file := (FileSystem disk workingDirectory / (self fileName,'.html')).
+	| file  dir|
+	dir := self class directory.
+	file := (dir / (self fileName,'.html')).
 	file exists ifTrue: [file delete].
-	file := (FileSystem disk workingDirectory / (self fileName,'.html')) writeStream.
+	file := (dir / (self fileName,'.html')) writeStream.
 	[ self exportOnStream: file ] 
 		ensure: [ file notNil ifTrue: [ file close ] ]
 ]
@@ -187,7 +207,6 @@ RTHTMLExporter >> initialize [
 	title := 'HTML Export'.
 	interactions := Dictionary new.
 	backgroundColor := self defaultBackgroundColor.
-	withCode := false.
 ]
 
 { #category : #accessing }
