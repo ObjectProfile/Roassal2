@@ -303,8 +303,8 @@ RTSVGVisitor >> closeTag [
 
 { #category : #drawing }
 RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadius: anotherNumber alphaAngle: anAngle betaAngle: anotherAngle color: aColor [
-	| start end p1 p2 aAngle bAngle sweepFlag alpha beta id closings|
-	id := element identityHash asString.
+	| start end p1 p2 aAngle bAngle sweepFlag alpha beta id closings |
+	id := self getId: element.
 	names at: element put: id.
 	alpha := self makePositive: anAngle.
 	beta := self makePositive: anotherAngle.
@@ -317,7 +317,7 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 	end := self getPointFrom: aCenter angle: bAngle radius: aNumber.
 	p1 := self getPointFrom: aCenter angle: aAngle radius: anotherNumber.
 	p2 := self getPointFrom: aCenter angle: bAngle radius: anotherNumber.
-	closings := self addEmbeddingInteractions: 'arc' , id  element: element.
+	closings := self addEmbeddingInteractions: 'arc' , id element: element.
 	stream
 		nextPutAll: '<path id="arc' , id , '" ';
 		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: start x with: start y);
@@ -327,17 +327,15 @@ RTSVGVisitor >> drawArc: element center: aCenter innerRadius: aNumber outterRadi
 		nextPutAll: ('L<1p>,<2p> ' expandMacrosWith: end x with: end y);
 		nextPutAll: ('A<1p>,<2p> 0 <3p>,0 ' expandMacrosWith: aNumber with: aNumber with: sweepFlag);
 		nextPutAll: ('<1p>,<2p>z" ' expandMacrosWith: start x with: start y);
-		nextPutAll:
-				('style="').
+		nextPutAll: 'style="'.
 	self addFillColor: aColor.
-	stream
-		nextPutAll: ' class="'.
+	stream nextPutAll: ' class="'.
 	self addContainedInteractions: 'arc' , id element: element.
 	stream
 		nextPutAll: '"';
 		nextPutAll: '/>' , String cr.
-	closings do: [ :c | stream nextPutAll: c].
-	self addExternalInteractions: 'arc' , id element: element.
+	closings do: [ :c | stream nextPutAll: c ].
+	self addExternalInteractions: 'arc' , id element: element
 ]
 
 { #category : #drawing }
@@ -442,7 +440,7 @@ RTSVGVisitor >> drawBezierLine: element points: points width: aSmallInteger colo
 { #category : #drawing }
 RTSVGVisitor >> drawBitMap: element form: form box: aRectangle [
 	|id closings|
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	closings := self addEmbeddingInteractions: 'bitmap' , id  element: element.
 	stream
@@ -530,7 +528,7 @@ RTSVGVisitor >> drawLine: element from: aPoint to: aPoint2 width: aSmallInteger 
 { #category : #drawing }
 RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSmallInteger borderColor: aColor4 [ 
 	|aCenter w h id closings|
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	aCenter := aRectangle center.
 	w := aRectangle width.
@@ -557,7 +555,7 @@ RTSVGVisitor >> drawOval: element box: aRectangle color: aColor borderWidth: aSm
 { #category : #drawing }
 RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor: fillColor borderColor: borderColor scale: anInteger [
 	| distanceX distanceY id closings |
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	distanceX := center x.
 	distanceY := center y.
@@ -585,7 +583,7 @@ RTSVGVisitor >> drawPath: element svg: pathString width: aSmallInteger fillColor
 { #category : #drawing }
 RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor borderWidth: aSmallInteger borderColor: aColor [
 	| id closings |
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	closings := self addEmbeddingInteractions: 'rect' , id element: element.
 	self openDef: 'rect' label: 'rect' id: id.
@@ -610,7 +608,7 @@ RTSVGVisitor >> drawRectangle: element box: aRectangle fillColor: fillColor bord
 { #category : #drawing }
 RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 	|p id closings box|
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	p := aPoint.
 	closings := self addEmbeddingInteractions: 'text' , id  element: element.
@@ -634,7 +632,7 @@ RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color [
 { #category : #drawing }
 RTSVGVisitor >> drawString: element text: aByteString at: aPoint color: color angle: angle [
 	| p id closings box |
-	id := element identityHash asString.
+	id := self getId: element.
 	names at: element put: id.
 	p := aPoint.
 	closings := self addEmbeddingInteractions: 'text' , id element: element.
@@ -693,6 +691,14 @@ RTSVGVisitor >> getDecorationId: aLineDecorationShape [
 	lw := aLineDecorationShape width.
 	^(t asString, w asString, ((c red * 256) + (s red * 256)) rounded asString, ((c green * 256) + (s green * 256)) rounded asString, ((c blue * 256) + (s blue * 256)) rounded asString, lw asString)
 	
+]
+
+{ #category : #utils }
+RTSVGVisitor >> getId: element [
+	|sum eShape|
+	eShape := element trachelShape.
+	sum := (element identityHash) + (eShape identityHash).
+	^ sum asString
 ]
 
 { #category : #utils }
