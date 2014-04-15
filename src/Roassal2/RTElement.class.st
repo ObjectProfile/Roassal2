@@ -61,6 +61,12 @@ RTElement >> extent [
 ]
 
 { #category : #accessing }
+RTElement >> extent: aPoint [
+	trachelShape extent: aPoint.
+	self updateConnectedEdges
+]
+
+{ #category : #accessing }
 RTElement >> height [
 	^ trachelShape height
 ]
@@ -117,10 +123,14 @@ RTElement >> translateBy: delta [
 { #category : #actions }
 RTElement >> translateTo: newPosition [
 	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
+
 	trachelShape translateTo: newPosition.
-	
-	self connectedEdges do: [ :edge | edge update ].
-	trachelShape resetPath
+	self updateConnectedEdges
+]
+
+{ #category : #actions }
+RTElement >> updateConnectedEdges [
+	self connectedEdges do: [ :edge | edge update ]
 ]
 
 { #category : #accessing }

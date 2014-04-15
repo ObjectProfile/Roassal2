@@ -519,6 +519,40 @@ RTExample >> edition [
 	view open
 ]
 
+{ #category : #nesting }
+RTExample >> elementZooming [
+	"
+	self new elementZooming
+	"
+	| view firstGroup secondGroup bothGroups mainElement originalExtent mainWithNested |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
+	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTNest new padding: 1; on: mainElement nest: firstGroup, secondGroup.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	view add: mainWithNested.
+	"define menu and their actions"
+	originalExtent := mainElement extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainElement extent * 0.6 
+													during: 0.3 on: mainElement) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainElement extent * (1 / 0.6) 
+													during: 0.3 on: mainElement) ].
+	view addMenu: 'Original' callback: [ mainElement extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainElement extent: originalExtent / 2. view signalUpdate ].
+	^ view open
+]
+
 { #category : #animations }
 RTExample >> escapingCircle [
 
@@ -629,81 +663,6 @@ RTExample >> group1 [
 	view @ RTDraggableView.
 	
 	view open
-]
-
-{ #category : #groups }
-RTExample >> groupZooming [
-	"
-	self new groupZooming
-	"
-	| view firstGroup secondGroup bothGroups mainElement originalExtent mainWithNested |
-	view := RTView new.
-	"element creation"
-	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
-	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
-	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
-	bothGroups := RTGroup with: firstGroup with: secondGroup.
-	"layouting"
-	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
-	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
-	RTNest new padding: 1; on: mainElement nest: bothGroups.
-	mainWithNested := RTGroup with: mainElement with: bothGroups.
-	mainWithNested @ RTDraggable.
-	view add: mainWithNested.
-	"define menu and their actions"
-	originalExtent := mainWithNested extent.
-	view addMenu: 'Smaller' 
-		callback: [ view addAnimation: (RTResizeMove new 
-													toExtent: mainWithNested extent * 0.6 
-													during: 0.3 on: mainWithNested) ].
-	view addMenu: 'Bigger' 
-		callback: [ view addAnimation: (RTResizeMove new 
-													toExtent: mainWithNested extent * 1.4 
-													during: 0.3 on: mainWithNested) ].
-	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
-	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
-	^ view open
-]
-
-{ #category : #groups }
-RTExample >> groupZooming2 [
-	"
-	self new groupZooming2
-	"
-	| view firstGroup secondGroup bothGroups 
-		mainElement originalExtent mainWithNested anotherElement 
-		line |
-	view := RTView new.
-	"element creation"
-	mainElement := RTBox new color: (Color blue alpha: 0.3); element.
-	firstGroup := (RTBox new size: #yourself) elementsOn: #(20 50).
-	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
-	bothGroups := RTGroup with: firstGroup with: secondGroup.
-	anotherElement := RTEllipse new size: 20; color: (Color green alpha: 0.3); element.
-	line := RTLine new color: Color brown; attachPoint: RTHorizontalAttachPoint new; 
-				edgeFrom: anotherElement to: mainElement.
-	"layouting"
-	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
-	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
-	RTGridLayout on: (Array with: anotherElement with: mainElement).
-	RTNest new padding: 1; on: mainElement nest: bothGroups.
-	mainWithNested := RTGroup with: mainElement with: bothGroups.
-	mainWithNested @ RTDraggable.
-	anotherElement @ RTDraggable.
-	view add: mainWithNested; add: anotherElement; add: line.
-	"define menu and their actions"
-	originalExtent := mainWithNested extent.
-	view addMenu: 'Smaller' 
-		callback: [ view addAnimation: (RTResizeMove new 
-													toExtent: mainWithNested extent * 0.6 
-													during: 0.3 on: mainWithNested) ].
-	view addMenu: 'Bigger' 
-		callback: [ view addAnimation: (RTResizeMove new 
-													toExtent: mainWithNested extent * 1.4 
-													during: 0.3 on: mainWithNested) ].
-	view addMenu: 'Original' callback: [ mainWithNested extent: originalExtent. view signalUpdate ].
-	view addMenu: 'Half' callback: [ mainWithNested extent: originalExtent / 2. view signalUpdate ].
-	^ view open
 ]
 
 { #category : #animations }
@@ -898,7 +857,7 @@ RTExample >> multipleNesting [
 	" 
 	self new multipleNesting
 	"
-	| view inner host edges outter trachelCanvas |
+	| view inner host edges outter trachelCanvas resizable |
 	outter := OrderedCollection new.
 	view := RTView new.
 	
@@ -927,7 +886,19 @@ RTExample >> multipleNesting [
 	
 	trachelCanvas := view setUpCanvas.
 	TRFocusCenter on: trachelCanvas.
-	trachelCanvas open  
+	
+	"Zoom a specific element"
+	resizable := outter at: (Random new nextInt: outter size).
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: resizable extent * 0.6 
+													during: 0.3 on: resizable) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: resizable extent * (1 / 0.6) 
+													during: 0.3 on: resizable) ].
+	
+	view openWithMenu
 ]
 
 { #category : #nesting }
