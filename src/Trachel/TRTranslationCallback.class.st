@@ -1,31 +1,16 @@
 Class {
 	#name : #TRTranslationCallback,
-	#superclass : #TRObject,
-	#instVars : [
-		'block'
-	],
+	#superclass : #TRCallback,
 	#category : #'Trachel-Core'
 }
 
-{ #category : #public }
-TRTranslationCallback class >> block: aBlock [
-	^ self new block: aBlock
+{ #category : #testing }
+TRTranslationCallback >> isTranslationCallback [
+	^ true
 ]
 
-{ #category : #accessing }
-TRTranslationCallback >> block [
-	^ block
-	
-]
-
-{ #category : #accessing }
-TRTranslationCallback >> block: aOneArgBlock [
-	"aThreeArgBlock follows the pattern [ :shape | ... ]"
-	block := aOneArgBlock
-]
-
-{ #category : #initialization }
-TRTranslationCallback >> initialize [
-	super initialize.
-	block := [ :shape :step | ]
+{ #category : #actions }
+TRTranslationCallback >> shape: aTRShape step: aStep [ 
+	"aStep is a point that represents a translation step"
+	^ block cull: aTRShape cull: aStep
 ]

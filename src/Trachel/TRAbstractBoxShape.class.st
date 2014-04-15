@@ -31,11 +31,12 @@ TRAbstractBoxShape >> center [
 TRAbstractBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
 		ifFalse: [ ^ self ].
+	self drawEncompassingRectangleOn: athensCanvas.
 	athensCanvas pathTransform
 		restoreAfter: [ 
 			athensCanvas pathTransform
-				multiplyBy: matrix asFloatTransform.
-			self preDrawOn: athensCanvas.
+				multiplyBy: matrix;
+				scaleBy: rectangle extent.
 			athensCanvas 
 				setPaint: color;
 				drawShape: self path.
@@ -44,14 +45,11 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
-	| scale ratio |
+	| scale |
 	scale := self canvas camera scale.
-	scale < 1 
-		ifTrue: [ ratio := self strokeWidth ] 
-		ifFalse: [ ratio := self strokeWidth / (scale ) ].
 	^ strokePaint
 		ifNotNil: [ 
-			(athensCanvas setStrokePaint: strokePaint) width: ratio asFloat.
+			(athensCanvas setStrokePaint: strokePaint) width: (self strokeWidth / (scale )) asFloat.
 			athensCanvas drawShape: path ]
 ]
 
@@ -81,10 +79,15 @@ TRAbstractBoxShape >> extent [
 ]
 
 { #category : #geometry }
-TRAbstractBoxShape >> extent: anExtent [
-	anExtent = self extent ifTrue: [ ^ self ].
-	rectangle := (0@0 - (anExtent / 2)) extent: anExtent.
+TRAbstractBoxShape >> extent: newExtent [
+	| oldExtent |
+	newExtent = rectangle extent ifTrue: [ ^ self ].
+	oldExtent := rectangle extent.
+	rectangle := (0@0 - (newExtent / 2)) extent: newExtent.
 	self resetPath.
+	(oldExtent = (0 @ 0)) ifFalse: [ 
+		self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ].
+
 ]
 
 { #category : #public }
@@ -147,10 +150,6 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 	self position: (aPosition - ((self width / -2) @ 0))
 ]
 
-{ #category : #drawing }
-TRAbstractBoxShape >> preDrawOn: athensCanvas [
-]
-
 { #category : #testing }
 TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]
@@ -163,7 +162,7 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
-	^ 1
+	^ 1.5
 ]
 
 { #category : #accessing }

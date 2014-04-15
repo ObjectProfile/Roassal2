@@ -9,11 +9,6 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #visitor }
-TRDiamondShape >> accept: aVisitor [
-	aVisitor visitDiamondShape: self
-]
-
 { #category : #hooks }
 TRDiamondShape >> computePath [
 	| vector r u unit middle|
@@ -37,10 +32,4 @@ TRDiamondShape >> computePath [
 				lineTo: self to;
 				lineTo: right;
 				lineTo: end. ]
-]
-
-{ #category : #initialization }
-TRDiamondShape >> initialize [
-	super initialize.
-	self type: 3.
 ]

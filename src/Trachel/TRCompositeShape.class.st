@@ -17,11 +17,6 @@ TRCompositeShape class >> with: s1 with: s2 [
 	^ self new shape1: s1; shape2: s2; yourself
 ]
 
-{ #category : #'as yet unclassified' }
-TRCompositeShape >> accept: aVisitor [
-	aVisitor visitCompositeShape: self
-]
-
 { #category : #actions }
 TRCompositeShape >> addCallback: aCallback [
 	shape1 addCallback: aCallback.

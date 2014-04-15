@@ -8,17 +8,13 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #visitor }
-TRArrowShape >> accept: aVisitor [
-	aVisitor visitArrowShape: self
-]
-
 { #category : #hooks }
 TRArrowShape >> computePath [
 	| vector r u unit middle |
 	vector := self to - self from. 
 	r := vector r.
 	r = 0 ifTrue: [ ^ false ].
+	
 	u := vector normal.
 	unit := vector / r.
 	"toPointWithOffset := self to - (offset * (vector r - size) * unit)." "add offset"
@@ -29,14 +25,8 @@ TRArrowShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: left;
-				lineTo: self to;
-				lineTo: right. ]
-]
-
-{ #category : #initialization }
-TRArrowShape >> initialize [
-	super initialize.
-	open := true.
-	self type: 2.
+				moveTo: self to;
+				lineTo: left;
+				lineTo: right;
+				lineTo: self to. ]
 ]

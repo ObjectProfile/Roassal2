@@ -14,11 +14,6 @@ TRLineShape >> accept: aVisitor [
 	aVisitor visitLineShape: self
 ]
 
-{ #category : #visitor }
-TRLineShape >> accept: aVisitor with: decoration [
-	aVisitor visitLineShape: self with: decoration
-]
-
 { #category : #hooks }
 TRLineShape >> computePath [
 	path := self athensCanvas
