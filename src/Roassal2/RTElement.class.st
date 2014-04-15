@@ -36,6 +36,11 @@ RTElement >> addedIn: aView [
 	view addElement: self
 ]
 
+{ #category : #accessing }
+RTElement >> center [
+	^ self position
+]
+
 { #category : #initialization }
 RTElement >> connectedEdges [
 	connectedEdges ifNil: [ connectedEdges := OrderedCollection new ].
