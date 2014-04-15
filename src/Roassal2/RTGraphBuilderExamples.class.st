@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple01 [
 	"
 	self new simple01
@@ -12,20 +12,17 @@ RTGraphBuilderExamples >> simple01 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b nodes
-		if: [ :obj | obj < 15 ]; shape: (RTEllipse new size: 20; color: Color blue).
-	b nodes
-		if: [ :obj | obj >= 15 ]; shape: (RTEllipse new size: 10; color: Color red).
-		
+	b node
+		if: [ :obj | obj < 15 ] shape: (RTEllipse new size: 20; color: Color blue);
+		if: [ :obj | obj >= 15 ] shape: (RTEllipse new size: 10; color: Color red).
 	b layout 
-		if: [ :obj | obj < 15 ]; use: (RTCircleLayout new).
-	b layout
-		if: [ :obj | obj >= 15 ]; use: (RTGridLayout new).
+		for: [ :obj | obj < 15 ] use: (RTCircleLayout new);
+		for: [ :obj | obj >= 15 ] use: (RTGridLayout new).
 	b addAll: (1 to: 20).
 	b open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple02 [
 	"
 	self new simple02
@@ -33,24 +30,21 @@ RTGraphBuilderExamples >> simple02 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b nodes
-		if: [ :cls | cls numberOfMethods < 15 ]; shape: (RTEllipse new size: 20; color: Color blue).
-	b nodes
-		if: [ :cls | cls numberOfMethods >= 15 ]; shape: (RTEllipse new size: 40; color: Color red).
+	b node
+		if: [ :cls | cls numberOfMethods < 15 ] shape: (RTEllipse new size: 20; color: Color blue);
+		if: [ :cls | cls numberOfMethods >= 15 ] shape: (RTEllipse new size: 40; color: Color red).
 
-	b edges
-		if: [ :cls | cls numberOfMethods >= 15 ];
-		connectTo: [ :c | c subclasses ].
+	b edge
+		if: [ :cls | cls numberOfMethods >= 15 ] connectTo: [ :c | c subclasses ].
 
 	b layout 
-		if: [ :cls | cls numberOfMethods >= 15 ]; use: (RTTreeLayout new).
-	b layout
-		if: [ :cls | cls numberOfMethods < 15 ]; use: (RTGridLayout new).
+		for: [ :cls | cls numberOfMethods >= 15 ] use: (RTTreeLayout new);
+		for: [ :cls | cls numberOfMethods < 15 ] use: (RTGridLayout new).
 	b addAll: (RTShape withAllSubclasses).
 	b open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple03 [
 	"
 	self new simple03
@@ -58,17 +52,18 @@ RTGraphBuilderExamples >> simple03 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b nodes shape: (RTEllipse new size: 30).
+	b node
+		if: true shape: (RTEllipse new size: 30).
 
 	b global
-		normalizeColor: #yourself using: (Array with: Color green with: Color red).
+		for: true normalizeColor: #yourself using: (Array with: Color green with: Color red).
 
 	b layout use: RTGridLayout new.
 	b addAll: (1 to: 20).
 	b open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple04 [
 	"
 	self new simple04
@@ -77,21 +72,20 @@ RTGraphBuilderExamples >> simple04 [
 	| b |
 	b := RTGraphBuilder new.
 
-	b nodes shape: RTEllipse new.
+	b node shape: RTEllipse new.
 
 	b layout use: (RTFlowLayout new maxWidth: 500).
 
 	b global 
 		normalizeSize: #numberOfMethods min: 5 max: 90.
-	b global
-		normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red).
+		 
 
 	b addAll: (Collection withAllSubclasses).
 
 	b open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple05WithInteraction [
 
 	"
@@ -110,7 +104,7 @@ RTGraphBuilderExamples >> simple05WithInteraction [
 	g open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple06AddingEdge [
 
 	"
@@ -129,7 +123,7 @@ RTGraphBuilderExamples >> simple06AddingEdge [
 	g open
 ]
 
-{ #category : #simples }
+{ #category : #examples }
 RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 	"
 	self new simple07HierarchicalBundleEdge
@@ -149,61 +143,7 @@ RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 	b open
 ]
 
-{ #category : #simples }
-RTGraphBuilderExamples >> simple08ColoredEdge [
-	"
-	self new simple08ColoredEdge
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-
-	b edge 
-		connectTo: [ :v | v + 1 ];
-		if: [:f :t | t = 2 ] color: Color red.
-	b layout grid.
-	b addAll: #(1 2 3).
-
-	b open
-]
-
-{ #category : #simples }
-RTGraphBuilderExamples >> simple09HighlightOutgoingEdges [
-	"
-	self new simple09HighlightOutgoingEdges
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-
-	b edge 
-		connectTo: [ :v | v + 1 ];
-		if: [:f :t | t = 2 ] color: Color red.
-	b layout grid.
-	b addAll: #(1 2 3).
-
-	b open
-]
-
-{ #category : #simples }
-RTGraphBuilderExamples >> simple10IfColorAndCurvedEdges [
-	"
-	self new simple10IfColorAndCurvedEdges
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-
-	b edge 
-		 connectTo: [ :v | v + 2 ] follow: [ :v | v + 1 ];
-		if: [:f :t | f = 1 ] color: Color red.
-	b layout grid.
-	b addAll: #(1 2 3).
-
-	b open
-]
-
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft01 [
 	"
 	self new vissoft01
@@ -224,7 +164,7 @@ RTGraphBuilderExamples >> vissoft01 [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft02 [
 	"
 	self new vissoft02
@@ -248,7 +188,7 @@ RTGraphBuilderExamples >> vissoft02 [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft03 [
 	"
 	self new vissoft03
@@ -273,7 +213,7 @@ RTGraphBuilderExamples >> vissoft03 [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft04 [
 	"
 	self new vissoft04
@@ -299,7 +239,7 @@ RTGraphBuilderExamples >> vissoft04 [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft05 [
 	"
 	self new vissoft05
@@ -325,7 +265,7 @@ RTGraphBuilderExamples >> vissoft05 [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 	"
 	self new vissoft06HierarchicalBundleEdges
@@ -353,7 +293,7 @@ RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 	b open
 ]
 
-{ #category : #'software visualization' }
+{ #category : #examples }
 RTGraphBuilderExamples >> vissoft07WithLabel [
 	"
 	self new vissoft07WithLabel
@@ -379,134 +319,4 @@ RTGraphBuilderExamples >> vissoft07WithLabel [
 
 	b addAll: (RTObject withAllSubclasses).
 	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft08DepAnalysis [
-	"
-	self new vissoft08DepAnalysis
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-	b node
-		if: [ :c | 'RT*' match: c name ] color: Color red;
-		if: [ :c | 'TR*' match: c name ] color: Color purple.
-		
-	b edge 
-		connectTo: #subclasses usedInLayout: true;
-		connectTo: #dependentClasses 
-			scopedTo: [ :c | 'TR*' match: c name ] 
-			color: (Color blue alpha: 0.4) 
-			usedInLayout: false.
-
-	b layout cluster.
-
-	b global
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 5 max: 60.
-
-	b addAll: RTObject withAllSubclasses.
-	b addAll: TRObject withAllSubclasses.
-	b addAll: TREvent withAllSubclasses.
-
-	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
-	"
-	self new vissoft09DepAnalysisWithCurved
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-	b node
-		if: [ :c | 'RT*' match: c name ] color: Color red;
-		if: [ :c | 'TR*' match: c name ] color: Color purple.
-		
-	b edge 
-		connectTo: #subclasses usedInLayout: true;
-		connectTo: #dependentClasses 
-			scopedTo: [ :c | 'TR*' match: c name ] 
-			follow: #superclass
-			color: (Color blue alpha: 0.4) 
-			usedInLayout: false.
-
-	b layout cluster.
-
-	b global
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 5 max: 60.
-
-	b addAll: RTObject withAllSubclasses.
-	b addAll: TRObject withAllSubclasses.
-	b addAll: TREvent withAllSubclasses.
-
-	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft10DepAnalysisWithCurved [
-	"
-	self new vissoft10DepAnalysisWithCurved
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-	b node
-		if: [ :c | c inheritsFrom: RTLayout ] color: Color red;
-		if: [ :c | c inheritsFrom: TREvent ] color: Color green;
-		if: [ :c | c inheritsFrom: RTShape ] color: Color purple.
-		
-	b edge 
-		connectTo: #subclasses usedInLayout: true;
-		connectTo: #dependentClasses 
-			scopedTo: [ :c | 'TR*' match: c name ] 
-			follow: #superclass
-			color: (Color blue alpha: 0.4) 
-			usedInLayout: false;
-		if: [ :f :t | f inheritsFrom: RTShape ] color: Color red.
-
-	b layout cluster.
-
-	b global
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 15 max: 60.
-
-	b addAll: RTObject withAllSubclasses.
-	b addAll: TRObject withAllSubclasses.
-	b addAll: TREvent withAllSubclasses.
-
-	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft11DependencyGraph [
-	"
-	self new vissoft11DependencyGraph
-	"
-
-|b |
-
-b := RTGraphBuilder new.
-
-b node
-	if: [ :c | c inheritsFrom: RTLayout ] shape: (RTEllipse new color: Color red; yourself);
-	if: [ :c | c inheritsFrom: RTShape ] shape: (RTEllipse new color: Color green; yourself);
-	if: [ :c | c inheritsFrom: RTBuilder ] shape: (RTEllipse new color: Color blue; yourself).
-
-b edge
-	connectTo: #dependentClasses.
-
-b layout forceBased charge: -100.
-
-b global 
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 15 max: 30.
-
-b addAll: RTObject withAllSubclasses.
-
-b applyLayout.
-b view
 ]

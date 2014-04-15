@@ -92,11 +92,6 @@ RTShapedObject >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #transformations }
-RTShapedObject >> preScaleBy: aPoint [ 
-	trachelShape preScaleBy: aPoint
-]
-
 { #category : #attributes }
 RTShapedObject >> removeAttributeAt: aKey [
 	^ self attributes removeKey: aKey

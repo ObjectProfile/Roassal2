@@ -2,25 +2,32 @@ Class {
 	#name : #RTGraphBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'bundleConnectToElements',
-		'nodes',
-		'edges',
-		'layouts',
-		'globals'
+		'node',
+		'edge',
+		'layout',
+		'global',
+		'interaction',
+		'bundleConnectToElements'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> add: anObject [
-	^ self addAll: (Array with: anObject)
+	view add: (self createElementFor: anObject).
+	self cleanAndAddEdges.
+	global executeOn: self view
 ]
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> addAll: objects [
-	view addAll: (self createElementsFor: objects).
+	objects do: [ :anObject |
+		view add: (self createElementFor: anObject) ].
 	self cleanAndAddEdges.
-	globals do: #execute
+	global executeOn: self view
+
+	"SLOW!"
+	"objects do: [ :o | self add: o ]"
 ]
 
 { #category : #'as yet unclassified' }
@@ -32,9 +39,10 @@ RTGraphBuilder >> addEdgesForObject: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-RTGraphBuilder >> applyLayout [	
-	layouts do: #execute.
+RTGraphBuilder >> applyLayout [
+	layout executeOn: view.
 	view edges do: [ :e | e trachelShape pushBack ]
+	"layout on: view elements edges: view edges"
 ]
 
 { #category : #'as yet unclassified' }
@@ -50,29 +58,13 @@ RTGraphBuilder >> cleanAndAddEdges [
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> createEdgesFor: anObject [
-	"Return a collection of Roassal edges that correspond to the argument"
-	| answer |
-	answer := OrderedCollection new.
-	edges do: [ :edge |
-		(edge canCreateForObject: anObject)
-			ifTrue: [ answer addAll: (edge createEdgesFor: anObject) ]
-	].
-
-	^ answer
-	
+	^ edge createEdgesFor: anObject
 ]
 
 { #category : #'as yet unclassified' }
-RTGraphBuilder >> createElementsFor: objects [
-	"Return a collection of Roassal elements that corresponds to the argument"
+RTGraphBuilder >> createElementFor: anObject [
+	^ node createElementFor: anObject
 
-	| gdNode answer |
-	answer := OrderedCollection new.
-	objects
-		do: [ :obj | 
-			gdNode := self getNodeFor: obj.
-			gdNode ifNotNil: [ answer add: (gdNode createElementFor: obj) ] ].
-	^ answer
 ]
 
 { #category : #'as yet unclassified' }
@@ -81,68 +73,34 @@ RTGraphBuilder >> createView [
 ]
 
 { #category : #'as yet unclassified' }
-RTGraphBuilder >> edges [
-	"Create a new entry for the edges"
-	| n |
-	n := RTGDEdgeB new.
-	n graphBuilder: self.
-	edges add: n.
-	^ n
-]
-
-{ #category : #'as yet unclassified' }
-RTGraphBuilder >> edgesUsedForLayout [
-	"Return all the edges in the view that have to be used for layout"
-	| answer |
-	answer := OrderedCollection new.
-	edges do: [ :e | answer addAll: e edgesUsedForLayout ].
-	^ answer
-]
-
-{ #category : #'as yet unclassified' }
-RTGraphBuilder >> getNodeFor: obj [
-	^ nodes detect: [ :n | n canCreateForObject: obj ] ifNone: [ nil ]
+RTGraphBuilder >> edge [
+	^ edge
 ]
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> global [
-	"Create a new entry for the globals"
-	| global |
-	global := RTGDGlobalB new.
-	global graphBuilder: self.
-	globals add: global.
-	^ global.
-	
+	^ global
 ]
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> initialize [
 	super initialize.
-	nodes := OrderedCollection new.
-	edges := OrderedCollection new.	
-	layouts := OrderedCollection new.				
-	globals := OrderedCollection new.
+	node := RTGDNodeB new.
+	node graph: self.
 	
+	edge := RTGDEdgeB new graphBuilder: self; yourself.
+	layout := RTGDLayoutB new.
+	global := RTGDGlobalB new.
 ]
 
 { #category : #'as yet unclassified' }
 RTGraphBuilder >> layout [
-	"Create a new entry for the layout"
-	| layout |
-	layout := RTGDLayoutB new.
-	layout graphBuilder: self.
-	layouts add: layout.
 	^ layout
 ]
 
 { #category : #'as yet unclassified' }
-RTGraphBuilder >> nodes [
-	"Create a new entry for the nodes"
-	| n |
-	n := RTGDNodeB new.
-	n graphBuilder: self.
-	nodes add: n.
-	^ n
+RTGraphBuilder >> node [
+	^ node
 ]
 
 { #category : #'as yet unclassified' }

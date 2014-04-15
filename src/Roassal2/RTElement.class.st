@@ -36,11 +36,6 @@ RTElement >> addedIn: aView [
 	view addElement: self
 ]
 
-{ #category : #accessing }
-RTElement >> center [
-	^ self position
-]
-
 { #category : #initialization }
 RTElement >> connectedEdges [
 	connectedEdges ifNil: [ connectedEdges := OrderedCollection new ].
@@ -58,6 +53,12 @@ RTElement >> encompassingRectangle [
 RTElement >> extent [
 	"Returns a point, describing the extent of the encompassing rectangle of myself"
 	^ self encompassingRectangle extent
+]
+
+{ #category : #accessing }
+RTElement >> extent: aPoint [
+	trachelShape extent: aPoint.
+	self updateConnectedEdges
 ]
 
 { #category : #accessing }
@@ -117,10 +118,14 @@ RTElement >> translateBy: delta [
 { #category : #actions }
 RTElement >> translateTo: newPosition [
 	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
+
 	trachelShape translateTo: newPosition.
-	
-	self connectedEdges do: [ :edge | edge update ].
-	trachelShape resetPath
+	self updateConnectedEdges
+]
+
+{ #category : #actions }
+RTElement >> updateConnectedEdges [
+	self connectedEdges do: [ :edge | edge update ]
 ]
 
 { #category : #accessing }

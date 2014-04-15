@@ -1,37 +1,36 @@
 Class {
 	#name : #RTGDLayoutB,
-	#superclass : #RTGDElement,
+	#superclass : #Object,
 	#instVars : [
-		'layout'
+		'conditionalLayout'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
 
 { #category : #'as yet unclassified' }
-RTGDLayoutB >> execute [
-	layout 
-		on: (self view elements select: [ :e | condition rtValue: e model ]) 
-		edges: graphBuilder edgesUsedForLayout
-
+RTGDLayoutB >> executeOn: view [
+	| condition layout elementsToLayout |
+	conditionalLayout do: [ :array |
+		condition := array first.
+		layout := array second.
+		
+		elementsToLayout := view elements select: [ :e | condition rtValue: e model ].
+		layout on: elementsToLayout edges: view edges.
+		]
 ]
 
 { #category : #'as yet unclassified' }
-RTGDLayoutB >> force [
-	^ self use: RTForceBasedLayout new
-]
-
-{ #category : #'as yet unclassified' }
-RTGDLayoutB >> grid [
-	^ self use: RTGridLayout new
+RTGDLayoutB >> for: condition use: aLayout [
+	conditionalLayout add: (Array with: condition with: aLayout)
 ]
 
 { #category : #'as yet unclassified' }
 RTGDLayoutB >> initialize [
 	super initialize.
-	self if: true
+	conditionalLayout := OrderedCollection new
 ]
 
 { #category : #'as yet unclassified' }
 RTGDLayoutB >> use: aLayout [
-	layout := aLayout
+	^ self for: true use: aLayout
 ]

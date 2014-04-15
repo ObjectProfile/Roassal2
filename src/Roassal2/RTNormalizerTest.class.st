@@ -24,39 +24,6 @@ RTNormalizerTest >> testGray [
 	self assert: (n rtValue: (es at: 100) model) = ( (Color r: 0.612 g: 0.612 b: 0.612 alpha: 1.0)).
 ]
 
-{ #category : #multicolor }
-RTNormalizerTest >> testMultiColor [
-
-	| n |
-	n :=  RTMultiLinearColor new
-		colors: (Array with: Color white with: Color black).
-	self assert: (n level: 0) = Color white. 
-	self assert: (n level: 1.0) = Color black.
-	self assert: (n level: 0.5) = (Color r: 0.5 g: 0.5 b: 0.5).
-]
-
-{ #category : #multicolor }
-RTNormalizerTest >> testMultiColor2 [
-
-	| n |
-	n :=  RTMultiLinearColor new
-		colors: (Array with: Color white with: Color red with: Color black).
-	self assert: (n level: 0) = Color white. 
-	self assert: (n level: 1.0) = Color black.
-	self assert: (n level: 0.5) = (Color red).
-]
-
-{ #category : #multicolor }
-RTNormalizerTest >> testMultiColor3 [
-
-	| n |
-	n :=  RTMultiLinearColor new
-		colors: (Array with: Color white with: Color red with: Color black).
-	self assert: (n level: 0) = Color white. 
-	self assert: (n level: 1.0) = Color black.
-	self assert: (n level: 0.75) = (Color r: 0.5 g: 0.0 b: 0.0).
-]
-
 { #category : #'gray color' }
 RTNormalizerTest >> testOnCharacters [
 
