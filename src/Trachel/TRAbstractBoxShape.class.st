@@ -31,12 +31,11 @@ TRAbstractBoxShape >> center [
 TRAbstractBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
 		ifFalse: [ ^ self ].
-	self drawEncompassingRectangleOn: athensCanvas.
 	athensCanvas pathTransform
 		restoreAfter: [ 
 			athensCanvas pathTransform
-				multiplyBy: matrix;
-				scaleBy: rectangle extent.
+				multiplyBy: matrix asFloatTransform.
+			self preDrawOn: athensCanvas.
 			athensCanvas 
 				setPaint: color;
 				drawShape: self path.
@@ -45,11 +44,14 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
-	| scale |
+	| scale ratio |
 	scale := self canvas camera scale.
+	scale < 1 
+		ifTrue: [ ratio := self strokeWidth ] 
+		ifFalse: [ ratio := self strokeWidth / (scale ) ].
 	^ strokePaint
 		ifNotNil: [ 
-			(athensCanvas setStrokePaint: strokePaint) width: (self strokeWidth / (scale )) asFloat.
+			(athensCanvas setStrokePaint: strokePaint) width: ratio asFloat.
 			athensCanvas drawShape: path ]
 ]
 
@@ -150,6 +152,10 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 	self position: (aPosition - ((self width / -2) @ 0))
 ]
 
+{ #category : #drawing }
+TRAbstractBoxShape >> preDrawOn: athensCanvas [
+]
+
 { #category : #testing }
 TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]
@@ -162,7 +168,7 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
-	^ 1.5
+	^ 1
 ]
 
 { #category : #accessing }

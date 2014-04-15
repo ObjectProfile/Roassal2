@@ -1,5 +1,5 @@
 Class {
-	#name : #TRArrowShape,
+	#name : #TRArrowHeadShape,
 	#superclass : #TRAbstractLineDecoratorShape,
 	#instVars : [
 		'left',
@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #visitor }
-TRArrowShape >> accept: aVisitor [
-	aVisitor visitArrowShape: self
+TRArrowHeadShape >> accept: aVisitor [
+	aVisitor visitArrowHeadShape: self
 ]
 
 { #category : #hooks }
-TRArrowShape >> computePath [
+TRArrowHeadShape >> computePath [
 	| vector r u unit middle |
 	vector := self to - self from. 
 	r := vector r.
@@ -29,14 +29,14 @@ TRArrowShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: left;
-				lineTo: self to;
-				lineTo: right. ]
+				moveTo: self to;
+				lineTo: left;
+				lineTo: right;
+				lineTo: self to. ]
 ]
 
 { #category : #initialization }
-TRArrowShape >> initialize [
+TRArrowHeadShape >> initialize [
 	super initialize.
-	open := true.
-	self type: 2.
+	self type: 1.
 ]

@@ -13,6 +13,11 @@ TRBezierShape >> accept: aVisitor [
 	aVisitor visitBezierShape: self
 ]
 
+{ #category : #visitor }
+TRBezierShape >> accept: aVisitor with: decoration [
+	aVisitor visitBezierShape: self with: decoration
+]
+
 { #category : #hooks }
 TRBezierShape >> computePath [
 	path := self athensCanvas
@@ -45,7 +50,7 @@ TRBezierShape >> encompassingRectangle [
 	^ Rectangle encompassing: listOfPoints
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRBezierShape >> initialize [
 	super initialize.
 	listOfPoints := Array with: 0 @ 0 with: 0 @ 0

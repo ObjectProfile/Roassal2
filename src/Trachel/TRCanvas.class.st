@@ -219,6 +219,11 @@ TRCanvas >> isMovableShape: aShape [
 	^ shapes includes: aShape
 ]
 
+{ #category : #accessing }
+TRCanvas >> morph [
+	^ morph
+]
+
 { #category : #animations }
 TRCanvas >> numberOfAnimations [
 	"Return the number of animations contained in the canvas"

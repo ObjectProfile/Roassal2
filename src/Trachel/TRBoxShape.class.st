@@ -16,11 +16,12 @@ TRBoxShape >> computePath [
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: -0.5 @ -0.5;
-				lineTo: 0.5 @ -0.5;
-				lineTo: 0.5 @ 0.5;
-				lineTo: -0.5 @ 0.5;
-				lineTo: -0.5 @ -0.5 ]
+				moveTo: rectangle topLeft;
+				lineTo: rectangle topRight;
+				lineTo: rectangle bottomRight;
+				lineTo: rectangle bottomLeft;
+				lineTo: rectangle topLeft;
+				closePath ]
 ]
 
 { #category : #testing }

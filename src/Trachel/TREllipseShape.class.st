@@ -23,13 +23,6 @@ TREllipseShape >> computePath [
 						ccwArcTo: 0 @ 0.5 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #public }
-TREllipseShape >> from: aPoint to: anotherPoint color: aColor [
-	rectangle := aPoint corner: anotherPoint.
-	self strokePaint: aColor.
-	self color: aColor
-]
-
 { #category : #testing }
 TREllipseShape >> includesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
@@ -43,7 +36,13 @@ TREllipseShape >> includesPoint: aPoint [
 	^ (delta x asFloat / xOverY) squared + delta y squared <= radius squared
 ]
 
-{ #category : #hooks }
+{ #category : #drawing }
+TREllipseShape >> preDrawOn: athensCanvas [
+	athensCanvas pathTransform
+		scaleBy: rectangle extent asFloatPoint
+]
+
+{ #category : #'as yet unclassified' }
 TREllipseShape >> strokeWidth [
-	^ 0.05
+	^ 0.005
 ]
