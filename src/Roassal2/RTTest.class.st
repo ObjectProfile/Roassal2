@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'useful documentation' }
 RTTest >> readme [
 
 "

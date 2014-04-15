@@ -78,9 +78,17 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	
 	follow ifNotNil: 
 		[ self setControllingElementsFromFollowFor: anEdge ].
-
+	
 	controllingElements ifNotEmpty: 
-		[ listOfPoints addAll: (controllingElements collect: #position) ].
+		[ |cElements|
+			cElements := controllingElements collect: #position.
+			cElements isNotEmpty ifTrue: [ 
+				(cElements first = anEdge from position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButFirst].
+				(cElements last = anEdge to position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButLast]].
+			listOfPoints addAll: cElements
+		].
 		
 	listOfPoints add: anEdge to position.
 	^ listOfPoints

@@ -28,7 +28,7 @@ RTEllipse >> updateFor: anElement trachelShape: trachelShape [
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	
-	trachelShape from: rec origin to: rec corner color: (self colorFor: anElement).
+	trachelShape fromRectangle: rec color: (self colorFor: anElement).
 	trachelShape strokePaint: (self borderColorFor: anElement).
 	^ trachelShape
 	

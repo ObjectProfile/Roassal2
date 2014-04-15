@@ -57,20 +57,6 @@ RTNest >> makeElements: elements draggableBy: backElement [
 	backElement trachelShape addCallback: callback 
 ]
 
-{ #category : #utility }
-RTNest >> makeElements: elements transformable: backElement [
-	| callback |
-	callback := TRExtentCallback block: [ :shape :ratio | 
-		| mainPosition |
-		mainPosition := backElement position.
-		elements do: [ :eachElement | | eachPosition |
-			eachPosition := eachElement position.
-			eachElement 
-				extent: eachElement extent * ratio;
-				translateTo: mainPosition + ((eachPosition - mainPosition) * ratio) ] ].
-	backElement trachelShape addCallback: callback 
-]
-
 { #category : #public }
 RTNest >> on: backElement nest: elements [
 	"public method"
@@ -83,7 +69,6 @@ RTNest >> on: backElement nest: elements [
 	layout ifNotNil: [ layout on: elements ].
 	self centerOn: backElement elements: elements.
 	self makeElements: elements draggableBy: backElement.
-	self makeElements: elements transformable: backElement.
 
 ]
 
