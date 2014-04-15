@@ -12,9 +12,11 @@ Class {
 RTNest >> centerOn: backElement elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
-		- translate all the elements on top of backElement"
+		- translate all the elements on top of backElement
+		- perform a layout if one is set"
 		
 	| encompassingRectangle off |
+	layout ifNotNil: [ layout on: elements ].
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
 	backElement trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
@@ -47,6 +49,7 @@ RTNest >> layout [
 
 { #category : #accessing }
 RTNest >> layout: aLayout [
+	"Set a layout that is used before doing the nesting"
 	layout := aLayout
 ]
 
