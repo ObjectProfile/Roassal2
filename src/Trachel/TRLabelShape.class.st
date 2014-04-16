@@ -36,6 +36,14 @@ TRLabelShape >> ascent [
 	^ font ascent
 ]
 
+{ #category : #private }
+TRLabelShape >> basicEncompassingRectangle [
+	| w h |
+	w := self textWidth.
+	h := self textHeight.
+	^ ((w / -2) @ (h / -2)) extent: (w @ h)
+]
+
 { #category : #accessing }
 TRLabelShape >> center [
 	^ self position
@@ -53,31 +61,37 @@ TRLabelShape >> descent [
 
 { #category : #drawing }
 TRLabelShape >> drawOn: athensCanvas [
-	"self drawEncompassingRectangleOn: athensCanvas color: (Color gray alpha: 0.1)."
+	"self drawEncompassingRectangleOn: athensCanvas."
 	athensCanvas pathTransform restoreAfter: [
 		"Draw the label centered on the position"
 		athensCanvas pathTransform
-			translateBy: self position asIntegerPoint;
-			translateBy: ((self width / -2) @ (self height / 2)) asIntegerPoint;
-			translateBy: (0 @ self descent negated) asIntegerPoint.
-			"scaleBy: (fontSize / 10)."
+			multiplyBy: matrix asFloatTransform;
+			translateBy: ((self textWidth / -2) @ (self textHeight / 2)) asFloatPoint;
+			translateBy: (0 @ self descent negated) asFloatPoint.
 		athensCanvas setFont: font.
 		athensCanvas setPaint: color.
 		athensCanvas drawString: text
-		]
+	]
 ]
 
 { #category : #accessing }
 TRLabelShape >> encompassingRectangle [
-	| w h |
-	w := self width.
-	h := self height.
-	^ self position + ((w / -2) @ (h / -2)) extent: (w @ h)
+	^ self transformedEncompassingRectangle 
 ]
 
 { #category : #accessing }
 TRLabelShape >> extent [
 	^ self encompassingRectangle extent
+]
+
+{ #category : #accessing }
+TRLabelShape >> extent: newExtent [
+	| oldExtent |
+	oldExtent := self extent.
+	(oldExtent = (0 @ 0)) ifTrue: [ ^ self ].
+	matrix scaleBy: newExtent / oldExtent.
+	self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent.
+
 ]
 
 { #category : #accessing }
@@ -98,7 +112,8 @@ TRLabelShape >> fontSize: aNumber [
 
 { #category : #accessing }
 TRLabelShape >> height [
-	^ font height
+
+	^ self encompassingRectangle height
 ]
 
 { #category : #testing }
@@ -129,6 +144,18 @@ TRLabelShape >> text: aText on: aPosition [
 	self position: aPosition
 ]
 
+{ #category : #private }
+TRLabelShape >> textHeight [
+	"without any transformation"
+	^ font height
+]
+
+{ #category : #private }
+TRLabelShape >> textWidth [
+	"without any transformation"
+	^ (font widthOfString: text)
+]
+
 { #category : #public }
 TRLabelShape >> translateLeftTo: aPosition [
 	self translateTo: (aPosition - ((self width / -2) @ 0) ) asIntegerPoint
@@ -141,5 +168,6 @@ TRLabelShape >> translateRightTo: aPosition [
 
 { #category : #accessing }
 TRLabelShape >> width [
-	^ (font widthOfString: text)
+
+	^ self encompassingRectangle width
 ]

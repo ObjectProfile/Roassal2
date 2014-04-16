@@ -7,7 +7,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #visitor }
 TRRotatedLabelShape >> accept: aVisitor [
 	aVisitor visitRotatedLabelShape: self
 ]
@@ -68,12 +68,6 @@ TRRotatedLabelShape >> encompassingRectangle [
 	
 ]
 
-{ #category : #accessing }
-TRRotatedLabelShape >> height [
-
-	^ self encompassingRectangle height
-]
-
 { #category : #initialization }
 TRRotatedLabelShape >> initialize [
 	super initialize.
@@ -88,10 +82,4 @@ TRRotatedLabelShape >> notRotatedHeight [
 { #category : #accessing }
 TRRotatedLabelShape >> notRotatedWidth [
 	^ (font widthOfString: text)
-]
-
-{ #category : #accessing }
-TRRotatedLabelShape >> width [
-
-	^ self encompassingRectangle width
 ]

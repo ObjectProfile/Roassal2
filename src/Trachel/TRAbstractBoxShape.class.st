@@ -22,6 +22,11 @@ TRAbstractBoxShape >> accept: aVisitor [
 	aVisitor visitAbstractBoxShape: self
 ]
 
+{ #category : #private }
+TRAbstractBoxShape >> basicEncompassingRectangle [
+	^ rectangle
+]
+
 { #category : #accessing }
 TRAbstractBoxShape >> center [
 	^ self position
@@ -57,22 +62,7 @@ TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 
 { #category : #accessing }
 TRAbstractBoxShape >> encompassingRectangle [
-
-	| rotatedRectangle topLeft topRight bottomRight bottomLeft p1 p2 p3 p4 |
-	topLeft := matrix transform: rectangle topLeft.
-	topRight := matrix transform: rectangle topRight.
-	bottomRight := matrix transform: rectangle bottomRight.
-	bottomLeft := matrix transform: rectangle bottomLeft.
-	
-	p1 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
-	p2 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
-	p3 := OrderedCollection new add: topLeft x; add: topRight x; add: bottomRight x; add: bottomLeft x; yourself.
-	p4 := OrderedCollection new add: topLeft y; add: topRight y; add: bottomRight y; add: bottomLeft y; yourself.
-	
-	rotatedRectangle := 
-		(p1 min @ p2 min) corner:
-		(p3 max @ p4 max).
-	^ rotatedRectangle
+	^ self transformedEncompassingRectangle 
 ]
 
 { #category : #accessing }
