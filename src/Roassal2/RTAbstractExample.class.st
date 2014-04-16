@@ -66,28 +66,29 @@ RTAbstractExample >> justToTry [
 
 
 	
-	RTGraphBuilderExample new installTitle: 'NormalizeColor' 
+	RTGraphBuilderExample new installTitle: 'ForceLayoutWithGreatCharge' 
 		code:
 		'
+
 
 	| b |
 	b := RTGraphBuilder new.
 	b nodes
-		if: [ :obj | obj isBehavior ];
-		shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
-
-	b global
-		normalizeColor: [ :cls | cls numberOfMethods ] using: (Array with: Color green with: Color red).
+		shape: (RTEllipse new size: #numberOfMethods);
+		whenOverShowEdges: [ :cls | cls dependentClasses ].
 
 	b edges
-		if: [ :obj | obj isBehavior ];
 		connectTo: [ :c | c subclasses ];
-		useInLayout;
 		shape: (RTLine new color: Color gray).
 
-	b layout tree.
-		
-	b addAll: (RTShape withAllSubclasses).
+	b layout 
+		use: (RTForceBasedLayout new charge: -180).
+
+	b global
+		minSize: 10;
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+
+	b addAll: (RTObject withAllSubclasses).
 	b open.
 	b view canvas'
 	

@@ -28,7 +28,12 @@ RTBezierLine >> centerOfElements: aOneArgBlockOrValues [
 
 { #category : #'control points' }
 RTBezierLine >> centerOfObjects: aOneArgBlockOrValues inView: view [
-	^ self centerOfElements: [ :edge | view elementsFromModels: (aOneArgBlockOrValues rtValue: edge) ]
+	"Set one control point, at the center of the elements provided as argument"
+	^ self centerOfElements: [ :edge |
+		aOneArgBlockOrValues isClosure
+			ifTrue:  [ view elementsFromModels: (aOneArgBlockOrValues 
+															value: edge from model value: edge to model) ]
+			ifFalse: [ view elementsFromModels: aOneArgBlockOrValues ] ]
 ]
 
 { #category : #accessing }
@@ -111,6 +116,34 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 RTBezierLine >> initialize [
 	super initialize.
 	controllingElements := #()
+]
+
+{ #category : #'control points' }
+RTBezierLine >> midPointInCenterOfElements: aOneArgBlockOrValues [
+	"Argument can be a OneArgBlock (taking an edge as argument) or direct values"
+	| b |
+	b := [ :edge |
+		| center intermediaryElement elements |
+		elements := aOneArgBlockOrValues rtValue: edge.
+		(elements isNil or: [ elements isEmpty ]) 
+			ifTrue: [ #() ]
+			ifFalse: [ 
+				center := (RTGroup withAll: elements) center.
+				intermediaryElement := RTBox element.
+				intermediaryElement translateTo: (edge from position + center) / 2.
+				Array with: intermediaryElement ] ].
+
+	self controllingElements:  b
+]
+
+{ #category : #'control points' }
+RTBezierLine >> midPointInCenterOfObjects: aOneArgBlockOrValues inView: view [
+	"Set one control point, between the starting point and the center of all the objects provided as argument"
+	^ self midPointInCenterOfElements: [ :edge |
+		aOneArgBlockOrValues isClosure
+			ifTrue:  [ view elementsFromModels: (aOneArgBlockOrValues 
+															value: edge from model value: edge to model) ]
+			ifFalse: [ view elementsFromModels: aOneArgBlockOrValues ] ]
 ]
 
 { #category : #'control points' }

@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTGDLayoutB >> circle [
+	^ self use: RTCircleLayout new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDLayoutB >> execute [
 	layout 
 		on: (self view elements select: [ :e | condition rtValue: e model ]) 

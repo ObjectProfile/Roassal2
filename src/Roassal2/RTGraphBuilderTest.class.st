@@ -18,6 +18,23 @@ RTGraphBuilderTest >> setUp [
 	b := RTGraphBuilder new
 ]
 
+{ #category : #edges }
+RTGraphBuilderTest >> testBundleConnect [
+
+	| firstEdge |
+	b nodes color: Color blue.
+	b edges 
+		if: [ :v | v = 1 ];
+		bundleConnectTo: [ :v | Array with: 2 with: 3 ].
+		
+	b layout grid.
+	b addAll: #(1 2 3).
+	
+	firstEdge := b view edges first .
+	self assert: firstEdge from == b view elements first.
+	self assert: firstEdge to == b view elements second.
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testDefaultNodeShape [
 

@@ -11,21 +11,13 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> bundleConnectTo: aBlock [
-
-"	oldColor := shape color.
+	| oldColor |
+	oldColor := shape color.
 	shape := RTBezierLine new.
 	shape color: oldColor.
-	shape centerOfObjects: objects inView: view.
-"
+	shape midPointInCenterOfElements: [ :edge | self view elementsFromModels: (aBlock rtValue: edge from model) ].
+	self connectTo: aBlock.
 
-
-"	shape := RTBezierLine new.
-	center := (RTGroup withAll: toElements) center.
-	intermediaryElement := (RTBox new color: Color red) element.
-	intermediaryElement translateTo: center.
-	
-	shape controllingElements: (Array with: intermediaryElement).
-"
 ]
 
 { #category : #'as yet unclassified' }
@@ -59,7 +51,7 @@ RTGDEdgeB >> initialize [
 	usedInLayout := false.
 	connectTo := #yourself.
 	edgesUsedForLayout := OrderedCollection new.
-	self shape: RTLine
+	self shape: RTLine new
 ]
 
 { #category : #'as yet unclassified' }

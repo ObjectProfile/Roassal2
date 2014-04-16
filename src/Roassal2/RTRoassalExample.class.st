@@ -1,3 +1,32 @@
+"
+RTRoassalExample new installTitle: 'BezierAndCenterOfObjects' 
+		code:
+		'
+| v es startingElement shape |
+v := RTView new.
+
+es := (RTEllipse new color: (Color blue alpha: 0.4); size: 15) elementsOn: (1 to: 20).
+v addAll: es.
+es @ RTDraggable.
+
+""we are properly locating the nodes""
+startingElement :=  (RTEllipse new color: (Color red alpha: 0.4); size: 20) element.
+v add:  startingElement.
+startingElement @ RTDraggable.
+
+RTCircleLayout new initialRadius: 80; on: es.
+es translateTo: 0 @ 0.
+
+startingElement translateBy: -150 @ 0.
+
+""Building the bezier lines""
+shape := RTBezierLine new
+				centerOfObjects: (1 to: 20) inView: v.
+v addAll: (shape edgesFrom: startingElement toAll: es).		
+v open.
+v  canvas'
+	
+"
 Class {
 	#name : #RTRoassalExample,
 	#superclass : #RTAbstractExample,
@@ -142,6 +171,74 @@ v add: edge.
 
 v open.
 v canvas
+]
+
+{ #category : #'as yet unclassified' }
+RTRoassalExample >> exampleBezierAndCenterOfObjects [
+
+| v es startingElement shape |
+v := RTView new.
+
+es := (RTEllipse new color: (Color blue alpha: 0.4); size: 15) elementsOn: (1 to: 20).
+v addAll: es.
+es @ RTDraggable.
+
+"we are properly locating the nodes"
+startingElement :=  (RTEllipse new color: (Color red alpha: 0.4); size: 20) element.
+v add:  startingElement.
+startingElement @ RTDraggable.
+
+RTCircleLayout new initialRadius: 80; on: es.
+es translateTo: 0 @ 0.
+
+startingElement translateBy: -150 @ 0.
+
+"Building the bezier lines"
+shape := RTBezierLine new
+				centerOfObjects: (1 to: 20) inView: v.
+v addAll: (shape edgesFrom: startingElement toAll: es).		
+v open.
+v  canvas
+]
+
+{ #category : #'as yet unclassified' }
+RTRoassalExample >> exampleBezierAndCenterOfObjectsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHNklEQVR4XuWaW0wUVxjHZ8Fd
+FkFYuSwL7HK/LSCy7MIuBARBuewKrIhIQRABIZbAVrSUXikJiTXyYFGjSUs0prEPTfqg1b7Y
+xMQHExISGjE8WO1LkyZ9aGKb9KXp5XwOkz0zDCug9sL/l53MnJkz58D3zfluMwI++OCDDz74
+4IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8+
++Py30esFwW4X9/j8w8THC4LHIwiJif5zx44JwsCAuJcwm8V+1B+fVwgJXtr8CnG5pqblClHr
+h89LICFBEHJy/O39+ysqTp8ThK4u3mS5XN0DcpPV3S0qyev1n6NxaDx8NkhsrP8pLyz0n4+M
+jIuLkwnW5XJV8e2kpKQ06uc/Q/dLY9G4+GyAuDgSYGvr+SuCkJsbSAHKdllZWbV8rNxcr/fj
+WVEhRiO+bDeM1SoIRUXR0dHGQAJXKqSgoKCYb5tMJjONIzd/+KwBh0N8iqtkAs7IyLBmZWXl
+8ecsFkuamkIKCwudfL+dO3eWJCYmJsvnofFpHgqX8QkYRRmNo2+qRUfKVcIrgT9Wrh6j0Ri/
+nnnwkWGzkZDy89sO2+32MuXVtra2Pum4oqKiVk0hvLnq7e19QzlGUVFRWV5e2+GVwQI+AUlN
+Tc0i4fHnghjZ2dk7pLZOpwtZVlQv7XklshUVq6aMhIQEC750n0t6umjPdTrlFfIBkZGRUZyP
+KOH9CCklNjbWRG2DwfCsX35+flFeXp6N76e24sT5aN60NHwdqGbg9fVqV0kJvIDr6+tbyNHT
+8e7du91sp2G+o0ZaJbm5uYWcCXOoK4NoaMDP6FdRiMl0ciwzs7MnMzMzj4WpiSufZZ3O6XRW
+0rHb7T5IvoIETf6DVhFbHdG0UqTVkpKSkrEyuhIxm80pZBKzsw/30rz4ClEtkfhD0G3btkWW
+lpZWk2KYgmRJ4ZEjR4arqqoaTp06NVVcXFzR1NT0mlar1Umrgtp0PwldscpcpLTq6mpPaGjo
+Vv8VmneTllRinv1eLlsYs7OzX7GI6cTly5e/pEhrcHBwLCQkRN/c3NzR3t7eT6uCwmJSlHQf
+ux566NChPo1GE0T9oJ5vA/uxMKeXjDGr5nnXdzeVyOkpjY8n503C9vl8E319faMXL178YmZm
+5vPr169/c+fOnaWjR4/66I6oqKhYOq6rq2uh0Lampmaf9NQnJydndHV1vR4REWFY7/ybRiHs
+v7GTMqaczulrPt+N93y+aRLq87bJyckLc3OLT588efIX2/58/PjxH48ePfp9cXHxl4WFhZ/n
+5+d/unv37ndXr179mvHtgwcPnt6/f/8Hao+NjZ1eyxzP367dcDqV5fv/e8WJ/bgXEAPhghC+
+JhMXExPX2XnmEgnF57vw2dTU1KWHDx/+urS09Nu9e/e+n5ub+3F4ePj9s2fPXrl9+/bC+Pj4
+mdraWi85a1ole/bsaerv7x9lYe4LlEDa28U/m/abCJat7agThDpWxTOv/271kjiLqnaNjIx8
+cPPmzflbt24tDA0NvUNOmUJdZpaGyHd0dHQMMnMV5q9SVbmZKdvPal/51PdF5sdnJRrmkDtp
+o8bx48fHJyYmZii68ng8beTEKaqia1R8zMnJKWhsbGxXhsvUt6WlpQtfnGv3QnZ6G0juejnP
+aFUTIGXglI1TxMWEfJDqWZSH0EqhomJwcPAW6kdJI1/r4iEFer3eTrFF89G8VJrHR1oEGrLh
+yclvvet2f3R+tV6UR0gJIxP2XkYzJYd6vX4rJYwsvNWwyGo7X3632Wwuh8NRvtqYTU3Tl2he
+0YfQ34HPMtKXI2WqJY7u7u4hvl1SUrJrOdfQM6GXSiUS6Tpz9Cf5/pSPqM9L8ym/WMFnGa1W
+eYZyCuULp4aGhlauaJhK+8rKymc1MIrAuKKk7K0hrSb1dyMr58VHhuhHqD4VFhYmC5/JBEnH
+fPlDUojkQwhmykKZQtPlI0fFsCJlET8PPgFpaSET0tx87hN11++v2rLsvFE65l9Q8VGW8t26
+BBv/U9FUkUPHJwCrf+DW2trao4yW1BTCmy2C8pT1zIOPDBMrndfVyT8VXf1JV1MIq/yu8Alk
+/uRnaHyax2TCl/m6qKzU6z2NFktSmmJ1dKymEKXZItLTM6xardtD4+HLdOMVMiuZFIPBd0L5
+uU55efneQAqR3h7y3mf7dt+oaKKsVnzZbojwcH9+IpXGTSaNxu4IDrYkBVJISEja8jt6ySTR
+/VK+ERaGL9sXIijIf9zTY7dPnpE746wsl2uEvYbNzOSdts324Wnqrz4OPi+JAwdEZfCCHhgw
+m998W64kuk5t6o/PK0T6bCciwn9u3z5R+LSXoOvUDz8L/5fAf5+BDz744IMPPvjggw8++OCD
+Dz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++Gxa/gaxvt0BZhXI
+eQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'as yet unclassified' }
@@ -1289,6 +1386,76 @@ P4i/ZflBnnx0P8jXn6z5s+Q/WX4QP4gfxA/iB/GD+FuWr/d8IlprPZvV2exO39L98+L/qftB
 fH4QP4jPD/JXjiOfiFLKkc3qbHanb2F3td1fiX2v/KnvP2c+P4gfxA/iB/GD+EFesbva7q/E
 Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/NxPvWi+6f+
 K4KdAAAAAElFTkSuQmCC'
+]
+
+{ #category : #'as yet unclassified' }
+RTRoassalExample >> exampleMidPointCenterUsingBezier [
+
+| v es startingElement shape |
+v := RTView new.
+
+es := (RTEllipse new color: (Color blue alpha: 0.4); size: 15) elementsOn: (1 to: 20).
+v addAll: es.
+es @ RTDraggable.
+
+"we are properly locating the nodes"
+startingElement :=  (RTEllipse new color: (Color red alpha: 0.4); size: 20) element.
+v add:  startingElement.
+startingElement @ RTDraggable.
+
+RTCircleLayout new initialRadius: 80; on: es.
+es translateTo: 0 @ 0.
+
+startingElement translateBy: -150 @ 0.
+
+"Building the bezier lines"
+shape := RTBezierLine new
+				midPointInCenterOfObjects: (1 to: 20) inView: v.
+v addAll: (shape edgesFrom: startingElement toAll: es).		
+
+v open.
+v  canvas
+]
+
+{ #category : #'as yet unclassified' }
+RTRoassalExample >> exampleMidPointCenterUsingBezierIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHeklEQVR4XuWaaUxUVxTHHyAM
+yyDUYR2QRQRhlG1mZGAQGJYWhh0GZVFhxDCKbRmh1hbXIKZWC0kjtR9MTAyJSROjsXYx9nPT
+pBhr08TEJsZvTT80/dwmTZrev4/beYwjIGoX/r/wct9yl+Gee8+559yr8MMPP/zwww8//PDD
+Dz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MPPf5vw
+cEWxWNSUn3+Y5GRFaWpSlJQU37uhIUXxeNRUkpqq5kN+fl4i6Hh5qWRkHD6anX3k5EKBPJmP
+nxeC0agoubm+544Oi+XUWUXZvRtPBoMhvrDQVumvsjo7z19ShdHe7iuLelAfPyskPt43youK
+8Gb79u17FCUmBvcRERGRFovFri2h0+nCt2zZYlGf1HwqKC/rQr38rIDExPj40UOhocMHFMVk
+SkxM/Ht05+XlFQpKtLnz8/Ot2dnZpkA1bd3a76moOPOhKpCEBP6+XSHt7UOjimI2R0dHx5jN
+5jLVXKdm5uTkbJF5ggSbN28uDlR+27Ztr1ZVVTWoT2bzQvXHzzKwWtVR7HCgo9PS0jbgbW1t
+bQvS2NhYQ3p6epbMXVxcXJabm5vvXwuE4BNEIBwOtR2Lhb/Pl1hFrV07chBpWVlZNd4kJCQk
+S/uQkpKSrlFRFn8VBSHY7fbapVqpqzv3kU4HVci/CluC4uKamnMzilJZabVay5OSklKFkTZj
+tmRmZuZobEiBn2qqE7OldLGanU6na42gtbW1F/VrFwv8LILo+GwYbdxv2rQpPzg4OESkj20G
+VlV4J/PabLYqzBKRJzhQXc3Nzd34pgqBn2cgKwvdbTAYU/GETm5ra+sTNiRL8NgQY6bgGfdY
+YUGVRUVFRfvXJDsfwli63bAw1Y5s2MAvgwAeuNN55jwEUFFR8VpRUZENM6K0tNSBmYBcuBfO
+YAKuQEJobGzc/mztOp38Hv1TBFJaenqqo+PEuZ07d+5PTk5Ora6ubiooKNiKrzU1Nc2wKbAl
+soSYQTuRtrS09CynBcwo1B0XF5co7VB399H3dboDr/MLJECI5MiRyzcxwsfGxk6Jzt8mR31d
+XV0rUggnIyMjG7NDzphAYGZ1dnbuDg0NDZPlF18CQ2Wt0pBK3OO/5RMSErJmeHj43WvXrn0z
+Ojo6MT09PQsjDvuxY8eOQYxqvV4f7XK5BrTlEDbp6upyS8EIW6Lv7e31SHtDT6z4G1SUQShj
+Ec1rXywvnLyRkZETk5OTH09NTV2+fv3Tb69c+eyOwWDKx6ju6+vb19TUtGPPnj1eqK3w8PAI
+NbIVnwSVU15eXgdBvrhfjxA9ZskqCtWL/8YCYZy22aZmvd6bx7zeKa/Xe1JeGP337t379dGj
+R38+fPjwj7m5uZ+RzszMfDIz88Xc7dtzP92//+PvV69e/Xp8fPyctuzLv2Zv2mynpxaG7//n
+5Ik/zQaER68oeu13+AIY8eiAW7du/XD37t1fHjx48BuctQsXvrxz8eJX37vdUxdFTMosVNRa
+h8PRuHfv3jERFil4+b++p0f92T09q0ptCW8tv15R6oUjkbqc/OvXr8+E/Zidnb1948bn30GV
+QVUJtTQsPPQU2ITIyEi9JlRihVBRDn7Irl27hiG8F/Pr+UPyCxCdP3T27NlLDQ0NLrEqasHK
+SC5njUZjmrAljTD0MTExrwQqL+JeNXAERfBxXX9//xsQGn+vPp8VspSXv33i+PGJ8xAGBIBL
+bkJhGSxz4h6rqcrKyvqlasVmFTa1ICgsCISg/DzydeuwC6mG5vmZB86ex5OXd+xUevqBEXQc
+nD4EC0tKSirgnUvnUIbhNc6eEapsuc6hNjjZ3d29Ny5uaL/JdHxStSE+p5Of+ZMjbW0T09gD
+EbuDKRjdAwMDb86HTKrxbr4zC7H0fcIHEh44ZpNYKHQtv127/ckTK/zMExrq6yZ7LTxzhMsR
+MsE77IdoVRdmxtM8dghHlLcuTzi+dvkJGO7rGkAIXgYTkWqXv9j70OZHnkAzRhvDMplMxTIE
+s9B+8LMEnZ1paYePKEp/P1ZbMjaFVLsBha1b/w0pCEUK8GlgOY39d4dj4gNVVcGg87MIvgNu
+wjl0SvWDWBXu4af4lgJBQTD6/jVAME879BCoHf4+VxYfw8K3rJdHRWWUVms73G73iLaE8F06
+A9WEssKHWR+4HdSPdtAeP8umtnb4LbXjgoKk6gKDg4MHtflwREhu+/ojlssiQBkRqdZTVcXf
+qyuPkOX51IrFAudOK5SOjo7d2txhYWE6/8Nzvm8lNqPx0DtqXaiXnxWg1/tOtquhcYTotRtK
+Wpvi8/ktdoMhv0jNJ1USykt/IyqKv2+fC+2JErcbHr3WGJeXN7lgSXA0Qr4rLDz53saN4yeR
+P3A9/LwgXC5VGNqO9niCg/ftX7hiwnc8Iz8/LxF5bGetJuze3Kx2PlIJviMfvxf+L8G/n8EP
+P/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDD
+Dz/8rFr+AnBX68ww1MTcAAAAAElFTkSuQmCC'
 ]
 
 { #category : #'as yet unclassified' }
