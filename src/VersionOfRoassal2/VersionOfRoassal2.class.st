@@ -2493,3 +2493,14 @@ VersionOfRoassal2 >> version000180 [
 	at: #date put: '16 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000181 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.126';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.236';
+	at: #version put: '0.182';
+	at: #comment put: '0.182 : Worked a lot on the graph builder, the RTBezierLine shape and added some examples';
+	at: #date put: '16 April 2014';
+	yourself
+]
