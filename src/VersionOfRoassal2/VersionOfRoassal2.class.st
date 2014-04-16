@@ -2460,3 +2460,14 @@ VersionOfRoassal2 >> version000177 [
 	at: #date put: '16 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000178 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.124';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.234';
+	at: #version put: '0.179';
+	at: #comment put: '0.179 : Fixed a bug with the bitmap in Trachel, and added many many examples. Cool!';
+	at: #date put: '16 April 2014';
+	yourself
+]
