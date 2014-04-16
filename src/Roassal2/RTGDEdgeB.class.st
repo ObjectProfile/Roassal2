@@ -12,6 +12,20 @@ Class {
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> bundleConnectTo: aBlock [
 
+"	oldColor := shape color.
+	shape := RTBezierLine new.
+	shape color: oldColor.
+	shape centerOfObjects: objects inView: view.
+"
+
+
+"	shape := RTBezierLine new.
+	center := (RTGroup withAll: toElements) center.
+	intermediaryElement := (RTBox new color: Color red) element.
+	intermediaryElement translateTo: center.
+	
+	shape controllingElements: (Array with: intermediaryElement).
+"
 ]
 
 { #category : #'as yet unclassified' }

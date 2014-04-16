@@ -62,10 +62,6 @@ RTNest >> makeElements: elements draggableBy: backElement [
 
 { #category : #utility }
 RTNest >> makeElements: elements transformable: backElement [
-	"It makes a scaling/zooming efect.
-	If you change backElement's extent, it changes proportionaly extent and position of nested elements. 
-	So the overall image --- composition of backElement and elements --- does not change. 
-	It only zoom in/out the overall image."
 	| callback |
 	callback := TRExtentCallback block: [ :shape :ratio | 
 		| mainPosition |
