@@ -4,15 +4,21 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #installing }
 RTAbstractExample >> installOn: aView [
 	| el |
 	el := (RTLabel new text: (self label)) element.
 	el @ RTHighlightable.
-	aView add: el
+	aView add: el.
+	
+	el on: TRMouseClick do: [ :evt |
+		aView clean.
+		self openOn: aView.
+		aView canvas camera focusOnCenter.
+	]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #installing }
 RTAbstractExample >> installTitle: aTitle code: sourceCode [
 	"SourceCode should be a complete example, executable within a workspace"
 	
@@ -41,6 +47,9 @@ v canvas'
 	| canvas icon64Mime stream |
 	canvas := (Compiler evaluate: sourceCode).
 	
+	(self class methodDict includesKey: ('example', aTitle) asSymbol)
+		ifTrue: [ self error: 'Title already used. Proceed to override' ].
+	
 	self class compile: 'example', aTitle, String cr, sourceCode.
 	
 	stream := WriteStream on: ByteArray new.
@@ -52,52 +61,65 @@ v canvas'
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #installing }
 RTAbstractExample >> justToTry [
 
 
 	
-	RTRoassalExample new installTitle: 'AnimatedCircle' 
+	RTRoassalExample new installTitle: 'ArrowedBezier' 
 		code:
-		'	| nbOfCircles  v shape mousePos |
-	nbOfCircles := 25.
-	
-	mousePos := 50 @ 50.
+		'	| v shape  edge els |
 	v := RTView new.
-	shape := RTEllipse new sizeElement: [ :el | ((el position - mousePos) r abs / 3) min: 50 ]; color: (Color blue alpha: 0.4).
-	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
-	RTGridLayout on: v elements.
-	
-	v on: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
-	
+	shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
+	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
+	v addAll: els .
+	RTHorizontalLineLayout on: v elements.
+	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTArrowHead new) ).
+	v add: edge.
+
 	v open.
 	v canvas'
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAbstractExample >> label [
 	^ 'fill please'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTAbstractExample >> open [
 
-	| v exampleSymbols icon64Mime form element |
+	| v |
 	v := RTView new.
+	self openOn: v.
+	v open.
 	
-	exampleSymbols := self class selectors select: [ :symbol | (symbol beginsWith: 'example') and: [ (symbol endsWith: 'Icon') not ] ].
+]
+
+{ #category : #'instance creation' }
+RTAbstractExample >> openOn: v [
+
+	| exampleSymbols icon64Mime form element helpBar |
+
+	exampleSymbols := self class selectors 
+								select: [ :symbol | (symbol beginsWith: 'example') 
+															and: [ (symbol endsWith: 'Icon') not ] ].
 	exampleSymbols do: [ :k |
 		icon64Mime := self perform: (k, #Icon) asSymbol.
-		form := Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
+		form := Form fromBinaryStream: 
+							(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
 		element := (RTBitmap new form: form) element.
-		element @ (RTPopup new text: 'Example ', k).
-		element when: TRMouseClick do: [ :evt | (self class >> k) browse ].
+		element @ (RTPopup new text: k asString).
+		element when: TRMouseLeftClick do: [ :evt | self class new perform: k ].
+		element when: TRMouseRightClick do: [ :evt | (self class >> k) browse ].
 		v add: element.
 	].
 
 	RTGridLayout new on: v elements.
 	
-	v open.
+	helpBar := TRLabelShape new text: ' Left to run / Right for code'.
+	v canvas addFixedShape: helpBar.
+	TRConstraint stickAtTheBottomOfTheWindow: helpBar.
 	
 ]
