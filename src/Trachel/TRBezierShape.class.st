@@ -57,6 +57,11 @@ TRBezierShape >> initialize [
 ]
 
 { #category : #accessing }
+TRBezierShape >> numberOfPoints [
+	^ self points size
+]
+
+{ #category : #accessing }
 TRBezierShape >> points [
 	^ listOfPoints copy
 ]
