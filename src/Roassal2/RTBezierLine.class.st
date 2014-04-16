@@ -32,8 +32,8 @@ RTBezierLine >> controllingElements [
 ]
 
 { #category : #accessing }
-RTBezierLine >> controllingElements: listOfElements [
-	controllingElements := listOfElements
+RTBezierLine >> controllingElements: listofElements [
+	controllingElements := listofElements
 ]
 
 { #category : #accessing }
@@ -74,24 +74,23 @@ RTBezierLine >> getFollowersOf: aNode using: followBlock [
 RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	| listOfPoints |
 	listOfPoints := OrderedCollection new.
-	
-	listOfPoints add: (attachPoint startingPointOf: anEdge).
+	listOfPoints add: anEdge from position.
 	
 	follow ifNotNil: 
 		[ self setControllingElementsFromFollowFor: anEdge ].
 	
-	controllingElements ~= #() ifTrue: 
+	controllingElements ifNotEmpty: 
 		[ |cElements|
 			cElements := controllingElements collect: #position.
 			cElements isNotEmpty ifTrue: [ 
-				(cElements first = anEdge from position and: [ cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButFirst ].
-				(cElements last = anEdge to position and: [ cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButLast ] ].
+				(cElements first = anEdge from position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButFirst].
+				(cElements last = anEdge to position and: [cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButLast]].
 			listOfPoints addAll: cElements
 		].
 		
-	listOfPoints add: (attachPoint endingPointOf: anEdge).
+	listOfPoints add: anEdge to position.
 	^ listOfPoints
 ]
 

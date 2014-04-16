@@ -19,27 +19,6 @@ RTExample >> animationTest [
 	^ view
 ]
 
-{ #category : #edges }
-RTExample >> arrowedEdges01 [
-	"
-	self new arrowedEdges01
-	"
-
-	| v e1 e2 l |
-	v := RTView new.
-	e1 := (RTEllipse new size: 10) element.
-	e2 := (RTEllipse new size: 10) element.
-	e2 translateBy: 100@0.
-
-	v add: e1.
-	v add: e2.
-	l := RTEdge from: e1 to: e2.
-	l + (RTLine new color: Color red) + (RTArrow new color: Color red).
-	v add: l.
-
-	v open
-]
-
 { #category : #attachpoints }
 RTExample >> attachPoint01 [
 
@@ -425,11 +404,7 @@ es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
 v addAll: es.
 RTCircleLayout new initialRadius: 150; on: es.
 
-es @ (RTShowEdge new 
-			connectTo: [ :value | value - 5 to: value + 5]; 
-			shape: [ :el | RTBezierLine new 
-								centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
-								color: (Color blue alpha: 0.4) ] ).
+es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: [ :el | RTBezierLine new centerOfObjects: (el model - 5 to: el model +5) inView: v; color: (Color blue alpha: 0.4) ] ).
 
 v open
 ]
@@ -542,6 +517,40 @@ RTExample >> edition [
 
 	view canvas color: Color white.
 	view open
+]
+
+{ #category : #nesting }
+RTExample >> elementWithFontsZooming [
+	"
+	self new elementWithFontsZooming
+	"
+	| view firstGroup secondGroup bothGroups mainElement originalExtent mainWithNested |
+	view := RTView new.
+	"element creation"
+	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
+	firstGroup := (RTLabel new) elementsOn: { 'Smalltalk'. 'World'}.
+	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
+	bothGroups := RTGroup with: firstGroup with: secondGroup.
+	"layouting"
+	RTHorizontalLineLayout new gapSize: 1; alignLeft; on: firstGroup; on: secondGroup.
+	RTVerticalLineLayout new gapSize: 1; alignLeft; on: bothGroups.
+	RTNest new padding: 1; on: mainElement nest: firstGroup, secondGroup.
+	mainWithNested := RTGroup with: mainElement with: bothGroups.
+	mainWithNested @ RTDraggable.
+	view add: mainWithNested.
+	"define menu and their actions"
+	originalExtent := mainElement extent.
+	view addMenu: 'Smaller' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainElement extent * 0.6 
+													during: 0.3 on: mainElement) ].
+	view addMenu: 'Bigger' 
+		callback: [ view addAnimation: (RTResizeMove new 
+													toExtent: mainElement extent * (1 / 0.6) 
+													during: 0.3 on: mainElement) ].
+	view addMenu: 'Original' callback: [ mainElement extent: originalExtent. view signalUpdate ].
+	view addMenu: 'Half' callback: [ mainElement extent: originalExtent / 2. view signalUpdate ].
+	^ view open
 ]
 
 { #category : #nesting }

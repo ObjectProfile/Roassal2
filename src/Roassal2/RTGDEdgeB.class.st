@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTGDEdgeB >> bundleConnectTo: aBlock [
-
-]
-
-{ #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: aOneArgBlock [
 
 	connectTo := aOneArgBlock

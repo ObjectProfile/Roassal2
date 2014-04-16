@@ -13,8 +13,7 @@ Class {
 		'interactions',
 		'markers',
 		'center',
-		'names',
-		'count'
+		'names'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
@@ -300,13 +299,6 @@ RTSVGVisitor >> closeDefWithContent [
 { #category : #'drawing-primitives' }
 RTSVGVisitor >> closeTag [
 	stream nextPutAll: '" '
-]
-
-{ #category : #utils }
-RTSVGVisitor >> count [
-	count ifNil: [ count := 0 ].
-	count := count + 1.
-	^count
 ]
 
 { #category : #drawing }
@@ -703,7 +695,10 @@ RTSVGVisitor >> getDecorationId: aLineDecorationShape [
 
 { #category : #utils }
 RTSVGVisitor >> getId: element [
-	^ element identityHash asString
+	|sum eShape|
+	eShape := element trachelShape.
+	sum := (element identityHash) + (eShape identityHash).
+	^ sum asString
 ]
 
 { #category : #utils }
