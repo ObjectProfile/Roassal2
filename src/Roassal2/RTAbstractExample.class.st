@@ -38,18 +38,66 @@ v add: edge.
 v open.
 v canvas'
 	"
-	| morph form |
-	morph := (Compiler evaluate: sourceCode) morph. 
-	form := Form extent: 500 @ 500 depth: 32.
-	morph drawOn: form getCanvas.
+	| canvas icon64Mime stream |
+	canvas := (Compiler evaluate: sourceCode).
 	
-	"Check users of Base64MimeConverter to see how to convert a form into a 64 mime string"
+	self class compile: 'example', aTitle, String cr, sourceCode.
 	
+	stream := WriteStream on: ByteArray new.
+	PNGReadWriter 
+				putForm: (canvas morph imageForm scaledToSize: 100 @ 100)
+				onStream: stream .
+	icon64Mime := (Base64MimeConverter mimeEncode: stream contents readStream) contents.
+	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, ''''.
 	
-	self halt.
+]
+
+{ #category : #'as yet unclassified' }
+RTAbstractExample >> justToTry [
+
+
+	
+	RTRoassalExample new installTitle: 'AnimatedCircle' 
+		code:
+		'	| nbOfCircles  v shape mousePos |
+	nbOfCircles := 25.
+	
+	mousePos := 50 @ 50.
+	v := RTView new.
+	shape := RTEllipse new sizeElement: [ :el | ((el position - mousePos) r abs / 3) min: 50 ]; color: (Color blue alpha: 0.4).
+	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
+	RTGridLayout on: v elements.
+	
+	v on: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	
+	v open.
+	v canvas'
+	
 ]
 
 { #category : #'as yet unclassified' }
 RTAbstractExample >> label [
 	^ 'fill please'
+]
+
+{ #category : #'as yet unclassified' }
+RTAbstractExample >> open [
+
+	| v exampleSymbols icon64Mime form element |
+	v := RTView new.
+	
+	exampleSymbols := self class selectors select: [ :symbol | (symbol beginsWith: 'example') and: [ (symbol endsWith: 'Icon') not ] ].
+	exampleSymbols do: [ :k |
+		icon64Mime := self perform: (k, #Icon) asSymbol.
+		form := Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
+		element := (RTBitmap new form: form) element.
+		element @ (RTPopup new text: 'Example ', k).
+		element when: TRMouseClick do: [ :evt | (self class >> k) browse ].
+		v add: element.
+	].
+
+	RTGridLayout new on: v elements.
+	
+	v open.
+	
 ]

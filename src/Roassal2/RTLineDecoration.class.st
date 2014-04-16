@@ -10,6 +10,16 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #accessing }
+RTLineDecoration >> attachPoint [
+	^ attachPoint
+]
+
+{ #category : #accessing }
+RTLineDecoration >> attachPoint: anObject [
+	attachPoint := anObject
+]
+
 { #category : #initialization }
 RTLineDecoration >> initialize [
 	super initialize.
@@ -40,13 +50,13 @@ RTLineDecoration >> trachelShapeClass [
 { #category : #public }
 RTLineDecoration >> trachelShapeFor: anEdge [
 	|f shape |
-	f :=  anEdge from position.
+	f :=  (attachPoint startingPointOf: anEdge).
 	(line ~= nil)
 		ifTrue: [ | tShape |
 			tShape := line trachelShapeFor: anEdge.
 			tShape class = TRBezierShape 
 				ifTrue: [	f := tShape points allButLast last ]].
-	shape := self trachelShapeClass from: f to: anEdge to position width: (self widthFor: anEdge) size: self mySize color: (self colorFor: anEdge) stroke: (self colorFor: anEdge).
+	shape := self trachelShapeClass from: f to: (attachPoint endingPointOf: anEdge) width: (self widthFor: anEdge) size: self mySize color: (self colorFor: anEdge) stroke: (self colorFor: anEdge).
 	^ shape
 ]
 
