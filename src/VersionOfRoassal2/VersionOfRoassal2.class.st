@@ -2449,3 +2449,14 @@ VersionOfRoassal2 >> version000176 [
 	at: #date put: '15 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000177 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-JurajKubelka.123';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.233';
+	at: #version put: '0.178';
+	at: #comment put: '0.178 : improvement of the bezier lines. Merged with improvment of Pablo Ricardo and Juraj';
+	at: #date put: '16 April 2014';
+	yourself
+]
