@@ -69,6 +69,19 @@ RTGraphBuilderTest >> testIfColor [
 ]
 
 { #category : #tests }
+RTGraphBuilderTest >> testMinSize [
+
+	b nodes shape: (RTEllipse new size: 3).
+	b global
+		if: [ :v | v = 'world' ]; minSize: 15.
+	b add: 'hello'.
+	b add: 'world'.
+	
+	self assert: b view elements first trachelShape extent = (3 @ 3).
+	self assert: b view elements second trachelShape extent = (15 @ 15).
+]
+
+{ #category : #tests }
 RTGraphBuilderTest >> testNode [
 
 	| e4 e6 |

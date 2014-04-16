@@ -66,19 +66,30 @@ RTAbstractExample >> justToTry [
 
 
 	
-	RTRoassalExample new installTitle: 'ArrowedBezier' 
+	RTGraphBuilderExample new installTitle: 'NormalizeColor' 
 		code:
-		'	| v shape  edge els |
-	v := RTView new.
-	shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
-	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
-	v addAll: els .
-	RTHorizontalLineLayout on: v elements.
-	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTArrowHead new) ).
-	v add: edge.
+		'
 
-	v open.
-	v canvas'
+	| b |
+	b := RTGraphBuilder new.
+	b nodes
+		if: [ :obj | obj isBehavior ];
+		shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
+
+	b global
+		normalizeColor: [ :cls | cls numberOfMethods ] using: (Array with: Color green with: Color red).
+
+	b edges
+		if: [ :obj | obj isBehavior ];
+		connectTo: [ :c | c subclasses ];
+		useInLayout;
+		shape: (RTLine new color: Color gray).
+
+	b layout tree.
+		
+	b addAll: (RTShape withAllSubclasses).
+	b open.
+	b view canvas'
 	
 ]
 

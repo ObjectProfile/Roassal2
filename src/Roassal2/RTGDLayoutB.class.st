@@ -32,6 +32,11 @@ RTGDLayoutB >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDLayoutB >> tree [
+	^ self use: RTTreeLayout new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDLayoutB >> use: aLayout [
 	layout := aLayout
 ]

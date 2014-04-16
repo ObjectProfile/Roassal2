@@ -152,10 +152,11 @@ RTGraphBuilderExamples >> simple08ColoredEdge [
 
 	| b |
 	b := RTGraphBuilder new.
-
-	b edge 
+	b nodes color: Color blue.
+	b edges
 		connectTo: [ :v | v + 1 ];
-		if: [:f :t | t = 2 ] color: Color red.
+		if: [:f :t | t = 2 ];
+		color: Color red.
 	b layout grid.
 	b addAll: #(1 2 3).
 
@@ -231,14 +232,12 @@ RTGraphBuilderExamples >> vissoft01 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]; color: (Color blue alpha: 0.3)).
+	b nodes
+		shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]; color: (Color blue alpha: 0.3)).
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ].
+	b edges connectTo: [ :c | c subclasses ]; useInLayout.
 
-	b layout 
-		for: [ :cls | cls isBehavior ] use: (RTTreeLayout new).
+	b layout  tree.
 		
 	b addAll: (RTShape withAllSubclasses).
 	b open
@@ -252,17 +251,20 @@ RTGraphBuilderExamples >> vissoft02 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: [ :obj | obj isBehavior ] shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
+	b nodes
+		if: [ :obj | obj isBehavior ];
+		shape: (RTEllipse new size: [ :c | 5 max: c numberOfMethods ]).
 
 	b global
 		normalizeColor: [ :cls | cls numberOfMethods ] using: (Array with: Color green with: Color red).
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+	b edges
+		if: [ :obj | obj isBehavior ];
+		connectTo: [ :c | c subclasses ];
+		useInLayout;
+		shape: (RTLine new color: Color gray).
 
-	b layout 
-		for: [ :cls | cls isBehavior ] use: (RTTreeLayout new).
+	b layout tree.
 		
 	b addAll: (RTShape withAllSubclasses).
 	b open
@@ -276,11 +278,12 @@ RTGraphBuilderExamples >> vissoft03 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
+	b nodes
 		shape: (RTEllipse new size: #numberOfMethods).
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+	b edges
+		connectTo: [ :c | c subclasses ];
+		shape: (RTLine new color: Color gray).
 
 	b layout 
 		use: (RTForceBasedLayout new).
@@ -301,18 +304,20 @@ RTGraphBuilderExamples >> vissoft04 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
+	b nodes
 		shape: (RTEllipse new size: #numberOfMethods);
 		whenOverShowEdges: [ :cls | cls dependentClasses ].
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+	b edges
+		if: [ :obj | obj isBehavior ];
+		connectTo: [ :c | c subclasses ];
+		useInLayout;
+		shape: (RTLine new color: Color gray).
 
-	b layout 
-		use: (RTTreeLayout new).
-
+	b layout tree.
+	
 	b global
-		minSize: 10;
+		minSize: 5;
 		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
@@ -327,12 +332,13 @@ RTGraphBuilderExamples >> vissoft05 [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
+	b nodes
 		shape: (RTEllipse new size: #numberOfMethods);
 		whenOverShowEdges: [ :cls | cls dependentClasses ].
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+	b edges
+		connectTo: [ :c | c subclasses ];
+		shape: (RTLine new color: Color gray).
 
 	b layout 
 		use: (RTForceBasedLayout new charge: -180).

@@ -20,6 +20,20 @@ RTGDGlobalB >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDGlobalB >> minSize: anInteger [
+	"aBlock is evaluated on each node model. 
+	Set the minimum size of each element"
+	self addProperty: [
+		self view elements do: [ :el | 
+				"We set the color"
+				(condition rtValue: el model)
+					ifTrue: [ el trachelShape extent: (el trachelShape extent max: anInteger @ anInteger) ]
+					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
+			] 
+		]. 
+]
+
+{ #category : #'as yet unclassified' }
 RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
@@ -40,9 +54,6 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape color: ((normalizer level: (((metricBlock rtValue: el model) - min) / max)) alpha: alphaColor) ]
 					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
-			
-				"Set the min and max size"
-				"self minAndMaxSizeOf: el"
 			] 
 		]. 
 ]

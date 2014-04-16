@@ -1,3 +1,6 @@
+"
+A RTExampleBrowser is the main class to browse examples of Roassal
+"
 Class {
 	#name : #RTExampleBrowser,
 	#superclass : #RTObject,
