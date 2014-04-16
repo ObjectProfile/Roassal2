@@ -19,6 +19,27 @@ RTExample >> animationTest [
 	^ view
 ]
 
+{ #category : #edges }
+RTExample >> arrowedEdges01 [
+	"
+	self new arrowedEdges01
+	"
+
+	| v e1 e2 l |
+	v := RTView new.
+	e1 := (RTEllipse new size: 10) element.
+	e2 := (RTEllipse new size: 10) element.
+	e2 translateBy: 100@0.
+
+	v add: e1.
+	v add: e2.
+	l := RTEdge from: e1 to: e2.
+	l + (RTLine new color: Color red) + (RTArrow new color: Color red).
+	v add: l.
+
+	v open
+]
+
 { #category : #attachpoints }
 RTExample >> attachPoint01 [
 
@@ -294,7 +315,7 @@ RTExample >> directedEdges01 [
 	self new directedEdges01
 	"
 
-| v classesRoassal classesTrachel shape1 shape2 |
+| v classesRoassal classesTrachel shape1 shape2 helpBar1 helpBar2 |
 v := RTView new.
 v @ RTDraggableView.
 
@@ -310,29 +331,20 @@ classesTrachel @ RTPopup.
 v addAll: classesRoassal.
 v addAll: classesTrachel.
 
-"RTEdge 
-	buildEdgesFromObjects: RTObject withAllSubclasses 
-	from: #yourself 
-	toAll: [ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ] 
-	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
-"
 RTEdge 
 	buildEdgesFromObjects: RTObject withAllSubclasses 
 	from: #yourself 
 	toAll: [ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ] 
 	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
 
-"RTGridLayout on: classesRoassal.
-RTGridLayout on: classesTrachel."
-
-"RTCircleLayout new initialRadius: 250; on: classesRoassal.
-RTCircleLayout new initialRadius: 150; on: classesTrachel.
-"
-
 RTHorizontalLineLayout new gapSize: 1;on: classesRoassal, classesTrachel.
 
-"TRConstraint move: classesRoassal onTheRightOf: classesTrachel."
-"TRConstraint move: classesRoassal onTheCenterOf: classesTrachel."
+helpBar1 := TRLabelShape new text: 'Dependencies between Roassal and Trachel'.
+helpBar2 := TRLabelShape new text: 'down links = Roassal depends on Trachel'.
+v canvas addFixedShape: helpBar1.
+v canvas addFixedShape: helpBar2.
+TRConstraint stick: helpBar1 above: helpBar2.
+TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
 
 v open
 ]
@@ -404,7 +416,11 @@ es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
 v addAll: es.
 RTCircleLayout new initialRadius: 150; on: es.
 
-es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: [ :el | RTBezierLine new centerOfObjects: (el model - 5 to: el model +5) inView: v; color: (Color blue alpha: 0.4) ] ).
+es @ (RTShowEdge new 
+			connectTo: [ :value | value - 5 to: value + 5]; 
+			shape: [ :el | RTBezierLine new 
+								centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
+								color: (Color blue alpha: 0.4) ] ).
 
 v open
 ]
@@ -502,18 +518,13 @@ RTExample >> edition [
 	view addMenu: '+ line' callback: [ selected := #line. statusBar text: 'line' ].
 	view addMenu: '+ circle' callback: [ selected := #circle. statusBar text: 'circle' ].
 	view addMenu: '+ rectangle' callback: [ selected := #rectangle. statusBar text: 'rectangle' ].
-	view addMenu: 'Info' callback: [ :evt | UIManager default inform: 'Vectorial editing is hyper cool' ].
+	view addMenu: 'Info' callback: [ UIManager default inform: 'Vectorial editing is hyper cool' ].
 
 	statusBar := TRLabelShape new.
 	statusBar text: 'Please, select an option'.
 	view canvas addShape: statusBar.
 	statusBar setAsFixed.
 	TRConstraint stickAtTheBottomOfTheWindow: statusBar.
-	
-"	stack zoomInButton; zoomOutButton.
-	stack title: 'Vectorial edition'.
-
-	"
 
 	view canvas color: Color white.
 	view open
@@ -810,7 +821,7 @@ RTExample >> label [
 	label := RTLabel new height: [ :e | e model ].
 	els := label elementsOn: (1 to: 30).
 	v addAll: els.
-	RTHorizontalLineLayout on: els.
+	RTGridLayout on: els.
 	v open
 ]
 
@@ -918,6 +929,7 @@ RTExample >> multipleNesting [
 	| view inner host edges outter trachelCanvas resizable |
 	outter := OrderedCollection new.
 	view := RTView new.
+	view @ RTDraggableView.
 	
 	1 to: 200 by: 10 do: [ :i |
 		inner := (RTBox new color: (Color purple alpha: 0.2)) elementsOn: (1 to: i).
@@ -934,12 +946,10 @@ RTExample >> multipleNesting [
 				inView: view
 				scope: inner.
 
-		"RTTreeLayout new on: inner edges: edges."
 		RTGridLayout new on: inner.
 		RTNest new		
 			on: host nest: inner.
 	].
-	"RTHorizontalLineLayout on: outter."
 	RTGridLayout on: outter.
 	
 	trachelCanvas := view setUpCanvas.
@@ -1094,7 +1104,6 @@ RTExample >> newYear2014 [
 				shape := (RTEllipse new size: size; color: (Color purple alpha: 0.2)).
 				el := shape element.
 				el translateTo: (800 atRandom @ 450 atRandom).
-				"el on: ROMouseEnter do: [ :evt | ROColorAlphaFading new for: evt element nbCycles: 100 ]."
 				view add: el.
 				view addAnimation: (RTLinearMove new to: ((x * size) @ (y * size) + offset) during: 0.5 on: el).
 			]
@@ -1116,7 +1125,7 @@ RTExample >> normalizer01 [
 				scope: ($a to: $z).
 				
 	es := RTBox new
-				size: 15;
+				size: 40;
 				color: n;
 				elementsOn: ($a to: $z).
 				
@@ -1398,13 +1407,9 @@ RTExample >> smoothLayout [
 	
 	v canvas addMenu: 'radial' callback: [ RTRadialTreeLayout new translator: translator; on: v elements. v canvas signalUpdate ].
 	
-"	v canvas addMenu: 'spring' callback: [ RTForceBasedLayout new translator: translator; on: v elements. v canvas signalUpdate ]."
-	
-	
 	v addAll: (RTBox new elementsOn: (1 to: 100)).
 	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.
 
-	"RTGridLayout on: v elements."
 	RTTreeLayout new  on: v elements edges: v edges.
 	v open
 ]
@@ -1415,10 +1420,12 @@ RTExample >> softviz01 [
 	self new softviz01
 	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
 	"
-| v inheritanceEdges shape |
+| v inheritanceEdges shape helpBar1 helpBar2 elements |
 v := RTView new.
 shape := RTEllipse new color: (Color red alpha: 0.4); size: [ :e | e numberOfMethods / 5 max: 5].
-v addAll: (shape elementsOn: Collection withAllSubclasses).
+elements := shape elementsOn: Collection withAllSubclasses.
+elements @ RTPopup.
+v addAll: elements.
 
 "Defining edges from inheritance"
 inheritanceEdges := 
@@ -1436,7 +1443,16 @@ cls methods do: [ :cm |
 			
 		RTEdge buildEdgesFromAssociations: { cls -> depClass } using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
 ].
-	
+
+
+helpBar1 := TRLabelShape new text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
+helpBar2 := TRLabelShape new text: 'blue links = dependencies; layout = force based layout on the inheritance links'.
+v canvas addFixedShape: helpBar1.
+v canvas addFixedShape: helpBar2.
+TRConstraint stick: helpBar1 above: helpBar2.
+TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
+
+
 "Open the view"
 v open
 

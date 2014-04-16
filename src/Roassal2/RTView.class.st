@@ -54,6 +54,12 @@ RTView >> canvas [
 	^ trCanvas
 ]
 
+{ #category : #actions }
+RTView >> clean [
+	self elements copy do: #remove.
+	self edges copy do: #remove.
+]
+
 { #category : #'accessing-computed' }
 RTView >> edgeFromModel: anObject [
 	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"

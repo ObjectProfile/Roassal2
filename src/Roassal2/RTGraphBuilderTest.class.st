@@ -18,6 +18,23 @@ RTGraphBuilderTest >> setUp [
 	b := RTGraphBuilder new
 ]
 
+{ #category : #edges }
+RTGraphBuilderTest >> testBundleConnect [
+
+	| firstEdge |
+	b nodes color: Color blue.
+	b edges 
+		if: [ :v | v = 1 ];
+		bundleConnectTo: [ :v | Array with: 2 with: 3 ].
+		
+	b layout grid.
+	b addAll: #(1 2 3).
+	
+	firstEdge := b view edges first .
+	self assert: firstEdge from == b view elements first.
+	self assert: firstEdge to == b view elements second.
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testDefaultNodeShape [
 
@@ -66,6 +83,19 @@ RTGraphBuilderTest >> testIfColor [
 	b addAll: #(1 2 3).
 	
 	self assert: (b view elementFromModel: 2) incomingEdges first trachelShape color = Color red
+]
+
+{ #category : #tests }
+RTGraphBuilderTest >> testMinSize [
+
+	b nodes shape: (RTEllipse new size: 3).
+	b global
+		if: [ :v | v = 'world' ]; minSize: 15.
+	b add: 'hello'.
+	b add: 'world'.
+	
+	self assert: b view elements first trachelShape extent = (3 @ 3).
+	self assert: b view elements second trachelShape extent = (15 @ 15).
 ]
 
 { #category : #tests }

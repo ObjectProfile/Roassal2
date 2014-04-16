@@ -9,31 +9,44 @@ Class {
 }
 
 { #category : #'control points' }
-RTBezierLine >> centerOfElements: elements [
+RTBezierLine >> centerOfElements: aOneArgBlockOrValues [
+	"Argument can be a OneArgBlock (taking an edge as argument) or direct values"
+	| b |
+	b := [ :edge |
+		| center intermediaryElement elements |
+		elements := aOneArgBlockOrValues rtValue: edge.
+		(elements isNil or: [ elements isEmpty ]) 
+			ifTrue: [ #() ]
+			ifFalse: [ 
+				center := (RTGroup withAll: elements) center.
+				intermediaryElement := RTBox element.
+				intermediaryElement translateTo: center.
+				Array with: intermediaryElement ] ].
 
-	| center intermediaryElement |
-	(elements isNil or: [ elements isEmpty ]) ifTrue: [ ^ self ].
-	
-	center := (RTGroup withAll: elements) center.
-	intermediaryElement := RTBox element.
-	intermediaryElement translateTo: center.
-	self controllingElements: (Array with: intermediaryElement).
-
+	self controllingElements:  b
 ]
 
 { #category : #'control points' }
-RTBezierLine >> centerOfObjects: objects inView: view [
-	^ self centerOfElements: (view elementsFromModels: objects)
+RTBezierLine >> centerOfObjects: aOneArgBlockOrValues inView: view [
+	"Set one control point, at the center of the elements provided as argument"
+	^ self centerOfElements: [ :edge |
+		aOneArgBlockOrValues isClosure
+			ifTrue:  [ view elementsFromModels: (aOneArgBlockOrValues 
+															value: edge from model value: edge to model) ]
+			ifFalse: [ view elementsFromModels: aOneArgBlockOrValues ] ]
 ]
 
 { #category : #accessing }
 RTBezierLine >> controllingElements [
+	"Return a list of elements or a one arg block, evaluated against the edge"
 	^ controllingElements
 ]
 
 { #category : #accessing }
-RTBezierLine >> controllingElements: listofElements [
-	controllingElements := listofElements
+RTBezierLine >> controllingElements: listOfElementsOrOneArgBlock [
+	"Argument can be a OneArgBlock (taking an edge as argument) or direct values"
+	"NOTE: controlling elements are retreived when the edge is created, which may not be already added to the view. This means that the argument should not try to access the view from the edge directly"
+	controllingElements := listOfElementsOrOneArgBlock
 ]
 
 { #category : #accessing }
@@ -72,25 +85,30 @@ RTBezierLine >> getFollowersOf: aNode using: followBlock [
 
 { #category : #'control points' }
 RTBezierLine >> getListOfPointsForTrachel: anEdge [
-	| listOfPoints |
+	| listOfPoints realControllingElements |
 	listOfPoints := OrderedCollection new.
-	listOfPoints add: anEdge from position.
 	
+	"We add the first point of the edge"
+	listOfPoints add: (attachPoint startingPointOf: anEdge).
+	
+	"Set the controlling elements from a follow block, if any"
 	follow ifNotNil: 
 		[ self setControllingElementsFromFollowFor: anEdge ].
 	
-	controllingElements ifNotEmpty: 
-		[ |cElements|
-			cElements := controllingElements collect: #position.
+	realControllingElements := controllingElements rtValue: anEdge.
+	realControllingElements ~= #() ifTrue: 
+		[ | cElements |
+			cElements := realControllingElements collect: #position.
 			cElements isNotEmpty ifTrue: [ 
-				(cElements first = anEdge from position and: [cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButFirst].
-				(cElements last = anEdge to position and: [cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButLast]].
+				(cElements first = anEdge from position and: [ cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButFirst ].
+				(cElements last = anEdge to position and: [ cElements size  > 1 ])
+					ifTrue: [ cElements := cElements allButLast ] ].
 			listOfPoints addAll: cElements
 		].
 		
-	listOfPoints add: anEdge to position.
+	"We add the last point of the edge"
+	listOfPoints add: (attachPoint endingPointOf: anEdge).
 	^ listOfPoints
 ]
 
@@ -101,18 +119,47 @@ RTBezierLine >> initialize [
 ]
 
 { #category : #'control points' }
+RTBezierLine >> midPointInCenterOfElements: aOneArgBlockOrValues [
+	"Argument can be a OneArgBlock (taking an edge as argument) or direct values"
+	| b |
+	b := [ :edge |
+		| center intermediaryElement elements |
+		elements := aOneArgBlockOrValues rtValue: edge.
+		(elements isNil or: [ elements isEmpty ]) 
+			ifTrue: [ #() ]
+			ifFalse: [ 
+				center := (RTGroup withAll: elements) center.
+				intermediaryElement := RTBox element.
+				intermediaryElement translateTo: (edge from position + center) / 2.
+				Array with: intermediaryElement ] ].
+
+	self controllingElements:  b
+]
+
+{ #category : #'control points' }
+RTBezierLine >> midPointInCenterOfObjects: aOneArgBlockOrValues inView: view [
+	"Set one control point, between the starting point and the center of all the objects provided as argument"
+	^ self midPointInCenterOfElements: [ :edge |
+		aOneArgBlockOrValues isClosure
+			ifTrue:  [ view elementsFromModels: (aOneArgBlockOrValues 
+															value: edge from model value: edge to model) ]
+			ifFalse: [ view elementsFromModels: aOneArgBlockOrValues ] ]
+]
+
+{ #category : #'control points' }
 RTBezierLine >> setControllingElementsFromFollowFor: anEdge [
 	controllingElements := self getControllingElementsFromFollowFor: anEdge
 ]
 
 { #category : #public }
 RTBezierLine >> trachelShapeFor: anEdge [
-	| shape |
+	| shape realControllingElements |
 	shape := TRBezierShape new.
 	shape width: (self widthFor: anEdge).
 	shape points: (self getListOfPointsForTrachel: anEdge).
 	shape strokePaint: (self colorFor: anEdge).
-	controllingElements do: [ :e | e addConnectedEdge: anEdge ].
+	realControllingElements := controllingElements rtValue: anEdge. 
+	realControllingElements do: [ :e | e addConnectedEdge: anEdge ].
 	^ shape
 ]
 

@@ -21,7 +21,13 @@ RTLabel >> defaultText [
 ]
 
 { #category : #accessing }
-RTLabel >> height: aValueOrABlock [
+RTLabel >> height: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self heightElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTLabel >> heightElement: aValueOrABlock [
 	height := aValueOrABlock
 ]
 
