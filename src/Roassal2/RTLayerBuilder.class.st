@@ -9,12 +9,12 @@ Class {
 	#category : #'Roassal2-Builder-Layer'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTLayerBuilder >> addLayer: objects [
 	objectLayers add: objects
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTLayerBuilder >> example01 [
 	"self new example01"
 
@@ -26,7 +26,7 @@ RTLayerBuilder >> example01 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTLayerBuilder >> example02 [
 	"self new example02"
 
@@ -44,7 +44,7 @@ RTLayerBuilder >> example02 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTLayerBuilder >> example03 [
 	"self new example03"
 
@@ -70,7 +70,7 @@ RTLayerBuilder >> horizontalGap: anObject [
 	horizontalGap := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLayerBuilder >> initialize [
 	super initialize.
 	objectLayers := OrderedCollection new.
@@ -78,7 +78,7 @@ RTLayerBuilder >> initialize [
 	horizontalGap := 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLayerBuilder >> renderIn: aView [
 	| elementsLayer topLayer currentLayer |
 	"We draw the nodes"
