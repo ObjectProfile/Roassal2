@@ -19,6 +19,27 @@ RTExample >> animationTest [
 	^ view
 ]
 
+{ #category : #edges }
+RTExample >> arrowedEdges01 [
+	"
+	self new arrowedEdges01
+	"
+
+	| v e1 e2 l |
+	v := RTView new.
+	e1 := (RTEllipse new size: 10) element.
+	e2 := (RTEllipse new size: 10) element.
+	e2 translateBy: 100@0.
+
+	v add: e1.
+	v add: e2.
+	l := RTEdge from: e1 to: e2.
+	l + (RTLine new color: Color red) + (RTArrow new color: Color red).
+	v add: l.
+
+	v open
+]
+
 { #category : #attachpoints }
 RTExample >> attachPoint01 [
 
@@ -404,7 +425,11 @@ es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
 v addAll: es.
 RTCircleLayout new initialRadius: 150; on: es.
 
-es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: [ :el | RTBezierLine new centerOfObjects: (el model - 5 to: el model +5) inView: v; color: (Color blue alpha: 0.4) ] ).
+es @ (RTShowEdge new 
+			connectTo: [ :value | value - 5 to: value + 5]; 
+			shape: [ :el | RTBezierLine new 
+								centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
+								color: (Color blue alpha: 0.4) ] ).
 
 v open
 ]

@@ -101,7 +101,7 @@ RTGraphBuilderExamples >> simple05WithInteraction [
 	| g |
 	g := RTGraphBuilder new.
 	
-	g node 
+	g nodes
 		shape: (RTEllipse new size: 20) + RTLabel;
 		noPopup;
 		whenOverHighlight: [ :v | { v - 1 . v . v + 1 } ].
@@ -120,9 +120,9 @@ RTGraphBuilderExamples >> simple06AddingEdge [
 	| g |
 	g := RTGraphBuilder new.
 	
-	g node 
+	g nodes
 		shape: (RTEllipse new size: 20) + RTLabel;
-		whenOverShowEdges: { 2 };
+		whenOverShowEdges: [ :v | Array with: v - 1 with: v + 1 ];
 		noPopup.
 	g layout use: RTFlowLayout new.
 	g addAll: (1 to: 50).
@@ -137,15 +137,10 @@ RTGraphBuilderExamples >> simple07HierarchicalBundleEdge [
 
 	| b |
 	b := RTGraphBuilder new.
-
-	b node shape: (RTEllipse new  size: 30) + RTLabel.
-
-	b edge if: [:v | v = 1 ] bundleConnectTo: [ :v | #(2 3) ].
-
-	b layout use: (RTCircleLayout new).
-		 
+	b nodes shape: (RTEllipse new  size: 30) + RTLabel.
+	b edges if: [:v | v = 1 ]; bundleConnectTo: [ :v | #(2 3) ].
+	b layout circle.
 	b addAll: (1 to: 3).
-
 	b open
 ]
 
@@ -199,6 +194,31 @@ RTGraphBuilderExamples >> simple10IfColorAndCurvedEdges [
 		if: [:f :t | f = 1 ] color: Color red.
 	b layout grid.
 	b addAll: #(1 2 3).
+
+	b open
+]
+
+{ #category : #simples }
+RTGraphBuilderExamples >> simple11 [
+	"
+	self new simple11
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b nodes shape: (RTEllipse new size: 13; color: (Color blue alpha: 0.3)).
+
+	b edges
+		connectTo: #subclasses.
+
+	b edges
+		connectTo: #dependentClasses;
+		shape: (RTLine new color: Color lightBlue).
+
+
+	b layout use: (RTCircleLayout new initialRadius: 230).
+	b addAll: (Collection withAllSubclasses).
 
 	b open
 ]
