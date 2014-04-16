@@ -7,24 +7,19 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #public }
-RTShape class >> color: aColor [
-	^ self new color: aColor
-]
-
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTShape class >> element [
 
 	^ self instance element
 ]
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTShape class >> elementOn: aModel [
 
 	^ self instance elementOn: aModel
 ]
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTShape class >> elementsOn: models [
 	"Return a group of elements, which is a kind of ordered collection"
 	| group |
@@ -34,7 +29,7 @@ RTShape class >> elementsOn: models [
 	^ group
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTShape class >> instance [
 	^ self new
 ]

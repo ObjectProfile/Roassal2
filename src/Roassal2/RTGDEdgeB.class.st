@@ -10,17 +10,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTGDEdgeB >> bundleConnectTo: aBlock [
-	| oldColor |
-	oldColor := shape color.
-	shape := RTBezierLine new.
-	shape color: oldColor.
-	shape midPointInCenterOfElements: [ :edge | self view elementsFromModels: (aBlock rtValue: edge from model) ].
-	self connectTo: aBlock.
-
-]
-
-{ #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: aOneArgBlock [
 
 	connectTo := aOneArgBlock
@@ -51,7 +40,7 @@ RTGDEdgeB >> initialize [
 	usedInLayout := false.
 	connectTo := #yourself.
 	edgesUsedForLayout := OrderedCollection new.
-	self shape: RTLine new
+	self shape: RTLine
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,6 +1,3 @@
-"
-A RTExampleBrowser is the main class to browse examples of Roassal
-"
 Class {
 	#name : #RTExampleBrowser,
 	#superclass : #RTObject,
@@ -10,7 +7,7 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #menu }
+{ #category : #'as yet unclassified' }
 RTExampleBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
@@ -22,13 +19,13 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 		action:[ self new open ]
 ]
 
-{ #category : #logo }
+{ #category : #'as yet unclassified' }
 RTExampleBrowser class >> roassalWithTransparentIcon [
 	"Private - Generated method"
 	^ icon ifNil: [ icon := Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self roassalWithTransparentIconContents readStream) ].
 ]
 
-{ #category : #logo }
+{ #category : #'as yet unclassified' }
 RTExampleBrowser class >> roassalWithTransparentIconContents [
 	"Private - Method generated with the content of the file /Users/alexandrebergel/Documents/ObjectProfile/Logos/RoassalWithTransparent.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAACXBIWXMAAAsTAAALEwEAmpwY
@@ -43,7 +40,7 @@ Q6IfqUS4+RWAS1cnQeuYnlDoPQdAMdPW2AiR6dlFeslG+U49UV+yQMQK2CfEU0wp17B5EUgg
 PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'as yet unclassified' }
 RTExampleBrowser >> open [
 
 	| v |
@@ -56,14 +53,7 @@ RTExampleBrowser >> open [
 	v open
 ]
 
-{ #category : #utility }
+{ #category : #'as yet unclassified' }
 RTExampleBrowser >> structure: aView [
-	"Structure a view with a proper layout and animation"
-	RTVerticalLineLayout on: aView elements.
-	aView elements doWithIndex: [ :each :index | 
-		| p |
-		p := each position.
-		each translateBy: (index * 50) @ 0.
-		aView addAnimation: (RTLinearMove to: p during: 0.4 on: each).
-		  ]
+	RTVerticalLineLayout on: aView elements
 ]

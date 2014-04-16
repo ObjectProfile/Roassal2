@@ -59,7 +59,7 @@ RTLabelTest >> testHeight2 [
 	| v label els |
 	v := RTView new.
 	label := RTLabel new.
-	label height: #yourself.
+	label height: [ :e | e model ].
 	els := label elementsOn: (1 to: 3).
 	self assert: els first trachelShape text = '1'.
 	self assert: els first trachelShape fontSize = 1.

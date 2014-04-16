@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTGDLayoutB >> circle [
-	^ self use: RTCircleLayout new
-]
-
-{ #category : #'as yet unclassified' }
 RTGDLayoutB >> execute [
 	layout 
 		on: (self view elements select: [ :e | condition rtValue: e model ]) 
@@ -34,11 +29,6 @@ RTGDLayoutB >> grid [
 RTGDLayoutB >> initialize [
 	super initialize.
 	self if: true
-]
-
-{ #category : #'as yet unclassified' }
-RTGDLayoutB >> tree [
-	^ self use: RTTreeLayout new
 ]
 
 { #category : #'as yet unclassified' }
