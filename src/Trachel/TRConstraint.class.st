@@ -106,6 +106,7 @@ TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
 
 { #category : #public }
 TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
+	self moveAtTheBottomOfTheWindow: trachelShape.
 	trachelShape canvas
 		when: TRResizeCanvasEvent
 		do: [ :event | self moveAtTheBottomOfTheWindow: trachelShape ]
