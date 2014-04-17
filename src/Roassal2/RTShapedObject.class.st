@@ -60,6 +60,16 @@ RTShapedObject >> attributes [
 	^ attributes ifNil: [ attributes := Dictionary new ]
 ]
 
+{ #category : #'accessing trachel' }
+RTShapedObject >> color [
+	^ trachelShape color
+]
+
+{ #category : #'accessing trachel' }
+RTShapedObject >> color: aColor [ 
+	^ trachelShape color: aColor
+]
+
 { #category : #attributes }
 RTShapedObject >> hasAttribute: aKey [ 
 	"Return true if attributes includes aKey"
