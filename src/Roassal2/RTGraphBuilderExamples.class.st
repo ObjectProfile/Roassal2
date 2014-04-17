@@ -155,7 +155,7 @@ RTGraphBuilderExamples >> simple08ColoredEdge [
 	b nodes color: Color blue.
 	b edges
 		connectTo: [ :v | v + 1 ];
-		if: [:f :t | t = 2 ];
+		if: [ :value | value = 2 ];
 		color: Color red.
 	b layout grid.
 	b addAll: #(1 2 3).

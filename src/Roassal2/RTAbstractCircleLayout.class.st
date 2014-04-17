@@ -107,6 +107,11 @@ RTAbstractCircleLayout >> initialize [
 ]
 
 { #category : #accessing }
+RTAbstractCircleLayout >> radius: aNumber [
+	^ self initialRadius: aNumber
+]
+
+{ #category : #accessing }
 RTAbstractCircleLayout >> scaleBy: aNumber [
 	
 	factor := aNumber

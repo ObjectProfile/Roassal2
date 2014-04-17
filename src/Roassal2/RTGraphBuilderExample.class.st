@@ -1,28 +1,25 @@
 "
-RTGraphBuilderExample new installTitle: 'ForceLayoutWithGreatCharge' 
+RTGraphBuilderExample new installTitle: 'SystemComplexity' 
 		code:
 		'
+| b |
+b := RTGraphBuilder new.
 
+b nodes shape: (RTBox new width: #numberOfVariables; height: #numberOfMethods).
 
-	| b |
-	b := RTGraphBuilder new.
-	b nodes
-		shape: (RTEllipse new size: #numberOfMethods);
-		whenOverShowEdges: [ :cls | cls dependentClasses ].
+b edges 
+	connectTo: #subclasses;
+	verticalAttachPoint;
+	useInLayout.
 
-	b edges
-		connectTo: [ :c | c subclasses ];
-		shape: (RTLine new color: Color gray).
+b layout tree.
 
-	b layout 
-		use: (RTForceBasedLayout new charge: -180).
+b global 
+	minSize: 5;
+	normalizeColor: #numberOfVariables using: {Color green . Color red}.
 
-	b global
-		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
-
-	b addAll: (RTObject withAllSubclasses).
-	b open.
+b addAll: RTObject withAllSubclasses.
+b open.
 	b view canvas'
 	
 "
@@ -939,6 +936,87 @@ KeHlwVOj+/svRww+Dh8PnxTwoO1oNLti8Hz40+a/4JOEo4Ot5a8z8mywde4gTUeQz/DnvssA
 j6DMVBjeP68n7OQiPCiaHetypScCb8fbX9t5h7kGv+mBp88d/md0/NIa/DdA4IMPPvjggw8+
 +OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPmj8B5PsQQ+oTj2lAAAA
 AElFTkSuQmCC'
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilderExample >> exampleSystemComplexity [
+
+| b |
+b := RTGraphBuilder new.
+
+b nodes shape: (RTBox new width: #numberOfVariables; height: #numberOfMethods).
+
+b edges 
+	connectTo: #subclasses;
+	verticalAttachPoint;
+	useInLayout.
+
+b layout tree.
+
+b global 
+	minSize: 5;
+	normalizeColor: #numberOfVariables using: {Color green . Color red}.
+
+b addAll: RTObject withAllSubclasses.
+b open.
+	b view canvas
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilderExample >> exampleSystemComplexityIcon [
+	^ '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
+hz8/TP4Pq0kT38CMcpsAAAAASUVORK5CYII='
 ]
 
 { #category : #'as yet unclassified' }

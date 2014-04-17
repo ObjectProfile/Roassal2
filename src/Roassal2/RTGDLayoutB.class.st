@@ -43,5 +43,6 @@ RTGDLayoutB >> tree [
 
 { #category : #'as yet unclassified' }
 RTGDLayoutB >> use: aLayout [
-	layout := aLayout
+	layout := aLayout.
+	^ aLayout
 ]

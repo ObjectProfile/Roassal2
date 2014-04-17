@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'usedInLayout',
 		'connectTo',
-		'edgesUsedForLayout'
+		'edgesUsedForLayout',
+		'attachPoint'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -21,6 +22,19 @@ RTGDEdgeB >> bundleConnectTo: aBlock [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDEdgeB >> canCreateForObject: anObject [
+	"Return true or false on whether I can create a Roassal element for the given argument"
+	condition isClosure
+		ifTrue: [ condition  argumentCount = 1 ifTrue: [ ^ super canCreateForObject: anObject ].
+			
+				   "The argument is an edge"
+				   condition  argumentCount = 2 
+						ifTrue: [ ^ condition value: anObject from model value: anObject to mode] ]
+		ifFalse: [ ^ super canCreateForObject: anObject ]
+		
+]
+
+{ #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: aOneArgBlock [
 
 	connectTo := aOneArgBlock
@@ -31,6 +45,8 @@ RTGDEdgeB >> createEdgesFor: object [
 	| answer el toObjects |
 	answer := OrderedCollection new.
 	el := self elementFromModel: object.
+
+	attachPoint ifNotNil: [ shape attachPoint: attachPoint ].
 
 	toObjects := connectTo rtValue: object.
 	toObjects isCollection ifFalse: [ toObjects := Array with: toObjects ]. 
@@ -43,6 +59,11 @@ RTGDEdgeB >> createEdgesFor: object [
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> edgesUsedForLayout [
 	^ edgesUsedForLayout
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> horizontalAttachPoint [
+	attachPoint := RTHorizontalAttachPoint new.
 ]
 
 { #category : #'as yet unclassified' }
@@ -62,4 +83,9 @@ RTGDEdgeB >> useInLayout [
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> usedInLayout [
 	^ usedInLayout
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> verticalAttachPoint [
+	attachPoint := RTVerticalAttachPoint new.
 ]
