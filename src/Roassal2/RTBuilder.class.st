@@ -22,9 +22,9 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
-{ #category : #hooks }
+{ #category : #public }
 RTBuilder >> build [
-	"to be overriden"
+	"do nothing by default. Subclasses should override with specific actions"
 ]
 
 { #category : #public }

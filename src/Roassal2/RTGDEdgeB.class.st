@@ -5,17 +5,20 @@ Class {
 		'usedInLayout',
 		'connectTo',
 		'edgesUsedForLayout',
-		'attachPoint',
-		'connectFrom'
+		'attachPoint'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> bundleConnectTo: aBlock [
-	self turnShapeIntoBezier.
+	| oldColor |
+	oldColor := shape color.
+	shape := RTBezierLine new.
+	shape color: oldColor.
 	shape midPointInCenterOfElements: [ :edge | self view elementsFromModels: (aBlock rtValue: edge from model) ].
-	self connectTo: aBlock
+	self connectTo: aBlock.
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -32,12 +35,6 @@ RTGDEdgeB >> canCreateForObject: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-RTGDEdgeB >> connectFrom: aOneArgBlock [
-
-	connectFrom := aOneArgBlock
-]
-
-{ #category : #'as yet unclassified' }
 RTGDEdgeB >> connectTo: aOneArgBlock [
 
 	connectTo := aOneArgBlock
@@ -45,39 +42,23 @@ RTGDEdgeB >> connectTo: aOneArgBlock [
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> createEdgesFor: object [
-	| answer toObjects fromObjects fromElements |
+	| answer el toObjects |
 	answer := OrderedCollection new.
+	el := self elementFromModel: object.
 
-	fromObjects := connectFrom rtValue: object.
-	fromObjects isCollection ifFalse: [ fromObjects := Array with: fromObjects ].
-	fromElements := fromObjects 
-							collect: [ :fromObject | self elementFromModel: fromObject ] 
-							thenSelect: #notNil.
+	attachPoint ifNotNil: [ shape attachPoint: attachPoint ].
+
+	toObjects := connectTo rtValue: object.
+	toObjects isCollection ifFalse: [ toObjects := Array with: toObjects ]. 
+	answer addAll: (shape edgesFrom: el toAll: (self elementsFromModels: toObjects)).
 	
-	fromElements do: [ :fromElement |
-
-		attachPoint ifNotNil: [ shape attachPoint: attachPoint ].
-
-		toObjects := connectTo rtValue: object.
-		toObjects isCollection ifFalse: [ toObjects := Array with: toObjects ]. 
-		answer addAll: (shape edgesFrom: fromElement toAll: (self elementsFromModels: toObjects)).
-		
-		usedInLayout ifTrue: [ edgesUsedForLayout addAll: answer ] ].
-	
+	usedInLayout ifTrue: [ edgesUsedForLayout addAll: answer ].
 	^ answer
 ]
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> edgesUsedForLayout [
 	^ edgesUsedForLayout
-]
-
-{ #category : #'as yet unclassified' }
-RTGDEdgeB >> follow: aBlock [
-	"Turn the shape into a bezier. Make the bezier follow the path specified as the argument"
-	self turnShapeIntoBezier.
-	shape follow: aBlock.
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,17 +71,8 @@ RTGDEdgeB >> initialize [
 	super initialize.
 	usedInLayout := false.
 	connectTo := #yourself.
-	connectFrom := #yourself.
 	edgesUsedForLayout := OrderedCollection new.
 	self shape: RTLine new
-]
-
-{ #category : #'as yet unclassified' }
-RTGDEdgeB >> turnShapeIntoBezier [
-	| oldColor |
-	oldColor := shape color.
-	shape := RTBezierLine new.
-	shape color: oldColor
 ]
 
 { #category : #'as yet unclassified' }

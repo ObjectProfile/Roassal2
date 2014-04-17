@@ -51,8 +51,7 @@ RTBezierLine >> controllingElements: listOfElementsOrOneArgBlock [
 
 { #category : #accessing }
 RTBezierLine >> follow: aBlockOrASymbol [
-	"Make the bezier follow the path specified as the argument"
-	
+
 	follow := aBlockOrASymbol
 ]
 

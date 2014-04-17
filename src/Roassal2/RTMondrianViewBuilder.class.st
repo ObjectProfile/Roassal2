@@ -15,7 +15,7 @@ RTMondrianViewBuilder >> applyLayout [
 	self layout on: self topLevelNodes edges: self topLevelEdges 
 ]
 
-{ #category : #hooks }
+{ #category : #layout }
 RTMondrianViewBuilder >> build [
 	self applyLayout
 ]

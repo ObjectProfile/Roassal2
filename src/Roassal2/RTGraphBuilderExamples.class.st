@@ -154,17 +154,29 @@ RTGraphBuilderExamples >> simple08ColoredEdge [
 	b := RTGraphBuilder new.
 	b nodes color: Color blue.
 	b edges
-		connectFrom: [ :v | v // 6 ];
-		if: [ :v | v ~~ 50 ];
-		color: Color gray.
-		
-	b edges
-		connectFrom: [ :v | v // 6 ];
-		if: [ :v | v = 50 ];
+		connectTo: [ :v | v + 1 ];
+		if: [ :value | value = 2 ];
 		color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
 
-	b layout circle radius: 220.
-	b addAll: (1 to: 100).
+	b open
+]
+
+{ #category : #simples }
+RTGraphBuilderExamples >> simple09HighlightOutgoingEdges [
+	"
+	self new simple09HighlightOutgoingEdges
+	"
+
+	| b |
+	b := RTGraphBuilder new.
+
+	b edge 
+		connectTo: [ :v | v + 1 ];
+		if: [:f :t | t = 2 ] color: Color red.
+	b layout grid.
+	b addAll: #(1 2 3).
 
 	b open
 ]
@@ -177,12 +189,10 @@ RTGraphBuilderExamples >> simple10IfColorAndCurvedEdges [
 
 	| b |
 	b := RTGraphBuilder new.
-	b nodes color: Color gray.
-	b edges
-		connectTo: [ :v | v + 2 ];
-		follow: [ :v | v + 1 ];
-		if: [:v | v = 1 ];
-		color: Color red.
+
+	b edge 
+		 connectTo: [ :v | v + 2 ] follow: [ :v | v + 1 ];
+		if: [:f :t | f = 1 ] color: Color red.
 	b layout grid.
 	b addAll: #(1 2 3).
 
@@ -437,21 +447,17 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 
 	| b |
 	b := RTGraphBuilder new.
-	b nodes
-		if: [ :c | 'RT*' match: c name ];
-		color: Color red.
-	b nodes
-		if: [ :c | 'TR*' match: c name ];
-		color: Color purple.
+	b node
+		if: [ :c | 'RT*' match: c name ] color: Color red;
+		if: [ :c | 'TR*' match: c name ] color: Color purple.
 		
-	b edges
-		connectTo: #subclasses;
-		usedInLayout.
-	b edges
-		connectTo: #dependentClasses ;
-		"scopedTo: [ :c | 'TR*' match: c name ] ;"
-		follow: #superclass;
-		color: (Color blue alpha: 0.4).
+	b edge 
+		connectTo: #subclasses usedInLayout: true;
+		connectTo: #dependentClasses 
+			scopedTo: [ :c | 'TR*' match: c name ] 
+			follow: #superclass
+			color: (Color blue alpha: 0.4) 
+			usedInLayout: false.
 
 	b layout cluster.
 

@@ -48,6 +48,11 @@ RTView >> addMenu: aTitle callback: aBlock [
 
 ]
 
+{ #category : #opening }
+RTView >> build [
+	"do nothing. This method is used polymorphically with builders"
+]
+
 { #category : #accessing }
 RTView >> canvas [
 	"Return the trachel canvas on which everything is drawn"
