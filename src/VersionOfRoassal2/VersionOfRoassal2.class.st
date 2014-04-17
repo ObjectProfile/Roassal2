@@ -2526,3 +2526,14 @@ VersionOfRoassal2 >> version000183 [
 	at: #date put: '17 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000184 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.240';
+	at: #version put: '0.185';
+	at: #comment put: '0.185 : merged with Dorus and Jurajs version';
+	at: #date put: '17 April 2014';
+	yourself
+]
