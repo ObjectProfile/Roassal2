@@ -15,6 +15,11 @@ RTMondrianViewBuilder >> applyLayout [
 	self layout on: self topLevelNodes edges: self topLevelEdges 
 ]
 
+{ #category : #hooks }
+RTMondrianViewBuilder >> build [
+	self applyLayout
+]
+
 { #category : #layout }
 RTMondrianViewBuilder >> clusterLayout [
 	self layout: RTClusterLayout new

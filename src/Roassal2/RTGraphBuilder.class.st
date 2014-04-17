@@ -38,6 +38,11 @@ RTGraphBuilder >> applyLayout [
 ]
 
 { #category : #'as yet unclassified' }
+RTGraphBuilder >> build [
+	self applyLayout
+]
+
+{ #category : #'as yet unclassified' }
 RTGraphBuilder >> cleanAndAddEdges [
 	"This is an expensive method"
 	

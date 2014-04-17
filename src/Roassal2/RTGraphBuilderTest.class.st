@@ -35,6 +35,20 @@ RTGraphBuilderTest >> testBundleConnect [
 	self assert: firstEdge to == b view elements second.
 ]
 
+{ #category : #edges }
+RTGraphBuilderTest >> testConnectFrom [
+
+	b nodes color: Color gray.
+	b edges 
+		connectFrom: [ :v | v - 1 ];
+		connectTo: [ :v | v + 1].
+	b addAll: #(1 2 3).
+	
+	self assert: b view numberOfEdges = 1.
+	self assert: b view edges first from model = 1.
+	self assert: b view edges first to model = 3.
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testDefaultNodeShape [
 

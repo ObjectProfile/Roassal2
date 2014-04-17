@@ -22,6 +22,11 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
+{ #category : #hooks }
+RTBuilder >> build [
+	"to be overriden"
+]
+
 { #category : #public }
 RTBuilder >> cleanView [
 	view edges copy do: #remove.
