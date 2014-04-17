@@ -13,6 +13,11 @@ RTGDLayoutB >> circle [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDLayoutB >> cluster [
+	^ self use: RTClusterLayout new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDLayoutB >> execute [
 	layout 
 		on: (self view elements select: [ :e | condition rtValue: e model ]) 

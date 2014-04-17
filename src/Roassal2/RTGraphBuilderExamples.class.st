@@ -446,13 +446,14 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 		
 	b edges
 		connectTo: #subclasses;
-		usedInLayout.
+		useInLayout.
 	b edges
 		connectTo: #dependentClasses ;
-		"scopedTo: [ :c | 'TR*' match: c name ] ;"
 		follow: #superclass;
 		color: (Color blue alpha: 0.4).
-
+"
+scopedTo: [ :c | 'TR*' match: c name ] ;
+"
 	b layout cluster.
 
 	b global
