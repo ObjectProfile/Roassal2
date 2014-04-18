@@ -2486,65 +2486,10 @@ VersionOfRoassal2 >> version000179 [
 { #category : #versions }
 VersionOfRoassal2 >> version000180 [
 	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.125';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.235';
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.242';
 	at: #version put: '0.181';
-	at: #comment put: '0.181 : worked on the browser example and the graph builder';
-	at: #date put: '16 April 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000181 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.126';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.236';
-	at: #version put: '0.182';
-	at: #comment put: '0.182 : Worked a lot on the graph builder, the RTBezierLine shape and added some examples';
-	at: #date put: '16 April 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000182 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.237';
-	at: #version put: '0.183';
-	at: #comment put: '0.183 : added more examples. Worked on the graph builder...';
-	at: #date put: '17 April 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000183 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.238';
-	at: #version put: '0.184';
-	at: #comment put: '0.184 : added examples for Mondrian. Worked on the graph builder';
-	at: #date put: '17 April 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000184 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.240';
-	at: #version put: '0.185';
-	at: #comment put: '0.185 : merged with Dorus and Jurajs version';
-	at: #date put: '17 April 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000185 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.241';
-	at: #version put: '0.186';
-	at: #comment put: '0.186 : worked on an example for the graph builder';
-	at: #date put: '17 April 2014';
+	at: #comment put: '0.181 : more example added, improvememtn of the graph builder. ';
+	at: #date put: '18 April 2014';
 	yourself
 ]
