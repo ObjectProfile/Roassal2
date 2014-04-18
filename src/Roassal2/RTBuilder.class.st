@@ -111,6 +111,7 @@ RTBuilder >> open [
 { #category : #'public-ui' }
 RTBuilder >> openIn: aView [
 	self renderIn: aView.
+	self build.
 	^ aView open
 ]
 

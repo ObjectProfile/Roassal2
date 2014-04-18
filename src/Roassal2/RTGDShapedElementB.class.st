@@ -20,5 +20,6 @@ RTGDShapedElementB >> shape [
 
 { #category : #'as yet unclassified' }
 RTGDShapedElementB >> shape: aShape [
-	shape := aShape
+	shape := aShape.
+	^ aShape
 ]

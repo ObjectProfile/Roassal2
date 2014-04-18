@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTGDNodeB >> circle [
+	^ self shape: RTEllipse new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDNodeB >> createElementFor: object [
 	| e |
 	e := shape elementOn: object.
@@ -41,6 +46,11 @@ RTGDNodeB >> initialize [
 { #category : #'as yet unclassified' }
 RTGDNodeB >> noPopup [
 	withPopup := false
+]
+
+{ #category : #'as yet unclassified' }
+RTGDNodeB >> rectangle [
+	^ self shape: RTBox new
 ]
 
 { #category : #'as yet unclassified' }

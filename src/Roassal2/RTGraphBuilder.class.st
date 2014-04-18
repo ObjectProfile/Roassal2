@@ -149,9 +149,3 @@ RTGraphBuilder >> nodes [
 	nodes add: n.
 	^ n
 ]
-
-{ #category : #'as yet unclassified' }
-RTGraphBuilder >> open [
-	self applyLayout.
-	view open
-]

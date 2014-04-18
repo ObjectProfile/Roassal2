@@ -26,6 +26,11 @@ RTGDLayoutB >> execute [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDLayoutB >> flow [
+	^ self use: RTFlowLayout new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDLayoutB >> force [
 	^ self use: RTForceBasedLayout new
 ]
