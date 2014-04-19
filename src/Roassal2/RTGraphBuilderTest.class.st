@@ -99,6 +99,19 @@ RTGraphBuilderTest >> testIfColor [
 	self assert: (b view elementFromModel: 2) incomingEdges first trachelShape color = Color red
 ]
 
+{ #category : #labels }
+RTGraphBuilderTest >> testLabellednode [
+	b nodes 
+		color: Color gray;
+		if: [ :v | v odd ];
+		labelled.
+
+	b addAll: #(1 2).
+	self assert: b view numberOfElements = 1.
+	self assert: b view canvas numberOfShapes = 2.
+	self assert: (b view canvas shapes collect: #class) = (Array with: TRLabelShape with: TREllipseShape)
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testMinSize [
 
@@ -112,7 +125,7 @@ RTGraphBuilderTest >> testMinSize [
 	self assert: b view elements second trachelShape extent = (15 @ 15).
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testNode [
 
 	| e4 e6 |
@@ -135,7 +148,7 @@ RTGraphBuilderTest >> testNode [
 	self assert: e6 trachelShape color = Color red.
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testNode2 [
 	b nodes
 		if: [ :obj | obj < 5 ];
@@ -149,7 +162,7 @@ RTGraphBuilderTest >> testNode2 [
 	self assert: ((b getNodeFor: 5) shape color rtValue: RTElement new) = Color red.
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testSimpleNodes [
 
 	b nodes shape: RTEllipse new.
@@ -158,7 +171,7 @@ RTGraphBuilderTest >> testSimpleNodes [
 	self assert: b view numberOfElements equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testSimpleNodes02 [
 
 	b nodes shape: RTEllipse new.
@@ -167,7 +180,7 @@ RTGraphBuilderTest >> testSimpleNodes02 [
 	self assert: b view numberOfElements equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testSimpleNodes03 [
 
 	b nodes shape: RTEllipse.
@@ -177,7 +190,7 @@ RTGraphBuilderTest >> testSimpleNodes03 [
 	self assert: b view elements first shape class equals: RTEllipse.
 ]
 
-{ #category : #tests }
+{ #category : #nodes }
 RTGraphBuilderTest >> testSimpleNodes04If [
 
 	b nodes 

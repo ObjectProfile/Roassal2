@@ -36,11 +36,26 @@ RTGDNodeB >> createElementsFor: objects [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDNodeB >> height: aBlock [
+	shape height: aBlock
+]
+
+{ #category : #'as yet unclassified' }
 RTGDNodeB >> initialize [
 	super initialize.
 	withDraggable := true.
 	withPopup := true.
 	shape := RTEllipse new size: 10
+]
+
+{ #category : #'as yet unclassified' }
+RTGDNodeB >> labelled [
+	"Gives a label to each node"
+	self addProperty: [ :el |
+		| lbl |
+		lbl := TRLabelShape new text: el model asString.
+		graphBuilder view canvas addShape: lbl.
+		TRConstraint stick: lbl below: el trachelShape ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -69,4 +84,9 @@ RTGDNodeB >> whenOverShowEdges: aBlock [
 
 	self addProperty: [ :anElement | 
 		anElement @ (RTShowEdge new connectTo: aBlock) ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGDNodeB >> width: aBlock [
+	shape width: aBlock
 ]

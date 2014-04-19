@@ -24,7 +24,8 @@ RTBuilder >> addElementOn: anObject [
 
 { #category : #public }
 RTBuilder >> build [
-	"do nothing by default. Subclasses should override with specific actions"
+	"Simply render the view"
+	self renderIn: view.
 ]
 
 { #category : #public }
@@ -110,7 +111,6 @@ RTBuilder >> open [
 
 { #category : #'public-ui' }
 RTBuilder >> openIn: aView [
-	self renderIn: aView.
 	self build.
 	^ aView open
 ]
