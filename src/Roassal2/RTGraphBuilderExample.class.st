@@ -254,7 +254,7 @@ RTGraphBuilderExample >> exampleDependenciesAndInheritance [
 	b addAll: (Collection withAllSubclasses).
 
 	b open.
-	b view canvas
+	
 ]
 
 { #category : #'as yet unclassified' }

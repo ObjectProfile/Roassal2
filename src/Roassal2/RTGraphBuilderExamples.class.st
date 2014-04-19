@@ -280,7 +280,8 @@ RTGraphBuilderExamples >> vissoft03 [
 
 	b global
 		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red);
+		alphaColor: 0.4.
 
 	b addAll: (RTObject withAllSubclasses).
 	b open

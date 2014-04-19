@@ -12,9 +12,7 @@ RTGDGlobalB >> alphaColor:  anAlphaColor [
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
 		self view elements do: [ :el | 
-				"We set the color"
-				(condition rtValue: el model)
-					ifTrue: [ el trachelShape color: (el trachelShape color alpha: anAlphaColor) ]
+				el trachelShape color: (el trachelShape color alpha: anAlphaColor)
 			] 
 		]. 
 ]

@@ -11,7 +11,9 @@ Class {
 		'maxX',
 		'maxY',
 		'sizeMax',
-		'labelShape'
+		'labelShape',
+		'colors',
+		'properties'
 	],
 	#category : #'Roassal2-Builder-AnimatedScatterPlot'
 }
@@ -83,11 +85,42 @@ RTAnimatedScatterPlot >> getTableForClasses: classes [
 	^ s contents
 ]
 
+{ #category : #utlity }
+RTAnimatedScatterPlot >> getTableForPackage: packageName [
+	"
+	self new getTableForPackage: 'GraphET2'
+	"
+	
+	| s classes |
+	classes := ((RPackageOrganizer default packageNamed: packageName) classes collect: #baseClass) asSet.
+	s := WriteStream on: String new.
+	classes do: [ :c |
+		s nextPutAll: c name.
+		s nextPut: Character tab.
+		s nextPutAll: (c numberOfMethods) printString.
+		s nextPut: Character tab.
+		s nextPutAll: (c numberOfVariables) printString.
+		s nextPut: Character tab.
+		s nextPutAll: (c numberOfLinesOfCode) printString.
+		s nextPut: Character tab.
+		s cr.
+		].
+	^ s contents
+]
+
+{ #category : #coloring }
+RTAnimatedScatterPlot >> if: aBlockForCondition color: aBlockForColor [
+	properties add: [ :row :element |
+		(aBlockForCondition rtValue: row) ifTrue: [ element trachelShape color: ((aBlockForColor rtValue: row) alpha: 0.4) ] ]
+	
+]
+
 { #category : #initialization }
 RTAnimatedScatterPlot >> initialize [
 	super initialize.
 	tables := OrderedCollection new.
 	frame := 1.
+	properties := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -135,6 +168,7 @@ RTAnimatedScatterPlot >> renderFrame: aFrameNumber [
 			newX := (x rtValue: r) max: maxX in: (0 to: 200).
 			newY := ((y rtValue: r) max: maxY in: (0 to: 200)) negated.
 			newSize := (size rtValue: r) max: sizeMax in: (5 to: 30).
+			properties do: [ :prop | prop value: r value: e ]
 			].
 		view addAnimation: (RTAccelerationMove new to: newX @ newY during: 0.4 on: e).
 		e trachelShape size: newSize.

@@ -1,7 +1,8 @@
 "
-RTAnimatedScatterPlotExample new installTitle: 'EvolutionOfGraphET2' 
+RTAnimatedScatterPlotExample new installTitle: 'EvolutionOfGraphET2'
 		code:
 		'
+
 | b |
 b := RTAnimatedScatterPlot new.
 
@@ -398,8 +399,13 @@ GET2TitleDecorator	3	0	20
 b x: #second.
 b y: #third.
 b size: #fourth.
+b if: [ :row | row first endsWith: ''Test'' ] color: Color green.
+b if: [ :row | row first endsWith: ''Decorator'' ] color: Color blue.
+b if: [ :row | row first endsWith: ''Diagram'' ] color: Color red.
 b open.
-b view canvas '
+""b build.
+b view ""
+b view canvas'
 	
 "
 Class {
@@ -410,6 +416,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTAnimatedScatterPlotExample >> exampleEvolutionOfGraphET2 [
+
 
 | b |
 b := RTAnimatedScatterPlot new.
@@ -807,33 +814,38 @@ GET2TitleDecorator	3	0	20
 b x: #second.
 b y: #third.
 b size: #fourth.
+b if: [ :row | row first endsWith: 'Test' ] color: Color green.
+b if: [ :row | row first endsWith: 'Decorator' ] color: Color blue.
+b if: [ :row | row first endsWith: 'Diagram' ] color: Color red.
 b open.
-b view canvas 
+"b build.
+b view "
+b view canvas
 ]
 
 { #category : #'as yet unclassified' }
 RTAnimatedScatterPlotExample >> exampleEvolutionOfGraphET2Icon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAEDElEQVR4XuWcXU8jVRjHH14K
-lJbyUl4KDFAItGWlUFtkXSjtIltfSH3JJpJGXPVC1zUa9mYxaNxbo4l3Xph44Rfwxg/kJ9hP
-sc8fnaRpClnjUpr8fpmT6cycOTN9/uc8Z+ZkzmN8+PC5iju+XJUCs4BvpQ5S9+Uds/tat0sZ
-s0zLKbE2xQx34l5jsdjMi+YdGBiIB0Fwu6+vb6B5/+LiYnl4eHjSU7K3t7ev9bz5+fnbLfn3
-+/v7oypL2+l0+q7WiUTieirqgdnnVbOv/Cpfenq4bvZHweyXW2a/F81+WjPLNWU/t3+2m0V5
-xdN3nuLXLcjo6OhSoVD4rF6v/7a1tfVpNBqd2NnZ+XpjY6Oxvr5+f3Nz86RarT6dnZ0tefae
-mZmZrVQq9arO3dvbO5uYmFjLZrPvVyqVH7RP+ebm5l7zY9/m8/mPlGd7e/uRG/3AxYoo7e/v
-f6+8XvYDrXd3d5/0OAsLC7u65kv/kxWzb940a7xl9uE9swdls8fuqs5dnEc1s5MWQW6UpaWl
-ajweT8kY09PTG6q5q6urb+v38vLygY5PTk7mxsfHV5QnEonEfP8bbr9eN35R57qoi2o1XvP3
-tE/lJpPJNQmissLzVfbg4GBCLaS5dfo1Ki7OxxduwVvaS/+TcklXpaTfL8F1y8XxOzA+fPjw
-4cOHDx8+fPjw4cOnm/ChldmRkZF5viW6hFKp9FBJg5Z8a3QBmUym7qPB7/EtwYcPHz58+PDh
-w4cPHz58+PABoa8Mh4aGxviW6BI0YLiysnKPb4kuQUPq/BbChw8fPkzSFwufruHuxcKHLwgf
-viB8QfjwBeELwudmBdGETc2wjUQiUb71ukAQza7VgGI4y5YP32WxBNFc8nbD6fl8/kStQkEF
-1EL4luuQIJrQ3y7MRjKZzCo4gMJnKBoD33IdEkQhL9pN9Nd0giAIXudbrMOCyC3pS/U2nXlJ
-rkrC8K3WBZ26Ypu428rwLdYhQVTzw6RgMblc7gOtdSyVShVqtdrPigzEt9gNCOIu611F5gk7
-70QisSBxFP2Hb7HOuqye5qet5nz6kEGhmPgW65AgU1NTtw4PD388PT39++zs7Fmj0firOd+/
-b+eldmXoqUytSnmKxeIXalF8y15TC9E7iT/u3lEgs8taiEQIJ3WGif8A8D8E0Zv50dHRr3pL
-lyF9u1apVJ4eHx//WS6Xz0Mjt6v5iiLXKoaSv9F/8qL3oL7JhZ/Wb8Vd9MowihblPwgSXJMg
-h02CHOAFuQzFPRwbG0vLZSno5WX5LnFZWb4Fb4jwUTns1PXewrcKHz58+PDhw4cPHz58+PDh
-w4cPHz58+PDhw4cPHz58+PDhw4cPHz58+PDhw4cPHz58+PDhw4cPHz58+PAB8xxBI6zg3zwY
-igAAAABJRU5ErkJggg=='
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAEB0lEQVR4XuXcW08TQRQH8EPL
+rd3SQrf0Qi+0DbRcerMLCPRGFVBjQcGoBER80IrBxBc1aOTVaPTNGBMffPPJFz+Qn8BP4Tlr
+iJtmIcTQS/L/zUy6bWe37ZzODC3dIXz48J1mgfNpJUQUwm+lFqpxvka0KZdmJUGUaNhFMTmM
+vRXPVVEU31nr9vb2OkKh0EWr1dprvD0SiRTtdruHi2qxWKyN+wWDwYsN9Uvd3d02OZZcj0aj
+S3LpdDqb80atEj2sED3hR3nMpT5J9C1H9HGK6Gue6N040YSh+iH9vW4MyjSXV1wczQ6Iy+Ua
+zeVyD2q12pdsNrtns9ncc3NzB6lUamtycnIzk8nsVCqVo0AgoHH1Lp/Pl/X7/Rdk30Kh8MLt
+do8nk8kb5XL5jdwm9UZGRmb5vpfpdHpb6szMzOxzo1c5WD1SSqXSa6nLx96Vy8XFxeddLBwO
+L8pjnvuLLBM9XSXaukJ0e5lot0j0jIeqQw7O/grRTkNA2mp0dLTicDj80hherzcl79yxsbGr
+sh2Lxapyv8fjmRgaGopLnZ6eHoVvv8TtZ+HGz8u+HNSI9Bp+5xfkNjmuqqrjEhA51vH+cuy+
+vj6n9BBj7+THKHNw7unDAve0c3+RMiSdVlR+vghDtwxx+BMYPnz48OHDhw8fPnz48OHD10kC
+nIP8/SJ+S3SIOmcpbiI3fmt0APl3wzrROn5L4MOHDx8+fPjw4cOHDx8+fPiAyK8M+/v7B/Fb
+okNomlaPx+PL+C3RIQYGBoL4PQQfPnz4MEX1jK9jLOkZH35A8OEHBD8g+PADgh8QfO0NiI2z
+xl9h2fRNfG0PSJ6z/AIxr2/iwx+y0AIi55KbfZ2eTqd35NzzPaK9uv5TXXwtCYic0G+2zIaq
+qklZHKBIVKzqi1Tga0lAZMkLsxP95XSCeaJ5/BZrcUBkWEokErXGevKXlQxVAT02+No+qSuc
+TVYvwtesgPD8EJAifWSBYtslct900fVtuS/H+SASeS8rA+G3WBsCotHIWp4cZSdp+uQd5ryq
+qtuy+g9+i7V2yOr6t+l0GusNcrbwnI/fYi0KyPDw8NSstvH2w+zGr8+ZO78V5ftPYz2Z0DV9
+bjfh4LTGqc7pEaewdCp8zekhPk4LtDAYpNSJPUSCUG9ICfw/AP47IL5keDm+P/2JJjhJQ67Q
+yt1xOrq1RT/okNNxI5u98yOc6ibpPqczkrmJP4x6ZVvWXeQPpy7ooPiSobMFJGSyiur5BOSy
+ISBV+ICcyMMpyomHLMpyOonZkJXkhK9NApyMk3pOPrrgw4cPHz58+PDhw4cPHz58+PDhw4cP
+Hz58+PDhw4cPHz58+PDhw4cPHz58+PDhw4cPHz58+PDhw4cPHz58sP4AohCdyI/yvN0AAAAA
+SUVORK5CYII='
 ]
 
 { #category : #'as yet unclassified' }
