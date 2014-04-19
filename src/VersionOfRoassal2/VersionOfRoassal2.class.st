@@ -2515,3 +2515,14 @@ VersionOfRoassal2 >> version000182 [
 	at: #date put: '19 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000183 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.127';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.245';
+	at: #version put: '0.184';
+	at: #comment put: '0.184 : worked on the animated scatter plot';
+	at: #date put: '19 April 2014';
+	yourself
+]
