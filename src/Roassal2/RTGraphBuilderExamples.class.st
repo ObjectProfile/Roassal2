@@ -501,6 +501,7 @@ b nodes
 	whenOverHighlight: #dependentClasses.
 
 b edges
+	shape: RTDirectedLine new;
 	connectTo: #dependentClasses.
 
 b layout force charge: -100.

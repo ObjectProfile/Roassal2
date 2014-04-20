@@ -41,6 +41,11 @@ RTGDLayoutB >> grid [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDLayoutB >> horizontal [
+	^ self use: RTHorizontalLineLayout new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDLayoutB >> initialize [
 	super initialize.
 	self if: true
