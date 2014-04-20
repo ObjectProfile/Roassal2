@@ -8,19 +8,19 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabelled >> below [
 	position := #below
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLabelled >> initialize [
 	super initialize.
 	text := #model.
 	self top
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLabelled >> initializeElement: element [
 	| lbl s t |
 	t := text rtValue: element.
@@ -34,42 +34,42 @@ RTLabelled >> initializeElement: element [
 	self isRight ifTrue: [ TRConstraint stick: lbl onTheRightOf: s ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLabelled >> isBelow [
 	^ position = #below
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLabelled >> isLeft [
 	^ position = #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLabelled >> isRight [
 	^ position = #right
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLabelled >> isTop [
 	^ position = #top
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabelled >> left [
 	position := #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabelled >> right [
 	position := #right
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabelled >> text: aTextOrBlock [
 	text := aTextOrBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLabelled >> top [
 	position := #top
 ]

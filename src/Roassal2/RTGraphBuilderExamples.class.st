@@ -446,11 +446,19 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 	| b |
 	b := RTGraphBuilder new.
 	b nodes
-		if: [ :c | 'RT*' match: c name ];
-		color: Color red.
+		if: [ :c | c inheritsFrom: RTShape ];
+		color: Color green.
+	b nodes
+		if: [ :c | c inheritsFrom: RTLayout ];
+		color: Color yellow.
+
 	b nodes
 		if: [ :c | 'TR*' match: c name ];
 		color: Color purple.
+
+	b nodes
+		color: Color red.
+		
 		
 	b edges
 		connectTo: #subclasses;
@@ -459,7 +467,6 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 		connectTo: #dependentClasses;
 		follow: #superclass;
 		if: [ :f :t | ('TR*' match: t name )and: [ 'RT*' match: f name ] ];
-"			scopedTo: [ :c | 'TR*' match: c name ] "
 		color: (Color blue alpha: 0.4).
 
 	b layout cluster.
