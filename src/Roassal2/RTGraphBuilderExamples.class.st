@@ -350,12 +350,13 @@ RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
+	b nodes
 		shape: (RTEllipse new size: #numberOfMethods);
 		whenOverShowEdges: [ :cls | cls dependentClasses ].
 
-	b edge
-		if: [ :obj | obj isBehavior ] bundleConnectTo: [ :c | c subclasses ].
+	b edges
+		bundleConnectTo: #subclasses;
+		useInLayout.
 
 	b layout 
 		use: (RTTreeLayout new ).
@@ -363,8 +364,8 @@ RTGraphBuilderExamples >> vissoft06HierarchicalBundleEdges [
 
 	b global
 		minSize: 10;
-		alphaColor: 0.4;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red);
+		alphaColor: 0.4.
 
 	b addAll: (RTObject withAllSubclasses).
 	b open
@@ -378,21 +379,22 @@ RTGraphBuilderExamples >> vissoft07WithLabel [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
+	b nodes
 		shape: (RTEllipse new size: #numberOfMethods);
 		whenOverShowEdges: [ :cls | cls dependentClasses ];
 		labelled.
 
-	b edge
-		if: [ :obj | obj isBehavior ] connectTo: [ :c | c subclasses ] shape: (RTLine new color: Color gray).
+	b edges
+		if: [ :obj | obj isBehavior ];
+		connectTo: [ :c | c subclasses ];
+		shape: (RTLine new color: Color gray).
 
-	b layout 
-		use: (RTForceBasedLayout new charge: -150).
+	b layout force charge: -150.
 
 	b global
 		minSize: 10;
-		alphaColor: 0.4;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red);
+		alphaColor: 0.4.
 
 	b addAll: (RTObject withAllSubclasses).
 	b open
@@ -406,16 +408,21 @@ RTGraphBuilderExamples >> vissoft08DepAnalysis [
 
 	| b |
 	b := RTGraphBuilder new.
-	b node
-		if: [ :c | 'RT*' match: c name ] color: Color red;
-		if: [ :c | 'TR*' match: c name ] color: Color purple.
+	b nodes
+		if: [ :c | 'RT*' match: c name ];
+		color: Color red.
+	b nodes
+		if: [ :c | 'TR*' match: c name ];
+		color: Color purple.
 		
-	b edge 
-		connectTo: #subclasses usedInLayout: true;
-		connectTo: #dependentClasses 
-			scopedTo: [ :c | 'TR*' match: c name ] 
-			color: (Color blue alpha: 0.4) 
-			usedInLayout: false.
+	b edges
+		connectTo: #subclasses;
+		useInLayout.
+	b edges
+		connectTo: #dependentClasses;
+		if: [ :f :t | ('TR*' match: t name )and: [ 'RT*' match: f name ] ];
+"			scopedTo: [ :c | 'TR*' match: c name ] "
+		color: (Color blue alpha: 0.4).
 
 	b layout cluster.
 
@@ -449,52 +456,17 @@ RTGraphBuilderExamples >> vissoft09DepAnalysisWithCurved [
 		connectTo: #subclasses;
 		useInLayout.
 	b edges
-		connectTo: #dependentClasses ;
+		connectTo: #dependentClasses;
 		follow: #superclass;
+		if: [ :f :t | ('TR*' match: t name )and: [ 'RT*' match: f name ] ];
+"			scopedTo: [ :c | 'TR*' match: c name ] "
 		color: (Color blue alpha: 0.4).
-"
-scopedTo: [ :c | 'TR*' match: c name ] ;
-"
+
 	b layout cluster.
 
 	b global
 		alphaColor: 0.4;
 		normalizeSize: #numberOfMethods min: 5 max: 60.
-
-	b addAll: RTObject withAllSubclasses.
-	b addAll: TRObject withAllSubclasses.
-	b addAll: TREvent withAllSubclasses.
-
-	b open
-]
-
-{ #category : #'software visualization' }
-RTGraphBuilderExamples >> vissoft10DepAnalysisWithCurved [
-	"
-	self new vissoft10DepAnalysisWithCurved
-	"
-
-	| b |
-	b := RTGraphBuilder new.
-	b node
-		if: [ :c | c inheritsFrom: RTLayout ] color: Color red;
-		if: [ :c | c inheritsFrom: TREvent ] color: Color green;
-		if: [ :c | c inheritsFrom: RTShape ] color: Color purple.
-		
-	b edge 
-		connectTo: #subclasses usedInLayout: true;
-		connectTo: #dependentClasses 
-			scopedTo: [ :c | 'TR*' match: c name ] 
-			follow: #superclass
-			color: (Color blue alpha: 0.4) 
-			usedInLayout: false;
-		if: [ :f :t | f inheritsFrom: RTShape ] color: Color red.
-
-	b layout cluster.
-
-	b global
-		alphaColor: 0.4;
-		normalizeSize: #numberOfMethods min: 15 max: 60.
 
 	b addAll: RTObject withAllSubclasses.
 	b addAll: TRObject withAllSubclasses.
@@ -513,15 +485,25 @@ RTGraphBuilderExamples >> vissoft11DependencyGraph [
 
 b := RTGraphBuilder new.
 
-b node
-	if: [ :c | c inheritsFrom: RTLayout ] shape: (RTEllipse new color: Color red; yourself);
-	if: [ :c | c inheritsFrom: RTShape ] shape: (RTEllipse new color: Color green; yourself);
-	if: [ :c | c inheritsFrom: RTBuilder ] shape: (RTEllipse new color: Color blue; yourself).
+b nodes
+	if: [ :c | c inheritsFrom: RTLayout ];
+	color: Color red;
+	whenOverHighlight: #dependentClasses.
 
-b edge
+b nodes
+	if: [ :c | c inheritsFrom: RTShape ];
+	color: Color green;
+	whenOverHighlight: #dependentClasses.
+	
+b nodes
+	if: [ :c | c inheritsFrom: RTBuilder ];
+	color: Color blue;
+	whenOverHighlight: #dependentClasses.
+
+b edges
 	connectTo: #dependentClasses.
 
-b layout forceBased charge: -100.
+b layout force charge: -100.
 
 b global 
 		alphaColor: 0.4;
@@ -529,6 +511,5 @@ b global
 
 b addAll: RTObject withAllSubclasses.
 
-b applyLayout.
-b view
+b open
 ]

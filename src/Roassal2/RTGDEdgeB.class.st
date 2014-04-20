@@ -45,7 +45,8 @@ RTGDEdgeB >> connectTo: aOneArgBlock [
 
 { #category : #'as yet unclassified' }
 RTGDEdgeB >> createEdgesFor: object [
-	| answer toObjects fromObjects fromElements |
+	"This method needs to be cleaned"
+	| answer toObjects fromObjects fromElements subToObjects edges |
 	answer := OrderedCollection new.
 
 	fromObjects := connectFrom rtValue: object.
@@ -55,12 +56,14 @@ RTGDEdgeB >> createEdgesFor: object [
 							thenSelect: #notNil.
 	
 	fromElements do: [ :fromElement |
-
 		attachPoint ifNotNil: [ shape attachPoint: attachPoint ].
-
 		toObjects := connectTo rtValue: object.
 		toObjects isCollection ifFalse: [ toObjects := Array with: toObjects ]. 
-		answer addAll: (shape edgesFrom: fromElement toAll: (self elementsFromModels: toObjects)).
+		
+		subToObjects := toObjects select: [ :o | condition value: fromElement model value: o ].
+		 
+		edges := shape edgesFrom: fromElement toAll: (self elementsFromModels: subToObjects).
+		answer addAll: edges.
 		
 		usedInLayout ifTrue: [ edgesUsedForLayout addAll: answer ] ].
 	
@@ -92,7 +95,8 @@ RTGDEdgeB >> initialize [
 	connectTo := #yourself.
 	connectFrom := #yourself.
 	edgesUsedForLayout := OrderedCollection new.
-	self shape: RTLine new
+	self shape: RTLine new.
+	condition := [ :f :t | true ]
 ]
 
 { #category : #'as yet unclassified' }

@@ -59,8 +59,7 @@ RTGraphBuilder >> createEdgesFor: anObject [
 	| answer |
 	answer := OrderedCollection new.
 	edges do: [ :edge |
-		(edge canCreateForObject: anObject)
-			ifTrue: [ answer addAll: (edge createEdgesFor: anObject) ]
+		answer addAll: (edge createEdgesFor: anObject)
 	].
 
 	^ answer

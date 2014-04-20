@@ -24,7 +24,7 @@ RTGraphBuilderTest >> testBundleConnect [
 	| firstEdge |
 	b nodes color: Color blue.
 	b edges 
-		if: [ :v | v = 1 ];
+		if: [ :f :t | f = 1 ];
 		bundleConnectTo: [ :v | Array with: 2 with: 3 ].
 		
 	b layout grid.
@@ -61,7 +61,7 @@ RTGraphBuilderTest >> testEdge [
 	b nodes color: Color blue.
 
 	b edges
-		if: [ :obj | obj = 1 ];
+		if: [ :f :t | f = 1 ];
 		connectTo: [ :o | o + 1 ];
 		shape: (RTLine new color: Color blue).
 	b addAll: (1 to: 2).
@@ -85,6 +85,20 @@ RTGraphBuilderTest >> testGlobalNormalization [
 	
 	self assert: b view elements first trachelShape color = Color green.
 	self assert: b view elements last trachelShape color red > 0.95.
+]
+
+{ #category : #edges }
+RTGraphBuilderTest >> testIfAndEdges [
+
+	b nodes color: Color blue.
+	b edges 
+		connectTo: [ :v | v + 1 ];
+		if: [ :f :t | f = 1 ];
+		color: Color black.
+	b layout grid.
+	b addAll: (1 to: 5).
+
+	self assert: b view numberOfEdges = 1	
 ]
 
 { #category : #edges }
