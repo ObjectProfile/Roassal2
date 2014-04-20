@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAbstractFlowLayout,
-	#superclass : #RTEdgeDrivenLayout,
+	#superclass : #RTLayout,
 	#instVars : [
 		'maxWidth',
 		'gapSize'
