@@ -1,0 +1,239 @@
+Class {
+	#name : #RTSVGEntity,
+	#superclass : #RTObject,
+	#instVars : [
+		'id',
+		'element',
+		'type',
+		'fillColor',
+		'strokeColor',
+		'strokeWidth',
+		'label',
+		'position'
+	],
+	#category : #'Roassal2-Exporter-SVG'
+}
+
+{ #category : #interactions }
+RTSVGEntity >> addContainedInteractions: aSVGVisitor [
+	aSVGVisitor addContainedInteractions: self label , self id element: self element
+]
+
+{ #category : #interactions }
+RTSVGEntity >> addEmbeddingInteractions: aSVGVisitor [
+	^ aSVGVisitor addEmbeddingInteractions: self label , self id element: self element
+]
+
+{ #category : #interactions }
+RTSVGEntity >> addExternalInteractions: aSVGVisitor [
+	aSVGVisitor addExternalInteractions: self label , self id element: self element
+]
+
+{ #category : #style }
+RTSVGEntity >> addFillColor: stream [
+	self fillColor = nil
+		ifTrue: [
+			stream
+				nextPutAll: 'fill:none; '
+			  ]
+		ifFalse: [  
+			stream
+				nextPutAll:
+					('fill:rgb(<1p>,<2p>,<3p>); '
+						expandMacrosWith: (self fillColor red * 256) rounded
+						with: (self fillColor green * 256) rounded
+						with: (self fillColor blue * 256) rounded)]
+]
+
+{ #category : #style }
+RTSVGEntity >> addFillOpacity: stream [
+	stream nextPutAll: ('fill-opacity:<1p>; ' expandMacrosWith: self fillColor alpha)
+]
+
+{ #category : #adding }
+RTSVGEntity >> addOn: aStream using: aSVGVisitor [
+	self subclassResponsibility
+]
+
+{ #category : #adding }
+RTSVGEntity >> addPosition: stream [
+	self subclassResponsibility
+]
+
+{ #category : #transform }
+RTSVGEntity >> addRotation: angle point: point into: stream [
+	angle isNotNil 
+		ifTrue: [  
+		stream 
+			nextPutAll: ('rotate(<1p>,<2p>,<3p>) ' expandMacrosWith: angle with: point x rounded with: point y rounded)]
+]
+
+{ #category : #transform }
+RTSVGEntity >> addScale: anInteger into: stream [
+	stream nextPutAll: ('scale(<1p>) ' expandMacrosWith: anInteger)
+]
+
+{ #category : #adding }
+RTSVGEntity >> addStringWithFont: aByteString into: stream [
+	| converter |
+	converter := RTSVGStringConverter new.
+	stream
+		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif">';
+		nextPutAll: (converter convertString: aByteString);
+		nextPutAll: '</tspan>'
+]
+
+{ #category : #style }
+RTSVGEntity >> addStrokeColor: stream [
+	stream
+		nextPutAll:
+			('stroke:rgb(<1p>,<2p>,<3p>); '
+				expandMacrosWith: (self strokeColor red * 256) rounded
+				with: (self strokeColor green * 256) rounded
+				with: (self strokeColor blue * 256) rounded)
+]
+
+{ #category : #style }
+RTSVGEntity >> addStrokeOpacity: stream [
+	stream nextPutAll: ('stroke-opacity:<1p>; ' expandMacrosWith: self strokeColor alpha)
+]
+
+{ #category : #style }
+RTSVGEntity >> addStrokeWidth: stream [
+	stream nextPutAll: ('stroke-width:<1p>; ' expandMacrosWith: self strokeWidth)
+]
+
+{ #category : #transform }
+RTSVGEntity >> addTranslation: point into: stream [
+	stream nextPutAll: ('translate(<1p>,<2p>) ' expandMacrosWith: point x rounded with: point y rounded)
+]
+
+{ #category : #adding }
+RTSVGEntity >> addWidth: x height: y into: stream [
+	stream
+		nextPutAll:
+				('width="<1p>" height="<2p>" ' expandMacrosWith: x with: y).
+]
+
+{ #category : #adding }
+RTSVGEntity >> closeDef: stream [
+	stream nextPutAll: '/>' , String cr
+]
+
+{ #category : #adding }
+RTSVGEntity >> closeDefWithContent: stream [
+	stream nextPutAll: '>' , String cr
+]
+
+{ #category : #adding }
+RTSVGEntity >> closeFullDef: stream [ 
+	stream 
+		nextPutAll: '</',self type,'>';
+		nextPutAll: String cr
+]
+
+{ #category : #adding }
+RTSVGEntity >> closeTag: stream [
+	stream nextPutAll: '" '
+]
+
+{ #category : #accessing }
+RTSVGEntity >> element [
+	^ element
+]
+
+{ #category : #accessing }
+RTSVGEntity >> element: anObject [
+	element := anObject
+]
+
+{ #category : #accessing }
+RTSVGEntity >> fillColor [
+	^ fillColor
+]
+
+{ #category : #accessing }
+RTSVGEntity >> fillColor: anObject [
+	fillColor := anObject
+]
+
+{ #category : #accessing }
+RTSVGEntity >> id [
+	id ifNil: [ id :=  element identityHash asString].
+	^ id
+]
+
+{ #category : #accessing }
+RTSVGEntity >> id: anObject [
+	id := anObject
+]
+
+{ #category : #accessing }
+RTSVGEntity >> label [
+	^ label
+]
+
+{ #category : #accessing }
+RTSVGEntity >> label: anObject [
+	label := anObject
+]
+
+{ #category : #adding }
+RTSVGEntity >> openDef: stream [
+	stream nextPutAll: '<',self type,' id="',self label , self id , '" '
+]
+
+{ #category : #accessing }
+RTSVGEntity >> position [
+	^ position
+]
+
+{ #category : #accessing }
+RTSVGEntity >> position: anObject [
+	position := anObject
+]
+
+{ #category : #adding }
+RTSVGEntity >> startClass: stream [
+	stream nextPutAll: 'class="'
+]
+
+{ #category : #style }
+RTSVGEntity >> startStyle: stream [
+	stream nextPutAll: 'style="'
+]
+
+{ #category : #transform }
+RTSVGEntity >> startTransform: stream [
+	stream nextPutAll: 'transform="'
+]
+
+{ #category : #accessing }
+RTSVGEntity >> strokeColor [
+	^ strokeColor
+]
+
+{ #category : #accessing }
+RTSVGEntity >> strokeColor: anObject [
+	strokeColor := anObject
+]
+
+{ #category : #accessing }
+RTSVGEntity >> strokeWidth [
+	^ strokeWidth
+]
+
+{ #category : #accessing }
+RTSVGEntity >> strokeWidth: anObject [
+	strokeWidth := anObject
+]
+
+{ #category : #accessing }
+RTSVGEntity >> type [
+	^ type
+]
+
+{ #category : #accessing }
+RTSVGEntity >> type: anObject [
+	type := anObject
+]

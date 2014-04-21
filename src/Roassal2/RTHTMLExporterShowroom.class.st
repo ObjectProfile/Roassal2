@@ -402,7 +402,9 @@ RTHTMLExporterShowroom >> makeIndex [
 	file exists ifTrue: [file delete].
 	file := (dir / 'index.html') writeStream.
 	[ self exportOnStream: file ] 
-		ensure: [ file notNil ifTrue: [ file close ] ]
+		ensure: [ file notNil ifTrue: [ file close ] ].
+	RTHTMLExporter directory: nil.
+	
 ]
 
 { #category : #html }
