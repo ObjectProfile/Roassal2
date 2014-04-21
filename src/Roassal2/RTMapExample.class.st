@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMapExample >> exampleCity01 [
 
 	| b |
@@ -53,7 +53,7 @@ RTMapExample >> exampleCity01 [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMapExample >> exampleCity01Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAARHklEQVR4XuVdCVAUZxb+AZVU
 XNdjTWJ5lIkxUclG12Q9A+IBurquUSFE0JSJ8UCCB4hH5BgNouIJ4n2hiAeCCMqpCAqCiAei
@@ -140,7 +140,7 @@ noX3+Rbjfy5/aTUCvfXWW258T2vDJxxgNTqWBvn7+ytRd3Ts2HGO/CVWR/8H7DdNcaAbl6sA
 AAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMapExample >> exampleSouthAmericaPopulation [
 
 	| b countries cn sum|
@@ -165,7 +165,7 @@ RTMapExample >> exampleSouthAmericaPopulation [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMapExample >> exampleSouthAmericaPopulationIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAKKklEQVR4XuWce1CU5xXGvwXB
 EmntKEyjoqYUUBSBioqAEoiAF9SgUqDeuLoQBBUV2AWWZUEWcLkJsgIrI3cHBe8CKoiiNk00
@@ -219,7 +219,7 @@ rDbk6Li8G35C4ytrBv7faocv+IIv+IIv+IIv+IIv+IIv+IIv+IIv+IIv+Hpl9T8DTQfeBAUc
 iAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMapExample >> exampleWorldPopulation [
 
 	| b countries cn |
@@ -240,7 +240,7 @@ RTMapExample >> exampleWorldPopulation [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMapExample >> exampleWorldPopulationIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAazUlEQVR4XuWdB1hT5/fHAyiK
 4t6z7j1AUFFABVFU0LpAxIXKcoCigMgKUxCBKoIIggxZKlO2yEZwt9Xa+qt2Wuu2dZKbe5P8
@@ -373,7 +373,7 @@ yP+Q/yH/Q/6H/A/5H/I/5H/I/5D/If9D/of8D/kf8j/kf8j/oMf/AewPpw4iHg/3AAAAAElF
 TkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMapExample >> label [
 	^ 'Geographical maps'
 ]

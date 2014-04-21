@@ -28,7 +28,7 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleConnectFromAndSelectiveColor [
 
 	| b |
@@ -51,7 +51,7 @@ RTGraphBuilderExample >> exampleConnectFromAndSelectiveColor [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleConnectFromAndSelectiveColorIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAll0lEQVR4XuWdCXiV5ZXH30sk
 yBqWhC0EIWyyGdaEGJYAAoZFdjHiBijIogjKKhBcSset2lqrlY6ttbXUccaqrdZax6XT1k6d
@@ -235,7 +235,7 @@ gNesJA0xc4z9l5tq/FuDbhs2ZF3e2tgkY2790KGNXzaNf2v8W+PfGv/W+LfGtv0/ETXaV/Yn
 KxkAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleDependenciesAndInheritance [
 | b |
 	b := RTGraphBuilder new.
@@ -257,7 +257,7 @@ RTGraphBuilderExample >> exampleDependenciesAndInheritance [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleDependenciesAndInheritanceIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAABML0lEQVR4XuVdBXhVV9Z9dZ2W
 tlBoS0uRIkWKhoSEhEBcibu7u7t7Xtzd3Yi7uxMjCTHcCi3UKf3Pei+3zVDaYeaf6UjvR74X
@@ -624,7 +624,7 @@ Qs7YhcrKBGQzst58x9Fxy1YTc+yEBzL64Sfu7rwy6elvb8Q9aambBQPd4RHbcWDdO2Dr/2yS
 AAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleDependenciesInRoassalAndTrachel [
 
 		| b |
@@ -658,7 +658,7 @@ RTGraphBuilderExample >> exampleDependenciesInRoassalAndTrachel [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleDependenciesInRoassalAndTrachelIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAABBk0lEQVR4Xs19B3gTV7r2aNQl
 S1a1LUuWLLn3hnsFm2pjMGAwNhhjjAsY3Btu9A6mhtB77y10CIFAEkglyaZver3JZrPZZPfu
@@ -974,7 +974,7 @@ A3tokZymO4Qk3fG2k1NcStNCoUAgEun14/KIY5o4iWQgL75kXyFs42NUlFqtMxAr37MPVpiQ
 sPNQQEBVY2nput16PaB1d68ik63fQFSips+FP/8PHnpQdvTgYVQAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleFading [
 
 	| b |
@@ -991,7 +991,7 @@ RTGraphBuilderExample >> exampleFading [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleFadingIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAIOklEQVR4XuWXa0xb5x2Hf+Fi
 Y3CAGDu1xTUJhhHuxoTQxHWWhrgEr2mwl5GkpINc2rIsI2RTiIZxukuWlGxNu1ou6pR1G446
@@ -1036,7 +1036,7 @@ H/rQhz70oQ996EMf+tCHPvShD33oQx/60Ic+9KEPfejz/8p/ALNY2vL98xAQAAAAAElFTkSu
 QmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleForceBasedLayoutWithMinSize [
 
 
@@ -1061,7 +1061,7 @@ RTGraphBuilderExample >> exampleForceBasedLayoutWithMinSize [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleForceBasedLayoutWithMinSizeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAWkUlEQVR4XuVdB3yT5fZ+sprR
 NG1W27R0l3TvTVvC6BDaUkaRVSioOMCCXMpQpEFcDPmjuLgigiAIMgRBAfUKCqKCiHJF5OqF
@@ -1174,7 +1174,7 @@ jb97PYFFzPiP8MdYuBsufEsJX4Qvwhfhi/BF+CJ8Eb4IQf4fKCtxaiqcLUYAAAAASUVORK5C
 YII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
 
 
@@ -1201,7 +1201,7 @@ RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleForceLayoutWithGreatChargeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAcn0lEQVR4XuVdCXiU1bl+Z8tk
 skz2fSV7yA4J2cgGSIjshkV2kEWJyBZ2hACiVBFFKLbSInIVtUUrbqi41n1rtXVp7YbVltrl
@@ -1342,7 +1342,7 @@ Nr7LjQmqkB3Y219UFt105Qqr71xjlpE74vQHMKy34G5ybtyf3d23VX+rm8jPZ/e1+xv537BF
 /9OD+CNc2DNH3ERWgatuz9W4/D94eJCkQNpQPQAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleLabelledGraph [
 
 
@@ -1370,7 +1370,7 @@ RTGraphBuilderExample >> exampleLabelledGraph [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleLabelledGraphIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAA9Q0lEQVR4XuWdB3Rc13WuDwCi
 944BMOi9A4NOdIBoRCcKAZCoRCcIggXsvXexk6JEUaJISlTvkqneLFktlmw5iXtsK7ZjJ7GT
@@ -1666,7 +1666,7 @@ VeA+UKPN3S7/XIfiHDGHezaFrvQ5zbP4//Qx+T72RoIUmh3SgfZDTWE34Chp9MiE0KbEquCN
 +9gzZv8XQkhGN5ryzVEAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleNormalizeColor [
 
 
@@ -1692,7 +1692,7 @@ RTGraphBuilderExample >> exampleNormalizeColor [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleNormalizeColorIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAF70lEQVR4XuWba2xTZRjH/6db
 3dpubbeuG6XtNnZpx9ptMCbdGHObDnWwjovBaabEhBDR6ECCSghmKIlR4gejWUT9CBq5BD4Y
@@ -1726,7 +1726,7 @@ Dz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8T/wI8vDyo7BPxJgAA
 AABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleSimple01 [
 
 	| b |
@@ -1746,7 +1746,7 @@ RTGraphBuilderExample >> exampleSimple01 [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleSimple01Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADRElEQVR4XuXcTShlYRzH8V/q
 MhsbLBQLSaaUZrw0xssMKWpqLJQok4WFhWLKlBrKS7ExTczKQlKamZUVS1FsZGGpWMgaSyFE
@@ -1767,7 +1767,7 @@ RkdjK9Yu7993eM0PSILZnYVspU5MxJ+mrMzbI/jy0r3RHB8fHx8fHx8fHx8fHx8fHx8fHx8f
 Hx8fHx+fA/4A7jmRoQn4CJgAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleSmallTree [
 
 	| b |
@@ -1784,7 +1784,7 @@ RTGraphBuilderExample >> exampleSmallTree [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleSmallTreeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAF7klEQVR4XuWd208bRxTGD64R
 OASwwcXGMcJ2fMHEBmxzs8EIfAGMFwKoqESQBkhLAQUIoJakahrSgghV71IV1Jc+pH0kqtS3
@@ -1818,7 +1818,7 @@ j6DMVBjeP68n7OQiPCiaHetypScCb8fbX9t5h7kGv+mBp88d/md0/NIa/DdA4IMPPvjggw8+
 AElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleSystemComplexity [
 
 | b |
@@ -1842,7 +1842,7 @@ b open.
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleSystemComplexityIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABfCAYAAAAeX2I6AAAK2UlEQVR4XuWcCVBU2RWGrwtb
 gHFBFAUFEWGQXVSQRVAURDHgEkURQURBQTbXEaFFBRzAJToLiajE0YmKuxGNG2ppTMaF0nLf
@@ -1899,7 +1899,7 @@ yP/PFfwdwh/+8Ic//OEPf/jDH/7whz/84Q9/+MMf/vCHP/zhD3/4wx/+8Ic//OEPf/jDH/7w
 hz8/TP4Pq0kT38CMcpsAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGraphBuilderExample >> exampleTreeMapAndNormalizeColor [
 
 
@@ -1927,7 +1927,7 @@ RTGraphBuilderExample >> exampleTreeMapAndNormalizeColor [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGraphBuilderExample >> exampleTreeMapAndNormalizeColorIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAANgElEQVR4XuVcCXRU1Rn+Z7LM
 ZJusJJlksi9kX8lG9g0SEwIJsiQhBMKaAAkkQMKWobVuaBUVilpzREErKNSg9WgVo55WKdZ6
@@ -1997,7 +1997,7 @@ H+JDfIgP8SE+xIf4EB/iQ3yID/EhPsSH+BAf4kN8iA/xcXPif2LjXofiPS+iAAAAAElFTkSu
 QmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGraphBuilderExample >> label [
 	^ 'Graph builder'
 ]

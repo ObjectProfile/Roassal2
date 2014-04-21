@@ -22,7 +22,7 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMondrianExample >> exampleClasses [
 
 	| b |
@@ -38,7 +38,7 @@ RTMondrianExample >> exampleClasses [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMondrianExample >> exampleClassesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADOElEQVR4XuXdTW7CMBBAYW7K
 UdjBMdjBLWDHMWAHtyCtkaYaTcexQ5zEzpuN1SSklT/s+Cd2N1237rher93lcnm38vduOj4I
@@ -59,7 +59,7 @@ at263gDA/js9fU+98rZvz9/aVl01X2XFQOx1rSwExYDwnyEzg+hqp+WFn82D2A0HWo8fkhzJ
 rlx6vgkAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMondrianExample >> exampleSimpleTreeLayout [
 
 
@@ -73,7 +73,7 @@ RTMondrianExample >> exampleSimpleTreeLayout [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMondrianExample >> exampleSimpleTreeLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAFQUlEQVR4XuWbuU7sMBSG82S8
 Ei1ILAUSPAodLRJi6aCkQKJBghKExL5vnstn3YNyfZ0ZJ/FkwvxHGiVxvByfL7b/OFAMBvrW
@@ -103,7 +103,7 @@ PhB90weiD0Tf9IHoA9E3fSD6QPRNH4g+EH3TB6Jv+kD0geibPhB9IPqmD0QfiL7pA9EHom/6
 QPRNH4g+EH3TB6IPRN/0gegD0Td9IPpA9E0fiL5F7A9htB21NeOvdgAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTMondrianExample >> exampleSystemComplexity [
 
 	| b |
@@ -120,7 +120,7 @@ RTMondrianExample >> exampleSystemComplexity [
 	b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTMondrianExample >> exampleSystemComplexityIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHUUlEQVR4XuWc2U4UQRSG5+Xw
 FUw08g7IpoKaiMhTqIlxueNKBVTkTm5NlIjirrgji4KgWG19Fc6kpulmpmE25z/JSXdPd9dy
@@ -160,7 +160,7 @@ xcvf+l6WH5rGx8crfjMQ+kD0gegDyRIDwR8H6ANpA+H1Ib51tG8f9YG0WOxr4FaIPpA2E30g
 A9EXfSD6QPRFH4g+EH3RB9LR8g/dmWDi7HSqOwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMondrianExample >> label [
 	^ 'Mondrian builder'
 ]

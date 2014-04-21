@@ -24,7 +24,7 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleAnimatedCircle [
 	| nbOfCircles  v shape mousePos |
 	nbOfCircles := 25.
@@ -41,7 +41,7 @@ RTRoassalExample >> exampleAnimatedCircle [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleAnimatedCircleIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAD8UlEQVR4XuWZCUuVQRSGp5Jc
 U3HJNENBczfXLCuXXHFX3BUVS/3/PyHepsM3M3cSkYLieWDg+vrduTBnzvo5Pnz48OHDhw8f
@@ -65,7 +65,7 @@ kJ57r8KHDx8+fPjw4cOHDx8+fPjw4cOHDx8+fPjw4cOHDx8+fPjw4cOHDx8+fPjw4cOHDx8+
 fPjw4cOHDx8+fPjw4cOHD5//mx9m6Vpqr6HZGwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleAnotherTreeLayout [
 	| view elements |
 	view := RTView new.	
@@ -85,7 +85,7 @@ RTRoassalExample >> exampleAnotherTreeLayout [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleAnotherTreeLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAFsElEQVR4XuWc20+cRRjG313Y
 5QzlfPpgOS5YKIUW+n3stikgFKGprSxQxAq1pYrBdDVpmtSQNPFS/wNN9HJTa03qjd55oze9
@@ -118,7 +118,7 @@ Bx988MEHH3zwwQcffPDBBx988MEHH3zwwQcffPDBB59TwL+LFiQTlicWMgAAAABJRU5ErkJg
 gg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleArrowedBezier [
 	| v shape  edge els |
 	v := RTView new.
@@ -133,7 +133,7 @@ RTRoassalExample >> exampleArrowedBezier [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleArrowedBezierIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAABCUlEQVR4XuXRIQoCURQF0A8i
 DGgSwWCTCTpBTAb34Tp+NAjKiLgBbWYXNGifJVjsyjSxOQyInAMvXG67L/h8Pp/P5/P5fD6f
@@ -143,7 +143,7 @@ F4bTJnL1kP3ucH7vfT+U5/nRX8Hn8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6f
 z+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n+/vvADh2zp6vpL8RAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleArrowedEdges [
 
 view := RTView new.
@@ -163,7 +163,7 @@ view open.
 view  canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleArrowedEdgesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAK5klEQVR4XuVaC1BU1xnmoYCA
 8oYFFcUHD+WxsCBPeRpBjI0BdUFAiFJfiBSpkNLWTetUatNOO6YzhnTyaia1Y6bROJOEWBtH
@@ -220,7 +220,7 @@ H/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/Ih
 H/IhH/IhH/IhH/IhH/IhH0b8DxOIBxLqM3+GAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleBezier [
 | v shape  edge els |
 v := RTView new.
@@ -241,7 +241,7 @@ v open.
 v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleBezierAndCenterOfObjects [
 
 | v es startingElement shape |
@@ -269,7 +269,7 @@ v open.
 v  canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleBezierAndCenterOfObjectsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHNklEQVR4XuWaW0wUVxjHZ8Fd
 FkFYuSwL7HK/LSCy7MIuBARBuewKrIhIQRABIZbAVrSUXikJiTXyYFGjSUs0prEPTfqg1b7Y
@@ -309,7 +309,7 @@ Dz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++Gxa/gaxvt0BZhXI
 eQAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleBezierIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAACcUlEQVR4XuXb3W/SUBjH8YPI
 qFHREayhikDBUkbLW+2kkAUUEl9ivDMh3K2JmYk323/hpX+yPUYTQzagCOzA93NJS6C/59Cn
@@ -326,7 +326,7 @@ mf0u5P9PRSFyZeKR0C1+Enx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8
 fHx8fHx8fHx8fHx//QL7WkIkODawDAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleCellLayout [
 
 	| view substrings |
@@ -340,7 +340,7 @@ RTRoassalExample >> exampleCellLayout [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleCellLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAGcklEQVR4XuWbe28UZRTGX2KB
 tuCNxRabBtKyLZsWWqQtFAo7XEqtVErFFipKQancjNQiWRNdWVQMmhglxhhJCImE/zQxUUNM
@@ -376,7 +376,7 @@ SUwIP/O5wK8Cfvjhhx9++OGHH3744Ycffvjhhx9++OGHH3744Ycffvjhhx9++OGHH3744Ycf
 fvjhhx9++OGHn5j8A9TB373eT7gUAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleCellLayoutWithCircle [
 	| view els |
 	view := RTView new.
@@ -389,7 +389,7 @@ RTRoassalExample >> exampleCellLayoutWithCircle [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleCellLayoutWithCircleIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAE50lEQVR4XuXbbUgcRxgHcFOM
 xoq2Ul/S6BnPpipoowbfuaRJQ0BBBV9Qg1grWvAtSgWN2qKiGLGo1BNLiAVrlIpB0PZDUQ98
@@ -418,7 +418,7 @@ hw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDh+9QXgOox3JY
 RZSQNAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleCircleLayoutAndEdges [
 
 	| v els |
@@ -433,7 +433,7 @@ RTRoassalExample >> exampleCircleLayoutAndEdges [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleCircleLayoutAndEdgesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAeSElEQVR4XuWd6XeV5bnGX5FS
 U5DBTJIQIWCCxBjmoYoMgkiAgAnzYBhlEJOACCqtBKSCUNDYqD0gtUdOUdBlEUFZurBVcUCB
@@ -582,7 +582,7 @@ jHqECzh6fh6NRqAqxbBMpRmKgv4AAVrUH8JAYVgXgKemjh27+uG+fVes5vz6W+28vFFjJ05c
 spJ+9e7de9CFkMv/Ax50FY2/phGnAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleClusterLayout [
 
 | v |
@@ -595,7 +595,7 @@ RTRoassalExample >> exampleClusterLayout [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleClusterLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAd/0lEQVR4XuWdCXCV13XHj4QQ
 u0DsIECIRawSoBWQBAIJJIEEQhJCCBCbBAKxGbMaA47BgG1iTDHBruOYJnachDqLU9JJXKcT
@@ -743,7 +743,7 @@ ktatQBjgImn6ZOu92Rte0BwhuDv3M4AHNs2xQUXvH8VuFANH41Q5vX80er90i/wfUISuWm4c
 UUkAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleDependenciesWithCurve [
 | v classesRoassal classesTrachel shape1 shape2 helpBar1 helpBar2 |
 v := RTView new.
@@ -780,7 +780,7 @@ v open.
 v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleDependenciesWithCurveIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAXR0lEQVR4XuWd+VMU1xqGD7sI
 CIIGxGEYBkZUQBFEjLigUTEqbkGNRmPUuCQasxkTzb6vxuz7zVKpJHWrUpWqm/tT7j93z+Ph
@@ -896,7 +896,7 @@ qy1eeMw5HGuVnBo/NoHl+tfmWAI9cYHvCPa6vo6hXRaO43j1h3Z4PR1rPFPts+gYtc/3cx2P
 /wLZleMnuj1bsAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleDotIndex [
 
 | v values resolutionVertical groups maxValue g c el |
@@ -932,7 +932,7 @@ v canvas color: Color black.
 v open.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleDotIndexIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABfCAYAAAAeX2I6AAAFhklEQVR4XuWc72tbVRzGT+PA
 V75ouw37M03bORlO2k4YNMlSakU0QbQV6WrapqkDrSBtHFLaLi0TZvtO9sM5fKGI/gH6xjfT
@@ -964,7 +964,7 @@ QPjFHwh/IPziD4Q/EH7xB8Iv/kD4A+EXfyD8gfCLPxD+QPjFHwh/IPziD4RcTwAORhKa195Q
 OgAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleDynamicBezierEdges [
 
 	| v es |
@@ -983,7 +983,7 @@ RTRoassalExample >> exampleDynamicBezierEdges [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleDynamicBezierEdgesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABfCAYAAAAeX2I6AAAMuElEQVR4XuVcCVBVyRX9CXwd
 F3BFUT+LoI6igqIoIIgs7liKuKKgggsiqCDgihgJ7vsa44qKiHtpHNeIu5bEuIyIG2qcqkxN
@@ -1049,7 +1049,7 @@ CzP5QJ7i924VoaLD+MWH+BAf4kN8iA/xIT7Eh/gQH+JDfIgP8SE+xIf4EB/iQ3yIj+rH/wDc
 OQlQqimsUAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleDynamicEdges [
 
 	| v es |
@@ -1064,7 +1064,7 @@ RTRoassalExample >> exampleDynamicEdges [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleDynamicEdgesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABfCAYAAAAeX2I6AAAMrElEQVR4XuVdCVBUyRlGUSKs
 CFjGUkSNouttFC9QEBARxAMVL7xQUcBbwfWKMuCBohagiDceUfE+iBFdTwxq4c2KCt7GiqlN
@@ -1130,7 +1130,7 @@ svbRS1npTsqmGTiO4uLi+P8MiY+P58xflK1evXoNlCPpzNfWtxCDrH5P/0weAwYOnoH/hIC8
 RU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleFontSize [
 
 	| v label els |
@@ -1143,7 +1143,7 @@ RTRoassalExample >> exampleFontSize [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleFontSizeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAEV0lEQVR4XuWaW4hWVRTHj7dQ
 EVMfBm26SOiTUVEGEenkaF4yKhqbsuxm9WBFqTmllPNpOalY0AWMoAgKUYusl8gsK0vFy4NC
@@ -1169,7 +1169,7 @@ WpM98+HDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8f
 Pnz48OHDhw8fPnwGhpNYGq32Nn6+JQAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleForceBasedLayout [
 
 	| v classes edges | 
@@ -1191,7 +1191,7 @@ RTRoassalExample >> exampleForceBasedLayout [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleForceBasedLayoutAnimated [
 
 	| v classes edges | 
@@ -1213,7 +1213,7 @@ RTRoassalExample >> exampleForceBasedLayoutAnimated [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleForceBasedLayoutAnimatedIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAALs0lEQVR4XuWca3Mb1w2GsRIp
 UtSNoiRS9zslRfJFduw4jtXYrts0sePEbpOm6TTTTtPP+QfNh/bP9VP/UoqHZxEdr8nlkvKk
@@ -1274,7 +1274,7 @@ NTATHysF90T82y/Dvyb8+8C/+Tf/5t/8m3/zb/7Nv/k3/+bf/Jt/82/+zb/5N//m3/ybf/Nv
 /s2/+bch7X+UezlxUQktfwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleForceBasedLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAALs0lEQVR4XuWca3Mb1w2GsRIp
 UtSNoiRS9zslRfJFduw4jtXYrts0sePEbpOm6TTTTtPP+QfNh/bP9VP/UoqHZxEdr8nlkvKk
@@ -1335,7 +1335,7 @@ NTATHysF90T82y/Dvyb8+8C/+Tf/5t/8m3/zb/7Nv/k3/+bf/Jt/82/+zb/5N//m3/ybf/Nv
 /s2/+bch7X+UezlxUQktfwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleGrayScaling [
 | v es n |
 	v := RTView new.
@@ -1356,7 +1356,7 @@ RTRoassalExample >> exampleGrayScaling [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleGrayScalingIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABfCAYAAAAeX2I6AAACt0lEQVR4XuWYP0ibQRiHu2Rx
 yRIIggQkEBKFEBDxD8YDIWQRUQhkCYEsLi7SkAZcbnJ2dnbP0KE4Z3Z2d+hQ7NDF+e39oLrd
@@ -1374,7 +1374,7 @@ Z/lBFhxkbW3tS6/X+/ls+v2NX2KBQfjwg/CD8OEH4QfhB+EH4cOHDx8+fPjw4cOHDx8+fPjw
 4cOHDx8+fPjw4cOHDx8+fPjw4cOHDx8+fPi8Nb8Bjy8MaRHyChQAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleGroupedLayout [
 
 	| view group1 group2 host1 host2 edgesGroup1 edgesGroup2 |
@@ -1415,7 +1415,7 @@ RTRoassalExample >> exampleGroupedLayout [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleGroupedLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAFw0lEQVR4XuWa60/bVhjGC5Qh
 qnWVuAjBBmhryWhXIIEVQsjWdsBYA0naDLKQUEghBMilzY3SUG4FgdgKg7EVlV4YpZsqbZ20
@@ -1448,7 +1448,7 @@ gw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OBzYvkP
 DO2Li2xss+0AAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleHappyNewYear [
 | view txt x y el shape size offset |
 	txt := 
@@ -1482,7 +1482,7 @@ RTRoassalExample >> exampleHappyNewYear [
 	view openInWindowSized: 800 @ 450
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleHappyNewYearIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAACGElEQVR4XuXZW08CQQyG4aII
 iMhBMCYeY/TCCy9M/P//TTDZRMZDt9uuXfZ9Ei4G2H5dDNMhCh8fHx8fHx8fHx8fHx8fHx8f
@@ -1497,7 +1497,7 @@ DGl0Tg48d3vzejlDtHOy9XeKtZ43L9p/52ffLx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f
 Hx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fX+EDGUbckNrlS/AAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleHighlightingNeighbourg [
 
 		
@@ -1513,7 +1513,7 @@ RTRoassalExample >> exampleHighlightingNeighbourg [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleHighlightingNeighbourgIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAABGklEQVR4XuXXwQnEIBBA0SnL
 YzpKCZZjGZZiKdkGJgqGLLu8B3MSPOSDTMLn8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P
@@ -1524,7 +1524,7 @@ Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/NxPvWi+6f+
 K4KdAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleLabels [
 
 | v es |
@@ -1540,7 +1540,7 @@ v open.
 v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleLabelsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAIBklEQVR4XuWc6U+cVRSHS0lt
 y07Z931fylrWYYdhbVELiFgQC0VlECxiW0rFojWtFGvRRmNtNPaDkRj7wYQPmvBBvxgTiB81
@@ -1584,7 +1584,7 @@ fvSjH/3oRz/60Y9+9KMf/ehHP/rRj370ox/96Ec/+tGPfvSz/fwFMXu1eRMLEJcAAAAASUVO
 RK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleMakingVisualizationFit [
 
 	| view |
@@ -1605,7 +1605,7 @@ RTRoassalExample >> exampleMakingVisualizationFit [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleMakingVisualizationFitIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAG5ElEQVR4XuWY92tdZRjHrW1W
 M5s2w4xm72n2aPbeey+zRzObYawZGtKIiWJCCIIBLZSkEqEgLQSkKviLUIjgL/4Lgn+Fz7f0
@@ -1643,7 +1643,7 @@ C883ziGoA8YKqvp2Y6S7STClZhgjPDw81pzzwvPM/czXnov44ssPv0PeHvCZhd8K/PDDDz/8
 /PDDDz/88MMPP/zwww8/bwT/AjBYEY/vhzN3AAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleMidPointCenterUsingBezier [
 
 | v es startingElement shape |
@@ -1672,7 +1672,7 @@ v open.
 v  canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleMidPointCenterUsingBezierIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHeklEQVR4XuWaaUxUVxTHHyAM
 yyDUYR2QRQRhlG1mZGAQGJYWhh0GZVFhxDCKbRmh1hbXIKZWC0kjtR9MTAyJSROjsXYx9nPT
@@ -1713,7 +1713,7 @@ P/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDDDz/88MMPP/zwww8//PDD
 Dz/8rFr+AnBX68ww1MTcAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleMovingCamera [
 	
 	| v menu |
@@ -1730,7 +1730,7 @@ RTRoassalExample >> exampleMovingCamera [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleMovingCameraIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAABj0lEQVR4XuXVIU+CURgFYJOF
 TzY3JsFNNzc3i2wEA6MatJMcweAcFIk6ihuFgNViwPEfDCT+AM0RIJGtGrTpNbB9YwiFfeCe
@@ -1743,7 +1743,7 @@ aDQafc0bpFgsnvotJSiTyWTDX/Ixa4xSqXTpN7Qi5XK52mw2n9rt9kutVrtPpVJbfis+n8/n
 zzffDyz/G9+Gw2cAAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleRotatingAnimatedLabels [
 
 
@@ -1772,7 +1772,7 @@ RTRoassalExample >> exampleRotatingAnimatedLabels [
 	v open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleRotatingAnimatedLabelsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAALH0lEQVR4XuWdZYwU3RKG5x/h
 BxoIQQJBgxMkECx4cIcEd3cLHtyCu7u7W3B3d3d3d+q7eSr3bObOneXbhdndWaqSTtuZntP1
@@ -1830,7 +1830,7 @@ EPuA2Dd7gPAusfv3D/YBCQJzfwHud/6Ut31AIsD4Vxr8cvZP/qS3fUACbL6/QbEPSBQaPxTi
 7Jt9QOybfUDsA2Lf7ANiHxD7Fnj7D8sZewm4xZooAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleRotatingLabels [
 
 
@@ -1847,7 +1847,7 @@ RTRoassalExample >> exampleRotatingLabels [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleRotatingLabelsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAALH0lEQVR4XuWdZYwU3RKG5x/h
 BxoIQQJBgxMkECx4cIcEd3cLHtyCu7u7W3B3d3d3d+q7eSr3bObOneXbhdndWaqSTtuZntP1
@@ -1905,7 +1905,7 @@ EPuA2Dd7gPAusfv3D/YBCQJzfwHud/6Ut31AIsD4Vxr8cvZP/qS3fUACbL6/QbEPSBQaPxTi
 7Jt9QOybfUDsA2Lf7ANiHxD7Fnj7D8sZewm4xZooAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleScaledNesting [
 
 	| view inner host edges outter trachelCanvas resizable |
@@ -1952,7 +1952,7 @@ RTRoassalExample >> exampleScaledNesting [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleScaledNestingIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAaaElEQVR4XuVcd1Sb2ZVnszmT
 syfJSU7aZDyesT32uDcwYNN7E00U0QQIUdQAFZBooiMQSKJ30Xs3vRljMGDc7RlPZiaTTHaS
@@ -2083,7 +2083,7 @@ idSvnUOoHyHUr8uifqN+o36jfqN+o36jfqN+o36jfqN+o36jfqN+o36jfttD+18hZpCBm4KO
 VwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleSmoothLayout [
 
 	| v translator |
@@ -2111,7 +2111,7 @@ RTRoassalExample >> exampleSmoothLayout [
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleSmoothLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAGSElEQVR4XuWcyU8cRxSHIewh
 LIawg9nCvsOExQMx+77DAGPMamxsQCabLIGIEilSkCBSlGsiJUcOcIADV8IhufiSc5Rr/pC8
@@ -2146,7 +2146,7 @@ vr7+Oywc4m9QC7d8fPDBBx988MEHH3zwwQcffPDBBx988MEHH3zwwQcffPDBBx988MEHH3zw
 wQcffPDBBx988MEHH3zwwQcffPDB5x7wP8IZ3MdvrtbNAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleTreeLayout [
 
 	| view |
@@ -2162,7 +2162,7 @@ RTRoassalExample >> exampleTreeLayout [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleTreeLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAJI0lEQVR4XuWaeUxV2RnAmRGw
 yriAuMC4jrgBboAoICqLG4KKWhQXFGFwAaWioxaZUal1rE7V4BhjMuMY9zUaE61mEMdRXDIa
@@ -2211,7 +2211,7 @@ fvSjH/3oRz/60Y9+9KMf/ehHP/rRj370ox/96Ec/+tGPfvSjH/3oRz/60Y9+9KMf/ehHF/8B
 u5nePWZ+kW8AAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleVectorEditing [
 	| view selected statusBar |
 	view := RTView new.
@@ -2273,7 +2273,7 @@ RTRoassalExample >> exampleVectorEditing [
 	view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleVectorEditingIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADFUlEQVR4XuXVS0tqURyH4b5w
 gd+gUeUgCCIowYGTDBRxEIGoYYSRN8QLEhlWWpQpmVkNtH51/ou2FOcyOJwD0fuCqPuy9nY9
@@ -2293,7 +2293,7 @@ hNsTaxN+e3srWwkPDw9u9djLWxm2WlqtljvOnnbbZyvBVoB9tmN+QNlLd3d37jw71sa2ibfr
 2OqwMR4fHx1qv9/ng7z3Bl50tq2EUZhJAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
 
 | v inheritanceEdges shape helpBar1 helpBar2 elements |
@@ -2335,7 +2335,7 @@ v canvas
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleVisualizingSoftwareWithBeziersIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAW/klEQVR4XuVcaVBb2ZW+khAS
 AiEEEquEEEISWtC+oh0QEkIg9h2zYwNewAtuMNh4xXa7247d3tLuxJ120mn33kl31kmnMqlk
@@ -2450,7 +2450,7 @@ NuM8cqAP0XFAJ3gmImldh4ahvaRMMqjJb3IcEXugdyGc0On/AZAUoPCUDle5AAAAAElFTkSu
 QmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTRoassalExample >> exampleWorm [
 
 | v s e last lineLength callback nbOfElements head |
@@ -2490,7 +2490,7 @@ v open.
 	v canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTRoassalExample >> exampleWormIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAE30lEQVR4XuWb7UsUURTGj1pg
 EL2gtBYo0rC4gS6xrtpWhNALSAYRqR+CNMQ3FHxBwxeULBPLD64vVFaIbUUJuuJLiiSSRmQv
@@ -2519,7 +2519,7 @@ sogpvO9Qm9LR4fePvwwEltbFzHn+XLmWkoKvW0LhzErsU/z+xTUlFZbjCn7/JMEUFQnhufWr
 SUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTRoassalExample >> label [
 	^ 'Plain Roassal'
 ]

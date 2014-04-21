@@ -22,28 +22,6 @@ RTAbstractExample >> installOn: aView [
 RTAbstractExample >> installTitle: aTitle code: sourceCode [
 	"SourceCode should be a complete example, executable within a workspace"
 	
-	"
-	
-	RTRoassalExample new installTitle: 'Bezier' 
-		code:
-		'| v shape  edge els |
-v := RTView new.
-shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
-els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
-v addAll: els .
-RTHorizontalLineLayout on: v elements.
-
-v elements first translateBy: -50 @ 50.
-v elements third translateBy: -10 @ 20.
-v elements fifth translateBy: 0 @ -60.
-v elements last translateBy: 150 @ 100.
-
-edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
-v add: edge.
-
-v open.
-v canvas'
-	"
 	| canvas icon64Mime stream | 
 	canvas := (Compiler evaluate: sourceCode).
 	canvas morph ifNil: [ self error: 'You have forgotten to open the view!' ].
@@ -51,14 +29,14 @@ v canvas'
 	(self class methodDict includesKey: ('example', aTitle) asSymbol)
 		ifTrue: [ self error: 'Title already used. Proceed to override' ].
 	
-	self class compile: 'example', aTitle, String cr, sourceCode.
+	self class compile: 'example', aTitle, String cr, sourceCode classified: 'sources'.
 	
 	stream := WriteStream on: ByteArray new.
 	PNGReadWriter 
 				putForm: (canvas morph imageForm scaledToSize: 100 @ 100)
 				onStream: stream .
 	icon64Mime := (Base64MimeConverter mimeEncode: stream contents readStream) contents.
-	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, ''''.
+	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, '''' classified: 'icons'.
 	
 ]
 
