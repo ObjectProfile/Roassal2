@@ -16,6 +16,11 @@ RTLabelled >> below [
 ]
 
 { #category : #accessing }
+RTLabelled >> center [
+	position := #center		
+]
+
+{ #category : #accessing }
 RTLabelled >> color [
 	^ color
 ]
@@ -69,6 +74,11 @@ RTLabelled >> initializeElement: element [
 { #category : #testing }
 RTLabelled >> isBelow [
 	^ position = #below
+]
+
+{ #category : #testing }
+RTLabelled >> isCenter [
+	^ position = #center		
 ]
 
 { #category : #testing }
