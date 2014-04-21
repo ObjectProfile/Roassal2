@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTInteraction,
 	#instVars : [
 		'position',
-		'text'
+		'text',
+		'color'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -13,11 +14,22 @@ RTLabelled >> below [
 	position := #below
 ]
 
+{ #category : #accessing }
+RTLabelled >> color [
+	^ color
+]
+
+{ #category : #accessing }
+RTLabelled >> color: aBlockOrColor [
+	color := aBlockOrColor
+]
+
 { #category : #initialization }
 RTLabelled >> initialize [
 	super initialize.
 	text := #model.
-	self top
+	self top.
+	color := Color gray.
 ]
 
 { #category : #hooks }
@@ -27,6 +39,7 @@ RTLabelled >> initializeElement: element [
 	t isNil ifTrue: [ ^ self ].
 	s := element trachelShape.
 	lbl := TRLabelShape new text: t asString.
+	lbl color: (color rtValue: element).
 	element view canvas addShape: lbl.
 	self isTop ifTrue: [ TRConstraint stick: lbl above: s ]. 
 	self isBelow ifTrue: [ TRConstraint stick: lbl below: s ].

@@ -44,8 +44,9 @@ v add: edge.
 v open.
 v canvas'
 	"
-	| canvas icon64Mime stream |
+	| canvas icon64Mime stream | 
 	canvas := (Compiler evaluate: sourceCode).
+	canvas morph ifNil: [ self error: 'You have forgotten to open the view!' ].
 	
 	(self class methodDict includesKey: ('example', aTitle) asSymbol)
 		ifTrue: [ self error: 'Title already used. Proceed to override' ].
