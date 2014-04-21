@@ -17,7 +17,7 @@ TRCompositeShape class >> with: s1 with: s2 [
 	^ self new shape1: s1; shape2: s2; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visitor }
 TRCompositeShape >> accept: aVisitor [
 	aVisitor visitCompositeShape: self
 ]
@@ -57,6 +57,11 @@ TRCompositeShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
 	shape1 canvas: aSurface.
 	shape2 canvas: aSurface
+]
+
+{ #category : #accessing }
+TRCompositeShape >> center [
+	^ (shape1 center + shape2 center) / 2
 ]
 
 { #category : #accessing }

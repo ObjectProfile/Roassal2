@@ -113,6 +113,35 @@ TRShapeTest >> testBoxTransformation [
 ]
 
 { #category : #composite }
+TRShapeTest >> testCenterOnAComposite [
+
+	| c s1 s2 composite |
+	c := TRCanvas new.
+	s1 := TREllipseShape new size: 20.
+	s2 := TREllipseShape new size: 20.
+	composite := TRCompositeShape with: s1 with: s2.
+	c addShape: composite.
+	
+	s2 translateTo: 50 @ 40.
+	self assert: composite center = (25 @ 20)
+	
+]
+
+{ #category : #lines }
+TRShapeTest >> testCenterOnALine [
+
+	| c l |
+	c := TRCanvas new.
+	
+	l := TRLineShape new from: 50 @ 50 to: 120 @ 100.
+	
+	c addShape: l.
+	
+	self assert: l center = (85 @ 75)
+	
+]
+
+{ #category : #composite }
 TRShapeTest >> testChangingColorOfAComposite [
 
 	| c s1 s2 cs |

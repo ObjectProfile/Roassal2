@@ -42,6 +42,12 @@ TRAbstractLineDecoratorShape >> accept: aVisitor [
 	aVisitor visitAbstractLineDecorationShape: self
 ]
 
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> center [
+	"Not sure whether this is right"
+	^ self to
+]
+
 { #category : #hooks }
 TRAbstractLineDecoratorShape >> computePath [
 	self subclassResponsibility

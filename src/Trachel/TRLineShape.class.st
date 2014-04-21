@@ -19,6 +19,11 @@ TRLineShape >> accept: aVisitor with: decoration [
 	aVisitor visitLineShape: self with: decoration
 ]
 
+{ #category : #accessing }
+TRLineShape >> center [
+	^ (from + to) / 2
+]
+
 { #category : #hooks }
 TRLineShape >> computePath [
 	path := self athensCanvas

@@ -90,7 +90,7 @@ TRBitmapShape >> height [
 	^ self form height
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRBitmapShape >> includesPoint: aPoint [
 	"Probably this methods should be updated to reflect transformation"
 	^ self encompassingRectangle containsPoint: aPoint
