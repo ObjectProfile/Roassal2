@@ -15,6 +15,11 @@ RTLabelled >> below [
 ]
 
 { #category : #accessing }
+RTLabelled >> center [
+	position := #center		
+]
+
+{ #category : #accessing }
 RTLabelled >> color [
 	^ color
 ]
@@ -45,11 +50,17 @@ RTLabelled >> initializeElement: element [
 	self isBelow ifTrue: [ TRConstraint stick: lbl below: s ].
 	self isLeft ifTrue: [ TRConstraint stick: lbl onTheLeftOf: s ].
 	self isRight ifTrue: [ TRConstraint stick: lbl onTheRightOf: s ].
+	self isCenter ifTrue: [ TRConstraint stick: lbl onTheCenterOf: s ].
 ]
 
 { #category : #testing }
 RTLabelled >> isBelow [
 	^ position = #below
+]
+
+{ #category : #testing }
+RTLabelled >> isCenter [
+	^ position = #center		
 ]
 
 { #category : #testing }
