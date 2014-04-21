@@ -69,6 +69,20 @@ RTGDNodeB >> rectangle [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDNodeB >> size: aSize [
+	self height: aSize.
+	self width: aSize
+]
+
+{ #category : #'as yet unclassified' }
+RTGDNodeB >> whenClicked: aBlock [
+	"aBlock is evaluated with the model as argument"
+
+	self addProperty: [ :anElement | 
+		anElement when: TRMouseClick do: [ :evt | aBlock rtValue: evt element model ] ]
+]
+
+{ #category : #'as yet unclassified' }
 RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"

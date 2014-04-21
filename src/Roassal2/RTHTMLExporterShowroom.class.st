@@ -45,7 +45,7 @@ RTHTMLExporterShowroom >> DependencyAnalyzerBuilder [
 RTHTMLExporterShowroom >> GraphETHistogram [
 	"GraphET2 Histogram"
 	|builder exporter|
-	builder := GET2VerticalBar data: ((1 to: 15) collect: [ :v | 10 atRandom - 5 ]).
+	builder := GET2Bar data: ((1 to: 15) collect: [ :v | 10 atRandom - 5 ]).
 	builder color: [ :val | 		|alpha MAX|
 		MAX := 8.
 		alpha := [ :v | (v abs / MAX) ].
@@ -402,9 +402,7 @@ RTHTMLExporterShowroom >> makeIndex [
 	file exists ifTrue: [file delete].
 	file := (dir / 'index.html') writeStream.
 	[ self exportOnStream: file ] 
-		ensure: [ file notNil ifTrue: [ file close ] ].
-	RTHTMLExporter directory: nil.
-	
+		ensure: [ file notNil ifTrue: [ file close ] ]
 ]
 
 { #category : #html }

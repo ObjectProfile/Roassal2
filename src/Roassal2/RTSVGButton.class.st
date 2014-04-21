@@ -114,6 +114,7 @@ RTSVGButton >> initialize [
 	external := false.
 	self name: ''.
 	self type: 'button'.
+	map := OrderedCollection new.
 ]
 
 { #category : #accessing }
