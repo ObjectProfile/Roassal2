@@ -2636,3 +2636,31 @@ VersionOfRoassal2 >> version000193 [
 	at: #date put: '21 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000194 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.129';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.255';
+	at: #version put: '0.194';
+	at: #comment put: '0.194 : bug fixed, spotted by Leo:   with the new interaction RTLabelled, I have played with it to integrate in my work and I have found a little bug.
+
+| view box els |
+view := RTView new.
+box := RTBox new element.
+els := (RTEllipse new color: Color red) elementsOn: (1 to: 30).
+view add: box; addAll: els.
+
+box @ RTDraggable.
+box @ (RTLabelled new text: ''Container'').
+
+RTNest new layout: RTGridLayout; on: box nest: els.
+
+view open
+
+The label is not at the right place. If you move the box it will move to its place.
+But if you add the interaction RTLabelled after the nest everything is ok.
+';
+	at: #date put: '22 April 2014';
+	yourself
+]
