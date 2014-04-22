@@ -54,53 +54,73 @@ TRConstraint class >> moveCameraToTheRightIn: trachelCanvas [
 
 { #category : #public }
 TRConstraint class >> stick: aShape above: anotherShape [
+	| b |
 	self move: aShape above: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape above: anotherShape ]) 
-	
+
+	b := [ :shape :step | self move: aShape above: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b)
 	
 ]
 
 { #category : #public }
 TRConstraint class >> stick: aShape below: anotherShape [
+	| b |
 	self move: aShape below: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape below: anotherShape ]) 
+	b := [ :shape :step | self move: aShape below: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
+	
 	
 	
 ]
 
 { #category : #public }
 TRConstraint class >> stick: aShape between: s1 and: s2 [
-	| callback |
+	| callback b |
 	self move: aShape between: s1 and: s2.
 	
-	callback := TRTranslationCallback block: [ :shape :step | self move: aShape between: s1 and: s2 ].
+	b := [ :shape :step | self move: aShape between: s1 and: s2 ].
+
+	callback := TRTranslationCallback block: b.
+	s1 addCallback: callback.
+	s2 addCallback: callback.
+
+	callback := TRExtentCallback block: b.
 	s1 addCallback: callback.
 	s2 addCallback: callback
+
 ]
 
 { #category : #public }
 TRConstraint class >> stick: aShape onTheCenterOf: anotherShape [
+	| b |
 	self move: aShape onTheCenterOf: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheCenterOf: anotherShape ]) 
+	
+	b := [ :shape :step | self move: aShape onTheCenterOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
 	
 ]
 
 { #category : #public }
 TRConstraint class >> stick: aShape onTheLeftOf: anotherShape [
+	| b |
 	self move: aShape onTheLeftOf: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheLeftOf: anotherShape ]) 
 	
+	b := [ :shape :step | self move: aShape onTheLeftOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
 ]
 
 { #category : #public }
 TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
+	| b |
 	self move: aShape onTheRightOf: anotherShape. 
-	anotherShape addCallback: 
-		(TRTranslationCallback block: [ :shape :step | self move: aShape onTheRightOf: anotherShape ]) 
+	
+	b := [ :shape :step | self move: aShape onTheRightOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
 	
 ]
 
