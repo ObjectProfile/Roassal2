@@ -69,6 +69,7 @@ RTLabelled >> initializeElement: element [
 	self isBelow ifTrue: [ TRConstraint stick: lbl below: s ].
 	self isLeft ifTrue: [ TRConstraint stick: lbl onTheLeftOf: s ].
 	self isRight ifTrue: [ TRConstraint stick: lbl onTheRightOf: s ].
+	self isCenter ifTrue: [ TRConstraint stick: lbl onTheCenterOf: s ].
 ]
 
 { #category : #testing }
