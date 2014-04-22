@@ -2664,3 +2664,14 @@ But if you add the interaction RTLabelled after the nest everything is ok.
 	at: #date put: '22 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000195 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.129';
+	at: 'Roassal2' put: 'Roassal2-PabloEstefo.256';
+	at: #version put: '0.195';
+	at: #comment put: '0.195 : Improvement by Pablo on RTLabelling. Thanks!';
+	at: #date put: '22 April 2014';
+	yourself
+]
