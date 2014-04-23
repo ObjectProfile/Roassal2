@@ -36,6 +36,12 @@ RTGraphBuilderTest >> testBundleConnect [
 ]
 
 { #category : #edges }
+RTGraphBuilderTest >> testChainedConnection [
+	"TODO"
+	b addAll: #(1 2 3)
+]
+
+{ #category : #edges }
 RTGraphBuilderTest >> testConnectFrom [
 
 	b nodes color: Color gray.
