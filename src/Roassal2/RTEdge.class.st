@@ -225,7 +225,7 @@ RTEdge class >> from: fromEl toAll: toEls [
 
 { #category : #public }
 RTEdge class >> on: aModel from: fromElement to: toElement [
-	^ (self on: aModel) from: fromElement to: toElement; yourself
+	^ (self model: aModel) from: fromElement to: toElement; yourself
 ]
 
 { #category : #accessing }
@@ -245,6 +245,12 @@ RTEdge >> from: anElement [
 	from ifNotNil: [ :element | element removeConnectedEdge: self ].
 	from := anElement.
 	anElement addConnectedEdge: self
+]
+
+{ #category : #accessing }
+RTEdge >> from: fromElement to: toElement [
+	self from: fromElement.
+	self to: toElement
 ]
 
 { #category : #actions }

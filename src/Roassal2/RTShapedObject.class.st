@@ -11,6 +11,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RTShapedObject class >> model: anObject [
+	^ self new model: anObject
+]
+
 { #category : #adding }
 RTShapedObject >> + aRTShape [
 	"Add a Roassal shape, class or instance of it. Not that a Trachel cannot be given as argument"
