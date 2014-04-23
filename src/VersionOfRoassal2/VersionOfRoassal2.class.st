@@ -2675,3 +2675,14 @@ VersionOfRoassal2 >> version000195 [
 	at: #date put: '22 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000196 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.130';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.257';
+	at: #version put: '0.196';
+	at: #comment put: '0.196 : pair programmed with Juraj on the animations. A small intent is being done with RTCompositeShape and offsets';
+	at: #date put: '23 April 2014';
+	yourself
+]
