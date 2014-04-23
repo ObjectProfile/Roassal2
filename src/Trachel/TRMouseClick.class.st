@@ -18,7 +18,7 @@ shiftKeyPressed
 "
 Class {
 	#name : #TRMouseClick,
-	#superclass : #TRShapeEvent,
+	#superclass : #TRAbstractMouseEvent,
 	#instVars : [
 		'commandKeyPressed',
 		'controlKeyPressed',

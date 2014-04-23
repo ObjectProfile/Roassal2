@@ -69,6 +69,16 @@ TRCanvas >> addShape: shape [
 	shape addedIn: self
 ]
 
+{ #category : #animations }
+TRCanvas >> animations [
+	^ animations
+]
+
+{ #category : #animations }
+TRCanvas >> animationsRemoveAll: someAnimations [
+	animations := animations copyWithoutAll: someAnimations
+]
+
 { #category : #events }
 TRCanvas >> announce: anEvent [
 	self announcer announce: anEvent

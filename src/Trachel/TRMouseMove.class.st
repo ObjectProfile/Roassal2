@@ -1,5 +1,5 @@
 Class {
 	#name : #TRMouseMove,
-	#superclass : #TRShapeEvent,
+	#superclass : #TRAbstractMouseEvent,
 	#category : #'Trachel-Core'
 }

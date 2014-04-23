@@ -92,6 +92,7 @@ TRMorph >> handleMouseOver: anEvent [
 		ifTrue: [ 
 			event := TRMouseLeave new.
 			event morph: self.
+			event canvas: trachelCanvas.
 			event position: (self relativePositionFor: anEvent).
 			event shape: shapeBeingPointed.
 

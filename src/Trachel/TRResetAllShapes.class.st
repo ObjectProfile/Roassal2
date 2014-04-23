@@ -12,22 +12,22 @@ TRResetAllShapes >> addedIn: aTRCanvas [
 	self trCanvas: aTRCanvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRResetAllShapes >> hasCompleted [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 TRResetAllShapes >> refresh [
 	self resetShapes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 TRResetAllShapes >> resetShapes [
 	trCanvas shapes do: #resetPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRResetAllShapes >> start [
 	self resetShapes
 ]
