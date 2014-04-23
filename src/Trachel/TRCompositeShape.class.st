@@ -136,6 +136,18 @@ TRCompositeShape >> position [
 ]
 
 { #category : #actions }
+TRCompositeShape >> pushBack [
+	shape1 pushBack.
+	shape2 pushBack.
+]
+
+{ #category : #actions }
+TRCompositeShape >> pushFront [
+	shape1 pushFront.
+	shape2 pushFront.
+]
+
+{ #category : #actions }
 TRCompositeShape >> remove [
 	shape1 remove.
 	shape2 remove

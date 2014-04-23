@@ -297,3 +297,33 @@ TRShapeTest >> testPositionWithFloats [
 	box translateTo: 1.1234 @ 1.1234.
 	self assert: box position = (1.1234 @ 1.1234)
 ]
+
+{ #category : #composite }
+TRShapeTest >> testPushingBackAComposite [
+
+	| c s1 s2 cs |
+	c := TRCanvas new.
+	s1 := TRBoxShape new size: 50.
+	s2 := TRBoxShape new size: 40.
+	cs := TRCompositeShape with: s1 with: s2.
+	c addShape: (TREllipseShape new).
+	c addShape: cs.
+	
+	cs pushBack.
+	self assert: (c shapes collect: #class) asArray = (Array with: TRBoxShape with: TRBoxShape with: TREllipseShape )
+]
+
+{ #category : #composite }
+TRShapeTest >> testPushingFrontAComposite [
+
+	| c s1 s2 cs |
+	c := TRCanvas new.
+	s1 := TRBoxShape new size: 50.
+	s2 := TRBoxShape new size: 40.
+	cs := TRCompositeShape with: s1 with: s2.
+	c addShape: cs.
+	c addShape: (TREllipseShape new).
+	
+	cs pushFront.
+	self assert: (c shapes collect: #class) asArray = (Array with: TREllipseShape with: TRBoxShape with:  TRBoxShape)
+]
