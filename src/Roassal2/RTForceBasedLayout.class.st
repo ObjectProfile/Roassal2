@@ -196,12 +196,6 @@ RTForceBasedLayout >> isFixed: aNode [
 ]
 
 { #category : #accessing }
-RTForceBasedLayout >> iterationsToSendEvent: anInteger [
-
-	currentIteraction := anInteger
-]
-
-{ #category : #accessing }
 RTForceBasedLayout >> length: aFloat [
 
 	length := aFloat
@@ -221,7 +215,8 @@ RTForceBasedLayout >> nodes: elements [
 { #category : #hook }
 RTForceBasedLayout >> on: elements edges: edgesCol [
 	self nodes: elements.
-	self applyOn: elements
+	self userDefinedEdges: edgesCol.
+	self applyOn: elements.
 ]
 
 { #category : #algorithm }

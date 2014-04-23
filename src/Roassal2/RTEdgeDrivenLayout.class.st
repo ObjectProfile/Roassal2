@@ -33,8 +33,8 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTEdgeDrivenLayout class >> isAbstract [
-	^ self name = #ROEdgeDrivenLayout
+RTEdgeDrivenLayout class >> on: elements edges: edges [
+	^ self new on: elements edges: edges
 ]
 
 { #category : #'instance creation' }

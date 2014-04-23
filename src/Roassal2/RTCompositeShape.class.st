@@ -19,7 +19,7 @@ RTCompositeShape >> heightFor: anElement [
 	^ (shape1 heightFor: anElement) max: (shape2 heightFor: anElement)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTCompositeShape >> initialize [
 	super initialize.
 	offset2 := 0 @ 0
