@@ -2686,3 +2686,14 @@ VersionOfRoassal2 >> version000196 [
 	at: #date put: '23 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000197 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.131';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.258';
+	at: #version put: '0.197';
+	at: #comment put: '0.197 : Minor fix in the RTExampleBrowser. Fixed a bug with pushBack and pushFront on composite trachel shapes, discovered by Johan Fabry';
+	at: #date put: '23 April 2014';
+	yourself
+]
