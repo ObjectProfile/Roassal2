@@ -48,6 +48,7 @@ RTExampleBrowser >> open [
 
 	| v |
 	v := RTView new.
+	v @ RTDraggableView.
 	RTAbstractExample subclasses do: [ :c |
 		c new installOn: v ].
 	
