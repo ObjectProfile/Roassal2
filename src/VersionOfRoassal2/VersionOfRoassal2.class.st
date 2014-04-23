@@ -2697,3 +2697,14 @@ VersionOfRoassal2 >> version000197 [
 	at: #date put: '23 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000198 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.131';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.259';
+	at: #version put: '0.198';
+	at: #comment put: '0.198 : bug: RTEdge class>>on:from:to: produces a MNU';
+	at: #date put: '23 April 2014';
+	yourself
+]
