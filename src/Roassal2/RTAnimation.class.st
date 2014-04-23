@@ -18,6 +18,11 @@ RTAnimation >> after: aBlock [
 
 ]
 
+{ #category : #accessing }
+RTAnimation >> element [
+	^ element
+]
+
 { #category : #testing }
 RTAnimation >> hasCompleted [
 	self subclassResponsibility

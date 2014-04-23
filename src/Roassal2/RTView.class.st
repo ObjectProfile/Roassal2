@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'elements',
 		'edges',
-		'animations',
 		'trCanvas'
 	],
 	#category : #'Roassal2-Core'
@@ -46,6 +45,11 @@ RTView >> addElement: anElement [
 RTView >> addMenu: aTitle callback: aBlock [
 	self canvas addMenu: aTitle callback: aBlock
 
+]
+
+{ #category : #adding }
+RTView >> animations [
+	^ trCanvas animations
 ]
 
 { #category : #opening }
@@ -102,7 +106,6 @@ RTView >> elementsFromModels: objects [
 RTView >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
-	animations := OrderedCollection new.
 	edges := OrderedCollection new.
 	trCanvas := TRCanvas new.
 	

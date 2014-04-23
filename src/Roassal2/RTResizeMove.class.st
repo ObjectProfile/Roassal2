@@ -8,6 +8,18 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #actions }
+RTResizeMove >> addedIn: trachelCanvas [
+	"We make sure that there is no existing resize animation in the animation queue."
+	| conflictingAnimations |
+	conflictingAnimations := trachelCanvas animations 
+					select: [ :anim | (anim class == self class 
+										and: [ anim element == element ])
+										and: [ self ~~ anim ] ].
+	trachelCanvas animationsRemoveAll: conflictingAnimations. 
+
+]
+
 { #category : #accessing }
 RTResizeMove >> after: aBlock [
 	animatedValue finishCallback: aBlock
@@ -33,9 +45,9 @@ RTResizeMove >> start [
 
 { #category : #public }
 RTResizeMove >> toExtent: toExtent during: numberOfSeconds on: anElement [
-	
 	element := anElement.
 	originalExtent := anElement extent.
+	
 	animatedValue := VIAnimatedValue new
 									evaluator: [ :t | originalExtent interpolateTo: toExtent at: t ];
 									timer: (VITimer new cycleLength: numberOfSeconds);

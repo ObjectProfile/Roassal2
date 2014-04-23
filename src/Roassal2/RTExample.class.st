@@ -800,6 +800,7 @@ RTExample >> hoverZoom [
 	es do: [ :eachElement | | nested |
 		nested := RTBox new color: (Color green alpha: 0.5); 
 						size: #yourself; elementsOn: (10 to: 25 by: 5).
+		nested @ RTHighlightable.
 		v add: nested.
 		RTNest new 
 			layout: RTGridLayout new;

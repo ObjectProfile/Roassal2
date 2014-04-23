@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTInteraction,
 	#instVars : [
 		'desiredExtent',
-		'resizeStrategy'
+		'resizeStrategy',
+		'zoomInElements'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -32,8 +33,13 @@ RTMouseHoverZoom >> desiredExtent: anExtentOrOneArgBlock [
 ]
 
 { #category : #private }
-RTMouseHoverZoom >> doZoomEfect: anElement [
+RTMouseHoverZoom >> doZoomEffect: anElement [
 	(anElement hasAttribute: self attributeSymbol) ifTrue: [ ^ self ].
+	
+	zoomInElements do: [ :el | self undoZoomEffect: el ].
+	zoomInElements := OrderedCollection new.
+	zoomInElements add: anElement.
+	
 	anElement attributeAt: self attributeSymbol put: anElement extent.
 	self setExtent: (desiredExtent rtValue: anElement) for: anElement after: [].
 ]
@@ -42,17 +48,17 @@ RTMouseHoverZoom >> doZoomEfect: anElement [
 RTMouseHoverZoom >> initialize [
 	super initialize.
 	desiredExtent := [ :anElement | anElement extent * 1.3 ].
+	zoomInElements := OrderedCollection new.
 	self animated.
 ]
 
 { #category : #hooks }
 RTMouseHoverZoom >> initializeElement: element [
 	element when: TRMouseEnter do: [ :anEvent |
-		self doZoomEfect: element.
-		"anEvent signalUpdate." ].
+		self doZoomEffect: element ].
+	
 	element when: TRMouseLeave do: [ :anEvent |
-		self undoZoomEfect: element.
-		"anEvent signalUpdate." ]
+		self undoZoomEffect: element ]
 ]
 
 { #category : #private }
@@ -69,7 +75,7 @@ RTMouseHoverZoom >> simple [
 ]
 
 { #category : #private }
-RTMouseHoverZoom >> undoZoomEfect: anElement [
+RTMouseHoverZoom >> undoZoomEffect: anElement [
 	| previousExtent |
 	previousExtent := anElement attributeAt: self attributeSymbol ifAbsent: [ ^ self ].
 	self setExtent: previousExtent for: anElement after: [ anElement removeAttributeAt: self attributeSymbol ifAbsent: [ nil ] ]

@@ -24,6 +24,10 @@ RTNest >> centerOn: backElement elements: elements [
 	off := backElement encompassingRectangle center - encompassingRectangle center. 
 	off := off asIntegerPoint.
 	elements do: [ :e | e translateBy: off ].
+	
+	"This is a big big question whether we need this or not"
+	"backElement attributes at: #nestedElements put: elements."
+	
 ]
 
 { #category : #utility }
