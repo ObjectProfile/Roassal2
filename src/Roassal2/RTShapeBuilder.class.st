@@ -55,6 +55,11 @@ RTShapeBuilder >> ellipse [
 	shape := RTEllipse new
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> extensibleLabel [
+	^ self shape: RTExtensibleLabel new
+]
+
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape

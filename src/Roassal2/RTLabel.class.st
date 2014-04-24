@@ -62,10 +62,7 @@ RTLabel >> textFor: element [
 
 { #category : #hooks }
 RTLabel >> trachelShapeFor: anElement [
-	|  shape |
-	"ex := (self widthFor: anElement) @ (self heightFor: anElement)."
-	"rec := (anElement position ) extent: ex."
-	
+	|  shape |	
 	shape := TRLabelShape new.
 	shape text: (self textFor: anElement);
 			color: (self colorFor: anElement);

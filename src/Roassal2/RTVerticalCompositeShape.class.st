@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTVerticalCompositeShape >> trachelShapeFor: anElement [
 	| s1 s2 c |
 	s1 := shape1 trachelShapeFor: anElement.
