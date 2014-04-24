@@ -1,19 +1,48 @@
 "
-RTRoassalExample new installTitle: 'EdgedWorm' 
+RTRoassalExample new installTitle: 'BezierCurve' 
 		code:
-		'| v es |
+		'
+""Moving each extremity will reposition the control points""		
+| v e1 e2 l s p1 p2 | 
 v := RTView new.
 
-es := RTBox elementsOn: (1 to: 50).
-v addAll: es.
+e1 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
+e2 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
 
-RTEdge buildEdgesFromObjects: (1 to: 50) from: #yourself toAll:  [:value | {value -1  . value + 1 . value + 2} ] inView: v.
+e1 @ RTDraggable.
+e2 @ RTDraggable.
 
-RTForceBasedLayout on: es.
+e2 translateBy: -150 @ 150.
 
+p1 := RTBox element.
+p2 := RTBox element.
+p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y.
+
+""It is not necessary to add the control points to the view""
+""v add: p1.
+v add: p2.""
+
+s := RTBezierLine new.
+s controllingElements: { p1 . p2 }.
+l := s edgeFrom: e1 to: e2.
+
+e1 trachelShape addCallback: 
+	(TRTranslationCallback block: [ :shape :step | 
+		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
+e2 trachelShape addCallback: 
+	(TRTranslationCallback block: [ :shape :step | 
+		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
+
+
+v add: e1.
+v add: e2.
+
+v add: l.
 v open.
-v canvas
-'
+v canvas '
 	
 "
 Class {
@@ -350,6 +379,66 @@ uU55efneQAqR3h7y3mf7dt+oaKKsVnzZbojwcH9+IpXGTSaNxu4IDrYkBVJISEja8jt6ySTR
 m998W64kuk5t6o/PK0T6bCciwn9u3z5R+LSXoOvUDz8L/5fAf5+BDz744IMPPvjggw8++OCD
 Dz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++Gxa/gaxvt0BZhXI
 eQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleBezierCurve [
+
+"Moving each extremity will reposition the control points"		
+| v e1 e2 l s p1 p2 | 
+v := RTView new.
+
+e1 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
+e2 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
+
+e1 @ RTDraggable.
+e2 @ RTDraggable.
+
+e2 translateBy: -150 @ 150.
+
+p1 := RTBox element.
+p2 := RTBox element.
+p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y.
+
+"It is not necessary to add the control points to the view"
+"v add: p1.
+v add: p2."
+
+s := RTBezierLine new.
+s controllingElements: { p1 . p2 }.
+l := s edgeFrom: e1 to: e2.
+
+e1 trachelShape addCallback: 
+	(TRTranslationCallback block: [ :shape :step | 
+		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
+e2 trachelShape addCallback: 
+	(TRTranslationCallback block: [ :shape :step | 
+		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
+		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
+
+
+v add: e1.
+v add: e2.
+
+v add: l.
+v open.
+v canvas 
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleBezierCurveIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAABu0lEQVR4XuXawYsSURzA8ddh
+OwwxYwkxSx2dAQ1UHLPN2GQVD2rQJXLxJsF27P+/pezBU9ghl198PvAuwzt9H4/hvZnk8/l8
+Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8/1BVpdQ0focQsiyl
+h4fHcXvr93hCZVm+HQwGk+12+6Oqqt7j06ur04Lc3PiVnsB0Ol0sl8uvf56R5ynVtV/qwnq9
+3nA8Hn/ySwQwGo2mh/HRLxFAnuetfr//3i8RxHq9/uZXCKJpmqlfIZDZbLbyKwRSFMVLv0IQ
+i8Xii18hkLqu3/kVYr3Q/UNgJPv9/pdfIZDVauWfPyI5XCLO/QqBDIfDD36FQE7fOHwhZFn2
+wq/g8/n+A51Op+tXCGS32/30KwRSluUbv0Igm83mu18hiFar9cqvEMhkMvnsVwji+YF/IAzi
+2UG73X7tl7iYu7uU7u9Tur4+N/N4kdjtdgd+s4spitNPz/P5uUNgnuf+zwyXd9wdxwU5v0N8
+Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/vr/wGmY0mlw5w
++SYAAAAASUVORK5CYII='
 ]
 
 { #category : #icons }
