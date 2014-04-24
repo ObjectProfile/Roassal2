@@ -2752,3 +2752,14 @@ VersionOfRoassal2 >> version000202 [
 	at: #date put: '24 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000203 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.132';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.265';
+	at: #version put: '0.203';
+	at: #comment put: '0.203 : added example for an horizontal bezier line';
+	at: #date put: '24 April 2014';
+	yourself
+]
