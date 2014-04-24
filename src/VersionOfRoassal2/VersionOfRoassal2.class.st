@@ -2730,3 +2730,14 @@ VersionOfRoassal2 >> version000200 [
 	at: #date put: '23 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000201 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.132';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.263';
+	at: #version put: '0.201';
+	at: #comment put: '0.201 : included composition shapes!! Added TRExtensibleLabelShape. moved distinctTenLightColors and distinctTenStrongColors to Roassal because these should be typical color schemes to be used in visualizations.';
+	at: #date put: '24 April 2014';
+	yourself
+]
