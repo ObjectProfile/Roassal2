@@ -2763,3 +2763,14 @@ VersionOfRoassal2 >> version000203 [
 	at: #date put: '24 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000204 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.132';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.266';
+	at: #version put: '0.204';
+	at: #comment put: '0.204 : added RTExtensibleLabel';
+	at: #date put: '24 April 2014';
+	yourself
+]
