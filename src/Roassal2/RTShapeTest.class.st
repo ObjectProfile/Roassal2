@@ -117,6 +117,14 @@ RTShapeTest >> testInstance [
 ]
 
 { #category : #tests }
+RTShapeTest >> testShapeAndElements [
+
+	| es |
+	es := RTBox elementsOn: #(1 2 3 4).
+	self assert: es first shape == es second shape
+]
+
+{ #category : #tests }
 RTShapeTest >> testShapeCreation [
 
 	self assert: RTBox element shape class == RTBox
