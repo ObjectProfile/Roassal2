@@ -13,11 +13,19 @@ RTViewTest >> setUp [
 	view := RTView new
 ]
 
-{ #category : #tests }
+{ #category : #'fixed elements' }
 RTViewTest >> testAdding [
 
-	view add: RTBox element.
-	self assert: view numberOfElements = 1
+	| e1 e2 |
+	e1 := RTBox element.
+	e2 := RTBox element.
+	
+	e1 setAsFixed.
+	view add: e1.
+	view add: e2.
+	
+	self assert: view canvas numberOfFixedShapes = 1.
+	self assert: view canvas numberOfShapes = 1.
 ]
 
 { #category : #tests }
@@ -43,10 +51,12 @@ RTViewTest >> testAddingEdges [
 	self assert: view numberOfEdges = 1.	
 ]
 
-{ #category : #tests }
+{ #category : #'fixed elements' }
 RTViewTest >> testDefault [
 
-	self assert: view numberOfElements = 0
+	self deny: RTElement new isFixed.
+	self assert: (RTElement new setAsFixed; isFixed).
+	self deny: (RTElement new setAsNotFixed; isFixed).
 ]
 
 { #category : #tests }

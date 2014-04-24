@@ -6,7 +6,8 @@ Class {
 		'trachelShape',
 		'attributes',
 		'view',
-		'model'
+		'model',
+		'isFixed'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -93,7 +94,15 @@ RTShapedObject >> hasAttributes [
 RTShapedObject >> initialize [
 	super initialize.
 	shape := RTNoShape new.
-	trachelShape := TRNoShape instance
+	trachelShape := TRNoShape instance.
+	isFixed := false
+]
+
+{ #category : #testing }
+RTShapedObject >> isFixed [
+	"True if the element is added in the trachel canvas as a fixed shape. 
+	If this is the case, then it will remain fixed when drag and dropping the view"
+	^ isFixed
 ]
 
 { #category : #accessing }
@@ -120,14 +129,34 @@ RTShapedObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 { #category : #rendering }
 RTShapedObject >> renderOn: trachelCanvas [
 	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].
-	trachelCanvas addShape: trachelShape.
+	
+	"This ifTrue:ifFalse: is not great. However it simplifies the design"
+	self isFixed
+		ifTrue: [ trachelCanvas addFixedShape: trachelShape ]
+		ifFalse: [ trachelCanvas addShape: trachelShape ].
+	
+	"Trachel shape use the same announcer than myself"
 	trachelShape announcer: self announcer.
+	
+	"Each trachel shape knows the element. Note that this is not a static dependency between Trachel and Roassal since in Trachel, this element could be any object"
 	trachelShape element: self
 ]
 
 { #category : #transformations }
 RTShapedObject >> scaleBy: aPoint [ 
 	trachelShape scaleBy: aPoint
+]
+
+{ #category : #actions }
+RTShapedObject >> setAsFixed [
+	"I will remain fixed when drag and dropping the view"
+	isFixed := true 
+]
+
+{ #category : #actions }
+RTShapedObject >> setAsNotFixed [
+	"I will move when dragging the view"
+	isFixed := false
 ]
 
 { #category : #accessing }
