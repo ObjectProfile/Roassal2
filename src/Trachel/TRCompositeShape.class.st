@@ -3,7 +3,8 @@ Class {
 	#superclass : #TRShape,
 	#instVars : [
 		'shape1',
-		'shape2'
+		'shape2',
+		'offset2'
 	],
 	#category : #'Trachel-Core'
 }
@@ -32,7 +33,7 @@ TRCompositeShape >> addCallback: aCallback [
 TRCompositeShape >> addedIn: aCanvas [
 	aCanvas addShape: shape1.
 	aCanvas addShape: shape2.
-
+	shape2 translateBy: offset2.
 ]
 
 { #category : #events }
@@ -128,6 +129,17 @@ TRCompositeShape >> initialize [
 	super initialize.
 	shape1 := TRNoShape instance.
 	shape2 := TRNoShape instance.
+	offset2 := 0 @ 0
+]
+
+{ #category : #accessing }
+TRCompositeShape >> offset2 [
+	^ offset2
+]
+
+{ #category : #accessing }
+TRCompositeShape >> offset2: aPoint [
+	offset2 := aPoint
 ]
 
 { #category : #accessing }
@@ -185,9 +197,16 @@ TRCompositeShape >> signalUpdate [
 ]
 
 { #category : #actions }
+TRCompositeShape >> translateBy: aPoint [
+
+	shape1 translateBy: aPoint.
+	shape2 translateBy: aPoint
+]
+
+{ #category : #actions }
 TRCompositeShape >> translateTo: aPoint [
 	shape1 translateTo: aPoint.
-	shape2 translateTo: aPoint.
+	shape2 translateTo: (aPoint + offset2).
 ]
 
 { #category : #events }
