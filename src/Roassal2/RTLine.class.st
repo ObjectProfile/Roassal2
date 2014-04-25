@@ -9,6 +9,7 @@ RTLine >> trachelShapeFor: anEdge [
 	| shape |
 	shape := TRLineShape new.
 	shape width: width.
-	shape from: anEdge from position to: anEdge to position color: (self colorFor: anEdge).
+	shape from: (attachPoint startingPointOf: anEdge) to: (attachPoint endingPointOf: anEdge).
+	shape color: (self colorFor: anEdge).
 	^ shape
 ]
