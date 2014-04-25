@@ -72,20 +72,28 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeSize: metricBlock min: minValue max: maxValue using: #yourself
+]
+
+{ #category : #'as yet unclassified' }
+RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	"transformation is a function that takes as argument the result of a metric and return the metric transformed"
 	self addProperty: [	
 		| min max ellsToConsider t |
 		min := 100000.
 		max := -100000.
 		ellsToConsider := OrderedCollection new.
 		self view elements do: [ :el | 	
-				t := metricBlock rtValue: el model.
+				t := transformation rtValue: (metricBlock rtValue: el model).
 				min := min min: t.
 				max := max max: t.
 				ellsToConsider add: el ].
 	
 		ellsToConsider do: [ :el | 
 			| tt |
-			t := metricBlock rtValue: el model.
+			t := transformation rtValue: (metricBlock rtValue: el model).
 			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
 			el trachelShape extent: tt @ tt ]
 		]
