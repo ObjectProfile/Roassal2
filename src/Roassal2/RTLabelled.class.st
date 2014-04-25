@@ -61,7 +61,10 @@ RTLabelled >> initializeElement: element [
 	"Not really nice. Maybe a different solution could be to have a double dispatch"
 	(element isKindOf: RTEdge) 
 		ifTrue: [ TRConstraint 
-					stick: lbl between: element from trachelShape and: element to trachelShape. 
+							stick: lbl 
+							between: element from trachelShape 
+							and: element to trachelShape
+							offset: 0.7. 
 				  ^ self ].
 
 	
