@@ -32,6 +32,20 @@ RTGDEdgeB >> canCreateForObject: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDEdgeB >> chainedConnectFrom: aBlock [
+	self connectFrom: [ :v | 
+		self recurFrom: v using: aBlock
+		 ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> chainedConnectTo: aBlock [
+	self connectTo: [ :v | 
+		self recurFrom: v using: aBlock
+		 ]
+]
+
+{ #category : #'as yet unclassified' }
 RTGDEdgeB >> connectFrom: aOneArgBlock [
 
 	connectFrom := aOneArgBlock
@@ -71,6 +85,11 @@ RTGDEdgeB >> createEdgesFor: object [
 ]
 
 { #category : #'as yet unclassified' }
+RTGDEdgeB >> directed [
+	self shape: RTDirectedLine new
+]
+
+{ #category : #'as yet unclassified' }
 RTGDEdgeB >> edgesUsedForLayout [
 	^ edgesUsedForLayout
 ]
@@ -97,6 +116,43 @@ RTGDEdgeB >> initialize [
 	edgesUsedForLayout := OrderedCollection new.
 	self shape: RTLine new.
 	condition := [ :f :t | true ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> recurFrom: v using: aBlock [
+	| r |
+	r := OrderedCollection new.
+	self 
+		recurFrom: v 
+		using: aBlock 
+		path: OrderedCollection new 
+		result: r 
+		allObjects: (graphBuilder view elements collect: #model).
+	^ r
+]
+
+{ #category : #'as yet unclassified' }
+RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: allObjects [
+	| objects |
+	(path includes: v) ifTrue: [ ^ self ].
+	path add: v.
+	
+	"We compute the nexts"
+	objects := aBlock rtValue: v.
+	
+	"If there is no leaf to v, then this is a result"
+	objects isCollection ifFalse: [ objects := Array with: objects ].
+	objects := objects select: [ :o | allObjects includes: o ].
+	objects ifEmpty: [ result add: v. ^ self ].
+	
+	"If there are leaves, then we recurse"
+	objects do: [ :o |
+		self 
+			recurFrom: o 
+			using: aBlock 
+			path: path 
+			result: result 
+			allObjects: allObjects ]
 ]
 
 { #category : #'as yet unclassified' }

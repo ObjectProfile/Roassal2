@@ -35,10 +35,32 @@ RTGraphBuilderTest >> testBundleConnect [
 	self assert: firstEdge to == b view elements second.
 ]
 
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testChainedConnectTo [
+
+	b nodes color: Color gray.
+	b edges 
+		connectTo: [ :v | v + 1]; 
+		color: Color gray;
+		useInLayout.	
+	b edges 
+		if: [ :f :t | f = 2 ];
+		chainedConnectTo: [ :v | v + 1 ]; 
+		follow: [ :v | v + 1 ];
+		color: Color red;
+		useInLayout.	
+	b layout force.
+	b addAll: (2 to: 20).
+
+]
+
 { #category : #edges }
 RTGraphBuilderTest >> testChainedConnection [
-	"TODO"
-	b addAll: #(1 2 3)
+	b nodes color: Color gray.
+	b edges chainedConnectTo: [ :v | v + 1 ].
+	b addAll: #(1 2 3).
+	self assert: b view numberOfEdges = 3.
+
 ]
 
 { #category : #edges }
@@ -180,6 +202,100 @@ RTGraphBuilderTest >> testNode2 [
 	
 	self assert: ((b getNodeFor: 4) shape color rtValue: RTElement new) = Color blue.
 	self assert: ((b getNodeFor: 5) shape color rtValue: RTElement new) = Color red.
+]
+
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testRecurFromUsing [
+
+	| edge path result allObjects |
+	edge := RTGDEdgeB new.
+	path := OrderedCollection new.
+	result := OrderedCollection new.
+	allObjects := #(1 2 3).
+
+	edge 
+		recurFrom: 1
+		using: [ :v | v + 1 ] 
+		path: path 
+		result: result 
+		allObjects: allObjects.
+	
+	self assert: result asArray = #(3).
+	self assert: path asArray = #(1 2 3).
+]
+
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testRecurFromUsing2 [
+
+	| edge path result allObjects |
+	edge := RTGDEdgeB new.
+	path := OrderedCollection new.
+	result := OrderedCollection new.
+	allObjects := #(1 2 3).
+
+	edge 
+		recurFrom: 1
+		using: [ :v | { v + 1 . v + 2 } ] 
+		path: path 
+		result: result 
+		allObjects: allObjects.
+	
+	self assert: result asArray = #(3).
+	self assert: path asArray = #(1 2 3).
+]
+
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testRecurFromUsing3 [
+
+	| edge path result allObjects |
+	edge := RTGDEdgeB new.
+	path := OrderedCollection new.
+	result := OrderedCollection new.
+	allObjects := #(1 2 3).
+
+	edge 
+		recurFrom: 1
+		using: [ :v | v = 3 ifTrue: [ 1 ] ifFalse: [ v + 1 ] ] 
+		path: path 
+		result: result 
+		allObjects: allObjects.
+	
+	self assert: result asArray = #().
+	self assert: path asArray = #(1 2 3).
+]
+
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testRecurFromUsing4 [
+
+	| edge path result allObjects |
+	edge := RTGDEdgeB new.
+	path := OrderedCollection new.
+	result := OrderedCollection new.
+	allObjects := (1 to: 20).
+
+	edge 
+		recurFrom: 2
+		using: [ :v | v * v ] 
+		path: path 
+		result: result 
+		allObjects: allObjects.
+	
+	self assert: result asArray = #(16).
+	self assert: path asArray =  #(2 4 16).
+]
+
+{ #category : #'edges recur' }
+RTGraphBuilderTest >> testRecurFromUsing5 [
+
+	| edge |
+	b nodes color: Color gray.
+	edge := b edges.
+	b addAll: (2 to: 20).
+
+	self assert: (edge 
+						recurFrom: 2
+						using: [ :v | v * v ]) asArray = #(16).
+
 ]
 
 { #category : #nodes }
