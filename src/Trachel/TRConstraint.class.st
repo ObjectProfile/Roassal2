@@ -24,6 +24,11 @@ TRConstraint class >> move: aShape between: s1 and: s2 [
 ]
 
 { #category : #util }
+TRConstraint class >> move: aShape between: s1 and: s2 offset: aFloat [
+	^ aShape translateTo: ((s1 position * aFloat) + (s2 position * (1.0 - aFloat)))
+]
+
+{ #category : #util }
 TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
 	^ aShape translateTo: anotherShape center
 
@@ -77,10 +82,18 @@ TRConstraint class >> stick: aShape below: anotherShape [
 
 { #category : #public }
 TRConstraint class >> stick: aShape between: s1 and: s2 [
+	^ self stick: aShape between: s1 and: s2 offset: 0.5
+]
+
+{ #category : #public }
+TRConstraint class >> stick: aShape between: s1 and: s2 offset: aFloat [
+	"locate aShape between s1 and s2. aFloat is used to weight the extremities. 
+		aFloat = 1.0 the label is on s1.
+		aFloat = 0.0 the label is on s2"
 	| callback b |
-	self move: aShape between: s1 and: s2.
+	self move: aShape between: s1 and: s2 offset: aFloat.
 	
-	b := [ :shape :step | self move: aShape between: s1 and: s2 ].
+	b := [ :shape :step | self move: aShape between: s1 and: s2 offset: aFloat ].
 
 	callback := TRTranslationCallback block: b.
 	s1 addCallback: callback.
