@@ -47,13 +47,6 @@ RTGDGlobalB >> minSize: anInteger [
 RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
-	^ self normalizeColor: metricBlock using: colors transformation: #yourself
-]
-
-{ #category : #'as yet unclassified' }
-RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transformation [
-	"aBlock is evaluated on each node model. 
-	 Colors is an array of colors used to do the fading"
 	self addProperty: [
 		| min max normalizer |
 		"We get the min and the max of the metric for all the elements"
@@ -61,7 +54,7 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transfo
 		max := 0.
 		self view elements do: [ :el | 
 			| t |  
-			t := transformation rtValue: (metricBlock rtValue: el model).
+			t := metricBlock rtValue: el model.
 			min := min min: t.
 			max := max max: t ].
 		
@@ -69,7 +62,7 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transfo
 		self view elements do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
-					ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
+					ifTrue: [ el trachelShape color: ((normalizer level: (((metricBlock rtValue: el model) - min) / max)) alpha: alphaColor) ]
 					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
 			] 
 		]. 
@@ -79,28 +72,20 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transfo
 RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
-	self normalizeSize: metricBlock min: minValue max: maxValue using: #yourself
-]
-
-{ #category : #'as yet unclassified' }
-RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
-	"metricBlock is evaluated on each node model. 
-	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
-	"transformation is a function that takes as argument the result of a metric and return the metric transformed"
 	self addProperty: [	
 		| min max ellsToConsider t |
 		min := 100000.
 		max := -100000.
 		ellsToConsider := OrderedCollection new.
 		self view elements do: [ :el | 	
-				t := transformation rtValue: (metricBlock rtValue: el model).
+				t := metricBlock rtValue: el model.
 				min := min min: t.
 				max := max max: t.
 				ellsToConsider add: el ].
 	
 		ellsToConsider do: [ :el | 
 			| tt |
-			t := transformation rtValue: (metricBlock rtValue: el model).
+			t := metricBlock rtValue: el model.
 			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
 			el trachelShape extent: tt @ tt ]
 		]

@@ -174,20 +174,18 @@ ColorPalette >> convertSchemeToColors: aCollectionOfRGB256triplets [
 ColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	| colors group label |
 	group := RTGroup new.
-	colors := rawColors collect: [ :t |
-			Color fromRgb256Triplet: t.
-		 ].
+	colors := rawColors collect: [ :t | Color fromRgb256Triplet: t ].
 	
 	colors do: [ :c | |el|
-			el := (RTBox new size: 20; color: c) element.
-			el on: TRMouseClick do: [ :evt | evt shape color inspect ].
+			el := (RTElement on: c) + (RTBox new size: 20; color: c).
+			el @ RTPopup.
 			el @ (RTMouseHoverZoom new desiredExtent: [ :anElement | anElement extent * 1.7 ]).
 			group add: el.
 			view add: el.
 		 ].
 	
 	label := (RTLabel new text: subPaletteName) element.	
-	label @ RTHighlightable.	
+	label @ RTHighlightable.
 	label on: TRMouseClick do: [:evt | Workspace new contents: 'ColorPalette ',(self class paletteName asLowercase),' colors: anInteger scheme:','''',subPaletteName,''''; open ].	
 	view add: label.
 	TRConstraint stick: label trachelShape onTheLeftOf: group first trachelShape. 
@@ -195,6 +193,14 @@ ColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	RTHorizontalLineLayout on: group.
 	^ group.
 	
+]
+
+{ #category : #'as yet unclassified' }
+ColorPalette >> gtInspectorPreviewIn: composite [
+	<gtInspectorPresentationOrder: 40>
+	composite roassal2
+		title: 'Preview';
+		painting: [ :view | self new viewOn: view ]
 ]
 
 { #category : #accessing }
@@ -207,10 +213,17 @@ ColorPalette >> palette [
 
 { #category : #'showing palette' }
 ColorPalette >> show [
-	
-	| palette view groups nbOfColors |
-	palette := self class palette.
+	| view |
 	view := RTView new.
+	self viewOn: view.
+	view openInWindowSized: 600@700 titled: 'Color Palette: ',self class paletteName
+]
+
+{ #category : #'showing palette' }
+ColorPalette >> viewOn: view [
+	
+	| palette groups nbOfColors |
+	palette := self class palette.
 	groups := RTGroup new.
 	nbOfColors := 10.
 	
@@ -226,6 +239,4 @@ ColorPalette >> show [
 	
 	"add title and info"
 	self addTitleTo: groups on: view.
-	
-	view openInWindowSized: 600@700 titled: 'Color Palette: ',self class paletteName
 ]

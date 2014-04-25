@@ -22,8 +22,7 @@ RTMondrianViewBuilder >> build [
 
 { #category : #layout }
 RTMondrianViewBuilder >> clusterLayout [
-	self layout: RTClusterLayout new.
-	^self layout
+	self layout: RTClusterLayout new
 ]
 
 { #category : #hooks }
@@ -112,20 +111,17 @@ RTMondrianViewBuilder >> edgesFromAssociations: associations [
 
 { #category : #layout }
 RTMondrianViewBuilder >> forceBasedLayout [
-	self layout: RTForceBasedLayout new.
-	^self layout
+	self layout: RTForceBasedLayout new
 ]
 
 { #category : #layout }
 RTMondrianViewBuilder >> gridLayout [
-	self layout: RTGridLayout new.
-	^self layout
+	self layout: RTGridLayout
 ]
 
 { #category : #layout }
 RTMondrianViewBuilder >> horizontalLineLayout [
-	self layout: RTHorizontalLineLayout new.
-	^self layout
+	self layout: RTHorizontalLineLayout
 ]
 
 { #category : #initialization }
@@ -230,8 +226,7 @@ RTMondrianViewBuilder >> open [
 
 { #category : #layout }
 RTMondrianViewBuilder >> radialTreeLayout [
-	self layout: RTRadialTreeLayout new.
-	^self layout
+	^ self layout: RTRadialTreeLayout new
 ]
 
 { #category : #initialization }
@@ -280,8 +275,7 @@ RTMondrianViewBuilder >> topLevelObjects [
 { #category : #layout }
 RTMondrianViewBuilder >> treeLayout [
 	self view edges do: [ :e | e shape withVerticallAttachPoint ].
-	self layout: RTTreeLayout new.
-	^self layout
+	self layout: RTTreeLayout new
 ]
 
 { #category : #'adding - nodes' }
@@ -291,8 +285,7 @@ RTMondrianViewBuilder >> use [
 
 { #category : #layout }
 RTMondrianViewBuilder >> verticalLineLayout [
-	self layout: RTVerticalLineLayout new.
-	^self layout
+	^ self layout: RTVerticalLineLayout new
 ]
 
 { #category : #accessing }

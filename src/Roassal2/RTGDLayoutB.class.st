@@ -52,11 +52,6 @@ RTGDLayoutB >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-RTGDLayoutB >> radial [
-	^ self use: RTRadialTreeLayout new
-]
-
-{ #category : #'as yet unclassified' }
 RTGDLayoutB >> tree [
 	^ self use: RTTreeLayout new
 ]

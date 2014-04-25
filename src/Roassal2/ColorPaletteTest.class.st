@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 ColorPaletteTest >> testDiverging [
 	|palette |
 	palette := ColorPalette diverging.
@@ -17,7 +17,7 @@ ColorPaletteTest >> testDiverging [
 	self assert: (palette colors: 6 scheme: 'RdGy') second asHTMLColor equals: '#EF8A62'.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 ColorPaletteTest >> testDivergingError [
 	|palette |
 	palette := ColorPalette diverging.
@@ -30,7 +30,7 @@ ColorPaletteTest >> testDivergingError [
 	self assert: (palette colors: 6 scheme: 'RdGy') second asHTMLColor equals: '#EF8A62'.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 ColorPaletteTest >> testQualitative [
 	|palette |
 	palette := ColorPalette qualitative.
@@ -40,7 +40,7 @@ ColorPaletteTest >> testQualitative [
 	self assert: (palette colors: 3 scheme: 'Set1') size equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 ColorPaletteTest >> testQualitativeError [
 	|palette |
 	palette := ColorPalette qualitative.
@@ -51,7 +51,7 @@ ColorPaletteTest >> testQualitativeError [
 	self should: [palette colors: 9 scheme: 'Pastel2'] raise: Error.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 ColorPaletteTest >> testSequential [
 	|palette |
 	palette := ColorPalette sequential.

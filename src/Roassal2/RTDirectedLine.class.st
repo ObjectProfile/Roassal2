@@ -31,8 +31,8 @@ RTDirectedLine >> trachelShapeFor: anEdge [
 	| shape points fromP toP |
 	shape := TRBezierShape new.
 	shape width: width.
-	fromP := attachPoint startingPointOf: anEdge.
-	toP := attachPoint endingPointOf: anEdge.
+	fromP := anEdge from position.
+	toP := anEdge to position.
 	points := self pointsFrom: fromP To: toP.
 	shape points: points color: (self colorFor: anEdge).
 	^ shape

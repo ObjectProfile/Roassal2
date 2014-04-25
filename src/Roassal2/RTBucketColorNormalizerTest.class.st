@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault [
 	|n elements defaultPalette|
 	n := RTBucketColorNormalizer numberOfColors: 5 command: #yourself scope: (1 to: 5).
@@ -21,7 +21,7 @@ RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault [
 	
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault2 [
 	|n elements view defaultPalette|
 	n := RTBucketColorNormalizer numberOfColors: 5 command: #yourself scope: (1 to: 30).
