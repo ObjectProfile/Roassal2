@@ -195,14 +195,6 @@ ColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	
 ]
 
-{ #category : #'as yet unclassified' }
-ColorPalette >> gtInspectorPreviewIn: composite [
-	<gtInspectorPresentationOrder: 40>
-	composite roassal2
-		title: 'Preview';
-		painting: [ :view | self new viewOn: view ]
-]
-
 { #category : #accessing }
 ColorPalette >> palette [
 
