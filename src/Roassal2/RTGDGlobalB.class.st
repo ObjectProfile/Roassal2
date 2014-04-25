@@ -47,6 +47,13 @@ RTGDGlobalB >> minSize: anInteger [
 RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
+	^ self normalizeColor: metricBlock using: colors transformation: #yourself
+]
+
+{ #category : #'as yet unclassified' }
+RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transformation [
+	"aBlock is evaluated on each node model. 
+	 Colors is an array of colors used to do the fading"
 	self addProperty: [
 		| min max normalizer |
 		"We get the min and the max of the metric for all the elements"
@@ -54,7 +61,7 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 		max := 0.
 		self view elements do: [ :el | 
 			| t |  
-			t := metricBlock rtValue: el model.
+			t := transformation rtValue: (metricBlock rtValue: el model).
 			min := min min: t.
 			max := max max: t ].
 		
@@ -62,7 +69,7 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 		self view elements do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
-					ifTrue: [ el trachelShape color: ((normalizer level: (((metricBlock rtValue: el model) - min) / max)) alpha: alphaColor) ]
+					ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
 					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
 			] 
 		]. 
