@@ -2807,3 +2807,14 @@ VersionOfRoassal2 >> version000207 [
 	at: #date put: '25 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000208 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.132';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.274';
+	at: #version put: '0.208';
+	at: #comment put: '0.208 : Merged with Pablo and Doru version. Improvement of the ColorPalette for GTInspector.';
+	at: #date put: '25 April 2014';
+	yourself
+]
