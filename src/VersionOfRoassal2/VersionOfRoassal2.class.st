@@ -2774,3 +2774,14 @@ VersionOfRoassal2 >> version000204 [
 	at: #date put: '24 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000205 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.132';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.268';
+	at: #version put: '0.205';
+	at: #comment put: '0.205 : worked on the graph builder. Integrated Pablo changes';
+	at: #date put: '25 April 2014';
+	yourself
+]
