@@ -9,6 +9,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #public }
+RTAbstractCompositeShape class >> with: s1 with: s2 [
+	^ self new shape1: s1; shape2: s2; yourself
+]
+
 { #category : #rendering }
 RTAbstractCompositeShape >> heightFor: anElement [
 	^ (shape1 heightFor: anElement) max: (shape2 heightFor: anElement)
