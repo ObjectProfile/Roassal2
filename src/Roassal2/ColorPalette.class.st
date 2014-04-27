@@ -142,7 +142,7 @@ ColorPalette >> colors: nbOfColors scheme: aString [
 	
 	"ERROR: number of colors is not an integer."
 	nbOfColors isInteger ifFalse: [ 
-		^ self error: 'Please, provide a correct number of elements' ].
+		^ self error: 'Please, provide a correct number of colors' ].
 	
 	"ERROR: scheme not found"
 	scheme := palette at: aString ifAbsent: [ 
