@@ -77,7 +77,7 @@ RTShapeTest >> testCompositingSize [
 	
 	self assert: trCanvas numberOfShapes equals: 2.
 	self assert: trCanvas shapes first width equals: 50.
-	self assert: trCanvas shapes second width equals: 50.
+	self assert: trCanvas shapes second width equals: 5.
 ]
 
 { #category : #composing }

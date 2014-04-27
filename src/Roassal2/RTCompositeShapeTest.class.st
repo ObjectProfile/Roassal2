@@ -114,3 +114,21 @@ RTCompositeShapeTest >> testOffset4 [
 	self assert: shapes first position = (10 @ 10).
 	self assert: shapes second position = (40 @ 40)
 ]
+
+{ #category : #size }
+RTCompositeShapeTest >> testSize [
+
+	| v s1 s2 e |
+	v := RTView new.
+	s1 := RTBox new size: 50; color: Color blue.
+	s2 := RTBox new size: 40; color: Color red.
+
+	e := (RTHorizontalCompositeShape new shape1: s1; shape2: s2) element.
+	v add: e.
+	
+	self assert: (s1 widthFor: e) equals: 50.
+	self assert: (s2 widthFor: e) equals: 40.
+	
+	self assert: v canvas shapes first width equals: 50.
+	self assert: v canvas shapes second width equals: 40.
+]
