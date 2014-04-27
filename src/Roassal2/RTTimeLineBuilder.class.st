@@ -5,7 +5,8 @@ Class {
 		'height',
 		'numberOfValues',
 		'values',
-		'addedElements'
+		'addedElements',
+		'colors'
 	],
 	#category : #'Roassal2-Builder-TimeLine'
 }
@@ -31,9 +32,20 @@ RTTimeLineBuilder >> cleanView [
 	addedElements := OrderedCollection new.
 ]
 
+{ #category : #accessing }
+RTTimeLineBuilder >> colors: arrayOfColors [
+	"The array of colors is used to give a color to each bar. The lowest value is the first colors. The highest value is the last color"
+	colors := arrayOfColors
+]
+
 { #category : #hooks }
 RTTimeLineBuilder >> createShapeBuilder [
 	^ super createShapeBuilder rectangle width: 10; yourself
+]
+
+{ #category : #hooks }
+RTTimeLineBuilder >> createView [
+	^ RTView new
 ]
 
 { #category : #examples }
@@ -44,6 +56,38 @@ RTTimeLineBuilder >> example01 [
 
 	| b |
 	b := RTTimeLineBuilder new.
+	b shape current width: 15.
+	b height: 80.
+	b numberOfValues: 20.
+	b view canvas addMenu: 'Add' callback: [ b add: 30 atRandom ].
+	b open
+]
+
+{ #category : #examples }
+RTTimeLineBuilder >> example02WithRedAndGreen [
+	"
+	self new example02WithRedAndGreen
+	"
+
+	| b |
+	b := RTTimeLineBuilder new.
+	b colors: (Array with: Color red with: Color green).
+	b shape current width: 15.
+	b height: 80.
+	b numberOfValues: 20.
+	b view canvas addMenu: 'Add' callback: [ b add: 30 atRandom ].
+	b open
+]
+
+{ #category : #examples }
+RTTimeLineBuilder >> example03WithRedOrangeAndGreen [
+	"
+	self new example03WithRedOrangeAndGreen
+	"
+
+	| b |
+	b := RTTimeLineBuilder new.
+	b colors: (Array with: Color red with: Color orange with: Color green).
 	b shape current width: 15.
 	b height: 80.
 	b numberOfValues: 20.
@@ -63,6 +107,7 @@ RTTimeLineBuilder >> initialize [
 	height := 100.
 	numberOfValues := 20.
 	values := OrderedCollection new.
+	colors := Array with: Color gray.
 	addedElements := OrderedCollection new.
 ]
 
@@ -87,10 +132,15 @@ RTTimeLineBuilder >> renderIn: aView [
 	self setShapeForMaxValue: values max.
 	self addBarsOn: aView.
 	self layoutBars.
-	view canvas camera focusOnCenter
+	view canvas camera focusOnCenter.
+	view signalUpdate
 ]
 
 { #category : #'private visualization' }
 RTTimeLineBuilder >> setShapeForMaxValue: maxValue [
-	self shape current height: [ :v | v * height / maxValue ]
+	| normalizer |
+	normalizer := RTMultiLinearColor new colors: colors.
+	self shape current 
+		color: [ :v | normalizer level: v / maxValue ];
+		height: [ :v | v * height / maxValue ]
 ]
