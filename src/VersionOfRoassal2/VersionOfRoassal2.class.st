@@ -2829,3 +2829,14 @@ VersionOfRoassal2 >> version000209 [
 	at: #date put: '25 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000210 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.134';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.276';
+	at: #version put: '0.210';
+	at: #comment put: '0.210 : two changes: (i) composite in Roassal do not change the size of the shapes, except for RTCompositeShape, Verticical and horizontal keep the size of the shape as it is. (ii) added a time builder. It simply allow for vertical bars to be dynamically added. Cool stuff :-)';
+	at: #date put: '27 April 2014';
+	yourself
+]
