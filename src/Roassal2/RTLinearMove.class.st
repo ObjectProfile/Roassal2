@@ -40,3 +40,10 @@ RTLinearMove >> to: anEndPoint during: seconds on: anElement [
 							yourself.
 	
 ]
+
+{ #category : #public }
+RTLinearMove >> to: anEndPoint during: seconds on: anElement in: aView [
+	| anim |
+	anim := self to: anEndPoint during: seconds on: anElement.
+	aView addAnimation: anim
+]
