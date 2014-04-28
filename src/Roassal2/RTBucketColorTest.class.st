@@ -1,13 +1,13 @@
 Class {
-	#name : #RTBucketColorNormalizerTest,
+	#name : #RTBucketColorTest,
 	#superclass : #RTTest,
 	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #tests }
-RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault [
+RTBucketColorTest >> testGivenCommandAndCollectionDefault [
 	|n elements defaultPalette|
-	n := RTBucketColorNormalizer numberOfColors: 5 command: #yourself scope: (1 to: 5).
+	n := RTBucketColor numberOfColors: 5 command: #yourself scope: (1 to: 5).
 	defaultPalette := n defaultPalette.
 	elements := (RTBox new size: 20; color: n) elementsOn: (1 to: 5).
 	"view := RTView new.
@@ -22,9 +22,9 @@ RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault [
 ]
 
 { #category : #tests }
-RTBucketColorNormalizerTest >> testGivenCommandAndCollectionDefault2 [
+RTBucketColorTest >> testGivenCommandAndCollectionDefault2 [
 	|n elements view defaultPalette|
-	n := RTBucketColorNormalizer numberOfColors: 5 command: #yourself scope: (1 to: 30).
+	n := RTBucketColor numberOfColors: 5 command: #yourself scope: (1 to: 30).
 	elements := (RTBox new size: 20; color: n) elementsOn: (1 to: 30).
 	defaultPalette := n defaultPalette.
 	"view := RTView new.
