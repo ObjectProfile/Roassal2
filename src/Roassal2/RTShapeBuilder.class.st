@@ -23,6 +23,11 @@ RTShapeBuilder >> current [
 	^ shape
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> directedLine [
+	^ self shape: RTDirectedLine new
+]
+
 { #category : #'reflective operations' }
 RTShapeBuilder >> doesNotUnderstand: aMessage [
 	"we simply forward the messages we do not understand
