@@ -2873,3 +2873,17 @@ VersionOfRoassal2 >> version000213 [
 	at: #date put: '28 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000214 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.134';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.280';
+	at: #version put: '0.214';
+	at: #comment put: '0.214 : added a #offsetOnEdge: to RTLabelled.
+The method takes as argument a float, between 0.0 and 1.0. 
+1.0 means it is on the starting extremity. 
+0.0 means it is on the ending extremity.';
+	at: #date put: '28 April 2014';
+	yourself
+]
