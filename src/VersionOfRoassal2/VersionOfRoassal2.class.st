@@ -2862,3 +2862,14 @@ VersionOfRoassal2 >> version000212 [
 	at: #date put: '27 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000213 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.134';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.279';
+	at: #version put: '0.213';
+	at: #comment put: '0.213 : added directedLine on the shape builder';
+	at: #date put: '28 April 2014';
+	yourself
+]
