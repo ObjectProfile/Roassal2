@@ -2887,3 +2887,14 @@ The method takes as argument a float, between 0.0 and 1.0.
 	at: #date put: '28 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000215 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.134';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.281';
+	at: #version put: '0.215';
+	at: #comment put: '0.215 : added utility methods in RTLinearMove. Added new example in RTRoassalExample. Started to work on a RTVerticalBagCompositeShape. But thisis not ready yet...';
+	at: #date put: '28 April 2014';
+	yourself
+]
