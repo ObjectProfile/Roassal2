@@ -1,14 +1,30 @@
 Class {
 	#name : #RTDirectedLine,
 	#superclass : #RTLine,
+	#instVars : [
+		'offset'
+	],
 	#category : #'Roassal2-Core'
 }
+
+{ #category : #initialization }
+RTDirectedLine >> initialize [
+	super initialize.
+	offset := 0.5
+]
+
+{ #category : #accessing }
+RTDirectedLine >> offset: anOffsetAsFloat [
+	"Argument is a float between 0.0 and 1.0. Its values means where the curve is positioned to.
+	lesser the argument, closer to the starting point"
+	offset := anOffsetAsFloat
+]
 
 { #category : #hooks }
 RTDirectedLine >> pointsFrom: from To: to [
 
 	| point mid   |
-	mid := (to + from) / 2.
+	mid := (to * (1 - offset)) + (from * offset).
 	point := from + ((mid - from) rightRotated).
 	"(to - from) abs / 2"
 	^ { from . point . to }
@@ -38,7 +54,7 @@ RTDirectedLine >> trachelShapeFor: anEdge [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTDirectedLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape points: (self pointsFrom: (attachPoint startingPointOf: edge) To: (attachPoint endingPointOf: edge)).
 	trachelShape color: (self colorFor: edge).

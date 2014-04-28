@@ -3,7 +3,7 @@ A scale of elements is discretized into buckets where elements of each bucket is
 
 "
 Class {
-	#name : #RTBucketColor,
+	#name : #RTBucketColorNormalizer,
 	#superclass : #RTAbstractNormalizer,
 	#instVars : [
 		'colorScheme',
@@ -15,10 +15,10 @@ Class {
 }
 
 { #category : #examples }
-RTBucketColor class >> example [
+RTBucketColorNormalizer class >> example [
 	
 	|n elements view|
-	n := RTBucketColor numberOfColors: 5 command: #asInteger scope: ($a to: $z).
+	n := RTBucketColorNormalizer numberOfColors: 5 command: #asInteger scope: ($a to: $z).
 	n colorScheme: 'Blues'.
 	elements := (RTBox new size: 20; color: n) elementsOn: ($a to: $z).
 	view := RTView new.
@@ -29,10 +29,10 @@ RTBucketColor class >> example [
 ]
 
 { #category : #examples }
-RTBucketColor class >> example1 [
+RTBucketColorNormalizer class >> example1 [
 	
 	|n elements view |
-	n := RTBucketColor numberOfColors: 5 scope: (1 to: 35).
+	n := RTBucketColorNormalizer numberOfColors: 5 scope: (1 to: 35).
 	elements := (RTBox new size: 20; color: n) elementsOn: (1 to: 30).
 	view := RTView new.
 	view addAll: elements.
@@ -42,7 +42,7 @@ RTBucketColor class >> example1 [
 ]
 
 { #category : #public }
-RTBucketColor class >> numberOfColors: anInteger command: aSymboOrBlock  scope: aCollection [
+RTBucketColorNormalizer class >> numberOfColors: anInteger command: aSymboOrBlock  scope: aCollection [
 
 	^ self new
 		numberOfBuckets: anInteger;
@@ -51,13 +51,13 @@ RTBucketColor class >> numberOfColors: anInteger command: aSymboOrBlock  scope: 
 ]
 
 { #category : #public }
-RTBucketColor class >> numberOfColors: anInteger scope: aCollection [
+RTBucketColorNormalizer class >> numberOfColors: anInteger scope: aCollection [
 
 	^ self numberOfColors: anInteger command: #yourself  scope: aCollection
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> bucketIndexOf: anObject [
+RTBucketColorNormalizer >> bucketIndexOf: anObject [
 
 	|value |
 	value := command value: anObject.
@@ -66,32 +66,32 @@ RTBucketColor >> bucketIndexOf: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> buckets [
+RTBucketColorNormalizer >> buckets [
 
 	^ buckets ifEmpty: [ self initializeBuckets. buckets ]
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> colorScheme: aString [
+RTBucketColorNormalizer >> colorScheme: aString [
 
 	colorScheme := aString.
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> defaultPalette [
+RTBucketColorNormalizer >> defaultPalette [
 
 	^ ColorPalette diverging colors: numberOfBuckets scheme:'RdBu'
 ]
 
 { #category : #initialize }
-RTBucketColor >> initialize [
+RTBucketColorNormalizer >> initialize [
 
 	super initialize.
 	buckets := OrderedCollection new.
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> initializeBuckets [
+RTBucketColorNormalizer >> initializeBuckets [
 	
 	|values min max delta  |
 	values := scope collect: [:v | command rtValue: v].
@@ -107,13 +107,13 @@ RTBucketColor >> initializeBuckets [
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> numberOfBuckets: anInteger [
+RTBucketColorNormalizer >> numberOfBuckets: anInteger [
 
 	numberOfBuckets := anInteger
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> palette [
+RTBucketColorNormalizer >> palette [
 
 	^ colorScheme isNil 
 		ifTrue: [ self defaultPalette ]
@@ -122,14 +122,14 @@ RTBucketColor >> palette [
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> rtValue: anObject [
+RTBucketColorNormalizer >> rtValue: anObject [
 
 	^ (self buckets detect: [ :pair | pair first = (self bucketIndexOf: anObject) ] ) second	
 
 ]
 
 { #category : #'as yet unclassified' }
-RTBucketColor >> scope: groupOfObjects [
+RTBucketColorNormalizer >> scope: groupOfObjects [
 	"The argument is used to determine the maximum value. Command is executed on each of elements of the group passed as argument"
 	scope := groupOfObjects
 ]

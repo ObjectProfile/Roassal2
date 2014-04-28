@@ -5,7 +5,8 @@ Class {
 		'position',
 		'text',
 		'color',
-		'canvas'
+		'canvas',
+		'offsetOnEdge'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -37,6 +38,8 @@ RTLabelled >> initialize [
 	self top.
 	color := Color gray.
 
+	offsetOnEdge := 0.5.
+
 	canvas := [ :el | 
 		el view ifNil: [ self error: 'You are trying to use RTLabelled on an element before adding the element to the view. Two solutions: (i) specify the view to the RTLabelled (using #view:) or (ii) use RTLabelled after having added the element' ].
 		el view canvas ]
@@ -64,7 +67,7 @@ RTLabelled >> initializeElement: element [
 							stick: lbl 
 							between: element from trachelShape 
 							and: element to trachelShape
-							offset: 0.7. 
+							offset: offsetOnEdge. 
 				  ^ self ].
 
 	
@@ -103,6 +106,17 @@ RTLabelled >> isTop [
 { #category : #accessing }
 RTLabelled >> left [
 	position := #left
+]
+
+{ #category : #accessing }
+RTLabelled >> offsetOnEdge [
+	^ offsetOnEdge
+]
+
+{ #category : #accessing }
+RTLabelled >> offsetOnEdge: aFloat [
+	"aFloat is between 0.0 and 1.0. With a value of 1.0, the label is close to the starting extremity"
+	offsetOnEdge := aFloat
 ]
 
 { #category : #accessing }
