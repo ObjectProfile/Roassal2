@@ -218,6 +218,7 @@ z+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n+/vvADh2zp6vpL8RAAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleArrowedEdges [
 
+| view els |
 view := RTView new.
 els := (RTBox new size: 10; color: Color blue; borderColor: Color veryLightGray) elementsOn: Collection withAllSubclasses.
 els @ RTDraggable.

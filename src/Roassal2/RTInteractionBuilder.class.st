@@ -73,6 +73,11 @@ RTInteractionBuilder >> popup [
 	^ i
 ]
 
+{ #category : #'events-registering' }
+RTInteractionBuilder >> popupText: aBlock [
+	interactions add: [ :element | element @ (RTPopup new text: aBlock) ]
+]
+
 { #category : #copying }
 RTInteractionBuilder >> postCopy [
 	super postCopy.
