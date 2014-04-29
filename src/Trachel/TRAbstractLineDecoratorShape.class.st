@@ -48,6 +48,11 @@ TRAbstractLineDecoratorShape >> center [
 	^ self to
 ]
 
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> color: aColor [
+	self strokePaint: aColor
+]
+
 { #category : #hooks }
 TRAbstractLineDecoratorShape >> computePath [
 	self subclassResponsibility
