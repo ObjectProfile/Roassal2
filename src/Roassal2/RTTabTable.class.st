@@ -124,6 +124,7 @@ RTTabTable >> numberOfRows [
 
 { #category : #accessing }
 RTTabTable >> removeFirstRow [
+	"Remove the first line of the table, typically the header"
 	values := values allButFirst
 ]
 
