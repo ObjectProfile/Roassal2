@@ -2920,3 +2920,14 @@ VersionOfRoassal2 >> version000217 [
 	at: #date put: '29 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000218 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.136';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.284';
+	at: #version put: '0.218';
+	at: #comment put: '0.218 : fixed the test de ColorPaletteTest. Added a new class RTTableTableData with some example';
+	at: #date put: '29 April 2014';
+	yourself
+]
