@@ -2898,3 +2898,14 @@ VersionOfRoassal2 >> version000215 [
 	at: #date put: '28 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000216 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.135';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.282';
+	at: #version put: '0.216';
+	at: #comment put: '0.216 : merged with Pablo version. added TRCompositeShape>>canvas ';
+	at: #date put: '29 April 2014';
+	yourself
+]
