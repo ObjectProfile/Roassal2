@@ -60,6 +60,12 @@ TRCompositeShape >> announcer: anAnnouncer [
 ]
 
 { #category : #accessing }
+TRCompositeShape >> canvas [
+	^ shape1 canvas
+
+]
+
+{ #category : #accessing }
 TRCompositeShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
 	shape1 canvas: aSurface.
