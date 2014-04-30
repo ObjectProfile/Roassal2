@@ -2942,3 +2942,14 @@ VersionOfRoassal2 >> version000219 [
 	at: #date put: '30 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000220 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.137';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.287';
+	at: #version put: '0.220';
+	at: #comment put: '0.220 : added tests that identify a bug (tests are yellow) + set the background in trachel as white, instead of being transparent';
+	at: #date put: '30 April 2014';
+	yourself
+]
