@@ -216,7 +216,7 @@ TRCanvas >> initialize [
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
-	color := Color transparent.
+	color := Color white.
 ]
 
 { #category : #testing }

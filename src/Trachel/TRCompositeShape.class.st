@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'shape1',
 		'shape2',
+		'offset1',
 		'offset2'
 	],
 	#category : #'Trachel-Core'
@@ -141,7 +142,18 @@ TRCompositeShape >> initialize [
 	super initialize.
 	shape1 := TRNoShape instance.
 	shape2 := TRNoShape instance.
+	offset1 := 0 @ 0.
 	offset2 := 0 @ 0
+]
+
+{ #category : #accessing }
+TRCompositeShape >> offset1 [
+	^ offset1
+]
+
+{ #category : #accessing }
+TRCompositeShape >> offset1: aPoint [
+	offset1 := aPoint
 ]
 
 { #category : #accessing }
@@ -217,7 +229,7 @@ TRCompositeShape >> translateBy: aPoint [
 
 { #category : #actions }
 TRCompositeShape >> translateTo: aPoint [
-	shape1 translateTo: aPoint.
+	shape1 translateTo: (aPoint + offset1).
 	shape2 translateTo: (aPoint + offset2).
 ]
 
