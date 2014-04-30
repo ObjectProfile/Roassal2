@@ -2931,3 +2931,14 @@ VersionOfRoassal2 >> version000218 [
 	at: #date put: '29 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000219 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.136';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.286';
+	at: #version put: '0.219';
+	at: #comment put: '0.219 : inserted singleton for the attachpoint';
+	at: #date put: '30 April 2014';
+	yourself
+]
