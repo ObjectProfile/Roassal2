@@ -4,6 +4,37 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #size }
+RTCompositeShapeTest >> testAttachPoint [
+
+| v e1 e2 l |
+
+v := RTView new.
+e1 := (RTHorizontalCompositeShape 
+			with: (RTEllipse new size: 20; color: (Color blue alpha: 0.3))
+			with: (RTBox new size: 10)) element.
+
+e2 := (RTHorizontalCompositeShape 
+			with: (RTEllipse new size: 40; color: (Color blue alpha: 0.3))
+			with: (RTBox new size: 10)) element.
+
+l := (RTLine new attachPoint: RTHorizontalAttachPoint instance) edgeFrom: e1 to: e2.
+
+e1 @ RTDraggable.
+e2 @ RTDraggable.
+v add: e1; add: e2; add: l.
+
+"self assert: e1 trachelShape encompassingRectangle = (Rectangle corner: 4 extent: 30 @ 20)."
+self assert: e1 trachelShape width = 50.
+
+self assert: e1 width = 50.
+self assert: e2 width = 50.
+
+self assert: e1 position = (0 @ 0).
+self assert: e2 position = (0 @ 0)
+
+]
+
 { #category : #'label size' }
 RTCompositeShapeTest >> testLabelSize [
 	| v s1 s2 c labels |
@@ -131,4 +162,7 @@ RTCompositeShapeTest >> testSize [
 	
 	self assert: v canvas shapes first width equals: 50.
 	self assert: v canvas shapes second width equals: 40.
+	
+	self assert: e width = 90.
+	self assert: e height = 50.
 ]
