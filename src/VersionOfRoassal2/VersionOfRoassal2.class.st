@@ -2964,3 +2964,14 @@ VersionOfRoassal2 >> version000221 [
 	at: #date put: '1 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000222 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.139';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.289';
+	at: #version put: '0.222';
+	at: #comment put: '0.222 : fixed problem with the double callback registration with nesting on composite shape (c.f., #testNesting). Thanks Leo for having spotted it!';
+	at: #date put: '1 May 2014';
+	yourself
+]
