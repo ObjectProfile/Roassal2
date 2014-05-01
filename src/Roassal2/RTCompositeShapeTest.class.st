@@ -55,6 +55,30 @@ RTCompositeShapeTest >> testLabelSize [
 ]
 
 { #category : #tests }
+RTCompositeShapeTest >> testNesting [
+
+	| view shape element el |
+	view := RTView new.
+	shape := (RTVerticalCompositeShape new
+		shape1: RTBox new;
+		shape2: (RTBox new color: Color red);
+		yourself).
+
+		
+	element := shape elementOn: 'Container'.
+	el := (RTEllipse new size: 10; color: (Color blue alpha: 0.5)) elementsOn: (1 to: 1).
+	view add: element; add: el.
+
+	RTNest new layout: RTGridLayout; on: element nest: {el}.
+	element @ RTDraggable.
+	
+	self assert: element position asIntegerPoint = el position.
+	element translateBy: 20 @ 30.
+	self assert: element position asIntegerPoint = el position.
+
+]
+
+{ #category : #tests }
 RTCompositeShapeTest >> testOffset [
 
 	| v s1 s2 c shapes |
