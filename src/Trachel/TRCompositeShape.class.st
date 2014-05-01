@@ -40,6 +40,7 @@ TRCompositeShape >> addCallback: aCallback [
 TRCompositeShape >> addedIn: aCanvas [
 	aCanvas addShape: shape1.
 	aCanvas addShape: shape2.
+	shape1 translateBy: offset1.
 	shape2 translateBy: offset2.
 ]
 
