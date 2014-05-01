@@ -2953,3 +2953,14 @@ VersionOfRoassal2 >> version000220 [
 	at: #date put: '30 April 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000221 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.138';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.288';
+	at: #version put: '0.221';
+	at: #comment put: '0.221 : fixed the problem identified by Leo about composite shapes and line attachment';
+	at: #date put: '1 May 2014';
+	yourself
+]
