@@ -6,12 +6,11 @@ Class {
 
 { #category : #'public - hooks' }
 RTVerticalAttachPoint >> endingPointOf: aRTEdge [
-	^ (aRTEdge to position 
-		- (0 @ (aRTEdge to height / 2))) asIntegerPoint
+	^ aRTEdge to encompassingRectangle topCenter
 ]
 
 { #category : #'public - hooks' }
 RTVerticalAttachPoint >> startingPointOf: aRTEdge [
-	^ (aRTEdge from position 
-		+ (0 @ (aRTEdge from height / 2))) asIntegerPoint
+	^ aRTEdge from encompassingRectangle bottomCenter
+
 ]
