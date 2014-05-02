@@ -946,6 +946,64 @@ I0cIJuQfGHDDZ/fy/P8H4yAqPck3kO8AAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGraphBuilderExample >> exampleComposingCircles [
+| b |
+b := RTGraphBuilder new.
+b nodes color: Color blue.
+
+b layout 
+	if: [ :c | (c inheritsFrom: RTInteraction) ]; 
+	circle: 200.
+b layout 
+	if: [ :c | c inheritsFrom: RTShape ]; 
+	circle: 50.
+	
+b layout 
+	if: [ :c | c inheritsFrom: RTLayout ]; 
+	circle: 100.
+
+b global
+	alphaColor: 0.4;
+	normalizeSize: #numberOfMethods min: 5 max: 30 using: #sqrt.
+b addAll: (RTObject withAllSubclasses).
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTGraphBuilderExample >> exampleComposingCirclesIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTGraphBuilderExample >> exampleConnectFromAndSelectiveColor [
 
 	| b |
