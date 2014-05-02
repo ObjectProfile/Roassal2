@@ -11,14 +11,14 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> bundleConnectTo: aBlock [
 	self turnShapeIntoBezier.
 	shape midPointInCenterOfElements: [ :edge | self view elementsFromModels: (aBlock rtValue: edge from model) ].
 	self connectTo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #condition }
 RTGDEdgeB >> canCreateForObject: anObject [
 	"Return true or false on whether I can create a Roassal element for the given argument"
 	condition isClosure
@@ -31,33 +31,33 @@ RTGDEdgeB >> canCreateForObject: anObject [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> chainedConnectFrom: aBlock [
 	self connectFrom: [ :v | 
 		self recurFrom: v using: aBlock
 		 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> chainedConnectTo: aBlock [
 	self connectTo: [ :v | 
 		self recurFrom: v using: aBlock
 		 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDEdgeB >> connectFrom: aOneArgBlock [
 
 	connectFrom := aOneArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDEdgeB >> connectTo: aOneArgBlock [
 
 	connectTo := aOneArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> createEdgesFor: object [
 	"This method needs to be cleaned"
 	| answer toObjects fromObjects fromElements subToObjects edges |
@@ -84,17 +84,17 @@ RTGDEdgeB >> createEdgesFor: object [
 	^ answer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> directed [
 	self shape: RTDirectedLine new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDEdgeB >> edgesUsedForLayout [
 	^ edgesUsedForLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDEdgeB >> follow: aBlock [
 	"Turn the shape into a bezier. Make the bezier follow the path specified as the argument"
 	self turnShapeIntoBezier.
@@ -102,12 +102,12 @@ RTGDEdgeB >> follow: aBlock [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> horizontalAttachPoint [
 	attachPoint := RTHorizontalAttachPoint new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTGDEdgeB >> initialize [
 	super initialize.
 	usedInLayout := false.
@@ -118,7 +118,7 @@ RTGDEdgeB >> initialize [
 	condition := [ :f :t | true ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> recurFrom: v using: aBlock [
 	| r |
 	r := OrderedCollection new.
@@ -131,7 +131,7 @@ RTGDEdgeB >> recurFrom: v using: aBlock [
 	^ r
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: allObjects [
 	| objects |
 	(path includes: v) ifTrue: [ ^ self ].
@@ -155,7 +155,7 @@ RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: al
 			allObjects: allObjects ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> turnShapeIntoBezier [
 	| oldColor |
 	oldColor := shape color.
@@ -163,17 +163,17 @@ RTGDEdgeB >> turnShapeIntoBezier [
 	shape color: oldColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> useInLayout [
 	^ usedInLayout := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDEdgeB >> usedInLayout [
 	^ usedInLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDEdgeB >> verticalAttachPoint [
 	attachPoint := RTVerticalAttachPoint new.
 ]

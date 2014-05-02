@@ -7,17 +7,22 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> circle [
-	^ self use: RTCircleLayout new
+	^ self use: RTCenteredCircleLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTGDLayoutB >> circle: aRadius [
+	^ self use: (RTCenteredCircleLayout new radius: aRadius)
+]
+
+{ #category : #public }
 RTGDLayoutB >> cluster [
 	^ self use: RTClusterLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #execute }
 RTGDLayoutB >> execute [
 	layout 
 		on: (self view elements select: [ :e | condition rtValue: e model ]) 
@@ -25,43 +30,49 @@ RTGDLayoutB >> execute [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> flow [
 	^ self use: RTFlowLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> force [
 	^ self use: RTForceBasedLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> grid [
 	^ self use: RTGridLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> horizontal [
 	^ self use: RTHorizontalLineLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTGDLayoutB >> initialize [
 	super initialize.
 	self if: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> radial [
 	^ self use: RTRadialTreeLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
+RTGDLayoutB >> translateBy: aPoint [
+
+	self use: (RTTranslationLayout new step: aPoint)
+]
+
+{ #category : #public }
 RTGDLayoutB >> tree [
 	^ self use: RTTreeLayout new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDLayoutB >> use: aLayout [
 	layout := aLayout.
 	^ aLayout

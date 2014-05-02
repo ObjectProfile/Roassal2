@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDGlobalB >> alphaColor:  anAlphaColor [
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
@@ -17,19 +17,19 @@ RTGDGlobalB >> alphaColor:  anAlphaColor [
 		]. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #execute }
 RTGDGlobalB >> execute [
 
 	properties do: #value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTGDGlobalB >> initialize [
 	super initialize.
 	alphaColor := 1.0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDGlobalB >> minSize: anInteger [
 	"aBlock is evaluated on each node model. 
 	Set the minimum size of each element"
@@ -43,14 +43,14 @@ RTGDGlobalB >> minSize: anInteger [
 		]. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	^ self normalizeColor: metricBlock using: colors transformation: #yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
@@ -75,14 +75,14 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transfo
 		]. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
 	self normalizeSize: metricBlock min: minValue max: maxValue using: #yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"

@@ -7,18 +7,18 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDShapedElementB >> color: aColorOrABlock [
 
 	shape color: aColorOrABlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDShapedElementB >> shape [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDShapedElementB >> shape: aShape [
 	shape := aShape.
 	^ aShape

@@ -14,7 +14,7 @@ RTGDElement >> addProperty: aOneOrTwoArgBlock [
 	properties add: aOneOrTwoArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #condition }
 RTGDElement >> canCreateForObject: anObject [
 	"Return true or false on whether I can create a Roassal element for the given argument"
 	^ condition rtValue: anObject
@@ -40,7 +40,7 @@ RTGDElement >> graphBuilder: aGraphBuilder [
 	graphBuilder := aGraphBuilder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #condition }
 RTGDElement >> if: aCondition [
 	condition := aCondition
 ]

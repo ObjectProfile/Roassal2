@@ -154,6 +154,20 @@ RTGraphBuilderTest >> testLabellednode [
 	self assert: (b view canvas shapes collect: #class) = (Array with: TRLabelShape with: TREllipseShape)
 ]
 
+{ #category : #layout }
+RTGraphBuilderTest >> testLayout01 [
+
+	b nodes color: Color gray.
+	b layout horizontal.
+	b layout 
+		if: #odd;
+		translateBy: 0 @ 40.
+	
+	b addAll: (1 to: 4).
+	b build.
+	self assert: (b view elements collect: #position) asArray = ((Array new: 4) at: 1 put: ((5.0@45.0)); at: 2 put: ((25.0@5.0)); at: 3 put: ((45.0@45.0)); at: 4 put: ((65.0@5.0)); yourself)
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testMinSize [
 

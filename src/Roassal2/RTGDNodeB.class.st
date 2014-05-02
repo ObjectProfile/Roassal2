@@ -9,12 +9,12 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTGDNodeB >> circle [
 	^ self shape: RTEllipse new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTGDNodeB >> createElementFor: object [
 	| e |
 	e := shape elementOn: object.
@@ -25,7 +25,7 @@ RTGDNodeB >> createElementFor: object [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'creating elements' }
 RTGDNodeB >> createElementsFor: objects [
 	| es |
 	es := shape elementsOn: objects.
@@ -35,12 +35,12 @@ RTGDNodeB >> createElementsFor: objects [
 	^ es
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDNodeB >> height: aBlock [
 	shape height: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTGDNodeB >> initialize [
 	super initialize.
 	withDraggable := true.
@@ -48,7 +48,7 @@ RTGDNodeB >> initialize [
 	shape := RTEllipse new size: 10
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTGDNodeB >> labelled [
 	"Gives a label to each node"
 	self addProperty: [ :el |
@@ -58,23 +58,23 @@ RTGDNodeB >> labelled [
 		TRConstraint stick: lbl below: el trachelShape ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interaction }
 RTGDNodeB >> noPopup [
 	withPopup := false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDNodeB >> rectangle [
 	^ self shape: RTBox new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDNodeB >> size: aSize [
 	self height: aSize.
 	self width: aSize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interaction }
 RTGDNodeB >> whenClicked: aBlock [
 	"aBlock is evaluated with the model as argument"
 
@@ -82,7 +82,7 @@ RTGDNodeB >> whenClicked: aBlock [
 		anElement when: TRMouseClick do: [ :evt | aBlock rtValue: evt element model ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interaction }
 RTGDNodeB >> whenOverHighlight: aBlock [
 	"When the mouse is over a node, highlight the elements returned by the block.
 	 The block takes as argument the model on which the mouse is pointing to"
@@ -90,7 +90,7 @@ RTGDNodeB >> whenOverHighlight: aBlock [
 		anElement @ (RTHighlightable highlight: (aBlock rtValue: anElement model)) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interaction }
 RTGDNodeB >> whenOverShowEdges: aBlock [
 	"aBlock, when evaluated against an element return a model or a collection of models. 
 	This will be used to draw edges"
@@ -100,7 +100,7 @@ RTGDNodeB >> whenOverShowEdges: aBlock [
 		anElement @ (RTShowEdge new connectTo: aBlock) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGDNodeB >> width: aBlock [
 	shape width: aBlock
 ]
