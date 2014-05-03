@@ -99,3 +99,17 @@ Color class >> grayScale256: intensity [
 	i := intensity asFloat / 256.
 	^ self r:  i g: i b: i 
 ]
+
+{ #category : #'*Roassal2' }
+Color class >> red: r green: g blue: b [
+	"Return a color with the given r, g, and b components in the range [0.0..255]."
+
+	^ self red: r green: g blue: b alpha: 1.0
+]
+
+{ #category : #'*Roassal2' }
+Color class >> red: r green: g blue: b alpha: a [
+	"Return a color with the given r, g, and b components in the range [0.0..255]."
+
+	^ self r: (r/255 asFloat) g: (g/255 asFloat) b: (b/255 asFloat) alpha: a
+]
