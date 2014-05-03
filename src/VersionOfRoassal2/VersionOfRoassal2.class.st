@@ -2997,3 +2997,14 @@ VersionOfRoassal2 >> version000224 [
 	at: #date put: '2 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000225 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.140';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.292';
+	at: #version put: '0.225';
+	at: #comment put: '0.225 : fixed bug identified by Johan Fabry and merged with Pablo Estefo version';
+	at: #date put: '3 May 2014';
+	yourself
+]
