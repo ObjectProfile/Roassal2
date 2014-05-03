@@ -41,7 +41,7 @@ TRBezierShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform restoreAfter: [
 		
 		athensCanvas setShape: self path.
-		(athensCanvas setStrokePaint: strokePaint) width: width.
+		(athensCanvas setStrokePaint: color) width: width.
 		athensCanvas draw  ]
 ]
 
@@ -82,6 +82,18 @@ TRBezierShape >> points: aListOfPoints color: aColor [
 { #category : #accessing }
 TRBezierShape >> position [
 	^ self encompassingRectangle center
+]
+
+{ #category : #'as yet unclassified' }
+TRBezierShape >> strokePaint [
+	"return the color of the border line"
+	^ self color
+]
+
+{ #category : #'as yet unclassified' }
+TRBezierShape >> strokePaint: aColor [
+	"set the color of the border line"
+	self color: aColor
 ]
 
 { #category : #actions }
