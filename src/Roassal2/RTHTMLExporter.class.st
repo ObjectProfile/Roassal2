@@ -90,7 +90,7 @@ RTHTMLExporter class >> exportViewAsHTML: aRTView title: aString [
 { #category : #interactiveExport }
 RTHTMLExporter class >> interactiveExportBuilderAsHTML: aRTBuilder [
 
-	^self exportViewAsHTML: (aRTBuilder view)
+	^self interactiveExportViewAsHTML: (aRTBuilder view)
 ]
 
 { #category : #interactiveExport }
