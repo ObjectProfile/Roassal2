@@ -284,7 +284,7 @@ RTForceBasedLayout >> start: nodeElements [
 				from := e from.
 				to := e to.
 				weights at: from put: ((weights at: from) + 1).
-				weights at: to put: ((weights at: to) + 1)].
+				weights at: to put: ((weights at: to) + 1) ].
 	
 	alpha := 0.1.
 
@@ -337,4 +337,12 @@ RTForceBasedLayout >> strength: aFloat [
 RTForceBasedLayout >> strengthOf: anEdge [
 
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
+]
+
+{ #category : #'as yet unclassified' }
+RTForceBasedLayout >> userDefinedEdges: aCollectionOfEdges [
+	"useful to tell to the layout which edges have to be used for the layout"
+	userDefinedEdges := aCollectionOfEdges select: [ :e |
+		(nodes includes: e from) and: [ nodes includes: e to ] ]
+	
 ]

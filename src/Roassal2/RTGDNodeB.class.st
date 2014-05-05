@@ -40,6 +40,22 @@ RTGDNodeB >> height: aBlock [
 	shape height: aBlock
 ]
 
+{ #category : #shapes }
+RTGDNodeB >> if: conditionBlock color: colorBlock [
+	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
+	| oldBlockOrValue |
+	oldBlockOrValue :=  shape color.
+	^self color: [ :aModel | (conditionBlock rtValue: aModel)
+									ifTrue: [ colorBlock rtValue: aModel ] 
+									ifFalse: [ 
+										"Having to create a new element is rather ugly. 
+										Ideally, the oldBlockOrValue has to be 'unwrapped' for the translation"
+										oldBlockOrValue rtValue: (RTElement on: aModel) ]].
+							
+						
+
+]
+
 { #category : #initialization }
 RTGDNodeB >> initialize [
 	super initialize.

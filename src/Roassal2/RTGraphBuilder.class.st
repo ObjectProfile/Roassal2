@@ -32,8 +32,14 @@ RTGraphBuilder >> addEdgesForObject: anObject [
 ]
 
 { #category : #actions }
-RTGraphBuilder >> applyLayout [	
-	layouts do: #execute.
+RTGraphBuilder >> applyLayout [
+	| partionnedGroups |
+	partionnedGroups := nil.
+	layouts do: [ :l |
+		partionnedGroups ifNotNil: [ l partionnedGroups: partionnedGroups ].
+		l execute.
+		partionnedGroups := l partionnedGroups.
+	].
 	view edges do: [ :e | e trachelShape pushBack ]
 ]
 

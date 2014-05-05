@@ -107,6 +107,16 @@ RTGDEdgeB >> horizontalAttachPoint [
 	attachPoint := RTHorizontalAttachPoint new.
 ]
 
+{ #category : #shapes }
+RTGDEdgeB >> if: conditionBlock color: color [
+	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the line. ConditionBlock isevaluated with the edge extremities. conditionBlock acepts two arguments, the from and to models"
+	| oldBlockOrValue |
+	oldBlockOrValue :=  shape color.
+	^ shape colorElement: [ :anEdge | (conditionBlock value: anEdge from model value: anEdge to model)
+														ifTrue: [ color ] 
+														ifFalse: [ oldBlockOrValue rtValue: anEdge ] ]
+]
+
 { #category : #initialization }
 RTGDEdgeB >> initialize [
 	super initialize.

@@ -83,6 +83,12 @@ RTGraphBuilderTest >> testDefaultNodeShape [
 	b add: 10
 ]
 
+{ #category : #partitioning }
+RTGraphBuilderTest >> testDefaultPartition [
+
+	self assert: RTGDLayoutB new numberOfPartitions equals: 0
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testEdge [
 
@@ -216,6 +222,48 @@ RTGraphBuilderTest >> testNode2 [
 	
 	self assert: ((b getNodeFor: 4) shape color rtValue: RTElement new) = Color blue.
 	self assert: ((b getNodeFor: 5) shape color rtValue: RTElement new) = Color red.
+]
+
+{ #category : #partitioning }
+RTGraphBuilderTest >> testPartitioning01 [
+
+	b nodes color: Color gray.
+
+	b layout
+			partition: #odd;
+			partition: #even;
+			force.
+	b layout horizontal gapSize: 50.
+
+	"No error is being raised"	 
+	b addAll: (1 to: 20)
+]
+
+{ #category : #partitioning }
+RTGraphBuilderTest >> testPartitioning02 [
+	| nodes firstLayout secondLayout |
+	b nodes color: Color gray.
+
+	firstLayout := b layout.
+	firstLayout
+			partition: #even;
+			partition: #odd;
+			grid.
+	secondLayout := b layout.
+	secondLayout horizontal.
+	 
+	b addAll: (1 to: 2).
+	b build.
+	nodes := b view elements.
+	
+	self assert: firstLayout numberOfPartitions equals: 2.
+	self assert: firstLayout computePartionnedGroups size equals: 2.
+	self assert: firstLayout computePartionnedGroups first size equals: 1.
+	self assert: firstLayout computePartionnedGroups first first model equals: 2.
+	self assert: firstLayout computePartionnedGroups second first model equals: 1.
+	
+	self assert: nodes first position x > nodes second position x.
+	self assert: nodes first position y = nodes second position y
 ]
 
 { #category : #'edges recur' }

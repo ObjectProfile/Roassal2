@@ -9,10 +9,22 @@ Class {
 
 { #category : #accessing }
 RTGDGlobalB >> alphaColor:  anAlphaColor [
+	"Set an alpha color (transparency) for nodes"
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
 		self view elements do: [ :el | 
 				el trachelShape color: (el trachelShape color alpha: anAlphaColor)
+			] 
+		]. 
+]
+
+{ #category : #accessing }
+RTGDGlobalB >> alphaColorEdge:  anAlphaColor [
+	"Set an alpha color (transparency) for nodes"
+	"aFloat has to be between 0.0 and 1.0"
+	self addProperty: [
+		self view edges do: [ :edge | 
+				edge trachelShape color: (edge trachelShape color alpha: anAlphaColor)
 			] 
 		]. 
 ]

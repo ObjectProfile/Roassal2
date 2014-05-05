@@ -4,6 +4,60 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
+{ #category : #'to do' }
+RTGraphBuilderExamples >> exampleToWorkOn [
+
+
+| b |
+b := RTGraphBuilder new.
+b nodes
+	if: [ :c | c inheritsFrom: RTShape ];
+	color: Color green.
+	
+b nodes
+	if: [ :c | c inheritsFrom: RTLayout ];
+	color: Color yellow.
+	
+b nodes
+	if: [ :c | 'TR*' match: c name ];
+	color: Color purple.
+	
+b nodes color: Color red.
+
+b edges 
+	connectTo: #dependentClasses;
+	useInLayout.
+
+"b edges
+	chainedConnectTo: #dependentClasses;
+	color: Color red."
+
+b layout 
+	if: [ :c | 'TR*' match: c name ];
+	forceCharge: -100.	
+b layout 
+	if: [ :c | c inheritsFrom: RTLayout ];
+	forceCharge: -100.	
+b layout 
+	if: [ :c | c inheritsFrom: RTShape ];
+	forceCharge: -100.	
+
+b layout 
+	if: [ :c | c inheritsFrom: RTLayout ];
+	translateBy: 150 @ 50.	
+b layout 
+	if: [ :c | c inheritsFrom: RTShape ];
+	translateBy: -150 @ -50.	
+	
+b global
+	minSize: 15;
+	alphaColor: 0.4.
+b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
+
+b open.
+b view canvas
+]
+
 { #category : #simples }
 RTGraphBuilderExamples >> simple01 [
 	"

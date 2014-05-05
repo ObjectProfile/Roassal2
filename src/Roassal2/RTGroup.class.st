@@ -58,6 +58,11 @@ RTGroup >> height [
 ]
 
 { #category : #accessing }
+RTGroup >> model [
+	^ 'group'
+]
+
+{ #category : #accessing }
 RTGroup >> position [
 	^ self encompassingRectangle center
 ]
