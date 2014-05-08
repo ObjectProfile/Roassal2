@@ -150,6 +150,14 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine new scope: aGroup
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -159,6 +167,17 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 
 { #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+
+	| es |
+	es := self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape scope: aGroup.
+	view addAll: es.
+	^ es
+]
+
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
 
@@ -173,8 +192,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 				| edge |
 				edge := RTEdge from: fromElement to: toElement. 
 				edge + aLineShape.
-				edges add: edge.
-				view add: edge ] ].
+				edges add: edge ] ].
 	^ edges
 
 ]
@@ -214,13 +232,15 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 ]
 
 { #category : #public }
-RTEdge class >> from: fromEl to: toEl [
-	^ self new from: fromEl; to: toEl; yourself
+RTEdge class >> from: fromElement to: toElement [
+	"Takes instances of RTElement as arguments"
+	^ self new from: fromElement; to: toElement; yourself
 ]
 
 { #category : #public }
-RTEdge class >> from: fromEl toAll: toEls [
-	^ RTGroup withAll: (toEls collect: [ :e | self from: fromEl to: e ])
+RTEdge class >> from: fromElement toAll: toElementss [
+	"Takes instances of RTElement as first argument and a collection of RTElements as second argument"
+	^ RTGroup withAll: (toElementss collect: [ :e | self from: fromElement to: e ])
 ]
 
 { #category : #public }

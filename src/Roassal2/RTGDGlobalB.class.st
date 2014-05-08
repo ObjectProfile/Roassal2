@@ -29,6 +29,14 @@ RTGDGlobalB >> alphaColorEdge:  anAlphaColor [
 		]. 
 ]
 
+{ #category : #algorithm }
+RTGDGlobalB >> colorCycles [
+
+	self addProperty: [
+		RTColorCycle new visitElements: self view elements
+		]. 
+]
+
 { #category : #execute }
 RTGDGlobalB >> execute [
 
@@ -39,6 +47,20 @@ RTGDGlobalB >> execute [
 RTGDGlobalB >> initialize [
 	super initialize.
 	alphaColor := 1.0
+]
+
+{ #category : #public }
+RTGDGlobalB >> maxSize: anInteger [
+	"aBlock is evaluated on each node model. 
+	Set the maximum size of each element"
+	self addProperty: [
+		self view elements do: [ :el | 
+				"We set the color"
+				(condition rtValue: el model)
+					ifTrue: [ el trachelShape extent: (el trachelShape extent min: anInteger @ anInteger) ]
+					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
+			] 
+		]. 
 ]
 
 { #category : #public }
@@ -59,11 +81,11 @@ RTGDGlobalB >> minSize: anInteger [
 RTGDGlobalB >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
-	^ self normalizeColor: metricBlock using: colors transformation: #yourself
+	^ self normalizeColor: metricBlock using: colors using: #yourself
 ]
 
 { #category : #public }
-RTGDGlobalB >> normalizeColor: metricBlock using: colors transformation: transformation [
+RTGDGlobalB >> normalizeColor: metricBlock using: colors using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	self addProperty: [
