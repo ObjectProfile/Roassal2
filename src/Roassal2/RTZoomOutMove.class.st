@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping and presenter' }
 RTZoomOutMove >> step [
 	^ 0.2 negated
 ]

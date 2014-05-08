@@ -3,39 +3,67 @@ Class {
 	#superclass : #RTAnimation,
 	#instVars : [
 		'view',
-		'layout'
+		'layout',
+		'afterBlock'
 	],
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTSpringLayoutStepping >> afterBlock: aBlock [
+	"Set a block to be evaluated at each refresh"
+	"Block could be [ view canvas camera focusOnCenter ]"
+	afterBlock := aBlock
+]
+
+{ #category : #testing }
 RTSpringLayoutStepping >> hasCompleted [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSpringLayoutStepping >> initialize [
 	super initialize.
-	
+	layout := RTForceBasedLayout new.
+	afterBlock := [ ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTSpringLayoutStepping >> layout: aForceBasedLayout [
+	"Set an instance of the class RTForceBasedLayout. 
+	This is useful in case the layout is initialized from outside"
+	layout := aForceBasedLayout.
+	view ifNotNil: 
+		[ self prepareLayoutFor: view ]
+]
+
+{ #category : #accessing }
+RTSpringLayoutStepping >> nodes [
+	^ layout nodes
+]
+
+{ #category : #accessing }
+RTSpringLayoutStepping >> prepareLayoutFor: aView [
+	layout
+		nodes: aView elements;
+		edges: aView edges;
+		start: aView elements
+]
+
+{ #category : #refreshing }
 RTSpringLayoutStepping >> refresh [
 	layout step.
-	view canvas signalUpdate
+	view ifNotNil: [ view canvas signalUpdate ].
+	afterBlock value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTSpringLayoutStepping >> start [
 	view canvas signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSpringLayoutStepping >> view: aView [
 	view := aView.
- 	layout := RTForceBasedLayout new 
-					nodes: view elements; 
-					edges: view edges; 
-					start: view elements;
-					yourself.
+	self prepareLayoutFor: aView
 ]

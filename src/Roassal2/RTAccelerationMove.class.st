@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAccelerationMove >> to: anEndPoint during: seconds on: anElement [
 	| position |
 	element := anElement.

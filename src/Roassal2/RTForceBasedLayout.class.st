@@ -74,7 +74,6 @@ Class {
 	#name : #RTForceBasedLayout,
 	#superclass : #RTEdgeDrivenLayout,
 	#instVars : [
-		'layoutInitial',
 		'oldPositions',
 		'nodes',
 		'weights',
@@ -89,7 +88,8 @@ Class {
 		'strength',
 		'length',
 		'fixedNodes',
-		'center'
+		'center',
+		'initialLayout'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -134,6 +134,11 @@ RTForceBasedLayout >> chargeOf: aNode [
 	^ charges at: aNode ifAbsent: [ ^ charge ] 
 ]
 
+{ #category : #'initialize-release' }
+RTForceBasedLayout >> defaultInitialLayout [
+	^ RTGridLayout new
+]
+
 { #category : #hook }
 RTForceBasedLayout >> doExecute: nodeElements [
 
@@ -160,33 +165,36 @@ RTForceBasedLayout >> gravityAt: aPoint [
 	center := aPoint 
 ]
 
+{ #category : #accessing }
+RTForceBasedLayout >> initialLayout: aLayout [
+	"Set the initial layout to be used before stepping"
+	initialLayout := aLayout
+]
+
 { #category : #hook }
 RTForceBasedLayout >> initialPositionOfNodes: nodeElements [
 
-	layoutInitial new executeOnElements: nodeElements
+	initialLayout executeOnElements: nodeElements
 ]
 
 { #category : #'initialize-release' }
 RTForceBasedLayout >> initialize [
-	
 	super initialize.
-	layoutInitial := RTGridLayout.
-	
+	edges := #().
+	nodes := #().
+	initialLayout := self defaultInitialLayout.
 	fixedNodes := Dictionary new.
-	
 	strengths := Dictionary new.
 	lengths := Dictionary new.
 	charges := Dictionary new.
-	
 	strength := 1.
 	length := 20.
-	charge := -30.	
-	
+	charge := -30.
 	gravity := 0.1.
 	friction := 0.9.
 	theta := 0.8.
-	
-	center := 200@200.
+	center := 200 @ 200.
+	alpha := 0.1
 ]
 
 { #category : #testing }
@@ -205,6 +213,11 @@ RTForceBasedLayout >> length: aFloat [
 RTForceBasedLayout >> lengthOf: anEdge [
 
 	^ lengths at: anEdge ifAbsent: [ ^ length ] 
+]
+
+{ #category : #accessing }
+RTForceBasedLayout >> nodes [
+	^ nodes
 ]
 
 { #category : #accessing }
@@ -294,6 +307,9 @@ RTForceBasedLayout >> start: nodeElements [
 RTForceBasedLayout >> step [ 
 	"run a step of the force layout algorithm"
 	| from to fp tp x y len k quad old |	
+		
+	"If there is no nodes, then there is not much to do"
+	nodes ifEmpty: [ ^ self ].
 	super step.
 	edges do: [ :e | 
 					from := e from. fp := from position.
@@ -339,7 +355,7 @@ RTForceBasedLayout >> strengthOf: anEdge [
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTForceBasedLayout >> userDefinedEdges: aCollectionOfEdges [
 	"useful to tell to the layout which edges have to be used for the layout"
 	userDefinedEdges := aCollectionOfEdges select: [ :e |

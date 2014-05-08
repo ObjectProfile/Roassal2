@@ -45,6 +45,12 @@ RTLayoutTest >> testCircleLayout [
 ]
 
 { #category : #tests }
+RTLayoutTest >> testCircleLayoutOnEmpty [
+
+	RTCircleLayout new doExecute: #()
+]
+
+{ #category : #tests }
 RTLayoutTest >> testCluster [
 	view := RTView new.
 	view addAll: ((RTEllipse new size: 10) elementsOn: (Collection withAllSubclasses)).
@@ -65,6 +71,15 @@ RTLayoutTest >> testForce [
 	layout on: es edges: #().
 	
 	self assert: layout userDefinedEdges isEmpty.
+]
+
+{ #category : #tests }
+RTLayoutTest >> testForceDefault [
+
+	| l |
+	l := RTForceBasedLayout new.
+	self assert: l edges isEmpty.
+	self assert: l nodes isEmpty.
 ]
 
 { #category : #tests }

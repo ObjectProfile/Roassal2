@@ -34,6 +34,7 @@ RTCircleLayout >> computeRadiusFor: elements [
 { #category : #hook }
 RTCircleLayout >> doExecute: elements [
 	| angleIncrement angle rad center |
+	elements isEmpty ifTrue: [ ^ self ].
 	rad := self computeRadiusFor: elements.
 	center := Point x: rad y: rad.
 	angleIncrement := self computeIncrementalAngleFor: elements.

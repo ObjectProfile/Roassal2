@@ -13,18 +13,18 @@ RTAbstractZoomMove class >> on: aView [
 	aView addAnimation: (self new on: aView)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTAbstractZoomMove >> hasCompleted [
 	^ animatedValue hasCompleted
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTAbstractZoomMove >> on: view [
 
 	^ self on: view during: 0.5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAbstractZoomMove >> on: view during: seconds [
 	| initialScale |
 	initialScale := view canvas camera scale.
@@ -38,19 +38,19 @@ RTAbstractZoomMove >> on: view during: seconds [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTAbstractZoomMove >> refresh [
 	trachelCanvas camera scale: animatedValue value.
 	trachelCanvas signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTAbstractZoomMove >> start [
 	animatedValue start.
 	trachelCanvas signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping and presenter' }
 RTAbstractZoomMove >> step [
 	self subclassResponsibility 
 ]

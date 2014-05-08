@@ -11,10 +11,9 @@ ColorPaletteTest >> expectedFailures [
 
 { #category : #tests }
 ColorPaletteTest >> testDiverging [
-	|palette |
+	| palette |
 	palette := ColorPalette diverging.
-	
-	
+
 	self assert: (palette colors: 11 scheme: 'RdGy') size equals: 11.
 	self assert: (palette colors: 11 scheme: 'RdGy') first asHTMLColor equals: '#67001F'.
 	
@@ -58,7 +57,7 @@ ColorPaletteTest >> testQualitativeError [
 
 { #category : #tests }
 ColorPaletteTest >> testSequential [
-	|palette |
+	| palette |
 	palette := ColorPalette sequential.
 
 	self assert: (palette colors: 3 scheme: 'Purples') size equals: 3.
