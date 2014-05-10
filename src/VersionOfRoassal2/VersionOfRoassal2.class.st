@@ -3041,3 +3041,14 @@ VersionOfRoassal2 >> version000228 [
 	at: #date put: '8 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000229 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.141';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.297';
+	at: #version put: '0.229';
+	at: #comment put: '0.229 : worked a lot on AnimatedScatterPlot. Improve RTTablTable and RTEdge builder';
+	at: #date put: '10 May 2014';
+	yourself
+]
