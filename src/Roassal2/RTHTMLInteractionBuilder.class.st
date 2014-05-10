@@ -1,3 +1,6 @@
+"
+A RTHTMLInteractionBuilder is a wrapper class designed to avoid the direct use of the RTSVGInteraction on the RTHTMLBuilder.
+"
 Class {
 	#name : #RTHTMLInteractionBuilder,
 	#superclass : #RTObject,
