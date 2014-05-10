@@ -100,3 +100,12 @@ Germany	80
 	tab convertColumn: 2 to: #asInteger.
 	self assert: (tab values = #( #('France' 20) #('Germany' 80)))
 ]
+
+{ #category : #tests }
+RTTabTableTest >> testRemovingColumn [
+
+	tab input: 'France	20	toremove
+Germany	80	toremove'.
+	tab removeColumn: 3.
+	self assert: (tab values = #( #('France' '20') #('Germany' '80')))
+]

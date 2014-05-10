@@ -99,6 +99,15 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock inView: view [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+	"toBlock should return a collection of models"
+
+	^ self buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: RTLine new inView: view
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -110,7 +119,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	elementsWithModels := elements select: [ :el | el model notNil ].
 	
 	elementsWithModels do: [ :element |
-		container := element parent.
+		container := element view.
 		fromElement := container elementFromModel: (fromBlock rtValue: element model).
 		
 		"We get the list of elements that corresponds to (toBlock roValues: element model)"
@@ -131,6 +140,18 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 					container add: edge ] ]  ].
 	^ edges
 
+]
+
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape inView: view [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toBlock operate on the model of the elements"
+	"toBlock should return a collection of models"
+
+	| es |
+	es := self buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape.
+	view addAll: es.
+	^ es
 ]
 
 { #category : #'public - edge construction' }

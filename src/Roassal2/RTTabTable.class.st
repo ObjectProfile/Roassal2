@@ -122,6 +122,12 @@ RTTabTable >> numberOfRows [
 	^ values size
 ]
 
+{ #category : #updating }
+RTTabTable >> removeColumn: aNumber [
+
+	values := values collect: [ :v | v copyWithoutIndex: aNumber ]
+]
+
 { #category : #accessing }
 RTTabTable >> removeFirstRow [
 	"Remove the first line of the table, typically the header"

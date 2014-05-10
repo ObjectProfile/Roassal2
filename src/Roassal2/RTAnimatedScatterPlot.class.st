@@ -13,7 +13,8 @@ Class {
 		'sizeMax',
 		'labelShape',
 		'colors',
-		'properties'
+		'properties',
+		'columns'
 	],
 	#category : #'Roassal2-Builder-AnimatedScatterPlot'
 }
@@ -28,7 +29,7 @@ RTAnimatedScatterPlot >> addName: aTitle table: aTable [
 { #category : #adding }
 RTAnimatedScatterPlot >> addTable: table [
 	tables add: table.
-	table convertColumnsAsInteger: (2 to: table numberOfColumns).
+	table convertColumnsAsFloat: (2 to: table numberOfColumns).
 ]
 
 { #category : #enumerating }
@@ -44,18 +45,54 @@ RTAnimatedScatterPlot >> build [
 	self renderIn: view
 ]
 
+{ #category : #'public - frames' }
+RTAnimatedScatterPlot >> chartTotalSize [
+	^ 200
+]
+
 { #category : #accessing }
 RTAnimatedScatterPlot >> color: aBlock [
 	color := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
+RTAnimatedScatterPlot >> columns: columnNames [
+	columns := columnNames
+]
+
+{ #category : #UI }
+RTAnimatedScatterPlot >> createElements [
+	| es shape |
+	shape := RTEllipse new
+		size: 15;
+		color: (Color gray alpha: 0.4).
+	es := shape elementsOn: self allEntries.
+	es @ RTPopup.
+	es when: TRMouseClick do: [ :evt | evt element inspect ].
+	^ es
+]
+
+{ #category : #UI }
 RTAnimatedScatterPlot >> createView [
 	| v |
-	v := RTView new .
+	v := RTView new.
 	v setDefaultMenu.
 	v @ RTDraggableView.
 	^ v
+]
+
+{ #category : #UI }
+RTAnimatedScatterPlot >> drawAxis [
+	view canvas
+		addShape:
+			(TRLineShape new
+				color: Color veryLightGray;
+				from: 0 @ 0 to: 0 @ self chartTotalSize negated).
+	view canvas
+		addShape:
+			(TRLineShape new
+				color: Color veryLightGray;
+				from: 0 @ 0 to: self chartTotalSize @ 0)
 ]
 
 { #category : #accessing }
@@ -108,6 +145,11 @@ RTAnimatedScatterPlot >> getTableForPackage: packageName [
 	^ s contents
 ]
 
+{ #category : #'public - frames' }
+RTAnimatedScatterPlot >> getTitleNumber: aFrameNumber table: table [
+	^ (table attributes at: #title ifAbsent: '') , ' ' , aFrameNumber printString , '/' , self numberOfTables printString
+]
+
 { #category : #coloring }
 RTAnimatedScatterPlot >> if: aBlockForCondition color: aBlockForColor [
 	properties add: [ :row :element |
@@ -120,7 +162,8 @@ RTAnimatedScatterPlot >> initialize [
 	super initialize.
 	tables := OrderedCollection new.
 	frame := 1.
-	properties := OrderedCollection new
+	properties := OrderedCollection new.
+	columns := #()
 ]
 
 { #category : #accessing }
@@ -153,73 +196,98 @@ RTAnimatedScatterPlot >> previousFrame [
 	
 ]
 
+{ #category : #UI }
+RTAnimatedScatterPlot >> renderCurrentFrame [
+	self renderFrame: frame
+]
+
 { #category : #'public - frames' }
 RTAnimatedScatterPlot >> renderFrame: aFrameNumber [
-
 	| elements newX newY r newSize table |
 	table := tables at: aFrameNumber.
 	elements := self allEntries collect: [ :entryName | view elementFromModel: entryName ].
-	
-	elements do: [ :e |
-		"We get the row that we are interested in"
-		r := table values detect: [ :rrow | rrow first = e model ] ifNone: [ nil ].
-		r ifNil: [ newSize := 0. newX := 0. newY := 0 ].
-		r ifNotNil: [ 
-			newX := (x rtValue: r) max: maxX in: (0 to: 200).
-			newY := ((y rtValue: r) max: maxY in: (0 to: 200)) negated.
-			newSize := (size rtValue: r) max: sizeMax in: (5 to: 30).
-			properties do: [ :prop | prop value: r value: e ]
-			].
-		view addAnimation: (RTAccelerationMove new to: newX @ newY during: 0.4 on: e).
-		e trachelShape size: newSize.
-		].
-
-	"Give indication about the frame" 
-	labelShape text: 
-		(table attributes at: #title ifAbsent: ''), ' ', 
-		aFrameNumber printString, '/', 
-		self numberOfTables printString.
-		
+	elements
+		do: [ :e | 
+			"We get the row that we are interested in"
+			r := table values detect: [ :rrow | rrow first = e model ] ifNone: [ nil ].
+			r
+				ifNil: [ 
+					newSize := 0.
+					newX := 0.
+					newY := 0 ].
+			r
+				ifNotNil: [ 
+					newX := (x rtValue: r) max: maxX in: (0 to: self chartTotalSize).
+					newY := ((y rtValue: r) max: maxY in: (0 to: self chartTotalSize)) negated.
+					newSize := (size rtValue: r) max: sizeMax in: (5 to: 30).
+					properties do: [ :prop | prop value: r value: e ] ].
+			view addAnimation: (RTAccelerationMove new to: newX @ newY during: 0.4 on: e).
+			e trachelShape size: newSize ].	"Give indication about the frame"
+	labelShape text: (self getTitleNumber: aFrameNumber table: table).
 	view signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : #UI }
 RTAnimatedScatterPlot >> renderIn: aView [
+	self setScale.
+	self setAndCreateElements.
+	self drawAxis.
+	self setButtons.
+	self setViewTitle.
+	self renderCurrentFrame
+]
 
-	| shape es |
-	"We take the maximal values"
-	sizeMax := self maxOfColumn: size.
+{ #category : #UI }
+RTAnimatedScatterPlot >> setAndCreateElements [
+	| es |
+	es := self createElements.
+	view addAll: es
+]
+
+{ #category : #UI }
+RTAnimatedScatterPlot >> setButtons [
+	| menuBuilder |
+	menuBuilder := RTMenuBuilder new view: view.
+	
+	menuBuilder menu: 'previous' background: Color lightBlue callback: [ self previousFrame ].
+	menuBuilder menu: 'next' background: Color lightBlue callback: [ self nextFrame ].
+
+	menuBuilder menu: 'x-axis' submenu: '0' background: Color red callback: [ self x: 0. self renderCurrentFrame ].
+	menuBuilder menu: 'y-axis' submenu: '0' background: Color red callback: [ self y: 0. self renderCurrentFrame ].	
+	columns withIndexDo: [ :columnName :index | 
+		menuBuilder 
+			menu: 'x-axis' 
+			submenu: columnName
+			background: Color red 
+			callback: [ self x: [ :row | row at: (index + 1) ]. self setScale. self renderCurrentFrame ].
+		menuBuilder 
+			menu: 'y-axis' 
+			submenu: columnName
+			background: Color red 
+			callback: [ self y: [ :row | row at: (index + 1) ]. self setScale. self renderCurrentFrame ].
+	].
+
+
+]
+
+{ #category : #UI }
+RTAnimatedScatterPlot >> setMaxSize [
+	sizeMax := self maxOfColumn: size
+]
+
+{ #category : #UI }
+RTAnimatedScatterPlot >> setScale [
+	self setMaxSize.
 	maxX := self maxOfColumn: x.
-	maxY := self maxOfColumn: y.
+	maxY := self maxOfColumn: y
+]
 
-	"Initialize elements"
-	shape := RTEllipse new 
-			size: 15 "[ :row | (size rtValue: row) 
-									max: sizeMax 
-									in: (5 to: 30) ]";
-			color: (Color gray alpha: 0.4).
-	es := shape elementsOn: self allEntries.
-	es @ RTPopup.
-	es when: TRMouseClick do: [ :evt | evt element inspect ].
-	view addAll: es. 
-	
-	"Set origin"
-	view canvas addShape: (TRLineShape new color: Color red; from: 0 @ 0 to: 0 @ -100).
-	view canvas addShape: (TRLineShape new color: Color red; from: 0 @ 0 to: 100 @ 0).
-
-	"We render the first frame"
+{ #category : #UI }
+RTAnimatedScatterPlot >> setViewTitle [
 	labelShape := TRLabelShape new text: 'Hello'.
-	self renderFrame: frame.
-	
-	"Render Button"
-	view canvas addMenu: 	'<-' callback: [ self previousFrame ].
-	view canvas addMenu: 	'->' callback: [ self nextFrame ].
-		
-	"Set the title"
 	view canvas addFixedShape: labelShape.
-	labelShape translateTo: 300 @ 20.
-	"TRConstraint moveAtTheBottomOfTheWindow: labelShape.
-"
+	TRConstraint stickAtTheBottomOfTheWindow: labelShape 
+
 ]
 
 { #category : #accessing }
