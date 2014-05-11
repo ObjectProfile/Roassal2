@@ -61,7 +61,7 @@ RTReadEvalLoop >> displayLine: aString [
 
 { #category : #'as yet unclassified' }
 RTReadEvalLoop >> enterCharacter: c [
-	currentText := currentText , c asString.
+	currentText := currentText, c asString.
 	currentElement trachelShape text: currentText
 ]
 
@@ -115,7 +115,7 @@ RTReadEvalLoop >> pressEnter [
 	self newLine.
 
 	self scrollDown.
-	self enterLine: 'Hello World!' color: Color blue.
+	self enterLine: '-->', currentText size printString color: Color blue.
 	self newLine.
 	self scrollDown.
 	self refresh
