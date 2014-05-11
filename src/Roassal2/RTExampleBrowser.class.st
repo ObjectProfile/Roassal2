@@ -46,7 +46,7 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 { #category : #'instance creation' }
 RTExampleBrowser >> open [
 
-	| v |
+	| v p |
 	v := RTView new.
 	v @ RTDraggableView.
 	RTAbstractExample subclasses do: [ :c |
@@ -54,7 +54,11 @@ RTExampleBrowser >> open [
 	
 	self structure: v.
 	
-	v open
+	v openInWindowSized: 300 @ 400 titled: 'Roassal'.
+	
+	"We set the camera position where it fits to. We need to do this since there is an animation"
+	p := v canvas camera position.
+	v canvas camera translateTo: 50 @ p y 
 ]
 
 { #category : #utility }

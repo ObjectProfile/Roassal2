@@ -1,3 +1,6 @@
+"
+A RTSpectrograph is a builder to create spectographs
+"
 Class {
 	#name : #RTSpectrograph,
 	#superclass : #RTBuilder,
@@ -5,7 +8,8 @@ Class {
 		'objects',
 		'lineBlock',
 		'pointSize',
-		'highlightBlock'
+		'highlightBlock',
+		'title'
 	],
 	#category : #'Roassal2-Builder-Spectrograph'
 }
@@ -35,6 +39,7 @@ RTSpectrograph >> highlight: aBlockOrValue color: aColor [
 { #category : #initialization }
 RTSpectrograph >> initialize [
 	super initialize.
+	title := ''
 ]
 
 { #category : #accessing }
@@ -84,6 +89,22 @@ RTSpectrograph >> renderIn: aView [
 		interactionBuilder setUpElements: es
 	].
 	RTHorizontalLineLayout new alignBottom; gapSize: 0; on: rowsOfElements.
+	self setTitleIfNecessary
 	
 	
+]
+
+{ #category : #util }
+RTSpectrograph >> setTitleIfNecessary [
+	"This method has to be called after having added the elements in the view"
+	| label g |
+	g := RTGroup withAll: view elements.
+	label := (RTLabel new text: title) element.
+	TRConstraint move: label below: g.
+	view add: label
+]
+
+{ #category : #accessing }
+RTSpectrograph >> title: aTitle [
+	title := aTitle
 ]
