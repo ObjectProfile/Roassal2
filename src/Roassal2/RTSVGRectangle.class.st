@@ -1,3 +1,6 @@
+"
+A RTSVGLine is represents the SVG Rectangle of a regular rectangle, as defined in Roassal.
+"
 Class {
 	#name : #RTSVGRectangle,
 	#superclass : #RTSVGEntity,

@@ -1,3 +1,7 @@
+"
+A RTHTMLBuilderExample is the example class for the RTHTMLBuilder hierarchy
+
+"
 Class {
 	#name : #RTHTMLBuilderExample,
 	#superclass : #RTObject,

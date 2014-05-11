@@ -1,3 +1,9 @@
+"
+A RTSVGAbstractMarker represents the SVG marker, set on a Line.
+
+
+
+"
 Class {
 	#name : #RTSVGAbstractMarker,
 	#superclass : #RTSVGEntity,

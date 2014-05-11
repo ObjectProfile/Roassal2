@@ -1,3 +1,6 @@
+"
+A RTHTMLExporterShowroom is a ready-to-use group of examples of RTHTMLExporter.
+"
 Class {
 	#name : #RTHTMLExporterShowroom,
 	#superclass : #RTObject,
