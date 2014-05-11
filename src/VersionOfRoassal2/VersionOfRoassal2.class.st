@@ -3074,3 +3074,14 @@ VersionOfRoassal2 >> version000231 [
 	at: #date put: '11 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000232 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.141';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.300';
+	at: #version put: '0.232';
+	at: #comment put: '0.232 : added an entry for the stectograph in the example browser';
+	at: #date put: '11 May 2014';
+	yourself
+]
