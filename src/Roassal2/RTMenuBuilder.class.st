@@ -4,6 +4,18 @@ Class {
 	#category : #'Roassal2-Builder-Menu'
 }
 
+{ #category : #public }
+RTMenuBuilder class >> setGraphMenuOn: view [
+
+	| b element |
+	b := self new view: view.
+	b menu: 'Find' background: Color blue callback: [ 
+		 
+		element := UIManager default chooseFrom: (view elements collect: #model) values: view elements.
+		element notNil
+			ifTrue: [ view canvas camera translateTo: element position. RTBlink on: element ] ].
+]
+
 { #category : #utility }
 RTMenuBuilder >> createBackgroundFor: lbl color: aColor [
 	| box |
