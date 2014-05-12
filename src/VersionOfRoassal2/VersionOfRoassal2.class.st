@@ -3112,9 +3112,9 @@ VersionOfRoassal2 >> version000234 [
 VersionOfRoassal2 >> version000235 [
 	^ Dictionary new 
 	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.306';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.307';
 	at: #version put: '0.235';
-	at: #comment put: '0.235 : added new example in the graph builder';
+	at: #comment put: '0.235 : added RTMenuBuilder>>setGraphMenuOn:';
 	at: #date put: '12 May 2014';
 	yourself
 ]
