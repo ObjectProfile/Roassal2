@@ -3085,3 +3085,14 @@ VersionOfRoassal2 >> version000232 [
 	at: #date put: '11 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000233 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.304';
+	at: #version put: '0.233';
+	at: #comment put: '0.233 : added CompiledMethod>>dependentMethods';
+	at: #date put: '12 May 2014';
+	yourself
+]
