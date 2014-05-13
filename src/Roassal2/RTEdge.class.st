@@ -224,6 +224,13 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 ]
 
 { #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toAllBlock operate on the model of the elements"
+	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new scope: aGroup
+]
+
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view [ 
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
 ]
@@ -252,6 +259,30 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 
 ]
 
+{ #category : #'public - edge construction' }
+RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape scope: aGroup [
+	"Handy method to easily build edges. Return a list of edges"
+	"fromBlock and toAllBlock operate on the model of the elements"
+
+	| edges fromElement toElement |
+	objects isEmpty ifTrue: [ ^ #() ].
+	edges := RTGroup new.
+	objects do: [ :object |
+		fromElement := aGroup elementFromModel: (fromBlock rtValue: object).
+		(toAllBlock rtValue: object) do: [ :toObject |
+			toElement := aGroup elementFromModel: toObject.
+			(fromElement notNil and: [ toElement notNil ])
+				ifTrue: [  
+					(fromElement ~~ toElement) ifTrue: 
+						[ | edge |
+						edge := RTEdge from: fromElement to: toElement. 
+						edge + aLineShape.
+						edges add: edge.
+						 ] ] ] ].
+	^ edges
+
+]
+
 { #category : #public }
 RTEdge class >> from: fromElement to: toElement [
 	"Takes instances of RTElement as arguments"
@@ -273,6 +304,12 @@ RTEdge class >> on: aModel from: fromElement to: toElement [
 RTEdge >> addedIn: aView [
 	view := aView.
 	view addEdge: self
+]
+
+{ #category : #accessing }
+RTEdge >> encompassingRectangle [
+	"Return the encompassing rectangle of the elements"
+	^ Rectangle merging: (Array with: self from encompassingRectangle with: self to encompassingRectangle)
 ]
 
 { #category : #accessing }
@@ -323,4 +360,9 @@ RTEdge >> to: anElement [
 	to ifNotNil: [ :element | element removeConnectedEdge: self ].
 	to := anElement.
 	anElement addConnectedEdge: self
+]
+
+{ #category : #actions }
+RTEdge >> translateBy: aPoint [
+	"do nothing"
 ]

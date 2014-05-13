@@ -13,7 +13,7 @@ RTMenuBuilder class >> setGraphMenuOn: view [
 		 
 		element := UIManager default chooseFrom: (view elements collect: #model) values: view elements.
 		element notNil
-			ifTrue: [ view canvas camera translateTo: element position. RTBlink on: element ] ].
+			ifTrue: [ view canvas camera translateTo: (view canvas camera fromSpaceToPixel: element position). RTBlink on: element ] ].
 ]
 
 { #category : #utility }

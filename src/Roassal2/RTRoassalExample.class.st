@@ -1,44 +1,53 @@
 "
-RTRoassalExample new installTitle: 'SelfCalls' 
+RTRoassalExample new installTitle: 'EdgesInTooltip' 
 		code:
-		'
-"" The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class.""		
-| v classes classElement classElements shapeBuilder |
+		'| v shapeBuilder elementClasses edges background label |
 v := RTView new.
-v @ RTDraggableView.
 
-shapeBuilder := RTShapeBuilder new.
-shapeBuilder rectangle
-	size: [ :m | m linesOfCode min: 60 max: 5 ].
+""We use the bounded shape builder to:
+  - have no element smaller than 5 x 5 ""
 
-classElements := RTGroup new. 
-classes := RTShape withAllSubclasses.
-classes do: [ :class |
-	classElement := (RTBox new color: (Color blue alpha: 0.4)) elementOn: class.
-	classElement @ RTPopup.
-	v add: classElement.
+shapeBuilder := RTBoundedShapeBuilder new.
+shapeBuilder 
+	rectangle;
+	width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
+elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
 
+""For each class, we add a popup that will show the method invocations and the class name""
+""The popup uses #group: to specify what is the group of elements to use
+#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
+the second argument, aClassElement, is the class element on which the popup is being triggered.""
+elementClasses @ (RTPopup new group: 
+[ :group :aClassElement |
+	methods := aClassElement model methods.
 
-	methods := class methods.
+	methodElements := (RTBox new color: Color red) elementsOn: methods.
 
-	methodElements := shapeBuilder elementsOn: methods.
-	v addAll: methodElements.
-
-	RTEdge 
+	""We do not want to directly add the edges to the view. We instead need to add the edges to the group""
+	edges := RTEdge 
 		buildEdgesFromObjects: methods 
 		from: #yourself 
-		toAll: #dependentMethods 
-		inView: v.
-	RTTreeLayout on: methodElements.
-	methodElements @ RTDraggable @ RTPopup.
-	
-	RTNest new on: classElement nest: methodElements.
-	classElement @ RTDraggable.
-	classElements add: classElement.
-].
+		toAll: #dependentMethods
+		using: (RTLine new color: Color white)
+		scope: methodElements.
 
-RTEdge buildEdgesFromObjects: classes from: #superclass to: #yourself using: (RTLine new attachPoint: RTVerticalAttachPoint instance) inView: v.
-RTTreeLayout on: classElements.
+	RTTreeLayout on: methodElements edges: edges.
+	
+	
+	background := (RTBox new color: (Color blue alpha: 0.4)) element. 
+	RTNest new centerOn: background elements: methodElements.
+
+	label := (RTLabel new text: aClassElement model name asString) element.
+	TRConstraint move: label above: background.
+	
+	group add: label.
+	group add: background.	
+	group addAll: edges.
+	group addAll: methodElements.
+
+]).
+v addAll: elementClasses.
+RTFlowLayout on: elementClasses.
 v open.
 v canvas'
 	
@@ -1352,6 +1361,82 @@ H3744Ycffvjhhx9++PmP8heS8r9YwwsVmwAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleEdgesInTooltip [
+| v shapeBuilder elementClasses edges background label |
+v := RTView new.
+
+"We use the bounded shape builder to:
+  - have no element smaller than 5 x 5 "
+
+shapeBuilder := RTBoundedShapeBuilder new.
+shapeBuilder 
+	rectangle;
+	width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
+elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
+
+"For each class, we add a popup that will show the method invocations and the class name"
+"The popup uses #group: to specify what is the group of elements to use
+#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
+the second argument, aClassElement, is the class element on which the popup is being triggered."
+elementClasses @ (RTPopup new group: 
+[ :group :aClassElement |
+	methods := aClassElement model methods.
+
+	methodElements := (RTBox new color: Color red) elementsOn: methods.
+
+	"We do not want to directly add the edges to the view. We instead need to add the edges to the group"
+	edges := RTEdge 
+		buildEdgesFromObjects: methods 
+		from: #yourself 
+		toAll: #dependentMethods
+		using: (RTLine new color: Color white)
+		scope: methodElements.
+
+	RTTreeLayout on: methodElements edges: edges.
+	
+	
+	background := (RTBox new color: (Color blue alpha: 0.4)) element. 
+	RTNest new centerOn: background elements: methodElements.
+
+	label := (RTLabel new text: aClassElement model name asString) element.
+	TRConstraint move: label above: background.
+	
+	group add: label.
+	group add: background.	
+	group addAll: edges.
+	group addAll: methodElements.
+
+]).
+v addAll: elementClasses.
+RTFlowLayout on: elementClasses.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleEdgesInTooltipIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADnklEQVR4XuWdTYvDIBBA+///
+ZG+9FnpooYfdJQtCGBydGTXRvAEhJEbTvETny/T2+xuT5/P5X9L2/X6vlkj7qXw+H/O53+/3
+ZyvyOvf7LXXOkFv0xO0GpZv0er1+Ho9HtZzxA/c3u6XO9EBWET4QPhA+ED4QPhA+ED4QPhA+
+ED4QPhA+kFWh8YHwgfCB8IHwgfCB8IHwhQ8ECcQSoEpS2u8Jclna07b3/XgDa72Db0OAbEGp
+rViAlKCmIFcPIJpswbF0rbL/ywCRcFojhCOBtPS5JJBemg4fCB8IHwgfyCJAttSb9/tdLFLD
+azXoLH1aC98O4dshNs0qp2W17i+VpM6WrkerI/dH+tf6OsUwtI6r3qHHM3ZbjDytTtq/2ULR
+/rW+pgbilVFA5JyhpYwuCSQ9VaVyJBDLkDWi/2mAjJQjbwAfyAJAlpzUrwxkSbV3pHgMsjPX
+cmCA8A3DoGG4N6xyxldtTN4ft4zfuTrR83oYpSMWJ3WJGMrlYTVnoDy+/wEWuyb3wyNOSW+d
+I5yNXd4QzWC0ArFO6FFFAAHEYjBGgJylLFwWiOfpXV3l5gPhA+EDuSSQ3s5Hvh3Cl/mByKCO
+/ASGdly+HblzrMXSdqkfrV5ue3ogyd6QY68MGGljc+5GebNAam1r/ViBnPE5kG5viDcsWoLs
+BVIKBWPnkJo7fCQQ/hxS0KS0zyhZNCw+kMm0LD6QyYBEtSw+EL7MB8ST7ZdTIy3ZhbW25fFc
+G5bMRm825FJ2SC2DUaufS3iz+sJKbUSWr1mX6i0PZC9askJrgAsLJKVlRoHMrMEtCWQ1iQBZ
+ag4hAOGrvQPFs1pqyQ8p82VSO8SyGilnT3iOW84r2Q5eW8na3lRApJsjORWl9iW3ZdqNpqlp
+2pvWbk5tbsnLKmla/CGrcfJuUc1z/jU+kEYH5R7W7I5K/qR+lUldm0O8T2g0waF3koPnuqb2
+ZXkmwegq2miSg4yvWxMwlpzUI29I6Ye3vCGtN+wSQCIyyiputRM8a9t7fteEP6kf/KDwgfBd
+J+WwpzUU6nV11NwuPcPIo9cUHqpl9fhqaTQkbDlHA9Ki8V0CiNeytk7MLf+huORnYnNP1159
+rSVR9xQ8kFb/Um+Llw9kMuED4QPhA+ED4QPhA+ED4QPhA5kdSOSL13wgA4Es6VzkA+ED4QPh
+A+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QNZRP4AizmlcvoLni4A
+AAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleFontSize [
 
 	| v label els |
@@ -2453,7 +2538,7 @@ VwAAAABJRU5ErkJggg=='
 RTRoassalExample >> exampleSelfCalls [
 
 " The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."		
-| v classes classElement classElements shapeBuilder |
+| v classes classElement classElements shapeBuilder methods methodElements |
 v := RTView new.
 v @ RTDraggableView.
 
