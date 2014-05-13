@@ -3118,3 +3118,14 @@ VersionOfRoassal2 >> version000235 [
 	at: #date put: '12 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000236 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.308';
+	at: #version put: '0.236';
+	at: #comment put: '0.236 : fix in the class RTEdge. Necessary to be able to add edges to a group. Added a new example with nested edges';
+	at: #date put: '13 May 2014';
+	yourself
+]
