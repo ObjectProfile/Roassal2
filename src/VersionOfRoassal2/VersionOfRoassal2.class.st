@@ -3129,3 +3129,14 @@ VersionOfRoassal2 >> version000236 [
 	at: #date put: '13 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000237 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.143';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.309';
+	at: #version put: '0.237';
+	at: #comment put: '0.237 : added RTNest>>onResizable:nest: Juraj will be happy :-)';
+	at: #date put: '14 May 2014';
+	yourself
+]
