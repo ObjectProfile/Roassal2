@@ -91,6 +91,16 @@ TRShape >> computePath [
 	self subclassResponsibility
 ]
 
+{ #category : #callbacks }
+TRShape >> doWithoutCallbacks: aBlock [
+	"Simply evaluate aBlock"
+	| oldCallbacks |
+	oldCallbacks := callbacks.
+	callbacks := #().
+	aBlock value.
+	callbacks := oldCallbacks
+]
+
 { #category : #drawing }
 TRShape >> drawEncompassingRectangleOn: athensCanvas [
 	"debugging purpose"

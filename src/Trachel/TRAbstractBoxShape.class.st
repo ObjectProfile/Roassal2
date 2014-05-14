@@ -146,6 +146,16 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 TRAbstractBoxShape >> preDrawOn: athensCanvas [
 ]
 
+{ #category : #geometry }
+TRAbstractBoxShape >> rectangle: aRectangle [
+	rectangle := aRectangle.
+	self resetPath.
+	
+	"(oldExtent = (0 @ 0)) ifFalse: [ 
+		self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ].
+"
+]
+
 { #category : #testing }
 TRAbstractBoxShape >> shouldBeDrawn [
 	^ rectangle width > 0 and: [ rectangle height > 0 ]
