@@ -107,6 +107,18 @@ RTLabelTest >> testLabelWidth [
 	self assert: (label1 widthFor: el) < (label2 widthFor: el)
 ]
 
+{ #category : #'test multilines' }
+RTLabelTest >> testMultiline01 [
+
+	| v lbl |
+	v := RTView new.
+	lbl := RTLabel elementOn: 'Hello', String cr, 'World'.
+	v add: lbl.
+	
+	lbl trachelShape setAsFixed.
+	self assert: lbl trachelShape class == TRCompositeShape
+]
+
 { #category : #tests }
 RTLabelTest >> testText [
 	| v label els |
