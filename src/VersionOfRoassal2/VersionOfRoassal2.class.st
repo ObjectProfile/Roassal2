@@ -3089,54 +3089,10 @@ VersionOfRoassal2 >> version000232 [
 { #category : #versions }
 VersionOfRoassal2 >> version000233 [
 	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.304';
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.141';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.301';
 	at: #version put: '0.233';
-	at: #comment put: '0.233 : added CompiledMethod>>dependentMethods';
-	at: #date put: '12 May 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000234 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.305';
-	at: #version put: '0.234';
-	at: #comment put: '0.234 : added a new example, showing class methods and their invocations';
-	at: #date put: '12 May 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000235 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.307';
-	at: #version put: '0.235';
-	at: #comment put: '0.235 : added RTMenuBuilder>>setGraphMenuOn:';
-	at: #date put: '12 May 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000236 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-RicardoJacas.142';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.308';
-	at: #version put: '0.236';
-	at: #comment put: '0.236 : fix in the class RTEdge. Necessary to be able to add edges to a group. Added a new example with nested edges';
-	at: #date put: '13 May 2014';
-	yourself
-]
-
-{ #category : #versions }
-VersionOfRoassal2 >> version000237 [
-	^ Dictionary new 
-	at: 'Trachel' put: 'Trachel-AlexandreBergel.143';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.309';
-	at: #version put: '0.237';
-	at: #comment put: '0.237 : added RTNest>>onResizable:nest: Juraj will be happy :-)';
-	at: #date put: '14 May 2014';
+	at: #comment put: '0.233 : RTLabel now handles multi-lines txt! Yupi!';
+	at: #date put: '15 May 2014';
 	yourself
 ]
