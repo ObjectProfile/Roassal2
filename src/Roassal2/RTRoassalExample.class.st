@@ -1,48 +1,55 @@
 "
-RTRoassalExample new installTitle: 'BezierCurve' 
+RTRoassalExample new installTitle: 'EdgesInTooltip' 
 		code:
-		'
-""Moving each extremity will reposition the control points""		
-| v e1 e2 l s p1 p2 | 
+		'| v shapeBuilder elementClasses edges background label |
 v := RTView new.
 
-e1 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
-e2 := (RTEllipse new size: 15; color: (Color blue alpha: 0.4)) element.
+""We use the bounded shape builder to:
+  - have no element smaller than 5 x 5 ""
 
-e1 @ RTDraggable.
-e2 @ RTDraggable.
+shapeBuilder := RTBoundedShapeBuilder new.
+shapeBuilder 
+	rectangle;
+	width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
+elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
 
-e2 translateBy: -150 @ 150.
+""For each class, we add a popup that will show the method invocations and the class name""
+""The popup uses #group: to specify what is the group of elements to use
+#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
+the second argument, aClassElement, is the class element on which the popup is being triggered.""
+elementClasses @ (RTPopup new group: 
+[ :group :aClassElement |
+	methods := aClassElement model methods.
 
-p1 := RTBox element.
-p2 := RTBox element.
-p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
-p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y.
+	methodElements := (RTBox new color: Color red) elementsOn: methods.
 
-""It is not necessary to add the control points to the view""
-""v add: p1.
-v add: p2.""
+	""We do not want to directly add the edges to the view. We instead need to add the edges to the group""
+	edges := RTEdge 
+		buildEdgesFromObjects: methods 
+		from: #yourself 
+		toAll: #dependentMethods
+		using: (RTLine new color: Color white)
+		scope: methodElements.
 
-s := RTBezierLine new.
-s controllingElements: { p1 . p2 }.
-l := s edgeFrom: e1 to: e2.
+	RTTreeLayout on: methodElements edges: edges.
+	
+	
+	background := (RTBox new color: (Color blue alpha: 0.4)) element. 
+	RTNest new centerOn: background elements: methodElements.
 
-e1 trachelShape addCallback: 
-	(TRTranslationCallback block: [ :shape :step | 
-		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
-		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
-e2 trachelShape addCallback: 
-	(TRTranslationCallback block: [ :shape :step | 
-		p1 translateTo: (e2 position x + e1 position x / 2) @ e1 position y.
-		p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y ]).
+	label := (RTLabel new text: aClassElement model name asString) element.
+	TRConstraint move: label above: background.
+	
+	group add: label.
+	group add: background.	
+	group addAll: edges.
+	group addAll: methodElements.
 
-
-v add: e1.
-v add: e2.
-
-v add: l.
+]).
+v addAll: elementClasses.
+RTFlowLayout on: elementClasses.
 v open.
-v canvas '
+v canvas'
 	
 "
 Class {
@@ -1304,10 +1311,14 @@ v := RTView new.
 
 es := RTBox elementsOn: (1 to: 50).
 v addAll: es.
+es @ RTDraggable.
 
 RTEdge buildEdgesFromObjects: (1 to: 50) from: #yourself toAll:  [:value | {value -1  . value + 1 . value + 2} ] inView: v.
 
 RTForceBasedLayout on: es.
+v addAnimation: (RTSpringLayoutStepping new view: v).
+
+v @ RTDraggableView.
 
 v open.
 v canvas
@@ -1347,6 +1358,82 @@ WFPw8fb2DoDMbmZmZg4FuLu7+zq/lf8FqI2gOLW9vf2rj49PEJRcQ0PDIxeU5ubmvkDb0dHx
 BhRhfoecEPpU9fDmPLJ/6UD+nyKoDHZpaOXrqvwqsopgAyD7KHTJn7nxoxLz8/NfocXPDrBj
 u3379iK/VVRElnH54Ycffvjhhx9++OGHH3744Ycffvjhhx9++OGHH3744Ycffvjhhx9++OGH
 H3744Ycffvjhhx9++PmP8heS8r9YwwsVmwAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleEdgesInTooltip [
+| v shapeBuilder elementClasses edges background label |
+v := RTView new.
+
+"We use the bounded shape builder to:
+  - have no element smaller than 5 x 5 "
+
+shapeBuilder := RTBoundedShapeBuilder new.
+shapeBuilder 
+	rectangle;
+	width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
+elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
+
+"For each class, we add a popup that will show the method invocations and the class name"
+"The popup uses #group: to specify what is the group of elements to use
+#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
+the second argument, aClassElement, is the class element on which the popup is being triggered."
+elementClasses @ (RTPopup new group: 
+[ :group :aClassElement |
+	methods := aClassElement model methods.
+
+	methodElements := (RTBox new color: Color red) elementsOn: methods.
+
+	"We do not want to directly add the edges to the view. We instead need to add the edges to the group"
+	edges := RTEdge 
+		buildEdgesFromObjects: methods 
+		from: #yourself 
+		toAll: #dependentMethods
+		using: (RTLine new color: Color white)
+		scope: methodElements.
+
+	RTTreeLayout on: methodElements edges: edges.
+	
+	
+	background := (RTBox new color: (Color blue alpha: 0.4)) element. 
+	RTNest new centerOn: background elements: methodElements.
+
+	label := (RTLabel new text: aClassElement model name asString) element.
+	TRConstraint move: label above: background.
+	
+	group add: label.
+	group add: background.	
+	group addAll: edges.
+	group addAll: methodElements.
+
+]).
+v addAll: elementClasses.
+RTFlowLayout on: elementClasses.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleEdgesInTooltipIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADnklEQVR4XuWdTYvDIBBA+///
+ZG+9FnpooYfdJQtCGBydGTXRvAEhJEbTvETny/T2+xuT5/P5X9L2/X6vlkj7qXw+H/O53+/3
+ZyvyOvf7LXXOkFv0xO0GpZv0er1+Ho9HtZzxA/c3u6XO9EBWET4QPhA+ED4QPhA+ED4QPhA+
+ED4QPhA+kFWh8YHwgfCB8IHwgfCB8IHwhQ8ECcQSoEpS2u8Jclna07b3/XgDa72Db0OAbEGp
+rViAlKCmIFcPIJpswbF0rbL/ywCRcFojhCOBtPS5JJBemg4fCB8IHwgfyCJAttSb9/tdLFLD
+azXoLH1aC98O4dshNs0qp2W17i+VpM6WrkerI/dH+tf6OsUwtI6r3qHHM3ZbjDytTtq/2ULR
+/rW+pgbilVFA5JyhpYwuCSQ9VaVyJBDLkDWi/2mAjJQjbwAfyAJAlpzUrwxkSbV3pHgMsjPX
+cmCA8A3DoGG4N6xyxldtTN4ft4zfuTrR83oYpSMWJ3WJGMrlYTVnoDy+/wEWuyb3wyNOSW+d
+I5yNXd4QzWC0ArFO6FFFAAHEYjBGgJylLFwWiOfpXV3l5gPhA+EDuSSQ3s5Hvh3Cl/mByKCO
+/ASGdly+HblzrMXSdqkfrV5ue3ogyd6QY68MGGljc+5GebNAam1r/ViBnPE5kG5viDcsWoLs
+BVIKBWPnkJo7fCQQ/hxS0KS0zyhZNCw+kMm0LD6QyYBEtSw+EL7MB8ST7ZdTIy3ZhbW25fFc
+G5bMRm825FJ2SC2DUaufS3iz+sJKbUSWr1mX6i0PZC9askJrgAsLJKVlRoHMrMEtCWQ1iQBZ
+ag4hAOGrvQPFs1pqyQ8p82VSO8SyGilnT3iOW84r2Q5eW8na3lRApJsjORWl9iW3ZdqNpqlp
+2pvWbk5tbsnLKmla/CGrcfJuUc1z/jU+kEYH5R7W7I5K/qR+lUldm0O8T2g0waF3koPnuqb2
+ZXkmwegq2miSg4yvWxMwlpzUI29I6Ye3vCGtN+wSQCIyyiputRM8a9t7fteEP6kf/KDwgfBd
+J+WwpzUU6nV11NwuPcPIo9cUHqpl9fhqaTQkbDlHA9Ki8V0CiNeytk7MLf+huORnYnNP1159
+rSVR9xQ8kFb/Um+Llw9kMuED4QPhA+ED4QPhA+ED4QPhA5kdSOSL13wgA4Es6VzkA+ED4QPh
+A+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QPhA+ED4QNZRP4AizmlcvoLni4A
+AAAASUVORK5CYII='
 ]
 
 { #category : #sources }
@@ -1741,6 +1828,95 @@ P4i/ZflBnnx0P8jXn6z5s+Q/WX4QP4gfxA/iB/GD+FuWr/d8IlprPZvV2exO39L98+L/qftB
 fH4QP4jPD/JXjiOfiFLKkc3qbHanb2F3td1fiX2v/KnvP2c+P4gfxA/iB/GD+EFesbva7q/E
 Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/NxPvWi+6f+
 K4KdAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleLabelledEncapsulating [
+| classes allClassElements v es enclosing label g1 back |
+classes := RTShape withAllSubclasses.
+allClassElements := OrderedCollection new.
+
+v := RTView new.
+
+classes do: [ :cls | 
+	es := RTBox elementsOn: cls methods.
+	es @ RTPopup.
+	
+	back := (RTBox new color: Color blue) element.
+	RTNest new 
+		layout: RTGridLayout new;
+		on: back nest: es.
+
+	enclosing := (RTBox new color: Color transparent) element.
+	label := (RTLabel new text: #name) elementOn: cls.
+	g1 := RTGroup withAll: { label . back }.
+	RTNest new 
+		layout: RTVerticalLineLayout new alignCenter;
+		on: enclosing nest: g1.
+
+	enclosing @ RTDraggable.
+
+	v add: enclosing.
+	v add: back.
+	v addAll: es.
+	v add: label.
+	
+	allClassElements add: enclosing.
+].
+RTFlowLayout on: allClassElements.
+v open .
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleLabelledEncapsulatingIcon [
+	^ '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'
 ]
 
 { #category : #sources }
@@ -2445,6 +2621,94 @@ L/++3ST4KNUMdqenoHY20MUrGRMFemCGelk7x6N44EXp4WHhwNOXOj3szl9m4ZiFzh77YRej
 euyXHV7pCKGyHq9MhOz3zKR+hFA/QqgfIdSPEOpHiOEi5EUbgvoRQv0IeXUj5FUoo3lZM+5V
 idSvnUOoHyHUr8uifqN+o36jfqN+o36jfqN+o36jfqN+o36jfqN+o36jfttD+18hZpCBm4KO
 VwAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleSelfCalls [
+
+" The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."		
+| v classes classElement classElements shapeBuilder methods methodElements |
+v := RTView new.
+v @ RTDraggableView.
+
+shapeBuilder := RTShapeBuilder new.
+shapeBuilder rectangle
+	size: [ :m | m linesOfCode min: 60 max: 5 ].
+
+classElements := RTGroup new. 
+classes := RTShape withAllSubclasses.
+classes do: [ :class |
+	classElement := (RTBox new color: (Color blue alpha: 0.4)) elementOn: class.
+	classElement @ RTPopup.
+	v add: classElement.
+
+
+	methods := class methods.
+
+	methodElements := shapeBuilder elementsOn: methods.
+	v addAll: methodElements.
+
+	RTEdge 
+		buildEdgesFromObjects: methods 
+		from: #yourself 
+		toAll: #dependentMethods 
+		inView: v.
+	RTTreeLayout on: methodElements.
+	methodElements @ RTDraggable @ RTPopup.
+	
+	RTNest new on: classElement nest: methodElements.
+	classElement @ RTDraggable.
+	classElements add: classElement.
+].
+
+RTEdge buildEdgesFromObjects: classes from: #superclass to: #yourself using: (RTLine new attachPoint: RTVerticalAttachPoint instance) inView: v.
+RTTreeLayout on: classElements.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleSelfCallsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAINklEQVR4XuWcaVMTSxRA5///
+AsUFEZHVBUUUEKEAt8KlpPygH3hCAQ/CHiAbkPbldLyhM28mmQkTMnhvVVdmpqe3e25vtwe8
+37/1S5rE068C/UD0i34g+oHoF/1A9APRL/qB6AeiX/QD0Q9Ev+gHol/0A9EPRL/oB6IfiH7R
+D0Q/EP2iH4h+IOmWGzeMSSroB5IQkF+/fv2emto3BLnn9/Pnf83gYL4unmueEff164YZHz+s
+va8fSJt6yORkFQyKd3/d8PLlgRkYyJuurnP9PaTdQLD6ICDDwzlz69a5mZg4CISkH0gbgNy8
+WTbd3ac1EF1dZTM6emRGRk5sj+jrK4b2Gv1A2gDk8eOTP7/HtkcAAOU/fFgwvb3F2nv6gbQZ
+iDtpj41l7aQdNKkLDOL0A7niZe/9+yXT31/Qv+xNAxCGqjt3zvTvQ9IAhCFL/8YwBUBYYTF5
+69+pp2hS1+860e/L0gXEVKRUKpmTkxNzeHhojo6OTD6fN2dnZ6ZYLJrt7W2ztbVldnZ2bFw2
+m7W/BwcHNp73yCeXy9l06+vrNm5/f99sbGyYlZUVm558yIP0xEvgnrTUAbn2QFAIihAloVga
+Vy6X7S+NRdE03FU0z4g7Pz+37xFPWu7Dyjo+PrZ5NHpHhLxPT09tvVxFS9n8kg/XwAIg5fOc
+cjY3N83q6qrJZDI1wFwLXN4tFAq2DdSdfCQ9bW8JCBUlAzKiUCpPIVQ0TNFhVsRz0lIx0lEp
+/30rlUQ5lN1q+maA/EI5omR0IMZCG0TQmfRW2kgaAU0v3N3dtQCpu4CnDcQBeW1tzezt7dWM
+i3pxHamHSAXFqrgnMfdUJuluTn40hNDOISQqoLBRgXRiKGJ4wAt7X4yecrmnbP8zL8kJU8Li
+YnDjeJ50WVexEAgrtxW9NHvHe/bsyMhBD9cE8QHJPdfLy7/q4tklz8zsmoWFbXvtpo8KZHn5
+n7r7b9/WrVudPJaW1gPr5a9jFCD4ueSAyl1Ckw/eYcp186VNvN+sXH/9xM/Gc9HL0tJarSxp
+v9SHtJJG3vHwlobRwqv64sWhPegJ8pyGeVSjAHnwoGhev96rudElr8HBnLl37zTRHvL+fca8
+e5epSwcI3C5sMqUNXKPI/v686ekpxe4hGJMAI8+BgULFaHdq7p0gIED4+XO1ZvjekyfHgSB4
+AYVJfNJAcJOT9/Pn2bq8MBCUlSSQ+fltG9xnGATnJ1wPDeUsjNnZXQuDZ+4pY1QgIyM5a7zk
+/fTpkc2Tcxr/kEVvEBiAn5rauxiyxBqpVG9vySppaKhaKeIkPkkgeGe7u8+sGwTr4YRPzjdo
+UJJzCMMGCiL09RWcXrNVUUjWwn/zZtdad1yvsXsvadEfZWFYKNvVj2uQYoi02X3HW1jImLm5
+bXP37mnd8HH79rl59erABq7lyNQfoEx8VCAARgnT03u1I1eGRZ5/+bKR+KQOECwVGHKSSJ1p
+z+zsjlXe9PRuHay4QKg7hjQ+fmFMQXoTIJxwyjBG+fz29FR17334sGW7qviJJPCMOIJM2kEV
+Y2KXhkYB4p8cgybMpICI32txcdNMTlbnQZ5hnZTHZC6LCf+E38xn5gKR+n/6tGnhMDyKXtw2
+CZBHj07+9Kq87VmAwygskNFRY5qF8fGcifKehB8/ghXF8yjpx8aKlQaWI70bBQi/1QVDvk7R
+jb5YaWXZy4IAIDJBhy17MRDem5jY/x84r9HmTHbwbHbYtFx2pxxF2GBRLmXK7rZdDsmkgTTL
+x53Uw8B5QTtKFMHOURTkKsu9T1LE9RAUJ7vhsPjrBKRRWFgoXAARfwzbeb/Fhllx0r0iCjTe
+FZ9Sq0Bk9SgTbtiCpR1AwtovPi9va6tY2aiUKs6ucsVVbQxuHX6roeRc18etrJQqXs/6eIIU
+4n8eFjY3i7WyGwXKdhuRzRZsukymWFduFCBBC4vLTOruHBIHiDgVEekIXhx/iyxb3a4u1ibP
+ghTitxxJJ9bq5ufPkxUIk56/MUBotNrqhC+rGUS3De7wT4+vud/F9yK/JHL9K65/xo0LW7KG
++ZL89+4KyK2D34ckPrMwIJ38iDpoHnj7thg6R1Bnfufn83X3Hz+e1669ubmdlntIo31Bsx7i
+/3CBtXmjoSJuD+mEiKXjlo+2PzK11Zbo3fNPaI0KrJ9fgkNcIOzaXQ9B3AnR7e6dFA6q5Drs
+TCQSEL78a4elNQOC3yyO7yjNQDiYilqnsEWSXHt+z+pVAMGLnNShVyeBVL0KpZp3Iq43IfBM
+Hb+Le/6QJBCZpCV8/75mCHIvH0m7k/x1AuIubGTIkYMq2sY1uo0FRBJdBRD5Wr1VIJftTe0A
+InWX+kn7eIZHOzaQsEk5zUBkqesuz91l+lUC8ddPlutVj245tpF77bYePxDXVRHmFW0GROYk
+F0QnekgYIP7+cXj4pKVRp61AUNTMzF5tfyEAWF3FWWGFAeGUs5NDVhgQ/yImNUDC/2ygHPuE
+LghI2FfwnQSCZ8H/4UiqgPg3fezKwyw7DpBGX8t0EoicGrrDcap7iPxNYKtA3DkpjUCCTg1T
+AwTF82lMUl9DXgcgl/3L37YDaaU36AfS5jV6UkAu+5GFfiBX8AF3miTs1FA/kA4CCfI4/LVz
+SNqBhJ0U6gdyjUX/kKUfiH4g+oHoB3Ixh1z2Py/oB5IgkFb/xEA/EP1Dln4g+oHoB6IfiP6N
+YcqANHOT6wdyxUDksx/9QFIAJM4fiab5jOOvAaJf9APRD0S/6AeiH4h+0Q9EPxD9oh+IftEP
+RD8Q/aIfiH4g+kU/EP1A9It+IPqB6Bf9QPSLfiDXQP4DZX2wCWyQSwgAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }

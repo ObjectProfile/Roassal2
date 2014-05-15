@@ -1,3 +1,7 @@
+"
+A RTSVGTextPopup is a simple text popup.
+
+"
 Class {
 	#name : #RTSVGTextPopup,
 	#superclass : #RTSVGPopup,

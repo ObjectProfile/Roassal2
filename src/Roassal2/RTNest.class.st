@@ -14,9 +14,8 @@ RTNest >> centerOn: backElement elements: elements [
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
-		
 	| encompassingRectangle off |
-	layout ifNotNil: [ layout on: elements ].
+	self doLayoutIfNecessaryOn: elements.
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
 	backElement trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
@@ -28,6 +27,11 @@ RTNest >> centerOn: backElement elements: elements [
 	"This is a big big question whether we need this or not"
 	"backElement attributes at: #nestedElements put: elements."
 	
+]
+
+{ #category : #utility }
+RTNest >> doLayoutIfNecessaryOn: elements [
+	layout ifNotNil: [ layout on: elements ]
 ]
 
 { #category : #utility }
@@ -65,8 +69,36 @@ RTNest >> makeElements: elements draggableBy: backElement [
 ]
 
 { #category : #utility }
+RTNest >> makeElements: elements resizable: backElement [
+	"If an element of elements is resized, then the backElement should be resized as well.
+	"
+	| callback1 callback2 |
+	callback1 := TRExtentCallback block: [ :shape :newsize |
+		self resizeWithoutRecursion: backElement for: elements
+	].
+	callback2 := TRTranslationCallback block: [ :shape :newsize |
+		self resizeWithoutRecursion: backElement for: elements
+	].
+	elements do: [ :e | e trachelShape addCallback: callback1 ; addCallback: callback2 ] 
+]
+
+{ #category : #utility }
+RTNest >> makeElements: elements resizableWithoutRecursion: backElement [
+	"If an element of elements is resized, then the backElement should be resized as well.
+	"
+	| callback1 callback2 |
+	callback1 := TRExtentCallback block: [ :shape :newsize |
+		self resizeWithoutRecursion: backElement for: elements
+	].
+	callback2 := TRTranslationCallback block: [ :shape :newsize |
+		self resizeWithoutRecursion: backElement for: elements
+	].
+	elements do: [ :e | e trachelShape addCallback: callback1 ; addCallback: callback2 ] 
+]
+
+{ #category : #utility }
 RTNest >> makeElements: elements transformable: backElement [
-	"It makes a scaling/zooming efect.
+	"It makes a scaling/zooming effect.
 	If you change backElement's extent, it changes proportionaly extent and position of nested elements. 
 	So the overall image --- composition of backElement and elements --- does not change. 
 	It only zoom in/out the overall image."
@@ -98,6 +130,23 @@ RTNest >> on: backElement nest: elements [
 
 ]
 
+{ #category : #public }
+RTNest >> onResizable: backElement nest: elements [
+	"public method"
+	"backElement is the elements on which elements are layout-ed"
+	"- position the elements above backElement. 
+	 - resize backElement to encapsulate the elements
+	 - perform a layout of the elements if a layout has been set
+	 - make the inner elements draggable"
+	
+	layout ifNotNil: [ layout on: elements ].
+	self centerOn: backElement elements: elements.
+	self makeElements: elements draggableBy: backElement.
+"	self makeElements: elements transformable: backElement."
+	self makeElements: elements resizableWithoutRecursion: backElement.
+
+]
+
 { #category : #accessing }
 RTNest >> padding [
 	^ padding
@@ -106,4 +155,46 @@ RTNest >> padding [
 { #category : #accessing }
 RTNest >> padding: aNumber [
 	padding := aNumber
+]
+
+{ #category : #utility }
+RTNest >> resize: backElement bounds: encompassingRectangle [
+	"it translates backElement, but does not trigger events."
+	| newRec |
+	newRec := (encompassingRectangle topLeft - (padding @ padding)) extent: 
+					((encompassingRectangle width + (padding * 2)) @ 
+					 (encompassingRectangle height + (padding * 2))).
+
+	backElement trachelShape
+		extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).	
+	backElement translateTo: encompassingRectangle center
+]
+
+{ #category : #utility }
+RTNest >> resize: backElement for: elements [
+	| encompassingRectangle |
+	encompassingRectangle := self encompassingRectangleOf: elements.
+	self resize: backElement bounds: encompassingRectangle.
+
+]
+
+{ #category : #utility }
+RTNest >> resizeWithoutRecursion: backElement bounds: encompassingRectangle [
+	"it translates backElement, but does not trigger events."
+	| newRec |
+	newRec := (encompassingRectangle topLeft - (padding @ padding)) extent: 
+					((encompassingRectangle width + (padding * 2)) @ 
+					 (encompassingRectangle height + (padding * 2))).
+
+	backElement trachelShape
+		extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).	
+	backElement trachelShape doWithoutCallbacks: [ backElement translateTo: encompassingRectangle center ]
+]
+
+{ #category : #utility }
+RTNest >> resizeWithoutRecursion: backElement for: elements [
+	| encompassingRectangle |
+	encompassingRectangle := self encompassingRectangleOf: elements.
+	self resizeWithoutRecursion: backElement bounds: encompassingRectangle.
+
 ]

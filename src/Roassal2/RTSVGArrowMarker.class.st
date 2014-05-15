@@ -1,3 +1,7 @@
+"
+A RTSVGArrowMarker is an arrow (open figure)  marker.
+
+"
 Class {
 	#name : #RTSVGArrowMarker,
 	#superclass : #RTSVGAbstractMarker,
