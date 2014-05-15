@@ -62,6 +62,34 @@ RTLabel >> textFor: element [
 
 { #category : #hooks }
 RTLabel >> trachelShapeFor: anElement [
+	| c txt lines n s lbl |
+
+	c := self colorFor: anElement.
+	txt := self textFor: anElement.
+	txt := txt replaceAllRegex: String tab with: '    '.
+	lines := txt lines.
+	lines size <= 1
+		ifTrue: 
+			[ ^ self trachelShapeForOneLine: anElement ]
+		ifFalse:
+			[
+			s := TRCompositeShape new.
+			lines reverse do: [ :l | 
+				lbl := TRLabelShape new text: l.
+				s shape1: lbl.
+				s offset1: lbl width / 2 @ 0.
+				s offset2: 0 @ 20.
+				
+				n := TRCompositeShape new.
+				n shape2: s.
+				s := n ].
+			^ s 
+			 ]
+
+]
+
+{ #category : #'as yet unclassified' }
+RTLabel >> trachelShapeForOneLine: anElement [
 	|  shape |	
 	shape := TRLabelShape new.
 	shape text: (self textFor: anElement);
@@ -73,10 +101,26 @@ RTLabel >> trachelShapeFor: anElement [
 
 { #category : #rendering }
 RTLabel >> updateFor: anElement trachelShape: trachelShape [	
+	| c txt lines n s |
 	trachelShape isNil ifTrue: [ ^ self ].
-	trachelShape 
-		color: (self colorFor: anElement);
-		text: (self textFor: anElement) on: anElement position
+	s := nil.
+	c := self colorFor: anElement.
+	txt := self textFor: anElement.
+	lines := txt lines.
+	lines size = 1
+		ifTrue: 
+			[ trachelShape 
+				color: c;
+				text: txt on: anElement position ]
+		ifFalse:
+			[
+			lines allButFirst do: [ :l |  
+				n := TRCompositeShape new.
+				n offset2: 20.
+				n shape1: l. 
+				s shape2: n.
+				s := n ]. 
+			 ]
 ]
 
 { #category : #rendering }

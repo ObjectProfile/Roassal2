@@ -1,7 +1,3 @@
-"
-A RTSVGArrowHeadMarker is an arrow-head marker.
-
-"
 Class {
 	#name : #RTSVGArrowHeadMarker,
 	#superclass : #RTSVGAbstractMarker,

@@ -1,6 +1,3 @@
-"
-A RTHTMLMetricMap is a RTHTMLBuilder that mimics the functionality of RTMetricMap to directly have exported results.
-"
 Class {
 	#name : #RTHTMLMetricMap,
 	#superclass : #RTHTMLBuilder,

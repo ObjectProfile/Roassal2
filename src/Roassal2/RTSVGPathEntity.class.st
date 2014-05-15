@@ -1,6 +1,3 @@
-"
-A RTSVGPathEntity is SVG path that translates from a generic SVG path, as represented in Roassal.
-"
 Class {
 	#name : #RTSVGPathEntity,
 	#superclass : #RTSVGEntity,

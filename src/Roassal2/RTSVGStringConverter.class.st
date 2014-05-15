@@ -1,6 +1,3 @@
-"
-A RTSVGStringConverter is a class used to fix Strings before using them inside SVG elements. Since many characters need to be translated to its HTML standart encoding
-"
 Class {
 	#name : #RTSVGStringConverter,
 	#superclass : #RTObject,

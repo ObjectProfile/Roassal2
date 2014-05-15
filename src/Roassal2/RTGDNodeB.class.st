@@ -9,14 +9,6 @@ Class {
 	#category : #'Roassal2-Builder-Graph'
 }
 
-{ #category : #interaction }
-RTGDNodeB >> @ anInteraction [
-	"Adds an interaction to the elements"
-
-	self addProperty: [ :anElement | 
-		anElement @ anInteraction ]
-]
-
 { #category : #shapes }
 RTGDNodeB >> circle [
 	^ self shape: RTEllipse new

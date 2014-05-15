@@ -1,6 +1,3 @@
-"
-NOT WORKING, REFRAIN FROM USAGE
-"
 Class {
 	#name : #RTSVGBitmap,
 	#superclass : #RTSVGEntity,

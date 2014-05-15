@@ -1,6 +1,3 @@
-"
-a RTHTMLBuilder is a builder that works as a RTBuilder, but it immediately exports the result.
-"
 Class {
 	#name : #RTHTMLBuilder,
 	#superclass : #RTObject,

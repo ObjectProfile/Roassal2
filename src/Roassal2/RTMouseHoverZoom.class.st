@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'desiredExtent',
 		'resizeStrategy',
-		'zoomInElements',
-		'ratio'
+		'zoomInElements'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -28,12 +27,6 @@ RTMouseHoverZoom >> attributeSymbol [
 	^ #automaticZoomExtent
 ]
 
-{ #category : #configuration }
-RTMouseHoverZoom >> defaultRatio [
-
-	^ 1.3
-]
-
 { #category : #public }
 RTMouseHoverZoom >> desiredExtent: anExtentOrOneArgBlock [
 	desiredExtent := anExtentOrOneArgBlock.
@@ -54,8 +47,7 @@ RTMouseHoverZoom >> doZoomEffect: anElement [
 { #category : #initialization }
 RTMouseHoverZoom >> initialize [
 	super initialize.
-	ratio := self defaultRatio.
-	desiredExtent := [ :anElement | anElement extent * ratio ].
+	desiredExtent := [ :anElement | anElement extent * 1.3 ].
 	zoomInElements := OrderedCollection new.
 	self animated.
 ]
@@ -67,17 +59,6 @@ RTMouseHoverZoom >> initializeElement: element [
 	
 	element when: TRMouseLeave do: [ :anEvent |
 		self undoZoomEffect: element ]
-]
-
-{ #category : #accessing }
-RTMouseHoverZoom >> ratio [
-	^ ratio
-]
-
-{ #category : #accessing }
-RTMouseHoverZoom >> ratio: aFloat [
-	"Ratio by wich the element will grow"
-	ratio := aFloat
 ]
 
 { #category : #private }

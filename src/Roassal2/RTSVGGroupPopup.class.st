@@ -1,6 +1,3 @@
-"
-A RTSVGGroupPopup is a RTGroup popup. 
-"
 Class {
 	#name : #RTSVGGroupPopup,
 	#superclass : #RTSVGPopup,
