@@ -64,8 +64,8 @@ TRCompositeShape >> announcer: anAnnouncer [
 
 { #category : #accessing }
 TRCompositeShape >> canvas [
-	^ shape1 canvas
-
+	"Return the canvas of one of the shapes"
+	^ shape1 canvas	
 ]
 
 { #category : #accessing }
