@@ -12,6 +12,11 @@ RTLinearMove class >> to: endPoint during: seconds on: shape [
 	^ self new to: endPoint during: seconds on: shape
 ]
 
+{ #category : #accessing }
+RTLinearMove >> after: aBlock [
+	animatedValue finishCallback: aBlock
+]
+
 { #category : #testing }
 RTLinearMove >> hasCompleted [
 	^ animatedValue hasCompleted
