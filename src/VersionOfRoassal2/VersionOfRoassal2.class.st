@@ -3118,3 +3118,14 @@ VersionOfRoassal2 >> version000235 [
 	at: #date put: '15 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000236 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.144';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.313';
+	at: #version put: '0.236';
+	at: #comment put: '0.236 : added alignment for the flow layout';
+	at: #date put: '16 May 2014';
+	yourself
+]
