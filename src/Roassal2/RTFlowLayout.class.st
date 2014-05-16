@@ -31,11 +31,11 @@ RTFlowLayout >> doExecute: elements [
 	elements do: 
 		[ :anElement | 
 		self isAlignTop ifTrue: [ translator translateTopLeftOf: anElement to: x @ y ].
-		self isAlignCenter ifTrue: [ translator translate: anElement to: x @ y ].
+		self isAlignCenter ifTrue: [ translator translateCenterLeftOf: anElement to: x @ y ].
 		self isAlignBottom ifTrue: [ translator translateBottomLeftOf: anElement to: x @ y ].
 		
 		x := x + anElement width + (2 * self gapSize).
-		maxLastLineHeight := maxLastLineHeight max: anElement height.
+		maxLastLineHeight := maxLastLineHeight max: (anElement height ).
 		x > self maxWidth ifTrue: 
 			[ x := self gapSize.
 			y := y + (2 * self gapSize) + maxLastLineHeight.
