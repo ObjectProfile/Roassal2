@@ -27,10 +27,18 @@ RTLayoutTranslator >> nbCycles: anInteger [
 
 { #category : #hook }
 RTLayoutTranslator >> translate: element to: newPosition [
+	"Translate of the center of the element"
 	self subclassResponsibility 
 ]
 
 { #category : #hook }
+RTLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
+	"Translate the top left corner of the element"
+	self translate: element to: (newPosition + (0 @ (element height / -2)))
+]
+
+{ #category : #hook }
 RTLayoutTranslator >> translateTopLeftOf: element to: newPosition [
+	"Translate the top left corner of the element"
 	self translate: element to: (newPosition + (element extent / 2))
 ]

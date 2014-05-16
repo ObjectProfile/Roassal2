@@ -60,6 +60,65 @@ RTLayoutTest >> testCluster [
 ]
 
 { #category : #tests }
+RTLayoutTest >> testFlowLayoutAlignment [
+	| l |
+	l := RTFlowLayout new.
+	self assert: l isAlignTop.
+	self deny: l isAlignBottom.
+	
+	l alignBottom.
+	self deny: l isAlignTop.
+	self assert: l isAlignBottom.
+
+]
+
+{ #category : #tests }
+RTLayoutTest >> testFlowLayoutAlignmentLayoutBottom [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTFlowLayout new.
+	l alignBottom.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+"		
+	self assert: (es collect: #position) asArray = (Array with: (5@0.0) with: (25.0@ -5.0) with: (55.0@ -10.0))
+	
+]
+
+{ #category : #tests }
+RTLayoutTest >> testFlowLayoutAlignmentLayoutCenter [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTFlowLayout new.
+	l alignCenter.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+		
+"	self assert: (es collect: #position) asArray = (Array with: (5@5) with: (25.0@5) with: (55.0@5))
+
+]
+
+{ #category : #tests }
+RTLayoutTest >> testFlowLayoutAlignmentLayoutTop [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTFlowLayout new.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+"		
+	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (35.0@15.0) with: (70.0@20.0))
+]
+
+{ #category : #tests }
 RTLayoutTest >> testForce [
 	| v es layout |
 	v := RTView new.
