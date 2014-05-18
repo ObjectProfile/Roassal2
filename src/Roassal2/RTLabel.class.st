@@ -66,7 +66,7 @@ RTLabel >> trachelShapeFor: anElement [
 
 	c := self colorFor: anElement.
 	txt := self textFor: anElement.
-	txt := txt replaceAllRegex: String tab with: '    '.
+	txt := txt copyReplaceAll: String tab with: '    '.
 	lines := txt lines.
 	lines size <= 1
 		ifTrue: 

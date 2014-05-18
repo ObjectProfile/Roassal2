@@ -25,14 +25,14 @@ Class {
 { #category : #'instance creation' }
 RTNIdentityNormalizer class >> beginingAtBlue [
 	^ self new
-			setIndexTo: #blue;
+			setIndexTo: Color blue;
 			yourself
 ]
 
 { #category : #'instance creation' }
 RTNIdentityNormalizer class >> beginingAtRed [
 	^ self new
-			setIndexTo: #red;
+			setIndexTo: Color red;
 			yourself
 ]
 
@@ -45,8 +45,8 @@ RTNIdentityNormalizer class >> withCommand: aBlock [
 ]
 
 { #category : #'initialize-release' }
-RTNIdentityNormalizer >> colorNames [
-	^ #(#black #veryVeryDarkGray #veryDarkGray #darkGray #gray #lightGray #veryLightGray #veryVeryLightGray #white #red #yellow #green #cyan #blue #magenta #brown #orange #lightRed #lightYellow #lightGreen #lightCyan #lightBlue #lightMagenta #lightBrown #lightOrange #transparent)
+RTNIdentityNormalizer >> colors [
+	^ Color distinctTenStrongColors
 ]
 
 { #category : #'initialize-release' }
@@ -54,15 +54,15 @@ RTNIdentityNormalizer >> initialize [
 	
 	super initialize.
 	colorIndex := 0.
-	dictionary := IdentityDictionary new.
+	dictionary := Dictionary new.
 	command := #yourself
 ]
 
 { #category : #private }
 RTNIdentityNormalizer >> nextColor [
 	
-	colorIndex := colorIndex \\ self colorNames size + 1.
-	^Color perform: (self colorNames at: colorIndex)
+	colorIndex := colorIndex \\ self colors size + 1.
+	^self colors at: colorIndex
 ]
 
 { #category : #accessing }
@@ -74,9 +74,9 @@ RTNIdentityNormalizer >> rtValue: anEntity [
 ]
 
 { #category : #private }
-RTNIdentityNormalizer >> setIndexTo: colorAsSymbol [
+RTNIdentityNormalizer >> setIndexTo: aColor [
 	"colorAsSymbol has to be one of Color colorNames. 
 	The method set the current index to the color given in parameter"
 	
-	colorIndex := (self colorNames indexOf: colorAsSymbol) - 1
+	colorIndex := (self colors indexOf: aColor) - 1
 ]
