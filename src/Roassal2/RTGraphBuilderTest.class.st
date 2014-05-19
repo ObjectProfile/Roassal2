@@ -105,6 +105,53 @@ RTGraphBuilderTest >> testEdge [
 
 ]
 
+{ #category : #edges }
+RTGraphBuilderTest >> testEdgesFromObjects [
+
+	b nodes color: Color gray.
+	b edges
+		seed: #(1 2 3 4);
+		connectFrom: [ :v | v - 1 ];
+		connectTo: [ :v | v + 1 ].
+	b addAll: #(1 2 3 4 5).
+	b build.
+	
+	self assert: b view numberOfEdges equals: 3.
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilderTest >> testEdgesFromObjects2 [
+
+	b nodes color: Color gray.
+	b edges
+		seed: #(1 2 3);
+		connectFrom: [ :v | v - 1 ];
+		connectTo: [ :v | v + 1 ].
+	b addAll: #(1 2 3 4 5).
+	b build.
+	
+	self assert: b view numberOfEdges equals: 2.
+
+	
+]
+
+{ #category : #edges }
+RTGraphBuilderTest >> testEdgesFromObjectsNo [
+
+	b nodes color: Color gray.
+	b edges
+		connectFrom: [ :v | v - 1 ];
+		connectTo: [ :v | v + 1 ].
+	b addAll: #(1 2 3 4 5).
+	b build.
+	
+	self assert: b view numberOfEdges equals: 3.
+
+	
+]
+
 { #category : #tests }
 RTGraphBuilderTest >> testGlobalNormalization [
 
@@ -358,6 +405,34 @@ RTGraphBuilderTest >> testRecurFromUsing5 [
 						recurFrom: 2
 						using: [ :v | v * v ]) asArray = #(16).
 
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilderTest >> testSeed [
+
+	| e |
+	b nodes color: Color gray.
+	e := b edges.
+	b addAll: #(1 2 3 4 5).
+	b build.
+	
+	self assert: e seed asArray equals: #(1 2 3 4 5).
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTGraphBuilderTest >> testSeed2 [
+
+	| e |
+	b nodes color: Color gray.
+	e := b edges seed: #(3 2 1).
+	b addAll: #(1 2 3 4 5).
+	b build.
+	
+	self assert: e seed asArray equals: #(3 2 1).
+
+	
 ]
 
 { #category : #nodes }

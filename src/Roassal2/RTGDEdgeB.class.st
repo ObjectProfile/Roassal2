@@ -6,10 +6,24 @@ Class {
 		'connectTo',
 		'edgesUsedForLayout',
 		'attachPoint',
-		'connectFrom'
+		'connectFrom',
+		'seed'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
+
+{ #category : #public }
+RTGDEdgeB >> addEdgesForObject: anObject [
+	| edges |
+	edges := self createEdgesFor: anObject.
+	edges notNil
+		ifTrue: [ graphBuilder view addAll: edges ]
+]
+
+{ #category : #public }
+RTGDEdgeB >> buildEdges [
+	self seed do: [ :obj | self addEdgesForObject: obj ]
+]
 
 { #category : #public }
 RTGDEdgeB >> bundleConnectTo: aBlock [
@@ -163,6 +177,17 @@ RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: al
 			path: path 
 			result: result 
 			allObjects: allObjects ]
+]
+
+{ #category : #accessing }
+RTGDEdgeB >> seed [ 
+	seed ifNotNil: [ ^ seed ].
+	^ graphBuilder view elements collect: #model
+]
+
+{ #category : #accessing }
+RTGDEdgeB >> seed: objects [
+	seed := objects
 ]
 
 { #category : #public }

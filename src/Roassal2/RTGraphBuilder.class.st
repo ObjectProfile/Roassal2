@@ -23,14 +23,6 @@ RTGraphBuilder >> addAll: objects [
 	globals do: #execute
 ]
 
-{ #category : #adding }
-RTGraphBuilder >> addEdgesForObject: anObject [
-	| edges |
-	edges := self createEdgesFor: anObject.
-	edges notNil
-		ifTrue: [ view addAll: edges ]
-]
-
 { #category : #actions }
 RTGraphBuilder >> applyLayout [
 	| partionnedGroups |
@@ -51,25 +43,10 @@ RTGraphBuilder >> build [
 { #category : #actions }
 RTGraphBuilder >> cleanAndAddEdges [
 	"This is an expensive method"
-	
 	"Remove all the edges of the view"
 	view edges copy do: [ :e | e remove ].
+	edges do: [ :e | e buildEdges ]
 
-	view elements do: [ :element |
-		self addEdgesForObject: element model ]
-]
-
-{ #category : #public }
-RTGraphBuilder >> createEdgesFor: anObject [
-	"Return a collection of Roassal edges that correspond to the argument"
-	| answer |
-	answer := OrderedCollection new.
-	edges do: [ :edge |
-		answer addAll: (edge createEdgesFor: anObject)
-	].
-
-	^ answer
-	
 ]
 
 { #category : #'creating elements' }
