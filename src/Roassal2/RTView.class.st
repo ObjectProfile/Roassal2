@@ -65,8 +65,16 @@ RTView >> canvas [
 
 { #category : #actions }
 RTView >> clean [
+	"Remove all the elements of the view. It does not remove fixed elements however"
 	self elements copy do: #remove.
 	self edges copy do: #remove.
+]
+
+{ #category : #actions }
+RTView >> cleanAll [
+	"Remove all the elements of the view, including fixed element"
+	self clean.
+	self canvas fixedShapes copy do: #remove
 ]
 
 { #category : #'accessing-computed' }

@@ -15,7 +15,8 @@ RTAbstractExample >> installOn: aView [
 		aView clean.
 		self openOn: aView.
 		aView canvas camera focusOnCenter.
-	]
+	].
+
 ]
 
 { #category : #installing }
@@ -110,8 +111,18 @@ RTAbstractExample >> openOn: v [
 
 	RTGridLayout new on: v elements.
 	
+	v canvas addMenu: 'back' callback: [ self pressedBackButtonOn: v ].
 	helpBar := TRLabelShape new text: ' Left to run / Right for code'.
 	v canvas addFixedShape: helpBar.
 	TRConstraint stickAtTheBottomOfTheWindow: helpBar.
 	
+]
+
+{ #category : #'instance creation' }
+RTAbstractExample >> pressedBackButtonOn: view [
+	view cleanAll.
+	RTExampleBrowser new
+		listExamplesOn: view;
+		lineUpAndAnimate: view;
+		positionCameraOn: view
 ]

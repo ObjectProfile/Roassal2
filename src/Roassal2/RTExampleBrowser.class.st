@@ -43,32 +43,44 @@ Q6IfqUS4+RWAS1cnQeuYnlDoPQdAMdPW2AiR6dlFeslG+U49UV+yQMQK2CfEU0wp17B5EUgg
 PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'instance creation' }
-RTExampleBrowser >> open [
-
-	| v p |
-	v := RTView new.
-	v @ RTDraggableView.
-	RTAbstractExample subclasses do: [ :c |
-		c new installOn: v ].
-	
-	self structure: v.
-	
-	v openInWindowSized: 300 @ 400 titled: 'Roassal'.
-	
-	"We set the camera position where it fits to. We need to do this since there is an animation"
-	p := v canvas camera position.
-	v canvas camera translateTo: 50 @ p y 
-]
-
 { #category : #utility }
-RTExampleBrowser >> structure: aView [
+RTExampleBrowser >> lineUpAndAnimate: aView [
 	"Structure a view with a proper layout and animation"
 	RTVerticalLineLayout on: aView elements.
 	aView elements doWithIndex: [ :each :index | 
 		| p |
 		p := each position.
 		each translateBy: (index * 50) @ 0.
-		aView addAnimation: (RTLinearMove to: p during: 0.4 on: each).
-		  ]
+		aView addAnimation: (RTLinearMove to: p during: 0.4 on: each) ].
+	
+
+]
+
+{ #category : #'instance creation' }
+RTExampleBrowser >> listExamplesOn: v [
+	RTAbstractExample subclasses do: [ :c | c new installOn: v ]
+]
+
+{ #category : #'instance creation' }
+RTExampleBrowser >> open [
+	| v |
+	v := RTView new.
+	v @ RTDraggableView.
+	self listExamplesOn: v.
+	self lineUpAndAnimate: v.
+	self show: v.
+	self positionCameraOn: v
+]
+
+{ #category : #'instance creation' }
+RTExampleBrowser >> positionCameraOn: v [
+	| p |
+	"We set the camera position where it fits to. We need to do this since there is an animation"
+	p := v canvas camera position.	
+	v canvas camera translateTo: 50 @ p y
+]
+
+{ #category : #'instance creation' }
+RTExampleBrowser >> show: v [
+	v openInWindowSized: 500 @ 500 titled: 'Roassal'
 ]
