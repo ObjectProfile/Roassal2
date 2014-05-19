@@ -3140,3 +3140,14 @@ VersionOfRoassal2 >> version000237 [
 	at: #date put: '16 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000238 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.144';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.317';
+	at: #version put: '0.238';
+	at: #comment put: '0.238 : added #seed: in the edge builder for the graph builder. Merged with Doru version as well';
+	at: #date put: '19 May 2014';
+	yourself
+]
