@@ -13,8 +13,7 @@ Class {
 RTGDNodeB >> @ anInteraction [
 	"Adds an interaction to the elements"
 
-	self addProperty: [ :anElement | 
-		anElement @ anInteraction ]
+	self addProperty: [ :anElement | anElement @ anInteraction ]
 ]
 
 { #category : #shapes }
@@ -31,6 +30,15 @@ RTGDNodeB >> createElementFor: object [
 	self initializePropertiesOn: e.
 	^ e
 	
+]
+
+{ #category : #'creating elements' }
+RTGDNodeB >> createElements [
+	| es |
+	seed ifNil: [ ^ #() ].
+	es := self createElementsFor: seed.
+	graphBuilder view addAll: es.
+	^ es
 ]
 
 { #category : #'creating elements' }

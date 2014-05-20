@@ -121,7 +121,7 @@ RTGraphBuilderTest >> testEdgesFromObjects [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #seed }
 RTGraphBuilderTest >> testEdgesFromObjects2 [
 
 	b nodes color: Color gray.
@@ -407,7 +407,7 @@ RTGraphBuilderTest >> testRecurFromUsing5 [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #seed }
 RTGraphBuilderTest >> testSeed [
 
 	| e |
@@ -421,7 +421,7 @@ RTGraphBuilderTest >> testSeed [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #seed }
 RTGraphBuilderTest >> testSeed2 [
 
 	| e |
@@ -433,6 +433,32 @@ RTGraphBuilderTest >> testSeed2 [
 	self assert: e seed asArray equals: #(3 2 1).
 
 	
+]
+
+{ #category : #seed }
+RTGraphBuilderTest >> testSeedFromNode [
+
+	b nodes
+		seed: #(1 2 3);
+		color: Color gray.
+		
+	b build.
+	self assert: b view numberOfElements equals: 3.
+]
+
+{ #category : #seed }
+RTGraphBuilderTest >> testSeedFromNodeAndEdges [
+
+	b nodes
+		seed: #(1 2 3);
+		color: Color gray.
+	b edges
+		seed: #(1 2 3);
+		connectTo: [ :v | v + 1 ].
+		
+	b build.
+	self assert: b view numberOfElements equals: 3.
+	self assert: b view numberOfEdges equals: 2.
 ]
 
 { #category : #nodes }

@@ -6,8 +6,7 @@ Class {
 		'connectTo',
 		'edgesUsedForLayout',
 		'attachPoint',
-		'connectFrom',
-		'seed'
+		'connectFrom'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -177,17 +176,6 @@ RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: al
 			path: path 
 			result: result 
 			allObjects: allObjects ]
-]
-
-{ #category : #accessing }
-RTGDEdgeB >> seed [ 
-	seed ifNotNil: [ ^ seed ].
-	^ graphBuilder view elements collect: #model
-]
-
-{ #category : #accessing }
-RTGDEdgeB >> seed: objects [
-	seed := objects
 ]
 
 { #category : #public }

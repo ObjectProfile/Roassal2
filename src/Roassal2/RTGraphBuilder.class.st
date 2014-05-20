@@ -18,9 +18,9 @@ RTGraphBuilder >> add: anObject [
 
 { #category : #adding }
 RTGraphBuilder >> addAll: objects [
-	view addAll: (self createElementsFor: objects).
+	self executeNodesRules: objects.
 	self cleanAndAddEdges.
-	globals do: #execute
+	self executeGlobalRules
 ]
 
 { #category : #actions }
@@ -37,6 +37,9 @@ RTGraphBuilder >> applyLayout [
 
 { #category : #public }
 RTGraphBuilder >> build [
+	self executeNodesRules.
+	self cleanAndAddEdges.
+	self executeGlobalRules.
 	self applyLayout
 ]
 
@@ -84,6 +87,21 @@ RTGraphBuilder >> edgesUsedForLayout [
 	answer := OrderedCollection new.
 	edges do: [ :e | answer addAll: e edgesUsedForLayout ].
 	^ answer
+]
+
+{ #category : #adding }
+RTGraphBuilder >> executeGlobalRules [
+	globals do: #execute
+]
+
+{ #category : #adding }
+RTGraphBuilder >> executeNodesRules [
+	nodes do: [ :n | n createElements ]
+]
+
+{ #category : #adding }
+RTGraphBuilder >> executeNodesRules: objects [
+	view addAll: (self createElementsFor: objects)
 ]
 
 { #category : #accessing }

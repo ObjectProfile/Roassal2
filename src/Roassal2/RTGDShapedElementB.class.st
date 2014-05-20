@@ -2,7 +2,8 @@ Class {
 	#name : #RTGDShapedElementB,
 	#superclass : #RTGDElement,
 	#instVars : [
-		'shape'
+		'shape',
+		'seed'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -11,6 +12,17 @@ Class {
 RTGDShapedElementB >> color: aColorOrABlock [
 
 	shape color: aColorOrABlock
+]
+
+{ #category : #accessing }
+RTGDShapedElementB >> seed [ 
+	seed ifNotNil: [ ^ seed ].
+	^ graphBuilder view elements collect: #model
+]
+
+{ #category : #accessing }
+RTGDShapedElementB >> seed: objects [
+	seed := objects
 ]
 
 { #category : #accessing }
