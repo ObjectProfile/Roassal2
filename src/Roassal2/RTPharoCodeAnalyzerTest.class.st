@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'a'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-PharoCodeAnalyzer'
 }
 
 { #category : #running }
@@ -23,5 +23,12 @@ RTPharoCodeAnalyzerTest >> testAddingClasses [
 RTPharoCodeAnalyzerTest >> testDefault [
 
 	self assert: a notNil.
-	self assert: a graph view numberOfElements equals: 0
+	self assert: a graph view numberOfElements equals: 0.
+	self assert: a currentSelection isEmpty
+]
+
+{ #category : #tests }
+RTPharoCodeAnalyzerTest >> testSelection [
+	a pressAddClasses: 'RT*'.
+	self assert: a currentSelection size > 80
 ]

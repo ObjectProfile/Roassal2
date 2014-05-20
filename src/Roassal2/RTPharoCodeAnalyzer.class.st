@@ -3,12 +3,13 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'graph',
-		'statusBar'
+		'statusBar',
+		'currentSelection'
 	],
 	#classInstVars : [
 		'icon'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-PharoCodeAnalyzer'
 }
 
 { #category : #'as yet unclassified' }
@@ -45,6 +46,11 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> currentSelection [
+	^ currentSelection 
+]
+
+{ #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> graph [
 	^ graph
 ]
@@ -57,7 +63,7 @@ RTPharoCodeAnalyzer >> initialize [
 
 	self setMenu.
 	self setStatusBar.
-
+	currentSelection := #()
 ]
 
 { #category : #'as yet unclassified' }
@@ -78,7 +84,8 @@ RTPharoCodeAnalyzer >> pressAddClasses: regExp [
 	| classes |
 	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
 	graph addAll: classes.
-	self setStatusBar: classes size printString, ' added nodes'
+	self setStatusBar: classes size printString, ' added nodes'.
+	currentSelection := graph view elementsFromModels: classes
 ]
 
 { #category : #'as yet unclassified' }
@@ -94,13 +101,16 @@ RTPharoCodeAnalyzer >> pressAddPackages: regExp [
 	| paks |
 	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
 	graph addAll: paks.
-	self setStatusBar: paks size printString, ' added nodes'
+	self setStatusBar: paks size printString, ' added nodes'.
+	currentSelection := graph view elementsFromModels: paks
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressLayout: layout [
 
-	layout on: self currentSelection
+	layout
+		translator: (RTSmoothLayoutTranslator new nbCycles: 0.5);
+		on: self currentSelection
 ]
 
 { #category : #'as yet unclassified' }
@@ -131,6 +141,13 @@ RTPharoCodeAnalyzer >> setMenu [
 
 	b menu: 'layout' submenu: 'grid' background: Color red callback: [ 
 		self pressLayout: RTGridLayout new
+	].
+
+	b menu: 'layout' submenu: 'flow' background: Color red callback: [ 
+		self pressLayout: RTFlowLayout new
+	].
+	b menu: 'layout' submenu: 'tree' background: Color red callback: [ 
+		self pressLayout: RTTreeLayout new
 	].
 
 	b menu: 'select' background: Color blue callback: [ 
