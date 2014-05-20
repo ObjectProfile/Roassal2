@@ -14,6 +14,11 @@ RTGDShapedElementB >> color: aColorOrABlock [
 	shape color: aColorOrABlock
 ]
 
+{ #category : #testing }
+RTGDShapedElementB >> hasSeed [
+	^ seed notNil
+]
+
 { #category : #accessing }
 RTGDShapedElementB >> seed [ 
 	seed ifNotNil: [ ^ seed ].

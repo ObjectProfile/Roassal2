@@ -105,6 +105,53 @@ RTGraphBuilderTest >> testEdge [
 
 ]
 
+{ #category : #seed }
+RTGraphBuilderTest >> testEdgesAndNoSeed [
+
+	| l |
+	b nodes 
+		color: Color gray.
+
+	b edges 
+		connectFrom: [ :v | v - 1 ];
+		useInLayout.
+
+	l := b layout.
+	l tree.
+
+	b addAll: #(1 2 3).
+
+	b build.
+	self assert: b view numberOfElements equals: 3.
+	self assert: b view numberOfEdges equals: 2.
+	
+	self assert: (b edgesUsedForLayout size) equals: 2.
+	self assert: (b view elements collect: #position) asArray equals:  {(10.0@10.0). (10.0@40.0). (10.0@70.0)}
+]
+
+{ #category : #seed }
+RTGraphBuilderTest >> testEdgesAndSeed [
+
+	| l |
+	b nodes 
+		seed: #(1 2 3);
+		color: Color gray.
+
+	b edges 
+		connectFrom: [ :v | v - 1 ];
+		useInLayout.
+
+	l := b layout.
+	l tree.
+
+	b build.
+	self assert: b view numberOfElements equals: 3.
+	self assert: b view numberOfEdges equals: 2.
+	
+	self assert: (b edgesUsedForLayout size) equals: 2.
+	self assert: (b view elements collect: #position) asArray equals:  {(10.0@10.0). (10.0@40.0). (10.0@70.0)}
+]
+
 { #category : #edges }
 RTGraphBuilderTest >> testEdgesFromObjects [
 
@@ -459,6 +506,39 @@ RTGraphBuilderTest >> testSeedFromNodeAndEdges [
 	b build.
 	self assert: b view numberOfElements equals: 3.
 	self assert: b view numberOfEdges equals: 2.
+]
+
+{ #category : #seed }
+RTGraphBuilderTest >> testSeedFromNodeAndEdges2 [
+
+	b nodes
+		seed: #(1 2 3);
+		color: Color gray.
+	b edges
+		seed: #(1 2 3);
+		connectTo: [ :v | v + 1 ].
+	b addAll: #(4 5 6).
+		
+	b build.
+	self assert: b view numberOfElements equals: 3.
+	self assert: b view numberOfEdges equals: 2.
+]
+
+{ #category : #seed }
+RTGraphBuilderTest >> testSeedFromNodeAndEdges3 [
+
+	b nodes
+		seed: #(1 2 3);
+		color: Color gray.
+	b edges
+		seed: #(1 2 3);
+		connectTo: [ :v | v + 1 ].
+	b edges connectTo: [ :v | v + 1 ].
+	b addAll: #(4 5 6).
+		
+	b build.
+	self assert: b view numberOfElements equals: 3.
+	self assert: b view numberOfEdges equals: 4.
 ]
 
 { #category : #nodes }

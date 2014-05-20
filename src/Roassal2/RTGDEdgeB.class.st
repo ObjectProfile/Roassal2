@@ -93,7 +93,7 @@ RTGDEdgeB >> createEdgesFor: object [
 		answer addAll: edges.
 		
 		usedInLayout ifTrue: [ edgesUsedForLayout addAll: answer ] ].
-	
+
 	^ answer
 ]
 
@@ -176,6 +176,11 @@ RTGDEdgeB >> recurFrom: v using: aBlock path: path result: result allObjects: al
 			path: path 
 			result: result 
 			allObjects: allObjects ]
+]
+
+{ #category : #public }
+RTGDEdgeB >> reset [
+	edgesUsedForLayout := OrderedCollection new.
 ]
 
 { #category : #public }

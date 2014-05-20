@@ -31,9 +31,7 @@ Class {
 		'affectedNodes',
 		'translator',
 		'eventHandler',
-		'currentIteraction',
-		'maxInterations',
-		'iterationsToSendEvent'
+		'currentIteraction'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -77,31 +75,11 @@ RTLayout class >> onView: aRoassalView [
 	^ self on: aRoassalView elements
 ]
 
-{ #category : #events }
-RTLayout >> announce: anEvent [
-	"trigger an event. Objects who registered to me will get notified"
-
-	| eventToBeSent |
-	eventToBeSent := anEvent isBehavior 
-						ifTrue: [ anEvent new ]
-						ifFalse: [ anEvent ]. 
-	
-	eventToBeSent layout: self.
-	eventHandler announce: eventToBeSent
-]
-
 { #category : #hook }
 RTLayout >> applyOn: elements [
 	"Return quickly if there is nothing to do"
 	elements isEmpty ifTrue: [ ^ self ].
 	self executeOnElements: elements
-]
-
-{ #category : #configuration }
-RTLayout >> defaultIterationsToSendEvent [
-	"Every 100 steps an event ROLayoutStep is sent"
-
-	^ 100
 ]
 
 { #category : #hook }
@@ -127,7 +105,6 @@ RTLayout >> doPost: elements [
 RTLayout >> executeOnElements: elements [ 
 	"Execute the layout, myself, on the elements"
 		
-	maxInterations := elements size.
 	self doInitialize: elements.
 	self doExecute: elements asOrderedCollection.
 	self doPost: elements.
@@ -146,23 +123,9 @@ RTLayout >> fatherOf: aNode put: aValue [
 
 { #category : #'initialize-release' }
 RTLayout >> initialize [
+	super initialize.
 	translator := RTLayoutTranslator default.
-	eventHandler := Announcer new.
-	currentIteraction := 0.
-	maxInterations := 0.
-	iterationsToSendEvent := self defaultIterationsToSendEvent.
 
-]
-
-{ #category : #accessing }
-RTLayout >> iterationsToSendEvent [
-	"This method return the amount of iterations before sending ROLayoutStep"
-	^ iterationsToSendEvent
-]
-
-{ #category : #accessing }
-RTLayout >> iterationsToSendEvent: anInteger [
-	iterationsToSendEvent := anInteger
 ]
 
 { #category : #utils }
@@ -268,13 +231,6 @@ RTLayout >> translator [
 { #category : #accessing }
 RTLayout >> translator: t [
 	translator := t
-]
-
-{ #category : #events }
-RTLayout >> when: eventClass do: aBlock [
-	"Register a block as an handler for eventClass"
-	
-	eventHandler when: eventClass do: aBlock.
 ]
 
 { #category : #utils }

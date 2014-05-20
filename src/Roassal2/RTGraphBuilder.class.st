@@ -48,7 +48,9 @@ RTGraphBuilder >> cleanAndAddEdges [
 	"This is an expensive method"
 	"Remove all the edges of the view"
 	view edges copy do: [ :e | e remove ].
-	edges do: [ :e | e buildEdges ]
+	edges do: [ :e | 
+		e reset.
+		e buildEdges ]
 
 ]
 
@@ -106,7 +108,9 @@ RTGraphBuilder >> executeNodesRules: objects [
 
 { #category : #accessing }
 RTGraphBuilder >> getNodeFor: obj [
-	^ nodes detect: [ :n | n canCreateForObject: obj ] ifNone: [ nil ]
+	"Return the node builder for a particular object. 
+	We exclude nodes builder that have a seed. Probably this will have to be changed in the future. It is rather ugly to have this manipulation of boolean with #hasSeed"
+	^ nodes detect: [ :n | (n canCreateForObject: obj) and: [ n hasSeed not ] ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
