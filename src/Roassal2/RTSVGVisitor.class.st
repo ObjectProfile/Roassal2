@@ -355,12 +355,11 @@ RTSVGVisitor >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor >> visitCanvas: aCanvas [
-	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses|
+	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes lineClasses lineDecorationClasses|
 	lineClasses := {TRLineShape . TRBezierShape}.	
 	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
 	elementShapes := aCanvas shapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
 	edgeShapes := (aCanvas shapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.
-	nonDecorationShapes := (aCanvas shapes reject: [ :e | lineDecorationClasses includes: e class ]) asOrderedCollection.
 	decorationShapes := aCanvas shapes select: [ :e |  lineDecorationClasses includes: e class].
 	decoratedEdgeShapes := self separateDecorated: edgeShapes decorations: decorationShapes.
 	
@@ -368,9 +367,9 @@ RTSVGVisitor >> visitCanvas: aCanvas [
 		nextPutAll: '<defs>'.
 	decorationShapes do: [:s | s accept: self ].
 	stream 
-		nextPutAll: '</defs>'.
-	elementShapes do: [ :s | self names at: s element put: s element identityHash asString ].
-	nonDecorationShapes do:[:s | s accept: self].
+		nextPutAll: '</defs>'.	
+	elementShapes do:[:s | s accept: self].
+	edgeShapes do:[:s | s accept: self].
 	decoratedEdgeShapes do:[:p | p first accept: self with: p second].
 ]
 
