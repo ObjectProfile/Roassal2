@@ -2,9 +2,9 @@ Class {
 	#name : #RTPharoCodeAnalyzer,
 	#superclass : #RTObject,
 	#instVars : [
-		'graph',
 		'statusBar',
-		'currentSelection'
+		'currentSelection',
+		'view'
 	],
 	#classInstVars : [
 		'icon'
@@ -53,14 +53,14 @@ RTPharoCodeAnalyzer >> currentSelection [
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> graph [
-	^ graph
+	^ view
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> initialize [
 	super initialize.
-	graph := RTGraphBuilder new. 
-	graph nodes color: Color gray.
+	view := RTView new. 
+	view @ RTDraggableView.
 
 	self setMenu.
 	self setStatusBar.
@@ -70,12 +70,12 @@ RTPharoCodeAnalyzer >> initialize [
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> notSelectedElements [
 	"Return a list of elements that are __not__ currently selected"
-	^ RTGroup withAll: (graph view elements copyWithoutAll: self currentSelection)
+	^ RTGroup withAll: (view elements copyWithoutAll: self currentSelection)
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> open [
-	graph open
+	view open
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,9 +90,9 @@ RTPharoCodeAnalyzer >> pressAddClasses [
 RTPharoCodeAnalyzer >> pressAddClasses: regExp [
 	| classes |
 	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
-	graph addAll: classes.
+	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: classes) @ RTPopup @ RTDraggable.
 	self setStatusBar: classes size printString, ' added nodes'.
-	currentSelection := graph view elementsFromModels: classes
+	currentSelection := view elementsFromModels: classes
 ]
 
 { #category : #'as yet unclassified' }
@@ -107,9 +107,9 @@ RTPharoCodeAnalyzer >> pressAddPackages [
 RTPharoCodeAnalyzer >> pressAddPackages: regExp [
 	| paks |
 	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
-	graph addAll: paks.
+	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
 	self setStatusBar: paks size printString, ' added nodes'.
-	currentSelection := graph view elementsFromModels: paks
+	currentSelection := view elementsFromModels: paks
 ]
 
 { #category : #'as yet unclassified' }
@@ -136,7 +136,7 @@ RTPharoCodeAnalyzer >> pressSelect [
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSelect: regExp [
 	| str |	
-	currentSelection := graph view elements select: [ :el | '*', regExp, '*' match: el model asString ].
+	currentSelection := view elements select: [ :el | '*', regExp, '*' match: el model asString ].
 
 	str := (currentSelection collect: #model) asString.
 	self setStatusBar: '#', currentSelection size printString, ':', (str copyFrom: 1 to: (str size min: 70)), ' ...'
@@ -145,13 +145,49 @@ RTPharoCodeAnalyzer >> pressSelect: regExp [
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSetColor: aColor [
 	self currentSelection do: [ :e | e trachelShape color: aColor ].
-	graph view signalUpdate
+	view signalUpdate
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetX: symbolOrBlock [
+	| ext |
+	self currentSelection do: [ :e | 
+		ext := e extent.
+		RTResizeMove new 
+			toExtent: (symbolOrBlock rtValue: e model) @ ext y during: 0.4 on: e;
+			inView: view  ]
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetX: symbolOrBlock using: aTransformation [
+	^ self pressSetX: symbolOrBlock using: #yourself
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetXLog: symbolOrBlock [
+	^ self pressSetX: symbolOrBlock using: [ :v | (v + 1) log * 10 ]
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetY: symbolOrBlock using: aTransformation [
+	| ext |
+	self currentSelection do: [ :e | 
+		ext := e extent.
+		RTResizeMove new 
+			toExtent: ext x @ (aTransformation rtValue: (symbolOrBlock rtValue: e model)) 
+				during: 0.4 on: e;
+			inView: view  ]
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetYLog: symbolOrBlock [
+	^ self pressSetY: symbolOrBlock using: [ :v | (v + 1) log * 10 ]
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> setMenu [
 	| b |
-	b := RTMenuBuilder new view: graph view.	"adding"
+	b := RTMenuBuilder new view: view.	"adding"
 	b
 		menu: 'add nodes'
 		submenu: 'packages'
@@ -198,18 +234,89 @@ RTPharoCodeAnalyzer >> setMenu [
 		submenu: 'green'
 		background: Color green
 		callback: [ self pressSetColor: Color green ].
+
+
+	b
+		menu: 'set x'
+		submenu: 'NOA'
+		background: Color blue
+		callback: [ self pressSetX: #numberOfVariables ].	
+	b
+		menu: 'set x'
+		submenu: 'NOM'
+		background: Color blue
+		callback: [ self pressSetX: #numberOfMethods ].
+	b
+		menu: 'set x'
+		submenu: 'LOC'
+		background: Color blue
+		callback: [ self pressSetX: #numberOfLinesOfCode ].
+
+
+	b
+		menu: 'set x'
+		submenu: 'NOAlog'
+		background: Color blue
+		callback: [ self pressSetXLog: #numberOfVariables ].	
+	b
+		menu: 'set x'
+		submenu: 'NOMlog'
+		background: Color blue
+		callback: [ self pressSetXLog: #numberOfMethods ].
+	b
+		menu: 'set x'
+		submenu: 'LOClog'
+		background: Color blue
+		callback: [ self pressSetXLog: #numberOfLinesOfCode ].
+
+	b
+		menu: 'set y'
+		submenu: 'NOA'
+		background: Color blue
+		callback: [ self pressSetY: #numberOfVariables ].	
+	b
+		menu: 'set y'
+		submenu: 'NOM'
+		background: Color blue
+		callback: [ self pressSetY: #numberOfMethods ].
+	b
+		menu: 'set y'
+		submenu: 'LOC'
+		background: Color blue
+		callback: [ self pressSetY: #numberOfLinesOfCode ].
+
+
+	b
+		menu: 'set y'
+		submenu: 'NOAlog'
+		background: Color blue
+		callback: [ self pressSetYLog: #numberOfVariables ].	
+	b
+		menu: 'set y'
+		submenu: 'NOMlog'
+		background: Color blue
+		callback: [ self pressSetYLog: #numberOfMethods ].
+	b
+		menu: 'set y'
+		submenu: 'LOClog'
+		background: Color blue
+		callback: [ self pressSetYLog: #numberOfLinesOfCode ].
 		
 	b
+		menu: 'remove'
+		background: Color blue
+		callback: [ self pressRemove ]		
+"	b
 		menu: '+partition'
 		background: Color blue
-		callback: [ self pressAddPartition ]
+		callback: [ self pressAddPartition ]" 
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> setStatusBar [
 
 	statusBar := TRLabelShape new.
-	graph view canvas addFixedShape: statusBar.
+	view canvas addFixedShape: statusBar.
 	TRConstraint stickAtTheBottomOfTheWindow: statusBar
 ]
 
@@ -218,7 +325,7 @@ RTPharoCodeAnalyzer >> setStatusBar: string [
 
 	statusBar text: string.
 	statusBar canvas announce: TRResizeCanvasEvent new.
-	graph view signalUpdate.
+	view signalUpdate.
 	
 ]
 
@@ -226,6 +333,6 @@ RTPharoCodeAnalyzer >> setStatusBar: string [
 RTPharoCodeAnalyzer >> translator [
 	^ RTSmoothLayoutTranslator new 
 			nbCycles: 0.5;
-			view: graph view;
+			view: view;
 			yourself
 ]

@@ -25,7 +25,7 @@ RTPharoCodeAnalyzerTest >> testChangeColor [
 	a pressSelect: 'Layout'.
 	a pressSetColor: Color red.
 	
-	self assert: (a graph view elementFromModel: RTShape) trachelShape color equals: Color gray.
+	self assert: (a graph view elementFromModel: RTShape) trachelShape color ~= Color red.
 	self assert: (a graph view elementFromModel: RTLayout) trachelShape color equals: Color red.
 
 ]

@@ -28,6 +28,11 @@ RTAnimation >> hasCompleted [
 	self subclassResponsibility
 ]
 
+{ #category : #public }
+RTAnimation >> inView: aView [
+	aView addAnimation: self
+]
+
 { #category : #refreshing }
 RTAnimation >> refresh [
 
