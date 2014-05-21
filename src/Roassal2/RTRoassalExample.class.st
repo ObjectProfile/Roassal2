@@ -2284,6 +2284,44 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleResizingElements [
+| v es resizeAnimation shape normalizer |
+v := RTView new.
+v @ RTDraggableView.
+normalizer := RTMultiLinearColor new.
+shape := RTBox new size: #yourself; color: [ :value | (normalizer level: (value / 100)) alpha: 0.4 ].
+es := shape elementsOn: (1 to: 100 by: 10).
+v addAll: es.
+
+v canvas addMenu: 'Press me!' callback: [ 
+	es do: [ :e | 
+		resizeAnimation := 
+			RTResizeMove new 
+				toExtent: (100 - e model) @ (100 - e model) on: e.
+		e model: (100 - e model).
+		v addAnimation: resizeAnimation ] ].
+v addAnimation: (RTLayoutAnimation new elements: es; yourself).
+
+v  open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleResizingElementsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAACBElEQVR4XuXYT0sqURjA4T6u
+Oz+DfgmPdyeIi8ABcW0KbYS5biyajVxoIVFKhCWXC/UaUxAE0X8v0vODl8HhOAznEQZnb7Px
+26X2/C3wQfxeA+l2u9HpdOK9X1gul+Fv2xZBUkrR6/Wi3W5HpVKJVqsV/X4/Go3Gw8aXWLVa
+LarVaozH4yiKwgfZJshkMnnY4Ol0GoPBIMrPWZZFs9l8Oj8ajWI4HG7q9XrMZjMfxH+G+CB+
+PoifD+KD+PkgPoifD+KD+PkgPoifD+Lng/ggfj6ID+Lng/ggfj6ID+Lng/ggfj6Inw/ig/j5
+ID6Inw/ig/j5ID6Inw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iB8LEqtV3K5u4t/84vG4
++hs386tnU667nK/jpfFBttB1fhJnKYvyeJ6fxlE6fDblmoNUxEvjg/gg1jPEB/FBfJDP5IP4
+ID6I/z9kB9pPi3htjvN15L/vIv26fXPKdfnJdaTs7ENT3kc6PIrPjA/ig/ggPogP4oP4ID6I
+D+KD+CA/Mx/EB/FBvg3PB/FBfJAt5IP4IH7+6/f3/DKLg/jK5Is/ka+PIy32vzzldXwQH8QH
+8UF8EB/EB/FBfBAfxAfxQXwQH8QH8UF8EB/EB/FBfBAfxAfxQXYxH8QH8UF2PR/EB/HzQXwQ
+Px/EB/HzQXwQv//dPcyFUJ9iOehYAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleRotatingAnimatedLabels [
 
 
@@ -2730,6 +2768,8 @@ RTRoassalExample >> exampleSmoothLayout [
 	v canvas addMenu: 'circle' callback: [ RTCircleLayout new translator: translator; scaleBy: 0.8; on: v elements. v canvas signalUpdate ].
 	
 	v canvas addMenu: 'radial' callback: [ RTRadialTreeLayout new translator: translator; on: v elements. v canvas signalUpdate ].
+	
+	v canvas addMenu: 'sugiyama' callback: [ RTSugiyamaLayout new translator: translator; on: v elements. v canvas signalUpdate ].
 	
 	v addAll: (RTBox new elementsOn: (1 to: 100)).
 	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.

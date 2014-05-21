@@ -197,7 +197,12 @@ RTPharoCodeAnalyzer >> setMenu [
 		menu: 'color'
 		submenu: 'green'
 		background: Color green
-		callback: [ self pressSetColor: Color green ]
+		callback: [ self pressSetColor: Color green ].
+		
+	b
+		menu: '+partition'
+		background: Color blue
+		callback: [ self pressAddPartition ]
 ]
 
 { #category : #'as yet unclassified' }
