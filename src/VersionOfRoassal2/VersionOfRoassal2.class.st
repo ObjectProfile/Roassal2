@@ -3250,3 +3250,14 @@ VersionOfRoassal2 >> version000247 [
 	at: #date put: '21 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000248 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.145';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.327';
+	at: #version put: '0.248';
+	at: #comment put: '0.248 : fix in RTIdentityMatrix';
+	at: #date put: '21 May 2014';
+	yourself
+]
