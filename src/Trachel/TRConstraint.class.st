@@ -19,6 +19,11 @@ TRConstraint class >> move: aShape below: anotherShape [
 ]
 
 { #category : #util }
+TRConstraint class >> move: aShape below: anotherShape using: translator [
+	^ translator translate: aShape to: anotherShape center + (0 @ ((anotherShape height + aShape height) / 2)) 
+]
+
+{ #category : #util }
 TRConstraint class >> move: aShape between: s1 and: s2 [
 	^ aShape translateTo: (s1 position + s2 position) /2 
 ]
@@ -42,6 +47,11 @@ TRConstraint class >> move: aShape onTheLeftOf: anotherShape [
 { #category : #util }
 TRConstraint class >> move: aShape onTheRightOf: anotherShape [
 	^ aShape translateTo: anotherShape center + ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ 0)
+]
+
+{ #category : #util }
+TRConstraint class >> move: aShape onTheRightOf: anotherShape using: translator [
+	^ translator translate: aShape to: anotherShape center + ((((anotherShape width / 2) rounded) + (aShape width/2 rounded)) @ 0)
 ]
 
 { #category : #util }

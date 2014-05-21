@@ -94,12 +94,6 @@ TRLineShape >> position [
 ]
 
 { #category : #accessing }
-TRLineShape >> strokePaint [
-	"return the color of the border line"
-	^ self color
-]
-
-{ #category : #accessing }
 TRLineShape >> to [
 	"Return a point"
 	^ to
