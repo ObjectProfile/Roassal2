@@ -276,7 +276,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	"spec for: #'pharo1.4.x' version: '0.9'"
 	
 	"Specfiy which exact version you want to load"
-	spec for: #'common' version: '1.1'.
+	spec for: #'common' version: '1.1-baseline'.
 	
 ]
 
