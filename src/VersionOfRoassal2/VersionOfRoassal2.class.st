@@ -3261,3 +3261,14 @@ VersionOfRoassal2 >> version000248 [
 	at: #date put: '21 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000249 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.145';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.328';
+	at: #version put: '0.249';
+	at: #comment put: '0.249 : changed ROSortBlock into RTSortBlock';
+	at: #date put: '21 May 2014';
+	yourself
+]
