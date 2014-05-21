@@ -14,7 +14,7 @@ Class {
 { #category : #utils }
 RTSugiyamaLayout class >> sortBlock [
 	
-	^ ROSortBlock new
+	^ RTSortBlock new
 ]
 
 { #category : #private }
