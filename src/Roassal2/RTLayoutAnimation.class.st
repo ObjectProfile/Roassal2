@@ -18,12 +18,12 @@ RTLayoutAnimation >> elements: anObject [
 	elements := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTLayoutAnimation >> hasCompleted [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLayoutAnimation >> initialize [
 	super initialize.
 	layout := RTGridLayout new
@@ -39,7 +39,7 @@ RTLayoutAnimation >> layout: anObject [
 	layout := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTLayoutAnimation >> refresh [
 	layout on: elements.
 	
