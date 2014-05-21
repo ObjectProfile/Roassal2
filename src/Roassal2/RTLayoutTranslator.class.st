@@ -1,6 +1,9 @@
 Class {
 	#name : #RTLayoutTranslator,
 	#superclass : #RTObject,
+	#instVars : [
+		'view'
+	],
 	#classInstVars : [
 		'defaultTranslator'
 	],
@@ -47,4 +50,14 @@ RTLayoutTranslator >> translateCenterLeftOf: element to: newPosition [
 RTLayoutTranslator >> translateTopLeftOf: element to: newPosition [
 	"Translate the top left corner of the element"
 	self translate: element to: (newPosition + (element extent / 2))
+]
+
+{ #category : #accessing }
+RTLayoutTranslator >> view [
+	^ view
+]
+
+{ #category : #accessing }
+RTLayoutTranslator >> view: anObject [
+	view := anObject
 ]

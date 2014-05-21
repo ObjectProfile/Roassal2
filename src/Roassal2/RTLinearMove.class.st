@@ -25,7 +25,7 @@ RTLinearMove >> hasCompleted [
 { #category : #refreshing }
 RTLinearMove >> refresh [
 	element translateTo: animatedValue value.
-	element trachelShape signalUpdate.
+	element signalUpdate
 ]
 
 { #category : #accessing }

@@ -46,5 +46,7 @@ RTSmoothLayoutTranslator >> nbCycles: anInteger [
 RTSmoothLayoutTranslator >> translate: element to: newPosition [
 	move := RTLinearMove new
 					to: newPosition during: nbCycles on: element.
-	element view addAnimation: move.
+
+	view ifNil: [ view := element view ].
+	view addAnimation: move.
 ]

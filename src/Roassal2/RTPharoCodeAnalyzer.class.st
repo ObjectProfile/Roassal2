@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : #'Roassal2-PharoCodeAnalyzer'
+	#category : #'Roassal2-DataStudio'
 }
 
 { #category : #'as yet unclassified' }
@@ -47,7 +47,8 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> currentSelection [
-	^ currentSelection 
+	"Return a list of elements that is currently selected"
+	^ RTGroup withAll: currentSelection 
 ]
 
 { #category : #'as yet unclassified' }
@@ -67,8 +68,14 @@ RTPharoCodeAnalyzer >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> notSelectedElements [
+	"Return a list of elements that are __not__ currently selected"
+	^ RTGroup withAll: (graph view elements copyWithoutAll: self currentSelection)
+]
+
+{ #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> open [
-	graph open.
+	graph open
 ]
 
 { #category : #'as yet unclassified' }
@@ -107,52 +114,90 @@ RTPharoCodeAnalyzer >> pressAddPackages: regExp [
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressLayout: layout [
-
 	layout
-		translator: (RTSmoothLayoutTranslator new nbCycles: 0.5);
+		translator: self translator;
 		on: self currentSelection
 ]
 
 { #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressMoveRight [
+	^ TRConstraint move: self currentSelection onTheRightOf: self notSelectedElements using: self translator
+]
+
+{ #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSelect [
-	| regExp elements str |
+	| regExp  str |
 	regExp := UIManager default request: 'Enter a regexp for elements (e.g., RTShape)'.
 	regExp ifNil: [ ^ self ].
 	
-	elements := graph view elements select: [ :el | '*', regExp, '*' match: el model asString ].
-	str := (elements collect: #model) asString.
-	self setStatusBar: (str copyFrom: 1 to: (str size min: 70)), ' ...'
+	self pressSelect: regExp
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSelect: regExp [
+	| str |	
+	currentSelection := graph view elements select: [ :el | '*', regExp, '*' match: el model asString ].
+
+	str := (currentSelection collect: #model) asString.
+	self setStatusBar: '#', currentSelection size printString, ':', (str copyFrom: 1 to: (str size min: 70)), ' ...'
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetColor: aColor [
+	self currentSelection do: [ :e | e trachelShape color: aColor ].
+	graph view signalUpdate
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> setMenu [
 	| b |
-
-	b := RTMenuBuilder new view: graph view.
-
-	"adding"
-	b menu: 'add nodes' submenu: 'packages' background: Color red callback: [
-		self pressAddPackages
-	].
-
-	b menu: 'add nodes' submenu: 'classes' background: Color red callback: [ 
-		self pressAddClasses
-	].
-
-	b menu: 'layout' submenu: 'grid' background: Color red callback: [ 
-		self pressLayout: RTGridLayout new
-	].
-
-	b menu: 'layout' submenu: 'flow' background: Color red callback: [ 
-		self pressLayout: RTFlowLayout new
-	].
-	b menu: 'layout' submenu: 'tree' background: Color red callback: [ 
-		self pressLayout: RTTreeLayout new
-	].
-
-	b menu: 'select' background: Color blue callback: [ 
-		self pressSelect
-	].
+	b := RTMenuBuilder new view: graph view.	"adding"
+	b
+		menu: 'add nodes'
+		submenu: 'packages'
+		background: Color red
+		callback: [ self pressAddPackages ].
+	b
+		menu: 'add nodes'
+		submenu: 'classes'
+		background: Color red
+		callback: [ self pressAddClasses ].
+	b
+		menu: 'layout'
+		submenu: 'grid'
+		background: Color red
+		callback: [ self pressLayout: RTGridLayout new ].
+	b
+		menu: 'layout'
+		submenu: 'flow'
+		background: Color red
+		callback: [ self pressLayout: RTFlowLayout new ].
+	b
+		menu: 'layout'
+		submenu: 'tree'
+		background: Color red
+		callback: [ self pressLayout: RTTreeLayout new ].
+	b
+		menu: 'layout'
+		submenu: 'right'
+		background: Color red
+		callback: [ self pressMoveRight ].
+	b menu: 'select' background: Color blue callback: [ self pressSelect ].
+	b
+		menu: 'color'
+		submenu: 'red'
+		background: Color green
+		callback: [ self pressSetColor: Color red ].
+	b
+		menu: 'color'
+		submenu: 'blue'
+		background: Color green
+		callback: [ self pressSetColor: Color blue ].
+	b
+		menu: 'color'
+		submenu: 'green'
+		background: Color green
+		callback: [ self pressSetColor: Color green ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -170,4 +215,12 @@ RTPharoCodeAnalyzer >> setStatusBar: string [
 	statusBar canvas announce: TRResizeCanvasEvent new.
 	graph view signalUpdate.
 	
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> translator [
+	^ RTSmoothLayoutTranslator new 
+			nbCycles: 0.5;
+			view: graph view;
+			yourself
 ]
