@@ -1,6 +1,6 @@
 Class {
 	#name : #RTIdentityMatrix,
-	#superclass : #ROObject,
+	#superclass : #RTObject,
 	#instVars : [
 		'rows'
 	],
