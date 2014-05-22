@@ -46,6 +46,31 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> addClassesFromRegExp: regExp [
+	| classes |
+	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
+	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: classes) @ RTPopup @ RTDraggable.
+	self setStatusBar: classes size printString, ' added nodes'.
+	currentSelection := view elementsFromModels: classes
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> addPackagesFromRegExp: regExp [
+	| paks |
+	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
+	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
+	self setStatusBar: paks size printString, ' added nodes'.
+	currentSelection := view elementsFromModels: paks
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> applyLayout: layout [
+	layout
+		translator: self translator;
+		on: self currentSelection
+]
+
+{ #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> currentSelection [
 	"Return a list of elements that is currently selected"
 	^ RTGroup withAll: currentSelection 
@@ -83,16 +108,7 @@ RTPharoCodeAnalyzer >> pressAddClasses [
 	| regExp |
 	regExp := UIManager default request: 'Enter a regexp for classes (e.g., RT*)'.
 	regExp ifNil: [ ^ self ].
-	self pressAddClasses: regExp
-]
-
-{ #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> pressAddClasses: regExp [
-	| classes |
-	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
-	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: classes) @ RTPopup @ RTDraggable.
-	self setStatusBar: classes size printString, ' added nodes'.
-	currentSelection := view elementsFromModels: classes
+	self addClassesFromRegExp: regExp
 ]
 
 { #category : #'as yet unclassified' }
@@ -100,23 +116,7 @@ RTPharoCodeAnalyzer >> pressAddPackages [
 	| regExp |
 	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
 	regExp ifNil: [ ^ self ].
-	self pressAddPackages: regExp
-]
-
-{ #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> pressAddPackages: regExp [
-	| paks |
-	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
-	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
-	self setStatusBar: paks size printString, ' added nodes'.
-	currentSelection := view elementsFromModels: paks
-]
-
-{ #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> pressLayout: layout [
-	layout
-		translator: self translator;
-		on: self currentSelection
+	self addPackagesFromRegExp: regExp
 ]
 
 { #category : #'as yet unclassified' }
@@ -130,22 +130,7 @@ RTPharoCodeAnalyzer >> pressSelect [
 	regExp := UIManager default request: 'Enter a regexp for elements (e.g., RTShape)'.
 	regExp ifNil: [ ^ self ].
 	
-	self pressSelect: regExp
-]
-
-{ #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> pressSelect: regExp [
-	| str |	
-	currentSelection := view elements select: [ :el | '*', regExp, '*' match: el model asString ].
-
-	str := (currentSelection collect: #model) asString.
-	self setStatusBar: '#', currentSelection size printString, ':', (str copyFrom: 1 to: (str size min: 70)), ' ...'
-]
-
-{ #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> pressSetColor: aColor [
-	self currentSelection do: [ :e | e trachelShape color: aColor ].
-	view signalUpdate
+	self selectFromRegExp: regExp
 ]
 
 { #category : #'as yet unclassified' }
@@ -185,6 +170,15 @@ RTPharoCodeAnalyzer >> pressSetYLog: symbolOrBlock [
 ]
 
 { #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> selectFromRegExp: regExp [
+	| str |	
+	currentSelection := view elements select: [ :el | '*', regExp, '*' match: el model asString ].
+
+	str := (currentSelection collect: #model) asString.
+	self setStatusBar: '#', currentSelection size printString, ':', (str copyFrom: 1 to: (str size min: 70)), ' ...'
+]
+
+{ #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> setMenu [
 	| b |
 	b := RTMenuBuilder new view: view.	"adding"
@@ -202,17 +196,17 @@ RTPharoCodeAnalyzer >> setMenu [
 		menu: 'layout'
 		submenu: 'grid'
 		background: Color red
-		callback: [ self pressLayout: RTGridLayout new ].
+		callback: [ self applyLayout: RTGridLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'flow'
 		background: Color red
-		callback: [ self pressLayout: RTFlowLayout new ].
+		callback: [ self applyLayout: RTFlowLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'tree'
 		background: Color red
-		callback: [ self pressLayout: RTTreeLayout new ].
+		callback: [ self applyLayout: RTTreeLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'right'
@@ -223,17 +217,17 @@ RTPharoCodeAnalyzer >> setMenu [
 		menu: 'color'
 		submenu: 'red'
 		background: Color green
-		callback: [ self pressSetColor: Color red ].
+		callback: [ self setSelectionToColor: Color red ].
 	b
 		menu: 'color'
 		submenu: 'blue'
 		background: Color green
-		callback: [ self pressSetColor: Color blue ].
+		callback: [ self setSelectionToColor: Color blue ].
 	b
 		menu: 'color'
 		submenu: 'green'
 		background: Color green
-		callback: [ self pressSetColor: Color green ].
+		callback: [ self setSelectionToColor: Color green ].
 
 
 	b
@@ -310,6 +304,12 @@ RTPharoCodeAnalyzer >> setMenu [
 		menu: '+partition'
 		background: Color blue
 		callback: [ self pressAddPartition ]" 
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> setSelectionToColor: aColor [
+	self currentSelection do: [ :e | e trachelShape color: aColor ].
+	view signalUpdate
 ]
 
 { #category : #'as yet unclassified' }

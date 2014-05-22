@@ -45,13 +45,67 @@ Q6IfqUS4+RWAS1cnQeuYnlDoPQdAMdPW2AiR6dlFeslG+U49UV+yQMQK2CfEU0wp17B5EUgg
 PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+RTSmartBrowser >> addClasses: classes [
+	"Add a list of Pharo classes"
+	
+	| es shape |
+	shape := RTBox new
+		height: [ :c | c numberOfMethods max: 5 ];
+		width: [ :c | c numberOfVariables * 4 max: 5 ];
+		color: (Color gray alpha: 0.4).
+	es := shape elementsOn: classes.
+	es @ RTPopup @ RTDraggable.
+	view addAll: es.
+	RTEdge
+		buildEdgesFromObjects: classes
+		from: #superclass
+		to: #yourself
+		using: (RTLine new attachPoint: RTVerticalAttachPoint instance)
+		inView: view.
+		
+"We look for the hierarchy root"	"	es do: [ :el | 
+		(classes includes: el model superclass)
+			ifFalse: [ el @ RTLabelled ] ].
+"
+	es
+		when: TRMouseClick
+		do: [ :e | 
+			self expandClassElement: e element.
+			self applyLayout: RTTreeLayout new ].
+	self setStatusBar: classes size printString , ' added classes'.
+	currentSelection := view elementsFromModels: classes.
+	self applyLayout: RTTreeLayout new
+]
+
+{ #category : #adding }
+RTSmartBrowser >> addClassesFromRegExp: regExp [
+	| classes |
+	classes := self getClassesMatching: regExp.
+	self addClasses: classes
+]
+
+{ #category : #adding }
+RTSmartBrowser >> addPackagesFromRegExp: regExp [
+	| paks |
+	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
+	self addClasses: (paks flatCollect: #definedClasses)
+]
+
+{ #category : #'UI effects' }
+RTSmartBrowser >> applyLayout: layout [
+	layout
+		translator: self translator;
+		on: self currentSelection
+]
+
+{ #category : #accessing }
 RTSmartBrowser >> currentSelection [
 	"Return a list of elements that is currently selected"
 	^ RTGroup withAll: currentSelection 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'UI effects' }
 RTSmartBrowser >> expandClassElement: classElement [
 	| class methods methodShape methodElements |
 	class := classElement model.
@@ -76,12 +130,17 @@ RTSmartBrowser >> expandClassElement: classElement [
 	RTNest new on: classElement nest: methodElements.
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> graph [
-	^ view
+{ #category : #accessing }
+RTSmartBrowser >> getClassesMatching: regExp [
+	^ self getClassesMatching: regExp from: Smalltalk allClasses
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
+	^ setOfClasses select: [ :c | regExp match: c name ]
+]
+
+{ #category : #initialization }
 RTSmartBrowser >> initialize [
 	super initialize.
 	view := RTView new. 
@@ -92,101 +151,145 @@ RTSmartBrowser >> initialize [
 	currentSelection := #()
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSmartBrowser >> notSelectedElements [
 	"Return a list of elements that are __not__ currently selected"
 	^ RTGroup withAll: (view elements copyWithoutAll: self currentSelection)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #opening }
 RTSmartBrowser >> open [
 	view open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #callbacks }
 RTSmartBrowser >> pressAddClasses [
 	| regExp |
-	regExp := UIManager default request: 'Enter a regexp for classes (e.g., RT*)'.
+	regExp := UIManager default request: 'Enter a regexp for classes (e.g., Layout)'.
 	regExp ifNil: [ ^ self ].
-	self pressAddClasses: regExp
+	self addClassesFromRegExp: regExp
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> pressAddClasses: regExp [
-	| classes shape es |
-	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
-	
-	shape := RTBox new 
-				height: [ :c | c numberOfMethods max: 5 ]; 
-				width: [ :c | c numberOfVariables * 4 max: 5 ]; color: (Color gray alpha: 0.4).
-	es := shape elementsOn: classes.
-	es @ RTPopup @ RTDraggable.
-	view addAll: es.	
-	
-	RTEdge 
-		buildEdgesFromObjects: classes 
-		from: #superclass 
-		to: #yourself 
-		using: (RTLine new attachPoint: RTVerticalAttachPoint instance)
-		inView: view.
-
-"We look for the hierarchy root"
-"	es do: [ :el | 
-		(classes includes: el model superclass)
-			ifFalse: [ el @ RTLabelled ] ].
-"	
-	
-	es when: TRMouseClick do: [ :e |
-		self expandClassElement: e element.
-		self pressLayout: RTTreeLayout new.
-	].
-	
-	self setStatusBar: classes size printString, ' added classes'.
-	currentSelection := view elementsFromModels: classes.
-	
-	self pressLayout: RTTreeLayout new.
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #callbacks }
 RTSmartBrowser >> pressAddPackages [
 	| regExp |
 	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
 	regExp ifNil: [ ^ self ].
-	self pressAddPackages: regExp
+	self addPackagesFromRegExp: regExp
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> pressAddPackages: regExp [
-	| paks |
-	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
-	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
-	self setStatusBar: paks size printString, ' added nodes'.
-	currentSelection := view elementsFromModels: paks
+{ #category : #callbacks }
+RTSmartBrowser >> pressCleanInterCategoriesEdges [
+	view edges copy do: [ :edge | (edge from model category ~= edge to model category) ifTrue: [ edge remove ] ].
+	view signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> pressLayout: layout [
-	layout
+{ #category : #callbacks }
+RTSmartBrowser >> pressCleanInterPackagesEdges [
+	view edges copy do: [ :edge | (edge from model package ~~ edge to model package) ifTrue: [ edge remove ] ].
+	view signalUpdate
+]
+
+{ #category : #callbacks }
+RTSmartBrowser >> pressColorPerCategory [
+	| categories n |
+	categories := self shownCategories.
+	n := RTMultiLinearColor new.
+	n colors: (ColorPalette qualitative colors: 8 scheme:'Set2').
+	view elements do: [ :e | e trachelShape color: (n level: ((categories indexOf: e model category) / categories size)) ].
+	
+	view signalUpdate
+]
+
+{ #category : #callbacks }
+RTSmartBrowser >> pressFindClass [
+	| regExp clss cls clsElement index |
+	regExp := UIManager default request: 'Enter a class name (e.g., a fraction of a classname, a reg exp)'.
+	regExp ifNil: [ ^ self ].
+	
+	clss := self getClassesMatching: '*', regExp, '*' from: self shownClasses.
+	clss size = 0 ifTrue: [ ^ self ].
+	clss size = 1 ifTrue: [ cls := clss first ].
+	clss size > 1 ifTrue: [ 
+		index := UIManager default chooseFrom: clss. 
+		index = 0 ifTrue: [ ^ self ].
+		cls := clss at: index ].
+
+	clsElement := view elementFromModel: cls.
+	clsElement ifNil: [ ^ self ].
+	view canvas camera translateTo: clsElement position.
+	RTBlink on: clsElement
+]
+
+{ #category : #callbacks }
+RTSmartBrowser >> pressLayoutPerCategory [
+	| categories groups clss currentGroup |
+	clss := view elements collect: #model.
+	categories := (clss collect: #category) asSet asSortedCollection.
+	groups := OrderedCollection new.
+	
+	categories do: [ :p |
+		currentGroup := RTGroup new.
+		clss do: [ :cls | (cls category = p) ifTrue: [ currentGroup add: (view elementFromModel: cls) ] ].
+		groups add: currentGroup
+		 ].
+	
+	groups do: [ :g |
+		RTTreeLayout new
+			on: g
+	].
+	RTFlowLayout new
 		translator: self translator;
-		on: self currentSelection
+		on: groups
+		
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #callbacks }
+RTSmartBrowser >> pressLayoutPerPackage [
+	| packages groups clss currentGroup |
+	clss := view elements collect: #model.
+	packages := (clss collect: #package) asSet asSortedCollection: [ :p1 :p2 | p1 name < p2 name ].
+	groups := OrderedCollection new.
+	
+	packages do: [ :p |
+		currentGroup := RTGroup new.
+		clss do: [ :cls | (cls package == p) ifTrue: [ currentGroup add: (view elementFromModel: cls) ] ].
+		groups add: currentGroup
+		 ].
+	
+	groups do: [ :g |
+		RTTreeLayout new
+			translator: self translator;
+			on: g
+	].
+	RTFlowLayout new
+		translator: self translator;
+		on: groups
+		
+
+
+"	RTFlowLayout on
+		translator: self translator;
+		on: self currentSelection"
+]
+
+{ #category : #callbacks }
 RTSmartBrowser >> pressMoveRight [
 	^ TRConstraint move: self currentSelection onTheRightOf: self notSelectedElements using: self translator
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #callbacks }
 RTSmartBrowser >> pressSelect [
 	| regExp  str |
 	regExp := UIManager default request: 'Enter a regexp for elements (e.g., RTShape)'.
 	regExp ifNil: [ ^ self ].
 	
-	self pressSelect: regExp
+	self selectFromRegExp: regExp
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> pressSelect: regExp [
+{ #category : #selection }
+RTSmartBrowser >> selectFromRegExp: regExp [
 	| str |	
 	currentSelection := view elements select: [ :el | '*', regExp, '*' match: el model asString ].
 
@@ -194,13 +297,7 @@ RTSmartBrowser >> pressSelect: regExp [
 	self setStatusBar: '#', currentSelection size printString, ':', (str copyFrom: 1 to: (str size min: 70)), ' ...'
 ]
 
-{ #category : #'as yet unclassified' }
-RTSmartBrowser >> pressSetColor: aColor [
-	self currentSelection do: [ :e | e trachelShape color: aColor ].
-	view signalUpdate
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'UI initialization' }
 RTSmartBrowser >> setMenu [
 	| b |
 	b := RTMenuBuilder new view: view.	"adding"
@@ -214,42 +311,62 @@ RTSmartBrowser >> setMenu [
 		submenu: 'classes'
 		background: Color red
 		callback: [ self pressAddClasses ].
+		
+	b
+		menu: 'layout'
+		submenu: 'per package'
+		background: Color red
+		callback: [ self pressLayoutPerPackage ].
+	b
+		menu: 'layout'
+		submenu: 'per category'
+		background: Color red
+		callback: [ self pressLayoutPerCategory ].
+
 	b
 		menu: 'layout'
 		submenu: 'grid'
 		background: Color red
-		callback: [ self pressLayout: RTGridLayout new ].
+		callback: [ self applyLayout: RTGridLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'flow'
 		background: Color red
-		callback: [ self pressLayout: RTFlowLayout new ].
+		callback: [ self applyLayout: RTFlowLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'tree'
 		background: Color red
-		callback: [ self pressLayout: RTTreeLayout new ].
+		callback: [ self applyLayout: RTTreeLayout new ].
 	b
 		menu: 'layout'
 		submenu: 'right'
 		background: Color red
 		callback: [ self pressMoveRight ].
 	b menu: 'select' background: Color blue callback: [ self pressSelect ].
+	
+	
+	b
+		menu: 'color'
+		submenu: 'per category'
+		background: Color green
+		callback: [ self pressColorPerCategory ].
+	
 	b
 		menu: 'color'
 		submenu: 'red'
 		background: Color green
-		callback: [ self pressSetColor: Color red ].
+		callback: [ self setSelectionToColor: Color red ].
 	b
 		menu: 'color'
 		submenu: 'blue'
 		background: Color green
-		callback: [ self pressSetColor: Color blue ].
+		callback: [ self setSelectionToColor: Color blue ].
 	b
 		menu: 'color'
 		submenu: 'green'
 		background: Color green
-		callback: [ self pressSetColor: Color green ].
+		callback: [ self setSelectionToColor: Color green ].
 
 
 	b
@@ -257,18 +374,41 @@ RTSmartBrowser >> setMenu [
 		submenu: 'All'
 		background: Color blue
 		callback: [ view clean ].
+	b
+		menu: 'Clean'
+		submenu: 'Inter packages edges'
+		background: Color blue
+		callback: [ self pressCleanInterPackagesEdges ].
+	b
+		menu: 'Clean'
+		submenu: 'Inter categories edges'
+		background: Color blue
+		callback: [ self pressCleanInterCategoriesEdges ].
+	
+		
+		
 		
 	b
-		menu: 'remove'
+		menu: 'Find'
+		submenu: 'class'
 		background: Color blue
-		callback: [ self pressRemove ]		
+		callback: [ self pressFindClass ].
+
+
+
 "	b
 		menu: '+partition'
 		background: Color blue
 		callback: [ self pressAddPartition ]" 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
+RTSmartBrowser >> setSelectionToColor: aColor [
+	self currentSelection do: [ :e | e trachelShape color: aColor ].
+	view signalUpdate
+]
+
+{ #category : #'UI initialization' }
 RTSmartBrowser >> setStatusBar [
 
 	statusBar := TRLabelShape new.
@@ -276,7 +416,7 @@ RTSmartBrowser >> setStatusBar [
 	TRConstraint stickAtTheBottomOfTheWindow: statusBar
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'UI initialization' }
 RTSmartBrowser >> setStatusBar: string [
 
 	statusBar text: string.
@@ -285,7 +425,22 @@ RTSmartBrowser >> setStatusBar: string [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTSmartBrowser >> shownCategories [
+
+	| clss categories |
+	clss := view elements collect: #model.
+	categories := (clss collect: #category) asSet asSortedCollection.
+	^ categories
+]
+
+{ #category : #accessing }
+RTSmartBrowser >> shownClasses [
+	"Return the list of methods currently displayed"
+	^ view elements collect: #model
+]
+
+{ #category : #utility }
 RTSmartBrowser >> translator [
 	^ RTSmoothLayoutTranslator new 
 			nbCycles: 0.5;

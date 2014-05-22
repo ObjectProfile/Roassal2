@@ -15,15 +15,15 @@ RTPharoCodeAnalyzerTest >> setUp [
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testAddingClasses [
-	a pressAddClasses: 'RT*'.
+	a addClassesFromRegExp: 'RT*'.
 	self assert: a graph view numberOfElements > 80 
 ]
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testChangeColor [
-	a pressAddClasses: 'RT*'.
-	a pressSelect: 'Layout'.
-	a pressSetColor: Color red.
+	a addClassesFromRegExp: 'RT*'.
+	a selectFromRegExp: 'Layout'.
+	a setSelectionToColor: Color red.
 	
 	self assert: (a graph view elementFromModel: RTShape) trachelShape color ~= Color red.
 	self assert: (a graph view elementFromModel: RTLayout) trachelShape color equals: Color red.
@@ -41,9 +41,9 @@ RTPharoCodeAnalyzerTest >> testDefault [
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testSelecting [
 	| t |
-	a pressAddClasses: 'RT*'.
+	a addClassesFromRegExp: 'RT*'.
 	t := a currentSelection size.
-	a pressSelect: 'Layout'.
+	a selectFromRegExp: 'Layout'.
 	self assert: a currentSelection size < t.
 	
 
@@ -51,6 +51,6 @@ RTPharoCodeAnalyzerTest >> testSelecting [
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testSelection [
-	a pressAddClasses: 'RT*'.
+	a addClassesFromRegExp: 'RT*'.
 	self assert: a currentSelection size > 80
 ]
