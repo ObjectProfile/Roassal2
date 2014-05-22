@@ -1,5 +1,5 @@
 Class {
-	#name : #RTSmallBrowser,
+	#name : #RTSmartBrowser,
 	#superclass : #RTObject,
 	#instVars : [
 		'statusBar',
@@ -13,25 +13,25 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser class >> menuCommandOn: aBuilder [
+RTSmartBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #'Pharo Small Browser')
 		order: 0.1; 
 		parent: #Tools;
-		label: 'Pharo Small Browser';
+		label: 'Pharo Smart Browser';
 		icon: self roassalWithTransparentIcon;
 		action:[ self new open ]
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser class >> roassalWithTransparentIcon [
+RTSmartBrowser class >> roassalWithTransparentIcon [
 	"Private - Generated method"
 	^ icon ifNil: [ icon := Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self roassalWithTransparentIconContents readStream) ].
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser class >> roassalWithTransparentIconContents [
+RTSmartBrowser class >> roassalWithTransparentIconContents [
 	"Private - Method generated with the content of the file /Users/alexandrebergel/Documents/ObjectProfile/Logos/RoassalWithTransparent.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAACXBIWXMAAAsTAAALEwEAmpwY
 AAABrklEQVQ4jc2TP0+TURSHn99tQwxYXQATmtc/pHXQtthCCImbA4mJRh3o6ICTX8AY/ALK
@@ -46,13 +46,13 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> currentSelection [
+RTSmartBrowser >> currentSelection [
 	"Return a list of elements that is currently selected"
 	^ RTGroup withAll: currentSelection 
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> expandClassElement: classElement [
+RTSmartBrowser >> expandClassElement: classElement [
 	| class methods methodShape methodElements |
 	class := classElement model.
 	methods := class methods.
@@ -77,12 +77,12 @@ RTSmallBrowser >> expandClassElement: classElement [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> graph [
+RTSmartBrowser >> graph [
 	^ view
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> initialize [
+RTSmartBrowser >> initialize [
 	super initialize.
 	view := RTView new. 
 	view @ RTDraggableView.
@@ -93,18 +93,18 @@ RTSmallBrowser >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> notSelectedElements [
+RTSmartBrowser >> notSelectedElements [
 	"Return a list of elements that are __not__ currently selected"
 	^ RTGroup withAll: (view elements copyWithoutAll: self currentSelection)
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> open [
+RTSmartBrowser >> open [
 	view open
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressAddClasses [
+RTSmartBrowser >> pressAddClasses [
 	| regExp |
 	regExp := UIManager default request: 'Enter a regexp for classes (e.g., RT*)'.
 	regExp ifNil: [ ^ self ].
@@ -112,7 +112,7 @@ RTSmallBrowser >> pressAddClasses [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressAddClasses: regExp [
+RTSmartBrowser >> pressAddClasses: regExp [
 	| classes shape es |
 	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
 	
@@ -148,7 +148,7 @@ RTSmallBrowser >> pressAddClasses: regExp [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressAddPackages [
+RTSmartBrowser >> pressAddPackages [
 	| regExp |
 	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
 	regExp ifNil: [ ^ self ].
@@ -156,7 +156,7 @@ RTSmallBrowser >> pressAddPackages [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressAddPackages: regExp [
+RTSmartBrowser >> pressAddPackages: regExp [
 	| paks |
 	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
 	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
@@ -165,19 +165,19 @@ RTSmallBrowser >> pressAddPackages: regExp [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressLayout: layout [
+RTSmartBrowser >> pressLayout: layout [
 	layout
 		translator: self translator;
 		on: self currentSelection
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressMoveRight [
+RTSmartBrowser >> pressMoveRight [
 	^ TRConstraint move: self currentSelection onTheRightOf: self notSelectedElements using: self translator
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressSelect [
+RTSmartBrowser >> pressSelect [
 	| regExp  str |
 	regExp := UIManager default request: 'Enter a regexp for elements (e.g., RTShape)'.
 	regExp ifNil: [ ^ self ].
@@ -186,7 +186,7 @@ RTSmallBrowser >> pressSelect [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressSelect: regExp [
+RTSmartBrowser >> pressSelect: regExp [
 	| str |	
 	currentSelection := view elements select: [ :el | '*', regExp, '*' match: el model asString ].
 
@@ -195,13 +195,13 @@ RTSmallBrowser >> pressSelect: regExp [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> pressSetColor: aColor [
+RTSmartBrowser >> pressSetColor: aColor [
 	self currentSelection do: [ :e | e trachelShape color: aColor ].
 	view signalUpdate
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> setMenu [
+RTSmartBrowser >> setMenu [
 	| b |
 	b := RTMenuBuilder new view: view.	"adding"
 	b
@@ -269,7 +269,7 @@ RTSmallBrowser >> setMenu [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> setStatusBar [
+RTSmartBrowser >> setStatusBar [
 
 	statusBar := TRLabelShape new.
 	view canvas addFixedShape: statusBar.
@@ -277,7 +277,7 @@ RTSmallBrowser >> setStatusBar [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> setStatusBar: string [
+RTSmartBrowser >> setStatusBar: string [
 
 	statusBar text: string.
 	statusBar canvas announce: TRResizeCanvasEvent new.
@@ -286,7 +286,7 @@ RTSmallBrowser >> setStatusBar: string [
 ]
 
 { #category : #'as yet unclassified' }
-RTSmallBrowser >> translator [
+RTSmartBrowser >> translator [
 	^ RTSmoothLayoutTranslator new 
 			nbCycles: 0.5;
 			view: view;
