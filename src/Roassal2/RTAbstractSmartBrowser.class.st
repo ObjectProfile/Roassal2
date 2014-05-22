@@ -54,8 +54,7 @@ RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
 	methodElements
 		when: TRMouseClick
 		do: [ :event | 
-			self clickOnMethod: event	"model := Pitekun new view: view; addCompiledMethod: event element model.
-			element := view elementFromModel: model. " ]
+			self clickOnMethod: event ]
 ]
 
 { #category : #adding }
