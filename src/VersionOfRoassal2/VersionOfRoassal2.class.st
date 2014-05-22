@@ -3294,3 +3294,14 @@ VersionOfRoassal2 >> version000251 [
 	at: #date put: '22 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000252 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.145';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.331';
+	at: #version put: '0.252';
+	at: #comment put: '0.252 : Renamed Small Browser into Smart Browser';
+	at: #date put: '22 May 2014';
+	yourself
+]
