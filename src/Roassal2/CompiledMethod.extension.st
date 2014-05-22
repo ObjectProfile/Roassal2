@@ -55,3 +55,8 @@ CompiledMethod >> livingInDays [
 
 	^ (DateAndTime now - self date) asDays
 ]
+
+{ #category : #'*roassal2' }
+CompiledMethod >> numberOfLinesOfCode [
+	^ self linesOfCode
+]
