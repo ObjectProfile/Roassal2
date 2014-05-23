@@ -48,6 +48,16 @@ ClassDescription >> livingInDays [
 ]
 
 { #category : #'*roassal2' }
+ClassDescription >> numberOfSubclasses [
+	^ self allSubclasses size
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> numberOfVariables [
+	^ self instVarNames size
+]
+
+{ #category : #'*roassal2' }
 ClassDescription >> oldestMethod [
 	"We pick a method, and put the cache in it"
 	| aMethod |
