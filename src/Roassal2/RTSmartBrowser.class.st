@@ -56,10 +56,13 @@ RTSmartBrowser >> addVisitedClass: aClass [
 
 { #category : #'as yet unclassified' }
 RTSmartBrowser >> addVisitedMethod: aCompiledMethod [
+	| el |
 	visitedMethods addFirst: aCompiledMethod.
 	visitedMethods size > 10 ifTrue: [ visitedMethods := visitedMethods copyFrom: 1 to: 10 ].
 	
-	visitedMethods do: [ :m | (view elementFromModel: m) update ].
+	visitedMethods do: [ :m | 
+		el := view elementFromModel: m.
+		el ifNotNil: [ el update ] ].
 	view signalUpdate.
 
 ]
