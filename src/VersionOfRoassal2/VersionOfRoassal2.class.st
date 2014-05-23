@@ -3382,3 +3382,14 @@ VersionOfRoassal2 >> version000259 [
 	at: #date put: '23 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000260 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.146';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.338';
+	at: #version put: '0.260';
+	at: #comment put: '0.260 : added missing methods on SequenceableCollection';
+	at: #date put: '23 May 2014';
+	yourself
+]
