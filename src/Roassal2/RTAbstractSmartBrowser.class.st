@@ -54,7 +54,7 @@ RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
 	methodElements
 		when: TRMouseClick
 		do: [ :event | 
-			self clickOnMethod: event ]
+			self clickOnMethod: event element model ]
 ]
 
 { #category : #adding }
@@ -95,7 +95,10 @@ RTAbstractSmartBrowser >> currentSelection [
 { #category : #'UI effects' }
 RTAbstractSmartBrowser >> expandClassElement: classElement [
 	| class methods methodElements edges |
+	
 	class := classElement model.
+	self clickOnClass: class.
+
 	methods := class methods.
 	classElement attributes at: #oldExtent put: classElement extent.
 	classElement attributes at: #oldColor put: classElement trachelShape color.
@@ -133,16 +136,12 @@ RTAbstractSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
 { #category : #initialization }
 RTAbstractSmartBrowser >> initialize [
 	super initialize.
-	self initializeView: RTView new. 
+	view := RTView new. 
 	view @ RTDraggableView.
-	currentSelection := #()
-]
 
-{ #category : #initialization }
-RTAbstractSmartBrowser >> initializeView: aView [
-	view := aView.
 	self setMenu.
 	self setStatusBar.
+	currentSelection := #()
 ]
 
 { #category : #utility }
@@ -475,7 +474,8 @@ RTAbstractSmartBrowser >> shrinkClassElement: classElement [
 		after: [ self applyLayout: RTTreeLayout new ];
 		inView: view.
 	
-	self markElementAsShrinked: classElement
+	self markElementAsShrinked: classElement.
+	self clickOnClass: classElement model.
 ]
 
 { #category : #utility }

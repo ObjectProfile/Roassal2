@@ -98,7 +98,7 @@ RTMenuBuilder >> menu: aTitle submenu: aSubMenuName background: aColor callback:
 	| parentMenu |
 	parentMenu := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = aTitle ] ].
 	parentMenu isEmpty 
-		ifTrue: [ parentMenu := self createParentMenu: aTitle background: aColor ]
+		ifTrue: [ parentMenu := self createParentMenu: aTitle background: aColor ];
 		ifFalse: [ parentMenu := parentMenu first ].
 	
 	parentMenu element add: aSubMenuName -> callback
