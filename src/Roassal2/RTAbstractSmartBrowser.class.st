@@ -136,12 +136,16 @@ RTAbstractSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
 { #category : #initialization }
 RTAbstractSmartBrowser >> initialize [
 	super initialize.
-	view := RTView new. 
+	self initializeView: RTView new. 
 	view @ RTDraggableView.
+	currentSelection := #()
+]
 
+{ #category : #initialization }
+RTAbstractSmartBrowser >> initializeView: aView [
+	view := aView.
 	self setMenu.
 	self setStatusBar.
-	currentSelection := #()
 ]
 
 { #category : #utility }
