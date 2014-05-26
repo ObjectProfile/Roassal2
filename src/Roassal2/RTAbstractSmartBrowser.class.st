@@ -42,9 +42,9 @@ RTAbstractSmartBrowser >> addClasses: classes [
 ]
 
 { #category : #adding }
-RTAbstractSmartBrowser >> addClassesFromRegExp: regExp [
+RTAbstractSmartBrowser >> addClassesMatching: matchingPattern [
 	| classes |
-	classes := self getClassesMatching: regExp.
+	classes := self getClassesMatching: matchingPattern.
 	self addClasses: classes
 ]
 
@@ -58,9 +58,9 @@ RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
 ]
 
 { #category : #adding }
-RTAbstractSmartBrowser >> addPackagesFromRegExp: regExp [
+RTAbstractSmartBrowser >> addPackagesMatching: matchingPattern [
 	| paks |
-	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
+	paks := RPackageOrganizer default packages select: [ :p | matchingPattern match: p name ].
 	self addClasses: ((paks flatCollect: #definedClasses) reject: #isTrait )
 ]
 
@@ -171,18 +171,18 @@ RTAbstractSmartBrowser >> open [
 
 { #category : #callbacks }
 RTAbstractSmartBrowser >> pressAddClasses [
-	| regExp |
-	regExp := UIManager default request: 'Enter a regexp for classes (e.g., Layout)'.
-	regExp ifNil: [ ^ self ].
-	self addClassesFromRegExp: regExp
+	| matchingPattern |
+	matchingPattern := UIManager default request: 'Enter a matching pattern for classes (e.g., Layout)'.
+	matchingPattern ifNil: [ ^ self ].
+	self addClassesMatching: matchingPattern
 ]
 
 { #category : #callbacks }
 RTAbstractSmartBrowser >> pressAddPackages [
-	| regExp |
-	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
-	regExp ifNil: [ ^ self ].
-	self addPackagesFromRegExp: regExp
+	| matchingPattern |
+	matchingPattern := UIManager default request: 'Enter a matching pattern for packages (e.g., *Roassal*)'.
+	matchingPattern ifNil: [ ^ self ].
+	self addPackagesMatching: matchingPattern
 ]
 
 { #category : #callbacks }

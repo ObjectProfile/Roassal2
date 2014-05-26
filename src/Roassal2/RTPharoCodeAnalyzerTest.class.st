@@ -15,13 +15,13 @@ RTPharoCodeAnalyzerTest >> setUp [
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testAddingClasses [
-	a addClassesFromRegExp: 'RT*'.
+	a addClassesMatching: 'RT*'.
 	self assert: a graph view numberOfElements > 80 
 ]
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testChangeColor [
-	a addClassesFromRegExp: 'RT*'.
+	a addClassesMatching: 'RT*'.
 	a selectFromRegExp: 'Layout'.
 	a setSelectionToColor: Color red.
 	
@@ -41,7 +41,7 @@ RTPharoCodeAnalyzerTest >> testDefault [
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testSelecting [
 	| t |
-	a addClassesFromRegExp: 'RT*'.
+	a addClassesMatching: 'RT*'.
 	t := a currentSelection size.
 	a selectFromRegExp: 'Layout'.
 	self assert: a currentSelection size < t.
@@ -51,6 +51,6 @@ RTPharoCodeAnalyzerTest >> testSelecting [
 
 { #category : #tests }
 RTPharoCodeAnalyzerTest >> testSelection [
-	a addClassesFromRegExp: 'RT*'.
+	a addClassesMatching: 'RT*'.
 	self assert: a currentSelection size > 80
 ]
