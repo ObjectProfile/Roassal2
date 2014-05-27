@@ -241,8 +241,8 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 	"fromBlock and toAllBlock operate on the model of the elements"
 
 	| edges fromElement toElement |
-	objects isEmpty ifTrue: [ ^ #() ].
 	edges := RTGroup new.
+	objects isEmpty ifTrue: [ ^ edges ].
 	objects do: [ :object |
 		fromElement := aGroup elementFromModel: (fromBlock rtValue: object).
 		(toAllBlock rtValue: object) do: [ :toObject |

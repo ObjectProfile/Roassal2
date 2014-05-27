@@ -32,7 +32,7 @@ RTAbstractSmartBrowser >> addClasses: classes [
 	es
 		when: TRMouseClick
 		do: [ :e | 
-			(e element attributes includesKey: #isExpanded)
+			(self isElementExpanded: e element)
 				ifTrue: [ self shrinkClassElement: e element ]
 				ifFalse: [ self expandClassElement: e element ].
 			self applyLayout: RTTreeLayout new ].
@@ -95,25 +95,19 @@ RTAbstractSmartBrowser >> currentSelection [
 { #category : #'UI effects' }
 RTAbstractSmartBrowser >> expandClassElement: classElement [
 	| class methods methodElements edges |
-	
 	class := classElement model.
 	self clickOnClass: class.
-
 	methods := class methods.
 	classElement attributes at: #oldExtent put: classElement extent.
 	classElement attributes at: #oldColor put: classElement trachelShape color.
 	classElement trachelShape color: (Color blue alpha: 0.3).
-
 	methodElements := self shapeForMethod elementsOn: methods.
 	view addAll: methodElements.
 	edges := RTEdge
 		buildEdgesFromObjects: methods
 		from: #yourself
 		toAll: #dependentMethods
-		using:
-			(RTLine new
-				color: (Color blue alpha: 0.3);
-				attachPoint: RTVerticalAttachPoint instance)
+		using: self shapeForDependentMethods
 		inView: view.
 	RTTreeLayout on: methodElements.
 	self addInteractionToMethods: methodElements.
@@ -146,6 +140,11 @@ RTAbstractSmartBrowser >> initializeView: aView [
 	view := aView.
 	self setMenu.
 	self setStatusBar.
+]
+
+{ #category : #testing }
+RTAbstractSmartBrowser >> isElementExpanded: anElement [
+	^ anElement hasAttribute: #isExpanded
 ]
 
 { #category : #utility }
@@ -440,6 +439,13 @@ RTAbstractSmartBrowser >> shapeForClass [
 		color: (Color gray alpha: 0.4)
 ]
 
+{ #category : #'UI effects' }
+RTAbstractSmartBrowser >> shapeForDependentMethods [
+	^ RTLine new
+		color: (Color blue alpha: 0.3);
+		attachPoint: RTVerticalAttachPoint instance
+]
+
 { #category : #hooks }
 RTAbstractSmartBrowser >> shapeForMethod [
 	^ RTBox new size: [ :c | c numberOfLinesOfCode max: 5 ]
@@ -488,4 +494,9 @@ RTAbstractSmartBrowser >> translator [
 			nbCycles: 0.5;
 			view: view;
 			yourself
+]
+
+{ #category : #accessing }
+RTAbstractSmartBrowser >> view [
+	^ view
 ]
