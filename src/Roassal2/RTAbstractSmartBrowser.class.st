@@ -32,7 +32,7 @@ RTAbstractSmartBrowser >> addClasses: classes [
 	es
 		when: TRMouseClick
 		do: [ :e | 
-			(self isElementExpanded: e element)
+			(e element attributes includesKey: #isExpanded)
 				ifTrue: [ self shrinkClassElement: e element ]
 				ifFalse: [ self expandClassElement: e element ].
 			self applyLayout: RTTreeLayout new ].
@@ -42,9 +42,9 @@ RTAbstractSmartBrowser >> addClasses: classes [
 ]
 
 { #category : #adding }
-RTAbstractSmartBrowser >> addClassesMatching: matchingPattern [
+RTAbstractSmartBrowser >> addClassesFromRegExp: regExp [
 	| classes |
-	classes := self getClassesMatching: matchingPattern.
+	classes := self getClassesMatching: regExp.
 	self addClasses: classes
 ]
 
@@ -58,9 +58,9 @@ RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
 ]
 
 { #category : #adding }
-RTAbstractSmartBrowser >> addPackagesMatching: matchingPattern [
+RTAbstractSmartBrowser >> addPackagesFromRegExp: regExp [
 	| paks |
-	paks := RPackageOrganizer default packages select: [ :p | matchingPattern match: p name ].
+	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
 	self addClasses: ((paks flatCollect: #definedClasses) reject: #isTrait )
 ]
 
@@ -95,19 +95,25 @@ RTAbstractSmartBrowser >> currentSelection [
 { #category : #'UI effects' }
 RTAbstractSmartBrowser >> expandClassElement: classElement [
 	| class methods methodElements edges |
+	
 	class := classElement model.
 	self clickOnClass: class.
+
 	methods := class methods.
 	classElement attributes at: #oldExtent put: classElement extent.
 	classElement attributes at: #oldColor put: classElement trachelShape color.
 	classElement trachelShape color: (Color blue alpha: 0.3).
+
 	methodElements := self shapeForMethod elementsOn: methods.
 	view addAll: methodElements.
 	edges := RTEdge
 		buildEdgesFromObjects: methods
 		from: #yourself
 		toAll: #dependentMethods
-		using: self shapeForDependentMethods
+		using:
+			(RTLine new
+				color: (Color blue alpha: 0.3);
+				attachPoint: RTVerticalAttachPoint instance)
 		inView: view.
 	RTTreeLayout on: methodElements.
 	self addInteractionToMethods: methodElements.
@@ -130,21 +136,12 @@ RTAbstractSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
 { #category : #initialization }
 RTAbstractSmartBrowser >> initialize [
 	super initialize.
-	self initializeView: RTView new. 
+	view := RTView new. 
 	view @ RTDraggableView.
-	currentSelection := #()
-]
 
-{ #category : #initialization }
-RTAbstractSmartBrowser >> initializeView: aView [
-	view := aView.
 	self setMenu.
 	self setStatusBar.
-]
-
-{ #category : #testing }
-RTAbstractSmartBrowser >> isElementExpanded: anElement [
-	^ anElement hasAttribute: #isExpanded
+	currentSelection := #()
 ]
 
 { #category : #utility }
@@ -170,18 +167,18 @@ RTAbstractSmartBrowser >> open [
 
 { #category : #callbacks }
 RTAbstractSmartBrowser >> pressAddClasses [
-	| matchingPattern |
-	matchingPattern := UIManager default request: 'Enter a matching pattern for classes (e.g., Layout)'.
-	matchingPattern ifNil: [ ^ self ].
-	self addClassesMatching: matchingPattern
+	| regExp |
+	regExp := UIManager default request: 'Enter a regexp for classes (e.g., Layout)'.
+	regExp ifNil: [ ^ self ].
+	self addClassesFromRegExp: regExp
 ]
 
 { #category : #callbacks }
 RTAbstractSmartBrowser >> pressAddPackages [
-	| matchingPattern |
-	matchingPattern := UIManager default request: 'Enter a matching pattern for packages (e.g., *Roassal*)'.
-	matchingPattern ifNil: [ ^ self ].
-	self addPackagesMatching: matchingPattern
+	| regExp |
+	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
+	regExp ifNil: [ ^ self ].
+	self addPackagesFromRegExp: regExp
 ]
 
 { #category : #callbacks }
@@ -439,13 +436,6 @@ RTAbstractSmartBrowser >> shapeForClass [
 		color: (Color gray alpha: 0.4)
 ]
 
-{ #category : #'UI effects' }
-RTAbstractSmartBrowser >> shapeForDependentMethods [
-	^ RTLine new
-		color: (Color blue alpha: 0.3);
-		attachPoint: RTVerticalAttachPoint instance
-]
-
 { #category : #hooks }
 RTAbstractSmartBrowser >> shapeForMethod [
 	^ RTBox new size: [ :c | c numberOfLinesOfCode max: 5 ]
@@ -494,9 +484,4 @@ RTAbstractSmartBrowser >> translator [
 			nbCycles: 0.5;
 			view: view;
 			yourself
-]
-
-{ #category : #accessing }
-RTAbstractSmartBrowser >> view [
-	^ view
 ]

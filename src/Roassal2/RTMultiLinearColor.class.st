@@ -58,7 +58,6 @@ RTMultiLinearColor >> initialize [
 RTMultiLinearColor >> level: f [
 	"f - float is between 0.0 and 1.0"
 	| arr c1 c2 nr ng nb i1 i2 nbColors ff  |
-	
 	(f isNaN) ifTrue: [ ^ Color white ]. 
 	
 	arr := self indexesFor: f.
