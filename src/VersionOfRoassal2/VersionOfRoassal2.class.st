@@ -3415,3 +3415,14 @@ VersionOfRoassal2 >> version000262 [
 	at: #date put: '23 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000263 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.147';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.340';
+	at: #version put: '0.263';
+	at: #comment put: '0.263 : added  RTMultiLinearColorCached';
+	at: #date put: '28 May 2014';
+	yourself
+]
