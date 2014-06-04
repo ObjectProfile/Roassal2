@@ -46,18 +46,18 @@ PwE6FbKAkaTh8gAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> addClassesFromRegExp: regExp [
+RTPharoCodeAnalyzer >> addClassesMatching: matchingPattern [
 	| classes |
-	classes := Smalltalk allClasses select: [ :c | regExp match: c name ].
+	classes := Smalltalk allClasses select: [ :c | matchingPattern match: c name ].
 	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: classes) @ RTPopup @ RTDraggable.
 	self setStatusBar: classes size printString, ' added nodes'.
 	currentSelection := view elementsFromModels: classes
 ]
 
 { #category : #'as yet unclassified' }
-RTPharoCodeAnalyzer >> addPackagesFromRegExp: regExp [
+RTPharoCodeAnalyzer >> addPackagesMatching: matchingPattern [
 	| paks |
-	paks := RPackageOrganizer default packages select: [ :p | regExp match: p name ].
+	paks := RPackageOrganizer default packages select: [ :p | matchingPattern match: p name ].
 	view addAll: ((RTEllipse new size: 10; color: (Color gray alpha: 0.4)) elementsOn: paks) @ RTPopup @ RTDraggable.
 	self setStatusBar: paks size printString, ' added nodes'.
 	currentSelection := view elementsFromModels: paks
@@ -105,18 +105,18 @@ RTPharoCodeAnalyzer >> open [
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressAddClasses [
-	| regExp |
-	regExp := UIManager default request: 'Enter a regexp for classes (e.g., RT*)'.
-	regExp ifNil: [ ^ self ].
-	self addClassesFromRegExp: regExp
+	| matchingPattern |
+	matchingPattern := UIManager default request: 'Enter a matching pattern for classes (e.g., RT*)'.
+	matchingPattern ifNil: [ ^ self ].
+	self addClassesMatching: matchingPattern
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressAddPackages [
-	| regExp |
-	regExp := UIManager default request: 'Enter a regexp for packages (e.g., *Roassal*)'.
-	regExp ifNil: [ ^ self ].
-	self addPackagesFromRegExp: regExp
+	| matchingPattern |
+	matchingPattern := UIManager default request: 'Enter a matching pattern for packages (e.g., *Roassal*)'.
+	matchingPattern ifNil: [ ^ self ].
+	self addPackagesMatching: matchingPattern
 ]
 
 { #category : #'as yet unclassified' }
