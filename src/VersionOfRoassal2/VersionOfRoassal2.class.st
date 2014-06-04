@@ -3426,3 +3426,14 @@ VersionOfRoassal2 >> version000263 [
 	at: #date put: '28 May 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000264 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.147';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.346';
+	at: #version put: '0.264';
+	at: #comment put: '0.264 : improved Code Analyzer (in data studio) by implementing the missing methods';
+	at: #date put: '4 June 2014';
+	yourself
+]
