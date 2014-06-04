@@ -6,5 +6,5 @@ Class {
 
 { #category : #'stepping and presenter' }
 RTZoomInMove >> step [
-	^ 0.2
+	^ 1.25
 ]

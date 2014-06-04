@@ -6,5 +6,5 @@ Class {
 
 { #category : #'stepping and presenter' }
 RTZoomOutMove >> step [
-	^ 0.2 negated
+	^ 0.8 
 ]
