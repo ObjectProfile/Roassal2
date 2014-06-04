@@ -135,22 +135,29 @@ RTPharoCodeAnalyzer >> pressSelect [
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSetX: symbolOrBlock [
-	| ext |
-	self currentSelection do: [ :e | 
-		ext := e extent.
-		RTResizeMove new 
-			toExtent: (symbolOrBlock rtValue: e model) @ ext y during: 0.4 on: e;
-			inView: view  ]
+	^ self pressSetX: symbolOrBlock using: #yourself
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSetX: symbolOrBlock using: aTransformation [
-	^ self pressSetX: symbolOrBlock using: #yourself
+	| ext |
+	self currentSelection do: [ :e | 
+		ext := e extent.
+		RTResizeMove new 
+			toExtent: (aTransformation rtValue: (symbolOrBlock rtValue: e model)) @ ext y 
+				during: 0.4 on: e;
+			inView: view  ]
 ]
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer >> pressSetXLog: symbolOrBlock [
 	^ self pressSetX: symbolOrBlock using: [ :v | (v + 1) log * 10 ]
+]
+
+{ #category : #'as yet unclassified' }
+RTPharoCodeAnalyzer >> pressSetY: symbolOrBlock [
+	^ self pressSetY: symbolOrBlock using: #yourself
+
 ]
 
 { #category : #'as yet unclassified' }
