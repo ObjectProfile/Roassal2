@@ -1,10 +1,10 @@
 Class {
-	#name : #RTArrowHead,
+	#name : #RTSimpleArrowHead,
 	#superclass : #RTLineDecoration,
 	#category : #'Roassal2-Core'
 }
 
 { #category : #hooks }
-RTArrowHead >> trachelShapeClass [
-	^ TRArrowHeadShape
+RTSimpleArrowHead >> trachelShapeClass [
+	^ TRSimpleArrowShape
 ]

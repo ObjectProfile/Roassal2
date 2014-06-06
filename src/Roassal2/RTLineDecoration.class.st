@@ -5,7 +5,8 @@ Class {
 		'width',
 		'size',
 		'attachPoint',
-		'line'
+		'line',
+		'baseSize'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -20,10 +21,23 @@ RTLineDecoration >> attachPoint: anObject [
 	attachPoint := anObject
 ]
 
+{ #category : #accessing }
+RTLineDecoration >> baseSize: aNumberOrBlockOrIdentifier [
+	baseSize := [ :e | aNumberOrBlockOrIdentifier rtValue: e].
+	
+]
+
+{ #category : #configuration }
+RTLineDecoration >> defaultBaseSize [
+	"Set the size of the base size of the line head decoration"
+	^ 10
+]
+
 { #category : #initialization }
 RTLineDecoration >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
+	baseSize := self defaultBaseSize
 ]
 
 { #category : #accessing }
@@ -38,7 +52,7 @@ RTLineDecoration >> mySize [
 
 { #category : #accessing }
 RTLineDecoration >> size: aNumberOrBlockOrIdentifier [
-	size := [ :e |  aNumberOrBlockOrIdentifier rtValue: e].
+	size := [ :e | aNumberOrBlockOrIdentifier rtValue: e ].
 	
 ]
 
@@ -49,14 +63,22 @@ RTLineDecoration >> trachelShapeClass [
 
 { #category : #public }
 RTLineDecoration >> trachelShapeFor: anEdge [
-	|f shape |
-	f :=  (attachPoint startingPointOf: anEdge).
-	(line ~= nil)
-		ifTrue: [ | tShape |
+	| f shape |
+	f := attachPoint startingPointOf: anEdge.
+	line ~= nil
+		ifTrue: [ 
+			| tShape |
 			tShape := line trachelShapeFor: anEdge.
-			tShape class = TRBezierShape 
-				ifTrue: [	f := tShape points allButLast last ]].
-	shape := self trachelShapeClass from: f to: (attachPoint endingPointOf: anEdge) width: (self widthFor: anEdge) size: self mySize color: (self colorFor: anEdge) stroke: (self colorFor: anEdge).
+			tShape class = TRBezierShape
+				ifTrue: [ f := tShape points allButLast last ] ].
+	shape := self trachelShapeClass
+		from: f
+		to: (attachPoint endingPointOf: anEdge)
+		width: (self widthFor: anEdge)
+		size: (self mySize rtValue: anEdge)
+		color: (self colorFor: anEdge)
+		stroke: (self colorFor: anEdge).
+	shape baseSize: (baseSize rtValue: anEdge).
 	^ shape
 ]
 

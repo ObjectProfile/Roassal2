@@ -35,6 +35,17 @@ RTAbstractLine >> attachPoint: aRTAttachPoint [
 ]
 
 { #category : #public }
+RTAbstractLine >> copyWithSimpleArrow [
+	"Return a new line, the one with arrow"
+	| arrow |
+	arrow := RTSimpleArrowHead new 
+				color: Color red; 
+				attachPoint: RTVerticalAttachPoint instance.
+	arrow size: 15; baseSize: 10. 
+	^ self + arrow
+]
+
+{ #category : #public }
 RTAbstractLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]

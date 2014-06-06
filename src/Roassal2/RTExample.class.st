@@ -34,7 +34,7 @@ RTExample >> arrowedEdges01 [
 	v add: e1.
 	v add: e2.
 	l := RTEdge from: e1 to: e2.
-	l + (RTLine new color: Color red) + (RTArrow new color: Color red).
+	l + (RTLine new color: Color red) + (RTSimpleArrowHead new color: Color red).
 	v add: l.
 
 	v open
@@ -130,7 +130,7 @@ RTExample >> beziersWithArrow [
 	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
 	v addAll: els .
 	RTHorizontalLineLayout on: v elements.
-	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTArrowHead new) ).
+	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTEmptyArrowHead new) ).
 	v add: edge.
 
 	v open

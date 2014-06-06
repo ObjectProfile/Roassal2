@@ -124,7 +124,7 @@ e2 @ RTDraggable.
 
 l := RTEdge from: e1 to: e2.
 l + (RTLine new color: Color red).
-l + (RTArrow new color: Color red).
+l + (RTSimpleArrowHead new color: Color red).
 
 e2 translateBy: 60 @ 80.
 v addAll: { e1 . e2 . l }.
@@ -164,7 +164,7 @@ RTRoassalExample >> exampleArrowedBezier [
 	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
 	v addAll: els .
 	RTHorizontalLineLayout on: v elements.
-	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTArrowHead new) ).
+	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTEmptyArrowHead new) ).
 	v add: edge.
 
 	v open.
@@ -193,7 +193,7 @@ RTEdge
         buildEdgesFromObjects: Collection withAllSubclasses
         from: #yourself
         toAll: #subclasses
-        using: ((RTLine new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray) + (RTArrow new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray))
+        using: ((RTLine new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray) + (RTSimpleArrowHead new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray))
         inView: view.
 
 RTTreeLayout on: els.
