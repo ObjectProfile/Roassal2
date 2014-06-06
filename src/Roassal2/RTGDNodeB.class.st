@@ -90,6 +90,16 @@ RTGDNodeB >> labelled [
 		TRConstraint stick: lbl below: el trachelShape ]
 ]
 
+{ #category : #shapes }
+RTGDNodeB >> labelled: aBlockOrSymbol [
+	"Gives a label to each node"
+	self addProperty: [ :el |
+		| lbl |
+		lbl := TRLabelShape new text: (aBlockOrSymbol rtValue: el model) asString.
+		graphBuilder view canvas addShape: lbl.
+		TRConstraint stick: lbl below: el trachelShape ]
+]
+
 { #category : #interaction }
 RTGDNodeB >> noPopup [
 	withPopup := false

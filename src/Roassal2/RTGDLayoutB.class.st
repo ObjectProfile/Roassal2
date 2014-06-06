@@ -62,7 +62,7 @@ RTGDLayoutB >> execute [
 
 { #category : #public }
 RTGDLayoutB >> flow [
-	^ self use: RTFlowLayout new
+	^ self use: (RTFlowLayout new maxWidth: 800)
 ]
 
 { #category : #public }
