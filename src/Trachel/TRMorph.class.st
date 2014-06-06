@@ -120,6 +120,13 @@ TRMorph >> handlesMouseOver: evt [
 	^ true
 ]
 
+{ #category : #'events-processing' }
+TRMorph >> handlesMouseWheel: evt [
+	"Do I want to receive mouseWheel events?." 
+
+	^true
+]
+
 { #category : #initialization }
 TRMorph >> initialize [
 	super initialize.
@@ -197,6 +204,14 @@ TRMorph >> mouseUp: evt [
 	self isDragging ifTrue: 
 		[self rtMouseDragEnd: evt ].
 	evt wasHandled: true.
+]
+
+{ #category : #'event handling' }
+TRMorph >> mouseWheel: evt [
+
+	self rtMouseWheel: evt.
+	evt wasHandled: true.
+	^ true
 ]
 
 { #category : #'events-roassal' }
@@ -334,6 +349,18 @@ TRMorph >> rtMouseMoving: evt [
 	ev morph: self.
 	ev canvas: trachelCanvas.
 	shape announce: ev
+]
+
+{ #category : #'event-processed' }
+TRMorph >> rtMouseWheel: evt [
+
+	trachelCanvas announce: (
+		TRMouseWheelEvent new
+			position: (trachelCanvas camera fromPixelToSpace:
+				(self relativePositionFor: evt));
+			direction: evt direction;
+			yourself)
+		
 ]
 
 { #category : #'event-processed' }
