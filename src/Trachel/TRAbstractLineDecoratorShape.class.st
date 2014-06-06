@@ -12,7 +12,8 @@ Class {
 		'from',
 		'width',
 		'open',
-		'type'
+		'type',
+		'baseSize'
 	],
 	#category : #'Trachel-Core'
 }
@@ -45,6 +46,17 @@ TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber color: aCo
 { #category : #visitor }
 TRAbstractLineDecoratorShape >> accept: aVisitor [
 	aVisitor visitAbstractLineDecorationShape: self
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> baseSize [
+	^ baseSize
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> baseSize: aNumber [
+	"Set the base size of the head. Initially, the baseSize is equals to the size of the arrow head."
+	baseSize := aNumber
 ]
 
 { #category : #accessing }
@@ -86,10 +98,10 @@ TRAbstractLineDecoratorShape >> drawOn: athensCanvas [
 				athensCanvas setShape: self path.
 				open 
 					ifFalse: [
-					athensCanvas setPaint: color.
-					athensCanvas draw].
+						athensCanvas setPaint: color.
+						athensCanvas draw ].
 				(athensCanvas setStrokePaint: strokePaint) width: self width.
-				athensCanvas draw ]]
+				athensCanvas draw ] ]
 ]
 
 { #category : #accessing }
@@ -111,11 +123,13 @@ TRAbstractLineDecoratorShape >> from: anObject [
 TRAbstractLineDecoratorShape >> initialize [
 	super initialize.
 	size := self defaultSize.
+	baseSize := size.
+	
 	color := self defaultColor.
 	strokePaint := self defaultColor.
 	width := 1.
 	open := false.
-	type := 0.
+
 ]
 
 { #category : #accessing }
@@ -140,16 +154,6 @@ TRAbstractLineDecoratorShape >> to [
 { #category : #accessing }
 TRAbstractLineDecoratorShape >> to: anObject [
 	to := anObject
-]
-
-{ #category : #accessing }
-TRAbstractLineDecoratorShape >> type [
-	^ type
-]
-
-{ #category : #accessing }
-TRAbstractLineDecoratorShape >> type: anObject [
-	type := anObject
 ]
 
 { #category : #accessing }

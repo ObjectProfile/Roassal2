@@ -42,5 +42,5 @@ TRDiamondShape >> computePath [
 { #category : #initialization }
 TRDiamondShape >> initialize [
 	super initialize.
-	self type: 3.
+	
 ]

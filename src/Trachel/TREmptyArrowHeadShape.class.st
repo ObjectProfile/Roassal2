@@ -1,20 +1,16 @@
 Class {
-	#name : #TRArrowShape,
-	#superclass : #TRAbstractLineDecoratorShape,
-	#instVars : [
-		'left',
-		'right'
-	],
+	#name : #TREmptyArrowHeadShape,
+	#superclass : #TRAbstractArrowHeadShape,
 	#category : #'Trachel-Core'
 }
 
 { #category : #visitor }
-TRArrowShape >> accept: aVisitor [
-	aVisitor visitArrowShape: self
+TREmptyArrowHeadShape >> accept: aVisitor [
+	aVisitor visitArrowHeadShape: self
 ]
 
 { #category : #hooks }
-TRArrowShape >> computePath [
+TREmptyArrowHeadShape >> computePath [
 	| vector r u unit middle |
 	vector := self to - self from. 
 	r := vector r.
@@ -23,20 +19,20 @@ TRArrowShape >> computePath [
 	unit := vector / r.
 	"toPointWithOffset := self to - (offset * (vector r - size) * unit)." "add offset"
 	middle := self to - (unit * size). 
-	left :=  middle- (u * size).
+	left :=  middle - (u * size).
 	right := middle + (u * size).
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: left;
-				lineTo: self to;
-				lineTo: right. ]
+				moveTo: self to;
+				lineTo: left;
+				lineTo: right;
+				lineTo: self to. ]
 ]
 
 { #category : #initialization }
-TRArrowShape >> initialize [
+TREmptyArrowHeadShape >> initialize [
 	super initialize.
-	open := true.
-	self type: 2.
+
 ]
