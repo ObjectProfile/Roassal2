@@ -3437,3 +3437,14 @@ VersionOfRoassal2 >> version000264 [
 	at: #date put: '4 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000265 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-YuriyTymchuk.148';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.348';
+	at: #version put: '0.265';
+	at: #comment put: '0.265 : mouse wheel by Yuriy!!! Excellent work!';
+	at: #date put: '6 June 2014';
+	yourself
+]
