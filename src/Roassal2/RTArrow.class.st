@@ -8,56 +8,66 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTArrow >> attachPoint: anAttachPoint [
 	head attachPoint: anAttachPoint.
 	line attachPoint: anAttachPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTArrow >> color: aColor [
 	head color: aColor.
 	line color: aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTArrow >> directed [
 
 	self line: RTDirectedLine new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTArrow >> empty [
 	self head: RTEmptyArrowHead new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTArrow >> head [
+	^ head
+]
+
+{ #category : #accessing }
 RTArrow >> head: aLineDecorationShape [
 	head := aLineDecorationShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTArrow >> initialize [
 	super initialize.
 	self simple; straight
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTArrow >> line [
+	^ line
+]
+
+{ #category : #accessing }
 RTArrow >> line: aLineShape [
 	line := aLineShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTArrow >> simple [
 	self head: RTSimpleArrowHead new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTArrow >> straight [
 	self line: RTLine new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTArrow >> trachelShapeFor: anEdge [
 	| lineTrachelShape headTrachelShape |
 	lineTrachelShape := line trachelShapeFor: anEdge.
@@ -65,7 +75,7 @@ RTArrow >> trachelShapeFor: anEdge [
 	^ TRCompositeShape new shape1: lineTrachelShape; shape2: headTrachelShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTArrow >> updateFor: edge trachelShape: trachelShape [
 	line updateFor: edge trachelShape: edge trachelShape shape1.
 	head updateFor: edge trachelShape: edge trachelShape shape2
