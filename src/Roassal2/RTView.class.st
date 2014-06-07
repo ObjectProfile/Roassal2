@@ -131,7 +131,7 @@ RTView >> numberOfElements [
 	^ elements size
 ]
 
-{ #category : #'instance creation' }
+{ #category : #opening }
 RTView >> open [
 	^ self setUpCanvas open
 ]
@@ -146,12 +146,18 @@ RTView >> openInWindowSized: anExtentAsPoint titled: aTitle [
 	^ self setUpCanvas openInWindowSized: anExtentAsPoint titled: aTitle
 ]
 
-{ #category : #'instance creation' }
+{ #category : #opening }
+RTView >> openRaw [
+	"Simply open the canvas. No menu is added, no centering of the camera is done"
+	^ trCanvas open
+]
+
+{ #category : #opening }
 RTView >> openWithMenu [
 	self canvas addMenu: 'In' callback: [ RTZoomInMove on: self ].
 	self canvas addMenu: 'Out' callback: [ RTZoomOutMove on: self ].
 
-	^ self setUpCanvas open
+	^ self open
 ]
 
 { #category : #actions }
@@ -178,6 +184,7 @@ RTView >> setDefaultMenu [
 
 { #category : #initialization }
 RTView >> setUpCanvas [
+	"Make the camera point on the center of the visualization"
 	trCanvas camera focusOnCenter.
 	^ trCanvas
 ]

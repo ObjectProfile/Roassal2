@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #tests }
-ColorPaletteTest >> expectedFailures [
-	^ #(#testDiverging #testDivergingError #testSequential)
-]
-
-{ #category : #tests }
 ColorPaletteTest >> testDiverging [
 	| palette |
 	palette := ColorPalette diverging.
