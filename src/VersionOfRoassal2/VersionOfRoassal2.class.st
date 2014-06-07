@@ -3481,3 +3481,14 @@ VersionOfRoassal2 >> version000268 [
 	at: #date put: '6 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000269 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.150';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.352';
+	at: #version put: '0.269';
+	at: #comment put: '0.269 : removed expectedFailures, Maybe this will generate some problems. Added RTView>>openRaw, thanks Yuriy for the suggestion';
+	at: #date put: '7 June 2014';
+	yourself
+]
