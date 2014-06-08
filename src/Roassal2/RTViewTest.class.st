@@ -51,6 +51,16 @@ RTViewTest >> testAddingEdges [
 	self assert: view numberOfEdges = 1.	
 ]
 
+{ #category : #camera }
+RTViewTest >> testCameraProjection [
+	| v camera |
+
+	v := RTView new.
+	camera := v canvas camera.
+
+	self assert: (camera fromPixelToSpace: (camera fromSpaceToPixel: (10@10))) equals: (10.0 @ 10.0)
+]
+
 { #category : #'fixed elements' }
 RTViewTest >> testDefault [
 
