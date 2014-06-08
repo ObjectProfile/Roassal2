@@ -225,7 +225,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	
 	"For the development tag refer to a fixed version which you update if you commit new code.
 	Note that you can refer here to any other version name from this configuration"
-	spec for: #'common' version: 'dev'.
+	spec for: #'common' version: '1.1-baseline'.
 
 ]
 
