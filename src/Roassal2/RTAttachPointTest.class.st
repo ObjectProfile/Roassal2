@@ -93,23 +93,6 @@ RTAttachPointTest >> testShorterDistancePoint3 [
 ]
 
 { #category : #'as yet unclassified' }
-RTAttachPointTest >> testShorterDistancePoint4WithOffset [
-	shape withShorterDistanceAttachPoint offset: 5.
-	"el1 and el2 are on the same vertical line. el1 is above el2"
-	el2 translateTo: el1 position.
-	el2 translateBy: 0 @ 80.
-	self 
-		assert: (shape startingPointOf: edge) 
-		equals: ((el1 encompassingRectangle topLeft 
-					+ ((el1 encompassingRectangle width / 2) 
-						@ el1 encompassingRectangle height)) + (5 @ 0)) asIntegerPoint.
-	self 
-		assert: (shape endingPointOf: edge) 
-		equals: ((el2 encompassingRectangle topLeft 
-					+ ((el2 encompassingRectangle width / 2) @ 0) + (5 @ 0))) asIntegerPoint.
-]
-
-{ #category : #'as yet unclassified' }
 RTAttachPointTest >> testVerticalAttachPoint [
 	shape withVerticallAttachPoint.
 	self 

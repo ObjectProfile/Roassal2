@@ -1,0 +1,47 @@
+Class {
+	#name : #RTAbstractShorterDistanceAttachPoint,
+	#superclass : #RTAttachPoint,
+	#category : #'Roassal2-Core'
+}
+
+{ #category : #util }
+RTAbstractShorterDistanceAttachPoint >> attachPointFor: anEdge on: anElement with: elementsPossibleAttachPoints [
+	"Returns the attach point having the shortest route for given edge on given element."
+	| p dp t |
+	p := anElement encompassingRectangle bottomRight.
+	
+	"We get the list of dot products"
+	dp := elementsPossibleAttachPoints collect: [ :pp | 
+		t := p - pp.
+		Array with: (t dotProduct: t) with:  pp ].
+	
+	"We look for the shortest path and return the point"
+	^ (dp inject: dp first into: [ :shorter :el | (shorter first < el first) ifTrue: [ shorter ] ifFalse: [ el ]]) second
+]
+
+{ #category : #'public - hooks' }
+RTAbstractShorterDistanceAttachPoint >> attachPointsFor: anEdge on: anElement [
+	self subclassResponsibility 
+]
+
+{ #category : #util }
+RTAbstractShorterDistanceAttachPoint >> destinationAttachPointsFor: anEdge [
+	"Return the four possible attach points for each of the four sides for this edges destination node."
+	^ self attachPointsFor: anEdge on: (anEdge to).
+]
+
+{ #category : #'public - hooks' }
+RTAbstractShorterDistanceAttachPoint >> endingPointOf: anEdge [
+	^ self attachPointFor: anEdge on: (anEdge from) with: (self destinationAttachPointsFor: anEdge).
+]
+
+{ #category : #util }
+RTAbstractShorterDistanceAttachPoint >> startingAttachPointsFor: anEdge [
+	"Return the four possible attach points for each of the four sides for this edges starting node."
+	^ self attachPointsFor: anEdge on: (anEdge from).
+]
+
+{ #category : #'public - hooks' }
+RTAbstractShorterDistanceAttachPoint >> startingPointOf: anEdge [
+	^ self attachPointFor: anEdge on: (anEdge to) with: (self startingAttachPointsFor: anEdge).
+]

@@ -8,6 +8,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #public }
+RTArrow class >> edgeFrom: el1 to: el2 [
+	^ (RTEdge from: el1 to: el2) addShape: self new
+]
+
 { #category : #accessing }
 RTArrow >> attachPoint: anAttachPoint [
 	head attachPoint: anAttachPoint.
@@ -24,6 +29,11 @@ RTArrow >> color: aColor [
 RTArrow >> directed [
 
 	self line: RTDirectedLine new
+]
+
+{ #category : #public }
+RTArrow >> edgeFrom: el1 to: el2 [
+	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
 { #category : #public }
@@ -79,4 +89,12 @@ RTArrow >> trachelShapeFor: anEdge [
 RTArrow >> updateFor: edge trachelShape: trachelShape [
 	line updateFor: edge trachelShape: edge trachelShape shape1.
 	head updateFor: edge trachelShape: edge trachelShape shape2
+]
+
+{ #category : #public }
+RTArrow >> withOffsetIfMultiple [
+	| ap |
+	ap := RTShorterDistanceWithOffsetAttachPoint new.
+	line attachPoint: ap.
+	head attachPoint: ap
 ]

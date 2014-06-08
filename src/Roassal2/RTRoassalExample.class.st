@@ -1,27 +1,31 @@
 "
-RTRoassalExample new installTitle: 'Arrow' 
+RTRoassalExample new installTitle: 'ArrowedLineWithOffset' 
 		code:
-		'| v es c |
+		'| v e1 e2 e3 e4 line |
 v := RTView new.
-c := RTMultiLinearColor new.
-es := (RTEllipse new size: 30; color: [ :e | c level: e / 10 ]) elementsOn: (1 to: 10).
-v addAll: es.
-es @ RTDraggable.
+e1 := (RTEllipse new color: (Color blue alpha: 0.4); size: 20) element.
+e2 := (RTEllipse new color: (Color red alpha: 0.4); size: 20) element.
+e3 := (RTEllipse new color: (Color yellow alpha: 0.4); size: 20) element.
+e4 := (RTEllipse new color: (Color green alpha: 0.4); size: 20) element.
+e1 @ RTDraggable.
+e2 @ RTDraggable.
+e3 @ RTDraggable.
+e4 @ RTDraggable.
 
-arrow := RTArrow new 
-			color: Color red; 
-			attachPoint: RTVerticalAttachPoint instance.
+v add: e1; add: e2; add: e3; add: e4.
 
-RTEdge 
-	buildEdgesFromObjects: (1 to: 10) 
-	from: [ :n | n // 2 ] 
-	to: #yourself 
-	using: arrow
-	inView: v.
+line := RTArrow new color: Color red.
+line withOffsetIfMultiple.
+v add: (line  edgeFrom: e1 to: e2).
+v add: (line  edgeFrom: e2 to: e1).
+v add: (line  edgeFrom: e1 to: e2).
 
-RTTreeLayout new on: es.
+v add: (line  edgeFrom: e2 to: e2).
 
-v  open.
+v add: (line  edgeFrom: e3 to: e4).
+
+RTCircleLayout on: { e1 . e2 . e3 . e4 }.
+v open.
 v canvas'
 	
 "
@@ -127,7 +131,7 @@ gg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleArrow [
-| v es c |
+| v es c arrow |
 v := RTView new.
 c := RTMultiLinearColor new.
 es := (RTEllipse new size: 30; color: [ :e | c level: e / 10 ]) elementsOn: (1 to: 10).
@@ -327,6 +331,52 @@ aribAnTV+HK9NJCitv+IdRWeOBZ3U4CT0fB5rC9RCehv6Lw9dYK5kwKcqF6OQdx9pLOz80V8
 x0u+QpGPKQPrQUZCPDIhzjTof0gunSn7EY+HyVTXEhFx36An55AZhZmgsmbYCrE22xWK/BUi
 H/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/IhH/Ih
 H/IhH/IhH/IhH/IhH/IhH0b8DxOIBxLqM3+GAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleArrowedLineWithOffset [
+| v e1 e2 e3 e4 line |
+v := RTView new.
+e1 := (RTEllipse new color: (Color blue alpha: 0.4); size: 20) element.
+e2 := (RTEllipse new color: (Color red alpha: 0.4); size: 20) element.
+e3 := (RTEllipse new color: (Color yellow alpha: 0.4); size: 20) element.
+e4 := (RTEllipse new color: (Color green alpha: 0.4); size: 20) element.
+e1 @ RTDraggable.
+e2 @ RTDraggable.
+e3 @ RTDraggable.
+e4 @ RTDraggable.
+
+v add: e1; add: e2; add: e3; add: e4.
+
+line := RTArrow new color: Color red.
+line withOffsetIfMultiple.
+v add: (line  edgeFrom: e1 to: e2).
+v add: (line  edgeFrom: e2 to: e1).
+v add: (line  edgeFrom: e1 to: e2).
+
+v add: (line  edgeFrom: e2 to: e2).
+
+v add: (line  edgeFrom: e3 to: e4).
+
+RTCircleLayout on: { e1 . e2 . e3 . e4 }.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleArrowedLineWithOffsetIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAACLklEQVR4XuXXzUpbQQCGYS/K
+S/FSxGuJWBFcWEGswUXBlSCCYrEmhILgLm6kiy6sujDw2Tnxpw0UIQZOTvK8w0BWWczDzJlZ
+eHrya1IL/hL4IH4+iA/i54P4IH4+iA/i54P4IH4+iJ8P4oP4+SA+iJ8P4oP4+SA+iJ8P4ueD
++CB+PogP4ueD+CB+PogP4ueD+PkgPoifD+KD+PkgPoifD+KD+PkgfvMGcpObfC6jVcb3MnyQ
+KbeXvSHG6/BBplw7bR+kaUfWdhn+kdWQ8viYLC7G/6g3BWRrKzk89EEagbGzM4TIw4MPMnWM
+/f3475BpLX5+jix+Dg7Gxri/T6rpg0wE8SvJpzJbZX55Pp6Oj8de1E6n/EPreXa7zUZpOMi3
+F4yX+bsz9mLm7OwN43X6IB8G+TEKktuxFjOnp0m/n83NvxjVbx9kIpRy3uRrmf0PYVS/B91e
+jo4ynIOBD1I/4j8Y6fVS5d+yGoaRdjvZ2EhWV/0dUgvE7m7e2xm5vExOTvxrb20gKyvJ+Xm5
+KZer8v8wLi6SuzsfpBaMq6tkefldDP8bUhdGeWe83WmXlsrTpbxdrq8zixjzAbK+PvLqm9Wd
+MZ87ZG0ts4wxX9+Q6qiaofcG9TD0Qfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80F8ED8f
+xM8H8UH8fBAfxM8H8UH8fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB/Cbq
+Dwek5Kyq+eWvAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
