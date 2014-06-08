@@ -149,6 +149,12 @@ TRCanvas >> camera [
 	^ camera
 ]
 
+{ #category : #action }
+TRCanvas >> clean [
+	self shapes copy do: #remove.
+	self fixedShapes copy do: #remove
+]
+
 { #category : #accessing }
 TRCanvas >> color [
 	^ color
