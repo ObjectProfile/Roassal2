@@ -21,7 +21,15 @@ TRCameraTest >> testConversion [
 	self assert: (camera fromSpaceToPixel: 10 @ 10) = ((canvas extent / 2) + (10 @ 10)).
 
 	self assert: (camera fromPixelToSpace: (canvas extent / 2)) = (0 @ 0).
-	self assert: (camera fromPixelToSpace: ((canvas extent / 2) + (10 @ 10))) = (10 @ 10)
+	self assert: (camera fromPixelToSpace: ((canvas extent / 2) + (10 @ 10))) = (10 @ 10).
+	
+	camera
+		translateTo: 21578 @ -1239;
+		scale: 736.
+		
+	self
+		assert: (camera fromPixelToSpace: (camera fromSpaceToPixel: 100 @ 100))
+		equals: 100 @ 100
 ]
 
 { #category : #focusing }
