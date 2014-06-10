@@ -122,6 +122,34 @@ RTForceBasedLayout >> accumulate: aQuad [
 	aQuad cy: cy / aQuad charge.
 ]
 
+{ #category : #updating }
+RTForceBasedLayout >> addEdge: anEdge [
+	self addEdges: (Array with: anEdge)
+]
+
+{ #category : #updating }
+RTForceBasedLayout >> addEdges: someEdges [
+	someEdges
+		do: [ :e | 
+			| from to |
+			from := e from.
+			to := e to.
+			weights at: from put: (weights at: from) + 1.
+			weights at: to put: (weights at: to) + 1 ].
+	edges := edges, someEdges
+]
+
+{ #category : #updating }
+RTForceBasedLayout >> addNodes: nodeElements [
+	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
+	nodes := nodes, nodeElements.
+	nodeElements
+		do: [ :e | 
+			weights add: (Association key: e value: 0).
+			oldPositions add: (Association key: e value: e position) ].
+
+]
+
 { #category : #accessing }
 RTForceBasedLayout >> charge: aFloat [
 
@@ -232,6 +260,26 @@ RTForceBasedLayout >> on: elements edges: edgesCol [
 	self applyOn: elements.
 ]
 
+{ #category : #accessing }
+RTForceBasedLayout >> prepareNodes: nodeElements [
+	"Initialize the meta data associated to the nodes. At that stage, position of nodes is not modified"
+	weights := Dictionary new.
+	oldPositions := Dictionary new.
+	nodes := nodeElements.
+	nodes
+		do: [ :e | 
+			weights add: (Association key: e value: 0).
+			oldPositions add: (Association key: e value: e position) ].
+	edges
+		do: [ :e | 
+			| from to |
+			from := e from.
+			to := e to.
+			weights at: from put: (weights at: from) + 1.
+			weights at: to put: (weights at: to) + 1 ].
+	alpha := 0.1
+]
+
 { #category : #algorithm }
 RTForceBasedLayout >> repulse: aNode from: aQuad [
 
@@ -281,26 +329,9 @@ RTForceBasedLayout >> set: anEdge strength: aFloat [
 ]
 
 { #category : #accessing }
-RTForceBasedLayout >> start: nodeElements [ 
-
+RTForceBasedLayout >> start: nodeElements [
 	self initialPositionOfNodes: nodeElements.
-
-	weights := Dictionary new.
-	oldPositions := Dictionary new.
-	
-	nodes := nodeElements.
-	
-	nodes do: [ :e | weights add: (Association key: e value: 0).
-					oldPositions add:(Association key: e value: e position) ].
-	
-	edges do: [ :e | | from to | 
-				from := e from.
-				to := e to.
-				weights at: from put: ((weights at: from) + 1).
-				weights at: to put: ((weights at: to) + 1) ].
-	
-	alpha := 0.1.
-
+	self prepareNodes: nodeElements
 ]
 
 { #category : #events }
@@ -312,34 +343,43 @@ RTForceBasedLayout >> step [
 	nodes ifEmpty: [ ^ self ].
 	super step.
 	edges do: [ :e | 
-					from := e from. fp := from position.
-					to := e to. tp := to position.
+					from := e from. 
+					fp := from position.
+					to := e to. 
+					tp := to position.
 					x := tp x - fp x.
 					y := tp y - fp y.
 					len := ((x * x) + (y * y)) sqrt.
-					((len closeTo: 0) not) ifTrue: [ len :=  alpha * (self strengthOf: e) * ( len - (self lengthOf: e) ) / len.
-										x := x * len.
-										y := y * len.
-										k := (weights at: from) / (( weights at: from) +( weights at: to )).
-										to translateTo: ( tp x - (x * k) )@( tp y - (y * k) ).
-										k := 1 -  k.
-										from translateTo: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
+					((len closeTo: 0) not) ifTrue: [ 
+						len :=  alpha * (self strengthOf: e) * ( len - (self lengthOf: e) ) / len.
+						x := x * len.
+						y := y * len.
+						k := (weights at: from) / (( weights at: from) +( weights at: to )).
+						to translateTo: ( tp x - (x * k) )@( tp y - (y * k) ).
+						k := 1 -  k.
+						from translateTo: ( fp x + (x * k) )@( fp y + (y * k) ) ] ].
 			
 		k := alpha * gravity.
-		((k closeTo: 0) not) ifTrue: [ x := center x.
-							y := center y.
-							nodes do: [ :ea | |pos|
-										pos := ea position.
-										ea translateTo: (pos x + (( x - pos x )* k ) )@(pos y + (( y - pos y )* k ) ) ] ].
-					
+		((k closeTo: 0) not) ifTrue: [ 
+			x := center x.
+			y := center y.
+			nodes do: [ :ea | | pos |
+					pos := ea position.
+					ea translateTo: (pos x + ((x - pos x)* k)) @ (pos y + (( y - pos y )* k )) ] ].
+				
 		quad := RTQuadTree withAll: nodes.
 		self accumulate: quad.
-		nodes do: [ :e | (self isFixed: e) ifFalse: [ self repulse: e from: quad ]
-										 ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
+		nodes do: [ :e | 
+			(self isFixed: e) 
+				ifFalse: [ self repulse: e from: quad ]
+				ifTrue: [ translator translateTopLeftOf: e to: (fixedNodes at: e) ] ].
 
-		nodes do: [ :e | old := e position .
-						e translateTo: (old x - (( (oldPositions at: e) x - old x ) * friction)) @ (old y - (( (oldPositions at: e) y - old y ) * friction)).
-						oldPositions at: e put: old.].
+		nodes do: [ :e | 
+			old := e position.
+			e translateTo: 
+				(old x - (( (oldPositions at: e) x - old x ) * friction)) @ 
+				(old y - (( (oldPositions at: e) y - old y ) * friction)).
+			oldPositions at: e put: old.].
 ]
 
 { #category : #accessing }
