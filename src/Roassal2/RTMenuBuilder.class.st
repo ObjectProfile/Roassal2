@@ -30,6 +30,15 @@ RTMenuBuilder >> createBackgroundFor: lbl color: aColor [
 
 { #category : #utility }
 RTMenuBuilder >> createParentMenu: aTitle [
+	| lbl |
+	lbl := nil.
+	lbl := self createParentMenu: aTitle action: [ self showSubmenuOf: lbl ].
+	^ lbl.
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTMenuBuilder >> createParentMenu: aTitle action: action [
 	
 	| lbl index |
 	index := view canvas fixedShapes 
@@ -38,7 +47,7 @@ RTMenuBuilder >> createParentMenu: aTitle [
 	lbl color: Color black.
 	lbl element: (OrderedCollection new add: false; yourself).
 	
-	lbl when: TRMouseClick do: [ :event | self showSubmenuOf: lbl ].
+	lbl when: TRMouseClick do: [ :event | action value. ].
 	lbl when: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
 	lbl when: TRMouseLeave do: [ :event | lbl color: Color black. self signalUpdate ].
 	view canvas addFixedShape: lbl.
