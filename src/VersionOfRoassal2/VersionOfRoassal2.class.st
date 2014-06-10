@@ -3525,3 +3525,14 @@ VersionOfRoassal2 >> version000272 [
 	at: #date put: '8 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000273 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-YuriyTymchuk.153';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.356';
+	at: #version put: '0.273';
+	at: #comment put: '0.273 : improved the force based layout to be dynamically updated. Works well! Example have been added';
+	at: #date put: '10 June 2014';
+	yourself
+]
