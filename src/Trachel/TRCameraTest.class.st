@@ -27,9 +27,13 @@ TRCameraTest >> testConversion [
 		translateTo: 21578 @ -1239;
 		scale: 736.
 		
-	self
-		assert: (camera fromPixelToSpace: (camera fromSpaceToPixel: 100 @ 100))
-		equals: 100 @ 100
+	self assert:
+		((camera fromPixelToSpace: (camera fromSpaceToPixel: 100 @ 100))
+		closeTo: 100 @ 100).
+			
+	self assert:
+		((camera fromSpaceToPixel: (camera fromPixelToSpace: 100 @ 100))
+		closeTo: 100 @ 100)
 ]
 
 { #category : #focusing }

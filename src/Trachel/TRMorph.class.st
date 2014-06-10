@@ -34,7 +34,6 @@ TRMorph >> createSurface [
 { #category : #drawing }
 TRMorph >> drawOn: aCanvas [
 	"aCanvas is a FormCanvas"
-	| offset |
 	
 "	self checkSession."
 	
@@ -46,10 +45,10 @@ TRMorph >> drawOn: aCanvas [
 		surface clear.
 		
 		"We display the elements that are subject to the camera"
-		offset := (self extent / 2) - trachelCanvas camera position.
-		cs pathTransform translateX: offset x Y: offset y.
-		cs pathTransform 
-			scaleBy: trachelCanvas camera scale.
+		cs pathTransform
+			translateBy: self extent / 2;
+			    scaleBy: trachelCanvas camera scale;
+			translateBy: trachelCanvas camera position negated.
 		trachelCanvas shapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
 		].

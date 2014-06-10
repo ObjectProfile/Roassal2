@@ -80,30 +80,23 @@ TRCamera >> focusOnCenterScaled: aFactor [
 
 { #category : #convertion }
 TRCamera >> fromPixelToSpace: aPoint [
-	| tr |
-	"tr := ((canvas extent / 2) - self position) negated.
-	^ AthensAffineTransform new scaleBy: (1 / self scale) asFloat; translation: tr*(1 / self scale); transform: aPoint"
-	
-	self flag: 'This transformation has to be re-maid in a smart way'.
-	^ (AthensAffineTransform new
-		translation: self position;
+
+	^ AthensAffineTransform new
+		translateBy: (self canvas extent / 2) negated;
 		scaleBy: 1 / self scale;
-		transform: (aPoint - (self canvas extent / 2)) )
+		translateBy: self position;
+		transform: aPoint
 ]
 
 { #category : #convertion }
 TRCamera >> fromSpaceToPixel: aPoint [
-	| tr |
-	"tr := (canvas extent / 2) - self position.
-	^ AthensAffineTransform new translation: tr*(self scale); scaleBy: (self scale) asFloat;  transform: aPoint"
-	
-	self flag: 'This transformation has to be re-maid in a smart way'.
+
 	^ AthensAffineTransform new
+		translateBy: self position negated;
 		scaleBy: self scale;
-		translation: (self canvas extent / 2);
-		transform: (aPoint - self position).
+		translateBy: self canvas extent / 2;
+		transform: aPoint
 	
-	"^ AthensAffineTransform new translation: tr; transform: aPoint"
 ]
 
 { #category : #initialization }
