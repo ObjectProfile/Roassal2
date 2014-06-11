@@ -11,10 +11,19 @@ Class {
 	#name : #RTCellLayout,
 	#superclass : #RTAbstractGridLayout,
 	#instVars : [
-		'inCellPosition'
+		'inCellPosition',
+		'translateElement'
 	],
 	#category : #'Roassal2-Layouts'
 }
+
+{ #category : #accessing }
+RTCellLayout >> centered [
+	translateElement := [ :aTranslator :anElement :newPos | translator translateCenterLeftOf: anElement to: newPos ].
+	
+	self inCellPosition: [ :cell | cell extent x @ 0 ]
+
+]
 
 { #category : #hook }
 RTCellLayout >> doExecute: elements [ 
@@ -26,8 +35,11 @@ RTCellLayout >> doExecute: elements [
 	elements withIndexDo: 
 		[ :element :index | 
 		cell element: element; number: index.
-		translator translateTopLeftOf: element to: pointer.
-		pointer := (pointer x + cell extent x + (self gapSize * 2)) @ pointer y.
+		"translator translateTopLeftOf: element to: pointer."
+		translateElement value: translator value: element value: pointer.
+		
+		pointer := ((pointer x + (self gapSize * 2)) @ pointer y) + (inCellPosition rtValue: cell).
+		"pointer := (pointer x + cell extent x + (self gapSize * 2)) @ pointer y."
 		lineItemCount := lineItemCount + 1.
 		lineItemCount >= lineItemSize ifTrue: 
 			[ pointer := self gapSize @ (pointer y + (self gapSize * 2) + cell extent y).
@@ -43,13 +55,15 @@ RTCellLayout >> inCellPosition: anObjectOrOneArgBlock [
 
 { #category : #'initialize-release' }
 RTCellLayout >> initialize [
-
 	super initialize.
-
+	self leftCentered
 ]
 
 { #category : #accessing }
-RTCellLayout >> leftCentred [
+RTCellLayout >> leftCentered [
+	translateElement := [ :aTranslator :anElement :newPos | translator translateTopLeftOf: anElement to: newPos ].
+	
+	"self inCellPosition: [ :cell | 0 @ ((cell extent y - cell element height) / 2) ]"
+	self inCellPosition: [ :cell | cell extent x @ 0 ]
 
-	self inCellPosition: [ :cell | 0 @ ((cell extent y - cell element height) / 2) ]
 ]

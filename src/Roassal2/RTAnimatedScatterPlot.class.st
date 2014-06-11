@@ -40,11 +40,6 @@ RTAnimatedScatterPlot >> allEntries [
 	^ answer asSortedCollection asArray
 ]
 
-{ #category : #public }
-RTAnimatedScatterPlot >> build [
-	self renderIn: view
-]
-
 { #category : #'public - frames' }
 RTAnimatedScatterPlot >> chartTotalSize [
 	^ 200
