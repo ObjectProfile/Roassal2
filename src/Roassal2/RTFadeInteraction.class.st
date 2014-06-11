@@ -1,8 +1,16 @@
 Class {
 	#name : #RTFadeInteraction,
 	#superclass : #RTInteraction,
+	#instVars : [
+		'action'
+	],
 	#category : #'Roassal2-Builder-Sunburst'
 }
+
+{ #category : #computing }
+RTFadeInteraction >> action: ablock [
+	action := ablock
+]
 
 { #category : #computing }
 RTFadeInteraction >> children: element [
@@ -50,7 +58,8 @@ RTFadeInteraction >> focus: element [
 
 { #category : #hooks }
 RTFadeInteraction >> initializeElement: element [
-	element when: TRMouseEnter do: [ :event | self focus: element ].
+	element when: TRMouseEnter do: [ :event | self focus: element. 
+		action ifNotNil: [ action value: element model ] ].
 	element when: TRMouseLeave do: [ :event | self restore: element ].
 ]
 
