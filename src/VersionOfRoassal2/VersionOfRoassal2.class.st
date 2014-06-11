@@ -3536,3 +3536,14 @@ VersionOfRoassal2 >> version000273 [
 	at: #date put: '10 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000274 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.154';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.357';
+	at: #version put: '0.274';
+	at: #comment put: '0.274 : fixing popup text with multiline. Wow! It was highly necessary! Now it works okay :-)';
+	at: #date put: '11 June 2014';
+	yourself
+]
