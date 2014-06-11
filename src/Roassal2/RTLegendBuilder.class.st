@@ -1,3 +1,6 @@
+"
+I am an handy class to build legend in a visualization
+"
 Class {
 	#name : #RTLegendBuilder,
 	#superclass : #RTBuilder,
@@ -7,7 +10,7 @@ Class {
 	#category : #'Roassal2-Builder-Legend'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTLegendBuilder >> example01 [
 	"
 	self new example01
@@ -40,28 +43,28 @@ RTLegendBuilder >> example01 [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLegendBuilder >> initialize [
 	super initialize.
 	legend := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTLegendBuilder >> name: aName color: aColor [
 	^ self name: aName shape: (RTBox new size: 10; color: aColor)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTLegendBuilder >> name: aName element: anElement [
 	legend add: aName -> anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTLegendBuilder >> name: aName shape: aShape [
 	^ self name: aName element: aShape element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
 
 	| groups bigGroup bigbigGroup |
