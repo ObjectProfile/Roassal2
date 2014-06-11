@@ -21,6 +21,11 @@ TRNoShape >> accept: aVisitor [
 	aVisitor visitNoShape: self
 ]
 
+{ #category : #actions }
+TRNoShape >> addedIn: aCanvas [
+	"Do nothing"
+]
+
 { #category : #accessing }
 TRNoShape >> center [
 	0@0
@@ -49,6 +54,11 @@ TRNoShape >> height [
 { #category : #accessing }
 TRNoShape >> position [
 	^ 0 @ 0
+]
+
+{ #category : #actions }
+TRNoShape >> setAsFixed [
+	"Not much to do"
 ]
 
 { #category : #actions }

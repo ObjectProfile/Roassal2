@@ -197,6 +197,12 @@ TRCompositeShape >> resetPath [
 	shape2 resetPath.
 ]
 
+{ #category : #actions }
+TRCompositeShape >> setAsFixed [
+	shape1 setAsFixed.
+	shape2 setAsFixed
+]
+
 { #category : #accessing }
 TRCompositeShape >> shape1 [
 	^ shape1
@@ -208,6 +214,12 @@ TRCompositeShape >> shape1: aTRShape [
 ]
 
 { #category : #accessing }
+TRCompositeShape >> shape1: aTRShape offset: offset [
+	shape1 := aTRShape.
+	shape1 translateBy: offset
+]
+
+{ #category : #accessing }
 TRCompositeShape >> shape2 [
 	^ shape2
 ]
@@ -215,6 +227,12 @@ TRCompositeShape >> shape2 [
 { #category : #accessing }
 TRCompositeShape >> shape2: aTRShape [
 	shape2 := aTRShape
+]
+
+{ #category : #accessing }
+TRCompositeShape >> shape2: aTRShape offset: offset [
+	shape2 := aTRShape.
+	shape2 translateBy: offset
 ]
 
 { #category : #actions }

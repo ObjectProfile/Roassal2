@@ -4,6 +4,15 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #NoShape }
+TRShapeTest >> testAddingNoShape [
+
+	| c |
+	c := TRCanvas new.
+	c addShape: (TRNoShape new).
+	self assert: c numberOfShapes = 0
+]
+
 { #category : #bitmap }
 TRShapeTest >> testBitmapIncludesPoint [
 
@@ -263,6 +272,25 @@ TRShapeTest >> testExtendingAComposite [
 	
 	self assert: s1 extent = (100 @ 80).
 	self assert: s2 extent = (100 @ 80).
+]
+
+{ #category : #composite }
+TRShapeTest >> testFixingComposite [
+
+	| c s1 s2 composite |
+	c := TRCanvas new.
+	s1 := TREllipseShape new size: 20.
+	s2 := TREllipseShape new size: 20.
+	composite := TRCompositeShape with: s1 with: s2.
+	c addShape: composite.
+
+	self assert: c numberOfShapes = 2.
+	self assert: c numberOfFixedShapes = 0.
+	
+	composite setAsFixed.
+
+	self assert: c numberOfShapes = 0.
+	self assert: c numberOfFixedShapes = 2
 ]
 
 { #category : #callback }
