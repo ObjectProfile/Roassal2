@@ -24,6 +24,16 @@ TRCameraTest >> testConversion [
 	self assert: (camera fromPixelToSpace: ((canvas extent / 2) + (10 @ 10))) = (10 @ 10).
 	
 	camera
+		translateTo: 5 @ -15; 
+		scale: 2.
+	
+	self assert: (camera fromSpaceToPixel: 0 @ 0) = (canvas extent / 2 - (10 @ -30)).
+	self assert: (camera fromSpaceToPixel: 10 @ 10) = ((canvas extent / 2) + (10 @ 50)).
+
+	self assert: (camera fromPixelToSpace: (canvas extent / 2 - (10 @ -30))) = (0 @ 0).
+	self assert: (camera fromPixelToSpace: ((canvas extent / 2) + (10 @ 50))) = (10 @ 10).
+	
+	camera
 		translateTo: 21578 @ -1239;
 		scale: 736.
 		

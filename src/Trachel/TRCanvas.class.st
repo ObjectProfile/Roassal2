@@ -129,7 +129,7 @@ TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 
 { #category : #'instance creation' }
 TRCanvas >> buildMorph [
-	morph := TRMorph new
+	morph := self morphClass new
 		canvas: self;
 		extent: canvas extent.
 	^ morph
@@ -238,6 +238,11 @@ TRCanvas >> isMovableShape: aShape [
 { #category : #accessing }
 TRCanvas >> morph [
 	^ morph
+]
+
+{ #category : #'instance creation' }
+TRCanvas >> morphClass [
+	^ TRMorph
 ]
 
 { #category : #animations }
