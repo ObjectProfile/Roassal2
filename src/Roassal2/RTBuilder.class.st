@@ -77,7 +77,7 @@ RTBuilder >> elementsOn: collectionOfObjects [
 RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
 	| els |
 	els := shapeBuilder elementsOn: collectionOfObjects.
-	interactionBuilder setUpElements: els.
+	self setUpInteractionFor: els.
 	^ els
 ]
 
@@ -130,6 +130,11 @@ RTBuilder >> render [
 { #category : #hooks }
 RTBuilder >> renderIn: aView [
 	"You may want to override this method to fill the view"
+]
+
+{ #category : #protected }
+RTBuilder >> setUpInteractionFor: oneOrMoreElements [
+	interactionBuilder setUpElements: oneOrMoreElements asGroup
 ]
 
 { #category : #accessing }

@@ -29,6 +29,11 @@ RTGroup >> addedIn: view [
 	self do: [ :e | view add: e ]
 ]
 
+{ #category : #converting }
+RTGroup >> asGroup [
+	^ self
+]
+
 { #category : #public }
 RTGroup >> center [
 	^ self encompassingRectangle center

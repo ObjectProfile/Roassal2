@@ -8,31 +8,66 @@ Class {
 	#category : #'Roassal2-Builder-Punchcard'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTPunchcard >> addMetric: blockOrSymbol [
 	self addMetric: blockOrSymbol named: blockOrSymbol asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTPunchcard >> addMetric: blockOrSymbol named: aName [
 	metrics add: aName -> blockOrSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTPunchcard >> addObject: anObject [
 	objects add: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
+RTPunchcard >> example01 [
+| b |
+
+b := RTPunchcard new.
+b addObject: RTPunchcard.
+b addObject: RTBox.
+b addObject: RTBuilder.
+b addMetric: #numberOfMethods named: 'NOM'.
+b addMetric: #numberOfVariables named: 'NOA'.
+
+b open
+]
+
+{ #category : #examples }
+RTPunchcard >> example02 [
+	"
+	self new example02
+	"
+| b |
+
+b := RTPunchcard new.
+b interaction
+		highlight;
+		popupText.
+		
+b addObject: RTPunchcard.
+b addObject: RTBox.
+b addObject: RTBuilder.
+b addMetric: #numberOfMethods named: 'NOM'.
+b addMetric: #numberOfVariables named: 'NOA'.
+
+b open
+]
+
+{ #category : #initialization }
 RTPunchcard >> initialize [
 	super initialize.
 	objects := OrderedCollection new.
 	metrics := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPunchcard >> renderIn: aView [
-	| value |
+	|  |
 	
 	"For the first column"
 	aView add: (RTLabel elementOn: ' ').
@@ -45,10 +80,11 @@ RTPunchcard >> renderIn: aView [
 	objects do: [ :obj |
 		aView add: (RTLabel elementOn: obj).
 		metrics do: [ :assoc | 
-			| aMetric |
+			| aMetric el |
 			aMetric := assoc value.
-			value := aMetric rtValue: obj.
-			aView add: (RTEllipse new size: value) element
+			el := (RTEllipse new size: #yourself) elementOn: (aMetric rtValue: obj).
+			self setUpInteractionFor: el.
+			aView add: el
 		]
 	].
 

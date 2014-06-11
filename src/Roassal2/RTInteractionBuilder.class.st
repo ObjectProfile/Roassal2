@@ -74,6 +74,11 @@ RTInteractionBuilder >> popup [
 ]
 
 { #category : #'events-registering' }
+RTInteractionBuilder >> popupText [
+	self popupText: #yourself
+]
+
+{ #category : #'events-registering' }
 RTInteractionBuilder >> popupText: aBlock [
 	interactions add: [ :element | element @ (RTPopup new text: aBlock) ]
 ]
