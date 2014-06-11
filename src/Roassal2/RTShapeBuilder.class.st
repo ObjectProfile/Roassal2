@@ -179,6 +179,12 @@ RTShapeBuilder >> reset [
 ]
 
 { #category : #building }
+RTShapeBuilder >> setUpElement: anElement [
+	self hasSetShape ifFalse: [ self rectangle ].
+	^ anElement + shape
+]
+
+{ #category : #building }
 RTShapeBuilder >> setUpElements: elements [
 	self hasSetShape ifFalse: [ self rectangle ].
 	^ elements + shape

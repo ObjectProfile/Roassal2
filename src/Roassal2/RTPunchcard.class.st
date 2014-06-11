@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'metrics',
-		'objects'
+		'objects',
+		'interactionObject'
 	],
 	#category : #'Roassal2-Builder-Punchcard'
 }
@@ -48,6 +49,9 @@ b := RTPunchcard new.
 b interaction
 		highlight;
 		popupText.
+b interactionObject
+		highlightColored: Color red;
+		action: #browse.
 		
 b addObject: RTPunchcard.
 b addObject: RTBox.
@@ -62,23 +66,32 @@ b open
 RTPunchcard >> initialize [
 	super initialize.
 	objects := OrderedCollection new.
-	metrics := OrderedCollection new
+	metrics := OrderedCollection new.
+	interactionObject := RTInteractionBuilder new
+]
+
+{ #category : #hooks }
+RTPunchcard >> interactionObject [
+	^ interactionObject
 ]
 
 { #category : #hooks }
 RTPunchcard >> renderIn: aView [
-	|  |
+	|  labelClass |
 	
 	"For the first column"
 	aView add: (RTLabel elementOn: ' ').
 	
 	metrics do: [ :assoc | 
-		| metricName |
+		| metricName el |
 		metricName := assoc key.
-		aView add: (RTLabel elementOn: metricName) ].
+		el := RTLabel elementOn: metricName.
+		aView add: el ].
 	
 	objects do: [ :obj |
-		aView add: (RTLabel elementOn: obj).
+		labelClass := RTLabel elementOn: obj.
+		interactionObject setUpElement: labelClass.
+		aView add: labelClass.
 		metrics do: [ :assoc | 
 			| aMetric el |
 			aMetric := assoc value.

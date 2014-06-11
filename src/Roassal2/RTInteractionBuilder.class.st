@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #public }
+RTInteractionBuilder >> action: aBlockOrSymbol [
+	^ self item: aBlockOrSymbol action: aBlockOrSymbol
+]
+
+{ #category : #public }
 RTInteractionBuilder >> decoration [
 	| i |
 	i := RTDecoration new.
@@ -53,6 +58,11 @@ RTInteractionBuilder >> initializeInteractions [
 ]
 
 { #category : #public }
+RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
+	interactions add: [ :element | element @ (RTMenuActivable  new item: aTitle asString action: aBlockOrSymbol) ]
+]
+
+{ #category : #public }
 RTInteractionBuilder >> menu [
 	| i |
 	i := RTMenuActivable new.
@@ -87,6 +97,13 @@ RTInteractionBuilder >> popupText: aBlock [
 RTInteractionBuilder >> postCopy [
 	super postCopy.
 	interactions := interactions copy.
+]
+
+{ #category : #building }
+RTInteractionBuilder >> setUpElement: elementOrGroup [
+	"elements is an RTGroup, that contains RTElement or RTEdges"
+	
+	interactions do: [ :int | elementOrGroup @ int ]
 ]
 
 { #category : #building }
