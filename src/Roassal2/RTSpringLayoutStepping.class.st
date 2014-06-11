@@ -9,6 +9,25 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #updating }
+RTSpringLayoutStepping >> addEdge: anEdge [
+	layout addEdge: anEdge
+]
+
+{ #category : #updating }
+RTSpringLayoutStepping >> addNode: anElement [
+	"Designate the collection of elements that have to be layouted"
+	layout 
+		addNodes: (Array with: anElement)
+]
+
+{ #category : #updating }
+RTSpringLayoutStepping >> addNodes: someElements [
+	"Designate the collection of elements that have to be layouted"
+	layout 
+		addNodes: someElements
+]
+
 { #category : #accessing }
 RTSpringLayoutStepping >> afterBlock: aBlock [
 	"Set a block to be evaluated at each refresh"
@@ -40,6 +59,14 @@ RTSpringLayoutStepping >> layout: aForceBasedLayout [
 { #category : #accessing }
 RTSpringLayoutStepping >> nodes [
 	^ layout nodes
+]
+
+{ #category : #accessing }
+RTSpringLayoutStepping >> nodes: elements [
+	"Designate the collection of elements that have to be layouted"
+	layout 
+		prepareNodes: elements;
+		nodes: elements
 ]
 
 { #category : #accessing }

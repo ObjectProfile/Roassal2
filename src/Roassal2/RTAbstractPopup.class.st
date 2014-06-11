@@ -133,6 +133,7 @@ RTAbstractPopup >> initializeElement: element [
 
 { #category : #utility }
 RTAbstractPopup >> lastPopup: anElement [
+ 
 	self class lastPopup: anElement
 ]
 

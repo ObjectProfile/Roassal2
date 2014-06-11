@@ -50,7 +50,7 @@ RTAbstractSmartBrowser >> addClassesMatching: matchingPattern [
 
 { #category : #'UI effects' }
 RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
-	methodElements @ (RTPopup new text: [ :cm | cm selector asString ]).
+	methodElements @ (RTPopup new text: [ :cm | cm getSource asString ]).
 	methodElements
 		when: TRMouseClick
 		do: [ :event | 
@@ -94,6 +94,7 @@ RTAbstractSmartBrowser >> currentSelection [
 
 { #category : #'UI effects' }
 RTAbstractSmartBrowser >> expandClassElement: classElement [
+	"Method called when one press on a class to expand it"
 	| class methods methodElements edges |
 	class := classElement model.
 	self clickOnClass: class.

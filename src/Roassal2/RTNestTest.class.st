@@ -129,6 +129,92 @@ RTNestTest >> testInner [
 	self assert: host position equals: (0@0).
 ]
 
+{ #category : #'multi line' }
+RTNestTest >> testMultiline [
+
+
+	| v b e |
+	v := RTView new.
+	b := (RTBox new color: (Color red alpha: 0.3)) element.
+	e := RTLabel elementOn: 'Hello
+	World
+	Bonjour
+	Blah
+	'.
+	v add: b.
+	v add: e.
+
+	RTNest new on: b nest: (Array with: e).
+
+	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
+	
+	"This has to be fixed."
+	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10)) "
+]
+
+{ #category : #'multi line' }
+RTNestTest >> testMultiline02 [
+
+
+	| v b e |
+	v := RTView new.
+	b := (RTBox new color: (Color red alpha: 0.3)) element.
+	e := RTLabel elementOn: 'Hello
+	World
+	Bonjour
+	Blah
+	'.
+	v add: b.
+	v add: e.
+
+	RTNest new on: b nest: (Array with: e).
+
+	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
+	
+	"This has to be fixed"
+	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10))" 
+]
+
+{ #category : #'multi line' }
+RTNestTest >> testMultiline03 [
+
+
+	| v b e |
+	v := RTView new.
+	b := (RTBox new color: (Color red alpha: 0.3)) element.
+	e := RTLabel elementOn: 'Hello
+	World
+	Bonjour
+	Blah
+	'.
+
+	RTNest new on: b nest: (Array with: e).
+
+	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
+	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10)) "
+]
+
+{ #category : #'multi line' }
+RTNestTest >> testMultiline04 [
+
+
+	| v b e |
+	v := RTView new.
+	b := (RTBox new color: (Color red alpha: 0.3)) element.
+	e := RTLabel elementOn: 'Hello
+	World
+	Bonjour
+	Blah
+	'.
+
+	RTNest new on: b nest: (Array with: e).
+	v add: b.
+	v add: e.
+	
+	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
+	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10)) "
+]
+
 { #category : #tests }
 RTNestTest >> testResizableInnerNode [
 	"If we resize an inner node, the outter node should be resized"

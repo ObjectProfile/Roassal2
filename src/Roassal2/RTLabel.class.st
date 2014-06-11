@@ -62,33 +62,45 @@ RTLabel >> textFor: element [
 
 { #category : #hooks }
 RTLabel >> trachelShapeFor: anElement [
-	| c txt lines n s lbl |
+	| c txt lines    |
 
 	c := self colorFor: anElement.
 	txt := self textFor: anElement.
-	txt := txt copyReplaceAll: String tab with: '    '.
 	lines := txt lines.
-	lines size <= 1
-		ifTrue: 
-			[ ^ self trachelShapeForOneLine: anElement ]
-		ifFalse:
-			[
-			s := TRCompositeShape new.
-			lines reverse do: [ :l | 
-				lbl := TRLabelShape new text: l.
-				s shape1: lbl.
-				s offset1: lbl width / 2 @ 0.
-				s offset2: 0 @ 20.
-				
-				n := TRCompositeShape new.
-				n shape2: s.
-				s := n ].
-			^ s 
-			 ]
+	^ lines size <= 1
+		ifTrue: [ self trachelShapeForOneLine: anElement ]
+		ifFalse: [ self trachelShapeForMultiLine: anElement ]
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'trachel shape production' }
+RTLabel >> trachelShapeForMultiLine: anElement [
+	| lines s lbl n txt  aColor fontSize |
+	aColor := self colorFor: anElement.
+	fontSize := self heightFor: anElement.
+	
+	txt := self textFor: anElement.
+	txt := txt copyReplaceAll: String tab with: '    '.
+	lines := txt lines.
+	 
+	s := TRCompositeShape new.
+	lines reverse do: [ :l | 
+		lbl := TRLabelShape new text: l.
+		lbl color: aColor.
+		lbl fontSize: fontSize.
+		
+		s shape1: lbl offset: lbl width / 2 @ 0.
+ 		
+		n := TRCompositeShape new.
+		n shape2: s offset: 0 @ 20.
+		s := n ].
+
+	"s offset2: s encompassingRectangle extent negated / 2."
+
+	^ s
+]
+
+{ #category : #'trachel shape production' }
 RTLabel >> trachelShapeForOneLine: anElement [
 	|  shape |	
 	shape := TRLabelShape new.
@@ -101,11 +113,15 @@ RTLabel >> trachelShapeForOneLine: anElement [
 
 { #category : #rendering }
 RTLabel >> updateFor: anElement trachelShape: trachelShape [	
-	| c txt lines n s |
+	| c s |
 	trachelShape isNil ifTrue: [ ^ self ].
 	s := nil.
 	c := self colorFor: anElement.
-	txt := self textFor: anElement.
+	 trachelShape 
+				color: c;
+				position: anElement position
+
+"	txt := self textFor: anElement.
 	lines := txt lines.
 	lines size = 1
 		ifTrue: 
@@ -120,7 +136,7 @@ RTLabel >> updateFor: anElement trachelShape: trachelShape [
 				n shape1: l. 
 				s shape2: n.
 				s := n ]. 
-			 ]
+			 ]"
 ]
 
 { #category : #rendering }

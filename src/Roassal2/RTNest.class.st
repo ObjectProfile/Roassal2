@@ -18,6 +18,7 @@ RTNest >> centerOn: backElement elements: elements [
 	self doLayoutIfNecessaryOn: elements.
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	
+
 	backElement trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
 
 	off := backElement encompassingRectangle center - encompassingRectangle center. 
@@ -36,6 +37,7 @@ RTNest >> doLayoutIfNecessaryOn: elements [
 
 { #category : #utility }
 RTNest >> encompassingRectangleOf: elements [
+	"Maybe in the future, we should enforce to have a group provided as argument, and not a collection"
 	| encompassingRectangle |
 	elements isEmpty ifTrue: [ ^ (0 @ 0) extent: (0 @ 0) ]. 
 	encompassingRectangle := elements anyOne encompassingRectangle.
