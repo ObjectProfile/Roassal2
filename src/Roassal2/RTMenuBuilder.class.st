@@ -94,51 +94,88 @@ RTMenuBuilder >> menu: aTitle callback: callback [
 ]
 
 { #category : #public }
+RTMenuBuilder >> menu: aTitle subcheckmenu: menuname background: color callback: callback [
+	| checkmenu |
+	checkmenu := nil.
+	checkmenu := self
+		 menu: aTitle
+		 submenu: menuname
+		 background: color
+		 callback: [ 
+			checkmenu selected: checkmenu selected not.
+			callback value: checkmenu].
+	checkmenu after: [ :menu | 
+		menu text: checkmenu label. self signalUpdate].
+	^ checkmenu.
+]
+
+{ #category : #public }
+RTMenuBuilder >> menu: aTitle subcheckmenus: menus background: color [
+	"format for menus
+	{'Title'->[:m | do something ]}"
+	^ menus collect: [ :m |
+		self menu: aTitle subcheckmenu: m key background: color callback: m value.
+		 ].
+]
+
+{ #category : #public }
 RTMenuBuilder >> menu: aTitle submenu: aSubMenuName background: aColor callback: callback [
-	| parentMenu |
+	| parentMenu menuItem |
 	parentMenu := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = aTitle ] ].
 	parentMenu isEmpty 
 		ifTrue: [ parentMenu := self createParentMenu: aTitle background: aColor ]
 		ifFalse: [ parentMenu := parentMenu first ].
 	
-	parentMenu element add: aSubMenuName -> callback
+	menuItem := RTMenuItem new name: aSubMenuName; callback: callback.
+	parentMenu element add: menuItem.
+	^ menuItem.
 ]
 
 { #category : #public }
 RTMenuBuilder >> menu: aTitle submenu: aSubMenuName callback: callback [
-	| parentMenu |
+	| parentMenu menuItem |
 	parentMenu := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = aTitle ] ].
 	parentMenu isEmpty 
 		ifTrue: [ parentMenu := self createParentMenu: aTitle ];
 		ifFalse: [ parentMenu := parentMenu first ].
 	
-	parentMenu element add: aSubMenuName -> callback
+	menuItem := RTMenuItem new name: aSubMenuName; callback: callback.
+	parentMenu element add: menuItem.
+	^ menuItem.
+]
+
+{ #category : #public }
+RTMenuBuilder >> menu: aTitle submenus: menus background: aColor callback: callback [
+	^ menus collect: [ :m | 
+		self menu: aTitle submenu: m key background: aColor callback: callback].
 ]
 
 { #category : #utility }
 RTMenuBuilder >> showSubmenuOf: lbl [
 
-	| assocs labels previousLabel |
-	assocs := lbl element.
+	| items labels previousLabel |
+	items := lbl element.
 	
 	"Check if submenu is open"
-	(assocs at: 1) = true
+	(items at: 1) = true
 		ifTrue: [  
 			"We mark it as closed"
-			assocs at: 1 put: false.
-			(assocs copyFrom: 2 to: assocs size) do: [ :as | 
-				(self getLabelNamed: as key) remove ].
+			items at: 1 put: false.
+			(items copyFrom: 2 to: items size) do: [ :item | 
+				(self getLabelNamed: item label) remove ].
 			self signalUpdate.
 			^ self
 			].
 	
 	"We mark the submenu as open" 
-	assocs at: 1 put: true.
+	items at: 1 put: true.
 	
-	assocs := assocs copyFrom: 2 to: assocs size.
-	labels := assocs collect: [ :as |
-						self menu: as key callback: as value
-					].
+	items := items copyFrom: 2 to: items size.
+	labels := items collect: [ :item | | m |
+		m := nil.
+		m := self menu: item label callback: [item execute: m].
+		item menu: m.
+		m ].
 	TRConstraint move: labels first onTheCenterOf: lbl.
 	TRConstraint move: labels first below: lbl. 
 	
