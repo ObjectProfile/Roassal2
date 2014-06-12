@@ -12,13 +12,15 @@ Class {
 	#superclass : #RTAbstractGridLayout,
 	#instVars : [
 		'inCellPosition',
-		'translateElement'
+		'translateElement',
+		'align'
 	],
 	#category : #'Roassal2-Layouts'
 }
 
 { #category : #accessing }
 RTCellLayout >> centered [
+	align := #center.
 	translateElement := [ :aTranslator :anElement :newPos | translator translateCenterLeftOf: anElement to: newPos ].
 	
 	self inCellPosition: [ :cell | cell extent x @ 0 ]
@@ -27,23 +29,86 @@ RTCellLayout >> centered [
 
 { #category : #hook }
 RTCellLayout >> doExecute: elements [ 
-	| pointer lineItemCount lineItemSize cell |
+	
+	| lineItemSize pointer columnCount rowCount maxHeight columnsWidths rowHeights |
+	lineItemSize := self lineItemsCountBlock rtValue: elements.
+
+	"We compute the size of the grid"
+	columnCount := 1.
+	rowCount := 1.
+	maxHeight := 0.
+	columnsWidths := OrderedCollection new.
+	rowHeights := OrderedCollection new.
+	elements do: [ :e |
+		columnsWidths size < columnCount ifTrue: [ columnsWidths add: 0 ].
+		columnsWidths at: columnCount put: ((columnsWidths at: columnCount) max: e extent x).		
+		maxHeight := maxHeight max: e extent y.
+		columnCount := columnCount + 1.
+		
+		columnCount > lineItemSize
+			ifTrue: [ 
+				columnCount := 1. 
+				rowHeights add: maxHeight.
+				maxHeight := 0 ]
+	].
+	rowHeights add: maxHeight.
+
+""
+	"We do the translation"
+	columnCount := 1.
+	rowCount := 1.
+	pointer := (((columnsWidths at: 1) / 2) @ ((rowHeights at: 1) / 2)) + (self gapSize @ 0).
+	elements do: [ :e | 
+		e translateTo: pointer.
+		pointer := pointer + (self gapSize * 2 @ 0) + (((columnsWidths at: columnCount) / 2) @ 0).
+
+		columnCount := columnCount + 1.
+		columnCount > lineItemSize
+			ifTrue: [ 
+				columnCount := 1.
+				pointer := (((columnsWidths at: 1) / 2) @ pointer y)  + (0 @ ((rowHeights at: rowCount) / 2)).
+				rowCount := rowCount + 1.
+				rowCount <= rowHeights size 
+					ifTrue: [ pointer := pointer + (0 @ ((rowHeights at: rowCount) / 2)) ].				 
+				 ]
+			ifFalse: [ pointer := pointer + (self gapSize * 2 @ 0) + (((columnsWidths at: columnCount ) / 2) @ 0) ].
+	]
+]
+
+{ #category : #hook }
+RTCellLayout >> doExecuteOLD: elements [ 
+	| pointer lineItemCount lineItemSize cell lineCount columnWidth |
 	lineItemSize := self lineItemsCountBlock rtValue: elements.
 	cell := RTCell elements: elements columns: lineItemSize.
+
 	pointer := self gapSize @ self gapSize.
 	lineItemCount := 0.
+	lineCount := 1.
 	elements withIndexDo: 
 		[ :element :index | 
-		cell element: element; number: index.
-		"translator translateTopLeftOf: element to: pointer."
-		translateElement value: translator value: element value: pointer.
-		
-		pointer := ((pointer x + (self gapSize * 2)) @ pointer y) + (inCellPosition rtValue: cell).
-		"pointer := (pointer x + cell extent x + (self gapSize * 2)) @ pointer y."
 		lineItemCount := lineItemCount + 1.
-		lineItemCount >= lineItemSize ifTrue: 
-			[ pointer := self gapSize @ (pointer y + (self gapSize * 2) + cell extent y).
-			lineItemCount := 0 ].
+		columnWidth := cell columnWidthAt: lineItemCount.
+		cell element: element; number: index.
+		
+		align == #left
+			ifTrue: [ 
+				translator translateTopLeftOf: element to: pointer.
+				pointer := ((pointer x + (self gapSize * 2)) @ pointer y) + (columnWidth @ 0) ].
+
+		align == #center
+			ifTrue: [ 
+				pointer := pointer + (columnWidth / 2 @ 0).
+				translator translateCenterLeftOf: element to: pointer.
+				pointer := ((pointer x + (self gapSize * 2)) @ pointer y) + (columnWidth / 2 @ 0) ].
+
+		
+		lineItemCount >= lineItemSize ifTrue: [   
+			pointer := self gapSize @ (pointer y + (self gapSize * 2) + ((cell rowHeightAt: lineItemCount) / 2)).
+			(align == #center and: [ lineCount > 1 ])
+				ifTrue: [ pointer := pointer + ((cell rowHeightAt: lineCount - 1) / 2) ].
+			lineItemCount := 0.
+			lineCount := lineCount + 1 ].
+
 		self step ]
 ]
 
@@ -61,6 +126,8 @@ RTCellLayout >> initialize [
 
 { #category : #accessing }
 RTCellLayout >> leftCentered [
+	align := #left.
+
 	translateElement := [ :aTranslator :anElement :newPos | translator translateTopLeftOf: anElement to: newPos ].
 	
 	"self inCellPosition: [ :cell | 0 @ ((cell extent y - cell element height) / 2) ]"

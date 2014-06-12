@@ -25,7 +25,7 @@ RTGlobalBuilder >> alphaColor:  anAlphaColor [
 	"Set an alpha color (transparency) for nodes"
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
-		self view elements do: [ :el | 
+		self filteredElementsToConsider do: [ :el | 
 				el trachelShape color: (el trachelShape color alpha: anAlphaColor)
 			] 
 		]. 
@@ -72,6 +72,11 @@ RTGlobalBuilder >> executeOn: elements [
 	self execute
 ]
 
+{ #category : #accessing }
+RTGlobalBuilder >> filteredElementsToConsider [ 
+	^ elementsToConsider select: [ :v | condition rtValue: v model ]
+]
+
 { #category : #initialization }
 RTGlobalBuilder >> initialize [
 	super initialize.
@@ -84,7 +89,7 @@ RTGlobalBuilder >> maxSize: anInteger [
 	"aBlock is evaluated on each node model. 
 	Set the maximum size of each element"
 	self addProperty: [
-		self elementsToConsider do: [ :el | 
+		self filteredElementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape extent: (el trachelShape extent min: anInteger @ anInteger) ]
@@ -98,7 +103,7 @@ RTGlobalBuilder >> minSize: anInteger [
 	"aBlock is evaluated on each node model. 
 	Set the minimum size of each element"
 	self addProperty: [
-		self elementsToConsider do: [ :el | 
+		self filteredElementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape extent: (el trachelShape extent max: anInteger @ anInteger) ]
@@ -123,14 +128,14 @@ RTGlobalBuilder >> normalizeColor: metricBlock using: colors using: transformati
 		"We get the min and the max of the metric for all the elements"
 		min := 1000000.
 		max := 0.
-		self elementsToConsider do: [ :el | 
+		self filteredElementsToConsider do: [ :el | 
 			| t |  
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			min := min min: t.
 			max := max max: t ].
 		
 		normalizer := RTMultiLinearColor new colors: colors.
-		self elementsToConsider do: [ :el | 
+		self filteredElementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
@@ -161,7 +166,7 @@ RTGlobalBuilder >> normalizeSize: metricBlock min: minValue max: maxValue using:
 		min := 100000.
 		max := -100000.
 		ellsToConsider := OrderedCollection new.
-		self elementsToConsider do: [ :el | 	
+		self filteredElementsToConsider do: [ :el | 	
 				t := transformation rtValue: (metricBlock rtValue: el model).
 				min := min min: t.
 				max := max max: t.
@@ -183,7 +188,7 @@ RTGlobalBuilder >> normalizeSizeMin: minValue max: maxValue [
 		max := -1000000.
 		 
 		ellsToConsider := OrderedCollection new.
-		self elementsToConsider do: [ :el | 	
+		self filteredElementsToConsider do: [ :el | 	
 				t := el trachelShape extent x max: el trachelShape extent y.
 				min := min min: t.
 				max := max max: t.

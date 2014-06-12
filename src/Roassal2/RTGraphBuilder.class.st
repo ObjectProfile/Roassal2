@@ -93,7 +93,7 @@ RTGraphBuilder >> edgesUsedForLayout [
 
 { #category : #adding }
 RTGraphBuilder >> executeGlobalRules [
-	globals do: #execute
+	globals do: [ :g | g view: self view. g execute ]
 ]
 
 { #category : #adding }

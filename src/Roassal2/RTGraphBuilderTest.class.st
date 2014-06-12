@@ -274,6 +274,7 @@ RTGraphBuilderTest >> testMinSize [
 	b nodes shape: (RTEllipse new size: 3).
 	b global
 		if: [ :v | v = 'world' ]; minSize: 15.
+
 	b add: 'hello'.
 	b add: 'world'.
 	

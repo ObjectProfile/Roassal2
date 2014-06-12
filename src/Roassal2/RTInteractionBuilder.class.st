@@ -59,7 +59,7 @@ RTInteractionBuilder >> initializeInteractions [
 
 { #category : #public }
 RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
-	interactions add: [ :element | element @ (RTMenuActivable  new item: aTitle asString action: aBlockOrSymbol) ]
+	interactions add: [ :element | element @ (RTMenuActivable  new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
 ]
 
 { #category : #public }
