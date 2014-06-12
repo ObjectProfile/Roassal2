@@ -2985,9 +2985,6 @@ YII='
 
 { #category : #sources }
 RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
-
-
-
 	| b |
 	b := RTGraphBuilder new.
 	b nodes
@@ -2996,10 +2993,11 @@ RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
 
 	b edges
 		connectTo: [ :c | c subclasses ];
-		shape: (RTLine new color: Color gray).
+		shape: (RTLine new color: Color gray);
+		useInLayout.
 
 	b layout 
-		use: (RTForceBasedLayout new charge: -180).
+		forceCharge: -180.
 
 	b global
 		minSize: 10;

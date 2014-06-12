@@ -1,8 +1,9 @@
 Class {
 	#name : #RTShapeBuilder,
-	#superclass : #RTObject,
+	#superclass : #RTScopedBuilder,
 	#instVars : [
-		'shape'
+		'shape',
+		'createdElements'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -15,6 +16,11 @@ RTShapeBuilder >> arc [
 { #category : #shapes }
 RTShapeBuilder >> circle [
 	^ self shape: RTEllipse new
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> createdElements [
+	^ createdElements
 ]
 
 { #category : #accessing }
@@ -45,14 +51,16 @@ RTShapeBuilder >> edgeFrom: element1 to: element2 [
 
 { #category : #building }
 RTShapeBuilder >> elementOn: object [
-	self hasSetShape ifFalse: [ self rectangle ].
-	^ shape elementOn: object
+	^ (self elementsOn: (RTGroup with: object)) first
 ]
 
 { #category : #building }
 RTShapeBuilder >> elementsOn: objects [
+	| answer |
 	self hasSetShape ifFalse: [ self rectangle ].
-	^ shape elementsOn: objects
+	answer := shape elementsOn: objects.
+	createdElements addAll: answer.
+	^ answer
 ]
 
 { #category : #shapes }
@@ -136,7 +144,9 @@ RTShapeBuilder >> ifElement: conditionBlock fillColor: colorBlock [
 
 { #category : #initialization }
 RTShapeBuilder >> initialize [
-	self reset
+	super initialize.
+	self reset.
+ 
 ]
 
 { #category : #shapes }
@@ -175,6 +185,17 @@ RTShapeBuilder >> rectangle [
 
 { #category : #accessing }
 RTShapeBuilder >> reset [
+	self resetShape.
+	self resetCreatedElements
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> resetCreatedElements [
+	createdElements := OrderedCollection new
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> resetShape [
 	shape := RTNoShape instance
 ]
 

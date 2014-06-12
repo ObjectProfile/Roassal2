@@ -1,14 +1,27 @@
 Class {
-	#name : #RTGDGlobalB,
-	#superclass : #RTGDElement,
+	#name : #RTGlobalBuilder,
+	#superclass : #RTScopedBuilder,
 	#instVars : [
-		'alphaColor'
+		'alphaColor',
+		'view',
+		'properties',
+		'elementsToConsider'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-Common'
 }
 
+{ #category : #public }
+RTGlobalBuilder class >> view: aView [
+	^ self new view: aView
+]
+
+{ #category : #adding }
+RTGlobalBuilder >> addProperty: aOneOrTwoArgBlock [
+	properties add: aOneOrTwoArgBlock
+]
+
 { #category : #accessing }
-RTGDGlobalB >> alphaColor:  anAlphaColor [
+RTGlobalBuilder >> alphaColor:  anAlphaColor [
 	"Set an alpha color (transparency) for nodes"
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
@@ -19,7 +32,7 @@ RTGDGlobalB >> alphaColor:  anAlphaColor [
 ]
 
 { #category : #accessing }
-RTGDGlobalB >> alphaColorEdge:  anAlphaColor [
+RTGlobalBuilder >> alphaColorEdge:  anAlphaColor [
 	"Set an alpha color (transparency) for nodes"
 	"aFloat has to be between 0.0 and 1.0"
 	self addProperty: [
@@ -30,31 +43,48 @@ RTGDGlobalB >> alphaColorEdge:  anAlphaColor [
 ]
 
 { #category : #algorithm }
-RTGDGlobalB >> colorCycles [
+RTGlobalBuilder >> colorCycles [
 
 	self addProperty: [
 		RTColorCycle new visitElements: self view elements
 		]. 
 ]
 
+{ #category : #accessing }
+RTGlobalBuilder >> elementsToConsider [
+	^ elementsToConsider
+]
+
+{ #category : #accessing }
+RTGlobalBuilder >> elementsToConsider: elements [
+	elementsToConsider := elements
+]
+
 { #category : #execute }
-RTGDGlobalB >> execute [
+RTGlobalBuilder >> execute [
 
 	properties do: #value
 ]
 
+{ #category : #execute }
+RTGlobalBuilder >> executeOn: elements [
+	self elementsToConsider: elements.
+	self execute
+]
+
 { #category : #initialization }
-RTGDGlobalB >> initialize [
+RTGlobalBuilder >> initialize [
 	super initialize.
-	alphaColor := 1.0
+	alphaColor := 1.0.
+	properties := OrderedCollection new
 ]
 
 { #category : #public }
-RTGDGlobalB >> maxSize: anInteger [
+RTGlobalBuilder >> maxSize: anInteger [
 	"aBlock is evaluated on each node model. 
 	Set the maximum size of each element"
 	self addProperty: [
-		self view elements do: [ :el | 
+		self elementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape extent: (el trachelShape extent min: anInteger @ anInteger) ]
@@ -64,11 +94,11 @@ RTGDGlobalB >> maxSize: anInteger [
 ]
 
 { #category : #public }
-RTGDGlobalB >> minSize: anInteger [
+RTGlobalBuilder >> minSize: anInteger [
 	"aBlock is evaluated on each node model. 
 	Set the minimum size of each element"
 	self addProperty: [
-		self view elements do: [ :el | 
+		self elementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape extent: (el trachelShape extent max: anInteger @ anInteger) ]
@@ -78,14 +108,14 @@ RTGDGlobalB >> minSize: anInteger [
 ]
 
 { #category : #public }
-RTGDGlobalB >> normalizeColor: metricBlock using: colors [
+RTGlobalBuilder >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	^ self normalizeColor: metricBlock using: colors using: #yourself
 ]
 
 { #category : #public }
-RTGDGlobalB >> normalizeColor: metricBlock using: colors using: transformation [
+RTGlobalBuilder >> normalizeColor: metricBlock using: colors using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	self addProperty: [
@@ -93,14 +123,14 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors using: transformation [
 		"We get the min and the max of the metric for all the elements"
 		min := 1000000.
 		max := 0.
-		self view elements do: [ :el | 
+		self elementsToConsider do: [ :el | 
 			| t |  
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			min := min min: t.
 			max := max max: t ].
 		
 		normalizer := RTMultiLinearColor new colors: colors.
-		self view elements do: [ :el | 
+		self elementsToConsider do: [ :el | 
 				"We set the color"
 				(condition rtValue: el model)
 					ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
@@ -110,14 +140,19 @@ RTGDGlobalB >> normalizeColor: metricBlock using: colors using: transformation [
 ]
 
 { #category : #public }
-RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue [
+RTGlobalBuilder >> normalizeColorUsing: colors [
+	^ self normalizeColor: #yourself using: colors
+]
+
+{ #category : #public }
+RTGlobalBuilder >> normalizeSize: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
 	self normalizeSize: metricBlock min: minValue max: maxValue using: #yourself
 ]
 
 { #category : #public }
-RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
+RTGlobalBuilder >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
 	"transformation is a function that takes as argument the result of a metric and return the metric transformed"
@@ -126,7 +161,7 @@ RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: tra
 		min := 100000.
 		max := -100000.
 		ellsToConsider := OrderedCollection new.
-		self view elements do: [ :el | 	
+		self elementsToConsider do: [ :el | 	
 				t := transformation rtValue: (metricBlock rtValue: el model).
 				min := min min: t.
 				max := max max: t.
@@ -138,4 +173,37 @@ RTGDGlobalB >> normalizeSize: metricBlock min: minValue max: maxValue using: tra
 			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
 			el trachelShape extent: tt @ tt ]
 		]
+]
+
+{ #category : #public }
+RTGlobalBuilder >> normalizeSizeMin: minValue max: maxValue [
+	self addProperty: [	
+		| min max ellsToConsider t |
+		min := 1000000.
+		max := -1000000.
+		 
+		ellsToConsider := OrderedCollection new.
+		self elementsToConsider do: [ :el | 	
+				t := el trachelShape extent x max: el trachelShape extent y.
+				min := min min: t.
+				max := max max: t.
+				ellsToConsider add: el ].
+	
+		ellsToConsider do: [ :el | 
+			| tt |
+			t := el trachelShape extent x max: el trachelShape extent y.
+			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
+			el trachelShape extent: tt @ tt ]
+		]
+]
+
+{ #category : #accessing }
+RTGlobalBuilder >> view [
+	^ view
+]
+
+{ #category : #accessing }
+RTGlobalBuilder >> view: aView [
+	view := aView.
+	self elementsToConsider: aView elements
 ]

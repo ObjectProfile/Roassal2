@@ -117,8 +117,8 @@ RTGraphBuilder >> getNodeFor: obj [
 RTGraphBuilder >> global [
 	"Create a new entry for the globals"
 	| global |
-	global := RTGDGlobalB new.
-	global graphBuilder: self.
+	global := RTGlobalBuilder new.
+	global view: self view.
 	globals add: global.
 	^ global.
 	

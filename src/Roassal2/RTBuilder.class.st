@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'view',
 		'interactionBuilder',
-		'shapeBuilder'
+		'shapeBuilder',
+		'globalBuilder'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -22,6 +23,12 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
+{ #category : #protected }
+RTBuilder >> applyGlobalBuilder [
+	globalBuilder view: self view.
+	globalBuilder execute
+]
+
 { #category : #public }
 RTBuilder >> build [
 	"Simply render the view"
@@ -32,6 +39,11 @@ RTBuilder >> build [
 RTBuilder >> cleanView [
 	view edges copy do: #remove.
 	view elements copy do: #remove.
+]
+
+{ #category : #hooks }
+RTBuilder >> createGlobalBuilder [
+	^ RTGlobalBuilder new
 ]
 
 { #category : #hooks }
@@ -47,6 +59,11 @@ RTBuilder >> createShapeBuilder [
 { #category : #hooks }
 RTBuilder >> createView [
 	^ RTView new
+]
+
+{ #category : #accessing }
+RTBuilder >> createdElements [
+	^ shapeBuilder createdElements
 ]
 
 { #category : #public }
@@ -81,12 +98,18 @@ RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
 	^ els
 ]
 
+{ #category : #accessing }
+RTBuilder >> global [
+	^ globalBuilder 
+]
+
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.
 	view := self createView.
 	shapeBuilder := self createShapeBuilder.
-	interactionBuilder := self createInteractionBuilder
+	interactionBuilder := self createInteractionBuilder.
+	globalBuilder := self createGlobalBuilder
 ]
 
 { #category : #accessing }
@@ -130,6 +153,11 @@ RTBuilder >> render [
 { #category : #hooks }
 RTBuilder >> renderIn: aView [
 	"You may want to override this method to fill the view"
+]
+
+{ #category : #protected }
+RTBuilder >> resetCreatedElements [
+	shapeBuilder resetCreatedElements
 ]
 
 { #category : #protected }
