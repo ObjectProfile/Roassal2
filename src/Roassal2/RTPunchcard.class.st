@@ -39,7 +39,7 @@ RTPunchcard >> createShapeBuilder [
 
 { #category : #hooks }
 RTPunchcard >> createView [
-	^ super createView @ RTDraggableView
+	^ super createView @ RTDraggableView; setDefaultMenu; yourself
 ]
 
 { #category : #examples }

@@ -28,8 +28,9 @@ RTLayoutTest >> testCellLayout [
 	el30 := els first.
 	el50 := els second.
 	el80 := els third.
-	self assert: el30 encompassingRectangle bottom + 20 equals: el80 encompassingRectangle top.
-	self assert: el30 encompassingRectangle right + 50 equals: el50 encompassingRectangle left.
+	
+	self assert: el30 encompassingRectangle bottom + 10 equals: el80 encompassingRectangle top.
+	self assert: el30 encompassingRectangle right + 25 equals: el50 encompassingRectangle left.
 	self assert: el50 encompassingRectangle bottom equals: el80 encompassingRectangle top.
 
 ]
