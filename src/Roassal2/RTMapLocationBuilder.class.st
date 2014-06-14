@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Map'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTMapLocationBuilder >> addPoint: geoPoint value: aValue [
 
 	| el |
@@ -14,7 +14,7 @@ RTMapLocationBuilder >> addPoint: geoPoint value: aValue [
 	view add: el
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMapLocationBuilder >> createView [
 	| v |
 	v := super createView.
@@ -23,7 +23,7 @@ RTMapLocationBuilder >> createView [
 	^ v
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTMapLocationBuilder >> example01 [
 
 	"
@@ -44,7 +44,7 @@ RTMapLocationBuilder >> example01 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTMapLocationBuilder >> example02 [
 	"
 	self new example02
@@ -61,7 +61,7 @@ RTMapLocationBuilder >> example02 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTMapLocationBuilder >> renderAllCountriesIn: aView [
 	| el shape |
 	RTSVGPath countries
@@ -73,7 +73,7 @@ RTMapLocationBuilder >> renderAllCountriesIn: aView [
 			aView add: el ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTMapLocationBuilder >> seismData [
 	^ 'time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type
 2014-05-25T01:39:20.040Z,-0.7851,-14.2823,10,4.5,mb,,197,7.1,0.59,us,usb000r36t,2014-05-25T02:09:12.227Z,"North of Ascension Island",earthquake
@@ -310,7 +310,7 @@ RTMapLocationBuilder >> seismData [
 2014-05-18T02:46:10.380Z,-14.9248,-174.847,10,4.7,mb,,173,3.14,1.33,us,usb000qt6i,2014-05-18T10:48:47.161Z,"163km NW of Hihifo, Tonga",earthquake'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTMapLocationBuilder >> translateGeoPositionToPixels: point [
 	"From https://github.com/thebyrd/world-news"
 	
