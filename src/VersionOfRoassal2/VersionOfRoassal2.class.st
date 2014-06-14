@@ -3602,3 +3602,14 @@ VersionOfRoassal2 >> version000279 [
 	at: #date put: '13 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000280 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.155';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.367';
+	at: #version put: '0.280';
+	at: #comment put: '0.280 : added a new builder, RTMapLocationBuilder to easily locate weighted geographical position';
+	at: #date put: '14 June 2014';
+	yourself
+]
