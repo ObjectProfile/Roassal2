@@ -80,30 +80,6 @@ b open
 ]
 
 { #category : #examples }
-RTPunchcard >> example02OLD [
-	"
-	self new example02
-	"
-| b |
-
-b := RTPunchcard new.
-b interaction
-		highlight;
-		popupText.
-b interactionObject
-		highlightColored: Color red;
-		action: #browse.
-		
-b addObject: RTPunchcard.
-b addObject: RTBox.
-b addObject: RTBuilder.
-b addMetric: #numberOfMethods named: 'NOM'.
-b addMetric: #numberOfVariables named: 'NOA'.
-
-b open
-]
-
-{ #category : #examples }
 RTPunchcard >> example03 [
 	"
 	self new example03
@@ -124,29 +100,6 @@ b addObject: RTBuilder.
 b addMetric: #numberOfMethods named: 'NOM'.
 b addMetric: #numberOfVariables named: 'NOA'.
 b addMetric: #numberOfLinesOfCode named: 'LOC'.
-b open
-]
-
-{ #category : #examples }
-RTPunchcard >> example03OLD [
-	"
-	self new example03
-	"
-| b |
-b := RTPunchcard new.
-b interaction
-		highlightColored: Color red;
-		action: #browse.
-
-b global
-	normalizeSizeMin: 5 max: 20;
-	normalizeColorUsing: { Color green . Color red }.
-
-b addObject: RTPunchcard.
-b addObject: RTBox.
-b addObject: RTBuilder.
-b addMetric: #numberOfMethods named: 'NOM'.
-b addMetric: #numberOfVariables named: 'NOA'.
 b open
 ]
 
@@ -172,34 +125,6 @@ b addObject: RTBuilder.
 b addMetric: #numberOfMethods named: 'NOM'.
 b addMetric: #numberOfVariables named: 'NOA'.
 b addMetric: #numberOfLinesOfCode named: 'LOC'.
-b open
-]
-
-{ #category : #examples }
-RTPunchcard >> example04OLD [
-	"
-	self new example04
-	"
-| b |
-
-b := RTPunchcard new.
-b interaction
-		highlight;
-		popupText.
-		
-b interactionObject
-		highlightColored: Color red;
-		action: #browse.
-
-b global
-	normalizeSizeMin: 5 max: 20;
-	normalizeColorUsing: { Color green . Color red }.
-
-b addObjects: RTShape withAllSubclasses.
-b addMetric: #numberOfMethods named: 'NOM'.
-b addMetric: #numberOfVariables named: 'NOA'.
-b addMetric: #numberOfLinesOfCode named: 'LOC'.
-b addMetric: [ :c | c allSubclasses size ] named: 'DIT'.
 b open
 ]
 
