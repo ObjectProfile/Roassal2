@@ -138,7 +138,7 @@ RTMenuBuilderExamples >> example04 [
 
 	menus := { 
 		'Ellipse'->[:m | shape := TREllipseShape ].
-		'Box'->[:m | shape := TRBoxShape] }.
+		'Box'->[:m | shape := TRBoxShape].}.
 	
 	menus := b menu: 'Shape' subcheckmenus: menus background: Color red.
 	RTMenuGroup on: menus.
