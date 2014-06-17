@@ -3624,3 +3624,14 @@ VersionOfRoassal2 >> version000281 [
 	at: #date put: '14 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000282 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.156';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.369';
+	at: #version put: '0.282';
+	at: #comment put: '0.282 : worked on the Sparkline. Works more or less. The matrix is not taken into account, which is problematic';
+	at: #date put: '17 June 2014';
+	yourself
+]
