@@ -36,7 +36,7 @@ RTMenuBuilder >> createParentMenu: aTitle [
 						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
 	lbl := TRLabelShape new text: aTitle; translateLeftTo: index @ 20.
 	lbl color: Color black.
-	lbl element: (RTMenu new view: view).
+	lbl element: (OrderedCollection new add: false; yourself).
 	
 	lbl when: TRMouseClick do: [ :event | self showSubmenuOf: lbl ].
 	lbl when: TRMouseEnter do: [ :event | lbl color: Color blue. self signalUpdate ].
@@ -57,6 +57,16 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor [
 { #category : #hooks }
 RTMenuBuilder >> createView [
 	^ RTView new
+]
+
+{ #category : #utility }
+RTMenuBuilder >> getLabelNamed: aName [
+	| labels |
+	labels := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = aName ] ].
+	^ labels isEmpty 
+		ifTrue: [ nil ];
+		ifFalse: [ labels first ].
+	
 ]
 
 { #category : #public }
@@ -143,30 +153,34 @@ RTMenuBuilder >> menu: aTitle submenus: menus background: aColor callback: callb
 { #category : #utility }
 RTMenuBuilder >> showSubmenuOf: lbl [
 
-	| menu labels |
-	menu := lbl element.
+	| items labels previousLabel |
+	items := lbl element.
 	
 	"Check if submenu is open"
-	menu isOpen
-		ifTrue: [ menu hideItems.
+	(items at: 1) = true
+		ifTrue: [  
+			"We mark it as closed"
+			items at: 1 put: false.
+			(items copyFrom: 2 to: items size) do: [ :item | 
+				(self getLabelNamed: item label) remove ].
 			self signalUpdate.
-			 ^ self].
+			^ self
+			].
 	
 	"We mark the submenu as open" 
-	menu hideAll.
-	menu isOpen: true.
+	items at: 1 put: true.
 	
-	labels := menu items collect: [ :item | | m |
+	items := items copyFrom: 2 to: items size.
+	labels := items collect: [ :item | | m |
 		m := nil.
 		m := self menu: item label callback: [item execute: m].
 		item menu: m.
 		m ].
+	TRConstraint move: labels first onTheCenterOf: lbl.
+	TRConstraint move: labels first below: lbl. 
 	
-	labels doWithIndex: [ :l :i | | p |
-		p := (lbl position x)@(lbl position y + (l height*i)).
-		l translateTo: lbl position.
-		view addAnimation: (RTLinearMove to: p during: 0.2 on: l).
-	].
+	previousLabel := labels first.
+	labels allButFirst do: [ :l | TRConstraint move: l below: previousLabel.  previousLabel := l ].
 	self signalUpdate
 ]
 
