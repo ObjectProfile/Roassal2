@@ -298,8 +298,10 @@ TRMorph >> rtMouseDragging: evt [
 	event shiftKeyPressed: evt shiftPressed.				
 "
 	event position: relativePosition.
-	shapeBeingPointed announce: event.
 	event canvas: trachelCanvas.
+	event morph: self.
+	shapeBeingPointed announce: event.
+
 	eventBeginingDragging := evt copy.
 ]
 

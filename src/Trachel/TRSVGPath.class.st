@@ -27,12 +27,6 @@ TRSVGPath >> angle [
 ]
 
 { #category : #accessing }
-TRSVGPath >> basicEncompassingRectangle [
-	rectangle := Rectangle encompassing: points.
-	^ rectangle
-]
-
-{ #category : #accessing }
 TRSVGPath >> borderColor: aColor [
 	self strokeColor: aColor
 ]
@@ -82,8 +76,6 @@ TRSVGPath >> drawOn: aCanvas [
 	| pt |
 	pt := aCanvas pathTransform.
 	pt restoreAfter: [
-		"aCanvas pathTransform
-				multiplyBy: matrix asFloatTransform."
 		pt scaleBy: scale.
 		aCanvas setShape: self path.
 		fillColor isNotNil ifTrue: [ aCanvas setPaint: fillColor; draw ].
@@ -94,12 +86,8 @@ TRSVGPath >> drawOn: aCanvas [
 
 { #category : #accessing }
 TRSVGPath >> encompassingRectangle [
-
 	rectangle := Rectangle encompassing: points.
 	^ rectangle
-	
-	"Using matrix"
-"	^ self transformedEncompassingRectangle "
 ]
 
 { #category : #accessing }
@@ -107,16 +95,9 @@ TRSVGPath >> fillColor: aColor [
 	fillColor := aColor
 ]
 
-{ #category : #accessing }
-TRSVGPath >> height [
-	^ self encompassingRectangle height
-]
-
 { #category : #testing }
 TRSVGPath >> includesPoint: aPoint [
-	| apt |
-	"invertedPoint := matrix inverseTransform: aPoint."
-
+	|apt|
 	apt := AthensPolygonTester new.
 	^ pathPoints inject: false into: [ :res :p |
 		res or: ((apt polygon: p) includesPoint: aPoint)
@@ -244,15 +225,6 @@ TRSVGPath >> processPath [
 ]
 
 { #category : #actions }
-TRSVGPath >> reset [
-	super resetPath.
-	paths := #().
-	pathPoints := #().
-	points := #().
-	curves := nil
-]
-
-{ #category : #actions }
 TRSVGPath >> rotateBy: anAngle [
 	|center|
 	center := self center / scale.
@@ -314,9 +286,4 @@ TRSVGPath >> translateTo: aPoint [
 TRSVGPath >> updateCurves: someCurves [
 	curves := someCurves.
 	self processCurves.
-]
-
-{ #category : #accessing }
-TRSVGPath >> width [
-	^ self encompassingRectangle width
 ]
