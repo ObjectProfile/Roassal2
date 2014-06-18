@@ -4,7 +4,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRAbstractMouseEvent >> isPositionAboveShape [
 	^ shape encompassingRectangle containsPoint: self positionFromCamera
 ]
