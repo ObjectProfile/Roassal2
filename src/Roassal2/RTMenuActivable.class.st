@@ -7,6 +7,17 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #public }
+RTMenuActivable class >> action: anAction [
+
+	^ self item: anAction asString action: anAction
+]
+
+{ #category : #public }
+RTMenuActivable class >> item: title action: action [
+	^ self new item: title action: action
+]
+
 { #category : #initialization }
 RTMenuActivable >> initialize [ 
 	super initialize.

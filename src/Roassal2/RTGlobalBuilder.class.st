@@ -133,14 +133,14 @@ RTGlobalBuilder >> normalizeColor: metricBlock using: colors using: transformati
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			min := min min: t.
 			max := max max: t ].
-		
-		normalizer := RTMultiLinearColor new colors: colors.
-		self filteredElementsToConsider do: [ :el | 
-				"We set the color"
-				(condition rtValue: el model)
-					ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
-					ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
-			] 
+		max ~= 0 ifTrue: [ 
+			normalizer := RTMultiLinearColor new colors: colors.
+			self filteredElementsToConsider do: [ :el | 
+					"We set the color"
+					(condition rtValue: el model)
+						ifTrue: [ el trachelShape color: ((normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) alpha: alphaColor) ]
+						ifFalse: [ el trachelShape color: (el trachelShape color alpha: alphaColor) ].
+			] ]
 		]. 
 ]
 

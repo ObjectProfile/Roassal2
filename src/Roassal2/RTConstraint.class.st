@@ -10,5 +10,10 @@ Class {
 
 { #category : #util }
 RTConstraint class >> move: element above: anotherElement [
-	^ element translateTo: anotherElement position - (0 @ element height)
+	^ element translateTo: anotherElement position - (0 @ (anotherElement height / 2)) - (0 @ (element height / 2))
+]
+
+{ #category : #util }
+RTConstraint class >> move: element below: anotherElement [
+	^ element translateTo: anotherElement position + (0 @ (anotherElement height / 2)) + (0 @ (element height / 2))
 ]
