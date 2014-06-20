@@ -1,5 +1,5 @@
 "
-I am interaction which allows view to be zoomed with a mouce wheel.
+I am interaction which allows view to be zoomed with a mouce wheel. While zomming mouce cursor stays on the same spot in the canvas
 "
 Class {
 	#name : #RTZoomableView,

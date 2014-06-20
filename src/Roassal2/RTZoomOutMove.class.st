@@ -1,3 +1,6 @@
+"
+I decrease camera's zoom by 20%
+"
 Class {
 	#name : #RTZoomOutMove,
 	#superclass : #RTAbstractZoomMove,

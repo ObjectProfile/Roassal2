@@ -1,3 +1,6 @@
+"
+I shange zoom ratio of camera by the value returned form #step method
+"
 Class {
 	#name : #RTAbstractZoomMove,
 	#superclass : #RTAnimation,
