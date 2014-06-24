@@ -3646,3 +3646,14 @@ VersionOfRoassal2 >> version000283 [
 	at: #date put: '18 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000284 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-YuriyTymchuk.159';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.373';
+	at: #version put: '0.284';
+	at: #comment put: '0.284 : Added zoom in the RTAbstractsmartBrowser>>setMenu method, added examples about rotating elements. Added RTSparkline and some example';
+	at: #date put: '24 June 2014';
+	yourself
+]
