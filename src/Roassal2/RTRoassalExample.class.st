@@ -1,36 +1,15 @@
 "
-RTRoassalExample new installTitle: 'AddingNodeDynamically' 
+RTRoassalExample new installTitle: 'RotatingElements' 
 		code:
-		'| v stepping |
+		'| v es |
 v := RTView new.
-v @ RTDraggableView.
-stepping := RTSpringLayoutStepping new view: v.
-stepping after: [ v canvas camera focusOnCenter ].
-v addAnimation: stepping.
+es := (RTBox new color: (Color blue alpha: 0.4); size: 30) elementsOn: (1 to: 60).
+v addAll: es.
 
-v canvas addMenu: ''Add circle'' callback: [ 
-	| el |
-	el := (RTEllipse new size: 20; color: (Color blue alpha: 0.4)) element.
-	el @ RTDraggable.
-	el translateTo: 5 atRandom @ 5 atRandom.
-	v add: el.
-	stepping addNode: el.
-	v signalUpdate.
-].
+es when: TRMouseEnter do: [ :evt |  evt element trachelShape rotateByDegrees: 5. evt signalUpdate ].
+es @ RTDraggable.
+RTGridLayout on: es.
 
-v canvas addMenu: ''Add connected circle'' callback: [ 
-	| el edge |
-	el := (RTEllipse new size: 20; color: (Color blue alpha: 0.4)) element.
-	el @ RTDraggable.
-	el translateTo: 5 atRandom @ 5 atRandom.
-	v add: el.
-
-	edge := RTLine edgeFrom: el to: v elements atRandom.
-	v add: edge.
-
-	stepping addNode: el; addEdge: edge.
-	v signalUpdate.
-].
 v open.
 v halt.
 v canvas'
@@ -2666,6 +2645,72 @@ K4xwRjwRAghsM+JZ3AtjbrHv/AiKkPAIo32LYkDsm31A7ANi3+wDYt/sA2IfEPtmHxD7gNg3
 EPuA2Dd7gPAusfv3D/YBCQJzfwHud/6Ut31AIsD4Vxr8cvZP/qS3fUACbL6/QbEPSBQaPxTi
 94F/4z+diZaA8Ksuf3+Y0j4gUQQGf4vE/QDTPiBRbAg5f43B99er9gGxb/YBsQ+IfbMPiH1A
 7Jt9QOybfUDsA2Lf7ANiHxD7Fnj7D8sZewm4xZooAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleRotatingElements [
+| v es |
+v := RTView new.
+es := (RTBox new color: (Color blue alpha: 0.4); size: 30) elementsOn: (1 to: 60).
+v addAll: es.
+
+es when: TRMouseEnter do: [ :evt |  evt element trachelShape rotateByDegrees: 5. evt signalUpdate ].
+es @ RTDraggable.
+RTGridLayout on: es.
+
+v open.
+
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleRotatingElementsIcon [
+	^ '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'
 ]
 
 { #category : #sources }

@@ -401,6 +401,17 @@ RTAbstractSmartBrowser >> setMenu [
 		background: Color blue
 		callback: [ self pressFindClass ].
 
+	b
+		menu: 'Zoom'
+		submenu: '+'
+		background: Color red
+		callback: [ RTZoomInMove on: self view ].
+
+	b
+		menu: 'Zoom'
+		submenu: '-'
+		background: Color red
+		callback: [ RTZoomOutMove on: self view ].
 
 
 "	b
