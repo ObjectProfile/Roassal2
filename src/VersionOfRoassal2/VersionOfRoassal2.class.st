@@ -3657,3 +3657,14 @@ VersionOfRoassal2 >> version000284 [
 	at: #date put: '24 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000285 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.160';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.373';
+	at: #version put: '0.285';
+	at: #comment put: '0.285 : merged with the sparkline version and moved TRMorph into a specific category';
+	at: #date put: '30 June 2014';
+	yourself
+]
