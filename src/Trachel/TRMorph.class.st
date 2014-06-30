@@ -9,7 +9,7 @@ Class {
 		'shouldRefresh',
 		'session'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-MorphSpecific'
 }
 
 { #category : #accessing }
