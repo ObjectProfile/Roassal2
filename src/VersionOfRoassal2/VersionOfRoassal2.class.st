@@ -3668,3 +3668,14 @@ VersionOfRoassal2 >> version000285 [
 	at: #date put: '30 June 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000286 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.161';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.374';
+	at: #version put: '0.286';
+	at: #comment put: '0.286 : Added TRConstraintclass>>fix:for: useful :-) Added RTMultiLinearColorForIdentity, really really useful. Added more example about this';
+	at: #date put: '1 July 2014';
+	yourself
+]
