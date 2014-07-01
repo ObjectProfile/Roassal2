@@ -18,6 +18,11 @@ RTMenuActivable class >> item: title action: action [
 	^ self new item: title action: action
 ]
 
+{ #category : #public }
+RTMenuActivable >> action: aSymbol [
+	^ self item: aSymbol asString action: aSymbol
+]
+
 { #category : #initialization }
 RTMenuActivable >> initialize [ 
 	super initialize.

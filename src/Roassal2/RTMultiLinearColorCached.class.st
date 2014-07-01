@@ -8,20 +8,20 @@ Class {
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTMultiLinearColorCached >> initialize [
 	super initialize.
 	self resetCache.
 	sizeBeforeReset := 800
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMultiLinearColorCached >> level: f [
 	cache size >= sizeBeforeReset ifTrue: [ self resetCache ].
 	^ cache at: f ifAbsentPut: [ super level: f ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTMultiLinearColorCached >> resetCache [
 	cache := Dictionary new
 ]
