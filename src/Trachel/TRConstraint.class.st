@@ -8,6 +8,17 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #public }
+TRConstraint class >> fix: aShape for: anotherShape [
+	"When anotherShape is moved, then move aShape"
+	| b |
+
+	b := [ :shape :step | aShape translateBy: step ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+
+	
+]
+
 { #category : #util }
 TRConstraint class >> move: aShape above: anotherShape [
 	^ aShape translateTo: anotherShape center - (0 @ ((anotherShape height + aShape height) / 2)) 
