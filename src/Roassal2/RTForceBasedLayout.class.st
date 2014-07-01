@@ -152,7 +152,7 @@ RTForceBasedLayout >> addNodes: nodeElements [
 
 { #category : #accessing }
 RTForceBasedLayout >> charge: aFloat [
-
+	"Typically a negative value."
 	charge := aFloat
 ]
 

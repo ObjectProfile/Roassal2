@@ -125,7 +125,13 @@ RTLabelled >> right [
 ]
 
 { #category : #accessing }
-RTLabelled >> text: aTextOrBlock [
+RTLabelled >> text: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self textElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTLabelled >> textElement: aTextOrBlock [
 	text := aTextOrBlock
 ]
 
