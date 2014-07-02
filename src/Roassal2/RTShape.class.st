@@ -1,3 +1,20 @@
+"
+A RTShape is an element factory. A shape is shared amoung all the elements created by the shape. We therefore have the following relations
+
+
+shape := RTBox new size: 10.
+e1 := shape elementOn: 'hello'.
+e2 := shape elementOn: 'world'.
+
+self assert: e1 shape == e2 shape.
+
+self assert: e1 shape ~~ e1 trachelShape.
+self assert: (e1 shape isKindOf: RTBox).
+self assert: (e1 trachelShape isKindOf: TRBoxShape).
+
+self assert: e1 trachelShape ~~ e2 trachelShape.
+
+"
 Class {
 	#name : #RTShape,
 	#superclass : #RTObject,
