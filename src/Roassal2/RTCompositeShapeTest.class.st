@@ -69,7 +69,7 @@ RTCompositeShapeTest >> testNesting [
 	el := (RTEllipse new size: 10; color: (Color blue alpha: 0.5)) elementsOn: (1 to: 1).
 	view add: element; add: el.
 
-	RTNest new layout: RTGridLayout; on: element nest: {el}.
+	RTNest new layout: RTGridLayout; on: element nest: (Array with: el).
 	element @ RTDraggable.
 	
 	self assert: element position asIntegerPoint = el position.

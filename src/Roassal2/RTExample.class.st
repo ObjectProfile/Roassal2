@@ -359,7 +359,7 @@ RTExample >> directedEdges02 [
 
 objects1 := 1 to: 5.
 objects2 := 6 to: 10.
-assocs := { 1 -> 5 . 2 -> 6 . 6 -> 10  . 10 -> 2}.
+assocs := Array with: 1 -> 5 with: 2 -> 6 with: 6 -> 10 with: 10 -> 2.
 
 
 v := RTView new.
@@ -488,7 +488,7 @@ RTExample >> edition [
 			ex1 @ RTDraggable. 
 			ex2 @ RTDraggable.
 			line := (RTLine new "width: 3;" color: (Color blue alpha: 0.2)) edgeFrom: ex1 to: ex2.
-			view addAll: { ex1 . ex2 . line }.
+			view addAll: (Array with: ex1 with: ex2 with: line ).
 			line trachelShape pushBack.
 		].
 
@@ -539,7 +539,7 @@ RTExample >> elementWithFontsZooming [
 	view := RTView new.
 	"element creation"
 	mainElement := RTBox new color: (Color blue alpha: 0.3); elementOn: nil.
-	firstGroup := (RTLabel new) elementsOn: { 'Smalltalk'. 'World'}.
+	firstGroup := (RTLabel new) elementsOn: #('Smalltalk' 'World').
 	secondGroup := (RTBox new size: #yourself) elementsOn: #(30 40).
 	bothGroups := RTGroup with: firstGroup with: secondGroup.
 	"layouting"
@@ -757,7 +757,14 @@ RTExample >> highlight [
 	v := RTView new.
 	es := ((RTBox new size: 30)" + RTLabel") elementsOn: (1 to: 16).
 
-	es @ (RTHighlightable highlight: [ :vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4 } ]).
+	es @ (RTHighlightable highlight: [ :vv | | arr |
+		arr := OrderedCollection new.
+		arr add: vv - 1.
+		arr add: vv.
+		arr add: vv + 1.
+		arr add: vv - 4.
+		arr add: vv + 4.
+		arr]).
 
 	RTGridLayout on: es.
 	v addAll: es.
@@ -1442,7 +1449,7 @@ Collection withAllSubclasses do: [ :cls |
 cls methods do: [ :cm | 
 			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
 			
-		RTEdge buildEdgesFromAssociations: { cls -> depClass } using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
+		RTEdge buildEdgesFromAssociations: (Array with: cls -> depClass) using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
 ].
 
 

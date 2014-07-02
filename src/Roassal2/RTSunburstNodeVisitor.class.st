@@ -8,7 +8,8 @@ Class {
 		'builder',
 		'radialSpacing',
 		'angularSpacing',
-		'interactions'
+		'interactions',
+		'weightBlock'
 	],
 	#category : #'Roassal2-Builder-Sunburst'
 }
@@ -90,7 +91,8 @@ RTSunburstNodeVisitor >> initialize [
 	interactions := OrderedCollection new.
 	interactions add: RTPopup.
 	angularSpacing:=0.
-	radialSpacing:=0
+	radialSpacing:=0.
+	weightBlock := [ :n | 1 ].
 ]
 
 { #category : #accessing }
@@ -128,10 +130,9 @@ RTSunburstNodeVisitor >> visitNode: aNode [
 	| angleOffset auxAngle totalPie |
 	self node: aNode.
 	arcs add: self createArc.
-	"(aNode depth = 1)
-		ifTrue:[lines add: self createLine]."
+
 	totalPie:=0.
-	aNode children do: [ :c | totalPie:= totalPie + (1 * c weight) ].
+	aNode children do: [ :c | totalPie:= totalPie + (1 * (c weight rtValue: c model) ) ].
 	auxAngle:=aNode alphaAngle.
 	(node hasChildren)
  		ifTrue:[
@@ -139,7 +140,7 @@ RTSunburstNodeVisitor >> visitNode: aNode [
 			aNode children do: 
 				[:c | 
 				c alphaAngle: auxAngle.
-				c betaAngle: c alphaAngle + (angleOffset * c weight).
+				c betaAngle: c alphaAngle + (angleOffset * (c weight rtValue: c model)).
 				auxAngle:= c betaAngle. 
 				].
 			aNode children do:[
@@ -147,4 +148,14 @@ RTSunburstNodeVisitor >> visitNode: aNode [
 				c accept: self.
 				] 
 			]
+]
+
+{ #category : #'as yet unclassified' }
+RTSunburstNodeVisitor >> weight [
+	^ weightBlock
+]
+
+{ #category : #accessing }
+RTSunburstNodeVisitor >> weight: ablock [
+	weightBlock := ablock
 ]

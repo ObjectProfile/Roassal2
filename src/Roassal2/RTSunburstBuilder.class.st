@@ -49,11 +49,12 @@ RTSunburstBuilder >> recurse: parentNode using: aBlock [
 		| n |
 		n := RTNode new.
 		n model: childObject.
+		n weight: self visitor weight.
 		parentNode addChild: n.
 		self recurse: n using: aBlock ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTSunburstBuilder >> renderIn: aView [
 	aView addAll: visitor arcs.
 	visitor lines do: [ :line | aView canvas addShape: line].

@@ -22,7 +22,7 @@ RTLayoutTest >> testCellLayout [
 	els := RTBox new size: #yourself; color: (Color green alpha: 0.3); elementsOn: #(30 50 80).
 	els @ RTDraggable.
 	v addAll: els.
-	RTEdge buildEdgesFromAssociations: { 30 -> 50. 30 -> 80. } inView: v.
+	RTEdge buildEdgesFromAssociations: (Array with: 30 -> 50 with: 30 -> 80) inView: v.
 	RTCellLayout new 
 		gapSize: 0; on: els.
 	el30 := els first.
@@ -40,8 +40,28 @@ RTLayoutTest >> testCircleLayout [
 
 	| answer |
 	RTCircleLayout on: view elements.
-	answer :=  {(442@222). (431@290). (400@351). (351@400). (290@431). (222@442). (154@431). (93@400). (44@351). (13@290). (2@222). (13@154). (44@93). (93@44). (154@13). (222@2). (290@13). (351@44). (400@93). (431@154)}.
-	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer
+	answer :=  OrderedCollection new.
+	answer add: (442@222);
+		add: (431@290);
+		add: (400@351);
+		add: (351@400);
+		add: (290@431);
+		add: (222@442);
+		add: (154@431);
+		add: (93@400);
+		add: (44@351);
+		add: (13@290);
+		add: (2@222);
+		add: (13@154);
+		add: (44@93);
+		add: (93@44);
+		add: (154@13);
+		add: (222@2);
+		add: (290@13);
+		add: (351@44);
+		add: (400@93);
+		add: (431@154).
+	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer asArray
 	
 ]
 
@@ -125,7 +145,8 @@ RTLayoutTest >> testForce [
 	v := RTView new.
 	es := RTBox elementsOn: (1 to: 2).
 	v addAll: es.
-	RTEdge buildEdgesFromObjects: (1 to: 2) from: #yourself toAll:  [:value | {value -1  . value + 1 . value + 2} ] inView: v.
+	RTEdge buildEdgesFromObjects: (1 to: 2) from: #yourself toAll:  [:value | 
+		Array with: value -1 with: value + 1 with: value + 2 ] inView: v.
 	
 	layout := RTForceBasedLayout new. 
 	layout on: es edges: #().
@@ -176,7 +197,7 @@ RTLayoutTest >> testHorizontalLineLayout [
 RTLayoutTest >> testHorizontalLineLayoutWithBox [
 	| models elHello elWorld elHelloWidth elWorldWidth |
 	view := RTView new.
-	models := { 50. 150 }.
+	models := #(50 150 ).
 	view addAll: (RTBox new color: (Color blue alpha: 0.2); size: #yourself; elementsOn: models).
 	self assert: view elements size = 2.
 	elHello := view elementFromModel: models first.
@@ -200,7 +221,7 @@ RTLayoutTest >> testHorizontalLineLayoutWithBox [
 RTLayoutTest >> testHorizontalLineLayoutWithText [
 	| elHello elWorld elHelloWidth elWorldWidth |
 	view := RTView new.
-	view addAll: (RTLabel elementsOn: {'hola '. 'mundo'}).
+	view addAll: (RTLabel elementsOn: #('hola ' 'mundo') ).
 	self assert: view elements size = 2.
 	elHello := view elementFromModel: 'hola '.
 	elWorld := view elementFromModel: 'mundo'.
@@ -227,7 +248,7 @@ v := RTView new.
 els := RTBox new size: #yourself; color: (Color green alpha: 0.3); elementsOn: #(30 50 80).
 els @ RTDraggable.
 v addAll: els.
-RTEdge buildEdgesFromAssociations: { 30 -> 50. 30 -> 80. } inView: v.
+RTEdge buildEdgesFromAssociations: (Array with: 30 -> 50 with: 30 -> 80) inView: v.
 RTHorizontalTreeLayout new 
 	isLayered: false; leftGap: 0; topGap: 0; verticalGap: 0; horizontalGap: 0; on: els.
 el30 := els first.
@@ -262,20 +283,62 @@ RTLayoutTest >> testRadialTreelLayout [
 	RTEdge buildEdgesFromObjects: (1 to: 20) from: [ :v | v // 2 ] to: #yourself inView: view.	
 	RTRadialTreeLayout on: view elements edges: view edges.
 
-	answer := {(202@202). (216@217). (187@215). (239@217). (213@240). (184@238). (165@216). (262@208). (250@239). (226@257). (212@261). (182@259). (169@252). (149@230). (144@216). (282@202). (281@217). (270@245). (261@257). (234@275)}.
-	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer
+	answer := OrderedCollection new.
+	answer add: (202@202);
+		add: (216@217);
+		add: (187@215);
+		add: (239@217);
+		add: (213@240);
+		add: (184@238);
+		add: (165@216);
+		add: (262@208);
+		add: (250@239);
+		add: (226@257);
+		add: (212@261);
+		add: (182@259);
+		add: (169@252);
+		add: (149@230);
+		add: (144@216);
+		add: (282@202);
+		add: (281@217);
+		add: (270@245);
+		add: (261@257);
+		add: (234@275).
+		
+	self assert: ((view elements collect: #position) collect: #asIntegerPoint) asArray = answer asArray
 ]
 
 { #category : #tests }
 RTLayoutTest >> testTreeLayoutWithoutSpecificingEdges [
 
-	| v |
+	| v answer |
 	v := RTView new.
 	v addAll: (RTBox elementsOn: (1 to: 20)).
 	RTEdge buildEdgesFromObjects: (1 to: 20) from: [ :value | value // 2 ] to: #yourself inView: v.
 	RTTreeLayout on: v elements.
 	
-	self assert: (v elements collect: #position) asArray equals: {(43.5@(15/2)). (27.5@(65/2)). (67.5@(65/2)). (19.5@(115/2)). (43.5@(115/2)). (59.5@(115/2)). (75.5@(115/2)). (11.5@(165/2)). (27.5@(165/2)). (39.5@(165/2)). (47.5@(165/2)). (55.5@(165/2)). (63.5@(165/2)). (71.5@(165/2)). (79.5@(165/2)). (7.5@(215/2)). (15.5@(215/2)). (23.5@(215/2)). (31.5@(215/2)). (39.5@(215/2))}
+	answer := OrderedCollection new.
+	answer add: (43.5@(15/2));
+		add: (27.5@(65/2));
+		add: (67.5@(65/2));
+		add: (19.5@(115/2));
+		add: (43.5@(115/2));
+		add: (59.5@(115/2));
+		add: (75.5@(115/2));
+		add: (11.5@(165/2));
+		add: (27.5@(165/2));
+		add: (39.5@(165/2));
+		add: (47.5@(165/2));
+		add: (55.5@(165/2));
+		add: (63.5@(165/2));
+		add: (71.5@(165/2));
+		add: (79.5@(165/2));
+		add: (7.5@(215/2));
+		add: (15.5@(215/2));
+		add: (23.5@(215/2));
+		add: (31.5@(215/2));
+		add: (39.5@(215/2)).
+	self assert: (v elements collect: #position) asArray equals: answer asArray.
 ]
 
 { #category : #tests }
@@ -286,8 +349,28 @@ RTLayoutTest >> testTreelLayout [
 	RTEdge buildEdgesFromObjects: (1 to: 20) from: [ :v | v // 2 ] to: #yourself inView: view.	
 	RTTreeLayout on: view elements edges: view edges.
 
-	answer :=  {(43.5@(15/2)). (27.5@(65/2)). (67.5@(65/2)). (19.5@(115/2)). (43.5@(115/2)). (59.5@(115/2)). (75.5@(115/2)). (11.5@(165/2)). (27.5@(165/2)). (39.5@(165/2)). (47.5@(165/2)). (55.5@(165/2)). (63.5@(165/2)). (71.5@(165/2)). (79.5@(165/2)). (7.5@(215/2)). (15.5@(215/2)). (23.5@(215/2)). (31.5@(215/2)). (39.5@(215/2))}.
-	self assert: (view elements collect: #position) asArray = answer
+	answer := OrderedCollection new.
+	answer add:(43.5@(15/2));
+		add: (27.5@(65/2));
+		add: (67.5@(65/2));
+		add: (19.5@(115/2));
+		add: (43.5@(115/2));
+		add: (59.5@(115/2));
+		add: (75.5@(115/2));
+		add: (11.5@(165/2));
+		add: (27.5@(165/2));
+		add: (39.5@(165/2));
+		add: (47.5@(165/2));
+		add: (55.5@(165/2));
+		add: (63.5@(165/2));
+		add: (71.5@(165/2));
+		add: (79.5@(165/2));
+		add: (7.5@(215/2));
+		add: (15.5@(215/2));
+		add: (23.5@(215/2));
+		add: (31.5@(215/2));
+		add: (39.5@(215/2)).
+	self assert: (view elements collect: #position) asArray = answer asArray
 ]
 
 { #category : #tests }
@@ -313,8 +396,8 @@ RTLayoutTest >> testVerticalLineLayoutOnElements [
 RTLayoutTest >> testVerticalLineLayoutOnGroups [
 	| line1 line2 el1 el2 |
 	view := RTView new.
-	line1 := RTBox new size: #yourself; elementsOn: {30}.
-	line2 := RTBox new size: #yourself; elementsOn: {50}.
+	line1 := RTBox new size: #yourself; elementsOn: #(30).
+	line2 := RTBox new size: #yourself; elementsOn: #(50).
 	view addAll: line1; addAll: line2.
 	self assert: view elements size equals: 2.
 	RTVerticalLineLayout new 
@@ -338,7 +421,7 @@ v := RTView new.
 els := RTBox new size: #yourself; color: (Color green alpha: 0.3); elementsOn: #(30 50 80).
 els @ RTDraggable.
 v addAll: els.
-RTEdge buildEdgesFromAssociations: { 30 -> 50. 30 -> 80. } inView: v.
+RTEdge buildEdgesFromAssociations: (Array with: 30 -> 50 with: 30 -> 80) inView: v.
 RTTreeLayout new 
 	isLayered: false; leftGap: 0; topGap: 0; verticalGap: 0; horizontalGap: 0; on: els.
 el30 := els first.

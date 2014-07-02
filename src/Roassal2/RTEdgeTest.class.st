@@ -112,7 +112,7 @@ RTEdgeTest >> testLineColorAndWidth [
 	e2 translateBy: 50 @ 40.
 	l shape width: 10.
 	l shape color: Color red.
-	v addAll: {e1. e2. l}.
+	v addAll: (Array with: e1 with: e2 with: l).
 	self assert: l trachelShape width = 1.
 	l updateShape.
 	self assert: l trachelShape width = 10.

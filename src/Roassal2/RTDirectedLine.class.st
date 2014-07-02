@@ -27,7 +27,7 @@ RTDirectedLine >> pointsFrom: from To: to [
 	mid := (to * (1 - offset)) + (from * offset).
 	point := from + ((mid - from) rightRotated).
 	"(to - from) abs / 2"
-	^ { from . point . to }
+	^ Array with: from with: point with: to.
 
 
 

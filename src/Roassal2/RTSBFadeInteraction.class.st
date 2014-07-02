@@ -40,12 +40,13 @@ RTSBFadeInteraction >> children: element [
 { #category : #computing }
 RTSBFadeInteraction >> fade: element [
 	| color |
-	color := element shape color rtValue: element.
-	element attributes at: #scolor put: element shape color.
+	(element attributes includesKey: #scolor) 
+		ifTrue: [ color := element attributes at: #scolor ]
+		ifFalse: [
+			color := element color.
+			element attributes at: #scolor put: color ].
 	element view addAnimation: (RTColorTransitionAnimation new toColor:(color alpha: 0.2) during: 0.25 on: element).
 
-	"element trachelShape color: (color alpha: 0.2).
-	element trachelShape signalUpdate."
 ]
 
 { #category : #computing }
@@ -78,9 +79,12 @@ RTSBFadeInteraction >> focus: element [
 
 { #category : #hooks }
 RTSBFadeInteraction >> initializeElement: element [
-	element when: TRMouseEnter do: [ :event | self focus: element. 
+	element when: TRMouseEnter do: [ :event | 
+		self focus: element. 
 		action ifNotNil: [ action value: element model ] ].
-	element when: TRMouseLeave do: [ :event | self restore: element ].
+	element when: TRMouseLeave do: [ :event | 
+		self restore: element.
+		action ifNotNil: [ action value: nil ] ].
 ]
 
 { #category : #computing }
@@ -99,8 +103,7 @@ RTSBFadeInteraction >> restore: element [
 			color := e attributes at: #scolor.
 			e view addAnimation: (RTColorTransitionAnimation new 
 				toColor: (color rtValue: e) during: 0.25 on: e ).
-			"e trachelShape color: (color rtValue: e).
-			e trachelShape signalUpdate" ].
+			 ].
 		]
 	
 ]
