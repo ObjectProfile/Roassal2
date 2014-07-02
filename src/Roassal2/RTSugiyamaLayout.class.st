@@ -204,7 +204,7 @@ RTSugiyamaLayout >> reduceCrossing [
 							c2 := self cl: layer1 u: v v: u.
 							c1 > c2
 								ifTrue:
-									[layer2 roSwapElement: u withElement: v.
+									[layer2 rtSwapElement: u withElement: v.
 									done := false]]]]
 ]
 

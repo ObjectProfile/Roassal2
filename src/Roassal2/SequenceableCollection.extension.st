@@ -6,7 +6,7 @@ SequenceableCollection >> reverseSortedAs: aSortBlockOrSymbol [
 ]
 
 { #category : #'*roassal2-core' }
-SequenceableCollection >> roSwapElement: u withElement: v [
+SequenceableCollection >> rtSwapElement: u withElement: v [
 	| index1 index2 |
 	index1 := self indexOf: u.
 	index2 := self indexOf: v.
