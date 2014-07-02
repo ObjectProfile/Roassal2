@@ -151,11 +151,6 @@ ConfigurationOfRoassal2 >> baseline10: spec [
 		"specify the default repository for your project's packages"
 		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
 	
-		"use separate methods for external projects"
-"		self 
-			fuelMetalevel: spec;
-			fileSystemLegacy: spec.
-"		
 		"specify the dependencies between packages and projects"
 		spec
 			"a package without dependencies:"
@@ -187,11 +182,7 @@ ConfigurationOfRoassal2 >> baseline11: spec [
 		"specify the default repository for your project's packages"
 		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
 	
-		"use separate methods for external projects"
-"		self 
-			fuelMetalevel: spec;
-			fileSystemLegacy: spec.
-"		
+
 		"specify the dependencies between packages and projects"
 		spec
 			"a package without dependencies:"
@@ -201,7 +192,6 @@ ConfigurationOfRoassal2 >> baseline11: spec [
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ].
 			
-		"using groups certain packages and projects can be loaded conditionally"
 		spec 
 			"load the tests by default"
 			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec');
@@ -217,40 +207,12 @@ ConfigurationOfRoassal2 >> customProjectAttributes [
 	^ #().
 ]
 
-{ #category : #tags }
+{ #category : #symbolic }
 ConfigurationOfRoassal2 >> development: spec [
-	"By convention the development branch should point to a fixed version that is regularly updated and might contain unstable code.
-	The name used by Metacello is only defined by the following pragma:"
-	<symbolicVersion: #development >
-	
-	"For the development tag refer to a fixed version which you update if you commit new code.
-	Note that you can refer here to any other version name from this configuration"
+	<symbolicVersion: #'development'>
+
 	spec for: #'common' version: '1.1-baseline'.
 
-]
-
-{ #category : #'external projects' }
-ConfigurationOfRoassal2 >> fileSystemLegacy: spec [
-	"This is an example of an external project which does not have a configuration yet.
-	Note that the package name is only used in the Metacello configuration and does not have be exactly the same as the Monticello project/version name."
-	spec package: 'FileSystemLegacy' with: [
-		spec 
-			repository: 'http://smalltalkhub.com/mc/PharoExtras/FileSystemLegacy/main';
-			"if you do not specify a version, automatically the newest version is chose."
-			file:  'FileSystem-Legacy-JohanBrichau.2' ]
-]
-
-{ #category : #'external projects' }
-ConfigurationOfRoassal2 >> fuelMetalevel: spec [
-
-	"Specify a dependency on an external project which has it's own configuration.
-	The given project name can be chosen freely, for simplicity use the same name as the configuration or the conditional group you load."
-	spec project: 'FuelMetalevel' with: [
-		spec 
-			repository: 'http://ss3.gemstone.com/ss/Fuel';
-			className: 'ConfigurationOfFuel';
-			"if you want to load by default a special group usse the #loads: message plus a group name of the external configuration"
-			loads: #FuelMetalevel ].
 ]
 
 { #category : #accessing }
@@ -266,67 +228,26 @@ ConfigurationOfRoassal2 >> project [
 		project ]
 ]
 
-{ #category : #tags }
+{ #category : #symbolic }
 ConfigurationOfRoassal2 >> stable: spec [
-	"Symbolic versions can be used to introduce an indirection to a version number.
-	The real name used by Metacello is only defined by the following pragma:"
-	<symbolicVersion: #stable >
-	
-	"If another version is stable for a differen Smalltalk use a specific name"
-	"spec for: #'pharo1.4.x' version: '0.9'"
-	
-	"Specfiy which exact version you want to load"
-	spec for: #'common' version: '1.1-baseline'.
-	
+	<symbolicVersion: #'stable'>
+
+	spec for: #'common' version: '1.0'.
+
 ]
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version10: spec [
-	"The name for this version is solely defined by the following pragma:"
-	<version: '1.0' imports: #('1.0-baseline') >
-	"Baselines are used to define more complex setups for your project.
-	If you want to use external projects and have fine-graind control of the dependencies between packages use the #imports: part.
-	See the #baseline10: for more details."
-	
-	"Using #for:do: with the #common release specifier the following version declaration is valid for all platforms."
-	spec for: #common do: [
-		spec 
-			description: 'Version 1.0 the current stable release';
-			blessing: #release;
-			author: 'John Doe';
-			timestamp: '2013-05-01'.
-		
-		"Specify the versions for each package and external project defined in the baseline, here the 1.0-baseline defined in the baseline10 method."
-		spec
-			"For standard Monticello packages simply refere to the full version name without the extension:"
-			package: 'MyProject-Core'  with: 'MyProject-Core-JohnDoe.52';
-			package: 'MyProject-Tests' with: 'MyProject-Tests-JohnDoe.73';
-			
-			"External projects versions are specified using #project:with:.
-			Note the project name referes to the name used in the Metacello declaration.
-			FuelMetalevel is defined in the #fuelMetalevel: method."
-			project: 'FuelMetalevel' with: #stable ].
-		
-	"If you want to specify different version on other platforms add another #for:do: block with a different version identifier."
-]
+	<version: '1.0' imports: #('1.1-baseline' )>
 
-{ #category : #versions }
-ConfigurationOfRoassal2 >> versionDevelopment: spec [
-	"version specification for the current development branch, see #version10 for a complete explanation of a version declaration.
-	In this case the 'dev' version uses the same baselin as version '1.0':"
-	<version: 'dev' imports: #('1.0-baseline') >
-	
-	"Update this configuration regulrarly with intermediate releases.
-	If a version is more stable or should stay accessible copy this 'dev' definition and give it a proper version name on its own.
-	For example, in this case you might want to split a new version '1.1' by copying over this definition."
-	spec for: #common do: [
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.0'.
+		spec author: 'StephaneDucasse'.
+		spec timestamp: '7/2/2014 11:25'.
 		spec 
-			description: 'Development Version';
-			blessing: #development;
-			author: 'John Doe';
-			timestamp: '2013-05-09'.
-		
-		spec
-			"note that for the 'dev' version we rely on the #development version of the external FuleMetalevel project"
-			project: 'FuelMetalevel'   with: #development ].
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.161';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.375';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-BenjaminVanRyseghem.4'. ].
+
 ]
