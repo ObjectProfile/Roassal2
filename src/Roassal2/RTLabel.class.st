@@ -113,30 +113,16 @@ RTLabel >> trachelShapeForOneLine: anElement [
 
 { #category : #rendering }
 RTLabel >> updateFor: anElement trachelShape: trachelShape [	
-	| c s |
+	| c s txt   |
 	trachelShape isNil ifTrue: [ ^ self ].
 	s := nil.
 	c := self colorFor: anElement.
 	 trachelShape 
 				color: c;
-				position: anElement position
+				position: anElement position.
 
-"	txt := self textFor: anElement.
-	lines := txt lines.
-	lines size = 1
-		ifTrue: 
-			[ trachelShape 
-				color: c;
-				text: txt on: anElement position ]
-		ifFalse:
-			[
-			lines allButFirst do: [ :l |  
-				n := TRCompositeShape new.
-				n offset2: 20.
-				n shape1: l. 
-				s shape2: n.
-				s := n ]. 
-			 ]"
+	txt := self textFor: anElement.
+	trachelShape text: txt on: anElement position
 ]
 
 { #category : #rendering }
