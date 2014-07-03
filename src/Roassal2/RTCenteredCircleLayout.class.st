@@ -29,7 +29,7 @@ RTCenteredCircleLayout >> center: aPoint [
 	center := aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hook }
 RTCenteredCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 	
@@ -38,7 +38,7 @@ RTCenteredCircleLayout >> computeIncrementalAngleFor: elements [
 		ifFalse: [ initialIncrementalAngle ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hook }
 RTCenteredCircleLayout >> computeRadiusFor: elements [
 	"Return the radius of the circle. If none has been set (i.e., initialRadius = 0), then it is computed as the scale factor times the number of elements"
 	^ initialRadius = 0 
@@ -46,7 +46,7 @@ RTCenteredCircleLayout >> computeRadiusFor: elements [
 		ifFalse: [ initialRadius ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hook }
 RTCenteredCircleLayout >> doExecute: elements [
 	| angleIncrement angle rad centerPoint |
 	rad := self computeRadiusFor: elements.
@@ -62,7 +62,7 @@ RTCenteredCircleLayout >> doExecute: elements [
 			self step ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'initialize-release' }
 RTCenteredCircleLayout >> initialize [
 	super initialize.
 	center := 0 @ 0
