@@ -21,5 +21,5 @@ RTMultiLinearColorForIdentity >> objects: someObjects [
 
 { #category : #'as yet unclassified' }
 RTMultiLinearColorForIdentity >> rtValue: anObject [
-	^ self level: (objects indexOf: anObject) / objects size
+	^ self level: (objects indexOf: anObject) - 1 / objects size
 ]
