@@ -15,6 +15,11 @@ RTMultiLinearColorForIdentity >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+RTMultiLinearColorForIdentity >> numberOfColors: aValue [
+	^ self objects: (1 to: aValue)
+]
+
+{ #category : #'as yet unclassified' }
 RTMultiLinearColorForIdentity >> objects: someObjects [
 	objects := someObjects
 ]
