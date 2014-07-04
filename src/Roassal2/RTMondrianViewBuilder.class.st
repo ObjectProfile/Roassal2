@@ -110,6 +110,11 @@ RTMondrianViewBuilder >> edgesFromAssociations: associations [
 
 ]
 
+{ #category : #'adding - edges' }
+RTMondrianViewBuilder >> edgesToAll: objects [
+	^ self edgesFrom: #yourself toAll: objects
+]
+
 { #category : #layout }
 RTMondrianViewBuilder >> forceBasedLayout [
 	self layout: RTForceBasedLayout new.
