@@ -3767,3 +3767,14 @@ VersionOfRoassal2 >> version000294 [
 	at: #date put: '3 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000295 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.161';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.383';
+	at: #version put: '0.295';
+	at: #comment put: '0.295 : added RTObject>>basicNew. Useful when we do some memory profiling';
+	at: #date put: '4 July 2014';
+	yourself
+]
