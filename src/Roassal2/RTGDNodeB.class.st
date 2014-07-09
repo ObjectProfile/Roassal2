@@ -25,7 +25,7 @@ RTGDNodeB >> circle [
 RTGDNodeB >> createElementFor: object [
 	| e |
 	e := shape elementOn: object.
-	withPopup ifTrue: [ e @ RTPopup ].
+	withPopup ifTrue: [ e @ RTPopup @ (RTMenuActivable new item: 'inspect' action: #inspect) ].
 	withDraggable ifTrue: [ e @ RTDraggable ].
 	self initializePropertiesOn: e.
 	^ e
@@ -45,7 +45,7 @@ RTGDNodeB >> createElements [
 RTGDNodeB >> createElementsFor: objects [
 	| es |
 	es := shape elementsOn: objects.
-	withPopup ifTrue: [ es @ RTPopup ].
+	withPopup ifTrue: [ es @ RTPopup @ (RTMenuActivable new item: 'inspect' action: #inspect) ].
 	withDraggable ifTrue: [ es @ RTDraggable ].
 	es do: [ :e | self initializePropertiesOn: e ].
 	^ es

@@ -66,6 +66,11 @@ RTGDLayoutB >> flow [
 ]
 
 { #category : #public }
+RTGDLayoutB >> flowWidth: aWidth [
+	^ self use: (RTFlowLayout new maxWidth: aWidth)
+]
+
+{ #category : #public }
 RTGDLayoutB >> force [
 	^ self use: RTForceBasedLayout new
 ]
