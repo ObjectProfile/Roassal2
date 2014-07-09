@@ -233,6 +233,11 @@ RTLayout >> translator: t [
 	translator := t
 ]
 
+{ #category : #hook }
+RTLayout >> userDefinedEdges: edges [
+	"Do nothing"
+]
+
 { #category : #utils }
 RTLayout >> xOf: aNode [ 
 	^ aNode attributes at: #x ifAbsent: [ 0 ]
