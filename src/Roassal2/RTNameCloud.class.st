@@ -73,6 +73,19 @@ RTNameCloud >> example03 [
 	b open
 ]
 
+{ #category : #examples }
+RTNameCloud >> example04 [
+	"
+	self new example04
+	"
+	| b |
+	b := RTNameCloud new.
+	b minHeight: 20.
+	b maxHeight: 30.
+	b addString: 'I am not that tall but I speak many languages. But I have tall legs and big feet'.
+	b open
+]
+
 { #category : #initialization }
 RTNameCloud >> initialize [
 	super initialize.
@@ -93,8 +106,28 @@ RTNameCloud >> maxFrequency [
 ]
 
 { #category : #accessing }
+RTNameCloud >> maxHeight [
+	^ maxHeight
+]
+
+{ #category : #accessing }
+RTNameCloud >> maxHeight: anObject [
+	maxHeight := anObject
+]
+
+{ #category : #accessing }
 RTNameCloud >> minFrequency [
 	^ table values min
+]
+
+{ #category : #accessing }
+RTNameCloud >> minHeight [
+	^ minHeight
+]
+
+{ #category : #accessing }
+RTNameCloud >> minHeight: anObject [
+	minHeight := anObject
 ]
 
 { #category : #utility }
@@ -107,7 +140,7 @@ RTNameCloud >> renderIn: aView [
 
 	| shape es |
 	shape := RTLabel new height: [ :assoc | 
-		(assoc value - self minFrequency * maxHeight / (self maxFrequency - self minFrequency)) + minHeight ]; text: #key.
+		(assoc value - self minFrequency * maxHeight / (self maxFrequency - self minFrequency max: 1)) + minHeight ]; text: #key.
 	es := shape elementsOn: self sortedAssociationsBounded.
 	aView addAll: es.
 	es @ RTPopup.
