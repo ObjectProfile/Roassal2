@@ -3800,3 +3800,14 @@ VersionOfRoassal2 >> version000297 [
 	at: #date put: '9 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000298 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.161';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.387';
+	at: #version put: '0.298';
+	at: #comment put: '0.298 : added a namecloud';
+	at: #date put: '11 July 2014';
+	yourself
+]
