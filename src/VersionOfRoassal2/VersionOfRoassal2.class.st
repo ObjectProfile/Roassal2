@@ -3855,3 +3855,14 @@ VersionOfRoassal2 >> version000302 [
 	at: #date put: '12 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000303 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.163';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.391';
+	at: #version put: '0.303';
+	at: #comment put: '0.303 : fixed a bug in TRMorph about Scaling and we now have a session management ! Yupi!!!! (Thanks Thierry!)';
+	at: #date put: '12 July 2014';
+	yourself
+]
