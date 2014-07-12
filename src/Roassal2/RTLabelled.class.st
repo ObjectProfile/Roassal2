@@ -47,7 +47,7 @@ RTLabelled >> initialize [
 
 { #category : #hooks }
 RTLabelled >> initializeElement: element [
-	| lbl s t |
+	| lbl s t callback |
 	t := text rtValue: element.
 	t isNil ifTrue: [ ^ self ].
 	
@@ -60,6 +60,10 @@ RTLabelled >> initializeElement: element [
 	adding the element into it"
 	canvas := (canvas rtValue: element).
 	canvas addShape: lbl.
+	
+	"Make sure that if we remove the element, the trachel shape is also removed"
+	callback := TRRemoveCallback new block: [ :shape | lbl remove ].
+	element trachelShape addCallback: callback.
 	
 	"Not really nice. Maybe a different solution could be to have a double dispatch"
 	(element isKindOf: RTEdge) 
