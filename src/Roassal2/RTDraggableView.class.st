@@ -1,6 +1,6 @@
 Class {
 	#name : #RTDraggableView,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractDraggableView,
 	#category : #'Roassal2-Core'
 }
 

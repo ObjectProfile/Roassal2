@@ -114,7 +114,7 @@ RTView >> elementFromModel: anObject [
 
 { #category : #accessing }
 RTView >> elements [
-	^ elements copy
+	^ RTGroup withAll: elements
 ]
 
 { #category : #'accessing-computed' }

@@ -5,7 +5,7 @@ In addition, I hold a block allowing constraints on the translations
 "
 Class {
 	#name : #RTConstrainedDraggableView,
-	#superclass : #RTDraggableView,
+	#superclass : #RTAbstractDraggableView,
 	#instVars : [
 		'constraint'
 	],
@@ -21,17 +21,15 @@ RTConstrainedDraggableView class >> constraint: constraint [
 ]
 
 { #category : #accessing }
-RTConstrainedDraggableView >> constraint: anObject [
-	
-	constraint := anObject
+RTConstrainedDraggableView >> constraint: aTwoArgBlock [
+	"First arg = view to drag, and second arg = step"
+	constraint := aTwoArgBlock
 ]
 
 { #category : #initialize }
 RTConstrainedDraggableView >> initialize [
-
 	super initialize.
-
-	constraint := [ :point | point ].
+	constraint := [ :aView :point | point ]
 ]
 
 { #category : #hooks }
@@ -39,8 +37,9 @@ RTConstrainedDraggableView >> initializeElement: aView [
 
 	aView canvas 
 		when: TRMouseDragging 
-		do: [ :e || translation |
-			translation := constraint value: e step negated.
+		do: [ :e |
+			| translation |
+			translation := constraint value: aView value: e step negated.
 			aView canvas camera translateBy: translation.
 			e signalUpdate ]
 ]

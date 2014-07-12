@@ -62,6 +62,15 @@ RTGroup >> height [
 	^ self encompassingRectangle height
 ]
 
+{ #category : #public }
+RTGroup >> leftMostElement [
+	"Return the element located on the most left"
+	| t |
+	t := self first.
+	self do: [ :e | (t position x > e position x) ifTrue: [ t := e ] ].
+	^ t
+]
+
 { #category : #accessing }
 RTGroup >> model [
 	^ 'group'
@@ -81,6 +90,15 @@ RTGroup >> remove [
 RTGroup >> renderOn: trCanvas [ 
 	"Not sure whether this method is necessary..."
 	self do: [ :e | e renderOn: trCanvas ]
+]
+
+{ #category : #public }
+RTGroup >> rightMostElement [
+	"Return the element located on the most left"
+	| t |
+	t := self first.
+	self do: [ :e | (t position x < e position x) ifTrue: [ t := e ] ].
+	^ t
 ]
 
 { #category : #signalling }

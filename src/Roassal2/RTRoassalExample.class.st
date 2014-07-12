@@ -2,43 +2,6 @@
 RTRoassalExample new installTitle: 'GroupOfGroups' 
 		code:
 		'
-| objects groups edgesBlock1 edgesBlock2 colorNormalizer groupsOfElements v predicate layoutClass filteredObjects shape elements edges |
-objects := Collection withAllSubclasses.
-groups := { 
-[ :c | c name endsWith: ''List'' ] -> RTGridLayout new .
-[ :c | ''*Set*'' match: c name ] ->  RTForceBasedLayout new .
-[ :c | ''*Dictionary*'' match: c name ] ->  RTTreeLayout new .
-[ :c | c name endsWith: ''Array'' ] ->  (RTWeightedCircleLayout new initialRadius: 60)
-}.
-edgesBlock1 := [ :c | c dependentClasses ].
-edgesBlock2 := [ :c | Array with: c superclass ].
-
-
-colorNormalizer := RTMultiLinearColorForIdentity new numberOfColors: groups size.
-groupsOfElements := RTGroup new.
-v := RTView new.
-groups doWithIndex: [ :assoc :index |
-	predicate := assoc key.
-	layoutClass := assoc value.
-	filteredObjects := objects select: predicate.
-	shape := RTEllipse new size: 20; color: (colorNormalizer rtValue: index).
-	elements := shape elementsOn: filteredObjects.
-	elements @ RTPopup.
-	elements when: TRMouseClick do: [ :evt | evt element model inspect ].
-	v add: elements.
-	groupsOfElements add: elements.
-	edges := RTEdge 
-		buildEdgesFromObjects: filteredObjects from: #yourself toAll: edgesBlock1 using: (RTLine new color: Color red) scope: elements.
-	v addAll: edges.	
-
-	layoutClass  on: elements edges: edges.
-
-	v addAll: (RTEdge 
-		buildEdgesFromObjects: filteredObjects from: #yourself toAll: edgesBlock2 using: (RTLine new color: Color green) scope: elements).		
-].
-
-RTFlowLayout on: groupsOfElements.
-v  open.
 v canvas'
 	
 "
@@ -784,6 +747,81 @@ kM8ftCzZioax9AhFfpweTuJ/NZz0b1qghSjpvJZFKVFC+IkhPeXFz4bT4TYteHt7+1HRcn0a
 vioNZcPCwi7K68JfcXzjKDYtlJWV1VPhjwcEBBgp6bRmgp+JN/A3LZxA+JsWTij8TQv48OHD
 hw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDhw8fPnz48OHDh+9QXgOox3JY
 RZSQNAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleCircleCould [
+
+| v |
+"The GlobalBuilder allow you to normalize the size or the colors across a number of elements. Consider the example:"
+v := RTView new.
+v addAll: ((RTEllipse new color: (Color red alpha: 0.3)) elementsOn: Collection withAllSubclasses) @ RTPopup.
+RTGlobalBuilder new
+elementsToConsider: v elements;
+normalizeSize: #numberOfLinesOfCode min: 10 max: 60;
+normalizeColor: #numberOfMethods using: { Color gray . Color red };
+execute.
+RTRectanglePackLayout on: v elements.
+
+"elements provided to #elementsToConsider: are resized and have a colors chosen between these elements."
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleCircleCouldIcon [
+	^ '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
+AABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
@@ -3331,6 +3369,69 @@ gPXSjrcjqZP5RuVtcYi/QS0cym9ubn4uL4lsy6JN+5Jvi0P8DWrhUN62wbMDl8u1QdsG/3fo
 iLy8vEIWrZ7/GEC9IHI6KioqOlzKh5VD+PW3fK3Mf3AwMDAwpafXljOyC8XyYeMQf4NauJS/
 vr7+Oywc4m9QC7d8fPDBBx988MEHH3zwwQcffPDBBx988MEHH3zwwQcffPDBBx988MEHH3zw
 wQcffPDBBx988MEHH3zwwQcffPDB5x7wP8IZ3MdvrtbNAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleTimeLineOfRoassal [
+
+| d popup v |
+"Time line of code in Roassal"
+"We compute the number of methods created for each day. We keep the information in a dictionary"
+d := Dictionary new.
+RTObject withAllSubclasses do: [ :c |
+	c methods do: [ :m |
+		d at: m ageInDaysAsInteger ifAbsentPut: [ 0 ].
+		d at: m ageInDaysAsInteger put: (d at: m ageInDaysAsInteger) + 1 ].
+].
+
+
+popup := RTPopup text: [:assoc | assoc value asString, ' methods added on day ', assoc key asString ].
+v := RTView new.
+v addAll: (RTEllipse elementsOn: d associations) @ popup.
+RTGlobalBuilder new
+	view: v;
+	normalizeX: #key min: 0 max: 500;
+	normalizeSize: #value min: 5  max: 30;
+	normalizeColor: #value;
+	alphaColor: 0.3;
+	execute.
+
+"We add a line from the left most element to the right most element"
+v add: ((RTLine new color: Color lightGray) edgeFrom: v elements leftMostElement to: v elements rightMostElement).
+
+"It make sense to only drag horizontally"
+v @ RTHorizontalDraggableView.
+
+"We add a small legend"
+v canvas addFixedShape: (TRLabelShape new text: 'Each circle is a day. Size of the circle indicates the number of methods produced that day').
+TRConstraint stickAtTheBottomOfTheWindow: v canvas fixedShapes last.
+
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleTimeLineOfRoassalIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD9UlEQVR4XuXXW09TWRjGcT6X
+V34BEw/xwmg0xpioMTExXnjhIWq88hCjUaPRBCeKBaMIRAQFbNpKdRCRCREoCKVyKi3CwLSU
+lj7Os5sZ4iTjDBfGjPN/khW62+61V9/fendL1efP/PyXUsUvAR+EHz4IH4QfPggfhB8+CB+E
+Hz4IH4QfPgg/fBA+CD98ED4IP3wQPgg/fBA+CD98EH74IHwQfvggfBB++CB8EH74IHwQfvgg
+/PBB+CD88EH4IPzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH44YPwQfj5v4BoZETlxkYV
+Tp5Ubtcu5U+c0Mr4uL7lYkvT0yoOD6u8uCgciJyF9+81++qVinNzqwUoLS0pPzPzl4LIhQow
+8vv2Kbdz5+rI7t+v8bo6TTQ3a/mLOdaM7Cx9+qTyyormnz/Xby0tyoZCmvWcxdFR5aemlInH
+tWikYP55rzc3OflDY1UNxmLq6ehQPpfT1MePmkmngzoo9fKl+mtrFbt+XeErV5T2bl/IZtXt
+grT4+Bef0xMOq8sQifPnlTp1SqPr1imxfr3imzerbft2tW7cqIj/drhrolevVt4bq6lR5OFD
+Tbij5l3EWc856esWi0WVSqXKtdMuatbr6PQ5jT634ehRxQ8fVnsw18GDCp8+rfi5c+q+eVOD
+wfWfPtWHBw/0wfAzXnchk/muKMHa/21jBflq5/tzr4J0+UM8qq5Wd1eX2vy4/dkzJZNJhe/c
+0ZOLF1Vz9qxCLni0rU3d0ageX7qkGh/fvXxZ9zxCPn5x7Jg69u7Vmw0bFN20SU/27FH9gQN6
+tHu3mtwld48f109nzqj+xg3V+v3VFy4o5vl+9u6OGLbdO7+vr09DQ0Ma9c5/0dqqeCSiel/7
+nqGrjdFw6JAeB/MeOaKQ56ozVJPX1+Q5m73+2K1blTUPuJOSvb1u2unvNgYGBv7x9bGxMaVS
+qa++PuwOn/QmDB5X/eoHhb+5Jwe3qawBgjHh8efzcy5a+u1bFd1RwXFw7oKLV25o0NyWLZrf
+ulXzO3Yo6TGybZt6XcjEtWvKvn6t5Xxec+60om97a9l52URCg94kmf5+pdyVk7dva8SYKXdt
+vrNTaXd35o8x29NT6Y6Mr8P/UnfK3pkl79Ivv0OW7t//ZsVRoVBByLmDC+/eif8ra42/tNy/
+Knu3anlZ/B+x/P9D+CD88EH4IPzwQfgg/PBB+OGD8EH44YPwQfjhg/BB+OGD8EH44YPwwwfh
+g/DDB+GD8MMH4YPwwwfhg/DDB+GHD8IH4YcPwgfhhw/CB+GHD8IH4YcPwg8fhA/CDx+ED8IP
+H4QPwg8fhA/CDx+EHz4IH4QfPsiPl98ByUwFby0fOIYAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }

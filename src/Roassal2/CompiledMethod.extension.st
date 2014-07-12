@@ -7,6 +7,12 @@ CompiledMethod >> ageInDays [
 ]
 
 { #category : #'*roassal2' }
+CompiledMethod >> ageInDaysAsInteger [
+
+	^ self ageInDays asInteger
+]
+
+{ #category : #'*roassal2' }
 CompiledMethod >> ageInDaysRounded [
 	^ self ageInDays rounded
 ]

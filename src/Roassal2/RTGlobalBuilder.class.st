@@ -113,6 +113,13 @@ RTGlobalBuilder >> minSize: anInteger [
 ]
 
 { #category : #public }
+RTGlobalBuilder >> normalizeColor: metricBlock [
+	"aBlock is evaluated on each node model. 
+	 Colors is an array of colors used to do the fading"
+	^ self normalizeColor: metricBlock using: (Array with: Color gray with: Color red)
+]
+
+{ #category : #public }
 RTGlobalBuilder >> normalizeColor: metricBlock using: colors [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
@@ -199,6 +206,37 @@ RTGlobalBuilder >> normalizeSizeMin: minValue max: maxValue [
 			t := el trachelShape extent x max: el trachelShape extent y.
 			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
 			el trachelShape extent: tt @ tt ]
+		]
+]
+
+{ #category : #public }
+RTGlobalBuilder >> normalizeX: metricBlock min: minValue max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeX: metricBlock min: minValue max: maxValue using: #yourself
+]
+
+{ #category : #public }
+RTGlobalBuilder >> normalizeX: metricBlock min: minValue max: maxValue using: transformation [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	"transformation is a function that takes as argument the result of a metric and return the metric transformed"
+	self addProperty: [	
+		| min max ellsToConsider t |
+		min := 100000.
+		max := -100000.
+		ellsToConsider := OrderedCollection new.
+		self filteredElementsToConsider do: [ :el | 	
+				t := transformation rtValue: (metricBlock rtValue: el model).
+				min := min min: t.
+				max := max max: t.
+				ellsToConsider add: el ].
+	
+		ellsToConsider do: [ :el | 
+			| tt |
+			t := transformation rtValue: (metricBlock rtValue: el model).
+			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
+			el translateTo: tt @ 0 ]
 		]
 ]
 

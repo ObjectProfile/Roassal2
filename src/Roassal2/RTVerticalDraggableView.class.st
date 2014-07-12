@@ -12,5 +12,5 @@ Class {
 RTVerticalDraggableView >> initialize [
 
 	super initialize.
-	self constraint: [ :point | 0 @ point y ]
+	self constraint: [ :aView :point | 0 @ point y ]
 ]
