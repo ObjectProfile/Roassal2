@@ -36,6 +36,11 @@ TRCallback >> isExtentCallback [
 ]
 
 { #category : #testing }
+TRCallback >> isRemoveCallback [
+	^ false
+]
+
+{ #category : #testing }
 TRCallback >> isTranslationCallback [
 	^ false
 ]

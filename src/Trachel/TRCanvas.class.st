@@ -357,7 +357,8 @@ TRCanvas >> removeFixedShape: aShape [
 { #category : #building }
 TRCanvas >> removeShape: shape [
 	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
-	shape canvas: nil
+	shape canvas: nil.
+	shape triggerRemoveCallbacks
 ]
 
 { #category : #actions }

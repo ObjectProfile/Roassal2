@@ -378,6 +378,15 @@ TRShape >> triggerCallbacksForStep: aStep [
 			c shape: self step: aStep ] ]
 ]
 
+{ #category : #callbacks }
+TRShape >> triggerRemoveCallbacks [
+	"aStep is a point that represents a translation step"
+	callbacks ifNil: [ ^ self ].
+	callbacks do: [ :c | 
+		c isRemoveCallback ifTrue: [ 
+			c removeShape: self ] ]
+]
+
 { #category : #events }
 TRShape >> when: event do: aBlock [
 	self announcer when: event do: aBlock
