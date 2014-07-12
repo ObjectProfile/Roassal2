@@ -26,16 +26,16 @@ TRMorph >> checkSession [
 
 { #category : #'session management' }
 TRMorph >> createSurface [
-"	surface isNil ifFalse: [ ^ self ]."
-	surface := AthensCairoSurface extent: self extent asIntegerPoint.
-	session := Smalltalk session.
+	surface isNil ifTrue: [ 
+		surface := AthensCairoSurface extent: self extent asIntegerPoint.
+		session := Smalltalk session ]
 ]
 
 { #category : #drawing }
 TRMorph >> drawOn: aCanvas [
 	"aCanvas is a FormCanvas"
 	
-"	self checkSession."
+	self checkSession.
 	
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	trachelCanvas playAnimations.
@@ -47,7 +47,7 @@ TRMorph >> drawOn: aCanvas [
 		"We display the elements that are subject to the camera"
 		cs pathTransform
 			translateBy: self extent / 2;
-			    scaleBy: trachelCanvas camera scale;
+			    scaleBy: trachelCanvas camera scale asFloat;
 			translateBy: trachelCanvas camera position negated.
 		trachelCanvas shapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
