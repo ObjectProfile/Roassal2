@@ -3822,3 +3822,14 @@ VersionOfRoassal2 >> version000299 [
 	at: #date put: '11 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000300 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.162';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.389';
+	at: #version put: '0.300';
+	at: #comment put: '0.300 : fix the bug when you removed a labelled edge or element, the label was not removed. Now it is!';
+	at: #date put: '12 July 2014';
+	yourself
+]
