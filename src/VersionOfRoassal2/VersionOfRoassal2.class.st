@@ -3866,3 +3866,14 @@ VersionOfRoassal2 >> version000303 [
 	at: #date put: '12 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000304 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.164';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.392';
+	at: #version put: '0.304';
+	at: #comment put: '0.304 : Added multi composite shape, both in Trachel and Roassal. Worked on the metricnormalizer. Cool stuff!';
+	at: #date put: '13 July 2014';
+	yourself
+]
