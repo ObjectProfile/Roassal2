@@ -82,26 +82,27 @@ RTMetricNormalizer >> normalizePosition: metricBlock min: minValue max: maxValue
 ]
 
 { #category : #'as yet unclassified' }
-RTMetricNormalizer >> normalizePosition: metricBlock min: minValue max: maxValue using: transformation [
-	"aBlock is evaluated on each node model. 
-	 Colors is an array of colors used to do the fading"
+RTMetricNormalizer >> normalizePosition: metricBlock min: min max: max using: transformation [
+	"aBlock is evaluated on each node model"
 	
-	| min max |
+	| minValue maxValue |
 	"We get the min and the max of the metric for all the elements"
-	min := 1000000.
-	max := 0.
+	minValue := 1000000.
+	maxValue := -1000000.
 	elements do: [ :el | 
 		| t |  
 		t := transformation rtValue: (metricBlock rtValue: el model).
-		min := min min: t.
-		max := max max: t ].
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
 	
-	max ~= 0 ifTrue: [ 
+	(maxValue - minValue) ~= (0 @ 0) ifTrue: [ 
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := minValue + (maxValue * (t - min) / (max + 1)) asIntegerPoint.
-			el translateTo: tt ] ] 
+			"tt := minValue + (maxValue * (t - min) / max) asInteger."
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asIntegerPoint.
+			el translateBy: tt ] ] 
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -112,26 +113,30 @@ RTMetricNormalizer >> normalizeSize: metricBlock min: minValue max: maxValue [
 ]
 
 { #category : #'as yet unclassified' }
-RTMetricNormalizer >> normalizeSize: metricBlock min: minValue max: maxValue using: transformation [
+RTMetricNormalizer >> normalizeSize: metricBlock min: min max: max using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	
-	| min max |
+	| minValue maxValue |
 	"We get the min and the max of the metric for all the elements"
-	min := 1000000.
-	max := 0.
+	minValue := 1000000.
+	maxValue := -1000000.
 	elements do: [ :el | 
 		| t |  
 		t := transformation rtValue: (metricBlock rtValue: el model).
-		min := min min: t.
-		max := max max: t ].
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
 	
-	max ~= 0 ifTrue: [ 
+	
+	(maxValue - minValue) ~= 0 ifTrue: [
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
+			"tt := minValue + (maxValue * (t - min) / max) asInteger."
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			el trachelShape extent: tt @ tt ] ] 
+	
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -142,25 +147,26 @@ RTMetricNormalizer >> normalizeX: metricBlock min: minValue max: maxValue [
 ]
 
 { #category : #'as yet unclassified' }
-RTMetricNormalizer >> normalizeX: metricBlock min: minValue max: maxValue using: transformation [
+RTMetricNormalizer >> normalizeX: metricBlock min: min max: max using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	
-	| min max |
+	| minValue maxValue |
 	"We get the min and the max of the metric for all the elements"
-	min := 1000000.
-	max := 0.
+	minValue := 1000000.
+	maxValue := -1000000.
 	elements do: [ :el | 
 		| t |  
 		t := transformation rtValue: (metricBlock rtValue: el model).
-		min := min min: t.
-		max := max max: t ].
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
 	
-	max ~= 0 ifTrue: [ 
+	(maxValue - minValue) ~= 0 ifTrue: [
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
+			"tt := minValue + (maxValue * (t - min) / max) asInteger."
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			el translateBy: tt @ 0 ] ] 
 ]
 
@@ -168,28 +174,30 @@ RTMetricNormalizer >> normalizeX: metricBlock min: minValue max: maxValue using:
 RTMetricNormalizer >> normalizeY: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+
 	self normalizeY: metricBlock min: minValue max: maxValue using: #yourself
 ]
 
 { #category : #'as yet unclassified' }
-RTMetricNormalizer >> normalizeY: metricBlock min: minValue max: maxValue using: transformation [
+RTMetricNormalizer >> normalizeY: metricBlock min: min max: max using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	
-	| min max |
+	| minValue maxValue |
 	"We get the min and the max of the metric for all the elements"
-	min := 1000000.
-	max := -1000000.
+	minValue := 1000000.
+	maxValue := -1000000.
 	elements do: [ :el | 
 		| t |  
 		t := transformation rtValue: (metricBlock rtValue: el model).
-		min := min min: t.
-		max := max max: t ].
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
 	
-	max ~= 0 ifTrue: [ 
+	(maxValue - minValue) ~= 0 ifTrue: [ 
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := minValue + (maxValue * (t - min) / (max + 1)) asInteger.
+			"tt := minValue + (maxValue * (t - min) / max) asInteger."
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			el translateBy: 0 @ tt ] ] 
 ]

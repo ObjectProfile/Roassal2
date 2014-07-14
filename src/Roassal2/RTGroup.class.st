@@ -101,6 +101,11 @@ RTGroup >> rightMostElement [
 	^ t
 ]
 
+{ #category : #public }
+RTGroup >> rotateByDegrees: degree [
+	self do: [ :e | e rotateByDegrees: degree ]
+]
+
 { #category : #signalling }
 RTGroup >> signalUpdate [
 	self ifEmpty: [ ^ self ].
