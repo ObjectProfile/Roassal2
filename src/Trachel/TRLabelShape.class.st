@@ -15,10 +15,19 @@ TRLabelShape class >> defaultFontSize [
 ]
 
 { #category : #configuration }
+TRLabelShape class >> familyFontName [
+	| fontList |
+	fontList := FontChooser new fontListStrings.
+	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
+	(fontList includes: 'cmr10') ifTrue: [ ^ 'cmr10' ].
+	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
+	
+	^ StandardFonts defaultFont familyName
+]
+
+{ #category : #configuration }
 TRLabelShape class >> getFontForSize: aNumber [
-
-   ^ LogicalFont familyName: StandardFonts defaultFont familyName pointSize: aNumber
-
+	^ LogicalFont familyName: self familyFontName pointSize: aNumber
 ]
 
 { #category : #configuration }

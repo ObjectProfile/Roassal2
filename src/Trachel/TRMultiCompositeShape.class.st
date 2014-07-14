@@ -126,6 +126,7 @@ TRMultiCompositeShape >> initialize [
 
 { #category : #'as yet unclassified' }
 TRMultiCompositeShape >> position [
+	self shapes ifEmpty: [ ^ 0 @ 0 ].
 	^ (self shapes collect: #position) sum / shapes size
 ]
 
