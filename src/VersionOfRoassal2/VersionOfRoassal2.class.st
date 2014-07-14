@@ -3888,3 +3888,14 @@ VersionOfRoassal2 >> version000305 [
 	at: #date put: '14 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000306 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.165';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.393';
+	at: #version put: '0.306';
+	at: #comment put: '0.306 : bug fixed in TRMorph related to the Athens surface creation';
+	at: #date put: '14 July 2014';
+	yourself
+]
