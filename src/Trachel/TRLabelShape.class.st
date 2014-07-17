@@ -4,18 +4,15 @@ Class {
 	#instVars : [
 		'text',
 		'font',
-		'fontSize'
+		'fontSize',
+		'fontName'
 	],
 	#category : #'Trachel-Core'
 }
 
 { #category : #configuration }
-TRLabelShape class >> defaultFontSize [
-	^ 12
-]
-
-{ #category : #configuration }
-TRLabelShape class >> familyFontName [
+TRLabelShape class >> defaultFamilyFontName [
+	"Default Family font"
 	| fontList |
 	fontList := FontChooser new fontListStrings.
 	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
@@ -26,8 +23,30 @@ TRLabelShape class >> familyFontName [
 ]
 
 { #category : #configuration }
+TRLabelShape class >> defaultFontSize [
+	^ 12
+]
+
+{ #category : #configuration }
+TRLabelShape class >> familyFontName [
+	"Default Family font"
+	^ self defaultFamilyFontName
+]
+
+{ #category : #configuration }
 TRLabelShape class >> getFontForSize: aNumber [
-	^ LogicalFont familyName: self familyFontName pointSize: aNumber
+	^ self getFontNamed: self familyFontName ForSize: aNumber
+
+]
+
+{ #category : #configuration }
+TRLabelShape class >> getFontNamed: aFontName ForSize: aNumber [
+	^ LogicalFont familyName: aFontName pointSize: aNumber
+]
+
+{ #category : #configuration }
+TRLabelShape class >> widthOfText: aString fontName: aFontName fontSize: aNumber [
+	^ (self getFontNamed: aFontName ForSize: aNumber) widthOfString: aString
 ]
 
 { #category : #configuration }
@@ -104,14 +123,40 @@ TRLabelShape >> font [
 ]
 
 { #category : #accessing }
+TRLabelShape >> fontName [
+	"Return the font name used when drawing"
+	^ fontName
+]
+
+{ #category : #accessing }
+TRLabelShape >> fontName: aFontName [
+	"Set the font name used by the label. You can check the expression
+		FontChooser new fontListStrings.
+	to know the different font installed on the system"
+	fontName := aFontName.
+	font := self getFontNamed: fontName ForSize: fontSize.
+]
+
+{ #category : #accessing }
 TRLabelShape >> fontSize [
 	^ fontSize
 ]
 
 { #category : #accessing }
 TRLabelShape >> fontSize: aNumber [
-	font := self class getFontForSize: aNumber.
+	font := self getFontNamed: fontName ForSize: aNumber.
 	fontSize := aNumber
+]
+
+{ #category : #'managing font' }
+TRLabelShape >> getFontForSize: aNumber [
+
+	^ self getFontNamed: fontName ForSize: aNumber
+]
+
+{ #category : #'managing font' }
+TRLabelShape >> getFontNamed: aFontName ForSize: aNumber [
+	^ self class getFontNamed: aFontName ForSize: aNumber
 ]
 
 { #category : #accessing }
@@ -129,6 +174,7 @@ TRLabelShape >> includesPoint: aPoint [
 TRLabelShape >> initialize [
 	super initialize.
 	text := 'Trachel label'.
+	fontName := self class familyFontName.
 	self fontSize: self defaultFontSize
 ]
 
@@ -174,4 +220,9 @@ TRLabelShape >> translateRightTo: aPosition [
 TRLabelShape >> width [
 
 	^ self encompassingRectangle width
+]
+
+{ #category : #'managing font' }
+TRLabelShape >> widthOfText: aString fontSize: aNumber [
+	^ (self getFontForSize: aNumber) widthOfString: aString
 ]
