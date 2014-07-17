@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'text',
 		'font',
-		'height'
+		'height',
+		'fontName'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -18,6 +19,25 @@ RTLabel >> defaultColor [
 { #category : #'instance creation' }
 RTLabel >> defaultText [
 	^ [ :e | e model asString ]
+]
+
+{ #category : #accessing }
+RTLabel >> fontName: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	"Set the font name used by the label. You can check the expression
+		FontChooser new fontListStrings.
+	to know the different font installed on the system"
+	self fontNameElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTLabel >> fontNameElement: aValueOrABlock [
+	fontName := aValueOrABlock
+]
+
+{ #category : #rendering }
+RTLabel >> fontNameFor: element [
+	^ (fontName rtValue: element) asString
 ]
 
 { #category : #accessing }
@@ -40,7 +60,8 @@ RTLabel >> heightFor: element [
 RTLabel >> initialize [
 	super initialize.
 	text := self defaultText.
-	height := TRLabelShape defaultFontSize
+	height := TRLabelShape defaultFontSize.
+	fontName := TRLabelShape defaultFamilyFontName
 ]
 
 { #category : #accessing }
@@ -107,7 +128,8 @@ RTLabel >> trachelShapeForOneLine: anElement [
 	shape text: (self textFor: anElement);
 			color: (self colorFor: anElement);
 			position: anElement position;
-			fontSize: (self heightFor: anElement).
+			fontSize: (self heightFor: anElement);
+			fontName: (self fontNameFor: anElement).
 	^ shape
 ]
 
@@ -127,5 +149,5 @@ RTLabel >> updateFor: anElement trachelShape: trachelShape [
 
 { #category : #rendering }
 RTLabel >> widthFor: anElement [
-	^ TRLabelShape widthOfText: (self textFor: anElement) fontSize: (self heightFor: anElement)
+	^ TRLabelShape widthOfText: (self textFor: anElement) fontName: fontName fontSize: (self heightFor: anElement)
 ]
