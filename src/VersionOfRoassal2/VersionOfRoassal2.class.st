@@ -3910,3 +3910,14 @@ VersionOfRoassal2 >> version000307 [
 	at: #date put: '17 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000308 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.167';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.394';
+	at: #version put: '0.308';
+	at: #comment put: '0.308 : fixed the bug related to surfaces. The surface gets properly initialized when one resize a window';
+	at: #date put: '17 July 2014';
+	yourself
+]
