@@ -111,3 +111,8 @@ mkwfvTbJGyLETWgwA7K7u2tCRTabFQ1HLX0P4S+OJfUgCOTk5ESitc2Nw1kU1jiFnTeXySrD
 1d7enhweHlqvC+X8/NzUkc/nZSkQbPjz87M5S8KMPDY3GjkKs/wgT93d3VmtC/OmYI1Qbbuu
 MAzHA9Bbs2+5XE74Q5Zv4xD+wg9CU/4Ab70DS6oUn88AAAAASUVORK5CYII='
 ]
+
+{ #category : #accessing }
+RTCharterExample >> label [
+	^ 'Charter example'
+]
