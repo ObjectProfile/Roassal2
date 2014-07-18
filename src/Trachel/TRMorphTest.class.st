@@ -1,7 +1,7 @@
 Class {
 	#name : #TRMorphTest,
 	#superclass : #TRTest,
-	#category : #'Trachel-MorphSpecific'
+	#category : #'Trachel-Core'
 }
 
 { #category : #forwarding }
