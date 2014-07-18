@@ -16,7 +16,7 @@ TRLabelShape class >> defaultFamilyFontName [
 	| fontList |
 	fontList := FontChooser new fontListStrings.
 	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
-	(fontList includes: 'cmr10') ifTrue: [ ^ 'cmr10' ].
+	(fontList includes: 'wasy10') ifTrue: [ ^ 'wasy10' ].
 	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
 	
 	^ StandardFonts defaultFont familyName
