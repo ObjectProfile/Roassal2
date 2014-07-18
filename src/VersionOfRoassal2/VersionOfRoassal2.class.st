@@ -3921,3 +3921,14 @@ VersionOfRoassal2 >> version000308 [
 	at: #date put: '17 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000309 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.167';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.395';
+	at: #version put: '0.309';
+	at: #comment put: '0.309 : Edge transparency example. Added the new interaction RTSetEdgeAlpha';
+	at: #date put: '18 July 2014';
+	yourself
+]
