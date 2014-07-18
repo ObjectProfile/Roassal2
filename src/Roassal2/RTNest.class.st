@@ -14,19 +14,29 @@ RTNest >> centerOn: backElement elements: elements [
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
-	| encompassingRectangle off |
-	self doLayoutIfNecessaryOn: elements.
-	encompassingRectangle := self encompassingRectangleOf: elements.
-	
 
-	backElement trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
-
-	off := backElement encompassingRectangle center - encompassingRectangle center. 
-	off := off asIntegerPoint.
-	elements do: [ :e | e translateBy: off ].
+	self centerOnTrachelShape: backElement trachelShape elements: elements
 	
 	"This is a big big question whether we need this or not"
 	"backElement attributes at: #nestedElements put: elements."
+	
+]
+
+{ #category : #public }
+RTNest >> centerOnTrachelShape: trachelShape elements: elements [
+	"Public method. This method does the following actions:
+		- resize the backElement to encompasse all the elements
+		- translate all the elements on top of backElement
+		- perform a layout if one is set"
+	| encompassingRectangle off |
+	self doLayoutIfNecessaryOn: elements.
+	encompassingRectangle := self encompassingRectangleOf: elements.
+
+	trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
+
+	off := trachelShape encompassingRectangle center - encompassingRectangle center. 
+	off := off asIntegerPoint.
+	elements do: [ :e | e translateBy: off ].
 	
 ]
 
@@ -65,9 +75,15 @@ RTNest >> layout: aLayout [
 
 { #category : #utility }
 RTNest >> makeElements: elements draggableBy: backElement [
+	^ self makeElements: elements draggableByTrachelShape: backElement trachelShape
+	 
+]
+
+{ #category : #utility }
+RTNest >> makeElements: elements draggableByTrachelShape: trachelShape [
 	| callback |
 	callback := TRTranslationCallback block: [ :shape :step | elements do: [ :e | e translateBy: step ] ].
-	backElement trachelShape addCallback: callback 
+	trachelShape addCallback: callback 
 ]
 
 { #category : #utility }
@@ -117,6 +133,35 @@ RTNest >> makeElements: elements transformable: backElement [
 ]
 
 { #category : #public }
+RTNest >> on: element inShape: aSymbol nest: elements [
+	"public method"
+	"aSymbol could be #first, #second, #third, #fourth"
+	
+	"We assume that the roassal shape of element is composed"
+	^ self on: element inShape: aSymbol nest: elements layout: #vertical
+]
+
+{ #category : #public }
+RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
+	"public method"
+	"aSymbol could be #first, #second, #third, #fourth
+	
+	aSymbolLayout is either #vertical or #horizontal"
+	
+	"We assume that the roassal shape of element is composed"
+	| callback |
+	self onTrachelShape: (aSymbol rtValue: element trachelShape shapes) nest: elements.
+
+	callback := TRTranslationCallback block: [ :shape :step | aSymbolLayout rtValue: element trachelShape ].
+	element trachelShape addCallback: callback.
+
+	callback := TRExtentCallback block: [ :shape :step | aSymbolLayout rtValue: element trachelShape ].
+	element trachelShape addCallback: callback.
+
+	aSymbolLayout rtValue: element trachelShape
+]
+
+{ #category : #public }
 RTNest >> on: backElement nest: elements [
 	"public method"
 	"backElement is the elements on which elements are layout-ed"
@@ -146,6 +191,21 @@ RTNest >> onResizable: backElement nest: elements [
 	self makeElements: elements draggableBy: backElement.
 "	self makeElements: elements transformable: backElement."
 	self makeElements: elements resizableWithoutRecursion: backElement.
+
+]
+
+{ #category : #public }
+RTNest >> onTrachelShape: trachelShape nest: elements [
+	"public method"
+	"backElement is the elements on which elements are layout-ed"
+	"- position the elements above backElement. 
+	 - resize backElement to encapsulate the elements
+	 - perform a layout of the elements if a layout has been set
+	 - make the inner elements draggable"
+
+	layout ifNotNil: [ layout on: elements ].
+	self centerOnTrachelShape: trachelShape elements: elements.
+	self makeElements: elements draggableByTrachelShape: trachelShape.
 
 ]
 

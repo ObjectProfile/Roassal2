@@ -134,10 +134,10 @@ RTMenuBuilder >> menu: aTitle submenu: aSubMenuName callback: callback [
 	^ menuItem.
 ]
 
-{ #category : #'as yet unclassified' }
-RTMenuBuilder >> menu: aTitle submenus: menus background: aColor [
+{ #category : #public }
+RTMenuBuilder >> menu: aTitle submenus: menus background: aColor callback: callback [
 	^ menus collect: [ :m | 
-		self menu: aTitle submenu: m key background: aColor callback: m value].
+		self menu: aTitle submenu: m key background: aColor callback: callback].
 ]
 
 { #category : #utility }
