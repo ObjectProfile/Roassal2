@@ -203,7 +203,7 @@ TRCanvas >> fixedShapes [
 { #category : #actions }
 TRCanvas >> focusOnCenterScaled [
 	| max |
-	max := morph width min: morph height.
+	morph isNil ifTrue:[max := 500 ] ifFalse: [ max := morph width min: morph height ].
 	camera focusOnCenterScaled: max.
 ]
 
