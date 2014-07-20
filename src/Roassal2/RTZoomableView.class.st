@@ -13,8 +13,8 @@ RTZoomableView >> initializeElement: aView [
 		| scale dist |
 		dist := e position - aView canvas camera position.
 		scale := aView canvas camera scale.
-		e direction = #up ifTrue: [ scale := scale * 1.25. dist := dist * 0.2 ].
-		e direction = #down ifTrue: [ scale := scale * 0.8. dist := dist * 0.25 negated ].
+		e direction =   #up ifTrue: [ scale := scale * 1.25. dist := dist * 0.2 ].
+		e direction = #down ifTrue: [ scale := scale * 0.8.  dist := dist * 0.25 negated ].
 		aView canvas camera scale: scale.
 		aView canvas camera translateBy: dist.
 		

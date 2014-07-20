@@ -6,14 +6,19 @@ Class {
 
 { #category : #public }
 RTMenuBuilder class >> setGraphMenuOn: view [
-
-	| b element |
-	b := self new view: view.
-	b menu: 'Find' background: Color blue callback: [ 
-		 
-		element := UIManager default chooseFrom: (view elements collect: #model) values: view elements.
-		element notNil
-			ifTrue: [ view canvas camera translateTo: (view canvas camera fromSpaceToPixel: element position). RTBlink on: element ] ].
+	| builder element |
+	builder := self new view: view.
+	builder
+		menu: 'Find'
+		background: Color blue
+		callback: [ 
+			element := UIManager default
+				chooseFrom: (view elements collect: #model)
+				values: view elements.
+			element notNil
+				ifTrue: [
+					view canvas camera translateTo: element position.
+					RTBlink on: element ] ].
 ]
 
 { #category : #utility }
