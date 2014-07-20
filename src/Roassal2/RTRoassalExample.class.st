@@ -8,6 +8,10 @@ v canvas'
 Class {
 	#name : #RTRoassalExample,
 	#superclass : #RTAbstractExample,
+	#instVars : [
+		'methods',
+		'methodElements'
+	],
 	#category : #'Roassal2-ExampleBrowser'
 }
 
@@ -2888,6 +2892,46 @@ fSwwtX7GBzz1jEdsQ601cEtACqvcom6X5qFPNlkLU4+YAgL+3ZXavzUUh5zXWJ1/NuN1Ty0Z
 3wSFbxjTL92fvDC3t+m6UDY2jI12/fdeog73y94g+Ud+g+Q3SP6R3yD5DZJ/5DdIfoPkH/kN
 kt8g+Ud+g+Qf+Q2S3yD5R36D5DdI/pHfIPkNkn/kN0h+g+Qf+Q2Sf+Q3SH6D5B/5DZLfIPlH
 foMMNP4E5gU0YnvlseEAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleNamedPopup [
+
+| v es |
+v := RTView new.
+
+es := RTLabel elementsOn: (1 to: 10).
+
+v addAll: es.
+
+es @ (RTPopup new 
+	named: #yourself
+	background: Color blue
+	group: [ :group :el |  
+ 
+		group addAll: (RTEllipse elementsOn: (1 to: el model)).
+		RTWeightedCircleLayout new
+			initialRadius: 50;
+			on: group.
+		]).
+
+RTHorizontalLineLayout on: es.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleNamedPopupIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAB4UlEQVR4XuXVu4oiQRSA4Xlk
+IwMTcx/AVF/B1MBLoHiJVAwEUQRBDARFBDU47tTCFt0PsMPA94Pgae0W6+uivz4fv9/Ul78E
+PoifD+KD+PkgPoifD+KD+PkgPoifD+Lng/ggfj6ID+Lng/ggfj6ID+Lng/j5ID6Inw/ig/j5
+ID6Inw/ig/j5IH4+iA/i54P4IH4+iA/i54P4IH4+iJ8P4oP4+SA+iJ8P4oP4+SA+yI81n8+j
+OO92uxiNRvnY5XKJ6XRa+s54PM7zer2O8/mc5+PxGJvNJs+32y0Gg0Hp/MlkkufX6xWdTqf0
+eavVisViEf1+PziQ2WxW+tNpIXq9Xj52Op1KIM1mM9rtdp5Xq1XUarU81+v1T6VSKV1zOBzm
++fF4RLVazfP7/Y4EcL/f87FGoxHf10kvb4dst9t4Pp95Ma7Xa2lxDofD37u1eE5a1H/vl8tl
+FHfZfr+PIkDq+07P79NvpV1U/Lzb7ZbmdEOkXVbcaf4zxH+G+Pkgfj6ID+Lng/ggfj6ID+Ln
+g/ggfj6Inw/ig/j5ID6Inw/ig/j5ID6Inw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P
+4oP4+SA+iJ8P4oP4+SB+PogP4ueD+CB+PogP4vff+wMItDGYvnMiCAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }

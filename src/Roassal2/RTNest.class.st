@@ -55,6 +55,33 @@ RTNest >> encompassingRectangleOf: elements [
 	^ encompassingRectangle 
 ]
 
+{ #category : #public }
+RTNest >> for: collectionOfElements add: aTwoArgBlock [
+	"aTwoArgBlock follows [ :group :model | ... ]"
+	
+	collectionOfElements do: [ :element |
+		| g |
+		g := RTGroup new.
+		aTwoArgBlock value: g value: element model.
+		RTNest new on: element nest: g.
+		element view addAll: g.
+	]
+]
+
+{ #category : #public }
+RTNest >> for: collectionOfElements inShape: aSymbol add: aTwoArgBlock [
+	"aTwoArgBlock follows [ :group :model | ... ]"
+	"This methods assumes that each shape of collection of Elements is a multi composed shape"
+	
+	collectionOfElements do: [ :element |
+		| g |
+		g := RTGroup new.
+		aTwoArgBlock value: g value: element model.
+		self on: element inShape: aSymbol nest: g.
+		element view addAll: g.
+	]
+]
+
 { #category : #initialization }
 RTNest >> initialize [
 	super initialize.
