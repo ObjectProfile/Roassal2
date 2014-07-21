@@ -68,6 +68,7 @@ RTBuilder >> createdElements [
 
 { #category : #public }
 RTBuilder >> edgeFrom: source to: target [ 
+	"source and target are elements"
 	| newEdge |
 	newEdge := shapeBuilder edgeFrom: source to: target.
 	view add: newEdge.
