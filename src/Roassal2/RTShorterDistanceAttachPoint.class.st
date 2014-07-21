@@ -1,9 +1,6 @@
 Class {
 	#name : #RTShorterDistanceAttachPoint,
 	#superclass : #RTAbstractShorterDistanceAttachPoint,
-	#instVars : [
-		'offset'
-	],
 	#category : #'Roassal2-Core'
 }
 
