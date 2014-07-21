@@ -3987,3 +3987,14 @@ VersionOfRoassal2 >> version000314 [
 	at: #date put: '21 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000315 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.171';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.402';
+	at: #version put: '0.315';
+	at: #comment put: '0.315 : Added RTShorterDistanceAttachPointAndCompositeShape and a corresponding example';
+	at: #date put: '21 July 2014';
+	yourself
+]
