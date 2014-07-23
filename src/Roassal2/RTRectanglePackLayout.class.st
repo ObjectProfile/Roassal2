@@ -68,8 +68,9 @@ RTRectanglePackLayout >> doExecute: elements [
 		smaller encompassingRectangle halfPerimeter ].
 	sortedElements addAll: elements.
 	
-	sortedElements do: [ :element |
-		self packIn: element ]
+	sortedElements
+		do: [ :element | self packIn: element ]
+		displayingProgress: 'Laying out elements'
 ]
 
 { #category : #'space-calculation' }
