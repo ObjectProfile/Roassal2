@@ -22,3 +22,8 @@ Rectangle >> areasOverlapingOutside: aRectangle [
 			[ areas addLast: (aRectangle corner x @ origin y corner: corner) ].
 	^ areas
 ]
+
+{ #category : #'*roassal2' }
+Rectangle >> halfPerimeter [
+	^ self width + self height
+]
