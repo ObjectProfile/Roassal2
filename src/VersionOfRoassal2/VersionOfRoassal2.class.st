@@ -3998,3 +3998,14 @@ VersionOfRoassal2 >> version000315 [
 	at: #date put: '21 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000316 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.171';
+	at: 'Roassal2' put: 'Roassal2-YuriyTymchuk.405';
+	at: #version put: '0.316';
+	at: #comment put: '0.316 : Added progress bar to rectangle packing layout';
+	at: #date put: '23 July 2014';
+	yourself
+]
