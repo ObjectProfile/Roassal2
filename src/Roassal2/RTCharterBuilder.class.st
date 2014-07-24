@@ -21,40 +21,49 @@ RTCharterBuilder >> allPointElements [
 { #category : #'public axis' }
 RTCharterBuilder >> axisTo: aPosition configuration: config [
 	"config is an instance of RTAxisConfiguration"
-	| ex1 ex2 edge tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue |
+
+	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue |
+	"We add the ticks"
 	nbOfTicks := config numberOfTicks.
 	nbOfLabels := config numberOfLabels.
-	tickIntervalForLabel := config tickIntervalForLabel.
 	minValue := config minValue.
 	maxValue := config maxValue.
-	
-	ex1 := RTBox element.
-	ex2 := RTBox element.
-	ex2 translateTo: aPosition.
-	edge := RTLine edgeFrom: ex1 to: ex2.
-	view add: edge.
-	
-	
-	"We add the ticks"
-	tickShape := RTBox new height: 10; width: 5.
+	self rawAxisTo: aPosition.
+	tickShape := RTBox new
+		height: 10;
+		width: 5.
 	ticks := tickShape elementsOn: (0 to: nbOfTicks).
 	ticks rotateByDegrees: aPosition angle radiansToDegrees abs.
 	view addAll: ticks.
 	RTMetricNormalizer new
 		elements: ticks;
-		normalizePosition: [ :v | v @ v ] min: 0 @ 0 max: aPosition.
-		
-	"We add the labels"
-	nbOfLabels = 0 ifTrue: [ ^ self ].
-	
-	minX > 0 ifTrue: [ minX := 0 ].
+		normalizePosition: [ :v | v @ v ] min: 0 @ 0 max: aPosition.	"We add the labels"
+	nbOfLabels = 0
+		ifTrue: [ ^ self ].
+	tickIntervalForLabel := config tickIntervalForLabel.
+	minX > 0
+		ifTrue: [ minX := 0 ].
 	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i ].
-	
 	labelValues := (0 to: nbOfLabels) collect: [ :i | minValue + (i * (maxValue - minValue) / nbOfLabels) ].
 	labelShape := RTLabel new text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ].
 	labels := labelShape elementsOn: (0 to: nbOfLabels).
 	labels withIndexDo: [ :label :i | config moveLabel: label againstTick: (labelledTicks at: i) ].
-	view addAll: labels.
+	view addAll: labels
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> axisX [
+	self rawAxisTo: extent x @ 0 
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> axisXNoLabelledWithNumberOfTicks: nbOfTicks [
+	| config |
+	config := RTAxisConfiguration new
+					numberOfTicks: nbOfTicks;
+					minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
+					maxValue: maxX.
+	self axisTo: extent x @ 0 configuration: config.
 	
 ]
 
@@ -70,6 +79,11 @@ RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 	self axisTo: extent x @ 0 configuration: config.
 	
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> axisY [
+	self rawAxisTo: 0 @ extent y negated
 ]
 
 { #category : #'public axis' }
@@ -131,7 +145,7 @@ RTCharterBuilder >> defaultMinValue [
 { #category : #examples }
 RTCharterBuilder >> exampleHistogram [
 	"
-	self new exampleLineCurve
+	self new exampleHistogram
 	"
 	| b |
 	b := RTCharterBuilder new.
@@ -183,6 +197,25 @@ RTCharterBuilder >> exampleLineCurve2 [
 	
 	b axisXWithNumberOfTicks: 4.
 	b axisYWithNumberOfTicks: 4.
+	b open
+]
+
+{ #category : #examples }
+RTCharterBuilder >> exampleSimpleHistogram [
+	"
+	self new exampleSimpleHistogram
+	"
+	| b |
+	b := RTCharterBuilder new.
+	b extent: 300 @ 100.
+	b points: #(5 10 20 3 12).
+	b y: #yourself min: 0 max: 50.
+	b shape rectangle color: Color blue.
+	b histogram.
+	
+	b axisX.
+	b axisYWithNumberOfTicks: 4.
+	
 	b open
 ]
 
@@ -254,6 +287,26 @@ RTCharterBuilder >> getStringFromNumber: aNumber [
 	^ (aNumber asFloat round: 2) asString
 ]
 
+{ #category : #public }
+RTCharterBuilder >> histogram [
+	"Draw an histogram"
+	
+	| bar models barWidth |
+	barWidth := (extent x - ((lastAddedElements size + 2) * 10)/ (lastAddedElements size + 2)) - 10.
+
+	"This is highly inefficent."
+	models := lastAddedElements collect: #model.
+	RTMetricNormalizer new
+		elements: lastAddedElements;
+		normalizeX: [ :m | models indexOf: m ] min: barWidth max: extent x - barWidth.
+
+
+	lastAddedElements do: [ :el |
+		bar := (shapeBuilder current height: el position y abs; width: barWidth) element.
+		bar translateTo: el position x @ (el position y / 2).
+		view add: bar ]  
+]
+
 { #category : #initialization }
 RTCharterBuilder >> initialize [
 	super initialize.
@@ -272,6 +325,16 @@ RTCharterBuilder >> points: objects [
 	view addAll: lastAddedElements.
 	self setUpInteractionFor: lastAddedElements.
 	allPointElements addAll: lastAddedElements.
+]
+
+{ #category : #utility }
+RTCharterBuilder >> rawAxisTo: aPosition [
+	| edge ex2 ex1 |
+	ex1 := RTBox element.
+	ex2 := RTBox element.
+	ex2 translateTo: aPosition.
+	edge := RTLine edgeFrom: ex1 to: ex2.
+	view add: edge
 ]
 
 { #category : #public }
@@ -302,6 +365,15 @@ RTCharterBuilder >> y: metricAsBlockOrSymbol [
 	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
+
+	self y: metricAsBlockOrSymbol min: minY max: maxY
+]
+
+{ #category : #public }
+RTCharterBuilder >> y: metricAsBlockOrSymbol min: aMin max: aMax [
+
+	minY := aMin.
+	maxY := aMax.
 
 	RTMetricNormalizer new
 		elements: allPointElements;

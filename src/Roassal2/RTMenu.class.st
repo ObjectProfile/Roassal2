@@ -15,6 +15,16 @@ RTMenu >> add: menuitem [
 ]
 
 { #category : #'as yet unclassified' }
+RTMenu >> getLabelNamed: aName [
+	| labels |
+	labels := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = aName ] ].
+	^ labels isEmpty 
+		ifTrue: [ nil ];
+		ifFalse: [ labels first ].
+	
+]
+
+{ #category : #'as yet unclassified' }
 RTMenu >> hideAll [
 	view canvas fixedShapes do: [ :s |
 		
@@ -26,8 +36,7 @@ RTMenu >> hideItems [
 	self isOpen ifFalse: [ ^ self ].
 	self isOpen: false.
 	self items do: [:item |
-		item rawmenu remove.
-		item background remove.].
+		(self getLabelNamed: item label) remove].
 ]
 
 { #category : #initialization }

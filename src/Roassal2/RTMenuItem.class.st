@@ -6,9 +6,7 @@ Class {
 		'callback',
 		'selected',
 		'after',
-		'rawmenu',
-		'color',
-		'background'
+		'rawmenu'
 	],
 	#category : #'Roassal2-Builder-Menu'
 }
@@ -24,17 +22,6 @@ RTMenuItem >> after: ablock [
 ]
 
 { #category : #accesing }
-RTMenuItem >> background [
-	^ background 
-]
-
-{ #category : #accesing }
-RTMenuItem >> background: aShape [
-
-	background := aShape
-]
-
-{ #category : #accesing }
 RTMenuItem >> callback [
 	^ callback
 	
@@ -44,16 +31,6 @@ RTMenuItem >> callback [
 RTMenuItem >> callback: ablock. [
 	callback := ablock
 	
-]
-
-{ #category : #accesing }
-RTMenuItem >> color [
-	^ color
-]
-
-{ #category : #accesing }
-RTMenuItem >> color: aColor [
-	color := aColor
 ]
 
 { #category : #public }
