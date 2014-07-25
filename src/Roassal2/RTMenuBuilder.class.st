@@ -30,6 +30,7 @@ RTMenuBuilder >> createBackgroundFor: lbl color: aColor [
 	TRConstraint move: box onTheCenterOf: lbl.
 	view canvas addFixedShape: box.
 	box pushBack.
+	^ box
 	
 ]
 
@@ -100,7 +101,9 @@ RTMenuBuilder >> menu: aTitle subcheckmenu: menuname background: color callback:
 			checkmenu selected: checkmenu selected not.
 			callback value: checkmenu].
 	checkmenu after: [ :menu | 
-		menu text: checkmenu label. self signalUpdate].
+		menu text: checkmenu label.
+		checkmenu background extent: menu encompassingRectangle extent.
+		self signalUpdate].
 	^ checkmenu.
 ]
 
@@ -121,7 +124,7 @@ RTMenuBuilder >> menu: aTitle submenu: aSubMenuName background: aColor callback:
 		ifTrue: [ parentMenu := self createParentMenu: aTitle background: aColor ]
 		ifFalse: [ parentMenu := parentMenu first ].
 	
-	menuItem := RTMenuItem new name: aSubMenuName; callback: callback.
+	menuItem := RTMenuItem new name: aSubMenuName; callback: callback; color: aColor.
 	parentMenu element add: menuItem.
 	^ menuItem.
 ]
@@ -148,7 +151,7 @@ RTMenuBuilder >> menu: aTitle submenus: menus background: aColor [
 { #category : #utility }
 RTMenuBuilder >> showSubmenuOf: lbl [
 
-	| menu labels |
+	| menu labels backgrounds |
 	menu := lbl element.
 	
 	"Check if submenu is open"
@@ -160,17 +163,22 @@ RTMenuBuilder >> showSubmenuOf: lbl [
 	"We mark the submenu as open" 
 	menu hideAll.
 	menu isOpen: true.
-	
+	backgrounds := OrderedCollection new.
 	labels := menu items collect: [ :item | | m |
 		m := nil.
 		m := self menu: item label callback: [item execute: m].
 		item menu: m.
+		item background: (self createBackgroundFor: m color: item color).
+		backgrounds add: item background.
 		m ].
 	
-	labels doWithIndex: [ :l :i | | p |
-		p := (lbl position x)@(lbl position y + (l height*i)).
+	labels doWithIndex: [ :l :i | | p back |
+		p := ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*i)).
+		back := backgrounds at: i.
 		l translateTo: lbl position.
+		back translateTo: lbl position.
 		view addAnimation: (RTLinearMove to: p during: 0.2 on: l).
+		view addAnimation: (RTLinearMove to: p during: 0.2 on: back).
 	].
 	self signalUpdate
 ]

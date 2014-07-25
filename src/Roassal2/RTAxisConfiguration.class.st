@@ -18,7 +18,7 @@ RTAxisConfiguration >> initialize [
 	labelConvertion := [ :number | number asFloat round: 2 ].
 	positionLabel := [ :aLabel :aTick | aLabel translateTo: aTick position ].
 	numberOfTicks := 4.
-	numberOfLabels := 0.
+	numberOfLabels := 4.
 	minValue := 0.
 	maxValue := 0
 ]
