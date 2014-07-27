@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 RTAbstractVerticalTreeLayout class >> isAbstract [
-	^ self name = #ROAbstractVerticalTreeLayout
+	^ self = RTAbstractVerticalTreeLayout
 ]
 
 { #category : #'hook-private' }

@@ -39,7 +39,7 @@ Class {
 
 { #category : #testing }
 RTAbstractRegularTreeLayout class >> isAbstract [
-	^ self name = #ROAbstractRegularTreeLayout
+	^ self = RTAbstractRegularTreeLayout
 ]
 
 { #category : #private }

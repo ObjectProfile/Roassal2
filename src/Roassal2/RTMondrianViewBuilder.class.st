@@ -88,7 +88,8 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 		scope: (RTGroup new addAll: view elements; yourself).
 		"scope: (RTGroup new addAll: topLevelNodes; yourself)."
 	topLevelEdges addAll: es.
-	es do: #moveBehindItsExtremities
+	es do: #moveBehindItsExtremities.
+	^ es
 ]
 
 { #category : #'adding - edges' }
