@@ -132,7 +132,7 @@ RTSunburstNodeVisitor >> visitNode: aNode [
 	arcs add: self createArc.
 
 	totalPie:=0.
-	aNode children do: [ :c | totalPie:= totalPie + (1 * (c weight rtValue: c model) ) ].
+	aNode children do: [ :c | totalPie:= totalPie +  (c weight rtValue: c model) ].
 	auxAngle:=aNode alphaAngle.
 	(node hasChildren)
  		ifTrue:[
