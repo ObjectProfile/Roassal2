@@ -88,7 +88,7 @@ RTSunburstBuilderExamples >> basic11 [
 	| b data |
 	data := { 'Chile' -> { 'Santiago' . 'Iquique' } . 'France' -> { 'Paris' . 'Nice' } }.
 	b := RTSunburstBuilder new.
-	b visitor interactions add: RTSBFadeInteraction.
+	b visitor interactions add: RTSBFadeInteraction new.
 	b 
 		explore: data 
 		using: [ :o | 

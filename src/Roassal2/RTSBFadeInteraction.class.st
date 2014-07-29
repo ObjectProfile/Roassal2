@@ -12,7 +12,8 @@ Class {
 	#name : #RTSBFadeInteraction,
 	#superclass : #RTInteraction,
 	#instVars : [
-		'action'
+		'action',
+		'stillInSunburst'
 	],
 	#category : #'Roassal2-Builder-Sunburst'
 }
@@ -45,7 +46,8 @@ RTSBFadeInteraction >> fade: element [
 		ifFalse: [
 			color := element color.
 			element attributes at: #scolor put: color ].
-	element view addAnimation: (RTColorTransitionAnimation new toColor:(color alpha: 0.2) during: 0.25 on: element).
+	element trachelShape color: (color alpha:0.2).
+
 
 ]
 
@@ -68,22 +70,43 @@ RTSBFadeInteraction >> fade: element element: target [
 ]
 
 { #category : #computing }
+RTSBFadeInteraction >> fadeElements: elements [
+	elements do: [ :e | self fade: e ].
+]
+
+{ #category : #computing }
 RTSBFadeInteraction >> focus: element [
-	| parent |
-	parent := self parentOf: element.
-	parent ifNil: [ ^ self ].
-	self fade: parent element: element.
+	| oldPath |
+	oldPath := self sbpath: element.
+	oldPath ifNil: [ self fadeElements: element view elements ]
+	ifNotNil: [
+		self fadeElements: oldPath ].
+	oldPath := self path: element.
+	self sbpath: element put: oldPath.
+	self restoreElements: oldPath.
 	
 	
 ]
 
 { #category : #hooks }
 RTSBFadeInteraction >> initializeElement: element [
+	
 	element when: TRMouseEnter do: [ :event | 
+		stillInSunburst := true.
 		self focus: element. 
-		action ifNotNil: [ action value: element model ] ].
-	element when: TRMouseLeave do: [ :event | 
-		self restore: element.
+		self updateCanvas: element.
+		action ifNotNil: [ action value: element model ].
+		 ].
+	
+	element when: TRMouseLeave do: [ :event | | anim |
+		stillInSunburst := false.
+		anim := RTNopAnimation new
+			waitFor: 1 after: [
+				stillInSunburst ifFalse: [self restore: element. self updateCanvas: element.].
+				 ].
+		
+		element view addAnimation: anim.
+		anim start.
 		action ifNotNil: [ action value: nil ] ].
 ]
 
@@ -95,15 +118,56 @@ RTSBFadeInteraction >> parentOf: element [
 	^ e
 ]
 
+{ #category : #'as yet unclassified' }
+RTSBFadeInteraction >> path: element [
+	| e path |
+	e := element.
+	path := OrderedCollection new.
+	path add: e.
+	[ e attributes includesKey: #sbParent ] whileTrue: [ 
+		e := e attributes at: #sbParent.
+		(e isKindOf: RTNullNode) ifTrue: [ ^ path ].
+		e := e element.
+		path add: e. ].
+	^ path.
+]
+
 { #category : #computing }
 RTSBFadeInteraction >> restore: element [
+	self sbpath: element put: nil.
+	self restoreElements: element view elements.
+]
+
+{ #category : #computing }
+RTSBFadeInteraction >> restoreElement: el [
 	| color |
-	element view elements do: [:e |
-		(e attributes includesKey: #scolor) ifTrue: [ 
-			color := e attributes at: #scolor.
-			e view addAnimation: (RTColorTransitionAnimation new 
-				toColor: (color rtValue: e) during: 0.25 on: e ).
-			 ].
-		]
+	(el attributes includesKey: #scolor) ifTrue: [ 
+		color := el attributes at: #scolor.
+		el trachelShape color: color. ]
 	
+]
+
+{ #category : #computing }
+RTSBFadeInteraction >> restoreElements: elements [
+	elements do: [ :e | self restoreElement: e ].
+	
+]
+
+{ #category : #computing }
+RTSBFadeInteraction >> sbpath: element [
+	| att |
+	att := element view elements first attributes.
+	^ (att includesKey: #sbpath) ifTrue: [ att at: #sbpath ] ifFalse: [ nil ]
+	
+]
+
+{ #category : #computing }
+RTSBFadeInteraction >> sbpath: element put: path [
+	element view elements first attributes at: #sbpath put: path.
+	
+]
+
+{ #category : #computing }
+RTSBFadeInteraction >> updateCanvas: element [
+	element trachelShape canvas signalUpdate.
 ]
