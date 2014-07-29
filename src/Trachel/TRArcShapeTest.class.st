@@ -74,10 +74,10 @@ TRArcShapeTest >> setUp [
 	p2:=100 @ 100.
 	p3:=50 @ 50.
 	p4:= 0 @ 150.
-	p5:=1 @ 1.
+	p5:=1 @ -1.
 	p6:=0 @ -100.
 	p7:=-100 @ 0.
-	p8:=-100 @ -100.
+	p8:=-100 @ 100.
 	p1n:=p1 negated.
 	p2n:=p2 negated.
 	p3n:=p3 negated.
@@ -90,7 +90,7 @@ TRArcShapeTest >> setUp [
 
 { #category : #'basic tests' }
 TRArcShapeTest >> testEncompassingRectangle [
-	self assert: (arc1 encompassingRectangle = ((-100.0@100.0) corner: (100.0@ -100.0))).
+	self assert: (arc1 encompassingRectangle = ((-100.0@ 100.0) corner: (100.0@ -100.0))).
 	self assert: (arc1 encompassingRectangle width abs = 200).
 	self assert:(arc2 encompassingRectangle width abs < 50).  
 	self assert:(arc2 encompassingRectangle height abs < 50).
@@ -157,23 +157,23 @@ TRArcShapeTest >> testIncludesPoint [
 	self deny: (arc4 includesPoint: p1).
 	self deny: (arc4 includesPoint: p2).
 	self deny: (arc4 includesPoint: p3).
-	self deny: (arc4 includesPoint: p4).
+	self assert: (arc4 includesPoint: p4).
 	self deny: (arc4 includesPoint: p5).	
-	self assert:(arc4 includesPoint: p6).
+	self deny: (arc4 includesPoint: p6).
 	self assert:(arc4 includesPoint: p7).
 	self assert:(arc4 includesPoint: p8).
 	self deny: (arc4 includesPoint: p1n).
-	self assert: (arc4 includesPoint: p2n).
-	self assert: (arc4 includesPoint: p3n).
-	self assert: (arc4 includesPoint: p4n).
+	self deny: (arc4 includesPoint: p2n).
+	self deny: (arc4 includesPoint: p3n).
+	self deny: (arc4 includesPoint: p4n).
 	self deny: (arc4 includesPoint: p5n).	
-	self deny: (arc4 includesPoint: p6n).
+	self assert: (arc4 includesPoint: p6n).
 	self deny: (arc4 includesPoint: p7n).
 	self deny: (arc4 includesPoint: p8n).
 	
 	self deny: (arc5 includesPoint: p1).
-	self assert: (arc5 includesPoint: p2).
-	self assert: (arc5 includesPoint: p3).
+	self deny: (arc5 includesPoint: p2).
+	self deny: (arc5 includesPoint: p3).
 	self assert: (arc5 includesPoint: p4).
 	self deny: (arc5 includesPoint: p5).	
 	self assert:(arc5 includesPoint: p6).
@@ -189,39 +189,39 @@ TRArcShapeTest >> testIncludesPoint [
 	self assert: (arc5 includesPoint: p8n).
 	
 	self assert:(arcQ1 includesPoint: pR).
-	self assert:(arcQ1 includesPoint: pQ1).
-	self assert:(arcQ1 includesPoint: pB).
+	self deny:(arcQ1 includesPoint: pQ1).
+	self deny:(arcQ1 includesPoint: pB).
 	self deny:(arcQ1 includesPoint: pQ2).
 	self deny:(arcQ1 includesPoint: pL).
 	self deny:(arcQ1 includesPoint: pQ3).
-	self deny:(arcQ1 includesPoint: pT).
-	self deny:(arcQ1 includesPoint: pQ4).
+	self assert:(arcQ1 includesPoint: pT).
+	self assert: (arcQ1 includesPoint: pQ4).
 	
 	self deny:(arcQ2 includesPoint: pR).
 	self deny:(arcQ2 includesPoint: pQ1).
-	self assert:(arcQ2 includesPoint: pB).
-	self assert:(arcQ2 includesPoint: pQ2).
+	self deny:(arcQ2 includesPoint: pB).
+	self deny:(arcQ2 includesPoint: pQ2).
 	self assert:(arcQ2 includesPoint: pL).
-	self deny:(arcQ2 includesPoint: pQ3).
-	self deny:(arcQ2 includesPoint: pT).
+	self assert:(arcQ2 includesPoint: pQ3).
+	self assert:(arcQ2 includesPoint: pT).
 	self deny:(arcQ2 includesPoint: pQ4).
 	
 	self deny:(arcQ3 includesPoint: pR).
 	self deny:(arcQ3 includesPoint: pQ1).
-	self deny:(arcQ3 includesPoint: pB).
-	self deny:(arcQ3 includesPoint: pQ2).
+	self assert:(arcQ3 includesPoint: pB).
+	self assert:(arcQ3 includesPoint: pQ2).
 	self assert:(arcQ3 includesPoint: pL).
-	self assert:(arcQ3 includesPoint: pQ3).
-	self assert:(arcQ3 includesPoint: pT).
+	self deny: (arcQ3 includesPoint: pQ3).
+	self deny:(arcQ3 includesPoint: pT).
 	self deny:(arcQ3 includesPoint: pQ4).
 	
 	self assert:(arcQ4 includesPoint: pR).
-	self deny:(arcQ4 includesPoint: pQ1).
-	self deny:(arcQ4 includesPoint: pB).
+	self assert:(arcQ4 includesPoint: pQ1).
+	self assert:(arcQ4 includesPoint: pB).
 	self deny:(arcQ4 includesPoint: pQ2).
 	self deny:(arcQ4 includesPoint: pL).
 	self deny:(arcQ4 includesPoint: pQ3).
-	self assert:(arcQ4 includesPoint: pT).
-	self assert:(arcQ4 includesPoint: pQ4).
+	self deny:(arcQ4 includesPoint: pT).
+	self deny:(arcQ4 includesPoint: pQ4).
 
 ]

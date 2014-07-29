@@ -67,18 +67,18 @@ TRArcShape >> computeBottomRight [
 	bA:=(betaAngle value \\ 360) degreesToRadians .
 	iR:= innerRadius value.
 	eR:= externalRadius value.
-	p1:= (iR*aA cos)@(iR*aA sin) .
-	p2:= (iR*bA cos)@(iR*bA sin) .
-	p3:= (eR*aA cos)@(eR*aA sin).
-	p4:=(eR*bA cos)@(eR*bA sin) .
-	pR:=(eR*0 cos) @ (eR*0 sin).
-	pQ1:=(eR*(Float pi /4) cos)@(eR*(Float pi /4) sin).
-	pB:=(eR*(Float pi /2) cos)@(eR*(Float pi /2) sin).
-	pQ2:=(eR*(Float pi * (3/4)) cos)@(eR*(Float pi * (3/4)) sin).
-	pL:=(eR*Float pi cos)@(eR*Float pi sin).
-	pQ3:=(eR*(Float pi * (5/4)) cos)@(eR*(Float pi * (5/4)) sin).
-	pT:=(eR*(Float pi * (3/2)) cos)@(eR*(Float pi * (3/2)) sin).
-	pQ4:=(eR*(Float pi * (7/4)) cos)@(eR*(Float pi * (7/4)) sin).
+	p1:= (iR*aA cos)@((iR*aA sin) negated).
+	p2:= (iR*bA cos)@((iR*bA sin) negated).
+	p3:= (eR*aA cos)@((eR*aA sin) negated).
+	p4:=(eR*bA cos)@((eR*bA sin) negated).
+	pR:=(eR*0 cos) @ ((eR*0 sin) negated).
+	pQ1:=(eR*(Float pi /4) cos)@((eR*(Float pi /4) sin) negated).
+	pB:=(eR*(Float pi /2) cos)@((eR*(Float pi /2) sin) negated).
+	pQ2:=(eR*(Float pi * (3/4)) cos)@((eR*(Float pi * (3/4)) sin) negated).
+	pL:=(eR*Float pi cos)@((eR*Float pi sin) negated).
+	pQ3:=(eR*(Float pi * (5/4)) cos)@((eR*(Float pi * (5/4)) sin) negated).
+	pT:=(eR*(Float pi * (3/2)) cos)@((eR*(Float pi * (3/2)) sin) negated).
+	pQ4:=(eR*(Float pi * (7/4)) cos)@((eR*(Float pi * (7/4)) sin) negated).
 	pCollection add:p1; add: p2; add: p3; add: p4.
 	(self includesPoint: pQ1)ifTrue:[pCollection add: pQ1].
 	(self includesPoint: pQ2)ifTrue:[pCollection add: pQ2].
@@ -98,22 +98,26 @@ TRArcShape >> computeHeight [
 
 { #category : #hooks }
 TRArcShape >> computePath [
-	| i e aAngle bAngle |
+	| i e aAngle bAngle aSin aCos bSin bCos |
 	canvas ifNil: [ ^ self ].
 	aAngle:=alphaAngle value degreesToRadians.
 	bAngle:=betaAngle value degreesToRadians.
 	i := innerRadius value.
 	e := externalRadius value.
+	aCos := aAngle cos.
+	aSin := aAngle sin negated.
+	bCos := bAngle cos.
+	bSin := bAngle sin negated.
 	path := 
 self athensCanvas
 	createPath: [ :builder | 
 		builder
 			absolute;
-			moveTo: ((i * (aAngle cos)) @ (i * (aAngle sin)));
-			arcTo: ((i * (bAngle cos)) @ (i * (bAngle sin))) angle: bAngle - aAngle cw: true;
-			ccwArcTo: ((e * (bAngle cos)) @ (e * (bAngle  sin))) angle: 0;
-			ccwArcTo: ((e * (aAngle  cos)) @ (e * (aAngle  sin))) angle: bAngle  - aAngle  ;
-			ccwArcTo: ((i * (aAngle  cos)) @ (i * (aAngle  sin))) angle: 0 ]
+			moveTo: ((i * (bCos)) @ (i * (bSin)));
+			arcTo:  ((i * (aCos)) @ (i * (aSin))) angle: bAngle - aAngle cw: true;
+			ccwArcTo: ((e * (aCos)) @ (e * (aSin))) angle: 0;
+			ccwArcTo: ((e * (bCos)) @ (e * (bSin))) angle: bAngle  - aAngle;
+			ccwArcTo: ((i * (bCos)) @ (i * (bSin))) angle: 0 ]
 ]
 
 { #category : #computing }
@@ -124,18 +128,18 @@ TRArcShape >> computeTopLeft [
 	bA:=(betaAngle value \\ 360) degreesToRadians.
 	iR:= innerRadius value.
 	eR:= externalRadius value.
-	p1:= (iR*aA cos)@(iR*aA sin).
-	p2:= (iR*bA cos)@(iR*bA sin).
-	p3:= (eR*aA cos)@(eR*aA sin).
-	p4:=(eR*bA cos)@(eR*bA sin).
-	pR:=(eR*0 cos) @ (eR*0 sin).
-	pQ1:=(eR*(Float pi /4) cos)@(eR*(Float pi /4) sin).
-	pB:=(eR*(Float pi /2) cos)@(eR*(Float pi /2) sin).
-	pQ2:=(eR*(Float pi * (3/4)) cos)@(eR*(Float pi * (3/4)) sin).
-	pL:=(eR*Float pi cos)@(eR*Float pi sin).
-	pQ3:=(eR*(Float pi * (5/4)) cos)@(eR*(Float pi * (5/4)) sin).
-	pT:=(eR*(Float pi * (3/2)) cos)@(eR*(Float pi * (3/2)) sin).
-	pQ4:=(eR*(Float pi * (7/4)) cos)@(eR*(Float pi * (7/4)) sin).
+	p1:= (iR*aA cos)@((iR*aA sin) negated).
+	p2:= (iR*bA cos)@((iR*bA sin) negated).
+	p3:= (eR*aA cos)@((eR*aA sin) negated).
+	p4:=(eR*bA cos)@((eR*bA sin) negated).
+	pR:=(eR*0 cos) @ ((eR*0 sin) negated).
+	pQ1:=(eR*(Float pi /4) cos)@((eR*(Float pi /4) sin) negated).
+	pB:=(eR*(Float pi /2) cos)@((eR*(Float pi /2) sin) negated).
+	pQ2:=(eR*(Float pi * (3/4)) cos)@((eR*(Float pi * (3/4)) sin) negated).
+	pL:=(eR*Float pi cos)@((eR*Float pi sin) negated).
+	pQ3:=(eR*(Float pi * (5/4)) cos)@((eR*(Float pi * (5/4)) sin) negated).
+	pT:=(eR*(Float pi * (3/2)) cos)@((eR*(Float pi * (3/2)) sin) negated).
+	pQ4:=(eR*(Float pi * (7/4)) cos)@((eR*(Float pi * (7/4)) sin) negated).
 	pCollection add:p1; add: p2; add: p3; add: p4.
 	(self includesPoint: pQ1)ifTrue:[pCollection add: pQ1].
 	(self includesPoint: pQ2)ifTrue:[pCollection add: pQ2].
@@ -197,7 +201,7 @@ TRArcShape >> includesPoint: aPoint [
 	(betaAngle value % 360 = 0 )
 		ifFalse: [ bAngle := betaAngle value \\  360 ]
 		ifTrue: [ bAngle := betaAngle value ].
-	pointAngle:= ((aPoint x @ aPoint y negated) angleWith: self center) radiansToDegrees \\  360.
+	pointAngle:= ((aPoint x @ aPoint y) angleWith: self center) radiansToDegrees \\  360.
 	pDistanceOrigin := (aPoint squaredDistanceTo: self center) sqrt.
 	((pDistanceOrigin < innerRadius value) or: (pDistanceOrigin > externalRadius value))
 		ifTrue: [ ^ false ].
