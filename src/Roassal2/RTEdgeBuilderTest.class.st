@@ -22,6 +22,58 @@ RTEdgeBuilderTest >> testDefault [
 ]
 
 { #category : #tests }
+RTEdgeBuilderTest >> testFrom [
+
+	| v es |
+	v := RTView new.
+
+	es := (RTEllipse new size: 20) elementsOn: (1 to: 2).
+	v addAll: es.
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 2) from: 1 to: 2;
+		build.
+
+	es @ RTPopup.
+	RTTreeLayout on: es.
+
+	self assert: v edges size equals: 1.
+	self assert: v edges first from position equals: (15.0@15.0).
+	self assert: v edges first to position equals: (15.0@55.0).
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testFromAll [
+
+	| v es |
+	v := RTView new.
+
+	es := (RTEllipse new size: 20) elementsOn: (1 to: 2).
+	v addAll: es.
+	
+	self assert: v edges size equals: 0.
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 2) fromAll: (Array with: 1) to: 2.
+
+	es @ RTPopup.
+	RTTreeLayout on: es.
+
+	self assert: v edges size equals: 1.
+	self assert: v edges first from position equals: (15.0@15.0).
+	self assert: v edges first to position equals: (15.0@55.0).
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testInit [
+	| eb |
+	eb := RTEdgeBuilder new.
+	self deny: eb shouldAllowRepetition.
+	eb allowRepetition.
+	self assert: eb shouldAllowRepetition.
+]
+
+{ #category : #tests }
 RTEdgeBuilderTest >> testSimple [
 
 	RTEdgeBuilder new
@@ -72,5 +124,17 @@ RTEdgeBuilderTest >> testSimple5 [
 		objects: #(1 2 3 6) from: #yourself toAll: [ :v | Array with: v + 1 with: v + 2 ].
 		
 	self assert: view numberOfEdges equals: 16.
+
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testSimple6 [
+
+	RTEdgeBuilder new
+		view: view;
+		object: 1 fromAll: (Array with: 2) to: 3.
+		
+		
+	self assert: view numberOfEdges equals: 1.
 
 ]

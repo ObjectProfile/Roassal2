@@ -161,6 +161,11 @@ RTBuilder >> resetCreatedElements [
 	shapeBuilder resetCreatedElements
 ]
 
+{ #category : #public }
+RTBuilder >> setCurrentShape: aShape [
+	shapeBuilder shape: aShape
+]
+
 { #category : #protected }
 RTBuilder >> setUpInteractionFor: oneOrMoreElements [
 	interactionBuilder setUpElements: oneOrMoreElements asGroup
