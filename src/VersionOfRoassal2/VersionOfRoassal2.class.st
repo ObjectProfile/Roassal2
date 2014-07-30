@@ -4031,3 +4031,14 @@ VersionOfRoassal2 >> version000318 [
 	at: #date put: '30 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000319 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.173';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.411';
+	at: #version put: '0.319';
+	at: #comment put: '0.319 : Added multilines, including orthogonal vertical and horizontal';
+	at: #date put: '30 July 2014';
+	yourself
+]
