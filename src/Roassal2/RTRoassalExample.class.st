@@ -2935,6 +2935,126 @@ g/ggfj6Inw/ig/j5ID6Inw/ig/j5ID6Inw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleOrthoHorizontalLines [
+| v eb |
+v := RTView new.
+v addAll: (RTBox elementsOn: Collection withAllSubclasses).
+
+eb := RTEdgeBuilder new.
+eb shape orthoHorizontalLine.
+eb view: v.
+eb	objects: Collection withAllSubclasses
+	from: #superclass
+	to: #yourself;
+	build.
+
+v elements @ RTDraggable @ RTPopup.
+RTHorizontalTreeLayout on: v elements.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleOrthoHorizontalLinesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAC+0lEQVR4XuXdW2sCMRCGYf//
+n/RORfEsHmG3pLBlG9PdtNrkm3kDgsjWiz7OJpNMspO21WuHw6HJuW6z2Txddz6fm8vl8vma
+Tqft8Xhsdrvd13Xb7bZVbpPWGUiqXa/XJkCFV0Dig7wB5HQ6ffvlB4zZbDb4y1ePBtMg4ded
++IfzQdRA+lHjobmJEC/NNEgYPfUjpHtvOWrMR0g3erLYX7gD6V/HBxEACUlfP7/o3lvJOdyB
+pD4bG/byM/XCIP3P+CACIOE2xh9lCYHkzoPxQQqBxLkJH6QyiPXcRBJkv98/zewul8u3TDjy
+Qf7Q+gtKXftpMWooQvi3rMIgj8fjKZLm8zk/QmqBjP0tH0QEhD/KEgLh5yHCIN0tK16P54MU
+BEnNZQWQfm4Szwor9TWuQVJNfcLRHYilGizXIPwVQ7FMnQ9SAaQ/UgrzXev1ml+XVQskVYM1
+1oHzQQqDxHNZ/LqsyiD3+51fl6V6y+KDCICEaRLLOYdLEH6ECIFYX/twB8LfHyIIws9DKoKk
+1s/5ESIWIfw8hN+p80GGQPh5CD8P4YPwp04MgfBHWUIgHpsZEOsViS4jxFvOYRrE44jKNEi8
+J50PUqClzsFKDXFzG387wpvaKxUm1nMTUyBjFSYearXMgOQ267Va7kCs12rJghByDpMRwgcR
+ixDPOQc/QvggfBA3IN6q2rHDXj5IgQjhg/DzED4Iv1N30IdYP6PXJYi3SDINwi+UEwOJz2bk
+gxQEifuLcM1iseDvD6kJwo8QAyD8/SFCIPxRlhiI9bOx3IFkfA8fpCRIfNZJyEv45/aK9SHW
+94yYWFOPf/mv3Mb4IPw8hJ+H8EEqgfD3qYuBeKzfMgPi8VkhpkFSjX/LEgThj7KEQKw/K8Q1
+yNBTD/jPDykEkvvc2/j5IXyQAiC/+G4+yH+B8NdDKoDwKxf5IHyQnFvW7Xbj7w+pCZKzHsIH
+qRgh8VwWH0RwlMV/fohQHxKOa+JPLlYE4ddlVQaJT/lZrVb8E+VUI8QzyAdHik3+wPASdAAA
+AABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleOrthoVerticalLines [
+
+| v  eb |
+v := RTView new.
+v addAll: (RTBox elementsOn: Collection withAllSubclasses).
+
+eb := RTEdgeBuilder new.
+eb shape orthoVerticalLine.
+eb view: v.
+eb	objects: Collection withAllSubclasses
+	from: #superclass
+	to: #yourself;
+	build.
+
+v elements @ RTDraggable @ RTPopup.
+RTTreeLayout on: v elements.
+v open.
+v canvas
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleOrthoVerticalLines2 [
+
+| v |
+v := RTView new.
+
+v addAll: ((RTEllipse new size: 20; color: (Color red alpha: 0.3)) elementsOn: (1 to: 20)).
+
+shape := RTMultiLine new.
+shape orthoVertical.
+shape color: (Color blue alpha: 0.3).
+
+RTEdge 
+	buildEdgesFromObjects: (1 to: 20) from: [ :n | n // 3 ] to: #yourself using: shape inView: v.
+
+v elements @ RTDraggable @ RTPopup.
+	
+RTTreeLayout on: v elements. 
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleOrthoVerticalLines2Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACk0lEQVR4XuXYP0vkUBSH4fn+
+zX6JLRa2E2HRBZnCSplCbERBReyChWihzdV740yyiWG5yTqTZJ8XLvMv50wmb2J+x8Xbm8+U
+WPiHwBfi4wvxhfj4QnwhPr4QX4iPL8QX4uML8fGF+EJ8fCG+EB9fiC/ExxfiC/Hxhfj4Qnwh
+Pr4QX4iPL8QX4uML8YX4+EJ8fCG+EB9fiC/ExxfiC/HxhfhCfHwhPr4QX0hvQlGEcHAQwslJ
+SOz8+5+eQlguP9bzc/CF7O2Fap2e7l7I/n79/fG5LyQeiNW35ccBiVfKqCdEXL6Q4+NaSPzz
+tfPvv7yshcTn/k09slrt/t7h39R9IeMIeXgIoe+6uupfk9bd3TCRqa7d6/q6uc7PP2+TAiFx
+hQz9odus69pmVkKG5vl02hU/j3rPIeHmJhQ/fodwdtbrIKXty7rb25Dbu9yxuH/lfn5h8FhM
+Mc+n7Yvvv3rNIeHxMTTqMtPRJlFVdbFPTu/yZPnjvXkIGZjnh8wh6Qxu1F1c5NXF7Rp1HVfJ
+pne1Uk36T8IWZpXFFPP80DkkHB7Wda+veUJeXmohsf5vvavfEnuXd/PN67i/fuydSJ0/h/hC
+/j3P58wK7bmjaw65v/9clzO/tKNpep1T918I+ao8PzTzb7P37IS083zXHJKT57vmkLF7z05I
+V55vzyG5eb49h4zde55C1nm+WvFsa88huXm+sU36fOTe8xSyzvPlWuf5rjkkJ8+nx+q99PkE
+evOxV8UX4gvx8YX4Qnx8Ib4QH1+IL8THF+IL8fGF+PhCfCE+vhBfiI8vxBfi4wvxhfj4Qnx8
+Ib4QH1+IL8THF+IL8fGF+EJ8fCE+vhBfiI8vxBfi4wvxhfj4QnwhPr4QH1/IxHkHjKX55SNV
+WJ0AAAAASUVORK5CYII='
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleOrthoVerticalLinesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAC40lEQVR4XuWZ267CIBBF+/8/
+6Zsajfeo0Yd6zpiMQULplEJF106ItUIZuoTNtM3jwVdNavi3gA+ELz4QPhC++ED4QPjiA+ED
+4YsPhA+ELz4QvvhA+ED44gPhA+GLD4QPhC8+ED4QvvhA+OID4QPhiw+ED4QvPhA+EL74QPhA
++OID4YsPhA+ELz4QPhC++ED4QGrXbDbjA6lJu92u/Qkgp9OpHVMOh0MVZT6ft9vt9uvL6Bly
+uVyq/WdqbG6M7rnU2MeOOdRez/GB/BqQms3031eeRWJ0jzVuPTfFmN2+Qu313Gggsu59k2nm
+mNHH47HN3X6/37/PkPP53F6v18FltVq1ssOxFgForStB9hXdXGg8fTfcAkTqxMYs/frn7ve7
+CdLtdnu21/ryXdqv1+vnZzO1F1j7sdzYmEeMBVJ6XKHY32YIH0hlQKYyZ2s/ffVCRm1tV8K0
+h47L/9SxNFNnumpepTLvHDM9ZaOSGq9v8I1miIvFImimvml2FYupSb3NZvOqL0WO3axf+9V4
+NBPXGHIsSV0mrjEsl8tXv3JejFfqabxS3KcEEqe2Cd0zbe9Lrif13d+b2BrXtc7lWkOtiVtu
+j4i1ifXv17PG1xVTqD0fSK1AYplsDiPsu/7Q33MbsmX8frYdi68vMw/dk2imPuRfmWJqpbbZ
+1k3DJzJ00+P3vunkHrsG7Bp/iqmVAOJvGkrALp2vDQKSusYPWVdLPOGt7VkYH8g3AQmZkG9E
+KaZrfdycS6H4Sl7fWn8wkCmM6hOq+cVZFIifKeaSPM6XQgWSOv6mVPBjXpH+ApDU8fOB1AbE
+alRDTWrMO+sc+vS7/tTxN3xjrczU+UD4QPjiA+EDGZWt8oHwxQfCFx8IHwhffCB8IHzxgfCB
+8MUHwgfCFx8IX3wgfCB88YHwgfDFB8IHwhcfCB8IX3wgfPGB8IHwxQfCB8IXHwgfCF98IHwg
+fPGB8MUHwgfCFx8IHwhffCC/qD8BcE4ipo/6xQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> examplePlacingGroups [
 
 | v |

@@ -172,6 +172,16 @@ RTShapeBuilder >> linearFillColor: block within: groupOfObjects [
 	self current color: [ :v | Color grayScale256: 256 - ((block rtValue: v) max: max in: (1 to: 256)) ]
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> orthoHorizontalLine [
+	^ self shape: RTMultiLine new orthoHorizontal 
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> orthoVerticalLine [
+	^ self shape: RTMultiLine new orthoVertical
+]
+
 { #category : #copying }
 RTShapeBuilder >> postCopy [
 	super postCopy.
