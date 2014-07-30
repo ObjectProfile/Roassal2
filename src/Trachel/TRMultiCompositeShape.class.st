@@ -7,7 +7,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #callbacks }
 TRMultiCompositeShape >> addCallback: aCallback [
 	"self shapes first addCallback: aCallback."
 	super addCallback: aCallback
@@ -15,17 +15,17 @@ TRMultiCompositeShape >> addCallback: aCallback [
 	"shape2 addCallback: aCallback"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 TRMultiCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 	shapes add: (Array with: aShape with: aPoint)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> addedIn: aCanvas [
 	shapes do: [ :tupple | 
 		aCanvas addShape: tupple first.
@@ -33,83 +33,83 @@ TRMultiCompositeShape >> addedIn: aCanvas [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 TRMultiCompositeShape >> announce: anEvent [
 	self shapes do: [ :s | s announce: anEvent ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> announcer [
 	self error: 'should not be called'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> announcer: anAnnouncer [
 	self shapes do: [ :s | s announcer: anAnnouncer ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> canvas [
 	"Return the canvas of one of the shapes"
 	^ shapes first canvas	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
 	self shapes do: [ :s | s canvas: aSurface ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> center [
 	^ (self shapes collect: #center) sum / shapes size
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> color [
 	^ self shapes first color
 	"shape2 color: aColor."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> color: aColor [
 	self shapes first color: aColor.
 	"shape2 color: aColor."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 TRMultiCompositeShape >> computePath [
 	self shapes do: [ :s | s computePath ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRMultiCompositeShape >> drawOn: athensCanvas [
 	self shapes do: [ :s | s drawOn: athensCanvas ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> element [
 	^ self shapes first element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> element: anObject [
 	"anObject could be any kind of object. A shape has a reference to an object, typically the object odel that the trachel shape represents"
 	self shapes do: [ :s | s element: anObject ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> encompassingRectangle [
 	^ Rectangle merging: (self shapes collect: #encompassingRectangle)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> extent: anExtent [
 	self shapes do: [ :s | s extent: anExtent ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> height [
 	^ self encompassingRectangle height
 ]
@@ -124,34 +124,34 @@ TRMultiCompositeShape >> horizontal [
 		previousShape := tupple first. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TRMultiCompositeShape >> includesPoint: aPoint [
 	^ self shapes anySatisfy: [ :s | s includesPoint: aPoint ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRMultiCompositeShape >> initialize [
 	super initialize.
 	shapes := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> position [
 	self shapes ifEmpty: [ ^ 0 @ 0 ].
 	^ (self shapes collect: #position) sum / shapes size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> pushBack [
 	self shapes do: #pushBack
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> pushFront [
 	self shapes do: #pushFront
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'layout inner shapes' }
 TRMultiCompositeShape >> relayout [
 	"DO WE NEED THIS METHOD????"
 	"One of the shape has been modified (position or extent), and the shapes may have to layouted correctly. This is what this method is about"
@@ -164,42 +164,42 @@ TRMultiCompositeShape >> relayout [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> remove [
 	self shapes do: #remove
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 TRMultiCompositeShape >> resetPath [
 	self shapes do: #resetPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> setAsFixed [
 	self shapes do: #setAsFixed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> setShapes: someShapesWithOffsetAsPoint [
 	shapes := someShapesWithOffsetAsPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> shapes [ 
 	^ shapes collect: #first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> signalUpdate [
 	self shapes first signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> translateBy: aPoint [
 	shapes do: [ :tupple | tupple first translateBy: aPoint ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 TRMultiCompositeShape >> translateTo: aPoint [
 	| oldPosition |
 	oldPosition := self position.
@@ -219,12 +219,12 @@ TRMultiCompositeShape >> vertical [
 		previousShape := tupple first. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 TRMultiCompositeShape >> when: event do: aBlock [
 	self shapes do: [ :s | s announcer when: event do: aBlock ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRMultiCompositeShape >> width [
 	^ self encompassingRectangle width
 ]
