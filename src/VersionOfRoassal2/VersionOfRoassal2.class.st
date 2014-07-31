@@ -4053,3 +4053,14 @@ VersionOfRoassal2 >> version000320 [
 	at: #date put: '30 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000321 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.173';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.413';
+	at: #version put: '0.321';
+	at: #comment put: '0.321 : Added seismData2, new class MapLocationExample. Improved the test of RTTableTable. Added a utility function in String';
+	at: #date put: '31 July 2014';
+	yourself
+]
