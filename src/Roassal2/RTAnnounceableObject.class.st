@@ -29,8 +29,13 @@ RTAnnounceableObject >> announce: evt [
 
 { #category : #accessing }
 RTAnnounceableObject >> announcer [
-	announcer ifNil: [ announcer := Announcer new ].
+	announcer ifNil: [ self announcer: Announcer new ].
 	^ announcer
+]
+
+{ #category : #accessing }
+RTAnnounceableObject >> announcer: anAnnouncer [
+	announcer := anAnnouncer
 ]
 
 { #category : #interaction }

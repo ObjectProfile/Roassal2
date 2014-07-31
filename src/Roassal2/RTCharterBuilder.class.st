@@ -18,6 +18,41 @@ RTCharterBuilder >> allPointElements [
 	^ allPointElements
 ]
 
+{ #category : #public }
+RTCharterBuilder >> allPoints [
+	^ allPointElements flatCollect: #yourself
+]
+
+{ #category : #public }
+RTCharterBuilder >> allX: metricAsBlockOrSymbol [
+	| vs |
+	RTMetricNormalizer new
+		elements: self allPoints;
+		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x minValue: 0.
+
+	"We compute the min and the max, useful for labelling"
+	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
+	minX := minX min: vs min.
+	maxX := maxX max: vs max.
+
+
+]
+
+{ #category : #public }
+RTCharterBuilder >> allY: metricAsBlockOrSymbol [
+	| vs |
+	RTMetricNormalizer new
+		elements: self allPoints;
+		normalizeY: metricAsBlockOrSymbol min: 0 max: extent y negated minValue: 0.
+		
+	"We compute the min and the max, useful for labelling"
+	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
+	minY := minY min: vs min.
+	maxY := maxY max: vs max.
+
+
+]
+
 { #category : #'public axis' }
 RTCharterBuilder >> axisTo: aPosition configuration: config [
 	"config is an instance of RTAxisConfiguration"
@@ -48,7 +83,8 @@ RTCharterBuilder >> axisTo: aPosition configuration: config [
 	labelShape := RTLabel new text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ].
 	labels := labelShape elementsOn: (0 to: nbOfLabels).
 	labels withIndexDo: [ :label :i | config moveLabel: label againstTick: (labelledTicks at: i) ].
-	view addAll: labels
+	view addAll: labels.
+	labels do: [ :e | e trachelShape pushBack ]
 ]
 
 { #category : #'public axis' }
@@ -100,6 +136,26 @@ RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	
 ]
 
+{ #category : #public }
+RTCharterBuilder >> connectDot [
+	self connectDotColor: Color lightGray
+]
+
+{ #category : #public }
+RTCharterBuilder >> connectDotColor: aColor [
+	self connectDotUsing: (RTLine new color: aColor)
+]
+
+{ #category : #public }
+RTCharterBuilder >> connectDotUsing: aLineShape [
+	| t |
+	t := lastAddedElements first.
+	lastAddedElements allButFirst
+		do: [ :tt | 
+			view add: (aLineShape edgeFrom: t to: tt).
+			t := tt ]
+]
+
 { #category : #hooks }
 RTCharterBuilder >> createView [
 
@@ -113,23 +169,25 @@ RTCharterBuilder >> curve [
 ]
 
 { #category : #public }
+RTCharterBuilder >> curveColor: aColor [
+	"connect the points in the order they have been added"
+
+	^ self curveUsing: (RTLine new color: aColor)
+]
+
+{ #category : #public }
 RTCharterBuilder >> curveUsing: aLineShape [
 	"connect the points in the order they have been added"
 
-	| models t |
+	| models |
 	"This is highly inefficent."
 	models := lastAddedElements collect: #model.
 	RTMetricNormalizer new
 		elements: lastAddedElements;
 		normalizeX: [ :m | models indexOf: m ] min: 0 max: extent x.
-		
-	minX := 0. 
+	minX := 0.
 	maxX := models size - 1.
-	
-	t := lastAddedElements first.
-	lastAddedElements allButFirst do: [ :tt |
-		view add: (aLineShape edgeFrom: t to: tt).
-		t := tt ]
+	self connectDotUsing: aLineShape
 ]
 
 { #category : #initialization }
@@ -211,6 +269,7 @@ RTCharterBuilder >> exampleSimpleHistogram [
 	b points: #(5 10 20 3 12).
 	b y: #yourself min: 0 max: 50.
 	b shape rectangle color: Color blue.
+	b stackX.
 	b histogram.
 	
 	b axisX.
@@ -291,19 +350,20 @@ RTCharterBuilder >> getStringFromNumber: aNumber [
 RTCharterBuilder >> histogram [
 	"Draw an histogram"
 	
-	| bar models barWidth |
+	| barWidth |
 	barWidth := (extent x - ((lastAddedElements size + 2) * 10)/ (lastAddedElements size + 2)) - 10.
+	self histogramBarWidth: barWidth
+]
 
-	"This is highly inefficent."
-	models := lastAddedElements collect: #model.
-	RTMetricNormalizer new
-		elements: lastAddedElements;
-		normalizeX: [ :m | models indexOf: m ] min: barWidth max: extent x - barWidth.
-
-
+{ #category : #public }
+RTCharterBuilder >> histogramBarWidth: barWidth [
+	"Draw an histogram"
+	
+	| bar |
 	lastAddedElements do: [ :el |
-		bar := (shapeBuilder current height: el position y abs; width: barWidth) element.
+		bar := (shapeBuilder current height: el position y abs; width: barWidth) elementOn: el model.
 		bar translateTo: el position x @ (el position y / 2).
+		bar announcer: el announcer.
 		view add: bar ]  
 ]
 
@@ -315,6 +375,8 @@ RTCharterBuilder >> initialize [
 	maxY := self defaultMinValue.
 	minX := self defaultMaxValue.
 	maxX := self defaultMinValue.
+	
+	"Collection of collection of elements"
 	allPointElements := OrderedCollection new
 ]
 
@@ -324,7 +386,7 @@ RTCharterBuilder >> points: objects [
 	lastAddedElements := self elementsOn: objects.
 	view addAll: lastAddedElements.
 	self setUpInteractionFor: lastAddedElements.
-	allPointElements addAll: lastAddedElements.
+	allPointElements add: lastAddedElements.
 ]
 
 { #category : #utility }
@@ -340,9 +402,26 @@ RTCharterBuilder >> rawAxisTo: aPosition [
 { #category : #public }
 RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue [
 
+	self size: metricAsBlockOrSymbol min: minValue max: maxValue using: #yourself
+]
+
+{ #category : #public }
+RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation [
+
 	RTMetricNormalizer new
 		elements: lastAddedElements;
-		normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue
+		normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation
+]
+
+{ #category : #public }
+RTCharterBuilder >> stackX [
+
+	maxX := allPointElements inject: 0 into: [ :m :cs | m max: cs size ].
+	allPointElements do: [ :points | 
+		RTMetricNormalizer new
+			elements: points;
+			normalizeElementX: [ :o | (points indexOf: o) ] min: 0 max: extent x minValue: 0 maxValue: maxX
+	].
 ]
 
 { #category : #public }
@@ -351,7 +430,7 @@ RTCharterBuilder >> x: metricAsBlockOrSymbol [
 	| vs |
 	RTMetricNormalizer new
 		elements: lastAddedElements;
-		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x.
+		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x minValue: 0.
 		
 	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minX := minX min: vs min. 
@@ -376,8 +455,7 @@ RTCharterBuilder >> y: metricAsBlockOrSymbol min: aMin max: aMax [
 	maxY := aMax.
 
 	RTMetricNormalizer new
-		elements: allPointElements;
-		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) / maxY ] min: 0 max: extent y negated.
-	
-	"@@ we need to readjust the elements that have been present before we add lastAddedElements"
+		elements: lastAddedElements;
+		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) / maxY ] min: 0 max: extent y negated minValue: 0.
+
 ]

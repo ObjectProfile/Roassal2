@@ -12,7 +12,7 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTAxisConfiguration >> initialize [
 	super initialize.
 	labelConvertion := [ :number | number asFloat round: 2 ].
@@ -23,72 +23,72 @@ RTAxisConfiguration >> initialize [
 	maxValue := 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> labelConvertion [
 	^ labelConvertion
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> labelConvertion: aValue [
 	labelConvertion := aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> maxValue [
 	^ maxValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> maxValue: aMinValue [
 	maxValue := aMinValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> minValue [
 	^ minValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> minValue: aMinValue [
 	minValue := aMinValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 RTAxisConfiguration >> moveLabel: label againstTick: aTick [
 	positionLabel value: label value: aTick
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> numberOfLabels [
 	^ numberOfLabels
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> numberOfLabels: aValue [
 	numberOfLabels := aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> numberOfTicks [
 	^ numberOfTicks
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> numberOfTicks: aValue [
 	numberOfTicks := aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> positionLabel [
 	^ positionLabel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> positionLabel: aValue [
 	positionLabel := aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisConfiguration >> tickIntervalForLabel [
 	^ numberOfTicks / numberOfLabels
 ]
