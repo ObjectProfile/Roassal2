@@ -45,7 +45,7 @@ RTTabTable >> convertColumnsAsInteger: collectionOfIntegers [
 
 { #category : #accessing }
 RTTabTable >> firstColumn [
-	^ (self values collect: #first) asArray
+	^ self valuesOfColumn: 1
 ]
 
 { #category : #converting }
@@ -69,9 +69,9 @@ RTTabTable >> input: txt [
 { #category : #updating }
 RTTabTable >> input: txt usingDelimiter: delimitersAsCharacter [
 	"txt is a large string in which we have one entry per line"
-	values := txt lines 
-						collect: [ :l | l subStrings: delimitersAsCharacter asString ]
-						thenSelect: #notEmpty
+	values := (txt lines select: #notEmpty
+						thenCollect: [ :l | l subStringsKeepingEmptyFields: delimitersAsCharacter asString ])
+						select: #notEmpty
 ]
 
 { #category : #updating }
@@ -102,6 +102,7 @@ RTTabTable >> maximum [
 
 { #category : #accessing }
 RTTabTable >> minimum [
+	"Return the minimum of the whole table"
 	| min |
 	"We initialize the mininum to any value found in the table"
 	min := self values last detect: #isNumber ifNone: [ 0 ].
@@ -132,6 +133,12 @@ RTTabTable >> removeColumn: aNumber [
 RTTabTable >> removeFirstRow [
 	"Remove the first line of the table, typically the header"
 	values := values allButFirst
+]
+
+{ #category : #converting }
+RTTabTable >> replaceEmptyValuesWith: aValue inColumns: columns [
+	"columns is a collection of integers"
+	self convertColumns: columns to: [ :s | s isEmpty ifTrue: [ aValue ] ifFalse: [ s ] ]
 ]
 
 { #category : #accessing }

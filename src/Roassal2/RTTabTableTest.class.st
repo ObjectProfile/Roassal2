@@ -20,7 +20,7 @@ RTTabTableTest >> testAccessing [
 	m1	m2	m3
 A	1	2	5
 B	2	5	4
-C	1	7	4	'.
+C	1	7	4'.
 	self assert: tab numberOfRows = 4.
 	tab removeFirstRow.
 	self assert: tab numberOfRows = 3.
@@ -36,13 +36,45 @@ A	1	2	5
 
 B	2	5	4
 
-C	1	7	4	'.
+C	1	7	4'.
 	self assert: tab numberOfRows = 4.
 	tab removeFirstRow.
 	self assert: tab numberOfRows = 3.
 	self assert: tab numberOfColumns = 4.
 	self assert: tab firstColumn = (Array with: 'A' with: 'B' with: 'C').
 
+]
+
+{ #category : #tests }
+RTTabTableTest >> testConvertAsFloats [
+
+	tab input: '5.4,1.2,0,hello world' usingDelimiter: $,.
+	tab convertColumnsAsFloat: #(1 2 3).
+	self assert: tab values first equals: #(5.4 1.2 0 'hello world')
+]
+
+{ #category : #tests }
+RTTabTableTest >> testConvertAsInteger [
+
+	tab input: '5.4,1.2,0,hello world' usingDelimiter: $,.
+	tab convertColumnsAsInteger: #(1 2 3).
+	self assert: tab values first equals: #(5 1 0 'hello world')
+]
+
+{ #category : #tests }
+RTTabTableTest >> testEmptyAndReplaceColumn [
+
+	tab input: ',,' usingDelimiter: $,.
+	tab replaceEmptyValuesWith: 0 inColumns: #(1 2 3).
+	self assert: tab numberOfColumns equals: 3.
+	self assert: tab values first equals: #(0 0 0)
+]
+
+{ #category : #tests }
+RTTabTableTest >> testEmptyColumn [
+
+	tab input: ',,' usingDelimiter: $,.
+	self assert: tab numberOfColumns equals: 3
 ]
 
 { #category : #tests }
@@ -80,6 +112,23 @@ C	1	7	4	'.
 	self assert: (tab maxOfColumn: #second) = 2.
 	self assert: (tab maxOfColumn: #fourth) = 5.
 	self assert: (tab maxOfColumn: [ :row | row at: 3 ]) = 7.
+]
+
+{ #category : #tests }
+RTTabTableTest >> testMinimumAndMaximum [
+
+	tab input: 
+'5.4,1.2,0,hello world
+-56,1.2,100,bravo' usingDelimiters: ','.
+	tab convertColumnsAsFloat: #(1 2 3).
+	self assert: tab minimum equals: -56.0.
+	self assert: tab maximum equals: 100.
+	
+	self assert: (tab maxOfColumn: #first) equals: 5.4.
+	self assert: (tab maxOfColumn: #second) equals: 1.2.
+	self assert: (tab maxOfColumn: #third) equals: 100.0.
+	
+	self assert: tab firstColumn equals: #(5.4 -56).
 ]
 
 { #category : #tests }
