@@ -78,6 +78,39 @@ RTTabTableTest >> testEmptyColumn [
 ]
 
 { #category : #tests }
+RTTabTableTest >> testFiltering [
+
+	tab input: 'abc,123,123
+5,0,0
+1,2,3' usingDelimiter: $,.
+
+	self assert: tab numberOfRows equals: 3.
+	tab rejectRow: [ :row | row first = 'abc' ]. 
+	self assert: tab numberOfRows equals: 2.
+	tab rejectRow: [ :row | row first = 'abc' ].
+	self assert: tab numberOfRows equals: 2.
+]
+
+{ #category : #tests }
+RTTabTableTest >> testFilteringPerColumn [
+
+	tab input: 'abc,123,123
+5,0,0
+1,2,3' usingDelimiter: $,.
+
+	tab convertColumnAsInteger: 2.
+	self assert: tab numberOfRows equals: 3.
+	tab rejectInColumn: 2 row: #isZero. 
+	self assert: tab numberOfRows equals: 2.
+
+	tab rejectInColumn: 2 row: #isZero. 
+	self assert: tab numberOfRows equals: 2.
+
+	tab rejectRow: [ :row | row first = 'abc' ].
+	self assert: tab numberOfRows equals: 1.
+]
+
+{ #category : #tests }
 RTTabTableTest >> testGathering [
 
 	tab input: '1 A

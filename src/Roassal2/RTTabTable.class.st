@@ -25,6 +25,11 @@ RTTabTable >> convertColumn: index to: blockForConvertion [
 ]
 
 { #category : #converting }
+RTTabTable >> convertColumnAsInteger: nbColumn [
+	^ self convertColumnsAsInteger: (Array with: nbColumn)
+]
+
+{ #category : #converting }
 RTTabTable >> convertColumns: collectionOfIntegers to: aBlock [
 	"collectionOfIntegers is a collection of integers corresponding to column to convert"
 	"block is a one-arg block that takes as input a string and return the wanted value"
@@ -121,6 +126,19 @@ RTTabTable >> numberOfColumns [
 { #category : #accessing }
 RTTabTable >> numberOfRows [
 	^ values size
+]
+
+{ #category : #updating }
+RTTabTable >> rejectInColumn: nbColumn row: aBlock [
+	"Remove rows for which the nbColumn element is evaluated at true"
+	self rejectRow: [ :row | aBlock rtValue: (row at: nbColumn) ]
+
+]
+
+{ #category : #updating }
+RTTabTable >> rejectRow: aBlock [
+	"Remove a row for which the block evaluate to true. The block takes as argument the row"
+	values := values reject: [ :v | aBlock rtValue: v ]
 ]
 
 { #category : #updating }
