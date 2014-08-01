@@ -385,7 +385,7 @@ b open.
 { #category : #sources }
 RTCharterExample >> exampleStackingX2 [
 
-	| b |
+	| b classes normalizer |
 	b := RTCharterBuilder new.
 	b extent: 400 @ 200.
 	

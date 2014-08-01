@@ -16,6 +16,12 @@ RTMetricNormalizer >> alphaColor: anAlphaValue [
 		 
 ]
 
+{ #category : #utility }
+RTMetricNormalizer >> checkNotEmpty [
+	"Raise an error if no elements have been added"
+	elements ifEmpty: [ self error: 'Please specify what are the element I should operate on using #elements:' ]
+]
+
 { #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
 	elements := someElements
@@ -159,6 +165,9 @@ RTMetricNormalizer >> normalizeSize: metricBlock min: min max: max using: transf
 	 Colors is an array of colors used to do the fading"
 	
 	| minValue maxValue |
+	
+	self checkNotEmpty.
+
 	"We get the min and the max of the metric for all the elements"
 	minValue := transformation rtValue: (metricBlock rtValue: elements anyOne model).
 	maxValue := minValue.
