@@ -4097,3 +4097,14 @@ VersionOfRoassal2 >> version000324 [
 	at: #date put: '1 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000325 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.174';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.416';
+	at: #version put: '0.325';
+	at: #comment put: '0.325 : Added TRMouseDragStart and TRMouseDragEnd';
+	at: #date put: '1 August 2014';
+	yourself
+]
