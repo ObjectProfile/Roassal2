@@ -264,15 +264,32 @@ TRMorph >> rtMouseClick: evt [
 
 { #category : #'event-processed' }
 TRMorph >> rtMouseDragBegin: evt [
-	| relativePosition |
+	| relativePosition ee |
 	eventBeginingDragging := evt copy.
 	
 	relativePosition := self relativePositionFor: evt.
-	shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition
+	shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition.
+	
+
+		
+	ee := TRMouseDragStart new.
+	ee shape: shapeBeingPointed.
+	ee position: relativePosition.
+	ee canvas: trachelCanvas.
+	ee morph: self.
+	shapeBeingPointed announce: ee.
 ]
 
 { #category : #'event-processed' }
 TRMorph >> rtMouseDragEnd: evt [
+
+	| ee |
+	ee := TRMouseDragEnd new.
+	ee shape: shapeBeingPointed.
+	ee canvas: trachelCanvas.
+	ee morph: self.
+	shapeBeingPointed announce: ee.
+	
 	eventBeginingDragging := nil.
 	shapeBeingPointed := nil
 ]
@@ -285,7 +302,9 @@ TRMorph >> rtMouseDragging: evt [
 	step := evt position - eventBeginingDragging position.
 
 	shapeBeingPointed ifNil: 
-		[ shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition ].
+		[  
+			shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition 
+		].
 	
 	event := TRMouseDragging new 
 				morph: self;
