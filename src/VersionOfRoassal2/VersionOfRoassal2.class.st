@@ -4086,3 +4086,14 @@ VersionOfRoassal2 >> version000323 [
 	at: #date put: '31 July 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000324 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.173';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.416';
+	at: #version put: '0.324';
+	at: #comment put: '0.324 : fixing undeclared temporary variables in the charter example';
+	at: #date put: '1 August 2014';
+	yourself
+]
