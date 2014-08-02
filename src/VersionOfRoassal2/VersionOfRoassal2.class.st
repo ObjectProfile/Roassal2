@@ -4108,3 +4108,14 @@ VersionOfRoassal2 >> version000325 [
 	at: #date put: '1 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000326 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.174';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.417';
+	at: #version put: '0.326';
+	at: #comment put: '0.326 : added highlightIf:using: in Charter. Improved RTTabTable and RTLabelled';
+	at: #date put: '2 August 2014';
+	yourself
+]
