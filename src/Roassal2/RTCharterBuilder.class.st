@@ -356,6 +356,18 @@ RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock [
 	]
 ]
 
+{ #category : #'public highlight' }
+RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock lowColor: lowColor color: highColor [
+
+	self allPoints do: [ :element |
+		(aConditionalBlock rtValue: element model) ifTrue: [ 
+			element @ (RTLabelled new 
+							lowColor: lowColor;
+							text: [ :model | aBlock rtValue: model ]; setAsHighlightable).
+		]
+	]
+]
+
 { #category : #public }
 RTCharterBuilder >> histogram [
 	"Draw an histogram"

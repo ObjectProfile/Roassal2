@@ -5,6 +5,7 @@ Class {
 		'position',
 		'text',
 		'color',
+		'lowColor',
 		'canvas',
 		'offsetOnEdge',
 		'highlightable'
@@ -38,6 +39,8 @@ RTLabelled >> initialize [
 	text := #model.
 	self top.
 	color := Color gray.
+	lowColor := Color veryVeryLightGray.
+	
 	highlightable := false. 
 	offsetOnEdge := 0.5.
 
@@ -115,14 +118,19 @@ RTLabelled >> left [
 	position := #left
 ]
 
+{ #category : #accessing }
+RTLabelled >> lowColor: aBlockOrColor [
+	lowColor := aBlockOrColor
+]
+
 { #category : #utility }
 RTLabelled >> make: lbl highlightableIfNecessaryBy: element [
 	"Do nothing if there is no need to"
 	highlightable ifFalse: [ ^ self ].
 	
-	lbl color: Color veryVeryLightGray.
-	element when: TRMouseEnter do: [ :evt | lbl color: Color black. evt signalUpdate ].
-	element when: TRMouseLeave do: [ :evt | lbl color: Color veryLightGray. evt signalUpdate ].
+	lbl color: lowColor.
+	element when: TRMouseEnter do: [ :evt | lbl color: color. evt signalUpdate ].
+	element when: TRMouseLeave do: [ :evt | lbl color: lowColor. evt signalUpdate ].
 ]
 
 { #category : #accessing }
