@@ -104,6 +104,11 @@ RTBuilder >> global [
 	^ globalBuilder 
 ]
 
+{ #category : #accessing }
+RTBuilder >> globalRule [
+	^ RTGlobalRule new view: self view; yourself
+]
+
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.

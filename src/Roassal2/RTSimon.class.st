@@ -14,7 +14,7 @@ Class {
 	#category : #'Roassal2-Builder-Simon'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSimon >> initialize [
 	super initialize.
 	self initializeShapeBuilder.
@@ -22,12 +22,12 @@ RTSimon >> initialize [
 	models := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSimon >> initializeInteractionBuilder [
 	self interaction popup.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSimon >> initializeShapeBuilder [
 	self shape arc  
 		outerAngle: [ :object | ((self models indexOf: object) - 1) * (360.0 / self models size) ] innerAngle: [ :object | 360.0 / self models size ];
@@ -36,12 +36,12 @@ RTSimon >> initializeShapeBuilder [
 		color: RTNIdentityNormalizer new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSimon >> models [
 	^ models
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSimon >> models: objects [
 	| elements |
 	self recordModels: objects.
@@ -50,7 +50,7 @@ RTSimon >> models: objects [
 	view addAll: elements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-ui' }
 RTSimon >> open [
 	^ view canvas open
 ]
