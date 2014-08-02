@@ -25,6 +25,13 @@ RTTabTable >> convertColumn: index to: blockForConvertion [
 ]
 
 { #category : #converting }
+RTTabTable >> convertColumnAsDateAndTime: integer [
+	"Replace each element by an instance of DateAndTime"
+
+	self convertColumnsAsDateAndTime: (Array with: integer)
+]
+
+{ #category : #converting }
 RTTabTable >> convertColumnAsInteger: nbColumn [
 	^ self convertColumnsAsInteger: (Array with: nbColumn)
 ]
@@ -36,6 +43,14 @@ RTTabTable >> convertColumns: collectionOfIntegers to: aBlock [
 
 	collectionOfIntegers do: [ :index | 
 		self convertColumn: index to: aBlock ]
+]
+
+{ #category : #converting }
+RTTabTable >> convertColumnsAsDateAndTime: collectionOfIntegers [
+	"collectionOfIntegers is a collection of integers corresponding to column to convert"
+	"Replace each element by an instance of DateAndTime"
+
+	self convertColumns: collectionOfIntegers to: [ :s | (DateAndTime fromString: s) ]
 ]
 
 { #category : #converting }

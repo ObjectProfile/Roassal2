@@ -64,15 +64,15 @@ RTCharterBuilder >> axisTo: aPosition configuration: config [
 	minValue := config minValue.
 	maxValue := config maxValue.
 	self rawAxisTo: aPosition.
-	tickShape := RTBox new
-		height: 10;
-		width: 5.
+	tickShape := RTBox new height: 10; width: 5.
 	ticks := tickShape elementsOn: (0 to: nbOfTicks).
 	ticks rotateByDegrees: aPosition angle radiansToDegrees abs.
 	view addAll: ticks.
 	RTMetricNormalizer new
 		elements: ticks;
-		normalizePosition: [ :v | v @ v ] min: 0 @ 0 max: aPosition.	"We add the labels"
+		normalizePosition: [ :v | v @ v ] min: 0 @ 0 max: aPosition.	
+
+	"We add the labels"
 	nbOfLabels = 0
 		ifTrue: [ ^ self ].
 	tickIntervalForLabel := config tickIntervalForLabel.
@@ -344,6 +344,16 @@ RTCharterBuilder >> extent: aValue [
 { #category : #utility }
 RTCharterBuilder >> getStringFromNumber: aNumber [
 	^ (aNumber asFloat round: 2) asString
+]
+
+{ #category : #'public highlight' }
+RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock [
+
+	self allPoints do: [ :element |
+		(aConditionalBlock rtValue: element model) ifTrue: [ 
+			element @ (RTLabelled new text: [ :model | aBlock rtValue: model ]; setAsHighlightable).
+		]
+	]
 ]
 
 { #category : #public }

@@ -319,6 +319,67 @@ zbP7CnuLEX7J4pcsfvggfBB++CB8EH74IPzwQfgg/PBB+CD88EH4IPzwQfgg/PBB+OGD8EH4
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleScatterplotWithHighlighting [
+
+	| b |
+
+	b := RTCharterBuilder new.
+	b extent: 290 @ 200.
+	b interaction popup.
+	b shape ellipse size: 15; color: (Color red alpha: 0.3).
+	b points: RTObject withAllSubclasses.
+	b x: #numberOfMethods; y: #numberOfVariables min: 0 max: 10.
+	b size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
+	
+	b axisXWithNumberOfTicks: 3.
+	b axisYWithNumberOfTicks: 4.
+	b highlightIf: [ :c | (c numberOfLinesOfCode > 2000) or: [ c numberOfVariables > 10 ] ] using: #name.
+	b open.
+	b view canvas
+	
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleScatterplotWithHighlightingIcon [
+	^ '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
+rkJggg=='
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleSimpleCurve [
 
 	| b |

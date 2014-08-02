@@ -6,7 +6,8 @@ Class {
 		'text',
 		'color',
 		'canvas',
-		'offsetOnEdge'
+		'offsetOnEdge',
+		'highlightable'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -37,7 +38,7 @@ RTLabelled >> initialize [
 	text := #model.
 	self top.
 	color := Color gray.
-
+	highlightable := false. 
 	offsetOnEdge := 0.5.
 
 	canvas := [ :el | 
@@ -60,6 +61,8 @@ RTLabelled >> initializeElement: element [
 	adding the element into it"
 	canvas := (canvas rtValue: element).
 	canvas addShape: lbl.
+	
+	self make: lbl highlightableIfNecessaryBy: element.
 	
 	"Make sure that if we remove the element, the trachel shape is also removed"
 	callback := TRRemoveCallback new block: [ :shape | lbl remove ].
@@ -112,6 +115,16 @@ RTLabelled >> left [
 	position := #left
 ]
 
+{ #category : #utility }
+RTLabelled >> make: lbl highlightableIfNecessaryBy: element [
+	"Do nothing if there is no need to"
+	highlightable ifFalse: [ ^ self ].
+	
+	lbl color: Color veryVeryLightGray.
+	element when: TRMouseEnter do: [ :evt | lbl color: Color black. evt signalUpdate ].
+	element when: TRMouseLeave do: [ :evt | lbl color: Color veryLightGray. evt signalUpdate ].
+]
+
 { #category : #accessing }
 RTLabelled >> offsetOnEdge [
 	^ offsetOnEdge
@@ -126,6 +139,12 @@ RTLabelled >> offsetOnEdge: aFloat [
 { #category : #accessing }
 RTLabelled >> right [
 	position := #right
+]
+
+{ #category : #'public configuration' }
+RTLabelled >> setAsHighlightable [
+	"Make the label highlightable by moving the mouse over the element"
+	highlightable := true
 ]
 
 { #category : #accessing }
