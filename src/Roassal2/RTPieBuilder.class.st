@@ -99,7 +99,10 @@ RTPieBuilder >> ratioOf: anObject [
 
 { #category : #public }
 RTPieBuilder >> slice: aBlockOrASymbol [
+	| es |
 	values := objects collect: aBlockOrASymbol.
 	sum := values sum.
-	view addAll: (self elementsOn: objects) 
+	es := self elementsOn: objects.
+	view addAll: es.
+	^ es
 ]

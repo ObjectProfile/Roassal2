@@ -2,7 +2,7 @@ Class {
 	#name : #RTGlobalRule,
 	#superclass : #RTObject,
 	#instVars : [
-		'view'
+		'elements'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -10,8 +10,13 @@ Class {
 { #category : #'as yet unclassified' }
 RTGlobalRule >> distinctColor [
 	| normalizer |
-	normalizer := RTMultiLinearColorForIdentity new objects: view elements.
-	view elements do: [ :el | el trachelShape color: (normalizer rtValue: el) ]
+	normalizer := RTMultiLinearColorForIdentity new objects: elements.
+	elements do: [ :el | el trachelShape color: (normalizer rtValue: el) ]
+]
+
+{ #category : #'as yet unclassified' }
+RTGlobalRule >> elements: someElements [
+	elements := someElements
 ]
 
 { #category : #'as yet unclassified' }
@@ -21,10 +26,10 @@ RTGlobalRule >> labelled [
 
 { #category : #'as yet unclassified' }
 RTGlobalRule >> labelledIf: aBlock [
-	view elements do: [ :el | (aBlock rtValue: el model) ifTrue: [ el @ RTLabelled ] ]
+	elements do: [ :el | (aBlock rtValue: el model) ifTrue: [ el @ RTLabelled ] ]
 ]
 
 { #category : #'as yet unclassified' }
 RTGlobalRule >> view: aView [
-	view := aView
+	self elements: aView elements
 ]

@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #public }
+RTHighlightable class >> allSibblings [
+
+	^ self highlightElements: [ :el | el view elements select: [ :e | e model == el model ] ]
+]
+
+{ #category : #public }
 RTHighlightable class >> highlight: aBlock [
 	"aBlock return an element or a list of elements to highlight"
 	^ self new highlight: aBlock
@@ -87,7 +93,7 @@ RTHighlightable >> highlightedColor [
 { #category : #initialize }
 RTHighlightable >> initialize [
 	super initialize.
-	highlightElements := [ :el | Array with: el ]
+	self highlightElements: [ :el | Array with: el ]
 ]
 
 { #category : #hooks }

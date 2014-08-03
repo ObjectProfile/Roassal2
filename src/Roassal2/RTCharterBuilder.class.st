@@ -414,10 +414,11 @@ RTCharterBuilder >> points: objects [
 { #category : #utility }
 RTCharterBuilder >> rawAxisTo: aPosition [
 	| edge ex2 ex1 |
-	ex1 := RTBox element.
-	ex2 := RTBox element.
+	ex1 := (RTBox new size: 0) element.
+	ex2 := (RTBox new size: 0) element.
 	ex2 translateTo: aPosition.
 	edge := RTLine edgeFrom: ex1 to: ex2.
+	view add: ex1; add: ex2.
 	view add: edge
 ]
 
