@@ -4174,3 +4174,23 @@ VersionOfRoassal2 >> version000331 [
 	at: #date put: '5 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000332 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.179';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.422';
+	at: #version put: '0.332';
+	at: #comment put: '0.332 : Added support for SVG. Thanks Juraj! Here is Juraj report Improved TRSVGPath
+- fixed draggable problem
+- fixed encompassing rectangle
+- now it use matrix (affinite transformation)
+- you can use #path: for a default behavior or #centeredPath: which recomputes points and the figure is in 0@0 by default.
+
+There are one crutial differences between #path: and #centeredPath:
+- if someone uses #centeredPath: svg position = svg center (always!)
+- if someone uses #path: svg position ~= svg center (usually)
+';
+	at: #date put: '5 August 2014';
+	yourself
+]
