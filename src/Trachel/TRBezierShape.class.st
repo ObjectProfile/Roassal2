@@ -84,13 +84,13 @@ TRBezierShape >> position [
 	^ self encompassingRectangle center
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRBezierShape >> strokePaint [
 	"return the color of the border line"
 	^ self color
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRBezierShape >> strokePaint: aColor [
 	"set the color of the border line"
 	self color: aColor
