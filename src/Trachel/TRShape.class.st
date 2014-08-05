@@ -9,7 +9,8 @@ Class {
 		'announcer',
 		'element',
 		'callbacks',
-		'matrix'
+		'matrix',
+		'rotationAngleDegrees'
 	],
 	#category : #'Trachel-Core'
 }
@@ -29,6 +30,11 @@ TRShape >> addCallback: aCallback [
 TRShape >> addedIn: aCanvas [
 	aCanvas privateAdd: self.
 	self canvas: aCanvas
+]
+
+{ #category : #accessing }
+TRShape >> angleInDegrees [
+	^ rotationAngleDegrees
 ]
 
 { #category : #events }
@@ -182,6 +188,7 @@ TRShape >> initialize [
 	color := Color gray.
 	strokePaint := Color black.
 	matrix := AthensAffineTransform new.
+	rotationAngleDegrees := 0.
 	self position: 0 @ 0.
 ]
 
@@ -279,7 +286,18 @@ TRShape >> resetPath [
 
 { #category : #transformations }
 TRShape >> rotateByDegrees: angle [ 
+	rotationAngleDegrees := rotationAngleDegrees + angle.
 	matrix rotateByDegrees: angle 
+]
+
+{ #category : #transformations }
+TRShape >> rotateToDegrees: anAngle [
+	^ self rotateByDegrees: anAngle - rotationAngleDegrees.
+]
+
+{ #category : #accessing }
+TRShape >> scale [
+	^ matrix scale
 ]
 
 { #category : #transformations }

@@ -318,6 +318,32 @@ TRShapeTest >> testPositionDefault [
 ]
 
 { #category : #position }
+TRShapeTest >> testPositionDefaultCenteredSVGPath [
+	| svg rectangle |
+	svg := TRSVGPath new centeredPath: 'M 0 0 L 30 10 L 20 30 z'.
+	rectangle := (Rectangle encompassing: {0@0. 30@10. 20@30}).
+	self assert: svg position equals: (0 @ 0).
+	self assert: svg center equals: (0 @ 0).
+	self deny: svg position = rectangle center.
+]
+
+{ #category : #position }
+TRShapeTest >> testPositionDefaultSVGPath [
+	| svg rectangle |
+	svg := TRSVGPath new path: 'M 0 0 L 30 10 L 20 30 z'.
+	rectangle := (Rectangle encompassing: {0@0. 30@10. 20@30}).
+	self assert: svg position equals: (0 @ 0).
+	self assert: svg center equals: rectangle center.
+	self deny: svg position = rectangle center.
+]
+
+{ #category : #position }
+TRShapeTest >> testPositionDefaultSVGPathWithoutPath [
+
+	self assert: TRSVGPath new position = (0 @ 0)
+]
+
+{ #category : #position }
 TRShapeTest >> testPositionWithFloats [
 
 	| box |
@@ -376,4 +402,27 @@ TRShapeTest >> testRemoving [
 	shape remove.
 	self assert: t equals: shape hash.
 	self assert: canvas numberOfShapes equals: 0.
+]
+
+{ #category : #position }
+TRShapeTest >> testScaleBox [
+
+	| box |
+	box := TRBoxShape new.
+	box scaleBy: 2.0.
+	self assert: box scale equals: 2.0 @ 2.0.
+]
+
+{ #category : #position }
+TRShapeTest >> testScaleSVG [
+
+	| svg rectangle scaledRectangle |
+	svg := TRSVGPath new path: 'M 0 0 L 30 10 L 20 30 z'.
+	rectangle := svg encompassingRectangle. 
+	svg scaleBy: 2.0.
+	scaledRectangle := svg encompassingRectangle.
+	self assert: svg scale equals: 2.0 @ 2.0.
+	self deny: rectangle = scaledRectangle.
+	self assert: rectangle width * 2.0 equals: scaledRectangle width.
+	self assert: rectangle height * 2.0 equals: scaledRectangle height.
 ]
