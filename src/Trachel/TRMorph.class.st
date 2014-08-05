@@ -158,7 +158,7 @@ TRMorph >> mouseDown: evt [
 		evt hand 
 					waitForClicksOrDrag: self 
 					event: evt 
-					selectors: { #rtMouseClick:. nil. nil. #rtMouseDragBegin: }
+					selectors: { #rtMouseClick:. #rtMouseDoubleClick:. nil. #rtMouseDragBegin: }
 					threshold: 5.
 		^ self ].
 	
@@ -249,6 +249,29 @@ TRMorph >> rtMouseClick: evt [
 		ifTrue: [ ev := TRMouseLeftClick new ].
 	evt blueButtonChanged
 		ifTrue: [ ev := TRMouseClick new ].
+
+	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	ev commandKeyPressed: evt commandKeyPressed.
+	ev controlKeyPressed: evt controlKeyPressed.
+	ev shiftKeyPressed: evt shiftPressed.
+	ev shape: shape.
+	ev morph: self.
+	ev canvas: trachelCanvas.
+	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
+	shape announce: ev.
+	
+]
+
+{ #category : #'event-processed' }
+TRMorph >> rtMouseDoubleClick: evt [
+	| relativePosition ev  shape |
+	relativePosition := self relativePositionFor: evt.	
+	evt yellowButtonChanged
+		ifTrue: [ ev := TRMouseDoubleRightClick new ].
+	evt redButtonChanged
+		ifTrue: [ ev := TRMouseDoubleLeftClick new ].
+	evt blueButtonChanged
+		ifTrue: [ ev := TRMouseDoubleClick new ].
 
 	shape := self shapeWithActionForPositionInPixels: relativePosition.
 	ev commandKeyPressed: evt commandKeyPressed.
@@ -422,6 +445,11 @@ TRMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+TRMorph >> timeOut [
+	^ 2.
 ]
 
 { #category : #accessing }

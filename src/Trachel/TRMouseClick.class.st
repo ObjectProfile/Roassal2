@@ -18,49 +18,6 @@ shiftKeyPressed
 "
 Class {
 	#name : #TRMouseClick,
-	#superclass : #TRAbstractMouseEvent,
-	#instVars : [
-		'commandKeyPressed',
-		'controlKeyPressed',
-		'shiftKeyPressed'
-	],
+	#superclass : #TRAbstractMouseClick,
 	#category : #'Trachel-Core'
 }
-
-{ #category : #accessing }
-TRMouseClick >> commandKeyPressed [
-	^ commandKeyPressed
-]
-
-{ #category : #accessing }
-TRMouseClick >> commandKeyPressed: anObject [
-	commandKeyPressed := anObject
-]
-
-{ #category : #accessing }
-TRMouseClick >> controlKeyPressed [
-	^ controlKeyPressed
-]
-
-{ #category : #accessing }
-TRMouseClick >> controlKeyPressed: anObject [
-	controlKeyPressed := anObject
-]
-
-{ #category : #accessing }
-TRMouseClick >> initialize [ 
-	super initialize.
-	commandKeyPressed := false.
-	controlKeyPressed := false.
-	shiftKeyPressed := false.
-]
-
-{ #category : #accessing }
-TRMouseClick >> shiftKeyPressed [
-	^ shiftKeyPressed
-]
-
-{ #category : #accessing }
-TRMouseClick >> shiftKeyPressed: anObject [
-	shiftKeyPressed := anObject
-]
