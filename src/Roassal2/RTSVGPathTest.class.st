@@ -14,11 +14,11 @@ RTSVGPathTest >> testIncludesPointBasic [
 	self assert: (e trachelShape includesPoint: 200@80) not
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
 	res := '{#m->{(100.0@100.0)}. #l->{(300.0@100.0)}. #l->{(200.0@300.0)}. #l->{(100.0@100.0)}}'.
-	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') processPath asString.
+	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') curves asString.
 	self assert: p1 = res.
 	
 	"
@@ -44,7 +44,7 @@ RTSVGPathTest >> testTranslateBy [
 	self assert: (e trachelShape includesPoint: 0@0) not.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 RTSVGPathTest >> testTranslateTo [
 	| v e |
 	v := RTView new.
@@ -52,6 +52,20 @@ RTSVGPathTest >> testTranslateTo [
 	v add: e.
 	self assert: (e trachelShape includesPoint: 210@210).
 	e translateTo: 0@0.
-	self assert: (e trachelShape includesPoint: 200@200) not.
+	self assert: (e trachelShape includesPoint: 200@200).
+	self assert: (e trachelShape includesPoint: 0@0) not.
+]
+
+{ #category : #'as yet unclassified' }
+RTSVGPathTest >> testTranslateToCentered [
+	| v e rectangle |
+	v := RTView new.
+	e := (RTSVGPath new centeredPath: 'M200,200l100,0l0,100l-100,0z') element.
+	rectangle := (Rectangle encompassing: {200@200. 300@200. 300@300. 200@300}).
+	v add: e.
+	self deny: (e trachelShape includesPoint: 200@200).
 	self assert: (e trachelShape includesPoint: 0@0).
+	e translateTo: rectangle center.
+	self assert: (e trachelShape includesPoint: 200@200).
+	self deny: (e trachelShape includesPoint: 0@0).
 ]

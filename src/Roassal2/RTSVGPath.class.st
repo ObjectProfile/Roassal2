@@ -7,7 +7,8 @@ Class {
 		'borderColor',
 		'curves',
 		'scale',
-		'rotation'
+		'rotation',
+		'keepInOriginalPosition'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -907,6 +908,12 @@ RTSVGPath >> borderWidth: aValueOrBlock [
 	borderWidth := aValueOrBlock
 ]
 
+{ #category : #accessing }
+RTSVGPath >> centeredPath: aString [ 
+	self path: aString.
+	keepInOriginalPosition := false.
+]
+
 { #category : #initialization }
 RTSVGPath >> initialize [
 	super initialize.
@@ -915,6 +922,7 @@ RTSVGPath >> initialize [
 	borderWidth := 1.
 	borderColor := Color black.
 	self fillColor: nil.
+	keepInOriginalPosition := true.
 ]
 
 { #category : #accessing }
@@ -940,9 +948,11 @@ RTSVGPath >> trachelShapeFor: anElement [
 	shape strokePaint: (borderColor rtValue: anElement).
 	shape borderWidth: (borderWidth rtValue: anElement).
 	shape fillColor: (self fillColor rtValue: anElement).
-	shape scale: (scale rtValue: anElement).
-	shape path: path.
-	rotation isNil ifFalse: [shape rotateBy: rotation].
+	keepInOriginalPosition
+		ifTrue: [ shape path: path ]
+		ifFalse: [ shape centeredPath: path. ].
+	shape scaleBy: (scale rtValue: anElement).
+	rotation isNil ifFalse: [shape rotateByDegrees: rotation].
 	^ shape
 ]
 

@@ -30,7 +30,7 @@ RTRotationMove >> hasCompleted [
 
 { #category : #refreshing }
 RTRotationMove >> refresh [
-	element trachelShape rotateTo: animatedValue value.
+	element trachelShape rotateToDegrees: animatedValue value.
 	element update.
 ]
 
