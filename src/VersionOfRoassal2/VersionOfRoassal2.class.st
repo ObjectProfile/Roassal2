@@ -4152,3 +4152,14 @@ VersionOfRoassal2 >> version000329 [
 	at: #date put: '5 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000330 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.177';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.421';
+	at: #version put: '0.330';
+	at: #comment put: '0.330 : moved extensions of TRConstraint from Telescope to Trachel. Thanks Leo!';
+	at: #date put: '5 August 2014';
+	yourself
+]
