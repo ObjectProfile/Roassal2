@@ -8,7 +8,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> fix: aShape for: anotherShape [
 	"When anotherShape is moved, then move aShape"
 	| b |
@@ -19,53 +19,70 @@ TRConstraint class >> fix: aShape for: anotherShape [
 	
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape above: anotherShape [
 	^ aShape translateTo: anotherShape center - (0 @ ((anotherShape height + aShape height) / 2)) 
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape below: anotherShape [
 	^ aShape translateTo: anotherShape center + (0 @ ((anotherShape height + aShape height) / 2)) 
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape below: anotherShape using: translator [
 	^ translator translate: aShape to: anotherShape center + (0 @ ((anotherShape height + aShape height) / 2)) 
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape between: s1 and: s2 [
 	^ aShape translateTo: (s1 position + s2 position) /2 
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape between: s1 and: s2 offset: aFloat [
 	^ aShape translateTo: ((s1 position * aFloat) + (s2 position * (1.0 - aFloat)))
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
 	^ aShape translateTo: anotherShape center
 
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheLeftOf: anotherShape [
 	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ 0)
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheRightOf: anotherShape [
 	^ aShape translateTo: anotherShape center + ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ 0)
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheRightOf: anotherShape using: translator [
 	^ translator translate: aShape to: anotherShape center + ((((anotherShape width / 2) rounded) + (aShape width/2 rounded)) @ 0)
 ]
 
-{ #category : #util }
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape [
+	^ self move: aShape onTheTopLeftOf: anotherShape withPadding: 5
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape withPadding: padding [
+	^ self move: aShape onTheTopLeftOf: anotherShape withWidthPadding: padding withHeightPadding: padding
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| rectangle |
+	rectangle := anotherShape encompassingRectangle topLeft.
+	^ aShape translateTo: ((rectangle x + (aShape width/2) + widthPadding)@(rectangle y + (aShape height/2) + heightPadding))
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
 
 	| windowSize |
@@ -74,12 +91,12 @@ TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
 	trachelShape translateTo: ((trachelShape width / 2) @ (windowSize y - (trachelShape height / 2)))
 ]
 
-{ #category : #camera }
+{ #category : #'public - camera' }
 TRConstraint class >> moveCameraToTheRightIn: trachelCanvas [
 	^ trachelCanvas camera translateTo: (trachelCanvas extent x / -2) @ trachelCanvas camera position y
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape above: anotherShape [
 	| b |
 	self move: aShape above: anotherShape. 
@@ -90,7 +107,7 @@ TRConstraint class >> stick: aShape above: anotherShape [
 	
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape below: anotherShape [
 	| b |
 	self move: aShape below: anotherShape. 
@@ -102,12 +119,12 @@ TRConstraint class >> stick: aShape below: anotherShape [
 	
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape between: s1 and: s2 [
 	^ self stick: aShape between: s1 and: s2 offset: 0.5
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape between: s1 and: s2 offset: aFloat [
 	"locate aShape between s1 and s2. aFloat is used to weight the extremities. 
 		aFloat = 1.0 the label is on s1.
@@ -127,7 +144,7 @@ TRConstraint class >> stick: aShape between: s1 and: s2 offset: aFloat [
 
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape onTheCenterOf: anotherShape [
 	| b |
 	self move: aShape onTheCenterOf: anotherShape. 
@@ -138,7 +155,7 @@ TRConstraint class >> stick: aShape onTheCenterOf: anotherShape [
 	
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape onTheLeftOf: anotherShape [
 	| b |
 	self move: aShape onTheLeftOf: anotherShape. 
@@ -148,7 +165,7 @@ TRConstraint class >> stick: aShape onTheLeftOf: anotherShape [
 	anotherShape addCallback: (TRExtentCallback block: b) 
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
 	| b |
 	self move: aShape onTheRightOf: anotherShape. 
@@ -159,7 +176,29 @@ TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
 	
 ]
 
-{ #category : #public }
+{ #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheTopLeftOf: anotherShape [
+	| b |
+	self move: aShape onTheTopLeftOf: anotherShape. 
+	
+	b := [ :shape :step | self move: aShape onTheTopLeftOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
+	
+]
+
+{ #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheTopLeftOf: anotherShape withPadding: padding [
+	| b |
+	self move: aShape onTheTopLeftOf: anotherShape withPadding: padding. 
+	
+	b := [ :shape :step | self move: aShape onTheTopLeftOf: anotherShape withPadding: padding ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
+	
+]
+
+{ #category : #'public - sticking' }
 TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
 	self moveAtTheBottomOfTheWindow: trachelShape.
 	trachelShape canvas
@@ -167,7 +206,7 @@ TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
 		do: [ :event | self moveAtTheBottomOfTheWindow: trachelShape ]
 ]
 
-{ #category : #camera }
+{ #category : #'public - camera' }
 TRConstraint class >> stickCameraToTheRightIn: trachelCanvas [
 	trachelCanvas
 		when: TRResizeCanvasEvent
