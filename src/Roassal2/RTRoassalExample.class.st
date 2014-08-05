@@ -1422,6 +1422,30 @@ OgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDoubleClick [
+
+| v es |
+v := RTView new.
+es := (RTBox new color: Color purple; size: 25) elementsOn: (1 to: 100).
+es when: TRMouseDoubleClick do: [ :e | e element trachelShape color: Color red. v signalUpdate ].
+v addAll: es.
+RTGridLayout on: v elements.
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDoubleClickIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABNElEQVR4XuXWsQ0AIQwEQVdL
+T1RrCiBAIuHErPSJQ+ZBrm6/pMo/Ah/EzwfxQfx8EB/EzwfxQfx8EB/Ezwfx80F8ED8fxAfx
+80F8ED8fxAfx80H8fBAfxM8H8UH8fBAfxC8XZNTcPn9+nvsgPog/90F8EP+A40D8/C3LvyE+
+iA/ig/ggPogP4m9Z/pblz/0nywfxD9gH8UF8EH/L8vNviP9k+SA+iA/iz30Qf8vy87cs/4b4
+ID6ID+KD+CA+iL9l+VuWP/efLB/EP3gfxAfxQfwty9+y/BviP1k+iA/ig/hzH8Tfsvz8Lev5
+H+yD+CA+iA/ig/gg34D4+SA+iJ8P4ueD+CB+PogP4ueD+CB+PogP4ueD+PkgPoifD+KD+Pkg
+PoifD+KD+Pkgfj6ID+Lng/ggftct4d43QXzhOT8AAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleDynamicBezierEdges [
 
 	| v es |

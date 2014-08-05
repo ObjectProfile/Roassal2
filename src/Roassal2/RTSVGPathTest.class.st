@@ -14,7 +14,7 @@ RTSVGPathTest >> testIncludesPointBasic [
 	self assert: (e trachelShape includesPoint: 200@80) not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
 	res := '{#m->{(100.0@100.0)}. #l->{(300.0@100.0)}. #l->{(200.0@300.0)}. #l->{(100.0@100.0)}}'.
@@ -32,7 +32,7 @@ RTSVGPathTest >> testParseSimple [
 	self assert: p2 = res."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testTranslateBy [
 	| v e |
 	v := RTView new.
@@ -44,7 +44,7 @@ RTSVGPathTest >> testTranslateBy [
 	self assert: (e trachelShape includesPoint: 0@0) not.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testTranslateTo [
 	| v e |
 	v := RTView new.
