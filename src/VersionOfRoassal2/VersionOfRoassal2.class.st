@@ -4227,3 +4227,14 @@ VersionOfRoassal2 >> version000335 [
 	at: #date put: '6 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000336 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-VincentBlondeau.180';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.425';
+	at: #version put: '0.336';
+	at: #comment put: '0.336 : Fixed a problem with force based layout and group of groups. Added an example. Thanks Usamn for having spotted that bug';
+	at: #date put: '6 August 2014';
+	yourself
+]
