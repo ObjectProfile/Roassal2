@@ -14,6 +14,13 @@ RTTabTable >> attributes [
 	^ attributes
 ]
 
+{ #category : #updating }
+RTTabTable >> breakDown: l usingDelimiters: delimitersAsCharacter [
+	^ l subStringsKeepingEmptyFields: delimitersAsCharacter
+	
+
+]
+
 { #category : #converting }
 RTTabTable >> convertColumn: index to: blockForConvertion [
 	"Convert a column of the table"
@@ -89,9 +96,11 @@ RTTabTable >> input: txt [
 { #category : #updating }
 RTTabTable >> input: txt usingDelimiter: delimitersAsCharacter [
 	"txt is a large string in which we have one entry per line"
-	values := (txt lines select: #notEmpty
-						thenCollect: [ :l | l subStringsKeepingEmptyFields: delimitersAsCharacter asString ])
-						select: #notEmpty
+
+	values := (txt lines 
+					select: #notEmpty 
+					thenCollect: [ :l | self breakDown: l usingDelimiters: delimitersAsCharacter asString ])
+		select: #notEmpty
 ]
 
 { #category : #updating }
