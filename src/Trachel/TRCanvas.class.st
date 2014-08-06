@@ -10,7 +10,8 @@ Class {
 		'morph',
 		'camera',
 		'announcer',
-		'color'
+		'color',
+		'session'
 	],
 	#category : #'Trachel-Core'
 }
@@ -97,7 +98,7 @@ TRCanvas >> announcer: anAnnouncer [
 
 { #category : #accessing }
 TRCanvas >> athensCanvas [
-	^ canvas
+	^ self canvas
 ]
 
 { #category : #building }
@@ -131,7 +132,7 @@ TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 TRCanvas >> buildMorph [
 	morph := self morphClass new
 		canvas: self;
-		extent: canvas extent.
+		extent: self canvas extent.
 	^ morph
 ]
 
@@ -147,6 +148,15 @@ TRCanvas >> buildRectangle: aRectangle color: aColor [
 { #category : #accessing }
 TRCanvas >> camera [
 	^ camera
+]
+
+{ #category : #events }
+TRCanvas >> canvas [
+	session == Smalltalk session
+		ifFalse: [ 
+			canvas := AthensCairoSurface extent: extent asIntegerPoint.
+			session := Smalltalk session ].
+	^ canvas
 ]
 
 { #category : #action }
@@ -223,6 +233,7 @@ TRCanvas >> initialize [
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
 	color := Color white.
+	session := Smalltalk session
 ]
 
 { #category : #testing }

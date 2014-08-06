@@ -10,7 +10,8 @@ Class {
 		'element',
 		'callbacks',
 		'matrix',
-		'rotationAngleDegrees'
+		'rotationAngleDegrees',
+		'session'
 	],
 	#category : #'Trachel-Core'
 }
@@ -70,9 +71,9 @@ TRShape >> canvas [
 ]
 
 { #category : #accessing }
-TRShape >> canvas: aSurface [
-	"aCanvas is a AthensCairoSurface"
-	canvas := aSurface
+TRShape >> canvas: aTRCanvas [
+	"aCanvas is a TRCanvas"
+	canvas := aTRCanvas
 ]
 
 { #category : #accessing }
@@ -190,6 +191,7 @@ TRShape >> initialize [
 	matrix := AthensAffineTransform new.
 	rotationAngleDegrees := 0.
 	self position: 0 @ 0.
+	session := Smalltalk session.
 ]
 
 { #category : #testing }
@@ -228,6 +230,8 @@ TRShape >> noBorder [
 
 { #category : #private }
 TRShape >> path [
+	session == Smalltalk session
+		ifFalse: [ path := nil ].
 	path ifNil: [ self computePath ].
 	^ path
 ]

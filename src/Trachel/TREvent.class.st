@@ -17,7 +17,6 @@ TREvent >> canvas [
 
 { #category : #accessing }
 TREvent >> canvas: aTrachelCanvas [
-	
 	canvas := aTrachelCanvas
 ]
 

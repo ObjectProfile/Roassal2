@@ -21,7 +21,9 @@ TRMorph >> canvas: aTrachelCanvas [
 { #category : #'session management' }
 TRMorph >> checkSession [
 	session == Smalltalk session
-		ifFalse: [ surface := nil. self createSurface ]
+		ifFalse: [ 
+			surface := nil.
+			self createSurface ]
 ]
 
 { #category : #'session management' }
@@ -143,6 +145,7 @@ TRMorph >> isDragging [
 TRMorph >> layoutChanged [ 
 	"react on morph resize"
 	super layoutChanged.
+	self checkSession.
 	surface ifNotNil: [  
 		self extent asIntegerPoint ~= surface extent ifTrue: [ 
 			self createSurface.
