@@ -131,6 +131,11 @@ RTGroup >> translateTopLeftTo: aPosition [
 	self translateBy: (aPosition - center)
 ]
 
+{ #category : #accessing }
+RTGroup >> view [
+	^ self anyOne view
+]
+
 { #category : #public }
 RTGroup >> when: evt do: callback [
 	self do: [ :e | e when: evt do: callback ]
