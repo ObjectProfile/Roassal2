@@ -4205,3 +4205,14 @@ VersionOfRoassal2 >> version000333 [
 	at: #date put: '6 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000334 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-VincentBlondeau.180';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.423';
+	at: #version put: '0.334';
+	at: #comment put: '0.334 : Fixed  RTTable does not parse commas inside quotes correcly identified by Serge S.';
+	at: #date put: '6 August 2014';
+	yourself
+]
