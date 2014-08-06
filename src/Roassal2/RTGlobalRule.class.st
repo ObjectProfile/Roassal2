@@ -7,29 +7,29 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGlobalRule >> distinctColor [
 	| normalizer |
 	normalizer := RTMultiLinearColorForIdentity new objects: elements.
 	elements do: [ :el | el trachelShape color: (normalizer rtValue: el) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGlobalRule >> elements: someElements [
 	elements := someElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #shapes }
 RTGlobalRule >> labelled [
 	^ self labelledIf: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGlobalRule >> labelledIf: aBlock [
 	elements do: [ :el | (aBlock rtValue: el model) ifTrue: [ el @ RTLabelled ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGlobalRule >> view: aView [
 	self elements: aView elements
 ]

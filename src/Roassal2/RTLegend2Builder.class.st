@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Legend'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTLegend2Builder >> addColor: aColor text: aText [
 	| g |
 	g := RTGroup new.
@@ -17,18 +17,18 @@ RTLegend2Builder >> addColor: aColor text: aText [
 	group add: g.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTLegend2Builder >> addText: aText [
 	group add: (RTGroup new add: (RTLabel elementOn: aText); yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLegend2Builder >> initialize [
 	super initialize.
 	group := RTGroup new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTLegend2Builder >> renderIn: aView [
 	| background |
 	super renderIn: aView.
