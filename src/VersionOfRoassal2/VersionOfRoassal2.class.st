@@ -4194,3 +4194,14 @@ There are one crutial differences between #path: and #centeredPath:
 	at: #date put: '5 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000333 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-VincentBlondeau.180';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.422';
+	at: #version put: '0.333';
+	at: #comment put: '0.333 : Trachel now handles sessions. Yupi!!! Finally!';
+	at: #date put: '6 August 2014';
+	yourself
+]
