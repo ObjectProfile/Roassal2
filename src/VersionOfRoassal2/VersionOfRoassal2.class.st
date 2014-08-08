@@ -4249,3 +4249,14 @@ VersionOfRoassal2 >> version000337 [
 	at: #date put: '8 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000338 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-VincentBlondeau.180';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.426';
+	at: #version put: '0.338';
+	at: #comment put: '0.338 : Added version by Vincent Bondeau about managing the session in Trachel';
+	at: #date put: '8 August 2014';
+	yourself
+]
