@@ -7,24 +7,24 @@ Class {
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTMultiLinearColorForIdentity >> initialize [
 	super initialize.
 	self colors: (ColorPalette qualitative colors: 12 scheme: 'Set3').
 	objects := #()
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTMultiLinearColorForIdentity >> numberOfColors: aValue [
 	^ self objects: (1 to: aValue)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTMultiLinearColorForIdentity >> objects: someObjects [
 	objects := someObjects
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMultiLinearColorForIdentity >> rtValue: anObject [
 	^ self level: (objects indexOf: anObject) - 1 / objects size
 ]
