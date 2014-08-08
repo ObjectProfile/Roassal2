@@ -25,6 +25,7 @@ RTCharterBuilder >> allPoints [
 
 { #category : #public }
 RTCharterBuilder >> allX: metricAsBlockOrSymbol [
+	"THIS METHOD PROBABLY DOES NOT WORK."
 	| vs |
 	RTMetricNormalizer new
 		elements: self allPoints;
@@ -41,36 +42,37 @@ RTCharterBuilder >> allX: metricAsBlockOrSymbol [
 { #category : #public }
 RTCharterBuilder >> allY: metricAsBlockOrSymbol [
 	| vs |
-	RTMetricNormalizer new
-		elements: self allPoints;
-		normalizeY: metricAsBlockOrSymbol min: 0 max: extent y negated minValue: 0.
-		
 	"We compute the min and the max, useful for labelling"
 	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
 
+	RTMetricNormalizer new
+		elements: self allPoints;
+		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) ] min: 0 max: extent y negated minValue: minY maxValue: maxY.
 
 ]
 
 { #category : #'public axis' }
-RTCharterBuilder >> axisTo: aPosition configuration: config [
+RTCharterBuilder >> axisFrom: fromPosition to: toPosition configuration: config [
 	"config is an instance of RTAxisConfiguration"
 
-	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue |
+	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue centralPoint |
 	"We add the ticks"
 	nbOfTicks := config numberOfTicks.
 	nbOfLabels := config numberOfLabels.
 	minValue := config minValue.
 	maxValue := config maxValue.
-	self rawAxisTo: aPosition.
+	self rawAxisFrom: fromPosition to: toPosition.
 	tickShape := RTBox new height: 10; width: 5.
 	ticks := tickShape elementsOn: (0 to: nbOfTicks).
-	ticks rotateByDegrees: aPosition angle radiansToDegrees abs.
+	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees abs.
 	view addAll: ticks.
+	
+	centralPoint := self centralPoint.
 	RTMetricNormalizer new
 		elements: ticks;
-		normalizePosition: [ :v | v @ v ] min: 0 @ 0 max: aPosition.	
+		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.	
 
 	"We add the labels"
 	nbOfLabels = 0
@@ -87,25 +89,26 @@ RTCharterBuilder >> axisTo: aPosition configuration: config [
 	labels do: [ :e | e trachelShape pushBack ]
 ]
 
-{ #category : #'public axis' }
-RTCharterBuilder >> axisX [
-	self rawAxisTo: extent x @ 0 
+{ #category : #utility }
+RTCharterBuilder >> axisPointFor: aPoint [
+	"Return the position in the view to have the 0 @ 0"
+	| centralPointX centralPointY |
+	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - minX) / (maxX - minX))) asInteger.
+	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - minY) / (maxY - minY))) asInteger.
+	^ centralPointX @ centralPointY negated.
+
 ]
 
 { #category : #'public axis' }
-RTCharterBuilder >> axisXNoLabelledWithNumberOfTicks: nbOfTicks [
-	| config |
-	config := RTAxisConfiguration new
-					numberOfTicks: nbOfTicks;
-					minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
-					maxValue: maxX.
-	self axisTo: extent x @ 0 configuration: config.
-	
+RTCharterBuilder >> axisX [
+	| centralPoint |
+	centralPoint := self centralPoint.
+	self rawAxisFrom: 0 @ centralPoint y to: extent x @ centralPoint y 
 ]
 
 { #category : #'public axis' }
 RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
-	| config |
+	| config centralPoint |
 	config := RTAxisConfiguration new
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
@@ -113,18 +116,22 @@ RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 					maxValue: maxX;					
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
-	self axisTo: extent x @ 0 configuration: config.
+	centralPoint := self centralPoint.
+	self axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y configuration: config.
 	
 ]
 
 { #category : #'public axis' }
 RTCharterBuilder >> axisY [
-	self rawAxisTo: 0 @ extent y negated
+	| centralPoint |
+	centralPoint := self centralPoint.
+	self rawAxisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
+	
 ]
 
 { #category : #'public axis' }
 RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
-	| config |
+	| config centralPoint |
 	config := RTAxisConfiguration new
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
@@ -132,8 +139,21 @@ RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 					maxValue: maxY;
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ].
-	self axisTo: 0 @ extent y negated configuration: config.
+	centralPoint := self centralPoint.
+	self axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated configuration: config.
 	
+]
+
+{ #category : #utility }
+RTCharterBuilder >> bottomPoint [
+	"Return the position in the view to have the 0 @ 0"
+	^ self axisPointFor: 0 @ minY
+]
+
+{ #category : #utility }
+RTCharterBuilder >> centralPoint [
+	"Return the position in the view to have the 0 @ 0"
+	^ self axisPointFor: 0 @ 0
 ]
 
 { #category : #public }
@@ -179,14 +199,12 @@ RTCharterBuilder >> curveColor: aColor [
 RTCharterBuilder >> curveUsing: aLineShape [
 	"connect the points in the order they have been added"
 
-	| models |
 	"This is highly inefficent."
-	models := lastAddedElements collect: #model.
 	RTMetricNormalizer new
 		elements: lastAddedElements;
-		normalizeX: [ :m | models indexOf: m ] min: 0 max: extent x.
+		normalizeElementX: [ :element | lastAddedElements indexOf: element ] min: 0 max: extent x minValue: 1 maxValue: lastAddedElements size.
 	minX := 0.
-	maxX := models size - 1.
+	maxX := lastAddedElements size - 1.
 	self connectDotUsing: aLineShape
 ]
 
@@ -402,6 +420,12 @@ RTCharterBuilder >> initialize [
 	allPointElements := OrderedCollection new
 ]
 
+{ #category : #utility }
+RTCharterBuilder >> leftPoint [
+	"Return the position in the view to have the 0 @ 0"
+	^ self axisPointFor: minX @ 0
+]
+
 { #category : #public }
 RTCharterBuilder >> points: objects [
 	"the argument is a collection of objects. Any objects may be provided here"
@@ -412,14 +436,43 @@ RTCharterBuilder >> points: objects [
 ]
 
 { #category : #utility }
-RTCharterBuilder >> rawAxisTo: aPosition [
+RTCharterBuilder >> rawAxisFrom: aPositionFrom to: aPositionTo [
 	| edge ex2 ex1 |
+	"centralPoint := extent x / 2 @ extent y negated / 2."
+"	centralPointX := minX + ((maxX - minX) * ( (t - minValue) / (extent x - minValue))) asInteger.
+"			
 	ex1 := (RTBox new size: 0) element.
 	ex2 := (RTBox new size: 0) element.
-	ex2 translateTo: aPosition.
+	ex2 translateTo: (aPositionTo).
+	ex1 translateTo: (aPositionFrom).
 	edge := RTLine edgeFrom: ex1 to: ex2.
 	view add: ex1; add: ex2.
 	view add: edge
+]
+
+{ #category : #utility }
+RTCharterBuilder >> rawAxisTo: aPosition [
+	| edge ex2 ex1 centralPointX centralPointY centralPoint |
+	"centralPoint := extent x / 2 @ extent y negated / 2."
+"	centralPointX := minX + ((maxX - minX) * ( (t - minValue) / (extent x - minValue))) asInteger.
+"		
+	centralPointX := 0 + ((extent x - 0) * ( (0 - minX) / (maxX - minX))) asInteger.
+	centralPointY := 0 + ((extent y - 0) * ( (0 - minY) / (maxY - minY))) asInteger.
+	centralPoint := centralPointX @ centralPointY negated.
+	
+	ex1 := (RTBox new size: 0) element.
+	ex2 := (RTBox new size: 0) element.
+	ex2 translateTo: (centralPoint + aPosition).
+	ex1 translateTo: (centralPoint).
+	edge := RTLine edgeFrom: ex1 to: ex2.
+	view add: ex1; add: ex2.
+	view add: edge
+]
+
+{ #category : #utility }
+RTCharterBuilder >> rightPoint [
+	"Return the position in the view to have the 0 @ 0"
+	^ self axisPointFor: maxX @ 0
 ]
 
 { #category : #public }
@@ -440,11 +493,18 @@ RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue usin
 RTCharterBuilder >> stackX [
 
 	maxX := allPointElements inject: 0 into: [ :m :cs | m max: cs size ].
+
 	allPointElements do: [ :points | 
 		RTMetricNormalizer new
 			elements: points;
-			normalizeElementX: [ :o | (points indexOf: o) ] min: 0 max: extent x minValue: 0 maxValue: maxX
+			normalizeElementX: [ :o | (points indexOf: o) - 1 ] min: 0 max: extent x minValue: -1 maxValue: maxX - 1
 	].
+]
+
+{ #category : #utility }
+RTCharterBuilder >> topPoint [
+	"Return the position in the view to have the 0 @ 0"
+	^ self axisPointFor: 0 @ maxY
 ]
 
 { #category : #public }
@@ -464,6 +524,7 @@ RTCharterBuilder >> x: metricAsBlockOrSymbol [
 RTCharterBuilder >> y: metricAsBlockOrSymbol [
 
 	| vs |
+
 	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
@@ -479,6 +540,6 @@ RTCharterBuilder >> y: metricAsBlockOrSymbol min: aMin max: aMax [
 
 	RTMetricNormalizer new
 		elements: lastAddedElements;
-		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) / maxY ] min: 0 max: extent y negated minValue: 0.
+		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) ] min: 0 max: extent y negated minValue: minY maxValue: maxY.
 
 ]
