@@ -4238,3 +4238,14 @@ VersionOfRoassal2 >> version000336 [
 	at: #date put: '6 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000337 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-VincentBlondeau.180';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.426';
+	at: #version put: '0.337';
+	at: #comment put: '0.337 : Minor cleaning. Method protocol reclassified';
+	at: #date put: '8 August 2014';
+	yourself
+]
