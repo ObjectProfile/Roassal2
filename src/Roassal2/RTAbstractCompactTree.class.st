@@ -58,7 +58,7 @@ RTAbstractCompactTree class >> horizontalGap: anInt verticalGap: another [
 
 { #category : #testing }
 RTAbstractCompactTree class >> isAbstract [
-	^ self = RTAbstractCompactTree
+	^ self name = #RTAbstractCompactTree
 
 
 ]

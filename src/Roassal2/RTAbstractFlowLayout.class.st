@@ -8,9 +8,9 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAbstractFlowLayout class >> isAbstract [
-	^ self name = #ROAbstractFlowLayout
+	^ self name = #RTAbstractFlowLayout
 ]
 
 { #category : #'instance creation' }

@@ -38,7 +38,7 @@ Class {
 
 { #category : #public }
 RTLayout class >> isAbstract [
-	^ self name =  #ROLayout
+	^ self name = #RTLayout
 ]
 
 { #category : #public }

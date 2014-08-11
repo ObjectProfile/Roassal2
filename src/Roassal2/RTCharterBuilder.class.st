@@ -13,19 +13,6 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #public }
-RTCharterBuilder >> adjustMinAndMaxValues [
-	minY > 0
-		ifTrue: [ minY := 0 ].
-	maxY < 0
-		ifTrue: [ maxY := 0 ].
-		
-	minX > 0
-		ifTrue: [ minX := 0 ].
-	maxX < 0
-		ifTrue: [ maxX := 0 ].
-]
-
 { #category : #accessing }
 RTCharterBuilder >> allPointElements [
 	^ allPointElements
@@ -60,9 +47,6 @@ RTCharterBuilder >> allY: metricAsBlockOrSymbol [
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
 
-	self adjustMinAndMaxValues.
-	
-	"We normalize the things"
 	RTMetricNormalizer new
 		elements: self allPoints;
 		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) ] min: 0 max: extent y negated minValue: minY maxValue: maxY.
@@ -550,14 +534,12 @@ RTCharterBuilder >> y: metricAsBlockOrSymbol [
 
 { #category : #public }
 RTCharterBuilder >> y: metricAsBlockOrSymbol min: aMin max: aMax [
+
 	minY := aMin.
-	maxY := aMax.	"Ensure that 0 is between [ minY ; maxY ]"
-	self adjustMinAndMaxValues.
+	maxY := aMax.
+
 	RTMetricNormalizer new
 		elements: lastAddedElements;
-		normalizeY: [ :model | metricAsBlockOrSymbol rtValue: model ]
-			min: 0
-			max: extent y negated
-			minValue: minY
-			maxValue: maxY
+		normalizeY: [ :model | (metricAsBlockOrSymbol rtValue: model) ] min: 0 max: extent y negated minValue: minY maxValue: maxY.
+
 ]

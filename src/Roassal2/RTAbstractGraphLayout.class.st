@@ -45,7 +45,7 @@ RTAbstractGraphLayout class >> horizontalGap [
 
 { #category : #testing }
 RTAbstractGraphLayout class >> isAbstract [
-	^ self = RTAbstractGraphLayout
+	^ self name = #RTAbstractGraphLayout
 ]
 
 { #category : #public }

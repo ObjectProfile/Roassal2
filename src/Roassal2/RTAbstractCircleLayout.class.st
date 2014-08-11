@@ -32,9 +32,9 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAbstractCircleLayout class >> isAbstract [
-	^ self name = #ROAbstractCircleLayout
+	^ self name = #RTAbstractCircleLayout
 ]
 
 { #category : #accessing }

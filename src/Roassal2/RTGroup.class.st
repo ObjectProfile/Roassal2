@@ -1,6 +1,9 @@
 Class {
 	#name : #RTGroup,
 	#superclass : #OrderedCollection,
+	#instVars : [
+		'attributes'
+	],
 	#category : #'Roassal2-Core'
 }
 
@@ -34,6 +37,30 @@ RTGroup >> asGroup [
 	^ self
 ]
 
+{ #category : #attributes }
+RTGroup >> attributeAt: aKey [
+	^ self attributes at: aKey
+]
+
+{ #category : #attributes }
+RTGroup >> attributeAt: aKey ifAbsent: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsent: aBlockClosure 
+]
+
+{ #category : #attributes }
+RTGroup >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
+]
+
+{ #category : #attributes }
+RTGroup >> attributes [
+	"Return the list of attributes associated to the element. Attributes are useful for caching values"
+
+	^ attributes ifNil: [ attributes := Dictionary new ]
+]
+
 { #category : #public }
 RTGroup >> center [
 	^ self encompassingRectangle center
@@ -55,6 +82,20 @@ RTGroup >> encompassingRectangle [
 { #category : #public }
 RTGroup >> extent [
 	^ self encompassingRectangle extent
+]
+
+{ #category : #attributes }
+RTGroup >> hasAttribute: aKey [ 
+	"Return true if attributes includes aKey"
+	
+	^ attributes notNil and: [ attributes includesKey: aKey ]
+]
+
+{ #category : #attributes }
+RTGroup >> hasAttributes [ 
+	"Return true if at least one attributes is present"
+	
+	^ attributes notNil and: [ attributes notEmpty ]
 ]
 
 { #category : #public }
@@ -84,6 +125,16 @@ RTGroup >> position [
 { #category : #public }
 RTGroup >> remove [
 	self do: #remove
+]
+
+{ #category : #attributes }
+RTGroup >> removeAttributeAt: aKey [
+	^ self attributes removeKey: aKey
+]
+
+{ #category : #attributes }
+RTGroup >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
+	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
 ]
 
 { #category : #public }

@@ -54,7 +54,7 @@ Class {
 
 { #category : #testing }
 RTAbstractLineLayout class >> isAbstract [
-	^ self name =  #ROAbstractLineLayout
+	^ self name = #RTAbstractLineLayout
 ]
 
 { #category : #'instance creation' }

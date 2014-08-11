@@ -47,25 +47,6 @@ RTCharterBuilderTest >> testCurveAndTotalWidthAndScatterplot [
 ]
 
 { #category : #tests }
-RTCharterBuilderTest >> testHistogramAndXAxis [
-	| b view |
-	b := RTCharterBuilder new.
-	b extent: 200 @ 200.
-	b points: { 10 . 5 . 2 }.
-	b stackX.
-	b y: #yourself.
-	b histogramBarWidth: 10.
-	b axisXWithNumberOfTicks: 1.
-	b axisYWithNumberOfTicks: 4.
-	b build.
-	view := b view.
-	self assert: view numberOfEdges equals: 2.
-	self assert: view edges first from position equals: (0 @ 0).
-	
-	
-]
-
-{ #category : #tests }
 RTCharterBuilderTest >> testMultipleCurve [
 
 	| b expectedResult |
@@ -88,26 +69,6 @@ RTCharterBuilderTest >> testMultipleCurve [
 	
 	expectedResult := ((Array new: 8) at: 1 put: ((25@0)); at: 2 put: ((50@ -3)); at: 3 put: ((75@ -6)); at: 4 put: ((100@ -10)); at: 5 put: ((25@0)); at: 6 put: ((50@ -33)); at: 7 put: ((75@ -66)); at: 8 put: ((100@ -100)); yourself).
 	self assert: (b allPoints collect: [ :el | el position asIntegerPoint ]) asArray equals: expectedResult
-]
-
-{ #category : #tests }
-RTCharterBuilderTest >> testMultiplePointSetsAndAxis [
-
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 200 @ 200.
-	b points: { 5 }.
-	b points: { 1 }.
-
-	b allY: #yourself.
-	b stackX.
-
-	b axisXWithNumberOfTicks: 1.
-	b axisYWithNumberOfTicks: 1.
-	b build.
-	
-	self assert: b allPoints size equals: 2.
-	self assert: b centralPoint equals: 0 @ 0
 ]
 
 { #category : #tests }
@@ -142,22 +103,6 @@ RTCharterBuilderTest >> testNegativeValuesAndAxisX [
 	self assert: view edges size equals: 1.
 	edge := view edges anyOne.
 	self assert: edge from position equals: (0 @ -100)
-]
-
-{ #category : #tests }
-RTCharterBuilderTest >> testPointsAndAxis [
-
-	| b view |
-	b := RTCharterBuilder new.
-	b points: { 1 @ 1 . 5 @ 5 }.
-	b x: #x; y: #y.
-	b axisX.
-	b axisY.
-	b build.
-	
-	view := b view.
-	self assert: view edges first from position equals: 0 @ 0.
-	self assert: view edges second from position equals: 0 @ 0.
 ]
 
 { #category : #tests }

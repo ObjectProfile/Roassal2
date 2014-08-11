@@ -24,7 +24,7 @@ Class {
 
 { #category : #public }
 RTAbstractGridLayout class >> isAbstract [
-	^ self name =  #ROAbstractGridLayout
+	^ self name = #RTAbstractGridLayout
 ]
 
 { #category : #public }

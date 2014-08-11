@@ -353,7 +353,7 @@ RTCharterExample >> exampleScatterPlot [
 	b interaction popup.
 	b shape ellipse size: 15; color: (Color red alpha: 0.3).
 	b points: RTObject withAllSubclasses.
-	b x: #numberOfMethods; y: #numberOfVariables.
+	b x: #numberOfMethods; y: #numberOfVariables min: 0 max: 10.
 	b size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
 	
 	b axisXWithNumberOfTicks: 3.
@@ -436,7 +436,7 @@ RTCharterExample >> exampleScatterplotWithHighlighting [
 	b interaction popup.
 	b shape ellipse size: 15; color: (Color red alpha: 0.3).
 	b points: RTObject withAllSubclasses.
-	b x: #numberOfMethods; y: #numberOfVariables.
+	b x: #numberOfMethods; y: #numberOfVariables min: 0 max: 10.
 	b size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
 	
 	b axisXWithNumberOfTicks: 3.
@@ -579,20 +579,21 @@ It/Y2ODveJ/EP4bwA+EXPxB+IPziB8IPhF/8QPiB8IsfCD8QfvED4Rc/EH4g/OIHwg+EX/xA
 RTCharterExample >> exampleStackingX [
 
 	| b |
-	b := RTCharterBuilder new.
-	b extent: 400 @ 300.
-	b points: { 5 . 6 . 7 }.
-	b connectDotColor: Color red.
+b := RTCharterBuilder new.
+b extent: 400 @ 300.
+b points: { 5 . 6 . 7 }.
+b connectDotColor: Color red.
 
-	b points: { 1 . 7 . 10 . 4 }.
-	b connectDotColor: Color blue.
-	 
-	b allY: #yourself.
-	b stackX.
+b points: { 1 .7 . 10 . 4 }.
+b connectDotColor: Color blue.
+ 
+b allY: #yourself.
+b stackX.
 
-	b axisXWithNumberOfTicks: 4.
-	b axisYWithNumberOfTicks: 4.
-	b open.
+b axisXWithNumberOfTicks: 4.
+b axisYWithNumberOfTicks: 4.
+b open.
+	b view canvas
 ]
 
 { #category : #sources }

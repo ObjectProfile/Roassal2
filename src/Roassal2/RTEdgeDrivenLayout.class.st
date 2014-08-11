@@ -33,6 +33,11 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTEdgeDrivenLayout class >> isAbstract [
+	^ self = RTEdgeDrivenLayout
+]
+
+{ #category : #public }
 RTEdgeDrivenLayout class >> on: elements edges: edges [
 	^ self new on: elements edges: edges
 ]
