@@ -32,6 +32,82 @@ Class {
 }
 
 { #category : #sources }
+RTCharterExample >> exampleAgeOfRoassalAndTrachel [
+
+| methodsRoassal methodsTrachel greatestAge b | 
+methodsRoassal := RTObject withAllSubclasses flatCollect: #methods.
+methodsTrachel := TRObject withAllSubclasses flatCollect: #methods.
+
+methodsRoassal := methodsRoassal select: [ :m | m numberOfLinesOfCode < 300 ].
+methodsTrachel := methodsTrachel select: [ :m | m numberOfLinesOfCode < 300 ].
+
+greatestAge := (methodsTrachel , methodsRoassal collect: [ :m | m date asUnixTime ]) min.
+
+b := RTCharterBuilder new.
+b extent: 300 @ 300.
+b interaction popup.
+
+b shape circle color: (Color blue alpha: 0.3); size: 5.
+b points: methodsRoassal.
+
+b shape circle color: (Color red alpha: 0.3); size: 5.
+b points: methodsTrachel.
+
+b allX: [ :m | (m date asUnixTime - greatestAge) / 3600 ] .
+b allY: #numberOfLinesOfCode.
+
+b axisXWithNumberOfTicks: 4.
+b axisYWithNumberOfTicks: 4.
+b open.
+
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleAgeOfRoassalAndTrachelIcon [
+	^ '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
+AElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleCosAndSin [
 
 | b |
