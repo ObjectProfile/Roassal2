@@ -29,6 +29,7 @@ TRBitmapShape >> drawOn: athensCanvas [
 	| paint |
 	athensCanvas pathTransform restoreAfter: [
 		"athensCanvas pathTransform translateBy: (self center - (self extent / 2)) asFloatPoint."
+		athensCanvas setShape: (0@0 extent: self extent).
 		athensCanvas pathTransform translateBy: self encompassingRectangle topLeft asFloatPoint.
 		self form ifNotNil: [ 
 			 paint := (athensCanvas cacheAt: self form
