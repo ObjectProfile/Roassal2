@@ -31,7 +31,7 @@ RTBitmap >> updateFor: anElement trachelShape: trachelShape [
 	form isNil ifTrue: 
 		[ ex := (self widthFor: anElement) @ (self heightFor: anElement).
 		  trachelShape extent: ex.
-		   ^ self ].
+		  ^ self ].
 	
 	trachelShape form: self form
 
