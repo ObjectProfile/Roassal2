@@ -4293,3 +4293,14 @@ VersionOfRoassal2 >> version000341 [
 	at: #date put: '12 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000342 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.182';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.430';
+	at: #version put: '0.342';
+	at: #comment put: '0.342 : Fix in the TRBitmapShape class. Spotted by Nicolas Heiss. Thanks!!';
+	at: #date put: '12 August 2014';
+	yourself
+]
