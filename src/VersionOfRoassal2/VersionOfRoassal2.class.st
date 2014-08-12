@@ -4282,3 +4282,14 @@ VersionOfRoassal2 >> version000340 [
 	at: #date put: '11 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000341 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.181';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.430';
+	at: #version put: '0.341';
+	at: #comment put: '0.341 : Improvement of Charter. Examples have been added. Test on bitmap has been added. The method TRSVGPath>>includesPoint: has been improved. Thanks Natalia for this!';
+	at: #date put: '12 August 2014';
+	yourself
+]
