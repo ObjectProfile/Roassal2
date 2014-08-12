@@ -220,13 +220,10 @@ TRSVGPath >> height [
 
 { #category : #testing }
 TRSVGPath >> includesPoint: aPoint [
-	|apt invertedPoint result |
+	|apt invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
 	apt := AthensPolygonTester new.
-	result := polygons inject: false into: [ :accumulatedResult :eachPolygon |
-		accumulatedResult or: ((apt polygon: eachPolygon) includesPoint: invertedPoint)
-	].
-	^ result
+	^ polygons anySatisfy: [ :eachPolygon | ((apt polygon: eachPolygon) includesPoint: invertedPoint) ]
 ]
 
 { #category : #initialization }
