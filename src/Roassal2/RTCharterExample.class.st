@@ -166,6 +166,76 @@ fCD4hg8E3P4AVhfZNUN554EAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleEbola [
+
+| tab data b |
+tab := RTTabTable new input: (ZnEasy get: 'http://mapstory.org/geoserver/wfs?typename=geonode%3AEbola2&outputFormat=csv&version=1.0.0&request=GetFeature&service=WFS') contents usingDelimiter: $,.
+tab removeFirstRow.
+tab replaceEmptyValuesWith: '0' inColumns: #(10 11).
+tab convertColumnsAsInteger: #(10 11).
+tab convertColumnsAsDateAndTime: #(3 4).
+data := tab values reversed.
+
+"We chart all this"
+b := RTCharterBuilder new.
+b extent: 400 @ 200.
+b shape ellipse 
+	color: (Color blue alpha: 0.3);
+	size: [ :row | (row at: 11) / 5 ].
+b points: data.
+b connectDotColor: Color blue.
+b allY: [ :r | r at: 10 ].
+b stackX.
+
+b axisX.
+b axisY.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleEbolaIcon [
+	^ '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
+BAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleFunctions [
 
 	| b |
@@ -375,6 +445,64 @@ a+n65NG8vN02P6vrD0TlbbOaG8hNhrRFaGdnB7WazGsmr/uQN5Omi9+AJx0i7+X+/fvZ60Tk
 g0rJktZorj8QlbfNin/IuiuJIb/4gfAD4Rc/EH4g/C7gB8IvfiD8QPjFD4QfCL/4gfAD4Rc/
 EH4g/OIHwi9+IPxA+MUPhB8Iv/iB8APhFz8QfiD84gfCL34g/ED4Nbf+AbGTEF2Ps5t9AAAA
 AElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTCharterExample >> exampleMethods [
+
+	| methods trachelMethods b |
+	methods := Collection withAllSubclasses flatCollect: #methods.
+	trachelMethods := TRObject withAllSubclasses flatCollect: #methods.
+
+	b := RTCharterBuilder new.
+	b extent: 200 @ 200.
+
+	"Data set 1"
+	b shape circle color: (Color red alpha: 0.3).
+	b points: methods.
+
+	"Data set 2"
+	b shape circle color: (Color blue alpha: 0.3).
+	b points: trachelMethods.
+
+	"The same metrics for all data points"
+	b allX: #numberOfLinesOfCode.
+	b allY: [ :m | m getSource size ].
+
+	b axisConfiguration withThousandsSeparator.
+	b axisXTitled: 'LOC'.
+	b axisYTitled: 'Size'.
+	b open
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleMethodsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFJ0lEQVR4XuWcb0hbVxjGjx82
+Co5R+mGD9cM+jH0Z3coGWwdjDD8UaWFQOgZ+7JpPpd/mPrRQtGCUqTArRGfSuVXBjrTUCLai
+MWLUOPwbjU7FNIKVoUsgVUFTEfNk5xybkGWaObrG630eOMTc+3LB93dz3vO+571XJBL8MpIE
+vwv4gfCLHwg/EH7xA+EHwi9+IPxA+MUPhB8Iv/iB8IsfCD8QfvED4QfCL34g/ED4xQ+EHwi/
++IHwix8IPxB+8QPhB8IvfiD8QPjFD4QfyP+sxcVFtLa2ore3F2tra1hYWMDIyAhKS0sT6+vr
+GB0dRbr98vIy1DgsR0QigBqmBeL3+1FZWamH0+lET08P7HY7LBYLJiYmNKh0+1gsBjUOyxHx
+OKDGXufw8CH4pyz+KYtf/ED4xQ/kb7Hh6VOowQ+EHwg/EP4pi1/8QPiBZNHMzAw6OjpQX1+P
+lZUV9PX1YWBgAF6vV8/ZKnM3UqZueiCzs7PweDyYmpqCzWaDy+VCd3c3urq6MDg4qDN3I2Xq
+WYP/s2f8mbqRYCAU2i10ycEPxChgnhe7+IHwxxB+8QPhFz8QfiCHEYjVyigHgZgfCD+Q/66t
+rS1UVVVpZ4yPj6OhoUH/rRJDI+6pmx7I9vY2ysrKUFtbC6XOzk7s7Oxoh+diTx03b4IfiFGm
+qtu3gceP+YHkUsHpmPa7BjA2BshpMZfdIdRAMnf2NvtGMNEcSB3DxgbkfJiTWhM9EF3Yk8E+
+HYgGJCvGKSAyJmF+frcAuLkJ9T11XMYlfY0cVmzNDSTDkQgGocfQkHY8Wlp0vEjGjCSMbNfg
+B/IiQJ7f5anv4TDw6BFitp+A5mZgehoqmKTOG3RPxVwxRN794R+adQVcBfCYx4dQl/xVXL8O
+RKPArVumCOhHapUV/i2IeI10/IMHgMMBFBUBTudu7DBYK49hgTQ1NemtWtUFn+yGV8fVPnum
+7X6Zut6xGx4GiouBGzeA6mrItB9oa9sN9nfuHNmcI+dAAoEA+vv7dYOD2l9XnfDz8o5Wjyds
+yKXqfpm6XhlJJ0d/7UT0Fxdw9Spw8iRw+jRw8SLQ2AiUlAAWi4bCXzrJQSBXn9FQFNHyeuDS
+JcTe/xjlH9wF7srh8yG+E0d88cmRKx4e2RiCmhpEv7iA5RPvwf32ZbjzzqLl2DfAvXs6kId7
+AojMRviB5ASG3Y7Q8Y9w/80rcIqvERPHEM57A/PvnkfwRzf2yjX4gbwsGOfOAWfOwCEssIkr
+qBDXEBTvwJP/JfxF35sqgB8NIKdOAfn5uCbKUSW+k58VsOZb8bvDh82VVdPvlxgKiMonvK+d
+xwXRiq/EfXwihvCpGMSTyyW6XJIgkKGA/Ony4S3xB14VW/hQjKFYVKOtoEZXchMkMhSQs6/0
+Ik8Ar4t1VJ2oMFUGbiggk5OTOhFM737P1NLSkjy/hM8/28Dwtz8jmShmjogssaux3/mXabe6
+umoOIAqEytqT3e972ah/eGw0gjWvP+uvQjnlII45LDvTJoasMgSQg0xp6gEgt9uNgoICfV51
+s9TV1f3DNvkqj/b29qx2SuntSfvZWa1W/dBRVFYH/u16pgFykCnNIUvuQ3KXsLCwUK6Ag9pJ
+jbLImGmnCpiqqqxe7ZHNLr09KZudqlKrV4PMzc1lteOfsvinLH7xA+EHwi9+IPziB8IPhF/8
+QPiB8IsfCD8QfvED4QfCL34g/OIHwg+EX/xA+IHwix8IPxB+8QPhB8IvfiD84gfCD4Rf/ED4
+gfDrBfUXObawXi/NDtIAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }

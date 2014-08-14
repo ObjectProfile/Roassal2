@@ -1,3 +1,41 @@
+"
+A RTCharterBuilder is a builder to chart data points.
+
+Instance Variables
+	allPointElements:		<Object>
+	axisConfiguration:		<Object>
+	extent:		<Object>
+	lastAddedElements:		<Object>
+	maxX:		<Object>
+	maxY:		<Object>
+	minX:		<Object>
+	minY:		<Object>
+
+allPointElements
+	- xxxxx
+
+axisConfiguration
+	- xxxxx
+
+extent
+	- xxxxx
+
+lastAddedElements
+	- xxxxx
+
+maxX
+	- xxxxx
+
+maxY
+	- xxxxx
+
+minX
+	- xxxxx
+
+minY
+	- xxxxx
+
+"
 Class {
 	#name : #RTCharterBuilder,
 	#superclass : #RTBuilder,
@@ -8,7 +46,8 @@ Class {
 		'maxY',
 		'minX',
 		'maxX',
-		'allPointElements'
+		'allPointElements',
+		'axisConfiguration'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -70,10 +109,16 @@ RTCharterBuilder >> allY: metricAsBlockOrSymbol [
 ]
 
 { #category : #'public axis' }
+RTCharterBuilder >> axisConfiguration [
+	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
+	^ axisConfiguration
+]
+
+{ #category : #'public axis' }
 RTCharterBuilder >> axisFrom: fromPosition to: toPosition configuration: config [
 	"config is an instance of RTAxisConfiguration"
 
-	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue centralPoint |
+	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue centralPoint  lbl |
 	"We add the ticks"
 	nbOfTicks := config numberOfTicks.
 	nbOfLabels := config numberOfLabels.
@@ -102,6 +147,13 @@ RTCharterBuilder >> axisFrom: fromPosition to: toPosition configuration: config 
 	labels := labelShape elementsOn: (0 to: nbOfLabels).
 	labels withIndexDo: [ :label :i | config moveLabel: label againstTick: (labelledTicks at: i) ].
 	view addAll: labels.
+	
+	"We insert the label if necessary"
+	axisConfiguration title notEmpty ifTrue: [
+		lbl := RTLabel elementOn: axisConfiguration title.
+		view add: lbl.
+		lbl translateTo: toPosition - (0 @ 20) ].
+	
 	labels do: [ :e | e trachelShape pushBack ]
 ]
 
@@ -119,7 +171,17 @@ RTCharterBuilder >> axisPointFor: aPoint [
 RTCharterBuilder >> axisX [
 	| centralPoint |
 	centralPoint := self centralPoint.
-	self rawAxisFrom: 0 @ centralPoint y to: extent x @ centralPoint y 
+	axisConfiguration 
+		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ];
+		minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
+		maxValue: maxX.	
+	self axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y configuration: axisConfiguration
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> axisXTitled: aTitle [
+	axisConfiguration title: aTitle.
+	self axisX
 ]
 
 { #category : #'public axis' }
@@ -141,8 +203,18 @@ RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 RTCharterBuilder >> axisY [
 	| centralPoint |
 	centralPoint := self centralPoint.
-	self rawAxisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
-	
+	axisConfiguration 
+		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ];
+		minValue: ((minY > 0) ifTrue: [ 0 ] ifFalse: [ minY ]);
+		maxValue: maxY.	
+
+	self axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated configuration: axisConfiguration
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> axisYTitled: aTitle [
+	axisConfiguration title: aTitle.
+	self axisY
 ]
 
 { #category : #'public axis' }
@@ -377,7 +449,7 @@ RTCharterBuilder >> extent: aValue [
 
 { #category : #utility }
 RTCharterBuilder >> getStringFromNumber: aNumber [
-	^ (aNumber asFloat round: 2) asString
+	^ axisConfiguration getStringFromNumber: aNumber
 ]
 
 { #category : #'public highlight' }
@@ -433,7 +505,9 @@ RTCharterBuilder >> initialize [
 	maxX := self defaultMinValue.
 	
 	"Collection of collection of elements"
-	allPointElements := OrderedCollection new
+	allPointElements := OrderedCollection new.
+	
+	self resetAxisConfiguration
 ]
 
 { #category : #utility }
@@ -483,6 +557,11 @@ RTCharterBuilder >> rawAxisTo: aPosition [
 	edge := RTLine edgeFrom: ex1 to: ex2.
 	view add: ex1; add: ex2.
 	view add: edge
+]
+
+{ #category : #'public axis' }
+RTCharterBuilder >> resetAxisConfiguration [
+	axisConfiguration := RTAxisConfiguration new
 ]
 
 { #category : #utility }
