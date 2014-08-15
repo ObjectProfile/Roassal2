@@ -516,6 +516,13 @@ RTCharterBuilder >> leftPoint [
 	^ self axisPointFor: minX @ 0
 ]
 
+{ #category : #'public axis' }
+RTCharterBuilder >> newAxisConfiguration [
+	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
+	self resetAxisConfiguration.
+	^ axisConfiguration
+]
+
 { #category : #public }
 RTCharterBuilder >> points: objects [
 	"the argument is a collection of objects. Any objects may be provided here"

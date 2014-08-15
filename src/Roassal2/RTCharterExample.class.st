@@ -126,11 +126,11 @@ b y: [ :v | v cos ].
 b x: #yourself.
 b connectDotColor: (Color blue alpha: 0.4).
 
-b axisXWithNumberOfTicks: 4.
-b axisYWithNumberOfTicks: 4.
+b axisX.
+b axisY.
 
 b open.
-b view canvas
+
 ]
 
 { #category : #icons }
@@ -169,6 +169,7 @@ fCD4hg8E3P4AVhfZNUN554EAAAAASUVORK5CYII='
 RTCharterExample >> exampleEbola [
 
 | tab data b |
+"Preparing the data"
 tab := RTTabTable new input: (ZnEasy get: 'http://mapstory.org/geoserver/wfs?typename=geonode%3AEbola2&outputFormat=csv&version=1.0.0&request=GetFeature&service=WFS') contents usingDelimiter: $,.
 tab removeFirstRow.
 tab replaceEmptyValuesWith: '0' inColumns: #(10 11).
@@ -176,22 +177,26 @@ tab convertColumnsAsInteger: #(10 11).
 tab convertColumnsAsDateAndTime: #(3 4).
 data := tab values reversed.
 
-"We chart all this"
+"Charting the data"
 b := RTCharterBuilder new.
 b extent: 400 @ 200.
+b interaction popupText: [ :row | row at: 12 ]. 
 b shape ellipse 
 	color: (Color blue alpha: 0.3);
-	size: [ :row | (row at: 11) / 5 ].
+	size: [ :row  | (row at: 11) / 5 ].
 b points: data.
 b connectDotColor: Color blue.
 b allY: [ :r | r at: 10 ].
 b stackX.
 
+b axisConfiguration noLabels; numberOfTicks: tab values size.
 b axisX.
+b newAxisConfiguration noDecimals.
 b axisY.
 
-b open.
-b view canvas
+b highlightIf: [ :row | (row at: 10) > 100 ] using: [ :row | row third year ].
+
+b open
 ]
 
 { #category : #icons }
@@ -367,10 +372,9 @@ RTCharterExample >> exampleMethodSize2 [
 	b allY: #numberOfLinesOfCode.
 	b stackX.
 
-	b axisXWithNumberOfTicks: 3.
-	b axisYWithNumberOfTicks: 4.
+	b axisX.
+	b axisY.
 	b open.
-	b view canvas
 ]
 
 { #category : #icons }
@@ -545,6 +549,50 @@ CDyICXvgfJAvMWEPnA9i4TDlO0ilUnEunj63ur6+/vaeuq0YvlXqWp33fx/0mPt/KnWbMXyt
 SanVas6F9txTL5Wse1BobKW+tLT0+ZUErz311syM0d9Tt27Ienh4kL/tqfNj2BzCDx+ED8IP
 H4QPwg8fhA/CDx+ED8IPH4QfPggfhB8+CB+EHz4IH4QfPggfhB8+CD98ED4IP3wQPgg/fBA+
 CD98ED4IP3wQeD4A8HkkRcbog0EAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
+RTCharterExample >> examplePointAspects [
+
+| b |
+b := RTCharterBuilder new.
+b extent: 200 @ 100.
+b shape rectangle color: Color red.
+b points: (RTShape withAllSubclasses sortedAs: #ageInDays).
+
+b shape circle color: Color blue.
+b points: (TRShape withAllSubclasses sortedAs: #ageInDays).
+
+b stackX.
+b allY: [ :c | c ageInDays ].
+
+b axisConfiguration noDecimals.
+b axisX.
+b axisY.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> examplePointAspectsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADW0lEQVR4XuXaQUtiURjGcZd9
+nPkG4arPUe2DvkAuWlTSwhZSuWnrKgJJwiCpNmFNq6RNZEKJm6IUrSwe577HnDG6pjOMdvP/
+wOFKHcnO797znnOvoWaTnyAlxB8CPgg/fBA+CD98ED4IP3wQPgg/fBA+CD98EH74IHwQfvgg
+fBB++CB8EH74IHwQfvgg/PBB+CD88EH4IPzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH4
+4YPwQfgBgOTzeWUyGYXDYeVyOUUikQ99KpWKSqWS7Djoz9NoSLu70sKCdHMjLS/r3d/U3p50
+eela0z5rNttqPp/7W4IkEgkdHR1pYmJC6+vrmp6e1sdBauj+/l52HORnKRalThD7maE4iDcE
+jY9LGxuujSRIv6nX6wPBsMG/uJAmJ1vNr4+7KtoI/Bry7yA22C8v0uJia7APD6Wpqfev233c
+G7yz3F0FNvh2JRiEHb3GL+r/GaSvN3SCeBjIor69ve3+8VQqpefnZ8ViMfkV9evr66EUdfwq
+6+DgQOVyWaenpyp6VTWdTn9ZUeeDBKCo80H4IEwQW0H108+bK+VaAJa0gSnqtVpNa2trrmjb
+8W+K+thYaxNnKyl7bUta2+BZ64pgS9m5udaSdmZG2tzkg3QW9aenJ+3s7Hh7g0PfQfcr6m0E
+3zP+7u73/sEtX0Ohdwj8KWuIU5Y74w0loPsIflHngwwXpPPu66heFUMH2fSKqtWRaDTqO6C+
+Rf3tLmvn3dfvXh8CA7K/v+926/Pz874D6rtTb9/25k9ZXz9lFbd+il9DAgQy9YMPEgwQeyo3
+pCdzaJCHhwcdHx93PeutmBcKhebJyZ3OzuoynG7N+n32+0H2GxmQarWqbDbbFcSKeWtgGn+e
+7nVJvwPzVf1GZsriJ0Agvaa0duyJ4+3tbc9+s7Ozurq6ku1/Puv3+PiolZUVxePxnv3smEwm
+hQDpNaW1Y3eNz8/Pe/az/Y49oVxaWvq0r21UV1dXZV9V6tXv9fXVfZ2JP2Xxpyx++CD88EH4
+IPzwQfgg/PBB+CD88EH4IPzwQfjhg/BB+OGD8EH44YPwQfjhg/BB+OGD8MMH4YPwwwfhg/DD
+B+GD8MMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw8CyC/G4RpvzYtWLQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }

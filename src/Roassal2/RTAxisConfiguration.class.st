@@ -81,6 +81,11 @@ RTAxisConfiguration >> noDecimals [
 ]
 
 { #category : #configuration }
+RTAxisConfiguration >> noLabels [
+	self numberOfLabels: 0
+]
+
+{ #category : #configuration }
 RTAxisConfiguration >> noThousandsSeparator [
 	thousandsSeparator := false
 ]
