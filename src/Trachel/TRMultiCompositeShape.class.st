@@ -15,12 +15,12 @@ TRMultiCompositeShape >> addCallback: aCallback [
 	"shape2 addCallback: aCallback"
 ]
 
-{ #category : #adding }
+{ #category : #'public - adding' }
 TRMultiCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0
 ]
 
-{ #category : #adding }
+{ #category : #'public - adding' }
 TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 	shapes add: (Array with: aShape with: aPoint)
 ]
