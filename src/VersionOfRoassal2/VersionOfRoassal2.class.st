@@ -4337,3 +4337,14 @@ VersionOfRoassal2 >> version000345 [
 	at: #date put: '15 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000346 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.184';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.434';
+	at: #version put: '0.346';
+	at: #comment put: '0.346 : Trachel: minor change, simply a recategorization of methods -- Roassal: Added examples about crosses, added guards in MultiCompositeShape, added RTShapeBuilder>>cross';
+	at: #date put: '17 August 2014';
+	yourself
+]
