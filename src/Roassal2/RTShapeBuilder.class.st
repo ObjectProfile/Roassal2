@@ -23,6 +23,16 @@ RTShapeBuilder >> createdElements [
 	^ createdElements
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> cross [
+	| s |
+	s := RTMultiCompositeShape new.
+	s add: (RTBox new height: 10; width: 3). 
+	s add: (RTBox new height: 3; width: 10).
+
+	^ self shape: s
+]
+
 { #category : #accessing }
 RTShapeBuilder >> current [
 	"Return the shape currently built"

@@ -166,6 +166,58 @@ fCD4hg8E3P4AVhfZNUN554EAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleCrosses [
+
+| b |
+b := RTCharterBuilder new.
+b extent: 400 @ 400.
+b shape cross color: (Color red alpha: 0.3).
+b points: (RTShape withAllSubclasses flatCollect: #methods).
+b x: #numberOfLinesOfCode.
+b y: [ :m | m getSource size ].
+b axisX.
+b axisY.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleCrossesIcon [
+	^ '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
+CI38A5O2Qrits48mAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleEbola [
 
 | tab data b |

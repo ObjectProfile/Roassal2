@@ -5,6 +5,27 @@ Class {
 }
 
 { #category : #tests }
+RTMultiCompositeShapeTest >> testColor [
+
+	| v box s e |
+	v := RTView new.
+	box := RTBox new.
+	s := RTMultiCompositeShape new.
+	s add: box.
+	s color: Color red.
+	e := s element.
+	v add: e.
+	
+	self assert: e trachelShape shapes first color equals: Color red
+]
+
+{ #category : #tests }
+RTMultiCompositeShapeTest >> testSetColorOnEmpty [
+
+	self should: [ RTMultiCompositeShape new color: Color blue ] raise: Error
+]
+
+{ #category : #tests }
 RTMultiCompositeShapeTest >> testTranslationBy [
 
 	| view shape el ps ps2 |
