@@ -81,13 +81,18 @@ RTAxisConfiguration >> noDecimals [
 ]
 
 { #category : #configuration }
-RTAxisConfiguration >> noLabels [
+RTAxisConfiguration >> noLabel [
 	self numberOfLabels: 0
 ]
 
 { #category : #configuration }
 RTAxisConfiguration >> noThousandsSeparator [
 	thousandsSeparator := false
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> noTick [
+	self numberOfTicks: 0
 ]
 
 { #category : #configuration }
@@ -118,6 +123,12 @@ RTAxisConfiguration >> numberOfTicks: aValue [
 { #category : #configuration }
 RTAxisConfiguration >> oneDecimal [
 	self decimal: 1
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> plain [
+	"Make the axis a plain line"
+	self noLabel; noTick
 ]
 
 { #category : #accessing }

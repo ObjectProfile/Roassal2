@@ -241,7 +241,7 @@ b connectDotColor: Color blue.
 b allY: [ :r | r at: 10 ].
 b stackX.
 
-b axisConfiguration noLabels; numberOfTicks: tab values size.
+b axisConfiguration noLabel; numberOfTicks: tab values size.
 b axisX.
 b newAxisConfiguration noDecimals.
 b axisY.

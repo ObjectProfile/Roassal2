@@ -479,7 +479,9 @@ RTCharterBuilder >> histogram [
 	"Draw an histogram"
 	
 	| barWidth |
-	barWidth := (extent x - ((lastAddedElements size + 2) * 10)/ (lastAddedElements size + 2)) - 10.
+	"barWidth := (extent x - ((lastAddedElements size + 2) * 10)/ (lastAddedElements size + 2)) - 10."
+	barWidth := (extent x / lastAddedElements size) asInteger - (lastAddedElements size * 3).
+	barWidth := barWidth max: 10.
 	self histogramBarWidth: barWidth
 ]
 

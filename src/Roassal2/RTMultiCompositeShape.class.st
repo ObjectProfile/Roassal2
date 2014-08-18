@@ -2,7 +2,8 @@ Class {
 	#name : #RTMultiCompositeShape,
 	#superclass : #RTShape,
 	#instVars : [
-		'shapes'
+		'shapes',
+		'layout'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -17,24 +18,37 @@ RTMultiCompositeShape >> add: aRTShape translateBy: aPoint [
 	shapes add: (Array with: aRTShape with: aPoint)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMultiCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
 	shapes do: [ :s | s first colorElement: aOneArgBlock ]
 ]
 
+{ #category : #'public - layout' }
+RTMultiCompositeShape >> horizontal [
+	layout := #horizontal
+]
+
 { #category : #initialization }
 RTMultiCompositeShape >> initialize [
 	super initialize.
-	shapes := OrderedCollection new
+	shapes := OrderedCollection new.
+	layout := #noLayout
 ]
 
 { #category : #public }
 RTMultiCompositeShape >> trachelShapeFor: anElement [
-	| ss |
+	| ss ts |
 	ss := shapes collect: [ :tupple | 
 		| s |
 		s := tupple first trachelShapeFor: anElement.
 		Array with: s with: tupple second ].
-	^ TRMultiCompositeShape new setShapes: ss; yourself
+	ts := TRMultiCompositeShape new setShapes: ss; yourself.
+	ts perform: layout.
+	^ ts
+]
+
+{ #category : #'public - layout' }
+RTMultiCompositeShape >> vertical [
+	layout := #vertical
 ]

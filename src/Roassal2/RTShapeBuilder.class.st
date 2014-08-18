@@ -165,6 +165,18 @@ RTShapeBuilder >> label [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> labelledAs: aBlock [
+	| label oldShape |
+	label := RTLabel new text: aBlock.
+	oldShape := shape.
+	shape := RTMultiCompositeShape new.
+	shape add: label.
+	shape add: oldShape.
+	shape vertical.
+	^ label
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> line [
 	^ self shape: RTLine new
 ]
