@@ -89,6 +89,8 @@ RTMultiCompositeShapeTest >> testVerticalLayoutAndTranslation [
 
 	e := s element.
 	v add: e @ RTDraggable.
+
+	self assert: e trachelShape shapes second position equals: 0 @ 16.0.
 	
 	self assert: (e trachelShape offsets asArray) equals: (Array with: (0@0) with: (0@16.0)).
 

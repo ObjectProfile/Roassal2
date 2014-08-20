@@ -170,8 +170,9 @@ RTShapeBuilder >> labelledAs: aBlock [
 	label := RTLabel new text: aBlock.
 	oldShape := shape.
 	shape := RTMultiCompositeShape new.
-	shape add: label.
 	shape add: oldShape.
+	shape add: label.
+	
 	shape vertical.
 	^ label
 ]
