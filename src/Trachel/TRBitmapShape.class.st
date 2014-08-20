@@ -32,7 +32,7 @@ TRBitmapShape >> drawOn: athensCanvas [
 		athensCanvas setShape: (0@0 extent: self extent).
 		athensCanvas pathTransform translateBy: self encompassingRectangle topLeft asFloatPoint.
 		self form ifNotNil: [ 
-			 paint := (athensCanvas cacheAt: self form
+			 paint := (athensCanvas cacheAt: self valuatedForm
                              	ifAbsentPut: [ (self form asAthensPaintOn: athensCanvas) ]).
 			athensCanvas setPaint: paint.
 			].
@@ -95,6 +95,12 @@ TRBitmapShape >> height [
 TRBitmapShape >> includesPoint: aPoint [
 	"Probably this methods should be updated to reflect transformation"
 	^ self encompassingRectangle containsPoint: aPoint
+]
+
+{ #category : #accessing }
+TRBitmapShape >> valuatedForm [
+	"We send value to allow for lazy image construction"
+	^ self form value
 ]
 
 { #category : #accessing }

@@ -64,7 +64,7 @@ TRCamera >> distanceFromPixelToSpace: aPoint [
 
 { #category : #utility }
 TRCamera >> encompassingRectangle [
-
+	"Return the encompassing rectangle of all the elements contained in the canvas"
 	"Maybe a method encompassingRectangle has to be defined in TRCanvas?"
 	^ self encompassingRectangleOf: canvas shapes
 ]
@@ -128,6 +128,15 @@ TRCamera >> initialize [
 	super initialize.
 	position := 0 @ 0.
 	scale := 1.0
+]
+
+{ #category : #'testing visibility' }
+TRCamera >> isVisible: aShape [
+	| p pOnScreen ext |
+	p := aShape position.
+	pOnScreen := self fromSpaceToPixel: p.
+	ext := self canvas extent.
+	^ (0 @ 0 extent: ext) containsPoint: pOnScreen
 ]
 
 { #category : #accessing }

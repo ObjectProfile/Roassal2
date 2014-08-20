@@ -170,11 +170,13 @@ TRShape >> extent: anExtent [
 
 { #category : #testing }
 TRShape >> hasCallback [
+	"Return true if at least one callback has been added to the shape"
 	^ callbacks notNil
 ]
 
 { #category : #testing }
 TRShape >> hasEventCallback [
+	"Return true if at least one event callback has been added to the shape"
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
@@ -196,7 +198,7 @@ TRShape >> initialize [
 
 { #category : #testing }
 TRShape >> isFixed [
-
+	"Return true if the shape is fixed, not subject to the camera therefore"
 	^ self canvas fixedShapes includes: self
 ]
 
@@ -207,7 +209,7 @@ TRShape >> isInACanvas [
 
 { #category : #testing }
 TRShape >> isMovable [
-
+	"Return if the shape is not fixed, therefore movable."
 	^ self canvas isMovableShape: self
 ]
 
@@ -215,6 +217,12 @@ TRShape >> isMovable [
 TRShape >> isNotFixed [
 
 	^ self isMovable
+]
+
+{ #category : #testing }
+TRShape >> isVisible [
+	"Return true if the element is being seen by the camera"
+	^ self canvas camera isVisible: self
 ]
 
 { #category : #accessing }
