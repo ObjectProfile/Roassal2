@@ -13,8 +13,15 @@ RTBitmap >> form [
 ]
 
 { #category : #accessing }
-RTBitmap >> form: anObject [
-	form := anObject
+RTBitmap >> form: aValueOrOneArgBlock [
+	"aValueOrOneArgBlock takes a model as input"
+	self formElement: [ :anElement | aValueOrOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #'as yet unclassified' }
+RTBitmap >> formElement: aValueOrOneArgBlock [
+	"aValueOrOneArgBlock takes a roassal element as input"
+	form := aValueOrOneArgBlock
 ]
 
 { #category : #hooks }
@@ -32,7 +39,7 @@ RTBitmap >> updateFor: anElement trachelShape: trachelShape [
 		[ ex := (self widthFor: anElement) @ (self heightFor: anElement).
 		  trachelShape extent: ex.
 		  ^ self ].
-	
-	trachelShape form: self form
+
+	trachelShape form: (self form rtValue: anElement)
 
 ]
