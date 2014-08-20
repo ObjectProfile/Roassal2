@@ -27,9 +27,11 @@ TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 
 { #category : #actions }
 TRMultiCompositeShape >> addedIn: aCanvas [
+
 	shapeAndOffsets do: [ :tupple | 
 		aCanvas addShape: tupple first.
-		tupple first translateBy: tupple second ]
+		tupple first translateBy: tupple second
+		]
 
 ]
 
@@ -214,10 +216,12 @@ TRMultiCompositeShape >> translateTo: aPoint [
 { #category : #'public - layout' }
 TRMultiCompositeShape >> vertical [
 
-	| previousShape |
+	| previousShape newPosition |
 	previousShape := shapeAndOffsets first first.
 	shapeAndOffsets allButFirst do: [ :tupple |
-		tupple first translateTo: (previousShape center + (0 @ (previousShape extent y / 2)) + (0 @ (tupple first extent y / 2))).
+		newPosition := (previousShape center + (0 @ (previousShape extent y / 2)) + (0 @ (tupple first extent y / 2))).
+		tupple first translateTo: newPosition.
+		tupple at: 2 put: newPosition.
 		previousShape := tupple first ].
 	self relayout
 ]

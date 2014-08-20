@@ -4,12 +4,6 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #position }
-TRShapeTest >> shapesForPositionTest [
-
-	^ { TRBoxShape. TREllipseShape. TRSVGPath. TRBitmapShape. TRLabelShape }
-]
-
 { #category : #NoShape }
 TRShapeTest >> testAddingNoShape [
 
@@ -311,19 +305,16 @@ TRShapeTest >> testHasCallback [
 { #category : #position }
 TRShapeTest >> testPosition [
 
-	self shapesForPositionTest do: [ :eachShapeClass |
-		eachShapeClass := TRBoxShape new.
-		eachShapeClass translateTo: 10 @ 20.
-		self assert: eachShapeClass position = (10 @ 20)
-	]
+	| box |
+	box := TRBoxShape new.
+	box translateTo: 10 @ 20.
+	self assert: box position = (10 @ 20)
 ]
 
 { #category : #position }
 TRShapeTest >> testPositionDefault [
 
-	self shapesForPositionTest do: [ :eachShapeClass |
-		self assert: eachShapeClass new position equals: (0 @ 0)
-	]
+	self assert: TRBoxShape new position = (0 @ 0)
 ]
 
 { #category : #position }
@@ -344,6 +335,12 @@ TRShapeTest >> testPositionDefaultSVGPath [
 	self assert: svg position equals: (0 @ 0).
 	self assert: svg center equals: rectangle center.
 	self deny: svg position = rectangle center.
+]
+
+{ #category : #position }
+TRShapeTest >> testPositionDefaultSVGPathWithoutPath [
+
+	self assert: TRSVGPath new position = (0 @ 0)
 ]
 
 { #category : #position }
