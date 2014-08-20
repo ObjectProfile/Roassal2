@@ -4370,3 +4370,14 @@ VersionOfRoassal2 >> version000348 [
 	at: #date put: '20 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000349 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.187';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.437';
+	at: #version put: '0.349';
+	at: #comment put: '0.349 : Improved RTBitmap, by adding formElement, and doing a rtValue. Added RTEventForwarder. Improved TRCamera and TRShape. Added comments and a #isVisible method. Really useful!';
+	at: #date put: '20 August 2014';
+	yourself
+]
