@@ -4381,3 +4381,14 @@ VersionOfRoassal2 >> version000349 [
 	at: #date put: '20 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000350 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.188';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.438';
+	at: #version put: '0.350';
+	at: #comment put: '0.350 : Reverted TRBitmapShape>>drawOn: and added RTVisible';
+	at: #date put: '20 August 2014';
+	yourself
+]
