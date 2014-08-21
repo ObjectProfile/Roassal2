@@ -170,6 +170,23 @@ RTCompositeShapeTest >> testOffset4 [
 	self assert: shapes second position = (40 @ 40)
 ]
 
+{ #category : #tests }
+RTCompositeShapeTest >> testRemoving [
+
+	| s e v |
+	s := RTMultiCompositeShape new.
+	s add: RTLabel new.
+	s add: RTBox new.
+	e := s element.
+	
+	v := RTView new.
+	v add: e.
+	self assert: v numberOfElements equals: 1.
+	
+	e remove.
+	self assert: v numberOfElements equals: 0.
+]
+
 { #category : #size }
 RTCompositeShapeTest >> testSize [
 

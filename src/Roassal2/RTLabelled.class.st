@@ -70,9 +70,6 @@ RTLabelled >> initializeElement: element [
 	"Make sure that if we remove the element, the trachel shape is also removed"
 	callback := TRRemoveCallback new block: [ :shape | lbl remove ].
 	element trachelShape addCallback: callback.
-	element 
-		attributeAt: #RTLabelledCallback put: callback;
-		attributeAt: #RTLabelledLabel put: lbl.
 	
 	"Not really nice. Maybe a different solution could be to have a double dispatch"
 	(element isKindOf: RTEdge) 
@@ -81,7 +78,7 @@ RTLabelled >> initializeElement: element [
 							between: element from trachelShape 
 							and: element to trachelShape
 							offset: offsetOnEdge. 
-				  ^ lbl ].
+				  ^ self ].
 
 	
 	self isTop ifTrue: [ TRConstraint stick: lbl above: s ]. 
@@ -89,7 +86,6 @@ RTLabelled >> initializeElement: element [
 	self isLeft ifTrue: [ TRConstraint stick: lbl onTheLeftOf: s ].
 	self isRight ifTrue: [ TRConstraint stick: lbl onTheRightOf: s ].
 	self isCenter ifTrue: [ TRConstraint stick: lbl onTheCenterOf: s ].
-	^ lbl.
 ]
 
 { #category : #testing }
@@ -146,18 +142,6 @@ RTLabelled >> offsetOnEdge [
 RTLabelled >> offsetOnEdge: aFloat [
 	"aFloat is between 0.0 and 1.0. With a value of 1.0, the label is close to the starting extremity"
 	offsetOnEdge := aFloat
-]
-
-{ #category : #public }
-RTLabelled >> removeLabelFrom: aRTElement [ 
-	| callback label |
-	callback := aRTElement attributeAt: #RTLabelledCallback ifAbsent: [ ^ self ].
-	aRTElement trachelShape removeCallback: callback ifAbsent: [ ].
-	label := aRTElement attributeAt: #RTLabelledLabel ifAbsent: [ ^ self ].
-	label remove.
-	aRTElement
-		removeAttributeAt: #RTLabelledCallback;
-		removeAttributeAt: #RTLabelledLabel.
 ]
 
 { #category : #accessing }

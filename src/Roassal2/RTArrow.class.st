@@ -82,13 +82,22 @@ RTArrow >> trachelShapeFor: anEdge [
 	| lineTrachelShape headTrachelShape |
 	lineTrachelShape := line trachelShapeFor: anEdge.
 	headTrachelShape := head trachelShapeFor: anEdge.
-	^ TRCompositeShape new shape1: lineTrachelShape; shape2: headTrachelShape
+	^ TRMultiCompositeShape new 
+			addShape: lineTrachelShape; 
+			addShape: headTrachelShape; 
+			yourself
+	
+	
+"	| lineTrachelShape headTrachelShape |
+	lineTrachelShape := line trachelShapeFor: anEdge.
+	headTrachelShape := head trachelShapeFor: anEdge.
+	^ TRCompositeShape new shape1: lineTrachelShape; shape2: headTrachelShape"
 ]
 
 { #category : #hooks }
 RTArrow >> updateFor: edge trachelShape: trachelShape [
-	line updateFor: edge trachelShape: edge trachelShape shape1.
-	head updateFor: edge trachelShape: edge trachelShape shape2
+	line updateFor: edge trachelShape: edge trachelShape shapes first.
+	head updateFor: edge trachelShape: edge trachelShape shapes second
 ]
 
 { #category : #public }

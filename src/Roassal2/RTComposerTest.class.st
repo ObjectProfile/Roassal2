@@ -158,3 +158,11 @@ RTComposerTest >> testopeningEmpty [
 	composer open delete.
 	self assert: composer gap > 0
 ]
+
+{ #category : #tests }
+RTComposerTest >> with0Arg [
+	^ #metaObject
+		run: #selector
+		with: #()
+		in: self
+]
