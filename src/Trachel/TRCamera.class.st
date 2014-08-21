@@ -162,6 +162,8 @@ TRCamera >> translateBy: aPoint [
 
 { #category : #actions }
 TRCamera >> translateTo: newPosition [
-	self triggerCallbacksForStep: (newPosition - position).
+	| step |
+	step := newPosition - position.
 	position := newPosition.
+	self triggerCallbacksForStep: step.
 ]
