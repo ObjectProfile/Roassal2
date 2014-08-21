@@ -11,17 +11,38 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTEventForwarder >> eventClass [
+	^ eventClass
+]
+
+{ #category : #accessing }
+RTEventForwarder >> eventClass: trEventClass [
+	"Useful to set the event that has to be forwarded"
+	eventClass := trEventClass
+]
+
+{ #category : #initialization }
 RTEventForwarder >> initialize [
 	super initialize.
 	eventClass := TREvent. 
 	toObject := [ :element | element view ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTEventForwarder >> initializeElement: element [
 	element
 		when: eventClass
 		do: [ :e | 
 			(toObject rtValue: element) announce: e ]
+]
+
+{ #category : #accessing }
+RTEventForwarder >> toObject [
+	^ toObject
+]
+
+{ #category : #accessing }
+RTEventForwarder >> toObject: anObject [
+	toObject := anObject
 ]

@@ -106,6 +106,7 @@ RTAbstractExample >> openOn: v [
 		element @ (RTPopup new text: k asString).
 		element when: TRMouseLeftClick do: [ :evt | self class new perform: k ].
 		element when: TRMouseRightClick do: [ :evt | (self class >> k) browse ].
+		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
 		v add: element.
 	].
 

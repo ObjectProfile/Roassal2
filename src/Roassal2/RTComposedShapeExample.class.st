@@ -17,6 +17,7 @@ RTComposedShapeExample >> exampleEdgesFromComposedShape [
 
 | v shape es |
 v := RTView new.
+v @ RTDraggableView.
 shape := RTMultiCompositeShape new.
 shape add: RTLabel new.
 shape add: RTBox new.
