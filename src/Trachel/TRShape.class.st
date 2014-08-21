@@ -163,6 +163,11 @@ TRShape >> hasEventCallback [
 	^ announcer notNil and: [ announcer numberOfSubscriptions > 0 ]
 ]
 
+{ #category : #accessing }
+TRShape >> height [
+	^ self encompassingRectangle height
+]
+
 { #category : #testing }
 TRShape >> includesPoint: aPoint [
 	^ false
@@ -371,4 +376,9 @@ TRShape >> translateTo: aPoint [
 { #category : #events }
 TRShape >> when: event do: aBlock [
 	self announcer when: event do: aBlock
+]
+
+{ #category : #accessing }
+TRShape >> width [
+	^ self encompassingRectangle width
 ]
