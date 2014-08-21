@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'lastPopup'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #lastPopup }

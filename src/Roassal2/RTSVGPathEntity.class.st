@@ -9,7 +9,7 @@ Class {
 		'center',
 		'scale'
 	],
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

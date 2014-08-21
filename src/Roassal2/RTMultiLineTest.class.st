@@ -6,7 +6,7 @@ Class {
 		'e2',
 		'v'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #running }

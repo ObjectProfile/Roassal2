@@ -12,7 +12,7 @@ Class {
 		'yExtent',
 		'size'
 	],
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

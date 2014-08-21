@@ -1,5 +1,5 @@
 Class {
 	#name : #RTVisitor,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }

@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'defaultTranslator'
 	],
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #'as yet unclassified' }

@@ -5,7 +5,7 @@ A RORadialTreeLayout is xxxxxxxxx.
 Class {
 	#name : #RTRadialTreeLayout,
 	#superclass : #RTAbstractCompactTree,
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #algorithm }

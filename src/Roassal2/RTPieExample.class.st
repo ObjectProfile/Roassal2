@@ -8,7 +8,7 @@ v canvas'
 Class {
 	#name : #RTPieExample,
 	#superclass : #RTAbstractExample,
-	#category : 'Roassal2-Builder-PieChart'
+	#category : #'Roassal2-Builder-PieChart'
 }
 
 { #category : #sources }

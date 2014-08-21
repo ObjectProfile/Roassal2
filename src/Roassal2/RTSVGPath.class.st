@@ -10,7 +10,7 @@ Class {
 		'rotation',
 		'keepInOriginalPosition'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #countries }

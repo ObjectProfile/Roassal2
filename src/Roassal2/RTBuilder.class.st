@@ -7,7 +7,7 @@ Class {
 		'shapeBuilder',
 		'globalBuilder'
 	],
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #accessing }

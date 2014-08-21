@@ -5,7 +5,7 @@ Class {
 		'shape',
 		'createdElements'
 	],
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #shapes }

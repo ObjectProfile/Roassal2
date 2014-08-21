@@ -13,7 +13,7 @@ All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brew
 Class {
 	#name : #CPSequential,
 	#superclass : #ColorPalette,
-	#category : 'Roassal2-ColorNormalizer'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #default }

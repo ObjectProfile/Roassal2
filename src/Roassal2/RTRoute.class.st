@@ -6,7 +6,7 @@ Class {
 		'mapBuilder',
 		'length'
 	],
-	#category : 'Roassal2-Builder-Map'
+	#category : #'Roassal2-Builder-Map'
 }
 
 { #category : #public }

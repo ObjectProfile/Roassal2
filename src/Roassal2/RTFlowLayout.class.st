@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'alignment'
 	],
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #alignment }

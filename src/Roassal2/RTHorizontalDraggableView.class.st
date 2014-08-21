@@ -5,7 +5,7 @@ The difference is that I only allow horizontal translations
 Class {
 	#name : #RTHorizontalDraggableView,
 	#superclass : #RTConstrainedDraggableView,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #initialize }

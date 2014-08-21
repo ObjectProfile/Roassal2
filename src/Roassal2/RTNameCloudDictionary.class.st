@@ -1,7 +1,7 @@
 Class {
 	#name : #RTNameCloudDictionary,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Builder-NameCloud'
+	#category : #'Roassal2-Builder-NameCloud'
 }
 
 { #category : #hooks }

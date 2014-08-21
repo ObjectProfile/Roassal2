@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSimonExample,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Builder-Simon'
+	#category : #'Roassal2-Builder-Simon'
 }
 
 { #category : #basic }

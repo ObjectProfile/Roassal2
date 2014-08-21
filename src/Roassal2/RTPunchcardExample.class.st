@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : 'Roassal2-Builder-Punchcard'
+	#category : #'Roassal2-Builder-Punchcard'
 }
 
 { #category : #example }

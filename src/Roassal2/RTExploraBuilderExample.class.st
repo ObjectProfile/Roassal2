@@ -5,7 +5,7 @@ A ROExploraBuilderExample is xxxxxxxxx.
 Class {
 	#name : #RTExploraBuilderExample,
 	#superclass : #Object,
-	#category : 'Roassal2-Builder-Explora'
+	#category : #'Roassal2-Builder-Explora'
 }
 
 { #category : #basic }

@@ -15,7 +15,7 @@ Class {
 		'translateElement',
 		'align'
 	],
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #accessing }

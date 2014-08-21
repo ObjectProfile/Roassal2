@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMondrianViewBuilderExample,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Builder-Mondrian'
+	#category : #'Roassal2-Builder-Mondrian'
 }
 
 { #category : #example }

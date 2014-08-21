@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rows'
 	],
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #accessing }

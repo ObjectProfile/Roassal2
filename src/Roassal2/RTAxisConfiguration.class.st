@@ -11,7 +11,7 @@ Class {
 		'thousandsSeparator',
 		'title'
 	],
-	#category : 'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Charter'
 }
 
 { #category : #configuration }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'node1'
 	],
-	#category : 'Roassal2-Builder-Sunburst'
+	#category : #'Roassal2-Builder-Sunburst'
 }
 
 { #category : #running }

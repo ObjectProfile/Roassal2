@@ -16,7 +16,7 @@ Class {
 		'names',
 		'count'
 	],
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #visitor }

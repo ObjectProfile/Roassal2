@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSVGExample,
 	#superclass : #Object,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #basic }

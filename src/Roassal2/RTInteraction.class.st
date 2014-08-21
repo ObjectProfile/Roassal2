@@ -5,7 +5,7 @@ A ROInteraction is xxxxxxxxx.
 Class {
 	#name : #RTInteraction,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #public }

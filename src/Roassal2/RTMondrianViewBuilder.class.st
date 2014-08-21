@@ -7,7 +7,7 @@ Class {
 		'topLevelEdges',
 		'layout'
 	],
-	#category : 'Roassal2-Builder-Mondrian'
+	#category : #'Roassal2-Builder-Mondrian'
 }
 
 { #category : #layout }

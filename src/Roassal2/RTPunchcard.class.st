@@ -6,7 +6,7 @@ Class {
 		'objects',
 		'interactionObject'
 	],
-	#category : 'Roassal2-Builder-Punchcard'
+	#category : #'Roassal2-Builder-Punchcard'
 }
 
 { #category : #adding }

@@ -6,7 +6,7 @@ Class {
 		'vertical',
 		'function'
 	],
-	#category : 'Roassal2-Builder-StructureMatrix'
+	#category : #'Roassal2-Builder-StructureMatrix'
 }
 
 { #category : #accessing }

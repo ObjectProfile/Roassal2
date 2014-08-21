@@ -1,7 +1,7 @@
 Class {
 	#name : #RTDependencyAnalyzerBuilderExample,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Builder-DependencyAnalyzer'
+	#category : #'Roassal2-Builder-DependencyAnalyzer'
 }
 
 { #category : #examples }

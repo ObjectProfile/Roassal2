@@ -9,7 +9,7 @@ Class {
 		'rowHeights',
 		'columnWidths'
 	],
-	#category : 'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts'
 }
 
 { #category : #public }

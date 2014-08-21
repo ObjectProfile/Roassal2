@@ -5,7 +5,7 @@ A RTConstraint is a utility class that contains methods to position elements aga
 Class {
 	#name : #RTConstraint,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #util }

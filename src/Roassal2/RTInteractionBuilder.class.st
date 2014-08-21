@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'interactions'
 	],
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #public }

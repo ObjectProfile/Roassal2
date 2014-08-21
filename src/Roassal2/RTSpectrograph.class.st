@@ -11,7 +11,7 @@ Class {
 		'highlightBlock',
 		'title'
 	],
-	#category : 'Roassal2-Builder-Spectrograph'
+	#category : #'Roassal2-Builder-Spectrograph'
 }
 
 { #category : #hooks }

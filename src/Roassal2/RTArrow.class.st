@@ -5,7 +5,7 @@ Class {
 		'line',
 		'head'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #public }

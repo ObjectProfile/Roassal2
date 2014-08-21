@@ -6,7 +6,7 @@ Class {
 		'dependencies',
 		'layout'
 	],
-	#category : 'Roassal2-Builder-DependencyAnalyzer'
+	#category : #'Roassal2-Builder-DependencyAnalyzer'
 }
 
 { #category : #public }

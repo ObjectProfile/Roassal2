@@ -1,7 +1,7 @@
 Class {
 	#name : #RTEllipse,
 	#superclass : #RTAbstractElementShape,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #visitor }

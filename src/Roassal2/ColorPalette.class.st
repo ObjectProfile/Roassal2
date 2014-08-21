@@ -19,7 +19,7 @@ Class {
 	#classInstVars : [
 		'palette'
 	],
-	#category : 'Roassal2-ColorNormalizer'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #palettes }

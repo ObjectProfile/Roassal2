@@ -8,7 +8,7 @@ Class {
 		'edge',
 		'shape'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'as yet unclassified' }

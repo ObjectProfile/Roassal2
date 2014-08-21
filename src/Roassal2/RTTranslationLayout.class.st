@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : 'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-Graph'
 }
 
 { #category : #hook }

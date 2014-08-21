@@ -20,7 +20,7 @@ RTSpectrographExample new installTitle: 'RoassalVisualization'
 Class {
 	#name : #RTSpectrographExample,
 	#superclass : #RTAbstractExample,
-	#category : 'Roassal2-Builder-Spectrograph'
+	#category : #'Roassal2-Builder-Spectrograph'
 }
 
 { #category : #sources }

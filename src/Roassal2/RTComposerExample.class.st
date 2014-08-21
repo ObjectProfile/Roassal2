@@ -86,7 +86,7 @@ c view canvas'
 Class {
 	#name : #RTComposerExample,
 	#superclass : #RTAbstractExample,
-	#category : 'Roassal2-Builder-Composer'
+	#category : #'Roassal2-Builder-Composer'
 }
 
 { #category : #sources }

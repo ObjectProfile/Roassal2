@@ -30,7 +30,7 @@ Class {
 		'text',
 		'groupBlock'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -156,7 +156,7 @@ RTPopup >> textElement: aOneArgBlock [
 		backRectangle := (RTBox new color: (Color gray alpha: 0.9); borderColor: Color black) element.
 		lbl := (RTLabel new 
 				color: Color black;
-				text: (aOneArgBlock rtValue: element)) element.
+				text: (aOneArgBlock rtValue: element) asString) element.
 		RTNest new centerOn: backRectangle elements: (Array with: lbl).
 		group add: backRectangle; add: lbl
 		] 

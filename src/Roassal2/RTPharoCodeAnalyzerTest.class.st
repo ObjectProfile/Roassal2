@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'a'
 	],
-	#category : 'Roassal2-DataStudio'
+	#category : #'Roassal2-DataStudio'
 }
 
 { #category : #running }

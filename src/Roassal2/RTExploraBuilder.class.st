@@ -49,7 +49,7 @@ Class {
 		'nextId',
 		'dragChildren'
 	],
-	#category : 'Roassal2-Builder-Explora'
+	#category : #'Roassal2-Builder-Explora'
 }
 
 { #category : #action }

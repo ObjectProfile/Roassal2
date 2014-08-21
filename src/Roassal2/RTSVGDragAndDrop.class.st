@@ -7,7 +7,7 @@ Drag&Drop of edges is NOT supported, but edges connected to dragged elements wil
 Class {
 	#name : #RTSVGDragAndDrop,
 	#superclass : #RTSVGInteraction,
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

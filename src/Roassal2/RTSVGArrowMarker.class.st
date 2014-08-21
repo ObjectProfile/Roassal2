@@ -5,7 +5,7 @@ A RTSVGArrowMarker is an arrow (open figure)  marker.
 Class {
 	#name : #RTSVGArrowMarker,
 	#superclass : #RTSVGAbstractMarker,
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

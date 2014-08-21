@@ -16,7 +16,7 @@ Class {
 		'properties',
 		'columns'
 	],
-	#category : 'Roassal2-Builder-AnimatedScatterPlot'
+	#category : #'Roassal2-Builder-AnimatedScatterPlot'
 }
 
 { #category : #adding }

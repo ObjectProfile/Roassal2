@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : 'Roassal2-Builder-Dowser'
+	#category : #'Roassal2-Builder-Dowser'
 }
 
 { #category : #initialization }

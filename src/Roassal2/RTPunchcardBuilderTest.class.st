@@ -24,7 +24,7 @@ Class {
 		'emptyBuilder',
 		'view'
 	],
-	#category : 'Roassal2-Builder-Punchcard'
+	#category : #'Roassal2-Builder-Punchcard'
 }
 
 { #category : #running }

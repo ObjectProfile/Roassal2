@@ -1,7 +1,7 @@
 Class {
 	#name : #RTHorizontalCompositeShape,
 	#superclass : #RTAbstractCompositeShape,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #hooks }

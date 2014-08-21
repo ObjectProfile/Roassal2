@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : 'Roassal2-Builder-TextBuilder'
+	#category : #'Roassal2-Builder-TextBuilder'
 }
 
 { #category : #asserting }

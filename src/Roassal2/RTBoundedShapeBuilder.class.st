@@ -5,7 +5,7 @@ A RTBoundedShapeBuilder is a shape builder for which all the nodes cannot have a
 Class {
 	#name : #RTBoundedShapeBuilder,
 	#superclass : #RTShapeBuilder,
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #accessing }

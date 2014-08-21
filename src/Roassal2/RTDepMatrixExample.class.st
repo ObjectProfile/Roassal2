@@ -1,7 +1,7 @@
 Class {
 	#name : #RTDepMatrixExample,
 	#superclass : #RTObject,
-	#category : 'Roassal2-Builder-StructureMatrix'
+	#category : #'Roassal2-Builder-StructureMatrix'
 }
 
 { #category : #'as yet unclassified' }

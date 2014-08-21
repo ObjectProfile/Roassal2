@@ -1,7 +1,7 @@
 Class {
 	#name : #RTShapedObjectTest,
 	#superclass : #RTTest,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'as yet unclassified' }

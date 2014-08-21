@@ -7,7 +7,7 @@ Class {
 		'gap',
 		'mapping'
 	],
-	#category : 'Roassal2-Builder-Composer'
+	#category : #'Roassal2-Builder-Composer'
 }
 
 { #category : #accessing }

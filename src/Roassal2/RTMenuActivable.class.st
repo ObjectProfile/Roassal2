@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'actions'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #public }

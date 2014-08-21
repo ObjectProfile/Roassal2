@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'allowRepetition'
 	],
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #'as yet unclassified' }

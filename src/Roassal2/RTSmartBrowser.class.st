@@ -5,7 +5,7 @@ Class {
 		'visitedMethods',
 		'visitedClasses'
 	],
-	#category : 'Roassal2-DataStudio'
+	#category : #'Roassal2-DataStudio'
 }
 
 { #category : #menu }

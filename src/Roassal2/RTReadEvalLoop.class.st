@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : 'Roassal2-ReadEvalLoop'
+	#category : #'Roassal2-ReadEvalLoop'
 }
 
 { #category : #'as yet unclassified' }

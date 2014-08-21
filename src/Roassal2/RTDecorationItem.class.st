@@ -6,7 +6,7 @@ Class {
 		'tooltip',
 		'action'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #accessing }

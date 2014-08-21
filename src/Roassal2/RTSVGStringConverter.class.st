@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'convertions'
 	],
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #converting }

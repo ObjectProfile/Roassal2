@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'classesToMonitor'
 	],
-	#category : 'Roassal2-Builder-MemoryProfiler'
+	#category : #'Roassal2-Builder-MemoryProfiler'
 }
 
 { #category : #'as yet unclassified' }

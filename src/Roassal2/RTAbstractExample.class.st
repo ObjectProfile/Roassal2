@@ -1,7 +1,7 @@
 Class {
 	#name : #RTAbstractExample,
 	#superclass : #RTObject,
-	#category : 'Roassal2-ExampleBrowser'
+	#category : #'Roassal2-ExampleBrowser'
 }
 
 { #category : #installing }

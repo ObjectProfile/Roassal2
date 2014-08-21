@@ -5,7 +5,7 @@ Class {
 		'highAlpha',
 		'lowAlpha'
 	],
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #'as yet unclassified' }

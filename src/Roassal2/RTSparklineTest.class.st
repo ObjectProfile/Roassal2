@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSparklineTest,
 	#superclass : #RTTest,
-	#category : 'Roassal2-Sparkline'
+	#category : #'Roassal2-Sparkline'
 }
 
 { #category : #tests }

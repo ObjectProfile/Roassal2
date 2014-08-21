@@ -5,7 +5,7 @@ A RTSVGDiamondMarker is a diamond shape marker.
 Class {
 	#name : #RTSVGDiamondMarker,
 	#superclass : #RTSVGAbstractMarker,
-	#category : 'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

@@ -13,7 +13,7 @@ Class {
 		'pairs',
 		'action'
 	],
-	#category : 'Roassal2-Builder-SimilarityMatrix'
+	#category : #'Roassal2-Builder-SimilarityMatrix'
 }
 
 { #category : #examples }

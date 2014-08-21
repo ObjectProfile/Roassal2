@@ -1,7 +1,7 @@
 Class {
 	#name : #RTGlobalBuilderTest,
 	#superclass : #RTTest,
-	#category : 'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-Common'
 }
 
 { #category : #tests }

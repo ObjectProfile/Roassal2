@@ -6,7 +6,7 @@ Class {
 		'properties',
 		'condition'
 	],
-	#category : 'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-Graph'
 }
 
 { #category : #adding }

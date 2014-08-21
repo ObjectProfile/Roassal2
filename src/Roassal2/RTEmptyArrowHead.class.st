@@ -1,7 +1,7 @@
 Class {
 	#name : #RTEmptyArrowHead,
 	#superclass : #RTLineDecoration,
-	#category : 'Roassal2-Core'
+	#category : #'Roassal2-Core'
 }
 
 { #category : #hooks }
