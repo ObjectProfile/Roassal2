@@ -4469,3 +4469,14 @@ VersionOfRoassal2 >> version000357 [
 	at: #date put: '21 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000358 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.194';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.444';
+	at: #version put: '0.358';
+	at: #comment put: '0.358 : Bug fixed in TRCamera>>translateTo:';
+	at: #date put: '21 August 2014';
+	yourself
+]
