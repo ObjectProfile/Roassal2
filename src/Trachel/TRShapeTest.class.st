@@ -33,6 +33,12 @@ TRShapeTest >> testBitmapIncludesPoint [
 	self deny: (s includesPoint: 19 @ 19).
 ]
 
+{ #category : #bitmap }
+TRShapeTest >> testBitmapWidth [
+
+	self assert: (TRBitmapShape new form: (ColorForm extent: 20 @ 20 depth: 32)) width equals: 20
+]
+
 { #category : #composite }
 TRShapeTest >> testBoxTransformation [
 

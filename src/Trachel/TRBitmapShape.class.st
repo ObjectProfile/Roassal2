@@ -88,9 +88,23 @@ TRBitmapShape >> form: aForm [
 	form := aForm
 ]
 
+{ #category : #accessing }
+TRBitmapShape >> height [
+
+	self form isNil ifTrue: [ ^ 0 ].
+	^ self form height
+]
+
 { #category : #testing }
 TRBitmapShape >> includesPoint: aPoint [
 	| invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
 	^ self basicEncompassingRectangle containsPoint: invertedPoint.
+]
+
+{ #category : #accessing }
+TRBitmapShape >> width [
+
+	self form isNil ifTrue: [ ^ 5 ].
+	^ self form width
 ]
