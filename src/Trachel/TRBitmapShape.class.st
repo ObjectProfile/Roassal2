@@ -2,7 +2,8 @@ Class {
 	#name : #TRBitmapShape,
 	#superclass : #TRShape,
 	#instVars : [
-		'form'
+		'form',
+		'rectangle'
 	],
 	#category : #'Trachel-Core'
 }
@@ -17,45 +18,48 @@ TRBitmapShape >> at: aPosition put: aColor [
 	self form getCanvas fillRectangle: (aPosition extent: 1 @ 1) color: aColor
 ]
 
+{ #category : #private }
+TRBitmapShape >> basicEncompassingRectangle [
+	rectangle ifNil: [ self computeRectangle ].
+	^ rectangle
+]
+
 { #category : #accessing }
 TRBitmapShape >> center [
 	^ self position
 ]
 
+{ #category : #private }
+TRBitmapShape >> computeRectangle [
+	form 
+		ifNil: [ rectangle := (-2.5 @ -2.5) corner: (2.5 @ 2.5) ]
+		ifNotNil: [ rectangle := form boundingBox translateBy: form boundingBox center negated ].
+]
+
 { #category : #drawing }
 TRBitmapShape >> drawOn: athensCanvas [
-	"self drawEncompassingRectangleOn: athensCanvas color: (Color gray alpha: 0.1)."
-	
 	| paint |
 	athensCanvas pathTransform restoreAfter: [
-		"athensCanvas pathTransform translateBy: (self center - (self extent / 2)) asFloatPoint."
-		athensCanvas setShape: (0@0 extent: self extent).
-		athensCanvas pathTransform translateBy: self encompassingRectangle topLeft asFloatPoint.
+		athensCanvas setShape: self form boundingBox.
+		athensCanvas pathTransform 
+			multiplyBy: matrix asFloatTransform;
+			translateBy: rectangle corner negated.
 		self form ifNotNil: [ 
 			 paint := (athensCanvas cacheAt: self form
                              	ifAbsentPut: [ (self form asAthensPaintOn: athensCanvas) ]).
 			athensCanvas setPaint: paint.
 			].
-		athensCanvas draw ]
-	
+		athensCanvas draw ].
 ]
 
 { #category : #accessing }
 TRBitmapShape >> encompassingRectangle [
-	| w h |
-	w := self width.
-	h := self height.
-	^ self position + ((w / -2) @ (h / -2)) extent: (w @ h)
+	^ self transformedEncompassingRectangle 
 ]
 
 { #category : #'mode constants' }
 TRBitmapShape >> erase [
 	self fillColor: Color white
-]
-
-{ #category : #accessing }
-TRBitmapShape >> extent [
-	 ^ self encompassingRectangle extent
 ]
 
 { #category : #actions }
@@ -84,22 +88,9 @@ TRBitmapShape >> form: aForm [
 	form := aForm
 ]
 
-{ #category : #accessing }
-TRBitmapShape >> height [
-
-	self form isNil ifTrue: [ ^ 0 ].
-	^ self form height
-]
-
 { #category : #testing }
 TRBitmapShape >> includesPoint: aPoint [
-	"Probably this methods should be updated to reflect transformation"
-	^ self encompassingRectangle containsPoint: aPoint
-]
-
-{ #category : #accessing }
-TRBitmapShape >> width [
-
-	self form isNil ifTrue: [ ^ 5 ].
-	^ self form width
+	| invertedPoint |
+	invertedPoint := matrix inverseTransform: aPoint.
+	^ self basicEncompassingRectangle containsPoint: invertedPoint.
 ]
