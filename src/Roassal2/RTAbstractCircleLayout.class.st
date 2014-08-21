@@ -29,7 +29,7 @@ Class {
 		'initialRadius',
 		'factor'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #public }

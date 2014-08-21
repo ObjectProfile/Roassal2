@@ -5,7 +5,7 @@ A RTDowserExample is a group of examples to show the different capabilities of R
 Class {
 	#name : #RTDowserExample,
 	#superclass : #Object,
-	#category : #'Roassal2-Builder-Dowser'
+	#category : 'Roassal2-Builder-Dowser'
 }
 
 { #category : #basic }

@@ -411,7 +411,7 @@ b view canvas'
 Class {
 	#name : #RTAnimatedScatterPlotExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-AnimatedScatterPlot'
+	#category : 'Roassal2-Builder-AnimatedScatterPlot'
 }
 
 { #category : #sources }

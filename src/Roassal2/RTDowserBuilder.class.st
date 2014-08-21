@@ -26,7 +26,7 @@ Class {
 		'edges',
 		'shadowEdges'
 	],
-	#category : #'Roassal2-Builder-Dowser'
+	#category : 'Roassal2-Builder-Dowser'
 }
 
 { #category : #coloring }

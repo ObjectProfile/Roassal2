@@ -11,7 +11,7 @@ Class {
 		'scope',
 		'buckets'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #examples }

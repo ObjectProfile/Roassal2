@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'colors'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #accessing }

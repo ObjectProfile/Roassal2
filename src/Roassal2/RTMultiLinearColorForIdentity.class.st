@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'objects'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #initialization }

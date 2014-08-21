@@ -39,7 +39,7 @@ Class {
 		'maxColor',
 		'popupText'
 	],
-	#category : #'Roassal2-Builder-Punchcard'
+	#category : 'Roassal2-Builder-Punchcard'
 }
 
 { #category : #adding }

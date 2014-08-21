@@ -4,7 +4,7 @@ A RTSVGExporterExample is the example class for RTSVGExporter.
 Class {
 	#name : #RTSVGExporterExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Exporter-SVG'
+	#category : 'Roassal2-Exporter-SVG'
 }
 
 { #category : #simple }

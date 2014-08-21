@@ -6,7 +6,7 @@ Class {
 		'mapBuilder',
 		'popup'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #'as yet unclassified' }

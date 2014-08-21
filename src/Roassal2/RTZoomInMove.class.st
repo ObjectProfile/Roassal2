@@ -4,7 +4,7 @@ I increase camera's zoom by 25%
 Class {
 	#name : #RTZoomInMove,
 	#superclass : #RTAbstractZoomMove,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #'stepping and presenter' }

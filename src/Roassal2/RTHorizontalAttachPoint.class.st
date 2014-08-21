@@ -1,7 +1,7 @@
 Class {
 	#name : #RTHorizontalAttachPoint,
 	#superclass : #RTAttachPoint,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #'public - hooks' }

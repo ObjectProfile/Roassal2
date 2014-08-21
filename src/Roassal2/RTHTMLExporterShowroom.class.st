@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #export }

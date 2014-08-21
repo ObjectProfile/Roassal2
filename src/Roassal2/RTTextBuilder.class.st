@@ -8,7 +8,7 @@ Class {
 		'wordShapeBuilder',
 		'padding'
 	],
-	#category : #'Roassal2-Builder-TextBuilder'
+	#category : 'Roassal2-Builder-TextBuilder'
 }
 
 { #category : #protocol }

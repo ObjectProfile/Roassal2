@@ -6,7 +6,7 @@ Class {
 		'partitions',
 		'partionnedGroups'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : 'Roassal2-Builder-Graph'
 }
 
 { #category : #public }

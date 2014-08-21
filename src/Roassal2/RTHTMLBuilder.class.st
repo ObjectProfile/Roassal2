@@ -10,7 +10,7 @@ Class {
 		'shapeBuilder',
 		'exporter'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #hooks }

@@ -6,7 +6,7 @@ Class {
 		'verticalGap',
 		'horizontalGap'
 	],
-	#category : #'Roassal2-Builder-Layer'
+	#category : 'Roassal2-Builder-Layer'
 }
 
 { #category : #adding }

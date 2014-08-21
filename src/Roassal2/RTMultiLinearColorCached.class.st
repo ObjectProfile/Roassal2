@@ -5,7 +5,7 @@ Class {
 		'cache',
 		'sizeBeforeReset'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #initialization }

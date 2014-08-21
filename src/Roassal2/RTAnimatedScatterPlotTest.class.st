@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-AnimatedScatterPlot'
+	#category : 'Roassal2-Builder-AnimatedScatterPlot'
 }
 
 { #category : #running }

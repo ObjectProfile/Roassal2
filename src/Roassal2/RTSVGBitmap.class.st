@@ -8,7 +8,7 @@ Class {
 		'form',
 		'box'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : 'Roassal2-Exporter-SVG'
 }
 
 { #category : #adding }

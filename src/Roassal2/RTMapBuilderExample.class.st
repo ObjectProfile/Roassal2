@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMapBuilderExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSortBlock,
 	#superclass : #Object,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #accessing }

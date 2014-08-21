@@ -5,7 +5,7 @@ Class {
 		'data',
 		'stepGiver'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #'as yet unclassified' }

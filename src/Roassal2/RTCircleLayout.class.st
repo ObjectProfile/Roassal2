@@ -5,7 +5,7 @@ A ROCircleLayout is xxxxxxxxx.
 Class {
 	#name : #RTCircleLayout,
 	#superclass : #RTAbstractCircleLayout,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #'instance creation' }

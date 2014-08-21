@@ -10,7 +10,7 @@ Class {
 		'color',
 		'background'
 	],
-	#category : #'Roassal2-Builder-Menu'
+	#category : 'Roassal2-Builder-Menu'
 }
 
 { #category : #accesing }

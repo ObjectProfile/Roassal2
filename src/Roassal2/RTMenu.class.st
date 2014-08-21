@@ -6,7 +6,7 @@ Class {
 		'items',
 		'isOpen'
 	],
-	#category : #'Roassal2-Builder-Menu'
+	#category : 'Roassal2-Builder-Menu'
 }
 
 { #category : #'as yet unclassified' }

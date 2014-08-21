@@ -1,7 +1,7 @@
 Class {
 	#name : #ColorPaletteTest,
 	#superclass : #TestCase,
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #tests }

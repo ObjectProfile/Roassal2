@@ -4,7 +4,7 @@ I am interaction which allows view to be zoomed with a mouce wheel. While zommin
 Class {
 	#name : #RTZoomableView,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #hooks }

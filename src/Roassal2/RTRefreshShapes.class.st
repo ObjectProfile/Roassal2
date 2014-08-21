@@ -6,7 +6,7 @@ Class {
 		'refreshValue',
 		'elements'
 	],
-	#category : #'Roassal2-Builder-MemoryProfiler'
+	#category : 'Roassal2-Builder-MemoryProfiler'
 }
 
 { #category : #'as yet unclassified' }

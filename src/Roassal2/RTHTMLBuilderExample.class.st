@@ -5,7 +5,7 @@ A RTHTMLBuilderExample is the example class for the RTHTMLBuilder hierarchy
 Class {
 	#name : #RTHTMLBuilderExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #metricMap }

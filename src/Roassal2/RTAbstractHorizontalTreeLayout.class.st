@@ -5,7 +5,7 @@ A ROAbstractHorizontalTreeLayout is xxxxxxxxx.
 Class {
 	#name : #RTAbstractHorizontalTreeLayout,
 	#superclass : #RTAbstractRegularTreeLayout,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #testing }

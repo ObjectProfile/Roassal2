@@ -1,7 +1,7 @@
 Class {
 	#name : #RTCharterBuilderTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Builder-Charter'
+	#category : 'Roassal2-Builder-Charter'
 }
 
 { #category : #tests }

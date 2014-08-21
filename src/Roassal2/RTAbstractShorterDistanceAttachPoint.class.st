@@ -1,7 +1,7 @@
 Class {
 	#name : #RTAbstractShorterDistanceAttachPoint,
 	#superclass : #RTAttachPoint,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #util }

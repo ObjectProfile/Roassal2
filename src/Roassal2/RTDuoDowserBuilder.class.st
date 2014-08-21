@@ -5,7 +5,7 @@ A RTDuoDowserBuilder is a 2 column dowser with its own API for managing the buil
 Class {
 	#name : #RTDuoDowserBuilder,
 	#superclass : #RTDowserBuilder,
-	#category : #'Roassal2-Builder-Dowser'
+	#category : 'Roassal2-Builder-Dowser'
 }
 
 { #category : #accessing }

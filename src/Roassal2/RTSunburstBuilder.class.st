@@ -5,7 +5,7 @@ Class {
 		'visitor',
 		'startingNode'
 	],
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #configuration }

@@ -15,7 +15,7 @@ lineItemsCountBlock
 Class {
 	#name : #RTGridLayout,
 	#superclass : #RTAbstractGridLayout,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #hook }

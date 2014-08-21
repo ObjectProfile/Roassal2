@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal2-Builder-Explora'
+	#category : 'Roassal2-Builder-Explora'
 }
 
 { #category : #running }

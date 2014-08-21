@@ -5,7 +5,7 @@ Class {
 		'color',
 		'markedElements'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : 'Roassal2-Builder-Graph'
 }
 
 { #category : #'as yet unclassified' }

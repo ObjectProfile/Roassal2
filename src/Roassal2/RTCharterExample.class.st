@@ -28,7 +28,7 @@ b view canvas'
 Class {
 	#name : #RTCharterExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Charter'
+	#category : 'Roassal2-Builder-Charter'
 }
 
 { #category : #sources }

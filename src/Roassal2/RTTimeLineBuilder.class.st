@@ -8,7 +8,7 @@ Class {
 		'addedElements',
 		'colors'
 	],
-	#category : #'Roassal2-Builder-TimeLine'
+	#category : 'Roassal2-Builder-TimeLine'
 }
 
 { #category : #adding }

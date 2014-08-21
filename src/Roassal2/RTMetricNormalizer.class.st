@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'elements'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #accessing }

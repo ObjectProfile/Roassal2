@@ -6,7 +6,7 @@ Class {
 		'layout',
 		'afterBlock'
 	],
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #updating }

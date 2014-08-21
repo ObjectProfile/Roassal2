@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-Spectrograph'
+	#category : 'Roassal2-Builder-Spectrograph'
 }
 
 { #category : #'method timestamp' }

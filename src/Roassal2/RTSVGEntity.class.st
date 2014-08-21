@@ -20,7 +20,7 @@ Class {
 		'label',
 		'position'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : 'Roassal2-Exporter-SVG'
 }
 
 { #category : #interactions }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMenuBuilder,
 	#superclass : #RTBuilder,
-	#category : #'Roassal2-Builder-Menu'
+	#category : 'Roassal2-Builder-Menu'
 }
 
 { #category : #public }

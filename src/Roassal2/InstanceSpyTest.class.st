@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spy'
 	],
-	#category : #'Roassal2-Builder-MemoryProfiler'
+	#category : 'Roassal2-Builder-MemoryProfiler'
 }
 
 { #category : #running }

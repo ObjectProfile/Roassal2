@@ -1,7 +1,7 @@
 Class {
 	#name : #RTTextBuilderExamples,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Builder-TextBuilder'
+	#category : 'Roassal2-Builder-TextBuilder'
 }
 
 { #category : #examples }

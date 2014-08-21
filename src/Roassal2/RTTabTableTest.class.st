@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tab'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #running }

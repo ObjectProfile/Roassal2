@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'models'
 	],
-	#category : #'Roassal2-Builder-Simon'
+	#category : 'Roassal2-Builder-Simon'
 }
 
 { #category : #initialization }

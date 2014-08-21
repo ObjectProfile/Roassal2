@@ -19,7 +19,7 @@ RTMondrianExample new installTitle: 'SystemComplexity'
 Class {
 	#name : #RTMondrianExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-ExampleBrowser'
+	#category : 'Roassal2-ExampleBrowser'
 }
 
 { #category : #sources }

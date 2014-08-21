@@ -4,7 +4,7 @@ A RTHTMLExporterExample is the example class for RTHTMLExporter
 Class {
 	#name : #RTHTMLExporterExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #example }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSunburstBuilderExamples,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #examples }

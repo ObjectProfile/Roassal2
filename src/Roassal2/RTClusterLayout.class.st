@@ -24,7 +24,7 @@ Class {
 		'maxLayer',
 		'maxAbcissa'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #algorithm }

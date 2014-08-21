@@ -5,7 +5,7 @@ Class {
 		'controllingElements',
 		'follow'
 	],
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #'control points' }

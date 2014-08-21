@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : 'Roassal2-Exporter-SVG'
 }
 
 { #category : #'as yet unclassified' }

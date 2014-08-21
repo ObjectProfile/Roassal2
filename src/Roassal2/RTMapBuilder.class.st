@@ -14,7 +14,7 @@ Class {
 		'periodLabel',
 		'cityElements'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #'list of countries' }

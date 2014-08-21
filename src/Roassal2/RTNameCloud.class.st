@@ -13,7 +13,7 @@ Class {
 		'tableObjects',
 		'dictionary'
 	],
-	#category : #'Roassal2-Builder-NameCloud'
+	#category : 'Roassal2-Builder-NameCloud'
 }
 
 { #category : #adding }

@@ -19,7 +19,7 @@ Class {
 		'move',
 		'nbCycles'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #testing }

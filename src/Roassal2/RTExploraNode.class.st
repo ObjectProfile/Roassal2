@@ -45,7 +45,7 @@ Class {
 		'expansion',
 		'expandedNodes'
 	],
-	#category : #'Roassal2-Builder-Explora'
+	#category : 'Roassal2-Builder-Explora'
 }
 
 { #category : #adding }

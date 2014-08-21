@@ -9,7 +9,7 @@ Class {
 		'countryName',
 		'menus'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #hooks }

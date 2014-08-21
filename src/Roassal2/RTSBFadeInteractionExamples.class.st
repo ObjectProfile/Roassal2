@@ -4,7 +4,7 @@ Just a class for examples
 Class {
 	#name : #RTSBFadeInteractionExamples,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #examples }

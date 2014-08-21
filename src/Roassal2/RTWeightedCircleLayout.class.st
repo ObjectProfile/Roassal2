@@ -1,7 +1,7 @@
 Class {
 	#name : #RTWeightedCircleLayout,
 	#superclass : #RTAbstractWeightedCircleLayout,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #hook }

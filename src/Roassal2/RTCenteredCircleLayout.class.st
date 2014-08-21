@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'center'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #accessing }

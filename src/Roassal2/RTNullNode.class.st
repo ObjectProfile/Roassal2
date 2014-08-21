@@ -1,7 +1,7 @@
 Class {
 	#name : #RTNullNode,
 	#superclass : #RTNode,
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #'as yet unclassified' }

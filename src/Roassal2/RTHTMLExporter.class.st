@@ -20,7 +20,7 @@ Class {
 	#classInstVars : [
 		'directory'
 	],
-	#category : #'Roassal2-Exporter-HTML'
+	#category : 'Roassal2-Exporter-HTML'
 }
 
 { #category : #'file system' }

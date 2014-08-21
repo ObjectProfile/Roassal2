@@ -5,7 +5,7 @@ A ROBlink is xxxxxxxxx.
 Class {
 	#name : #RTBlink,
 	#superclass : #RTAction,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #configuration }

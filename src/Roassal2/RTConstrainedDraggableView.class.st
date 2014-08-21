@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'constraint'
 	],
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #'instance creation' }

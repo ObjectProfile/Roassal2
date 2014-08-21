@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMapLocationBuilder,
 	#superclass : #RTBuilder,
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #adding }

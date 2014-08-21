@@ -49,7 +49,7 @@ Class {
 		'allPointElements',
 		'axisConfiguration'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : 'Roassal2-Builder-Charter'
 }
 
 { #category : #public }

@@ -24,7 +24,7 @@ Class {
 		'context',
 		'minimumValue'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : 'Roassal2-ColorNormalizer'
 }
 
 { #category : #'instance creation' }

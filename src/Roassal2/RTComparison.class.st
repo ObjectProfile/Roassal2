@@ -9,7 +9,7 @@ Class {
 		'rhs',
 		'similarity'
 	],
-	#category : #'Roassal2-Builder-SimilarityMatrix'
+	#category : 'Roassal2-Builder-SimilarityMatrix'
 }
 
 { #category : #'as yet unclassified' }

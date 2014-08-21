@@ -13,7 +13,7 @@ Class {
 		'model',
 		'children'
 	],
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #'as yet unclassified' }

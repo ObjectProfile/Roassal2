@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : #'Roassal2-ExampleBrowser'
+	#category : 'Roassal2-ExampleBrowser'
 }
 
 { #category : #menu }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSparklineExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Sparkline'
+	#category : 'Roassal2-Sparkline'
 }
 
 { #category : #'as yet unclassified' }

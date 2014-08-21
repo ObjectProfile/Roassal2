@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-TimeLine'
+	#category : 'Roassal2-Builder-TimeLine'
 }
 
 { #category : #running }

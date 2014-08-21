@@ -5,7 +5,7 @@ Class {
 		'composer',
 		'view'
 	],
-	#category : #'Roassal2-Builder-Composer'
+	#category : 'Roassal2-Builder-Composer'
 }
 
 { #category : #running }
@@ -49,25 +49,6 @@ RTComposerTest >> testBelow [
 	self assert: e1 position equals: (0 @ 0).	
 	self assert: e1 position x equals: e2 position x.
 	self assert: e2 position y equals: 25.0.
-]
-
-{ #category : #tests }
-RTComposerTest >> testGroup [
-
-	| e |
-	self assert: composer newElementsAsGroup isEmpty.
-	self assert: composer allGroupedElements isEmpty.
-	self assert: composer currentElementsAsGroup isEmpty.
-	e := RTEllipse element.
-	composer view add: e.
-	
-	self assert: composer allGroupedElements isEmpty.
-	self assert: composer currentElementsAsGroup asArray equals: (Array with: e).
-	self assert: composer newElementsAsGroup asArray equals: (Array with: e).
-	composer group: #first.
-		
-	self assert: composer newElementsAsGroup isEmpty.
-	self assert: composer allGroupedElements asArray equals: (Array with: e). 
 ]
 
 { #category : #tests }
@@ -157,4 +138,12 @@ RTComposerTest >> testopeningEmpty [
 
 	composer open delete.
 	self assert: composer gap > 0
+]
+
+{ #category : #tests }
+RTComposerTest >> with0Arg [
+	^ #metaObject
+		run: #selector
+		with: #()
+		in: self
 ]

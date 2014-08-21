@@ -14,7 +14,7 @@ Class {
 		'node7',
 		'node8'
 	],
-	#category : #'Roassal2-Builder-Sunburst'
+	#category : 'Roassal2-Builder-Sunburst'
 }
 
 { #category : #running }

@@ -15,7 +15,7 @@ Class {
 		'buttons',
 		'buttonStart'
 	],
-	#category : #'Roassal2-Exporter-SVG'
+	#category : 'Roassal2-Exporter-SVG'
 }
 
 { #category : #svg }

@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : #'Roassal2-DataStudio'
+	#category : 'Roassal2-DataStudio'
 }
 
 { #category : #'as yet unclassified' }

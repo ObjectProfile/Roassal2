@@ -1,7 +1,7 @@
 Class {
 	#name : #RTDirectLayoutTranslator,
 	#superclass : #RTLayoutTranslator,
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #'as yet unclassified' }

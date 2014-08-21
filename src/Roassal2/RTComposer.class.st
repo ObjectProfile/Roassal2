@@ -7,7 +7,7 @@ Class {
 		'gap',
 		'mapping'
 	],
-	#category : #'Roassal2-Builder-Composer'
+	#category : 'Roassal2-Builder-Composer'
 }
 
 { #category : #accessing }
@@ -37,6 +37,11 @@ RTComposer >> gap: anInteger [
 ]
 
 { #category : #'public-layout' }
+RTComposer >> group [
+	^ self group: ('group', (mapping size asString)) asSymbol
+]
+
+{ #category : #'public-layout' }
 RTComposer >> group: aName [
 	"Compute the group of added objects"
 	mapping at: aName put: self newElementsAsGroup 
@@ -46,8 +51,17 @@ RTComposer >> group: aName [
 RTComposer >> initialize [
 	super initialize.
 	view := RTView new.
+	view @ RTDraggableView.
+	
 	mapping := Dictionary new.
 	gap := 20
+]
+
+{ #category : #'public-layout' }
+RTComposer >> layout: aLayout [
+	
+	aLayout on: mapping values
+
 ]
 
 { #category : #'public-layout' }
@@ -113,6 +127,12 @@ RTComposer >> open [
 RTComposer >> propagateHighlight [
 
 	self newElementsAsGroup @ RTHighlightable allSibblings.
+]
+
+{ #category : #'public-interaction' }
+RTComposer >> propagateHighlightToAll [
+
+	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
 ]
 
 { #category : #accessing }

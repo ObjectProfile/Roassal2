@@ -1,7 +1,7 @@
 Class {
 	#name : #RTTabTableData,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Builder-Map'
+	#category : 'Roassal2-Builder-Map'
 }
 
 { #category : #data }

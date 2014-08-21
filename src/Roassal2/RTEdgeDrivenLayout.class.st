@@ -29,7 +29,7 @@ Class {
 		'fromPositions',
 		'toPositions'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #'as yet unclassified' }

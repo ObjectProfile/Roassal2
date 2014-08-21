@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMondrianShapeBuilder,
 	#superclass : #RTBoundedShapeBuilder,
-	#category : #'Roassal2-Builder-Mondrian'
+	#category : 'Roassal2-Builder-Mondrian'
 }
 
 { #category : #shapes }

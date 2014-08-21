@@ -12,7 +12,7 @@ Class {
 		'methods',
 		'methodElements'
 	],
-	#category : #'Roassal2-ExampleBrowser'
+	#category : 'Roassal2-ExampleBrowser'
 }
 
 { #category : #sources }

@@ -19,7 +19,7 @@ Class {
 		'nodes',
 		'quad'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : 'Roassal2-Layouts'
 }
 
 { #category : #util }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTCompositeShapeTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Core'
+	#category : 'Roassal2-Core'
 }
 
 { #category : #size }

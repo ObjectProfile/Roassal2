@@ -6,7 +6,7 @@ Class {
 		'right',
 		'parent'
 	],
-	#category : #'Roassal2-Builder-Explora'
+	#category : 'Roassal2-Builder-Explora'
 }
 
 { #category : #accessing }
