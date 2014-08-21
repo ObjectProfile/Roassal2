@@ -53,7 +53,7 @@ TRMultiCompositeShape >> announcer: anAnnouncer [
 { #category : #accessing }
 TRMultiCompositeShape >> canvas [
 	"Return the canvas of one of the shapes"
-	^ shapeAndOffsets first canvas	
+	^ shapeAndOffsets anyOne first canvas	
 ]
 
 { #category : #accessing }

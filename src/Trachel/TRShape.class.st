@@ -251,7 +251,7 @@ TRShape >> pushBehind: aShape [
 
 { #category : #actions }
 TRShape >> pushBehindAll: manyShapes [
-	canvas push: self behindAll: manyShapes
+	self canvas push: self behindAll: manyShapes
 ]
 
 { #category : #actions }

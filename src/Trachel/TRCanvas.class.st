@@ -320,16 +320,17 @@ TRCanvas >> privateAdd: shape [
 
 { #category : #actions }
 TRCanvas >> push: aShape behind: anotherShape [
-	shapes remove: aShape.
-	shapes add: aShape before: anotherShape
+	aShape remove.
+	shapes add: aShape before: anotherShape.
+	aShape canvas: self 
 ]
 
 { #category : #action }
-TRCanvas >> push: aTRBoxShape behindAll: aCollection [ 
+TRCanvas >> push: aShape behindAll: aCollection [ 
 	"Move the first argument, which is supposely be contained in the shapes variable, before all elements contained in aCollection"
 	| firstElement |
 	firstElement := self firstElementOf: aCollection.
-	self push: aTRBoxShape behind: firstElement
+	self push: aShape behind: firstElement
 ]
 
 { #category : #action }
