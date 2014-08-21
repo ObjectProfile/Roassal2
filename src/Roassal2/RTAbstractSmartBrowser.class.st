@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'statusBar',
 		'currentSelection',
-		'addedClasses',
 		'view'
 	],
 	#classInstVars : [
@@ -19,8 +18,7 @@ RTAbstractSmartBrowser >> addClasses: classes [
 
 	| es |
 	es := self shapeForClass elementsOn: classes.
-	addedClasses addAll: classes.
-	self addInteractionToClasses: es.
+	es @ RTPopup @ RTDraggable.
 	view addAll: es.
 	RTEdge
 		buildEdgesFromObjects: classes
@@ -51,29 +49,6 @@ RTAbstractSmartBrowser >> addClassesMatching: matchingPattern [
 ]
 
 { #category : #'UI effects' }
-RTAbstractSmartBrowser >> addInteractionLineToReferencedClasses: classElements [
-
-	classElements @ (RTShowEdge new 
-								connectTo: [ :aClass | aClass classReferences ]; 
-								shape: ([ :el | RTBezierLine new 
-												centerOfObjects: el model classReferences inView: self view; 
-												color: (Color blue alpha: 0.4) ])).
-								
-	classElements @ (RTShowEdge new 
-								connectTo: [ :aClass | aClass referencedByClasses: self addedClasses ]; 
-								shape: ([ :el | RTBezierLine new 
-												centerOfObjects: el model classReferences inView: self view; 
-												color: (Color red alpha: 0.4) ])).
-
-]
-
-{ #category : #'UI effects' }
-RTAbstractSmartBrowser >> addInteractionToClasses: classElements [
-	classElements @ RTPopup @ RTDraggable.
-	self addInteractionLineToReferencedClasses: classElements
-]
-
-{ #category : #'UI effects' }
 RTAbstractSmartBrowser >> addInteractionToMethods: methodElements [
 	methodElements @ (RTPopup new text: [ :cm | cm getSource asString ]).
 	methodElements
@@ -87,12 +62,6 @@ RTAbstractSmartBrowser >> addPackagesMatching: matchingPattern [
 	| paks |
 	paks := RPackageOrganizer default packages select: [ :p | matchingPattern match: p name ].
 	self addClasses: ((paks flatCollect: #definedClasses) reject: #isTrait )
-]
-
-{ #category : #accessing }
-RTAbstractSmartBrowser >> addedClasses [
-	"Return the list of classes currently displayed"
-	^ addedClasses
 ]
 
 { #category : #'UI effects' }
@@ -162,7 +131,6 @@ RTAbstractSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
 { #category : #initialization }
 RTAbstractSmartBrowser >> initialize [
 	super initialize.
-	addedClasses := OrderedCollection new.
 	self initializeView: RTView new. 
 	view @ RTDraggableView.
 	currentSelection := #()

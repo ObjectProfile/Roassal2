@@ -16,7 +16,7 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 
 	(aBuilder item: #'Roassal Examples')
 		order: 0.1; 
-		parent: #Tools;
+		parent: #Roassal;
 		label: 'Roassal examples';
 		icon: self roassalWithTransparentIcon;
 		action:[ self new open ]

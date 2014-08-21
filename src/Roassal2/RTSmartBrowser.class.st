@@ -14,7 +14,7 @@ RTSmartBrowser class >> menuCommandOn: aBuilder [
 
 	(aBuilder item: #'Pharo Small Browser')
 		order: 0.1; 
-		parent: #Tools;
+		parent: #Roassal;
 		label: 'Pharo Smart Browser';
 		icon: self roassalWithTransparentIcon;
 		action:[ self new open ]

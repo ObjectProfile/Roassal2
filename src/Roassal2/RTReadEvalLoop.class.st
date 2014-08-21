@@ -18,7 +18,7 @@ RTReadEvalLoop class >> menuCommandOn: aBuilder [
 
 	(aBuilder item: #'Roassal evaluator')
 		order: 0.1; 
-		parent: #Tools;
+		parent: #Roassal;
 		label: 'Roassal evaluator';
 		icon: self roassalWithTransparentIcon;
 		action:[ self new open ]

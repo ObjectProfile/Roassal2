@@ -18,7 +18,7 @@ RTPharoCodeAnalyzer class >> menuCommandOn: aBuilder [
 
 	(aBuilder item: #'Pharo Code Analyzer')
 		order: 0.1; 
-		parent: #Tools;
+		parent: #Roassal;
 		label: 'Pharo Code Analyzer';
 		icon: self roassalWithTransparentIcon;
 		action:[ self new open ]
