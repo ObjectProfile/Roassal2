@@ -5,7 +5,8 @@ Class {
 		'statusBar',
 		'currentSelection',
 		'addedClasses',
-		'view'
+		'view',
+		'hierarchyEdges'
 	],
 	#classInstVars : [
 		'icon'
@@ -17,21 +18,19 @@ Class {
 RTAbstractSmartBrowser >> addClasses: classes [
 	"Add a list of Pharo classes"
 
-	| es |
-	es := self shapeForClass elementsOn: classes.
+	| elements edges |
+	elements := self shapeForClass elementsOn: classes.
 	addedClasses addAll: classes.
-	self addInteractionToClasses: es.
-	view addAll: es.
-	RTEdge
+	self addInteractionToClasses: elements.
+	view addAll: elements.
+	edges := RTEdge
 		buildEdgesFromObjects: classes
 		from: #superclass
 		to: #yourself
 		using: (RTLine new attachPoint: RTVerticalAttachPoint instance)
-		inView: view.	"We look for the hierarchy root"	"	es do: [ :el | 
-		(classes includes: el model superclass)
-			ifFalse: [ el @ RTLabelled ] ].
-"
-	es
+		inView: view.
+	hierarchyEdges addAll: edges.
+	elements
 		when: TRMouseClick
 		do: [ :e | 
 			(self isElementExpanded: e element)
@@ -58,6 +57,9 @@ RTAbstractSmartBrowser >> addInteractionLineToReferencedClasses: classElements [
 								shape: ([ :el | RTBezierLine new 
 												centerOfObjects: el model classReferences inView: self view; 
 												color: (Color blue alpha: 0.4) ])).
+	classElements @ (RTShowLabel highlight: [ :aClass | 
+								(aClass classReferences, (aClass referencedByClasses: self addedClasses))
+									removeDuplicates ]).
 								
 	classElements @ (RTShowEdge new 
 								connectTo: [ :aClass | aClass referencedByClasses: self addedClasses ]; 
@@ -99,6 +101,7 @@ RTAbstractSmartBrowser >> addedClasses [
 RTAbstractSmartBrowser >> applyLayout: layout [
 	layout
 		translator: self translator;
+		userDefinedEdges: hierarchyEdges;
 		on: self currentSelection
 ]
 
@@ -163,8 +166,9 @@ RTAbstractSmartBrowser >> getClassesMatching: regExp from: setOfClasses [
 RTAbstractSmartBrowser >> initialize [
 	super initialize.
 	addedClasses := OrderedCollection new.
+	hierarchyEdges := OrderedCollection new.
 	self initializeView: RTView new. 
-	view @ RTDraggableView.
+	view @ RTDraggableView @ RTZoomableView.
 	currentSelection := #()
 ]
 
