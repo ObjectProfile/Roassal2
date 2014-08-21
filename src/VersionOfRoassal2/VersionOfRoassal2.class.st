@@ -4425,3 +4425,14 @@ VersionOfRoassal2 >> version000353 [
 	at: #date put: '21 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000354 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.191';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.442';
+	at: #version put: '0.354';
+	at: #comment put: '0.354 : Merged with Juraj added back missing methods in Trachel';
+	at: #date put: '21 August 2014';
+	yourself
+]
