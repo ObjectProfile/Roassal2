@@ -87,6 +87,44 @@ TRCameraTest >> testIsVisible [
 	self deny: s isVisible.
 ]
 
+{ #category : #visibility }
+TRCameraTest >> testIsVisibleWithCameraMoving [
+	| c s |
+	c := TRCanvas new.
+	s := TREllipseShape new size: 50.
+	c addShape: s.
+	
+	c camera translateBy: 200 @ 200.
+
+	self assert: s position equals: 0 @ 0.
+	self assert: s isVisible.
+	
+	"Outside the canvas"
+	s translateBy: -100 @ -100.
+	self deny: s isVisible.
+	
+]
+
+{ #category : #callbacks }
+TRCameraTest >> testTranslateBy [
+	| callback t |
+	callback := TRTranslationCallback new.
+	t := 0.
+	callback block: [ :o :step | t := t + 1 ].
+	camera addCallback: callback.
+	self assert: t equals: 0.
+	
+	camera translateBy: 5 @ 4.
+	self assert: t equals: 1.
+
+	camera translateBy: 5 @ 4.
+	self assert: t equals: 2.
+	
+	camera translateTo: 15 @ 4.
+	self assert: t equals: 3.
+
+]
+
 { #category : #tests }
 TRCameraTest >> testTranslation [
 	camera translateTo: 5 @ 3.

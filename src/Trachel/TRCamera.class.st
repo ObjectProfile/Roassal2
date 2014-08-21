@@ -24,7 +24,7 @@ Also I provide handy methods for centering camera on current elements and zoomei
 "
 Class {
 	#name : #TRCamera,
-	#superclass : #TRObject,
+	#superclass : #TRCallableObject,
 	#instVars : [
 		'position',
 		'canvas',
@@ -156,10 +156,12 @@ TRCamera >> scale: aNewScale [
 
 { #category : #actions }
 TRCamera >> translateBy: aPoint [
-	position := position + aPoint
+	position := position + aPoint.
+	self triggerCallbacksForStep: aPoint
 ]
 
 { #category : #actions }
 TRCamera >> translateTo: newPosition [
-	position := newPosition
+	self triggerCallbacksForStep: (newPosition - position).
+	position := newPosition.
 ]

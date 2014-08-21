@@ -1,6 +1,6 @@
 Class {
 	#name : #TRShape,
-	#superclass : #TRObject,
+	#superclass : #TRCallableObject,
 	#instVars : [
 		'canvas',
 		'color',
@@ -8,7 +8,6 @@ Class {
 		'strokePaint',
 		'announcer',
 		'element',
-		'callbacks',
 		'matrix',
 		'rotationAngleDegrees',
 		'session'
@@ -19,12 +18,6 @@ Class {
 { #category : #visitor }
 TRShape >> accept: aVisitor [
 	aVisitor visitShape: self
-]
-
-{ #category : #callbacks }
-TRShape >> addCallback: aCallback [
-	callbacks ifNil: [ callbacks := OrderedCollection new ].
-	callbacks add: aCallback
 ]
 
 { #category : #actions }
@@ -96,16 +89,6 @@ TRShape >> color: aColor [
 { #category : #private }
 TRShape >> computePath [
 	self subclassResponsibility
-]
-
-{ #category : #callbacks }
-TRShape >> doWithoutCallbacks: aBlock [
-	"Simply evaluate aBlock"
-	| oldCallbacks |
-	oldCallbacks := callbacks.
-	callbacks := #().
-	aBlock value.
-	callbacks := oldCallbacks
 ]
 
 { #category : #drawing }
@@ -285,12 +268,6 @@ TRShape >> remove [
 	canvas removeShape: self
 ]
 
-{ #category : #callbacks }
-TRShape >> removeCallback: aCallback ifAbsent: anErrorBlock [
-	callbacks ifNil: [ ^ self ].
-	callbacks remove: aCallback ifAbsent: anErrorBlock
-]
-
 { #category : #private }
 TRShape >> resetPath [
 	path := nil
@@ -389,32 +366,6 @@ TRShape >> translateTo: aPoint [
 	oldPosition := self position.
 	self position: aPoint.
 	self triggerCallbacksForStep: (self position - oldPosition)
-]
-
-{ #category : #callbacks }
-TRShape >> triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent [ 
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
-		c isExtentCallback ifTrue: [ 
-			c shape: self newExtent: newExtent oldExtent: oldExtent ] ]
-]
-
-{ #category : #callbacks }
-TRShape >> triggerCallbacksForStep: aStep [
-	"aStep is a point that represents a translation step"
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
-		c isTranslationCallback ifTrue: [ 
-			c shape: self step: aStep ] ]
-]
-
-{ #category : #callbacks }
-TRShape >> triggerRemoveCallbacks [
-	"aStep is a point that represents a translation step"
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
-		c isRemoveCallback ifTrue: [ 
-			c removeShape: self ] ]
 ]
 
 { #category : #events }
