@@ -4403,3 +4403,14 @@ VersionOfRoassal2 >> version000351 [
 	at: #date put: '21 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000352 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.189';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.440';
+	at: #version put: '0.352';
+	at: #comment put: '0.352 : Fixed a serious bug related to the visibility and the camera movement';
+	at: #date put: '21 August 2014';
+	yourself
+]
