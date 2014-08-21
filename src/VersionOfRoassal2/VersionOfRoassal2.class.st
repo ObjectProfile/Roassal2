@@ -4436,3 +4436,14 @@ VersionOfRoassal2 >> version000354 [
 	at: #date put: '21 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000355 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.192';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.443';
+	at: #version put: '0.355';
+	at: #comment put: '0.355 : Improved the push:behind: in TRCanvas. Replaced CompositeShape by MultiCompositeShape in RTArrow. Added test';
+	at: #date put: '21 August 2014';
+	yourself
+]
