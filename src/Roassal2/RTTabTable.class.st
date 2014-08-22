@@ -99,7 +99,7 @@ RTTabTable >> input: txt usingDelimiter: delimitersAsCharacter [
 
 	values := (txt lines 
 					select: #notEmpty 
-					thenCollect: [ :l | self breakDown: l usingDelimiters: delimitersAsCharacter asString ])
+					thenCollect: [ :l | self breakDown: l trimBoth usingDelimiters: delimitersAsCharacter asString ])
 		select: #notEmpty
 ]
 

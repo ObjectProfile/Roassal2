@@ -23,6 +23,11 @@ RTFlowLayout >> alignTop [
 ]
 
 { #category : #hook }
+RTFlowLayout >> defaultGapSize [
+	^ 5
+]
+
+{ #category : #hook }
 RTFlowLayout >> doExecute: elements [ 
 	| x y maxLastLineHeight |
 	x := self gapSize.
@@ -45,7 +50,8 @@ RTFlowLayout >> doExecute: elements [
 { #category : #'initialize-release' }
 RTFlowLayout >> initialize [
 	super initialize.
-	self alignTop
+	self alignTop.
+	gapSize := self defaultGapSize.
 ]
 
 { #category : #testing }
