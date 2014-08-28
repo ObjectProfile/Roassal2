@@ -15,6 +15,15 @@ ClassDescription >> ageInDaysRounded [
 ]
 
 { #category : #'*roassal2' }
+ClassDescription >> classReferences [
+	| references |
+	references := OrderedCollection new.
+	self methodDict valuesDo: [ :compiledMethod |
+			references addAll: compiledMethod classReferences ].
+	^ references removeDuplicates
+]
+
+{ #category : #'*roassal2' }
 ClassDescription >> computeOldestMethod [
 	| d m |
 	d := DateAndTime now.
@@ -39,6 +48,11 @@ ClassDescription >> gotMethodOnDay: dayAsNumber [
 ClassDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
 	^ self methods anySatisfy: [ :cm | cm livingInDays = aNumberOfDays ]
 
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> isReferencedBy: aClass [ 
+	^ aClass classReferences includes: self 
 ]
 
 { #category : #'*roassal2' }
@@ -75,4 +89,14 @@ ClassDescription >> oldestMethod [
 			m := self computeOldestMethod.
 			aMethod properties at: #oldestMethod put: m ]
 
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> referencedByClasses: aCollectionOfClasses [
+	| references |
+	references := OrderedCollection new.
+	aCollectionOfClasses do: [ :eachClass |
+		(self isReferencedBy: eachClass) 
+			ifTrue: [ references add: eachClass ] ].
+	^ references
 ]
