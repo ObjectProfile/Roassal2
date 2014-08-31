@@ -149,7 +149,7 @@ RTNestTest >> testInnerElement1 [
 	RTNest new
 		onTrachelShape: e trachelShape shapes second nest: (Array with: innerElement).  
 
-	self assert: innerElement position equals: 0 @ 20
+	self assert: innerElement position equals: 0 @ 10
 ]
 
 { #category : #'composed shape' }
@@ -173,7 +173,7 @@ RTNestTest >> testInnerElement2 [
 	RTNest new
 		onTrachelShape: e trachelShape shapes second nest: innerElements.  
 
-	self assert: (innerElements collect: #position) asArray equals: (Array with: (-7.0@20.0) with: (8.0@20.0))
+	self assert: (innerElements collect: #position) asArray equals: (Array with: (-7.0@10.0) with: (8.0@10.0))
 ]
 
 { #category : #'composed shape' }
@@ -188,18 +188,21 @@ RTNestTest >> testInnerElement3 [
 	shape add: (RTBox new size: 20; color: (Color blue alpha: 0.3)) translateBy: 0 @ 20.
 
 	e := shape elementOn: 1.
-	v add: e.
 
 	innerBox := RTBox new size: 10; color: (Color red alpha: 0.9).
 	innerElements := innerBox elementsOn: #(2 3).
-	v addAll: innerElements.
+	
 	RTVerticalLineLayout on: innerElements.
 
 	RTNest new
 		onTrachelShape: e trachelShape shapes second nest: innerElements.  
+
 	e trachelShape vertical.
 	
-	self assert: (innerElements collect: #position) asArray equals: (Array with: (0@20.0) with: (0@40.0))
+	v add: e.
+	v addAll: innerElements.
+	
+	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 5.0) with: (0 @ 25.0))
 ]
 
 { #category : #'multi line' }

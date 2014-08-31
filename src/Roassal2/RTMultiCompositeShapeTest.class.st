@@ -43,7 +43,7 @@ RTMultiCompositeShapeTest >> testTranslationBy [
 	self assert: el shape class equals: RTMultiCompositeShape.
 	
 	ps := view canvas shapes collect: #position.
-	self assert: ps equals: (Array with: (0@0) with: (15@0) with: (30@0)).
+	self assert: ps equals: (Array with: (-15 @ 0) with: (0 @ 0) with: (15 @ 0)).
 	
 	el translateBy: 10 @ 5.
 	ps2 := view canvas shapes collect: #position.
@@ -68,7 +68,7 @@ RTMultiCompositeShapeTest >> testTranslationTo [
 	self assert: el shape class equals: RTMultiCompositeShape.
 	
 	ps := view canvas shapes collect: #position.
-	self assert: ps equals: (Array with: (0@0) with: (15@0) with: (30@0)).
+	self assert: ps equals: (Array with: (-15 @ 0) with: (0 @ 0) with: (15 @ 0)).
 
 	el translateTo: 10 @ 5.
 	ps2 := view canvas shapes collect: #position.
@@ -90,9 +90,9 @@ RTMultiCompositeShapeTest >> testVerticalLayoutAndTranslation [
 	e := s element.
 	v add: e @ RTDraggable.
 
-	self assert: e trachelShape shapes second position equals: 0 @ 16.0.
+	self assert: e trachelShape shapes second position equals: 0 @ 8.0.
 	
-	self assert: (e trachelShape offsets asArray) equals: (Array with: (0@0) with: (0@16.0)).
+	self assert: (e trachelShape offsets asArray) equals: (Array with: (0 @ 0) with: (0 @ 16.0)).
 
 	tb1 := e trachelShape shapes first.
 	tb2 := e trachelShape shapes second.
@@ -100,11 +100,11 @@ RTMultiCompositeShapeTest >> testVerticalLayoutAndTranslation [
 	self assert: (e trachelShape offsetOf: tb2) equals: 0 @ 16.0.
 
 	positions := (e trachelShape shapes collect: #position) asArray.	
-	self assert: positions equals: (Array with: (0@0) with: (0@16.0)).
+	self assert: positions equals: (Array with: (0 @ -8) with: (0 @ 8)).
 
 	e translateTo: 0 @ 0.
 	
 	positions := (e trachelShape shapes collect: #position) asArray.
-	self assert: positions equals: (Array with: (0@0) with: (0@16.0)).
+	self assert: positions equals: (Array with: (0 @ -8) with: (0 @ 8)).
 	
 ]
