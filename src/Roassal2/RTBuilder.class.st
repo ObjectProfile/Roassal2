@@ -168,6 +168,12 @@ RTBuilder >> resetCreatedElements [
 ]
 
 { #category : #public }
+RTBuilder >> restoreCamera [
+	"Reuse a previous camera. This is useful when scripting in a playground"
+	self view restoreCamera
+]
+
+{ #category : #public }
 RTBuilder >> setCurrentShape: aShape [
 	shapeBuilder shape: aShape
 ]

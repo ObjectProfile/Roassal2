@@ -190,6 +190,14 @@ RTView >> removeElement: anElement [
 	anElement trachelShape remove.
 ]
 
+{ #category : #actions }
+RTView >> restoreCamera [
+	"Reuse a previous camera. This is useful when scripting in a playground"
+	| v |
+	v := RTView allInstances detect: [ :aView | self view ~~ aView ] ifNone: [ ^ self ].
+	self view canvas camera: v canvas camera
+]
+
 { #category : #menu }
 RTView >> setDefaultMenu [
 	"Simply add some useful menu"
