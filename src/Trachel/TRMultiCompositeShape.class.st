@@ -27,12 +27,14 @@ TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 
 { #category : #actions }
 TRMultiCompositeShape >> addedIn: aCanvas [
-
-	shapeAndOffsets do: [ :tupple | 
-		aCanvas addShape: tupple first.
-		tupple first translateBy: tupple second
-		]
-
+	self propagateElement.
+	shapeAndOffsets
+		do: [ :tupple | 
+			aCanvas addShape: tupple first.
+			tupple first translateBy: tupple second ].
+		
+	"Make sure we are in the center"
+	self translateBy: self position negated
 ]
 
 { #category : #events }
@@ -85,17 +87,6 @@ TRMultiCompositeShape >> drawOn: athensCanvas [
 ]
 
 { #category : #accessing }
-TRMultiCompositeShape >> element [
-	^ self shapes first element
-]
-
-{ #category : #accessing }
-TRMultiCompositeShape >> element: anObject [
-	"anObject could be any kind of object. A shape has a reference to an object, typically the object odel that the trachel shape represents"
-	self shapes do: [ :s | s element: anObject ]
-]
-
-{ #category : #accessing }
 TRMultiCompositeShape >> encompassingRectangle [
 	^ Rectangle merging: (self shapes collect: #encompassingRectangle)
 ]
@@ -138,6 +129,12 @@ TRMultiCompositeShape >> noLayout [
 ]
 
 { #category : #accessing }
+TRMultiCompositeShape >> numberOfShapes [
+	"Return the number of shapes added into myself"
+	^ self shapes size
+]
+
+{ #category : #accessing }
 TRMultiCompositeShape >> offsetOf: aTrachelShape [
 	^ (shapeAndOffsets detect: [ :shapeAndOffset | shapeAndOffset first == aTrachelShape ]) second
 ]
@@ -151,6 +148,11 @@ TRMultiCompositeShape >> offsets [
 TRMultiCompositeShape >> position [
 	self shapes ifEmpty: [ ^ 0 @ 0 ].
 	^ (self shapes collect: #position) sum / shapeAndOffsets size
+]
+
+{ #category : #actions }
+TRMultiCompositeShape >> propagateElement [
+	self shapes do: [ :s | s element: self element ]
 ]
 
 { #category : #actions }
@@ -206,11 +208,10 @@ TRMultiCompositeShape >> translateBy: aPoint [
 
 { #category : #actions }
 TRMultiCompositeShape >> translateTo: aPoint [
-	| oldPosition |
-	oldPosition := self position.
-	shapeAndOffsets do: [ :tupple | tupple first translateTo: (aPoint + tupple second) ].
-	self triggerCallbacksForStep: (self position - oldPosition)
-
+	| diffPosition |
+	diffPosition := aPoint - self position.
+	self translateBy: diffPosition.
+	self triggerCallbacksForStep: diffPosition
 ]
 
 { #category : #'public - layout' }
@@ -223,7 +224,7 @@ TRMultiCompositeShape >> vertical [
 		tupple first translateTo: newPosition.
 		tupple at: 2 put: newPosition.
 		previousShape := tupple first ].
-	self relayout
+	self shapes do: [ :ss | ss translateTo: 0 @ 0 ]
 ]
 
 { #category : #events }

@@ -12,7 +12,7 @@ TRUtil class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 TRUtil >> widgetFactory [
 	^ TRMorphWidgetFactory
 ]
