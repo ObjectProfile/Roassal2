@@ -4524,3 +4524,14 @@ VersionOfRoassal2 >> version000362 [
 	at: #date put: '31 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000363 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.196';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.451';
+	at: #version put: '0.363';
+	at: #comment put: '0.363 : Worked on the vertical layout for MultiCompositeShapes. Added tests';
+	at: #date put: '31 August 2014';
+	yourself
+]
