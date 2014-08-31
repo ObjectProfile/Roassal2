@@ -4502,3 +4502,14 @@ VersionOfRoassal2 >> version000360 [
 	at: #date put: '22 August 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000361 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.195';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.448';
+	at: #version put: '0.361';
+	at: #comment put: '0.361 : Added #restoreCamera in RTView and RTBuilder. This is useful when scripting in a playground. Added an accessor for the camera in TRCanvas';
+	at: #date put: '31 August 2014';
+	yourself
+]
