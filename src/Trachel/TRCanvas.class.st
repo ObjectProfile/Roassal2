@@ -150,6 +150,11 @@ TRCanvas >> camera [
 	^ camera
 ]
 
+{ #category : #accessing }
+TRCanvas >> camera: aCamera [
+	camera := aCamera 
+]
+
 { #category : #events }
 TRCanvas >> canvas [
 	session == Smalltalk session
