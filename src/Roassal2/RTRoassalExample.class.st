@@ -8,10 +8,6 @@ v canvas'
 Class {
 	#name : #RTRoassalExample,
 	#superclass : #RTAbstractExample,
-	#instVars : [
-		'methods',
-		'methodElements'
-	],
 	#category : #'Roassal2-ExampleBrowser'
 }
 
@@ -3342,7 +3338,7 @@ fPGB8MUHwgfCFx8IHwhffCC/qD8BcE4ipo/6xQAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> examplePlacingGroups [
 
-| v |
+| v g1 g2 |
 v := RTView new.
 g1 := RTGroup new.
 g1 addAll: (RTBox new size: 10; elementsOn:( 1 to: 200)).
@@ -3701,7 +3697,7 @@ EPuA2Dd7gPAusfv3D/YBCQJzfwHud/6Ut31AIsD4Vxr8cvZP/qS3fUACbL6/QbEPSBQaPxTi
 { #category : #sources }
 RTRoassalExample >> exampleSVGPath [
 
-| paths v |
+| paths v normalizer es |
 "Icons have been obtained from http://iconmonstr.com"
 paths := RTGroup new.
 
