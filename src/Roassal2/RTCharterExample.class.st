@@ -661,6 +661,45 @@ B+GD8MMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw8CyC/G4RpvzYtWLQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleRandomScatterplot [
+
+	| b |
+	b := RTCharterBuilder new.
+	b extent: 300 @ 300.
+	b shape ellipse color: (Color blue alpha: 0.3).
+	b interaction popup.
+	b points: ((1 to: 50) collect: [:v | (v / 2) asInteger atRandom @ v atRandom ]).
+	b x: #x.
+	b y: #y.
+	b axisXWithNumberOfTicks: 4; axisYWithNumberOfTicks: 4.
+	b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleRandomScatterplotIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADlUlEQVR4XuWdPWsiURSG83Nt
+BfsUdmqRiAYNWOQHBAtDRGwk9gkIEkxSKEaLFFGERC08xuPuLMvufKvz9bwwSMJMdO7jnHvP
+e8+9Odtu+YqSzvhNwAfCFx8IHwhffCB8IHzxgfCB8MUHwgfCFx8IX3wgfCB88YHwgfDFB8IH
+wlfkgazXa7m4uJCbmxvRn7vdrnQ6Hfn3vOl0Knoc8gGfnkT4QBw0Go3k/v5e9PXx8VHa7ba0
+Wq3/Gu77+1vm8/lBDbr7E3wgx5RC4QciPhA+ED4QPhA+ED4QPhA+ED4QPhC++ED4QCKh19fo
+Z/18IHwg8dDdXTjwAgOyXLq/QS/n8vuQnRaLhVQqlT/2e71eF7MnQa339/f3/e/f3kTcNrSX
+c/lAtr/mPxSKYb+Px2NpNBonsd/5QCIQsqKqzUZEj1OG28CAJCEMfXyI6GEHQ++TP8rihyw+
+ECyQsPIBPhC++ED4QPiKfh5Ctkkil4ccY9zOBxLhkJWEstNEAUlC2elBQIrF4s7b2Qi/Uw8Z
+yGQy2TeyFlifn5+LXfW7Yb/zdUIgq9VK9Oj1elIoFE5a/c4HEoE+RDtn2jIETGKodrnTHAYf
+CB8IF0jcwl/oQPjWSYSA8K0TYMiK2xcBa79HNVTy50P4QE6nOBRT84HwgZgDIdshgQBRM7Hf
+74tbIF6mcPnV7z6UzWb3Tq9WvlttMONU/W41/ORXv/uyJJ72yxHUgs/n82L1dLi13zX+++kD
+klZIl6jqd6c+6uuLv6Qt0Op3pyKHOBRBhDLsvb2NZ5hxWo4QWyCfn/EE4mbBTmLyEKtOnV/9
+HlKmrk9NXJ8cPhA+kOOGLCMM6TD00JHP3yEtCeGNvwrXZ07Dz0MCVlg5S2BAHh5kZ6OI+L1Z
+yvx7YEAMGIdYGATD8aRAtOFfXrxPUGkmb4y4nDpqvrn4W5eXl1Iul8V4NTtHrffhcLjfmMbr
+MZvN9tZ93K49dK9730Curq6kVqtJtVqV6+tr0w+h1rvf5Qh6g35vLo7XBtaHxE3NZlN0ridx
+fYibkGb39Omr3WykmYyFROl02vbfaNhdm8lkZDAYiNUeYGYy9g9b7kYdXt83MCBuQpqVdBay
+VCrZzkaayVhIpNPL2qhWC4nsrtUvUCqVstwDzEzG/mG5XE6en589vS8/ZNHzEL74QPhA+OID
+4QPhiw+ED4QvPhC++ED4QPjiA+ED4YsPhA+ELz4QPhC+QtYPIMsvvK/HaI8AAAAASUVORK5C
+YII='
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleScatterPlot [
 
 	| b |
@@ -805,6 +844,64 @@ rkJggg=='
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleScatterplotWithTitle [
+
+	| b |
+	b := RTCharterBuilder new.
+	b extent: 300 @ 300.
+	b shape ellipse color: (Color blue alpha: 0.3).
+	b interaction popup.
+	b points: RTObject withAllSubclasses.
+	b x: #numberOfLinesOfCode.
+	b y: #numberOfMethods.
+	b size: #numberOfVariables min: 10 max: 25.
+
+	b axisConfiguration 
+			numberOfTicks: 4;
+			title: 'LOC'.
+	b axisX.
+
+	b axisConfiguration 
+			numberOfTicks: 4;
+			title: 'NOM'.
+
+	b axisY.
+	b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleScatterplotWithTitleIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFaElEQVR4XuWdzU8TXRTGUWNc
+mBj/BJcm6saVrowrN279AxAWxjVhpSkJJBQInwEEBEkQlKYEEptSwAJa0kQpUsSYFAQFQUQQ
+KV/DR8Kjc2YyUl4Lb/nqTHme5GbadO7cmfObe8+dc3vvJP3+zS8rKYnfBPxA+MUPhB8Iv/iB
+8APhFz8QfiD84gfCD4Rf/ED4xQ+EHwi/+IHwA+GX5YG0trais7MTDQ0NkO+BQAAOhwO1tbXg
+N7dJQNxuNzo6OjA1NYVQKISWlhaMjIzwA+FvssiArK6uorCwcMc7/907wOsFFhbAXzuOCog0
+R7J1uVxobGxEXV2davAFiK+I3G98HPjwYUpLL1/yAzkyID6fD9PT0+jv70dlZSWys7MRDAbR
+3d29zejLy4DfH1YdvAKpKfymtoAPWVhQIDWF38wWAaIoCj8MfiD8QPiB8APhB8IPhB8IPxB+
+IPxA+MUPhB8Iv/iBsAKRoKKMDvIDMRGIhN9FRUVFcDqdSEtL04w+Ojr6j/EnJye1UcPjajx1
+UBSSTAUi4feJiQl4PB4IBAm/+/3+qDUlHA7jONcSSwDh9yH8Tp0fCD8QfiD84gfCD4Rf/ED4
+gfAD4QfCD4QfCD8QfiD8QBIJSElJCTY3N8EPxCJA2tvbkZycjObmZs3gAwMDWF5epgu/WwbI
+4OAgMjIykJOTg6GhIfT09EQNsx/38Du/D+EHwg+EHwg/EH4g/ED4xQ+EHwg/EH4g/EDiAER9
+0MeLF0AoZP3ZvK9eAV++HOw84wakt1c37OvXezvh9XXA4wFmZ60PRK5PoCQEEDlZI/HPXbcI
+kCdPgPx8YGyMH8iRALHZbDED+fEDePQIePpUryX8pj9EIAUFBdoqQHa7XTNseXl5VANHht/X
+1nQQFRV62u344sATwWdYBkhWVhbq6+vRq3pqCb9LmD3aeMj372F4vQqcTt3Ab9/qTZaaFV+/
+7mxwASeOnB/IIevzZwUPH0JLz58DKytbjl0+75Tv2zdAahQ/kEPWx48KLl0Czp8HLl8Gmpr4
+fYepQJxOBWfPAidOQNveuQPI3c9vdpOANDUpGgwDyO3betPFb3aTgNjtCk6f1oGcOgVcvAgU
+F/MDMQ3Is2cKzpwBkpKgbS9cABwOfiCmAXG5FK1mnDwJnDsHlJXxwzAVyL17ilY7JN28Cbx5
+8y8Q/iVk4wjkxo0tILduAZWV+jOJERH99El/JgkG+aHEBcj161tArl4FHjzYDuTXLx2IjHkk
+shGrq6v/rnWfnp5u3fD7tWs6EOllXbkCpKZCDbVsByCf/++pXKLDVg7ZF6tdR1lIQeJ2paWl
+aphoFpYHIj2s+/eBjAzg8WM9riUplriVEW7hb7IOoJ8/AQOI9LJsNv0pPRDQh2MNI8cS2VVj
+l5DED2QHRa71LtW1TO3P/ncfGXp9/34cbvck7t5d0f50vZckofv5+fk95zM770H/R7AvIEtL
+S9pa78PDw5CxkJqamqgnEQxOwucL7+sEpT3e78UlYt64+JBEU746WLOm9jD2mk8cuqwdZlkf
+EkuTFikxQm5uLoxXYciyT/JWHrnbVtSBkwp1iNH4Hi3/4uKits/MzAyMYxnlSr6dJg2Nqd03
+mXQktX1ubg4yMyyyHJmYtFu5MkAnw9iyZpjsZ7xdKNbrjhuQWJs0QxsbG8jMzISxFpesvSVb
+eUeJHKOtre3v92j5ZcKQQJG0rjovOZZRrkwuysvLi5pPXrkhk44kdXV1oa+vTzOoUa4Ydbdy
+5XUdKSkp2n6pap/e6/Vq1yA3hfxWVVUF/iaLv9vLL34g/ED4xQ+EHwi/+IHwix8IPxB+8QPh
+B8IvfiD8QPjFD4QfCL9M1x8VaX6HWdsx8AAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleSimpleCurve [
 
 	| b |
@@ -820,6 +917,53 @@ RTCharterExample >> exampleSimpleCurve [
 	b axisYWithNumberOfTicks: 4.
 	b open.
 	b view canvas
+]
+
+{ #category : #sources }
+RTCharterExample >> exampleSimpleCurve2 [
+
+	| b |
+	b := RTCharterBuilder new.
+	b extent: 400 @ 300.
+	b shape ellipse fillColor: (Color blue alpha: 0.3).
+	b points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
+	b y: #numberOfMethods.
+
+	b curve.
+	b axisXWithNumberOfTicks: 4.
+	b axisYWithNumberOfTicks: 4.
+	b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleSimpleCurve2Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFFElEQVR4XuWd3U/TUBiH/Tu5
+5YY/gAu9kZhhRhBCIIMAygViZgJTpsjHhMkSLkwIH2YJCMQlIyDqFjbY1m7A+Ol5u1QG7qMb
+HSv+nqRpA+lJ+z7tOe17es4e/P7Nj5N4wB8CfiH88AvhF8IPvxB+IfzwC+EXwg+/EH4h/PAL
+4YdfCL8QfviF8Avhh18Iq5De3l7kcjnwh6hJQiT43d3d8Pl88Hq9GBgYMGT09/djcHDwmpij
+oyPIwh+++shmgW/fgIpCzs/P4XK50NnZaSxra2uYnJzE0NAQxsbGru2s6zpOTk74hdyCdDoH
+W9sQkcIf1vqRG4BfiIPI5/P8QpwEAH4h//V7CL8QfiH8QviF8AvhF8IvhF8IP/xCnMXl5SX4
+hTiIi4uL2oV0dHTwC2kQZ2dn1YWY6fdoNAq/3494PI7V1VUj23tzJ0m9Hx4e8gupk3g8C1Vr
+WUu/b2xsQDqn1tfXEQ6HjcXj8fCn320VolUXwt+G3B2ZTIa/UXcS6XSaX4iTOD095RfiJCq1
+v/xCmkAymeQX4iQSiQS/EP4qix/+Rv2+kEql+IXwvxjyUxZN0/iFOIlKsbsmZHNzE8FgEPxC
+Gks2m7UmZGpqCu3t7YjFYsYOKysrCIVC/Ol3m7HUHyJEIhG43W7IU8DOzg4WFxcRCARQ6u7g
+T7/XT7kPrfnbkCZRVxcuv5DGwf+Rg8Mo9+U7vxD+O4Qf/jaE/ymLH9veQ/iF3A2Vxv/zC2kC
+4bDOL8QpFCYN4G/UHUM0egGRwi/EIWxtnVaMW0kh8/PzkFQ8vxD7yWTy1oXI1+4yDEFS8Lu7
+u5ienkapwPOn328jJGNdyMjICFpbWyEzALW1teHg4AAzMzP86Xeb+PkTiETStVdZ/G1IYwiF
+NIgUfiEOQLUAqsNPqxozfiENJp8HhoezePdOr3p38AtpIMkksL0NvHihlZ09jl/IHSBD1b5/
+h7ojUpif15FIoKY48QuxmTdvdPj9uiGlnv35hdiACoWSoMHt1hAOX94qLvxCbsHGBvD2LfDy
+ZRpfv8KWePALsdAmfPoE9YIMfPyoqXZBUw11Ck+fauoFOoe5OZQd4swv5NZX+5kR8EDgKuiP
+H2uYmACCQSAWA378QMVsLb+QGjg+BmZnC8F9/jyNhw91lbvT4XIVrvYvXwoBj8cBaReacYyO
+EyK3vwREAmMGx9z+/PkqoLJWuU9j/eoV8OiRjidPCosE2tyWv8uVLovHk/q7/69fcOQF1TAh
+8lZaHFCph80AmgEdGEj/E8TOTl1VHTrevy8sHz5cbfv95yWFSNl21uOOEmLO9V5qzncTSb3v
+7kbR25syrjpZirefPUupQB6rBi+hApYw1q9fZ+D1avD5NPW/wvrwUDPS+zJMWMqUbTuW+1Be
+ubnz/xFizvUuqfjR0dGSO0nq3c7+EDlIOyf3v8/lNfX3Q6QzTCb9X1hYcGR1U8sAJqtUO9+a
+hVip0qzQ19eHrq4utLS0YHl5WfU1b6mqba7k/FxWKJ7va1Y1LMPDwzDv+HrKk7Ex5gCm8fHx
+v2XIeJl6yjTPzzxfGYtTHM+6hVip0qwgI7Oky1jm4ppQD/rbKjW6tLRUcn4uKxTP99XT02Nc
+hXt7e3WXJ8dnDmDa3983yjUn0Jcqu1pX7E3M85NjkYtR7jw5vps/B8L/k0f/y2MvP/xC+IXw
+wy+EXwh/CPiF8MMvhF8IP/xC+IXwwy+EXwg//EL4hfDDL4QffiH3hD80D8Gucb+qHgAAAABJ
+RU5ErkJggg=='
 ]
 
 { #category : #icons }

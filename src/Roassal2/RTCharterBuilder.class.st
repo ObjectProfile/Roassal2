@@ -306,123 +306,6 @@ RTCharterBuilder >> defaultMinValue [
 	^ -1000000
 ]
 
-{ #category : #examples }
-RTCharterBuilder >> exampleLineCurve [
-	"
-	self new exampleLineCurve
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 400 @ 300.
-	b shape ellipse fillColor: (Color blue alpha: 0.3).
-	b points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
-	b y: #numberOfMethods.
-
-	b curve.
-	b axisXWithNumberOfTicks: 4.
-	b axisYWithNumberOfTicks: 4.
-	b open
-]
-
-{ #category : #examples }
-RTCharterBuilder >> exampleLineCurve2 [
-	"
-	self new exampleLineCurve2
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 400 @ 300.
-
-	b shape ellipse fillColor: (Color green alpha: 0.3).
-	b points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
-	b y: #numberOfLinesOfCode.
-	b curve.
-
-	
-	b shape ellipse fillColor: (Color blue alpha: 0.3).
-	b points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
-	b y: #numberOfMethods.
-	b curve.
-		
-	
-	b axisXWithNumberOfTicks: 4.
-	b axisYWithNumberOfTicks: 4.
-	b open
-]
-
-{ #category : #examples }
-RTCharterBuilder >> exampleSimpleHistogram [
-	"
-	self new exampleSimpleHistogram
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 300 @ 100.
-	b points: #(5 10 20 3 12).
-	b y: #yourself min: 0 max: 50.
-	b shape rectangle color: Color blue.
-	b stackX.
-	b histogram.
-	
-	b axisX.
-	b axisYWithNumberOfTicks: 4.
-	
-	b open
-]
-
-{ #category : #examples }
-RTCharterBuilder >> exampleSimpleScatterPlot [
-	"
-	self new exampleSimpleScatterPlot
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b shape ellipse color: (Color blue alpha: 0.3).
-	b interaction popup.
-	b points: RTObject withAllSubclasses.
-	b x: #numberOfLinesOfCode.
-	b y: #numberOfMethods.
-	b size: #numberOfVariables min: 5 max: 15.
-
-	b open
-]
-
-{ #category : #examples }
-RTCharterBuilder >> exampleSimpleScatterPlotWithAxis [
-	"
-	self new exampleSimpleScatterPlotWithAxis
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 300 @ 300.
-	b shape ellipse color: (Color blue alpha: 0.3).
-	b interaction popup.
-	b points: RTObject withAllSubclasses.
-	b x: #numberOfLinesOfCode.
-	b y: #numberOfMethods.
-	b size: #numberOfVariables min: 10 max: 25.
-
-	b axisXWithNumberOfTicks: 4; axisYWithNumberOfTicks: 4.
-	b open
-]
-
-{ #category : #examples }
-RTCharterBuilder >> exampleSimpleScatterPlotWithRandomValues [
-	"
-	self new exampleSimpleScatterPlotWithRandomValues
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b extent: 300 @ 300.
-	b shape ellipse color: (Color blue alpha: 0.3).
-	b interaction popup.
-	b points: ((1 to: 50) collect: [:v | (v / 2) asInteger atRandom @ v atRandom ]).
-	b x: #x.
-	b y: #y.
-	b axisXWithNumberOfTicks: 4; axisYWithNumberOfTicks: 4.
-	b open
-]
-
 { #category : #accessing }
 RTCharterBuilder >> extent [
 	^ extent
@@ -537,10 +420,7 @@ RTCharterBuilder >> rawAxisFrom: aPositionFrom to: aPositionTo [
 
 { #category : #utility }
 RTCharterBuilder >> rawAxisTo: aPosition [
-	| edge ex2 ex1 centralPointX centralPointY centralPoint |
-	"centralPoint := extent x / 2 @ extent y negated / 2."
-"	centralPointX := minX + ((maxX - minX) * ( (t - minValue) / (extent x - minValue))) asInteger.
-"		
+	| edge ex2 ex1 centralPointX centralPointY centralPoint |		
 	centralPointX := 0 + ((extent x - 0) * ( (0 - minX) / (maxX - minX))) asInteger.
 	centralPointY := 0 + ((extent y - 0) * ( (0 - minY) / (maxY - minY))) asInteger.
 	centralPoint := centralPointX @ centralPointY negated.
