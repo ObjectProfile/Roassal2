@@ -4568,3 +4568,14 @@ VersionOfRoassal2 >> version000366 [
 	at: #date put: '3 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000367 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.197';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.455';
+	at: #version put: '0.367';
+	at: #comment put: '0.367 : removed RTCharterBuilder>>#exampleHistogram and added comments in RTCharterExample>>exampleHistogram';
+	at: #date put: '3 September 2014';
+	yourself
+]
