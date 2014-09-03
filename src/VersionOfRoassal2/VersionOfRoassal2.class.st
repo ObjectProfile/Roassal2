@@ -4579,3 +4579,14 @@ VersionOfRoassal2 >> version000367 [
 	at: #date put: '3 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000368 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.198';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.456';
+	at: #version put: '0.368';
+	at: #comment put: '0.368 : Added RTPolygon, TRPolygon and an example. Thanks Natalia for these classes!';
+	at: #date put: '3 September 2014';
+	yourself
+]
