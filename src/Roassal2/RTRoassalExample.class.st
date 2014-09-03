@@ -1152,7 +1152,7 @@ UUkAAAAASUVORK5CYII='
 { #category : #sources }
 RTRoassalExample >> exampleComposedLayout [
 
-| view |
+| view es1 es2 es3 |
 view := RTView new.
 
 es1 := (RTEllipse new color: Color lightRed; size: 20) elementsOn: (1 to: 20).
@@ -1268,7 +1268,7 @@ JPwNXt+qEqTBc4UAAAAASUVORK5CYII='
 { #category : #sources }
 RTRoassalExample >> exampleCrosses [
 
-| v |
+| v nbOfCrosses n s es |
 v := RTView new.
 
 nbOfCrosses := 300. 
@@ -1287,8 +1287,9 @@ s color: n.
 es := s elementsOn: (1 to: nbOfCrosses).
 "
 
-RTGridLayout on: es.
 v addAll: es.
+RTGridLayout on: es.
+
 v  open.
 v canvas
 ]
@@ -1958,7 +1959,7 @@ H3744Ycffvjhhx9++PmP8heS8r9YwwsVmwAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleEdgesInTooltip [
-| v shapeBuilder elementClasses edges background label |
+| v shapeBuilder elementClasses edges background label methods methodElements |
 v := RTView new.
 
 "We use the bounded shape builder to:
@@ -2074,7 +2075,7 @@ Pnz48OHDhw8fPnwGhpNYGq32Nn6+JQAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleFonts [
 
-| v fontNames |
+| v fontNames shape es |
 v := RTView new.
 fontNames := FontChooser new fontListStrings  allButFirst.
 
@@ -2733,6 +2734,7 @@ RTRoassalExample >> exampleLazyFormLoading [
 
 "This example shows how to do lazy form loading. It is used to make Roassal use OpenStreetMap by loading tiles"
 
+| forms v emptyForm s elements visibleInteraction |
 forms := ColorForm allInstances select: [:f | f extent = (16 @ 16) ].
 
 v := RTView new.
@@ -3279,7 +3281,7 @@ v canvas
 { #category : #sources }
 RTRoassalExample >> exampleOrthoVerticalLines2 [
 
-| v |
+| v shape |
 v := RTView new.
 
 v addAll: ((RTEllipse new size: 20; color: (Color red alpha: 0.3)) elementsOn: (1 to: 20)).
