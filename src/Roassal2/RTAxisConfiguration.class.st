@@ -1,3 +1,6 @@
+"
+A RTAxisConfiguration describes an axis configuration
+"
 Class {
 	#name : #RTAxisConfiguration,
 	#superclass : #RTObject,
@@ -9,10 +12,30 @@ Class {
 		'minValue',
 		'maxValue',
 		'thousandsSeparator',
-		'title'
+		'title',
+		'builder'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
+
+{ #category : #rendering }
+RTAxisConfiguration >> axisFrom: fromPosition to: toPosition [
+	| renderer |
+	renderer := RTAxisRenderer new.
+	renderer builder: self builder.
+	renderer config: self.
+	renderer axisFrom: fromPosition to: toPosition
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> builder [
+	^ builder
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> builder: anObject [
+	builder := anObject
+]
 
 { #category : #configuration }
 RTAxisConfiguration >> decimal: anInteger [
@@ -68,11 +91,6 @@ RTAxisConfiguration >> minValue [
 { #category : #accessing }
 RTAxisConfiguration >> minValue: aMinValue [
 	minValue := aMinValue
-]
-
-{ #category : #action }
-RTAxisConfiguration >> moveLabel: label againstTick: aTick [
-	positionLabel value: label value: aTick
 ]
 
 { #category : #configuration }

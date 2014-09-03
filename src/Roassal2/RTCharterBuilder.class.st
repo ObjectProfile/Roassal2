@@ -114,47 +114,16 @@ RTCharterBuilder >> axisConfiguration [
 	^ axisConfiguration
 ]
 
-{ #category : #'public axis' }
-RTCharterBuilder >> axisFrom: fromPosition to: toPosition configuration: config [
-	"config is an instance of RTAxisConfiguration"
-
-	| tickShape ticks labelShape labelValues labels nbOfTicks nbOfLabels tickIntervalForLabel labelledTicks minValue maxValue centralPoint  lbl |
-	"We add the ticks"
-	nbOfTicks := config numberOfTicks.
-	nbOfLabels := config numberOfLabels.
-	minValue := config minValue.
-	maxValue := config maxValue.
-	self rawAxisFrom: fromPosition to: toPosition.
-	tickShape := RTBox new height: 10; width: 5.
-	ticks := tickShape elementsOn: (0 to: nbOfTicks).
-	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees abs.
-	view addAll: ticks.
-	
-	centralPoint := self centralPoint.
-	RTMetricNormalizer new
-		elements: ticks;
-		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.	
-
-	"We add the labels"
-	nbOfLabels = 0
-		ifTrue: [ ^ self ].
-	tickIntervalForLabel := config tickIntervalForLabel.
-	minX > 0
-		ifTrue: [ minX := 0 ].
-	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i ].
-	labelValues := (0 to: nbOfLabels) collect: [ :i | minValue + (i * (maxValue - minValue) / nbOfLabels) ].
-	labelShape := RTLabel new text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ].
-	labels := labelShape elementsOn: (0 to: nbOfLabels).
-	labels withIndexDo: [ :label :i | config moveLabel: label againstTick: (labelledTicks at: i) ].
-	view addAll: labels.
-	
-	"We insert the label if necessary"
-	axisConfiguration title notEmpty ifTrue: [
-		lbl := RTLabel elementOn: axisConfiguration title.
-		view add: lbl.
-		lbl translateTo: toPosition - (0 @ 20) ].
-	
-	labels do: [ :e | e trachelShape pushBack ]
+{ #category : #utility }
+RTCharterBuilder >> axisLineFrom: aPositionFrom to: aPositionTo [
+	| edge ex2 ex1 |		
+	ex1 := (RTBox new size: 0) element.
+	ex2 := (RTBox new size: 0) element.
+	ex2 translateTo: (aPositionTo).
+	ex1 translateTo: (aPositionFrom).
+	edge := RTLine edgeFrom: ex1 to: ex2.
+	view add: ex1; add: ex2.
+	view add: edge
 ]
 
 { #category : #utility }
@@ -175,7 +144,7 @@ RTCharterBuilder >> axisX [
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ];
 		minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
 		maxValue: maxX.	
-	self axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y configuration: axisConfiguration
+	axisConfiguration axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'public axis' }
@@ -188,6 +157,7 @@ RTCharterBuilder >> axisXTitled: aTitle [
 RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	config := RTAxisConfiguration new
+					builder: self;
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
 					minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
@@ -195,8 +165,7 @@ RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 	centralPoint := self centralPoint.
-	self axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y configuration: config.
-	
+	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'public axis' }
@@ -208,7 +177,7 @@ RTCharterBuilder >> axisY [
 		minValue: ((minY > 0) ifTrue: [ 0 ] ifFalse: [ minY ]);
 		maxValue: maxY.	
 
-	self axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated configuration: axisConfiguration
+	axisConfiguration axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
 { #category : #'public axis' }
@@ -221,6 +190,7 @@ RTCharterBuilder >> axisYTitled: aTitle [
 RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	config := RTAxisConfiguration new
+					builder: self;
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
 					minValue: ((minY > 0) ifTrue: [ 0 ] ifFalse: [ minY ]);
@@ -228,8 +198,7 @@ RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ].
 	centralPoint := self centralPoint.
-	self axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated configuration: config.
-	
+	config axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
 { #category : #utility }
@@ -316,11 +285,6 @@ RTCharterBuilder >> extent: aValue [
 	extent := aValue
 ]
 
-{ #category : #utility }
-RTCharterBuilder >> getStringFromNumber: aNumber [
-	^ axisConfiguration getStringFromNumber: aNumber
-]
-
 { #category : #'public highlight' }
 RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock [
 
@@ -403,40 +367,10 @@ RTCharterBuilder >> points: objects [
 	allPointElements add: lastAddedElements.
 ]
 
-{ #category : #utility }
-RTCharterBuilder >> rawAxisFrom: aPositionFrom to: aPositionTo [
-	| edge ex2 ex1 |
-	"centralPoint := extent x / 2 @ extent y negated / 2."
-"	centralPointX := minX + ((maxX - minX) * ( (t - minValue) / (extent x - minValue))) asInteger.
-"			
-	ex1 := (RTBox new size: 0) element.
-	ex2 := (RTBox new size: 0) element.
-	ex2 translateTo: (aPositionTo).
-	ex1 translateTo: (aPositionFrom).
-	edge := RTLine edgeFrom: ex1 to: ex2.
-	view add: ex1; add: ex2.
-	view add: edge
-]
-
-{ #category : #utility }
-RTCharterBuilder >> rawAxisTo: aPosition [
-	| edge ex2 ex1 centralPointX centralPointY centralPoint |		
-	centralPointX := 0 + ((extent x - 0) * ( (0 - minX) / (maxX - minX))) asInteger.
-	centralPointY := 0 + ((extent y - 0) * ( (0 - minY) / (maxY - minY))) asInteger.
-	centralPoint := centralPointX @ centralPointY negated.
-	
-	ex1 := (RTBox new size: 0) element.
-	ex2 := (RTBox new size: 0) element.
-	ex2 translateTo: (centralPoint + aPosition).
-	ex1 translateTo: (centralPoint).
-	edge := RTLine edgeFrom: ex1 to: ex2.
-	view add: ex1; add: ex2.
-	view add: edge
-]
-
 { #category : #'public axis' }
 RTCharterBuilder >> resetAxisConfiguration [
-	axisConfiguration := RTAxisConfiguration new
+	axisConfiguration := RTAxisConfiguration new.
+	axisConfiguration builder: self
 ]
 
 { #category : #utility }
