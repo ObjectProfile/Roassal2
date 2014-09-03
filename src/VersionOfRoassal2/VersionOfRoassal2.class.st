@@ -4546,3 +4546,14 @@ VersionOfRoassal2 >> version000364 [
 	at: #date put: '2 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000365 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.197';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.453';
+	at: #version put: '0.365';
+	at: #comment put: '0.365 : Added RTGroup>>extent:, width:, height: Useful for resizing a group of elements';
+	at: #date put: '3 September 2014';
+	yourself
+]
