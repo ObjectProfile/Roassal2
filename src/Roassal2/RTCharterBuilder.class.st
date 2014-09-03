@@ -307,20 +307,6 @@ RTCharterBuilder >> defaultMinValue [
 ]
 
 { #category : #examples }
-RTCharterBuilder >> exampleHistogram [
-	"
-	self new exampleHistogram
-	"
-	| b |
-	b := RTCharterBuilder new.
-	b y: #numberOfMethods width: 100.
-	b size: #numberOfVariable min: 5 max: 15.
-	b points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
-	b histogram.
-	b open
-]
-
-{ #category : #examples }
 RTCharterBuilder >> exampleLineCurve [
 	"
 	self new exampleLineCurve

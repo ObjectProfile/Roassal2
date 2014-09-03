@@ -345,13 +345,26 @@ RTCharterExample >> exampleHistogram [
 
 	| b |
 	b := RTCharterBuilder new.
+	
+	"We defien the size of the charting area"
 	b extent: 500 @ 100.
 	
+	"When the mouse is above a bar, say which class we are point at"
 	b interaction popup.
+	
+	"Each subclass of RTShape will be a bar"
 	b points: RTShape withAllSubclasses.
+	
+	"The height of a bar will be the number of methods (defined in the instance side)"
 	b allY: [ :c | c methods size ].
+	
+	"We set a color of the rectangle"
 	b shape rectangle color: Color blue.
+	
+	"All the bar have to be stacked from left to right"
 	b stackX.
+	
+	"Set the width of a bar"
 	b histogramBarWidth: 10.
 	
 	b axisX.
