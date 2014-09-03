@@ -84,6 +84,30 @@ RTGroup >> extent [
 	^ self encompassingRectangle extent
 ]
 
+{ #category : #resizing }
+RTGroup >> extent: newExtentT [
+
+	| newExtent oldExtent encompassingRectangle |
+	newExtent := newExtentT max: 1 @ 1.
+	encompassingRectangle := self encompassingRectangle.
+	oldExtent := encompassingRectangle extent.
+	
+	"Make top left to 0 @ 0"
+	self translateBy: encompassingRectangle topLeft negated.
+	
+	"Resizing and moving the position of each element"
+	self do: [ :element |
+		element translateTo: (element position * newExtent / oldExtent).
+		element extent: (element extent * newExtent / oldExtent).
+	].
+	
+	"Move back all the element to the original position"
+	self translateBy: encompassingRectangle topLeft.
+	
+	
+	
+]
+
 { #category : #attributes }
 RTGroup >> hasAttribute: aKey [ 
 	"Return true if attributes includes aKey"
@@ -101,6 +125,11 @@ RTGroup >> hasAttributes [
 { #category : #public }
 RTGroup >> height [
 	^ self encompassingRectangle height
+]
+
+{ #category : #resizing }
+RTGroup >> height: newHeight [
+	self extent: self extent x @ newHeight
 ]
 
 { #category : #public }
@@ -135,12 +164,6 @@ RTGroup >> removeAttributeAt: aKey [
 { #category : #attributes }
 RTGroup >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
-]
-
-{ #category : #public }
-RTGroup >> renderOn: trCanvas [ 
-	"Not sure whether this method is necessary..."
-	self do: [ :e | e renderOn: trCanvas ]
 ]
 
 { #category : #public }
@@ -184,6 +207,7 @@ RTGroup >> translateTopLeftTo: aPosition [
 
 { #category : #accessing }
 RTGroup >> view [
+	"Return the view of the group. This method assumes that all the elements of group belong to the same view"
 	^ self anyOne view
 ]
 
@@ -195,4 +219,10 @@ RTGroup >> when: evt do: callback [
 { #category : #public }
 RTGroup >> width [
 	^ self encompassingRectangle width
+]
+
+{ #category : #resizing }
+RTGroup >> width: newWidth [
+
+	self extent: newWidth @ self extent y
 ]

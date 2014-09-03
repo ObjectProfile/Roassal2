@@ -67,7 +67,7 @@ RTCompositeShapeTest >> testNesting [
 		
 	element := shape elementOn: 'Container'.
 	el := (RTEllipse new size: 10; color: (Color blue alpha: 0.5)) elementsOn: (1 to: 1).
-	view add: element; add: el.
+	view add: element; addAll: el.
 
 	RTNest new layout: RTGridLayout; on: element nest: (Array with: el).
 	element @ RTDraggable.

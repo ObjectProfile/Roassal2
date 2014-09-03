@@ -2,7 +2,7 @@ Extension { #name : #Rectangle }
 
 { #category : #'*roassal2' }
 Rectangle >> areasOverlapingOutside: aRectangle [ 
-	"Answer an Array of maximazed Rectangles comprising (overlaped by each other) the parts of the receiver not 
+	"Answer an Array of maximized Rectangles comprising (overlaped by each other) the parts of the receiver not 
 	intersecting aRectangle."
 	"Make sure the intersection is non-empty"
 	| areas |
