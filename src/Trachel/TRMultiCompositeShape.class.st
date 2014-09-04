@@ -9,10 +9,11 @@ Class {
 
 { #category : #callbacks }
 TRMultiCompositeShape >> addCallback: aCallback [
-	"self shapes first addCallback: aCallback."
-	super addCallback: aCallback
+	"super addCallback: aCallback."
+	self shapes ifEmpty: [ ^ self ].
 	"We are adding only to one shape. If we add it to two shapes, then the nesting will register several time the same callback"
-	"shape2 addCallback: aCallback"
+	"self shapes last addCallback: aCallback 
+"
 ]
 
 { #category : #'public - adding' }
@@ -103,7 +104,7 @@ TRMultiCompositeShape >> height [
 
 { #category : #'public - layout' }
 TRMultiCompositeShape >> horizontal [
-
+	"PROBABLY DOES NOT WORK. GET INSPIRATION FROM #vertical"
 	| previousShape |
 	previousShape := shapeAndOffsets first first.
 	shapeAndOffsets allButFirst do: [ :tupple |
@@ -167,8 +168,14 @@ TRMultiCompositeShape >> pushFront [
 
 { #category : #'layout inner shapes' }
 TRMultiCompositeShape >> relayout [
+
+	| first |
+	first := self shapes first.
+	shapeAndOffsets do: [ :shapeAndOffset | 
+		shapeAndOffset first translateBy: first position + shapeAndOffset second ]
+	
 	"Set as offset the position of the shapes"
-	shapeAndOffsets do: [ :shapeAndOffset | shapeAndOffset at: 2 put: shapeAndOffset first position ]
+	"shapeAndOffsets do: [ :shapeAndOffset | shapeAndOffset at: 2 put: shapeAndOffset first position ]"
 ]
 
 { #category : #actions }
