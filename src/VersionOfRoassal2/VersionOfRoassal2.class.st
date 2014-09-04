@@ -4645,3 +4645,14 @@ VersionOfRoassal2 >> version000373 [
 	at: #date put: '4 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000374 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.201';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.461';
+	at: #version put: '0.374';
+	at: #comment put: '0.374 : Added a camera initializer. Improved RTView>>restoreCamera';
+	at: #date put: '4 September 2014';
+	yourself
+]
