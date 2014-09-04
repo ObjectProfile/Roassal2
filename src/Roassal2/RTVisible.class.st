@@ -47,6 +47,13 @@ RTVisible >> doVisibleBlockOn: element [
 	visibleBlock rtValue: element
 ]
 
+{ #category : #initialization }
+RTVisible >> initialize [
+	super initialize.
+	visibleBlock := [ :anElement | "do nothing " ].
+	invisibleBlock := [ :anElement | "do nothing " ].
+]
+
 { #category : #hooks }
 RTVisible >> initializeElement: element [
 	| c |
