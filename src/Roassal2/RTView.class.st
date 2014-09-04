@@ -193,9 +193,7 @@ RTView >> removeElement: anElement [
 { #category : #actions }
 RTView >> restoreCamera [
 	"Reuse a previous camera. This is useful when scripting in a playground"
-	| v |
-	v := RTView allInstances detect: [ :aView | self view ~~ aView ] ifNone: [ ^ self ].
-	self view canvas camera: v canvas camera
+	self view canvas camera toAdjust: TRCameraInitializer restorePrevious
 ]
 
 { #category : #menu }
@@ -215,7 +213,7 @@ RTView >> setDefaultMenu [
 { #category : #initialization }
 RTView >> setUpCanvas [
 	"Make the camera point on the center of the visualization"
-	trCanvas camera focusOnCenter.
+	trCanvas camera adjust.
 	^ trCanvas
 ]
 
