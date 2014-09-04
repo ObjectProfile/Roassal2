@@ -1,3 +1,6 @@
+"
+A TRMorph is at the interface between Morphic and Trachel. 
+"
 Class {
 	#name : #TRMorph,
 	#superclass : #Morph,
@@ -433,6 +436,7 @@ TRMorph >> signalUpdate [
 
 { #category : #stepping }
 TRMorph >> step [
+	self wantsSteps ifFalse: [ ^ self ].
 	self changed
 ]
 
@@ -448,11 +452,6 @@ TRMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-TRMorph >> timeOut [
-	^ 2.
 ]
 
 { #category : #accessing }
