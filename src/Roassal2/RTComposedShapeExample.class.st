@@ -188,22 +188,19 @@ RTComposedShapeExample >> exampleInnerShapes [
 
 	shape := RTMultiCompositeShape new.
 	shape add: RTLabel new.
-	shape add: (RTBox new size: 20; color: (Color blue alpha: 0.3)).
-
+	shape add: (RTBox new color: (Color blue alpha: 0.3)).
+	
 	es := shape elementsOn: RTShape withAllSubclasses.
 	v addAll: es.
 
 	es do: [ :e | 
 		methodElements := RTBox new elementsOn: e model methods.
 		RTGridLayout on: methodElements.
-		
+		v addAll: methodElements.
 		RTNest new
 			on: e 
 			inShape: #second 
 			nest: methodElements.
-			
-		v addAll: methodElements.
-		e trachelShape vertical.
 	].
 
 	RTFlowLayout on: es.

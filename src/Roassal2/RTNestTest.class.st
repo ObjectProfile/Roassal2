@@ -88,6 +88,85 @@ RTNestTest >> testDifferentSizes [
 	self assert: 50 = el position y.
 ]
 
+{ #category : #'composed shape' }
+RTNestTest >> testDragAndDrop [
+	| v shape es outer  inner |
+	v := RTView new.
+	shape := RTMultiCompositeShape new.
+	shape add: RTBox new.
+	shape add: RTBox new.
+	
+	es := shape elementsOn: #(1).
+	v addAll: es.
+	outer := es anyOne.
+	
+	RTNest new
+		for: es
+		inShape: #first
+		add: [ :group :model | 
+			inner := (RTBox new color: Color blue) elementOn: 'hello'.
+			group add: inner ].
+		
+	self assert: outer position equals: 0 @ 5.0.
+	self assert: inner position equals: 0 @ 0.	
+		
+	outer translateBy: 5 @ 5.
+	self assert: outer position equals: 5 @ 10.0.
+	self assert: inner position equals: 5 @ 5.	
+	
+	
+	
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testDragAndDrop2 [
+	| v shape e inner |
+	v := RTView new.
+	shape := RTBox new.
+	
+	e := shape element.
+	
+	inner := (RTBox new color: Color blue) element.
+	RTNest new on: e nest: (RTGroup with: inner).
+		
+	self assert: e position equals: 0 @ 0.
+	self assert: inner position equals: 0 @ 0.	
+		
+	e translateBy: 5 @ 5.
+	self assert: e position equals: 5 @ 5.
+	self assert: inner position equals: 5 @ 5.	
+	
+	
+	
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testDragAndDropWithoutComposite [
+	| v shape es outer  inner |
+	v := RTView new.
+	shape := RTBox new.
+	
+	es := shape elementsOn: #(1).
+	v addAll: es.
+	outer := es anyOne.
+	
+	RTNest new
+		for: es
+		add: [ :group :model | 
+			inner := (RTBox new color: Color blue) elementOn: 'hello'.
+			group add: inner ].
+		
+	self assert: outer position equals: 0 @ 0.
+	self assert: inner position equals: 0 @ 0.	
+		
+	outer translateBy: 5 @ 5.
+	self assert: outer position equals: 5 @ 5.
+	self assert: inner position equals: 5 @ 5.	
+	
+	
+	
+]
+
 { #category : #encompassing }
 RTNestTest >> testEncompassingRectangle [
 
@@ -108,6 +187,29 @@ RTNestTest >> testEncompassingRectangle2 [
 	e2 translateTo: (100 @ 80).
 	r := RTNest new encompassingRectangleOf: (Array with: e1 with: e2).
 	self assert: r = ((-5 @ -5) corner: (115 @ 95))
+]
+
+{ #category : #tests }
+RTNestTest >> testForAdd [
+
+	| v es positions |
+	v := RTView new.
+	es := RTBox elementsOn: (1 to: 5).
+	v addAll: es.
+	es @ RTDraggable.
+
+	RTNest new
+		for: es
+		add: [ :group :model | 
+			group addAll: ((RTBox new color: Color blue) elementsOn: (1 to: model)).
+			RTGridLayout on: group.
+		].
+
+	RTGridLayout on: es.
+	
+	positions := 
+((Array new: 20) at: 1 put: ((7.5@7.5)); at: 2 put: ((32.5@7.5)); at: 3 put: ((62.5@12.5)); at: 4 put: ((12.5@42.5)); at: 5 put: ((47.5@42.5)); at: 6 put: ((8.0@8.0)); at: 7 put: ((28.0@8.0)); at: 8 put: ((38.0@8.0)); at: 9 put: ((58.0@8.0)); at: 10 put: ((68.0@8.0)); at: 11 put: ((58.0@18.0)); at: 12 put: ((8.0@38.0)); at: 13 put: ((18.0@38.0)); at: 14 put: ((8.0@48.0)); at: 15 put: ((18.0@48.0)); at: 16 put: ((38.0@38.0)); at: 17 put: ((48.0@38.0)); at: 18 put: ((58.0@38.0)); at: 19 put: ((38.0@48.0)); at: 20 put: ((48.0@48.0)); yourself).
+	self assert: (v elements collect: #position) asArray equals: positions
 ]
 
 { #category : #tests }

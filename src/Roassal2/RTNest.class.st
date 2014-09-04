@@ -185,7 +185,8 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 	callback := TRExtentCallback block: [ :shape :step | aSymbolLayout rtValue: element trachelShape ].
 	element trachelShape addCallback: callback.
 
-	aSymbolLayout rtValue: element trachelShape
+	aSymbolLayout rtValue: element trachelShape.
+	element trachelShape relayout.
 ]
 
 { #category : #public }
