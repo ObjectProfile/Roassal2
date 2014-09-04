@@ -4634,3 +4634,14 @@ VersionOfRoassal2 >> version000372 [
 	at: #date put: '4 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000373 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.200';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.460';
+	at: #version put: '0.373';
+	at: #comment put: '0.373 : improved the TRMorph>>step method';
+	at: #date put: '4 September 2014';
+	yourself
+]
