@@ -2731,7 +2731,9 @@ RK5CYII='
 
 { #category : #sources }
 RTRoassalExample >> exampleLazyFormLoading [
-
+	"
+	self new exampleLazyFormLoading
+	"
 "This example shows how to do lazy form loading. It is used to make Roassal use OpenStreetMap by loading tiles"
 
 | forms v emptyForm s elements visibleInteraction |
@@ -2742,6 +2744,7 @@ v @ RTDraggableView.
 
 "We first create elements on an empty form"
 emptyForm := ColorForm extent: 16 @ 16 depth: 32.
+emptyForm fillColor: Color blue.
 s := RTBitmap new
 			form: emptyForm.
 elements := s elementsOn: (1 to: forms size).
@@ -2754,7 +2757,8 @@ visibleInteraction := RTVisible new.
 visibleInteraction
 	visibleBlock: [ :el | 
 		Transcript show: 'refresh'; cr.
-		el trachelShape form: (forms at: el model). el signalUpdate ].
+		el trachelShape form: (forms at: el model).
+		el signalUpdate ].
 elements @ visibleInteraction.
 "We do the layout with a gap, for the purpose of the demo"
 RTGridLayout new gapSize: 90; on: elements.
