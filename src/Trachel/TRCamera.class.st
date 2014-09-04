@@ -113,6 +113,12 @@ TRCamera >> fromPixelToSpace: aPoint [
 ]
 
 { #category : #convertion }
+TRCamera >> fromPixelToSpaceForRectangle: aRectangle [
+
+	^ (self fromPixelToSpace: aRectangle topLeft) corner: (self fromPixelToSpace: aRectangle bottomRight)
+]
+
+{ #category : #convertion }
 TRCamera >> fromSpaceToPixel: aPoint [
 
 	^ AthensAffineTransform new
@@ -121,6 +127,12 @@ TRCamera >> fromSpaceToPixel: aPoint [
 		translateBy: self position negated;
 		transform: aPoint
 	
+]
+
+{ #category : #convertion }
+TRCamera >> fromSpaceToPixelForRectangle: aRectangle [
+
+	^ (self fromSpaceToPixel: aRectangle topLeft) corner: (self fromSpaceToPixel: aRectangle bottomRight)
 ]
 
 { #category : #initialization }
@@ -132,11 +144,18 @@ TRCamera >> initialize [
 
 { #category : #'testing visibility' }
 TRCamera >> isVisible: aShape [
-	| p pOnScreen ext |
+	"Return true if aShape is fully or partially visible. I.e., the encompassing bounds of aShape intersects of the of the canvas "
+	| rec ext |
+	rec := aShape encompassingRectangle.
+	rec := self fromSpaceToPixelForRectangle: rec.
+	ext := self canvas extent.
+	^ (0 @ 0 extent: ext) intersects: rec
+	
+"	| p pOnScreen ext |
 	p := aShape position.
 	pOnScreen := self fromSpaceToPixel: p.
 	ext := self canvas extent.
-	^ (0 @ 0 extent: ext) containsPoint: pOnScreen
+	^ (0 @ 0 extent: ext) intersects: pOnScreen"
 ]
 
 { #category : #accessing }
