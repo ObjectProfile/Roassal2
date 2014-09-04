@@ -4623,3 +4623,14 @@ VersionOfRoassal2 >> version000371 [
 	at: #date put: '4 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000372 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.199';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.460';
+	at: #version put: '0.372';
+	at: #comment put: '0.372 : RTVisible now handle a better detection of isVisible. Useful for the OpenStreeMap integration';
+	at: #date put: '4 September 2014';
+	yourself
+]
