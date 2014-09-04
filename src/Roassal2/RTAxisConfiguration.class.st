@@ -13,7 +13,9 @@ Class {
 		'maxValue',
 		'thousandsSeparator',
 		'title',
-		'builder'
+		'builder',
+		'color',
+		'titlePosition'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -37,10 +39,27 @@ RTAxisConfiguration >> builder: anObject [
 	builder := anObject
 ]
 
+{ #category : #accessing }
+RTAxisConfiguration >> color [
+	"Return the color of the axis"
+	^ color
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> color: aColor [
+	"Set the color of the axis"
+	color := aColor
+]
+
 { #category : #configuration }
 RTAxisConfiguration >> decimal: anInteger [
 	"Set the number of decimals"
 	self labelConvertion: [ :number | number asFloat round: anInteger ]
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> defaultColor [
+	^ Color gray
 ]
 
 { #category : #action }
@@ -59,7 +78,9 @@ RTAxisConfiguration >> initialize [
 	maxValue := 0.
 	self twoDecimals.
 	self noThousandsSeparator.
-	self noTitle
+	self noTitle.
+	color := self defaultColor.
+	titlePosition := (0 @ 20)
 ]
 
 { #category : #accessing }
@@ -155,8 +176,10 @@ RTAxisConfiguration >> positionLabel [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> positionLabel: aValue [
-	positionLabel := aValue
+RTAxisConfiguration >> positionLabel: aTwoArgBlock [
+	"This method expect a two argblock to set where the label should be"
+	"eg. [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ]"
+	positionLabel := aTwoArgBlock
 ]
 
 { #category : #accessing }
@@ -172,6 +195,18 @@ RTAxisConfiguration >> title [
 { #category : #accessing }
 RTAxisConfiguration >> title: aTitleAsString [
 	title := aTitleAsString
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> titlePosition [
+	^ titlePosition
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> titlePosition: aPoint [
+	"Set the position of the title according to the toPosition when rendering the axis"
+	"The argument is added to the toPosition"
+	titlePosition := aPoint
 ]
 
 { #category : #configuration }

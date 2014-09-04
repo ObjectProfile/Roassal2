@@ -20,14 +20,13 @@ RTAxisRenderer >> addAllToView: roassalElements [
 { #category : #rendering }
 RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	"Add ticks on the lines. Return the list of ticks"
-	| centralPoint tickShape ticks |
+	| tickShape ticks |
 	tickShape := RTBox new
 		height: 10;
 		width: 5.
 	ticks := tickShape elementsOn: (0 to: self numberOfTicks).
 	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees abs.
 	self addAllToView: ticks.
-	centralPoint := builder centralPoint.
 	RTMetricNormalizer new
 		elements: ticks;
 		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.
@@ -39,8 +38,9 @@ RTAxisRenderer >> addToView: roassalElement [
 	self builder view add: roassalElement
 ]
 
-{ #category : #rendering }
+{ #category : #'public-rendering' }
 RTAxisRenderer >> axisFrom: fromPosition to: toPosition [
+	"THIS IS A PUBLIC METHOD"
 	"config is an instance of RTAxisConfiguration"
 
 	"fromPosition is the starting point of the axis. toPosition is the ending point"
@@ -65,7 +65,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition [
 		ifTrue: [ 
 			lbl := RTLabel elementOn: self title.
 			self addToView: lbl.
-			lbl translateTo: toPosition - (0 @ 20) ].
+			lbl translateTo: toPosition - config titlePosition ].
 	labels do: [ :e | e trachelShape pushBack ]
 ]
 
@@ -77,7 +77,7 @@ RTAxisRenderer >> axisLineFrom: aPositionFrom to: aPositionTo [
 	ex2 := (RTBox new size: 0) element.
 	ex2 translateTo: (aPositionTo).
 	ex1 translateTo: (aPositionFrom).
-	edge := RTLine edgeFrom: ex1 to: ex2.
+	edge := (RTLine new color: config color) edgeFrom: ex1 to: ex2.
 	self addToView: ex1; addToView: ex2.
 	self addToView: edge
 ]
