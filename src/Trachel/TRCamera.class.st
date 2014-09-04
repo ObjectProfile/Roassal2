@@ -28,7 +28,8 @@ Class {
 	#instVars : [
 		'position',
 		'canvas',
-		'scale'
+		'scale',
+		'initializer'
 	],
 	#category : #'Trachel-Core'
 }
@@ -42,6 +43,11 @@ TRCamera class >> forCanvas: aTrachelCanvas [
 { #category : #public }
 TRCamera class >> new [
 	self error: 'Instance of this class have to be created with #forCanvas:'
+]
+
+{ #category : #actions }
+TRCamera >> adjust [
+	initializer executeOn: self
 ]
 
 { #category : #accessing }
@@ -139,7 +145,8 @@ TRCamera >> fromSpaceToPixelForRectangle: aRectangle [
 TRCamera >> initialize [
 	super initialize.
 	position := 0 @ 0.
-	scale := 1.0
+	scale := 1.0.
+	initializer := TRCameraInitializer focusOnCenter
 ]
 
 { #category : #'testing visibility' }
@@ -171,6 +178,11 @@ TRCamera >> scale [
 { #category : #accessing }
 TRCamera >> scale: aNewScale [
 	scale := aNewScale
+]
+
+{ #category : #accessing }
+TRCamera >> toAdjust: aCameraInitializer [
+	initializer := aCameraInitializer
 ]
 
 { #category : #actions }
