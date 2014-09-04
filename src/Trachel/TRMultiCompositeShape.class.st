@@ -10,7 +10,7 @@ Class {
 { #category : #callbacks }
 TRMultiCompositeShape >> addCallback: aCallback [
 	"super addCallback: aCallback."
-	self shapes ifEmpty: [ ^ self ].
+"	self shapes ifEmpty: [ ^ self ]."
 	"We are adding only to one shape. If we add it to two shapes, then the nesting will register several time the same callback"
 	"self shapes last addCallback: aCallback 
 "

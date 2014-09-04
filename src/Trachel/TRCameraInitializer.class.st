@@ -61,8 +61,5 @@ TRCameraInitializer >> restorePrevious: camera [
 	LastCamera ifNil: [ LastCamera := camera ].
 	canvas := camera canvas.
 	canvas camera: LastCamera.
-	LastCamera canvas: canvas.
-	
-"	camera translateTo: LastCamera position.
-	camera scale: LastCamera scale."
+	LastCamera canvas: canvas
 ]
