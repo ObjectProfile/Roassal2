@@ -134,10 +134,7 @@ RTNestTest >> testDragAndDrop2 [
 		
 	e translateBy: 5 @ 5.
 	self assert: e position equals: 5 @ 5.
-	self assert: inner position equals: 5 @ 5.	
-	
-	
-	
+	self assert: inner position equals: 5 @ 5
 ]
 
 { #category : #'composed shape' }

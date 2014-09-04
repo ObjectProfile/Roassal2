@@ -179,6 +179,12 @@ RTView >> openWithMenu [
 ]
 
 { #category : #actions }
+RTView >> pushBackEdges [
+	"Move all the edges in the background"
+	self edges do: [ :e | e trachelShape pushBack ]
+]
+
+{ #category : #actions }
 RTView >> removeEdge: anEdge [
 	edges remove: anEdge ifAbsent: [ ].
 	anEdge trachelShape remove.
