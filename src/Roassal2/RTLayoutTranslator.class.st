@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLayoutTranslator class >> default [
 	"Return the default translator, the one used in the layouts"
 
@@ -18,9 +18,14 @@ RTLayoutTranslator class >> default [
 	^ defaultTranslator := self defaultClass new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLayoutTranslator class >> defaultClass [
 	^ self allSubclasses detect: #isDefault
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutTranslator class >> isDefault [
+	^ false
 ]
 
 { #category : #accessing }

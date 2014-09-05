@@ -33,14 +33,14 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #lastPopup }
 RTPopup class >> removeLastPopup [
 	lastPopup ifNil: [ ^ self ].
 	lastPopup remove.
 	self resetLastPopup. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTPopup class >> text: aBlockOrSymbol [
 	^ self new text: aBlockOrSymbol
 ]

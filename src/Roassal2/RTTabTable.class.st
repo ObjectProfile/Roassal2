@@ -3,9 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'attributes',
-		'values'
+		'values',
+		'firstRow'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : #'Roassal2-Utility'
 }
 
 { #category : #accessing }
@@ -25,22 +26,23 @@ RTTabTable >> breakDown: l usingDelimiters: delimitersAsCharacter [
 RTTabTable >> convertColumn: index to: blockForConvertion [
 	"Convert a column of the table"
 	values do: [ :row | 
-		| v |
-		v := row at: index.
-		row at: index put: (blockForConvertion rtValue: v)
+		| v i |
+		i := (self convertFromNameToIndexIfNecessary: index).
+		v := row at: i.
+		row at: i put: (blockForConvertion rtValue: v)
 		 ]
 ]
 
 { #category : #converting }
-RTTabTable >> convertColumnAsDateAndTime: integer [
+RTTabTable >> convertColumnAsDateAndTime: integerOrString [
 	"Replace each element by an instance of DateAndTime"
 
-	self convertColumnsAsDateAndTime: (Array with: integer)
+	self convertColumnsAsDateAndTime: (Array with: (self convertFromNameToIndexIfNecessary: integerOrString))
 ]
 
 { #category : #converting }
-RTTabTable >> convertColumnAsInteger: nbColumn [
-	^ self convertColumnsAsInteger: (Array with: nbColumn)
+RTTabTable >> convertColumnAsInteger: integerOrString [
+	^ self convertColumnsAsInteger: (Array with: (self convertFromNameToIndexIfNecessary: integerOrString))
 ]
 
 { #category : #converting }
@@ -70,6 +72,17 @@ RTTabTable >> convertColumnsAsInteger: collectionOfIntegers [
 	^ self convertColumns: collectionOfIntegers to: [ :s | Integer readFrom: s ]
 ]
 
+{ #category : #'private-utility' }
+RTTabTable >> convertFromNameToIndexIfNecessary: anObject [
+	"anObject could be a number (to indicate a column index) or a string"
+	"The method return the index"
+	^ anObject isNumber
+		ifTrue: [ anObject ]
+		ifFalse: [ 
+			"Then we are surely a string" 
+			self indexOfName: anObject ]
+]
+
 { #category : #accessing }
 RTTabTable >> firstColumn [
 	^ self valuesOfColumn: 1
@@ -85,6 +98,12 @@ RTTabTable >> gather: columnIndex using: twoArgBlock [
 			ifTrue: [ d at: key put: (twoArgBlock value: (d at: key) value: row) ]
 			ifFalse: [ d at: key put: row ] ].
 	values := d values
+]
+
+{ #category : #converting }
+RTTabTable >> indexOfName: aString [
+	"Return the index of the column named aString"
+	^ firstRow indexOf: aString
 ]
 
 { #category : #updating }
@@ -174,6 +193,7 @@ RTTabTable >> removeColumn: aNumber [
 { #category : #accessing }
 RTTabTable >> removeFirstRow [
 	"Remove the first line of the table, typically the header"
+	firstRow := values first.
 	values := values allButFirst
 ]
 
@@ -189,6 +209,6 @@ RTTabTable >> values [
 ]
 
 { #category : #accessing }
-RTTabTable >> valuesOfColumn: index [
-	^ values collect: [ :row | row at: index ]
+RTTabTable >> valuesOfColumn: indexAsNumberOfString [
+	^ values collect: [ :row | row at: (self convertFromNameToIndexIfNecessary: indexAsNumberOfString) ]
 ]

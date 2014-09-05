@@ -114,9 +114,9 @@ RTBuilder >> globalRule [
 RTBuilder >> initialize [
 	super initialize.
 	view := self createView.
-	shapeBuilder := self createShapeBuilder.
-	interactionBuilder := self createInteractionBuilder.
-	globalBuilder := self createGlobalBuilder
+	self resetShape.
+	self resetInteraction.
+	self resetGlobal
 ]
 
 { #category : #accessing }
@@ -167,6 +167,21 @@ RTBuilder >> resetCreatedElements [
 	shapeBuilder resetCreatedElements
 ]
 
+{ #category : #resetting }
+RTBuilder >> resetGlobal [
+	globalBuilder := self createGlobalBuilder
+]
+
+{ #category : #resetting }
+RTBuilder >> resetInteraction [
+	interactionBuilder := self createInteractionBuilder
+]
+
+{ #category : #resetting }
+RTBuilder >> resetShape [
+	shapeBuilder := self createShapeBuilder
+]
+
 { #category : #public }
 RTBuilder >> restoreCamera [
 	"Reuse a previous camera. This is useful when scripting in a playground"
@@ -180,6 +195,7 @@ RTBuilder >> setCurrentShape: aShape [
 
 { #category : #protected }
 RTBuilder >> setUpInteractionFor: oneOrMoreElements [
+	"This method may be used in subclasses to set up the interaction on the elements provided as argument"
 	interactionBuilder setUpElements: oneOrMoreElements asGroup
 ]
 

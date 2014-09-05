@@ -31,11 +31,10 @@ RTSpringLayoutStepping >> addNodes: someElements [
 { #category : #'public-configuration' }
 RTSpringLayoutStepping >> addStartStopButton [
 
-	view canvas addMenu: 'Start/Stop' callback: [
+	view canvas addMenu: 'Toggle Animation' callback: [
 		(view canvas hasAnimation: self)
 			ifTrue: [ view canvas removeAnimation: self ]
-			ifFalse: [ view canvas addAnimation: self ]
-		 ]
+			ifFalse: [ view canvas addAnimation: self ] ]
 ]
 
 { #category : #accessing }

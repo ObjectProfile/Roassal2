@@ -327,6 +327,7 @@ RTCharterBuilder >> histogramBarWidth: barWidth [
 		bar := (shapeBuilder current height: el position y abs; width: barWidth) elementOn: el model.
 		bar translateTo: el position x @ (el position y / 2).
 		bar announcer: el announcer.
+		self setUpInteractionFor: bar.
 		view add: bar ]  
 ]
 

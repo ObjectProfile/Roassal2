@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTDirectLayoutTranslator class >> isDefault [
 	^ true
 ]

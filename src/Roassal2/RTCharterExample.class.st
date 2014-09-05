@@ -218,6 +218,53 @@ CI38A5O2Qrits48mAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleDifferentInteraction [
+
+| b |
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+
+b interaction popupText: [ :c | 'Roassal class: ', c name ].
+b shape circle color: (Color blue alpha: 0.3).
+b points: RTShape withAllSubclasses.
+
+b resetInteraction.
+b interaction popupText: [ :c | 'Trachel class: ', c name ].
+b shape circle color: (Color red alpha: 0.3).
+b points: TRShape withAllSubclasses.
+b allX: #numberOfMethods.
+b allY: #numberOfLinesOfCode.
+
+b axisX; axisY.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleDifferentInteractionIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADlElEQVR4XuXc3UpiURjG8W5w
+rmHuYOYiOqgJpJOI8FgqhCGhD6I80D5gyMEopkgz6ftAqInGtGJ6mv2uxhnH2dvMHN3O/4GN
+CG2p9cN3td61dODxkZ8wZYA/BHwQfvggfBB++CB8EH74IHwQfvggfBB++CD88EH4IPzwQfgg
+/PBB+CD88EH4IPzwQfjhg/BB+OGD8EH44YPwQfjhg/BBWszOzo4WFhYUj8d1fX2tiYkJ3d3d
+aWVlRY0/e35+Lrs68Ytqc1N8EJ/s7u4qmUwqGo1qdXXVoRhGIpH4a8AqlYqKxWLgQOrhQSqV
+Whpoea/FB+lAOgXCL1ldAOGHD8IH4YP00xwyN8fH4r9D+CB8ED4ICOT29lYjIyMaHx93A728
+vOwea88bV+p8kH8Mcn9/r8HBQW1vb2tsbEypVEr5fP7X85es1Pnhlyw+CB+ED8IHeQmI9RPt
+Clws3tyID9JFEK+5aw3eYBBv30OXl+7ig4SkZPFB+HMIH4SfDq/UbU/97OzMDXazPXU+SJdW
+6ranbjh2vXRPfX//96RO2SsPdcn6A6TuNIkKBala5f/bG5Y5hI7Bn9T5IPyEBqR+3uCXqRCC
+VL9WVfhSkU3kfIYelSyvb6jN7Hfp+NhBeG8OPkavQGpHfh6+lfV5NM2H6CTIzMyMbNGXTqcD
+99ODVurWes9mnzq+nhEfphMgJycnmp2ddafgc7mcrq6uVC6XA1fq3ra7bXOoHqXZnkg/57Vl
+uCsly94N/ytAI4Y1G0INsrZWfKpP+Ty/PIUB5FNsSZqe1tbHnCtbWxv8ZmJvS9bSkjY+JHVx
+Idc45K87QgCSiOQRc0hfgKyvF73/yMQHCQvIuzdJHR3xQUIBYgrv32b5EN0AsT31+ke/nJ6e
+uoPYBW8ib+eyNUy/3fvaz+W3DWJ76jbY9hj0M7aCN5R2Xt9W+e3+cf14b9fmEH5CAtJKSfOL
+9clisZjXoT9u2rj0i33th32AqPTzywjsNQ4ODp69v3a06fDwUJOTk882Tf3unZqa0vz8vPua
+kaBjUT0FaaWk+cWalTYQw8PDTRuXQYNjnWj7uo+9vT1X0/2OJzWmdrQp67WhI5GIe42gDyEF
+3Ts0NKTFxUVlMpnAY1H8ksUvWfzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH44YPwQfjh
+g/DDB+GD8MMH4YPwwwfhg/DDB+GD8MMH4YPwh4APwk+T/AAZbB5inK2HAwAAAABJRU5ErkJg
+gg=='
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleDoubleBar [
 
 | b |
@@ -398,6 +445,65 @@ dGOtkSBuhLxHwK0bNySGaRD8+M/O1M1Mab2G3Pqq1SotLNy+0OXvvl0xNTWlT71jY2NUr9ep
 3Zc/k3fi2HqeUrs9NJbj5/V6ye/3U+d4WgYxM6X1Gufn55TL5WhkZISKxSJ19u38PeFwWL/t
 KRgM6p/tvny9iN1/0+XlJcmU4ye/X1EU/W+T/fYtVfhT1iBMWfiBD4IPgh/4IPiBD4IPgh/P
 xB+OyefbraC3AwAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTCharterExample >> exampleGroupViewOnHistogram [
+
+| b |
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+b shape rectangle size: 0.
+b points: (RTShape withAllSubclasses ).
+b y: [ :c | c methods size ].
+b stackX.
+b shape rectangle color: Color veryLightGray.
+
+b interaction 
+	highlightColored: Color red.
+
+b interaction popup 
+	named: [ :c | c name, ' methods'] 
+	background: Color veryVeryLightGray 
+	group: [ :group :element | 
+		| s ms |
+		s := RTBox new size: #numberOfLinesOfCode; color: Color red.
+		ms := element model methods sortedAs: #numberOfLinesOfCode.
+		group addAll: (s elementsOn: ms).
+		RTGridLayout on: group ].
+	
+b histogram.
+
+b axisY.
+b newAxisConfiguration plain.
+b axisX.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleGroupViewOnHistogramIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAD5ElEQVR4XuXbyU7qUBzHcR7P
+tzDGV3Dhzo0mbI3GaMIDaOKwcEpcOBMTFxCcDSriFDZE5V4Rh/y5/Z+bQ7i1LaAUmvv9JU0L
+tNWez+k5HWPVKj9RSoxfBHwQfvggfBB++CB8EH74IHwQfvggfBB++CD88EH4IPzwQfgg/PBB
++CD88EH4IPzwQfjhg/BB+OGD8EH44YPwQVw5Pj6W6elp2d7elkQiIW9vb3J5eSnu+V5fX6uP
+j49m4CdEkJOTE7m7u5Pd3V1Jp9Oyubkp8/PzniBXV1cSCDI05PwXsb9jftrTZL2/v4tT+OL1
+m4IELswH6Wwfwgfhg/BB+CB8kKbz9PQkfJAfgqysrMjOzo4MDw+bZfv7++Xg4ECWlpYklUqJ
+nWd9fV3y+bwkk0mZnZ0VPfq7vb2Vo6Mj2draksXFRbNMw/+BDJLL5czQCETPcxTk5uZGxsbG
+pKenRyYnJ+Xi4sKsTw+zFWl8fFzW1tYMoF1+amrKfL+xsSFzc3MyMDDQUZAv2xhlEKeQzPA/
+9yFftrETINfX16Z5KBaLpsD1RLGZE8NmQLxqWKVSkefn56YGJMj+/r5pwxcWFkwBxOPxtoF4
+bZCClJwmSgtcx7Vpp0n7dXhoxjogQfRyyZBTgKenp7K3t2c6VW3f29Vk+YH8djpoLXAd22mF
+0el6JOQeEmYf4gfCb7JCBLFDrrfXgOjYfHb6jlb2kPLERG3vsN91sgDRIKbgtc9wDnEtjBuI
+D9JFEF3Oju00HyREkPrD36A+pDI4aAY+SMgg9Rv28fEhitLMwAdpAsTW9u+CRPWoKBIgWgsz
+mYzc39/XaqPXmbreSVSQcrks7kLmg4Rwpm6n9eqqXtBzz1MqlQzIw8MDHyRMEK352Wy21maf
+n5//s7d4NVl8kIj1IXwQPggfpFMgdp7v3gTig/BB+CB8ED4IB8S9gWGD/HT9XQHRB6z1yXed
+HhkZET5Il0HOzs5kZmbGFrZ8fn5+QdF76X7XsPggbQZ5eXkx99P1XZFCoRC5PcRWhqBXIdyV
+JWj9jZ61qv97/D7Ep7AbzdPK+hsVcv0yGBBbC9PpdMsg9TXYrxnlg7QI4v6tFRCvAuODdAGk
+0Tr4IHwQPggfhA8SXRB9v0PvMIYBEvT9d0DasUzXQPSB6+XlZfPmko6DTpZSqVRV32jyGjKj
+o5Lv6zNj8zmTEd95fX7z+r6Vedu5jP3c8Rd29Il3fXNpdXXVjP3m0wcddA+p8hONJosfPggf
+hB8+CB+EHz4IH4QfPgg/fBA+CD98ED4IP3wQPgg/fBA+CD98EH74IHwQfvggfBB++CB8EH74
+IHwQfrqZP3BSGkuoIDcwAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
@@ -718,6 +824,76 @@ pCdzaJCHhwcdHx93PeutmBcKhebJyZ3OzuoynG7N+n32+0H2GxmQarWqbDbbFcSKeWtgGn+e
 hQDpNaW1Y3eNz8/Pe/az/Y49oVxaWvq0r21UV1dXZV9V6tXv9fXVfZ2JP2Xxpyx++CD88EH4
 IPzwQfgg/PBB+CD88EH4IPzwQfjhg/BB+OGD8EH44YPwQfjhg/BB+OGD8MMH4YPwwwfhg/DD
 B+GD8MMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw8CyC/G4RpvzYtWLQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTCharterExample >> examplePopulationUSA [
+
+| b  tab |
+tab := RTTabTable new input: (ZnEasy get: 'https://www.census.gov/popest/data/state/asrh/2013/files/SCPRC-EST2013-18+POP-RES.csv') contents usingDelimiter: $,.
+tab removeFirstRow.
+tab convertColumnsAsInteger: #('POPESTIMATE2013' 'POPEST18PLUS2013').
+
+b := RTDoubleBarBuilder new.
+b pointName: [ :row | row at: (tab indexOfName: 'NAME') ].
+b points: tab values allButFirst. 
+b value1: [ :row | ((row at: (tab indexOfName: 'POPESTIMATE2013')) / 1000) asInteger ] titled: 'Pop estimate'.
+b value2: [ :row | ((row at: (tab indexOfName: 'POPEST18PLUS2013')) / 1000) asInteger ] titled: 'Pop +18 estimate'.
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> examplePopulationUSAIcon [
+	^ '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
+XcWjA7UAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }

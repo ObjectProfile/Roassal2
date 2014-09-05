@@ -7,17 +7,30 @@ Class {
 	#instVars : [
 		'elements',
 		'topExtremity',
-		'bottomExtremity'
+		'bottomExtremity',
+		'pointName',
+		'verticalGap',
+		'width'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDoubleBarBuilder >> createView [
 	^ super createView @ RTDraggableView
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
+RTDoubleBarBuilder >> defaultVerticalGap [
+	^ 5
+]
+
+{ #category : #configuration }
+RTDoubleBarBuilder >> defaultWidth [
+	^ 250
+]
+
+{ #category : #examples }
 RTDoubleBarBuilder >> example01 [
 	"
 	self new example01
@@ -30,7 +43,15 @@ RTDoubleBarBuilder >> example01 [
 	b open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
+RTDoubleBarBuilder >> initialize [
+	super initialize.
+	pointName := #yourself.
+	verticalGap := self defaultVerticalGap.
+	width := self defaultWidth.
+]
+
+{ #category : #configuration }
 RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 	| boxes |
 	boxes := elements collect: [ :el | 
@@ -40,7 +61,7 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 		b ].
 	RTMetricNormalizer new 
 		elements: boxes;
-		normalizeWidth: aBlock min: 2 max: 200.
+		normalizeWidth: aBlock min: 2 max: width.
  		
 	elements with: boxes do: [ :e :b | 		 
 		TRConstraint move: b onTheRightOf: e.
@@ -48,17 +69,25 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 	view addAll: boxes.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
+RTDoubleBarBuilder >> pointName: aOneArgBlock [
+	pointName := aOneArgBlock
+]
+
+{ #category : #'public-accessing' }
 RTDoubleBarBuilder >> points [
 	^ elements collect: #model
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-accessing' }
 RTDoubleBarBuilder >> points: someObjects [
-	elements := RTLabel elementsOn: someObjects.
+	elements := (RTLabel new text: pointName) elementsOn: someObjects.
 	elements @ RTHighlightable.
 	view addAll: elements.
-	RTVerticalLineLayout new alignRight; on: elements.
+	RTVerticalLineLayout new 
+		verticalGap: verticalGap;
+		alignRight; 
+		on: elements.
 	
 	topExtremity := RTBox element.
 	bottomExtremity := RTBox element.
@@ -69,13 +98,13 @@ RTDoubleBarBuilder >> points: someObjects [
 	view add: ((RTLine new color: Color red) edgeFrom: topExtremity to: bottomExtremity).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDoubleBarBuilder >> value1: aBlock [
 	"The gray bar"
 	self value1: aBlock titled: aBlock asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDoubleBarBuilder >> value1: aBlock titled: aTitle [
 	"The gray bar"
 	 | configuration |
@@ -90,17 +119,17 @@ RTDoubleBarBuilder >> value1: aBlock titled: aTitle [
 	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (0 @ 15) ].
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
-	configuration axisFrom: topExtremity position to: topExtremity position + (200 @ 0).
+	configuration axisFrom: topExtremity position to: topExtremity position + (width @ 0).
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDoubleBarBuilder >> value2: aBlock [
 	"The red bar"
 	self value2: aBlock titled: aBlock asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDoubleBarBuilder >> value2: aBlock titled: aTitle [
 	"The red bar"
 	 | configuration |
@@ -115,6 +144,6 @@ RTDoubleBarBuilder >> value2: aBlock titled: aTitle [
 	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
-	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (200 @ 0).
+	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (width @ 0).
 	
 ]
