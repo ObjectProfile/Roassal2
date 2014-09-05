@@ -93,6 +93,11 @@ RTCharterBuilder >> allX: metricAsBlockOrSymbol [
 
 { #category : #public }
 RTCharterBuilder >> allY: metricAsBlockOrSymbol [
+	"
+	PUBLIC METHOD
+	This methods takes as an argument a symbol or a block. The argument will be invoked on _all_ data point to compute the position on the Y-axis.  
+	"
+	
 	| vs |
 	"We compute the min and the max, useful for labelling"
 	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
