@@ -224,8 +224,14 @@ TRCanvas >> focusOnCenterScaled [
 
 { #category : #animations }
 TRCanvas >> hasAnimation [
-	"True is at least one animation is running"
+	"True if at least one animation is running"
 	^ animations notEmpty
+]
+
+{ #category : #animations }
+TRCanvas >> hasAnimation: anAnimation [
+	"True if anAnimation is running"
+	^ animations includes: anAnimation
 ]
 
 { #category : #initialization }
@@ -364,6 +370,11 @@ TRCanvas >> pushBack: aShape [
 TRCanvas >> pushFront: aShape [
 	shapes remove: aShape.
 	shapes addLast: aShape
+]
+
+{ #category : #animations }
+TRCanvas >> removeAnimation: anAnimation [
+	animations := animations copyWithout: anAnimation
 ]
 
 { #category : #actions }
