@@ -4700,3 +4700,14 @@ VersionOfRoassal2 >> version000378 [
 	at: #date put: '5 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000379 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.205';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.466';
+	at: #version put: '0.379';
+	at: #comment put: '0.379 : In trachel, the initial scale of a camera has been changed (1.0 -> 1.01), since this seems to remove the font problem. Several examples have been added to Charter. The RTDoubleBarBuilder has been improved. RTBuilder, RTTabTable have also been improved. Bug fixed in RTLayoutTranslator';
+	at: #date put: '5 September 2014';
+	yourself
+]
