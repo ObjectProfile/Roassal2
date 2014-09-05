@@ -145,7 +145,7 @@ TRCamera >> fromSpaceToPixelForRectangle: aRectangle [
 TRCamera >> initialize [
 	super initialize.
 	position := 0 @ 0.
-	scale := 1.0.
+	scale := 1.01.
 	initializer := TRCameraInitializer focusOnCenter
 ]
 
