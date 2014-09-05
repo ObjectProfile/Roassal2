@@ -4689,3 +4689,14 @@ VersionOfRoassal2 >> version000377 [
 	at: #date put: '4 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000378 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.204';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.465';
+	at: #version put: '0.378';
+	at: #comment put: '0.378 : Added facilities to have a start stop button for the setting force based layout';
+	at: #date put: '5 September 2014';
+	yourself
+]
