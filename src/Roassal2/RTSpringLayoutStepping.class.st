@@ -28,6 +28,16 @@ RTSpringLayoutStepping >> addNodes: someElements [
 		addNodes: someElements
 ]
 
+{ #category : #'public-configuration' }
+RTSpringLayoutStepping >> addStartStopButton [
+
+	view canvas addMenu: 'Start/Stop' callback: [
+		(view canvas hasAnimation: self)
+			ifTrue: [ view canvas removeAnimation: self ]
+			ifFalse: [ view canvas addAnimation: self ]
+		 ]
+]
+
 { #category : #accessing }
 RTSpringLayoutStepping >> afterBlock: aBlock [
 	"Set a block to be evaluated at each refresh"
