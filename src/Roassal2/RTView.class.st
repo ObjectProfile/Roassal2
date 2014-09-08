@@ -133,10 +133,7 @@ RTView >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
 	edges := OrderedCollection new.
-	trCanvas := TRCanvas new.
-	
-	"Share my announcer with the one of the Trachel Canvas"
-	announcer := trCanvas announcer.
+	self setCanvas: TRCanvas new
 ]
 
 { #category : #'accessing-computed' }
@@ -200,6 +197,13 @@ RTView >> removeElement: anElement [
 RTView >> restoreCamera [
 	"Reuse a previous camera. This is useful when scripting in a playground"
 	self view canvas camera toAdjust: TRCameraInitializer restorePrevious
+]
+
+{ #category : #accessing }
+RTView >> setCanvas: aTrachelCanvas [
+	trCanvas := aTrachelCanvas.
+	"Share my announcer with the one of the Trachel Canvas"
+	announcer := trCanvas announcer.
 ]
 
 { #category : #menu }
