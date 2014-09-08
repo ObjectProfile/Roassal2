@@ -44,7 +44,7 @@ TREllipseShape >> preDrawOn: athensCanvas [
 		scaleBy: rectangle extent asFloatPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 TREllipseShape >> strokeWidth [
 	^ 0.005
 ]
