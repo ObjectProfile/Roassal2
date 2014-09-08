@@ -4733,3 +4733,14 @@ VersionOfRoassal2 >> version000381 [
 	at: #date put: '5 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000382 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.207';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.469';
+	at: #version put: '0.382';
+	at: #comment put: '0.382 : Added a RTView setCanvas: This is necessary to be able to use TRCanvas in a GTInspector. Minor reclassification in TREllipseShape';
+	at: #date put: '8 September 2014';
+	yourself
+]
