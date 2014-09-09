@@ -320,20 +320,38 @@ RTCharterBuilder >> histogram [
 	"barWidth := (extent x - ((lastAddedElements size + 2) * 10)/ (lastAddedElements size + 2)) - 10."
 	barWidth := (extent x / lastAddedElements size) asInteger - (lastAddedElements size * 3).
 	barWidth := barWidth max: 10.
-	self histogramBarWidth: barWidth
+	^ self histogramBarWidth: barWidth
 ]
 
 { #category : #public }
 RTCharterBuilder >> histogramBarWidth: barWidth [
 	"Draw an histogram"
 	
-	| bar |
+	| bar bars |
+	bars := OrderedCollection new.
 	lastAddedElements do: [ :el |
 		bar := (shapeBuilder current height: el position y abs; width: barWidth) elementOn: el model.
 		bar translateTo: el position x @ (el position y / 2).
 		bar announcer: el announcer.
 		self setUpInteractionFor: bar.
-		view add: bar ]  
+		view add: bar.
+		bars add: bar ].
+	^ bars
+]
+
+{ #category : #public }
+RTCharterBuilder >> histogramWithBarTitle: aBlockOrSymbol [
+	"Draw an histogram with title"
+	| bars lbl |
+	bars := self histogram.
+	bars do: [ :e |
+		lbl := (RTLabel new text: aBlockOrSymbol; color: Color lightGray) elementOn: e model.
+		lbl rotateByDegrees: -45.
+		TRConstraint move: lbl below: e.
+		lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
+		view add: lbl.
+	].
+	^ bars 
 ]
 
 { #category : #initialization }
