@@ -39,7 +39,6 @@ RTMultiCompositeShape >> initialize [
 { #category : #public }
 RTMultiCompositeShape >> trachelShapeFor: anElement [
 	| ss ts |
-"self halt."
 	ss := shapes collect: [ :tupple | 
 		| s |
 		s := tupple first trachelShapeFor: anElement.

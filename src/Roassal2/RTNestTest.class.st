@@ -107,11 +107,11 @@ RTNestTest >> testDragAndDrop [
 			inner := (RTBox new color: Color blue) elementOn: 'hello'.
 			group add: inner ].
 		
-	self assert: outer position equals: 0 @ 5.0.
+	self assert: outer position equals: 0 @ 2.
 	self assert: inner position equals: 0 @ 0.	
 		
 	outer translateBy: 5 @ 5.
-	self assert: outer position equals: 5 @ 10.0.
+	self assert: outer position equals: 5 @ 7.0.
 	self assert: inner position equals: 5 @ 5.	
 	
 	
@@ -301,7 +301,7 @@ RTNestTest >> testInnerElement3 [
 	v add: e.
 	v addAll: innerElements.
 	
-	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 5.0) with: (0 @ 25.0))
+	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 0.0) with: (0 @ 20.0))
 ]
 
 { #category : #'multi line' }

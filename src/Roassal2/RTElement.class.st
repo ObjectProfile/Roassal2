@@ -23,6 +23,11 @@ RTElement >> accept: aVisitor [
 	aVisitor visitElement: self
 ]
 
+{ #category : #accessing }
+RTElement >> addCallback: aCallback [
+	self trachelShape addCallback: aCallback
+]
+
 { #category : #initialization }
 RTElement >> addConnectedEdge: anEdge [
 	[  anEdge class == RTEdge ] assert.
