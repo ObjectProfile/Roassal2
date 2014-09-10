@@ -40,8 +40,9 @@ RTElement >> center [
 	^ self position
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 RTElement >> connectedEdges [
+	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
 	connectedEdges ifNil: [ connectedEdges := OrderedCollection new ].
 	^ connectedEdges
 ]
