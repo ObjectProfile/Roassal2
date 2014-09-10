@@ -73,8 +73,9 @@ TRMultiCompositeShape >> color [
 
 { #category : #accessing }
 TRMultiCompositeShape >> color: aColor [
+	"Simply set the first shape"
 	self shapes first color: aColor.
-	"shape2 color: aColor."
+
 ]
 
 { #category : #private }
@@ -104,13 +105,17 @@ TRMultiCompositeShape >> height [
 
 { #category : #'public - layout' }
 TRMultiCompositeShape >> horizontal [
-	"PROBABLY DOES NOT WORK. GET INSPIRATION FROM #vertical"
-	| previousShape |
+	"Layout the shapes horizontally"
+
+	| previousShape newPosition |
 	previousShape := shapeAndOffsets first first.
-	shapeAndOffsets allButFirst do: [ :tupple |
-		tupple first translateTo: (previousShape center + ((previousShape extent x / 2) @ 0) + ((tupple first extent x / 2) @ 0)).
-		previousShape := tupple first ].
-	self relayout
+	shapeAndOffsets allButFirst
+		do: [ :tupple | 
+			newPosition := previousShape center + ((previousShape extent x / 2) @ 0) + ((tupple first extent x / 2) @ 0).
+			tupple first translateTo: newPosition.
+			tupple at: 2 put: newPosition.
+			previousShape := tupple first ].
+	self resetInnerShapes
 ]
 
 { #category : #testing }
@@ -148,7 +153,7 @@ TRMultiCompositeShape >> offsets [
 { #category : #accessing }
 TRMultiCompositeShape >> position [
 	self shapes ifEmpty: [ ^ 0 @ 0 ].
-	^ (self shapes collect: #position) sum / shapeAndOffsets size
+	^ self encompassingRectangle center
 ]
 
 { #category : #actions }
@@ -168,19 +173,22 @@ TRMultiCompositeShape >> pushFront [
 
 { #category : #'layout inner shapes' }
 TRMultiCompositeShape >> relayout [
-
+	"This methods places the contained shapes according to the specified layout"
 	| first |
 	first := self shapes first.
 	shapeAndOffsets do: [ :shapeAndOffset | 
 		shapeAndOffset first translateBy: first position + shapeAndOffset second ]
-	
-	"Set as offset the position of the shapes"
-	"shapeAndOffsets do: [ :shapeAndOffset | shapeAndOffset at: 2 put: shapeAndOffset first position ]"
+
 ]
 
 { #category : #actions }
 TRMultiCompositeShape >> remove [
 	self shapes do: #remove
+]
+
+{ #category : #'public - layout' }
+TRMultiCompositeShape >> resetInnerShapes [
+	self shapes do: [ :ss | ss translateTo: 0 @ 0 ]
 ]
 
 { #category : #private }
@@ -223,7 +231,7 @@ TRMultiCompositeShape >> translateTo: aPoint [
 
 { #category : #'public - layout' }
 TRMultiCompositeShape >> vertical [
-
+	"Layout the shapes vertically"
 	| previousShape newPosition |
 	previousShape := shapeAndOffsets first first.
 	shapeAndOffsets allButFirst do: [ :tupple |
@@ -231,7 +239,7 @@ TRMultiCompositeShape >> vertical [
 		tupple first translateTo: newPosition.
 		tupple at: 2 put: newPosition.
 		previousShape := tupple first ].
-	self shapes do: [ :ss | ss translateTo: 0 @ 0 ]
+	self resetInnerShapes
 ]
 
 { #category : #events }
