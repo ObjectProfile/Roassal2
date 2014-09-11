@@ -54,6 +54,7 @@ Class {
 
 { #category : #public }
 RTCharterBuilder >> adjustMinAndMaxValues [
+	"Values are adjusted to always have 0 @ 0 in the chart"
 	minY > 0
 		ifTrue: [ minY := 0 ].
 	maxY < 0
@@ -75,7 +76,7 @@ RTCharterBuilder >> allPoints [
 	^ allPointElements flatCollect: #yourself
 ]
 
-{ #category : #public }
+{ #category : #'public-scatterplot' }
 RTCharterBuilder >> allX: metricAsBlockOrSymbol [
 	"THIS METHOD PROBABLY DOES NOT WORK."
 	| vs |
@@ -113,7 +114,7 @@ RTCharterBuilder >> allY: metricAsBlockOrSymbol [
 
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
 	^ axisConfiguration
@@ -141,7 +142,7 @@ RTCharterBuilder >> axisPointFor: aPoint [
 
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisX [
 	| centralPoint |
 	centralPoint := self centralPoint.
@@ -149,16 +150,17 @@ RTCharterBuilder >> axisX [
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ];
 		minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
 		maxValue: maxX.	
+
 	axisConfiguration axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisXTitled: aTitle [
 	axisConfiguration title: aTitle.
 	self axisX
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	config := RTAxisConfiguration new
@@ -173,7 +175,7 @@ RTCharterBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisY [
 	| centralPoint |
 	centralPoint := self centralPoint.
@@ -185,13 +187,13 @@ RTCharterBuilder >> axisY [
 	axisConfiguration axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisYTitled: aTitle [
 	axisConfiguration title: aTitle.
 	self axisY
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	config := RTAxisConfiguration new
@@ -218,17 +220,17 @@ RTCharterBuilder >> centralPoint [
 	^ self axisPointFor: 0 @ 0
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> connectDot [
 	self connectDotColor: Color lightGray
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> connectDotColor: aColor [
 	self connectDotUsing: (RTLine new color: aColor)
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> connectDotUsing: aLineShape [
 	| t |
 	t := lastAddedElements first.
@@ -244,20 +246,20 @@ RTCharterBuilder >> createView [
 	^ super createView @ RTDraggableView
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> curve [
 	"connect the points in the order they have been added"
 	^ self curveUsing: RTLine new
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> curveColor: aColor [
 	"connect the points in the order they have been added"
 
 	^ self curveUsing: (RTLine new color: aColor)
 ]
 
-{ #category : #public }
+{ #category : #'public-curve' }
 RTCharterBuilder >> curveUsing: aLineShape [
 	"connect the points in the order they have been added"
 
@@ -290,7 +292,7 @@ RTCharterBuilder >> extent: aValue [
 	extent := aValue
 ]
 
-{ #category : #'public highlight' }
+{ #category : #'public-highlight' }
 RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock [
 
 	self allPoints do: [ :element |
@@ -300,7 +302,7 @@ RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock [
 	]
 ]
 
-{ #category : #'public highlight' }
+{ #category : #'public-highlight' }
 RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock lowColor: lowColor color: highColor [
 
 	self allPoints do: [ :element |
@@ -312,7 +314,7 @@ RTCharterBuilder >> highlightIf: aConditionalBlock using: aBlock lowColor: lowCo
 	]
 ]
 
-{ #category : #public }
+{ #category : #'public-histogram' }
 RTCharterBuilder >> histogram [
 	"Draw an histogram"
 	
@@ -323,7 +325,7 @@ RTCharterBuilder >> histogram [
 	^ self histogramBarWidth: barWidth
 ]
 
-{ #category : #public }
+{ #category : #'public-histogram' }
 RTCharterBuilder >> histogramBarWidth: barWidth [
 	"Draw an histogram"
 	
@@ -339,7 +341,7 @@ RTCharterBuilder >> histogramBarWidth: barWidth [
 	^ bars
 ]
 
-{ #category : #public }
+{ #category : #'public-histogram' }
 RTCharterBuilder >> histogramWithBarTitle: aBlockOrSymbol [
 	"Draw an histogram with title"
 	| bars lbl |
@@ -375,7 +377,7 @@ RTCharterBuilder >> leftPoint [
 	^ self axisPointFor: minX @ 0
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> newAxisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
 	self resetAxisConfiguration.
@@ -391,7 +393,7 @@ RTCharterBuilder >> points: objects [
 	allPointElements add: lastAddedElements.
 ]
 
-{ #category : #'public axis' }
+{ #category : #'public-axis' }
 RTCharterBuilder >> resetAxisConfiguration [
 	axisConfiguration := RTAxisConfiguration new.
 	axisConfiguration builder: self
@@ -403,13 +405,13 @@ RTCharterBuilder >> rightPoint [
 	^ self axisPointFor: maxX @ 0
 ]
 
-{ #category : #public }
+{ #category : #'public-scatterplot' }
 RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue [
 
 	self size: metricAsBlockOrSymbol min: minValue max: maxValue using: #yourself
 ]
 
-{ #category : #public }
+{ #category : #'public-scatterplot' }
 RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation [
 
 	RTMetricNormalizer new
@@ -419,7 +421,7 @@ RTCharterBuilder >> size: metricAsBlockOrSymbol min: minValue max: maxValue usin
 
 { #category : #public }
 RTCharterBuilder >> stackX [
-
+	"Stack all the data points from left to right, in the same order they have been declared using #points:"
 	maxX := allPointElements inject: 0 into: [ :m :cs | m max: cs size ].
 
 	allPointElements do: [ :points | 
@@ -435,7 +437,7 @@ RTCharterBuilder >> topPoint [
 	^ self axisPointFor: 0 @ maxY
 ]
 
-{ #category : #public }
+{ #category : #'public-scatterplot' }
 RTCharterBuilder >> x: metricAsBlockOrSymbol [
 
 	| vs |
@@ -452,7 +454,6 @@ RTCharterBuilder >> x: metricAsBlockOrSymbol [
 RTCharterBuilder >> y: metricAsBlockOrSymbol [
 
 	| vs |
-
 	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
