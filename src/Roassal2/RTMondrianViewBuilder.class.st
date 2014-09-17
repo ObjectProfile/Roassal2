@@ -136,6 +136,13 @@ RTMondrianViewBuilder >> horizontalLineLayout [
 	^self layout
 ]
 
+{ #category : #layouts }
+RTMondrianViewBuilder >> horizontalTreeLayout [
+	self view edges do: [ :e | e shape withHorizontalAttachPoint ].
+	self layout: RTHorizontalTreeLayout new.
+	^self layout
+]
+
 { #category : #initialization }
 RTMondrianViewBuilder >> initialize [
 	super initialize.
