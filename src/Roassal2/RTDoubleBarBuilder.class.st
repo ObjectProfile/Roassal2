@@ -15,6 +15,31 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
+{ #category : #configuration }
+RTDoubleBarBuilder >> bottomValue: aBlock [
+	"The gray bar"
+	self bottomValue: aBlock titled: aBlock asString
+]
+
+{ #category : #configuration }
+RTDoubleBarBuilder >> bottomValue: aBlock titled: aTitle [
+	"The gray bar"
+	 | configuration |
+	self metric: aBlock color: Color lightGray height: 20.
+	
+	configuration := RTAxisConfiguration new.
+	configuration builder: self.
+	configuration title: aTitle.
+	configuration titlePosition: (0 @ -30).
+	configuration color: Color lightGray.
+	configuration minValue: 0.
+	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
+	configuration maxValue: (self points collect: aBlock) max.
+	configuration numberOfTicks: 4.
+	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (width @ 0).
+	
+]
+
 { #category : #hooks }
 RTDoubleBarBuilder >> createView [
 	^ super createView @ RTDraggableView
@@ -38,9 +63,9 @@ RTDoubleBarBuilder >> example01 [
 	| b |
 	b := RTDoubleBarBuilder new.
 	b points: RTShape withAllSubclasses.
-	b value1: #numberOfMethods.
-	b value2: #numberOfVariables.
-	b open
+	b bottomValue: #numberOfMethods.
+	b topValue: #numberOfVariables.
+	b open maximize
 ]
 
 { #category : #initialization }
@@ -99,38 +124,13 @@ RTDoubleBarBuilder >> points: someObjects [
 ]
 
 { #category : #configuration }
-RTDoubleBarBuilder >> value1: aBlock [
-	"The gray bar"
-	self value1: aBlock titled: aBlock asString
-]
-
-{ #category : #configuration }
-RTDoubleBarBuilder >> value1: aBlock titled: aTitle [
-	"The gray bar"
-	 | configuration |
-	self metric: aBlock color: Color gray height: 20.
-	
-	configuration := RTAxisConfiguration new.
-	configuration builder: self.
-	configuration title: aTitle.
-	configuration titlePosition: (0 @ 30).
-	configuration color: Color gray.
-	configuration minValue: 0.
-	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (0 @ 15) ].
-	configuration maxValue: (self points collect: aBlock) max.
-	configuration numberOfTicks: 4.
-	configuration axisFrom: topExtremity position to: topExtremity position + (width @ 0).
-	
-]
-
-{ #category : #configuration }
-RTDoubleBarBuilder >> value2: aBlock [
+RTDoubleBarBuilder >> topValue: aBlock [
 	"The red bar"
-	self value2: aBlock titled: aBlock asString
+	self topValue: aBlock titled: aBlock asString
 ]
 
 { #category : #configuration }
-RTDoubleBarBuilder >> value2: aBlock titled: aTitle [
+RTDoubleBarBuilder >> topValue: aBlock titled: aTitle [
 	"The red bar"
 	 | configuration |
 	self metric: aBlock color: Color red height: 10.
@@ -138,12 +138,11 @@ RTDoubleBarBuilder >> value2: aBlock titled: aTitle [
 	configuration := RTAxisConfiguration new.
 	configuration builder: self.
 	configuration title: aTitle.
-	configuration titlePosition: (0 @ -30).
+	configuration titlePosition: (0 @ 30).
 	configuration color: Color red.
 	configuration minValue: 0.
-	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
+	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (0 @ 15) ].
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
-	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (width @ 0).
-	
+	configuration axisFrom: topExtremity position to: topExtremity position + (width @ 0).
 ]

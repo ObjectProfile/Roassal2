@@ -270,8 +270,8 @@ RTCharterExample >> exampleDoubleBar [
 | b |
 	b := RTDoubleBarBuilder new.
 	b points: RTShape withAllSubclasses.
-	b value1: #numberOfMethods.
-	b value2: #numberOfVariables.
+	b bottomValue: #numberOfMethods.
+	b topValue: #numberOfVariables.
 	b open.
 b view canvas
 ]
@@ -915,8 +915,8 @@ tab convertColumnsAsInteger: #('POPESTIMATE2013' 'POPEST18PLUS2013').
 b := RTDoubleBarBuilder new.
 b pointName: [ :row | row at: (tab indexOfName: 'NAME') ].
 b points: tab values allButFirst. 
-b value1: [ :row | ((row at: (tab indexOfName: 'POPESTIMATE2013')) / 1000) asInteger ] titled: 'Pop estimate'.
-b value2: [ :row | ((row at: (tab indexOfName: 'POPEST18PLUS2013')) / 1000) asInteger ] titled: 'Pop +18 estimate'.
+b bottomValue: [ :row | ((row at: (tab indexOfName: 'POPESTIMATE2013')) / 1000) asInteger ] titled: 'Pop estimate'.
+b topValue: [ :row | ((row at: (tab indexOfName: 'POPEST18PLUS2013')) / 1000) asInteger ] titled: 'Pop +18 estimate'.
 b open.
 b view canvas
 ]
