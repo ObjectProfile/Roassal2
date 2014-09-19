@@ -404,7 +404,7 @@ l + (RTLine new color: Color red).
 l + (RTSimpleArrowHead new color: Color red).
 
 e2 translateBy: 60 @ 80.
-v addAll: (Array with: e1 with: e2 with: l ).
+v addAll: { e1 . e2 . l }.
 
 e1 @ RTLabelled.
 e2 @ RTLabelled.
@@ -561,7 +561,7 @@ v add: (line  edgeFrom: e2 to: e2).
 
 v add: (line  edgeFrom: e3 to: e4).
 
-RTCircleLayout on: (Array with: e1 with: e2 with: e3 with: e4 ).
+RTCircleLayout on: { e1 . e2 . e3 . e4 }.
 v open.
 v canvas
 ]
@@ -696,7 +696,7 @@ p2 translateTo: (e2 position x + e1 position x / 2) @ e2 position y.
 v add: p2."
 
 s := RTBezierLine new.
-s controllingElements: (Array with: p1 with: p2 ).
+s controllingElements: { p1 . p2 }.
 l := s edgeFrom: e1 to: e2.
 
 e1 trachelShape addCallback: 
@@ -850,7 +850,7 @@ v addAll: ((RTEllipse new color: (Color red alpha: 0.3)) elementsOn: Collection 
 RTGlobalBuilder new
 elementsToConsider: v elements;
 normalizeSize: #numberOfLinesOfCode min: 10 max: 60;
-normalizeColor: #numberOfMethods using: (Array with: Color gray with: Color red );
+normalizeColor: #numberOfMethods using: { Color gray . Color red };
 execute.
 RTRectanglePackLayout on: v elements.
 
@@ -2001,7 +2001,7 @@ es := RTBox elementsOn: (1 to: 50).
 v addAll: es.
 es @ RTDraggable.
 
-RTEdge buildEdgesFromObjects: (1 to: 50) from: #yourself toAll:  [:value | (Array with: value -1  with: value + 1 with: value + 2) ] inView: v.
+RTEdge buildEdgesFromObjects: (1 to: 50) from: #yourself toAll:  [:value | {value -1  . value + 1 . value + 2} ] inView: v.
 
 RTForceBasedLayout on: es.
 v addAnimation: (RTSpringLayoutStepping new view: v).
@@ -2424,12 +2424,12 @@ RTRoassalExample >> exampleGroupOfGroups [
 
 | objects groups edgesBlock1 edgesBlock2 colorNormalizer groupsOfElements v predicate layoutClass filteredObjects shape elements edges |
 objects := Collection withAllSubclasses.
-groups := Array with:  
-([ :c | c name endsWith: 'List' ] -> RTGridLayout new) with:
-([ :c | '*Set*' match: c name ] ->  RTForceBasedLayout new) with:
-([ :c | '*Dictionary*' match: c name ] ->  RTTreeLayout new) with:
-([ :c | c name endsWith: 'Array' ] ->  (RTWeightedCircleLayout new initialRadius: 60)).
-
+groups := { 
+[ :c | c name endsWith: 'List' ] -> RTGridLayout new .
+[ :c | '*Set*' match: c name ] ->  RTForceBasedLayout new .
+[ :c | '*Dictionary*' match: c name ] ->  RTTreeLayout new .
+[ :c | c name endsWith: 'Array' ] ->  (RTWeightedCircleLayout new initialRadius: 60)
+}.
 edgesBlock1 := [ :c | c dependentClasses ].
 edgesBlock2 := [ :c | Array with: c superclass ].
 
@@ -2652,7 +2652,7 @@ RTRoassalExample >> exampleHighlightingNeighbourg [
 	v := RTView new.
 	es := ((RTBox new size: 30)" + RTLabel") elementsOn: (1 to: 16).
 
-	es @ (RTHighlightable highlight: [ :vv | Array with: vv - 1 with: vv with: vv + 1 with: vv - 4 with: vv + 4 ]).
+	es @ (RTHighlightable highlight: [ :vv | { vv - 1 . vv . vv + 1 . vv - 4 . vv + 4 } ]).
 
 	RTGridLayout on: es.
 	v addAll: es.
@@ -2690,7 +2690,7 @@ classes do: [ :cls |
 
 	enclosing := (RTBox new color: Color transparent) element.
 	label := (RTLabel new text: #name) elementOn: cls.
-	g1 := RTGroup withAll: (Array with: label with: back).
+	g1 := RTGroup withAll: { label . back }.
 	RTNest new 
 		layout: RTVerticalLineLayout new alignCenter;
 		on: enclosing nest: g1.
@@ -2885,14 +2885,14 @@ g/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz7I4eoHSM9N3guI5iUAAAAASUVORK5CYII='
 RTRoassalExample >> exampleLinkingObjects [
 | associations v labels |
 
-associations := OrderedCollection new.
-associations
-	add: 'bonjour' -> 'hello';
-	add: 'homme' -> 'man' ;
-	add: 'femme' -> 'women' ;
-	add: 'hello' -> 'goodbye' ;
-	add: 'people' -> 'homme' ;
-	add: 'people' -> 'women'.
+associations := { 
+	'bonjour' -> 'hello'.
+	'homme' -> 'man' .
+	'femme' -> 'women' .
+	'hello' -> 'goodbye' .
+	'people' -> 'homme' .
+	'people' -> 'women'
+ }.
 
 "We create the nodes"
 v := RTView new.
@@ -3199,8 +3199,8 @@ RTEdge buildEdgesFromElements: es
 	from: #yourself
 	toAll: [ :value |
 		(value \\ size) = 0
-			ifTrue: [ Array with: value + size ]
-			ifFalse: [ Array with: value + 1 with: value + size ] ]
+			ifTrue: [ { value + size } ]
+			ifFalse: [ { value + 1 . value + size } ] ]
 	inView: v.
 
 initialLayout := RTGridLayout new
@@ -4557,7 +4557,7 @@ RTRoassalExample >> exampleVectorEditing [
 			ex1 @ RTDraggable. 
 			ex2 @ RTDraggable.
 			line := (RTLine new "width: 3;" color: (Color blue alpha: 0.2)) edgeFrom: ex1 to: ex2.
-			view addAll: (Array with: ex1 with: ex2 with: line ).
+			view addAll: { ex1 . ex2 . line }.
 			line trachelShape pushBack.
 		].
 
@@ -4644,7 +4644,7 @@ Collection withAllSubclasses do: [ :cls |
 cls methods do: [ :cm | 
 			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
 			
-		RTEdge buildEdgesFromAssociations: (Array with: cls -> depClass ) using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
+		RTEdge buildEdgesFromAssociations: { cls -> depClass } using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
 ].
 
 

@@ -257,7 +257,8 @@ RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max using: trans
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			"tt := minValue + (maxValue * (t - min) / max) asInteger."
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
+			"tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger."
+			tt := t * (max-min) / maxValue.
 			el trachelShape width: tt ] ] 
 	
 	

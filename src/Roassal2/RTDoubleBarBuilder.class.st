@@ -84,6 +84,7 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 		b := (RTBox new height: anHeight; color: aColor) elementOn: el model.
 		b @ (RTPopup text: [ :model | aBlock rtValue: model ]).
 		b ].
+
 	RTMetricNormalizer new 
 		elements: boxes;
 		normalizeWidth: aBlock min: 2 max: width.
@@ -145,4 +146,14 @@ RTDoubleBarBuilder >> topValue: aBlock titled: aTitle [
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
 	configuration axisFrom: topExtremity position to: topExtremity position + (width @ 0).
+]
+
+{ #category : #accessing }
+RTDoubleBarBuilder >> width [
+	^ width
+]
+
+{ #category : #accessing }
+RTDoubleBarBuilder >> width: anObject [
+	width := anObject
 ]

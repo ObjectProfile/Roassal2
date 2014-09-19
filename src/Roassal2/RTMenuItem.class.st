@@ -105,15 +105,3 @@ RTMenuItem >> selected [
 RTMenuItem >> selected: abool [
 	selected := abool
 ]
-
-{ #category : #public }
-RTMenuItem >> update [
-	| width pos ext|
-	width := self background width.
-	ext := self rawmenu encompassingRectangle extent.
-	pos := self background position + (( (ext x - width)/2 )@0).
-	
-	self background extent: ext.
-	self background translateTo: pos.
-	self rawmenu translateTo: pos.
-]

@@ -75,7 +75,7 @@ RTColorCycle >> visit: element visitedElements: visitedElements [
 	(visitedElements includes: element)
 		ifTrue: [ self changeColorOf: visitedElements ]
 		ifFalse: [ 
-			v := visitedElements, (Array with:element ).
+			v := visitedElements, { element }.
 			element outgoingEdges do: [ :ee | self visit: ee to visitedElements: v ] ]
 ]
 

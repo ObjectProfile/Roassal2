@@ -101,7 +101,7 @@ RTBucketColor >> initializeBuckets [
 	delta := (max - min)/numberOfBuckets.
 
 	((min + delta) to: max by: delta) with: self palette do: [ :i :c |
-			buckets add:  (Array with:i with: c)
+			buckets add:  {i .  c}
 		 ].
 	buckets := buckets sort: [:a :b | a first < b first].
 ]

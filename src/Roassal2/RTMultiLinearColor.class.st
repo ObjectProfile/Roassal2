@@ -42,7 +42,7 @@ RTMultiLinearColor >> indexesFor: f [
 	nbColors := colors size.
 	
 	v := f * (nbColors - 1).
-	i1 := v asInteger + 1.
+	i1 := v integerPart + 1.
 	i2 := i1 + 1.
 	
 	^ Array with: i1 with: i2
