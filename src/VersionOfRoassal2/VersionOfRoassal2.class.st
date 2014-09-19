@@ -4788,3 +4788,14 @@ VersionOfRoassal2 >> version000386 [
 	at: #date put: '11 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000387 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-akevalion.209';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.476';
+	at: #version put: '0.387';
+	at: #comment put: '0.387 : Removed non VW things from Trachel and Roassal for the migration to VW.';
+	at: #date put: '19 September 2014';
+	yourself
+]
