@@ -126,7 +126,7 @@ RTGraphBuilderTest >> testEdgesAndNoSeed [
 	self assert: b view numberOfEdges equals: 2.
 	
 	self assert: (b edgesUsedForLayout size) equals: 2.
-	self assert: (b view elements collect: #position) asArray equals:  {(10.0@10.0). (10.0@40.0). (10.0@70.0)}
+	self assert: (b view elements collect: #position) asArray equals: (Array with: 10.0@10.0  with: 10.0@40.0 with: 10.0@70.0)
 ]
 
 { #category : #seed }
@@ -149,7 +149,7 @@ RTGraphBuilderTest >> testEdgesAndSeed [
 	self assert: b view numberOfEdges equals: 2.
 	
 	self assert: (b edgesUsedForLayout size) equals: 2.
-	self assert: (b view elements collect: #position) asArray equals:  {(10.0@10.0). (10.0@40.0). (10.0@70.0)}
+	self assert: (b view elements collect: #position) asArray equals: (Array with:10.0@10.0 with: 10.0@40.0 with: 10.0@70.0)
 ]
 
 { #category : #edges }
@@ -212,7 +212,7 @@ RTGraphBuilderTest >> testGlobalNormalization [
 	b render.
 	
 	self assert: b view elements first trachelShape color = Color green.
-	self assert: b view elements last trachelShape color red > 0.95.
+	self assert: b view elements last trachelShape color red > 0.949.
 ]
 
 { #category : #edges }
@@ -392,7 +392,7 @@ RTGraphBuilderTest >> testRecurFromUsing2 [
 
 	edge 
 		recurFrom: 1
-		using: [ :v | { v + 1 . v + 2 } ] 
+		using: [ :v | Array with: v + 1 with: v + 2  ] 
 		path: path 
 		result: result 
 		allObjects: allObjects.

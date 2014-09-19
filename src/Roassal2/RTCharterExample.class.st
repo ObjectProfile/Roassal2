@@ -1067,7 +1067,7 @@ RTCharterExample >> exampleScatterPlotSimple [
 	b extent: 290 @ 200.
 	b interaction popup.
 	b shape ellipse size: 15; color: (Color red alpha: 0.3).
-	b points: { 2 @ 3 . 6 @ 6 . 10 @ 5}.
+	b points: (Array with: 2 @ 3 with: 6 @ 6 with: 10 @ 5).
 	b x: #x; y: #y min: 0 max: 10.
 	b size: 10 min: 4 max: 10.
 	
@@ -1310,7 +1310,7 @@ RTCharterExample >> exampleSimpleValues [
 
 | b values |
 b := RTCharterBuilder new.
-values := { 5 . 6 . 7 .-1 . -3}.
+values := #(5 6 7 -1 -3).
 b extent: 400 @ 300.
 b interaction popup.
 b points: values.
@@ -1356,10 +1356,10 @@ RTCharterExample >> exampleStackingX [
 	| b |
 	b := RTCharterBuilder new.
 	b extent: 400 @ 300.
-	b points: { 5 . 6 . 7 }.
+	b points: #( 5 6 7 ).
 	b connectDotColor: Color red.
 
-	b points: { 1 . 7 . 10 . 4 }.
+	b points: #(1 7 10 4).
 	b connectDotColor: Color blue.
 	 
 	b allY: #yourself.

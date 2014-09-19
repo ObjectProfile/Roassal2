@@ -1029,7 +1029,7 @@ b edges
 b layout force charge: -100.	
 b global
 	minSize: 15;
-	normalizeColor: [ :c | c dependentClasses size ] using: { Color green . Color  red } using: [ :v | (v + 1) log ];
+	normalizeColor: [ :c | c dependentClasses size ] using: (Array with: Color green with: Color  red) using: [ :v | (v + 1) log ];
 	alphaColor: 0.4.
 b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
 
@@ -1244,7 +1244,7 @@ b global
 	normalizeSize: [ :c | c dependentClasses size ]
 		min: 5 max: 25 using: #log;
 	normalizeColor: [ :c | c dependentClasses size ] 
-		using: { Color green . Color  red } using: #log;
+		using: (Array with: Color green with: Color  red ) using: #log;
 	alphaColor: 0.4.
 
 b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
@@ -4246,7 +4246,7 @@ b layout tree.
 
 b global 
 	minSize: 5;
-	normalizeColor: #numberOfVariables using: {Color green . Color red}.
+	normalizeColor: #numberOfVariables using: (Array with: Color green with: Color red).
 
 b addAll: RTObject withAllSubclasses.
 b open.
