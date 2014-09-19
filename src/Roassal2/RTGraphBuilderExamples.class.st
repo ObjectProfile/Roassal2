@@ -158,7 +158,7 @@ RTGraphBuilderExamples >> simple05WithInteraction [
 	g nodes
 		shape: (RTEllipse new size: 20) + RTLabel;
 		noPopup;
-		whenOverHighlight: [ :v | { v - 1 . v . v + 1 } ].
+		whenOverHighlight: [ :v | Array with: v - 1 with: v with: v + 1 ].
 	g layout use: RTFlowLayout new.
 	g addAll: (1 to: 50).
 	g open

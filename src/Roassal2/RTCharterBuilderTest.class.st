@@ -51,7 +51,7 @@ RTCharterBuilderTest >> testHistogramAndXAxis [
 	| b view |
 	b := RTCharterBuilder new.
 	b extent: 200 @ 200.
-	b points: { 10 . 5 . 2 }.
+	b points: #( 10 5 2 ).
 	b stackX.
 	b y: #yourself.
 	b histogramBarWidth: 10.
@@ -96,8 +96,8 @@ RTCharterBuilderTest >> testMultiplePointSetsAndAxis [
 	| b |
 	b := RTCharterBuilder new.
 	b extent: 200 @ 200.
-	b points: { 5 }.
-	b points: { 1 }.
+	b points: #( 5 ).
+	b points: #( 1 ).
 
 	b allY: #yourself.
 	b stackX.
@@ -149,7 +149,7 @@ RTCharterBuilderTest >> testPointsAndAxis [
 
 	| b view |
 	b := RTCharterBuilder new.
-	b points: { 1 @ 1 . 5 @ 5 }.
+	b points: (Array with: 1 @ 1 with: 5 @ 5 ).
 	b x: #x; y: #y.
 	b axisX.
 	b axisY.
