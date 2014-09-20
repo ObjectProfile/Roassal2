@@ -1,3 +1,6 @@
+"
+A RTNopAnimation simply wait. This is useful to temporize
+"
 Class {
 	#name : #RTNopAnimation,
 	#superclass : #RTAnimation,
