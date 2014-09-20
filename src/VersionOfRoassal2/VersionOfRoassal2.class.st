@@ -4818,3 +4818,14 @@ In the RTDoubleBarBuilder>>metric: aBlock color: aColor height: anHeight I have 
 	at: #date put: '20 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000389 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-akevalion.209';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.478';
+	at: #version put: '0.389';
+	at: #comment put: '0.389 : Added some class comments';
+	at: #date put: '20 September 2014';
+	yourself
+]
