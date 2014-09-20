@@ -4799,3 +4799,22 @@ VersionOfRoassal2 >> version000387 [
 	at: #date put: '19 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000388 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-akevalion.209';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.477';
+	at: #version put: '0.388';
+	at: #comment put: '0.388 : I have improved the RTMetricNormalizer. And factored out the common part. That was indeed necessary.
+
+In the RTDoubleBarBuilder>>metric: aBlock color: aColor height: anHeight I have inserted the following:
+	...
+	RTMetricNormalizer new 
+		elements: boxes;
+		normalizeWidth: aBlock min: 2 max: width minValue: 0.
+	…
+';
+	at: #date put: '20 September 2014';
+	yourself
+]
