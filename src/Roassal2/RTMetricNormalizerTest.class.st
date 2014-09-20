@@ -88,6 +88,30 @@ RTMetricNormalizerTest >> testBasicPositiveRangeSize [
 	self assert: (es collect: [ :e | e extent x ]) asArray equals: (Array with: 0 with: 100 with: 200)
 ]
 
+{ #category : #'test size' }
+RTMetricNormalizerTest >> testBasicPositiveRangeWidth [
+	
+	| es |
+	es := RTEllipse new elementsOn: (Array with: 25 with: 50).
+
+	RTMetricNormalizer new
+			elements: es;
+			normalizeWidth: #yourself min: 0 max: 200.
+	self assert: (es collect: [ :e | e extent x ]) asArray equals: (Array with: 0 with: 200)
+]
+
+{ #category : #'test size' }
+RTMetricNormalizerTest >> testBasicPositiveRangeWidth2 [
+	
+	| es |
+	es := RTEllipse new elementsOn: (Array with: 25 with: 50).
+
+	RTMetricNormalizer new
+			elements: es;
+			normalizeWidth: #yourself min: 0 max: 200 minValue: 0.
+	self assert: (es collect: [ :e | e extent x ]) asArray equals: (Array with: 100 with: 200)
+]
+
 { #category : #'test x' }
 RTMetricNormalizerTest >> testBasicPositiveRangeX [
 	
