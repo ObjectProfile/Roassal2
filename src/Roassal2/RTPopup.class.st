@@ -1,5 +1,5 @@
 "
-A RTPopup is xxxxxxxxx.
+A RTPopup is an interaction that dynamically add a text or a group of elements above the element pointed by the mouse.
 
 example of use:
 -=-=-=-=-=-=-=-=-=-=-=-=

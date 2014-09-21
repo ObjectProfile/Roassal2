@@ -1,3 +1,6 @@
+"
+A RTBox is a rectangular box. E.g., RTBox new width: 10; height: 20
+"
 Class {
 	#name : #RTBox,
 	#superclass : #RTAbstractElementShape,

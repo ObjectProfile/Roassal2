@@ -1,3 +1,6 @@
+"
+A RTEllipse is an ellipse. e.g., RTEllipse new width: 10; height: 20
+"
 Class {
 	#name : #RTEllipse,
 	#superclass : #RTAbstractElementShape,
