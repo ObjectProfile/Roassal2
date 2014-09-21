@@ -82,51 +82,51 @@ TRSVGPath >> computeCurves [
 	
 	[ stream atEnd ] whileFalse: [ 
 		token := stream next.
-		token = 'M' ifTrue: [ p := nextPoint value. answer add: #m -> {p}. initialPoint := nil. cp1 := nil. cp2 := nil ].
-		token = 'm' ifTrue: [ p := p + (nextPoint value). answer add: #m -> {p}. initialPoint := nil. cp1 := nil. cp2 := nil ].
+		token = 'M' ifTrue: [ p := nextPoint value. answer add: #m -> (Array with: p). initialPoint := nil. cp1 := nil. cp2 := nil ].
+		token = 'm' ifTrue: [ p := p + (nextPoint value). answer add: #m -> (Array with: p). initialPoint := nil. cp1 := nil. cp2 := nil ].
 
-		(token = 'Z' or: [ token = 'z' ]) ifTrue: [ answer add: #l -> {initialPoint}. initialPoint := nil ].
+		(token = 'Z' or: [ token = 'z' ]) ifTrue: [ answer add: #l -> (Array with: initialPoint). initialPoint := nil ].
 
-		token = 'L' ifTrue: [ t := nextPoint value. answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
-		token = 'l' ifTrue: [ t := p + (nextPoint value). answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
+		token = 'L' ifTrue: [ t := nextPoint value. answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
+		token = 'l' ifTrue: [ t := p + (nextPoint value). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
 		
-		token = 'V' ifTrue: [ t := (p x) @ (Float readFrom: stream next). answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
-		token = 'v' ifTrue: [ t := p + (0 @ (Float readFrom: stream next)). answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
+		token = 'V' ifTrue: [ t := (p x) @ (Float readFrom: stream next). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
+		token = 'v' ifTrue: [ t := p + (0 @ (Float readFrom: stream next)). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
 		
-		token = 'H' ifTrue: [ t := (Float readFrom: stream next) @ (p y). answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
-		token = 'h' ifTrue: [ t := p + ((Float readFrom: stream next) @ 0). answer add: #l -> {t}. p := t. cp1 := nil. cp2 := nil ].
+		token = 'H' ifTrue: [ t := (Float readFrom: stream next) @ (p y). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
+		token = 'h' ifTrue: [ t := p + ((Float readFrom: stream next) @ 0). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
 		
 		token = 'C' ifTrue: [
 			cp1 := nextPoint value. cp2 := nextPoint value.
 			t := nextPoint value.
-			answer add: #c -> {t. cp1. cp2}. p := t. cp1 := nil ].
+			answer add: #c -> (Array with: t with: cp1 with: cp2). p := t. cp1 := nil ].
 		token = 'c' ifTrue: [ 
 			cp1 := p + (nextPoint value). cp2 := p + (nextPoint value).
 			t := p + (nextPoint value).
-			answer add: #c -> {t. cp1. cp2}. p := t. cp1 := nil ].
+			answer add: #c -> (Array with: t with: cp1 with: cp2). p := t. cp1 := nil ].
 		
 		token = 'S' ifTrue: [ 
 			cp1 := (cp2 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp2) ]). cp2 := nextPoint value.
 			t := nextPoint value.
-			answer add: #c -> { t. cp1. cp2. }. p:= t. cp1 := nil ].
+			answer add: #c -> (Array with: t with: cp1 with: cp2). p:= t. cp1 := nil ].
 		token = 's' ifTrue: [ 
 			cp1 := (cp2 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp2) ]). cp2 := p + nextPoint value.
 			t := p + nextPoint value.
-			answer add: #c -> { t. cp1. cp2. }. p:= t. cp1 := nil ].
+			answer add: #c -> (Array with: t with: cp1 with: cp2 ). p:= t. cp1 := nil ].
 		
 		token = 'Q' ifTrue: [
 			cp1 := nextPoint value. t := nextPoint value.
-			answer add: #q -> {t. cp1}. p := t. cp2 := nil ].
+			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
 		token = 'q' ifTrue: [ 
 			cp1 := p + (nextPoint value). t := p + (nextPoint value).
-			answer add: #q -> {t. cp1}. p := t. cp2 := nil ].
+			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
 		
 		token = 'T' ifTrue: [
 			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := nextPoint value.
-			answer add: #q -> {t. cp1}. p := t. cp2 := nil ].
+			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
 		token = 't' ifTrue: [ 
 			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := p + (nextPoint value).
-			answer add: #q -> {t. cp1}. p := t. cp2 := nil ].
+			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
 		
 		initialPoint ifNil: [ initialPoint := p ].
  	].

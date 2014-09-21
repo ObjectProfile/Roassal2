@@ -36,7 +36,7 @@ TRCanvasExample >> arc [
 	| c  shape|
 	c := TRCanvas new.
 	shape:= TRArcShape new.
-	shape alphaAngle:10  betaAngle: 80  innerRadius: 30 externalRadius: 150. 
+	shape alphaAngle:10  betaAngle: 20  innerRadius: 30 externalRadius: 150. 
 	shape color: Color blue.
 	c addShape: shape.
 	c open.
@@ -79,7 +79,7 @@ TRCanvasExample >> arc2 [
 	shape3 color: Color yellow.
 	shape4 alphaAngle:280  betaAngle: 350 innerRadius: 30 externalRadius: 150. 
 	shape4 color: Color red.
-	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c addShape: shape1. c addShape: shape2. c addShape: shape3. c addShape: shape4.
 	c open.
 	
 
@@ -104,7 +104,7 @@ TRCanvasExample >> arc3 [
 	shape3 color: Color yellow.
 	shape4 alphaAngle:275  betaAngle: 355 innerRadius: 30 externalRadius: 150. 
 	shape4 color: Color red.
-	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c addShape: shape1. c addShape: shape2. c addShape: shape3. c addShape: shape4.
 	c open.
 	
 
@@ -129,7 +129,7 @@ TRCanvasExample >> arc4 [
 	shape3 color: Color yellow.
 	shape4 alphaAngle:270  betaAngle: 360 innerRadius: 130 externalRadius: 150. 
 	shape4 color: Color red.
-	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c addShape: shape1. c addShape: shape2. c addShape: shape3. c addShape: shape4.
 	c open.
 	
 
@@ -154,7 +154,7 @@ TRCanvasExample >> arc5 [
 	shape3 color: Color yellow.
 	shape4 alphaAngle:270  betaAngle: 360 innerRadius: 0 externalRadius: 150. 
 	shape4 color: Color red.
-	c addShape: shape1.c addShape: shape2. c addShape: shape3. c addShape: shape4.
+	c addShape: shape1. c addShape: shape2. c addShape: shape3. c addShape: shape4.
 	c open.
 	
 

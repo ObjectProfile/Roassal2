@@ -70,7 +70,7 @@ TRBitmapShape >> extent: anExtent [
 
 { #category : #accessing }
 TRBitmapShape >> fillColor: aColor [
-	self form getCanvas fillRectangle: (0 @ 0 extent: self extent) color: aColor
+	self form getCanvas fillRectangle: (0 @ 0 extent: self encompassingRectangle extent) color: aColor
 ]
 
 { #category : #accessing }
