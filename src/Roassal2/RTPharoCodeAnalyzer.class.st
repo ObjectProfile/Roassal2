@@ -20,7 +20,7 @@ RTPharoCodeAnalyzer class >> menuCommandOn: aBuilder [
 		order: 0.1; 
 		parent: #Roassal;
 		label: 'Pharo Code Analyzer';
-		icon: self roassalWithTransparentIcon;
+		icon: RTIcon smallRoassal;
 		action:[ self new open ]
 ]
 

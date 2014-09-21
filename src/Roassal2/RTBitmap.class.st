@@ -18,7 +18,7 @@ RTBitmap >> form: aValueOrOneArgBlock [
 	self formElement: [ :anElement | aValueOrOneArgBlock rtValue: anElement model ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBitmap >> formElement: aValueOrOneArgBlock [
 	"aValueOrOneArgBlock takes a roassal element as input"
 	form := aValueOrOneArgBlock

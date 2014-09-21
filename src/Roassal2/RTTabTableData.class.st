@@ -1,7 +1,7 @@
 Class {
 	#name : #RTTabTableData,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Utility'
+	#category : #'Roassal2-Table'
 }
 
 { #category : #data }

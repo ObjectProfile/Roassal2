@@ -20,7 +20,7 @@ RTReadEvalLoop class >> menuCommandOn: aBuilder [
 		order: 0.1; 
 		parent: #Roassal;
 		label: 'Roassal evaluator';
-		icon: self roassalWithTransparentIcon;
+		icon: RTIcon smallRoassal;
 		action:[ self new open ]
 ]
 

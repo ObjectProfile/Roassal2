@@ -6,7 +6,7 @@ Class {
 		'values',
 		'firstRow'
 	],
-	#category : #'Roassal2-Utility'
+	#category : #'Roassal2-Table'
 }
 
 { #category : #accessing }

@@ -59,6 +59,11 @@ RTEdgeBuilder >> object: object fromAll: fromBlock to: toBlock [
 ]
 
 { #category : #public }
+RTEdgeBuilder >> objects: objects from: fromBlock [
+	^ self objects: objects from: fromBlock to: #yourself
+]
+
+{ #category : #public }
 RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock [ 
 
 	^ self objects: objects from: fromBlock to: toBlock scope: self globalScope
