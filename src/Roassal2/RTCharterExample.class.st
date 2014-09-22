@@ -1776,6 +1776,76 @@ Twb19Rlsb2e83na/f9LptJe/D+K1839sHBsvjLFs/koC6ejocGcunV5O3T4DvtjZlOXS7QXD
 QfSnQB9EP76Iv5jwA2uZpidXAAAAAElFTkSuQmCC'
 ]
 
+{ #category : #sources }
+RTCharterExample >> exampleUsingLegend [
+
+| clss b lb |
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+
+clss := {RTElement . RTEdge }.
+n := RTMultiLinearColorForIdentity new objects: clss.
+clss do: [ :cls |
+	b points: (cls methods sortedAs: #numberOfLinesOfCode).
+	b connectDotColor: (n rtValue: cls).
+].
+	b allY: #numberOfLinesOfCode.
+	b stackX.
+b axisY; axisX.
+b build.
+
+
+"defining the legend"
+lb := RTLegend2Builder new.
+lb view: b view.
+lb addText: 'Distribution of number of Methods in some classes'.
+clss do: [ :aClass |
+	lb addColor: (n rtValue: aClass) text: aClass name.
+].
+lb build.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleUsingLegendIcon [
+	^ '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
+AAAASUVORK5CYII='
+]
+
 { #category : #accessing }
 RTCharterExample >> label [
 	^ 'Charter example'
