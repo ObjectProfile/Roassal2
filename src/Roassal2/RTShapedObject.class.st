@@ -116,6 +116,12 @@ RTShapedObject >> model: anObject [
 	model := anObject
 ]
 
+{ #category : #actions }
+RTShapedObject >> pushBack [
+	"Move the shaped object back"
+	self trachelShape pushBack
+]
+
 { #category : #attributes }
 RTShapedObject >> removeAttributeAt: aKey [
 	^ self attributes removeKey: aKey

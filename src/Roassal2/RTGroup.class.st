@@ -151,6 +151,11 @@ RTGroup >> position [
 	^ self encompassingRectangle center
 ]
 
+{ #category : #'as yet unclassified' }
+RTGroup >> pushBack [
+	self do: #pushBack
+]
+
 { #category : #public }
 RTGroup >> remove [
 	self do: #remove

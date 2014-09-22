@@ -26,7 +26,9 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 		width: 5.
 	ticks := tickShape elementsOn: (0 to: self numberOfTicks).
 	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees abs.
+	
 	self addAllToView: ticks.
+	ticks pushBack.
 	RTMetricNormalizer new
 		elements: ticks;
 		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.
