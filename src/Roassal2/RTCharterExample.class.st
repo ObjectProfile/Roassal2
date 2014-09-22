@@ -218,6 +218,135 @@ CI38A5O2Qrits48mAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTCharterExample >> exampleDateOnXAxis [
+
+| methods oldestMethod b |
+methods := RTObject withAllSubclasses flatCollect: #methods.
+methods := methods reject: [ :m | m numberOfLinesOfCode > 150 ].
+oldestMethod := methods minFor: #date.
+
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+b shape circle size: 5; color: (Color blue alpha: 0.1).
+b interaction popup.
+b points: methods.
+b allY: #numberOfLinesOfCode.
+b allX: [ :m | m date julianDayNumber - oldestMethod date julianDayNumber ].
+
+b axisConfiguration 
+	noDecimals;
+	title: 'LOC'.
+b axisY.
+b axisConfiguration 
+	title: '';
+	labelRotation: -30;
+	labelConvertion: [ :v | (Date julianDayNumber: v + oldestMethod date julianDayNumber) ].
+b axisX.
+
+b build.
+
+b open.
+b view canvas
+]
+
+{ #category : #sources }
+RTCharterExample >> exampleDateOnXAxis2 [
+| dates minDate b |
+dates := { Date today . Date yesterday . Date yesterday previous }.
+minDate := dates min.
+
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+
+b interaction popup.
+b shape rectangle color: Color blue.
+b points: dates.
+b allX: [ :aDate | aDate julianDayNumber - minDate julianDayNumber ].
+
+b allY: [ :d | d dayOfWeek \\ 7 ].
+"b stackX."
+b axisY.
+
+b axisConfiguration 
+	labelRotation: -30;
+	labelConvertion: [ :v | (Date julianDayNumber: v + minDate julianDayNumber) ].  
+b axisX.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleDateOnXAxis2Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADJElEQVR4XuWcT0tqQRiH+3J9
+nohoLYJuMqyNEoSCWBKIIYoEYiaKRn+gQIRUUFu0TQNRtHrtvufiXXlBpXNGfR4YdHF+Msxz
+xjmvM7U1mfBZJbb4Q8AXwocvhC+ED18IXwgfvhC+ED58IXwhfPhC+PCF8IXw4QvhC+HDF8IX
+wocvhC+ED18IH+eEHBwciL6Wy2WpVCrCH2bDQu7u7iwJzWZTtM26pt1uW42Cy/W3GRGSy+Wk
+Wq3K4+OjPDw88GcIfw3hC+HDF8IXwocvhC+ED18IH9uFnJ6eWrVHoVCQUqnEr0NMC5n+dPLy
+8mIViPxK3bCQfD4vtVpNOp2O3N/f82cIfw3hC+HDF8IXwocvhC+ED18IH8cqdf6e+opV6qu4
+pz7v3vZGVur8PXX+GsIXwocvhC+ED18IXwgfvhA+Tgl5e3uzao+Pjw/Rxh9mw0K63a68v79L
+NBoVPeiwSpU6UojL5ZLb21u5vr6WbDbLnyH8NYQvhA9fCF8IH74QvhA+fCF8HKvUPz8/Rdus
+a4bDodWWYZOztlbq9XrdarOu2dnpTvb2apPX11dZtOn2sLZ1y/4ZF7OVulbp/6vUB4OBaFvm
+8zc5y19D6Iv619eXdZdsb2+Lws8aFOL1emU8HluH5wKBwEJ/zEPJOiJEO/T8/CzJZFIikYj4
+fL657zRa1nYh00dgPTQXj8elWCzKqme/v7+NZG0XEg6HJRQKWR1KJBKyLlm32+141lYhu7u7
+EgwGRV8zmYysW1aPv45GI3Eia6uQp6cnOT4+Fj3b6/F4hJ81KMTv91tfE+fn53JzcyP8rCEh
+epfoyRLtWCwWE37WkBD9febi4kLOzs7k8vJS+FlDQqbflel0Wq6urhZ6rKNlbRWiz9Ra7Oj7
+k5MTabfb4kT28PDw37VOZlOplPR6vaX6bKsQHcj9/X3RZ2ydrot8+G9k9b2e7zKRNfF/Wuaa
+IUdHR9ZUbbVaC3fwN7KNRmNtso4I6ff7S3eMll2ZOoQPXwhfCB++EL4QPnwhfPhC+EL48IXw
+hfDhC+EL4cMXwhfChy+ED18IXwgfvhC+ED58IRvGD+a+cRWbD700AAAAAElFTkSuQmCC'
+]
+
+{ #category : #icons }
+RTCharterExample >> exampleDateOnXAxisIcon [
+	^ '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
+B1itzLkeuS7qAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTCharterExample >> exampleDifferentInteraction [
 
 | b |
