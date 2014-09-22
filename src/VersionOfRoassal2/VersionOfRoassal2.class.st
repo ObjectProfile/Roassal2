@@ -4873,3 +4873,14 @@ VersionOfRoassal2 >> version000393 [
 	at: #date put: '22 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000394 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.211';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.483';
+	at: #version put: '0.394';
+	at: #comment put: '0.394 : Added RTTabTable>>replaceZeroWithCumulativeValuesInColumns: Thanks Serge S. !!';
+	at: #date put: '22 September 2014';
+	yourself
+]
