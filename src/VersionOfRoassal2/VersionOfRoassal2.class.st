@@ -4851,3 +4851,14 @@ VersionOfRoassal2 >> version000391 [
 	at: #date put: '21 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000392 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.211';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.481';
+	at: #version put: '0.392';
+	at: #comment put: '0.392 : Added pushBack in shapedObject. Modified Charter to move the tick behind the scene';
+	at: #date put: '22 September 2014';
+	yourself
+]
