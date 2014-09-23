@@ -174,7 +174,7 @@ RTLabelled >> make: lbl highlightableIfNecessaryBy: element [
 	highlightable ifFalse: [ ^ self ].
 	
 	lbl color: lowColor.
-	element when: TRMouseEnter do: [ :evt | lbl color: color. evt signalUpdate ].
+	element when: TRMouseEnter do: [ :evt | lbl color: color. lbl pushFront. evt signalUpdate ].
 	element when: TRMouseLeave do: [ :evt | lbl color: lowColor. evt signalUpdate ].
 ]
 
