@@ -23,11 +23,6 @@ TRSVGPath >> basicEncompassingRectangle [
 ]
 
 { #category : #accessing }
-TRSVGPath >> borderColor: aColor [
-	self strokeColor: aColor
-]
-
-{ #category : #accessing }
 TRSVGPath >> borderWidth: width [
 	borderWidth := width.
 ]
@@ -251,9 +246,6 @@ TRSVGPath >> pathString [
 { #category : #actions }
 TRSVGPath >> reset [
 	super resetPath.
-	paths := #().
-	pathPoints := #().
-	points := #().
 	curves := nil
 ]
 
