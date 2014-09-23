@@ -40,6 +40,6 @@ RTConstrainedDraggableView >> initializeElement: aView [
 		do: [ :e |
 			| translation |
 			translation := constraint value: aView value: e step negated.
-			aView canvas camera translateBy: translation / aView canvas camera scale.
+			aView canvas camera translateBy: translation.
 			e signalUpdate ]
 ]

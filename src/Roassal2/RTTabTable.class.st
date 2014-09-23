@@ -203,6 +203,18 @@ RTTabTable >> replaceEmptyValuesWith: aValue inColumns: columns [
 	self convertColumns: columns to: [ :s | s isEmpty ifTrue: [ aValue ] ifFalse: [ s ] ]
 ]
 
+{ #category : #converting }
+RTTabTable >> replaceZeroWithCumulativeValuesInColumns: columns [
+	columns
+		do: [ :column | 
+			| previous |
+			previous := 0.
+			values
+				do: [ :row | 
+					(row at: column) = 0 ifTrue: [ row at: column put: previous ].
+					previous := row at: column ] ]
+]
+
 { #category : #accessing }
 RTTabTable >> values [
 	^ values

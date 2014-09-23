@@ -15,10 +15,17 @@ Class {
 		'title',
 		'builder',
 		'color',
-		'titlePosition'
+		'titlePosition',
+		'labelRotation'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
+
+{ #category : #testing }
+RTAxisConfiguration >> areLabelRotated [
+	"Return true if labels are rotated"
+	^ labelRotation ~= 0
+]
 
 { #category : #rendering }
 RTAxisConfiguration >> axisFrom: fromPosition to: toPosition [
@@ -62,6 +69,16 @@ RTAxisConfiguration >> defaultColor [
 	^ Color gray
 ]
 
+{ #category : #configuration }
+RTAxisConfiguration >> defaultTitlePosition [
+	^ 0 @ 20
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> doNotRotateLabels [
+	labelRotation := 0
+]
+
 { #category : #action }
 RTAxisConfiguration >> getStringFromNumber: aNumber [
 	^ (self labelConvertion rtValue: aNumber) asString
@@ -80,7 +97,8 @@ RTAxisConfiguration >> initialize [
 	self noThousandsSeparator.
 	self noTitle.
 	color := self defaultColor.
-	titlePosition := (0 @ 20)
+	titlePosition := self defaultTitlePosition.
+	self doNotRotateLabels
 ]
 
 { #category : #accessing }
@@ -92,6 +110,18 @@ RTAxisConfiguration >> labelConvertion [
 RTAxisConfiguration >> labelConvertion: aOneArgBlock [
 	"The argument is a one arg block taking the numerical value"
 	labelConvertion := aOneArgBlock
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> labelRotation [
+	"Return the rotation of the label"
+	^ labelRotation
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> labelRotation: rotationAsDegrees [
+	"Rotate the labels"
+	labelRotation := rotationAsDegrees
 ]
 
 { #category : #accessing }
@@ -116,6 +146,7 @@ RTAxisConfiguration >> minValue: aMinValue [
 
 { #category : #configuration }
 RTAxisConfiguration >> noDecimals [
+	"Make the axis labels without decimal"
 	self labelConvertion: [ :number | number asInteger ]
 ]
 
@@ -180,6 +211,12 @@ RTAxisConfiguration >> positionLabel: aTwoArgBlock [
 	"This method expect a two argblock to set where the label should be"
 	"eg. [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ]"
 	positionLabel := aTwoArgBlock
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> rotateLabels [
+	"Rotate the labels"
+	labelRotation := -45
 ]
 
 { #category : #accessing }

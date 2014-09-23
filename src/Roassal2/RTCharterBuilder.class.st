@@ -78,16 +78,20 @@ RTCharterBuilder >> allPoints [
 
 { #category : #'public-scatterplot' }
 RTCharterBuilder >> allX: metricAsBlockOrSymbol [
-	"THIS METHOD PROBABLY DOES NOT WORK."
+	"
+	PUBLIC METHOD
+	This methods takes as an argument a symbol or a block. The argument will be invoked on _all_ data point to compute the position on the X-axis.  
+	"
 	| vs |
-	RTMetricNormalizer new
-		elements: self allPoints;
-		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x minValue: 0.
-
 	"We compute the min and the max, useful for labelling"
 	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minX := minX min: vs min.
 	maxX := maxX max: vs max.
+
+	RTMetricNormalizer new
+		elements: self allPoints;
+		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x minValue: 0.
+
 
 
 ]

@@ -21,9 +21,7 @@ RTAxisRenderer >> addAllToView: roassalElements [
 RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	"Add ticks on the lines. Return the list of ticks"
 	| tickShape ticks |
-	tickShape := RTBox new
-		height: 10;
-		width: 5.
+	tickShape := RTBox new height: 10; width: 5.
 	ticks := tickShape elementsOn: (0 to: self numberOfTicks).
 	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees abs.
 	
@@ -43,32 +41,29 @@ RTAxisRenderer >> addToView: roassalElement [
 { #category : #'public-rendering' }
 RTAxisRenderer >> axisFrom: fromPosition to: toPosition [
 	"THIS IS A PUBLIC METHOD"
-	"config is an instance of RTAxisConfiguration"
 
 	"fromPosition is the starting point of the axis. toPosition is the ending point"
 
-	| ticks labelShape labelValues labels tickIntervalForLabel labelledTicks lbl |
+	| ticks labelShape labelValues labels tickIntervalForLabel labelledTicks |
 	"We add the labels"
 	self axisLineFrom: fromPosition to: toPosition.
 	ticks := self addTicksFrom: toPosition to: fromPosition.
-
 	self numberOfLabels = 0
 		ifTrue: [ ^ self ].
-		
 	tickIntervalForLabel := self tickIntervalForLabel.
 	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i ].
 	labelValues := (0 to: self numberOfLabels)
 		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
+
 	labelShape := RTLabel new text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ].
 	labels := labelShape elementsOn: (0 to: self numberOfLabels).
-	labels withIndexDo: [ :label :i | self moveLabel: label againstTick: (labelledTicks at: i) ].
+	labels withIndexDo: [ :label :i | 
+		self moveLabel: label againstTick: (labelledTicks at: i).
+		self rotateLabelIfNecessary: label ].
+	
 	self addAllToView: labels.	"We insert the label if necessary"
-	self title notEmpty
-		ifTrue: [ 
-			lbl := RTLabel elementOn: self title.
-			self addToView: lbl.
-			lbl translateTo: toPosition - config titlePosition ].
-	labels do: [ :e | e trachelShape pushBack ]
+	self insertLabelIfNecessaryTo: toPosition.
+	labels pushBack
 ]
 
 { #category : #rendering }
@@ -109,6 +104,16 @@ RTAxisRenderer >> getStringFromNumber: aNumber [
 	^ config getStringFromNumber: aNumber
 ]
 
+{ #category : #'public-rendering' }
+RTAxisRenderer >> insertLabelIfNecessaryTo: toPosition [
+	| lbl |
+	self title notEmpty
+		ifTrue: [ 
+			lbl := RTLabel elementOn: self title.
+			self addToView: lbl.
+			lbl translateTo: toPosition - config titlePosition ]
+]
+
 { #category : #'accessing-computed' }
 RTAxisRenderer >> maxValue [
 	^ config maxValue
@@ -137,6 +142,15 @@ RTAxisRenderer >> numberOfTicks [
 { #category : #'accessing-computed' }
 RTAxisRenderer >> positionLabel [
 	^ config positionLabel
+]
+
+{ #category : #'public-rendering' }
+RTAxisRenderer >> rotateLabelIfNecessary: label [
+	"Rotate and position the label if necessary"
+	config areLabelRotated ifFalse: [ ^ self ].
+	label rotateByDegrees: config labelRotation.
+	label translateBy: (label width / -2 * config labelRotation degreesToRadians cos @ 
+								(label width / -2 * config labelRotation degreesToRadians sin)) "+ (5 @ 0)".
 ]
 
 { #category : #'accessing-computed' }
