@@ -4906,3 +4906,14 @@ VersionOfRoassal2 >> version000396 [
 	at: #date put: '23 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000397 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.212';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.486';
+	at: #version put: '0.397';
+	at: #comment put: '0.397 : Slightly improved RTLabelled. If highlightable, then the label is pushed in front. Useful in Hapao2';
+	at: #date put: '23 September 2014';
+	yourself
+]
