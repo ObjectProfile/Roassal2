@@ -39,15 +39,15 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	max := vs max.
 	stepVertical := h / (max - min).
 	
-	p := (element position - ((w / 2) @ (h negated / 2))).
+	p := (element position - ((w / 2) @ (h negated / 2))) asIntegerPoint.
+	path := 'M', p x asString, ',', p y asString.
+
 	x := p x.
 	y := p y.
-	ny := vs first - min * stepVertical.
-	path := 'M', x asInteger asString, ',', (y - ny) asInteger asString.
 	
-	vs allButFirstDo: [ :v |
+	vs do: [ :v |
 		x := x + stepHorizontal.
-		ny := (v - min * stepVertical).
+		ny := (v * stepVertical).
 		path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString.
 	].
 	trachelShape resetPath.

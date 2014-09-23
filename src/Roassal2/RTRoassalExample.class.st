@@ -3623,7 +3623,7 @@ TkSuQmCC'
 { #category : #sources }
 RTRoassalExample >> examplePolygons [
 
-| clss v ver d composedShape e |
+| clss v ver d composedShape e s |
 clss := RTShape withAllSubclasses.
 
 v := RTView new.

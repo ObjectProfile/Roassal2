@@ -1779,7 +1779,7 @@ QfSnQB9EP76Iv5jwA2uZpidXAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTCharterExample >> exampleUsingLegend [
 
-| clss b lb |
+| clss b lb n |
 b := RTCharterBuilder new.
 b extent: 300 @ 200.
 
