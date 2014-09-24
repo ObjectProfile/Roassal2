@@ -4950,3 +4950,14 @@ VersionOfRoassal2 >> version000400 [
 	at: #date put: '24 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000401 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.212';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.490';
+	at: #version put: '0.401';
+	at: #comment put: '0.401 : Fixed bug related to edgesFromAll: in RTMondrianViewBuilder';
+	at: #date put: '24 September 2014';
+	yourself
+]
