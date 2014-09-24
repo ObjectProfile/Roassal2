@@ -4939,3 +4939,14 @@ VersionOfRoassal2 >> version000399 [
 	at: #date put: '24 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000400 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.212';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.489';
+	at: #version put: '0.400';
+	at: #comment put: '0.400 : Merged with Roassal2-TudorGirba.487,  Roassal2-AlexandreBergel.488, Roassal2-YuriyTymchuk.486, Roassal2-YuriyTymchuk.482';
+	at: #date put: '24 September 2014';
+	yourself
+]
