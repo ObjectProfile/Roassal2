@@ -14,6 +14,11 @@ RTShapeBuilder >> arc [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> arrow [
+	^ self shape: RTArrow new
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> circle [
 	^ self shape: RTEllipse new
 ]
