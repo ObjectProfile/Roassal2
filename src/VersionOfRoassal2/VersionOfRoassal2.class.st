@@ -4928,3 +4928,14 @@ VersionOfRoassal2 >> version000398 [
 	at: #date put: '24 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000399 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.212';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.488';
+	at: #version put: '0.399';
+	at: #comment put: '0.399 : Visualization of African Countries';
+	at: #date put: '24 September 2014';
+	yourself
+]
