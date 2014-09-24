@@ -20,7 +20,7 @@ RTPNGExporter >> builder: anObject [
 
 { #category : #public }
 RTPNGExporter >> exportToFile [
-	self todo: 'The form is not yet correct as it only displays the visible part of the morph'.
+	self flag: 'The form is not yet correct as it only displays the visible part of the morph'.
 	PNGReadWriter 
 		putForm: view view canvas morph imageForm
 		onFileNamed: self fileName 
