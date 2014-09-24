@@ -4917,3 +4917,14 @@ VersionOfRoassal2 >> version000397 [
 	at: #date put: '23 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000398 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.212';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.487';
+	at: #version put: '0.398';
+	at: #comment put: '0.398 : Added african countries in RTMapBuilder';
+	at: #date put: '24 September 2014';
+	yourself
+]
