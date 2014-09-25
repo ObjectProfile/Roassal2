@@ -4972,3 +4972,14 @@ VersionOfRoassal2 >> version000402 [
 	at: #date put: '25 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000403 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.213';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.492';
+	at: #version put: '0.403';
+	at: #comment put: '0.403 : Integrated Doru minor flag change';
+	at: #date put: '25 September 2014';
+	yourself
+]
