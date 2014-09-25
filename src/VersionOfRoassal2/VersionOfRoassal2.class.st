@@ -4961,3 +4961,14 @@ VersionOfRoassal2 >> version000401 [
 	at: #date put: '24 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000402 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.213';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.491';
+	at: #version put: '0.402';
+	at: #comment put: '0.402 : In Trachel: added the method TRCanvas>>encapsulatingRectangle, and in Roassal added CompiledMethod>>dependentClasses, and an examlpe about nesting';
+	at: #date put: '25 September 2014';
+	yourself
+]
