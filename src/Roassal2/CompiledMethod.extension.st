@@ -54,6 +54,23 @@ CompiledMethod >> dateSinceEpoch [
 ]
 
 { #category : #'*roassal2' }
+CompiledMethod >> dependentClasses [
+	"Return the list of classes used myself"
+	
+	"(Morph>>#drawOn:) dependentClasses"
+	| cll | 
+	cll := Set new.
+	
+	"We unify a class and its metaclass"
+	self literalsDo: [ :l | 
+					"We also check if the method is not an extension"
+					((l isVariableBinding 
+					and: [ l value notNil ]) 
+					and: [ l value isBehavior ])  ifTrue: [ cll add: l value ] ].
+	^ cll asArray
+]
+
+{ #category : #'*roassal2' }
 CompiledMethod >> dependentMethods [
 	"Return the list of methods defined in my class for which I may invoke"
 	"(self >> #dependentMethods) dependentMethods"

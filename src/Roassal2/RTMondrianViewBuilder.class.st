@@ -21,6 +21,12 @@ RTMondrianViewBuilder >> build [
 ]
 
 { #category : #layout }
+RTMondrianViewBuilder >> circleLayout [
+	self layout: RTCircleLayout new.
+	^ self layout
+]
+
+{ #category : #layout }
 RTMondrianViewBuilder >> clusterLayout [
 	self layout: RTClusterLayout new.
 	^self layout
@@ -102,7 +108,7 @@ RTMondrianViewBuilder >> edgesFrom: fromBlock [
 
 { #category : #'adding - edges' }
 RTMondrianViewBuilder >> edgesFrom: object toAll: objects [
-	^ self edges: (Array with: object) from: #yourself toAll: objects
+	^ self edges: self topLevelObjects from: #yourself toAll: objects
 
 ]
 

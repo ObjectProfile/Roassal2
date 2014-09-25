@@ -90,6 +90,22 @@ RTMondrianViewBuilderTest >> testEdgesFromToAll [
 	self assert: edge shape class == RTLine
 ]
 
+{ #category : #edges }
+RTMondrianViewBuilderTest >> testEdgesToAll [
+
+	builder shape rectangle.
+	builder nodes: #(1 2 3).
+	self assert: builder view edges size equals: 0.
+	
+	builder shape line.
+	builder edgesToAll: #(2).
+	self assert: builder view edges size equals: 2.
+	(builder view edges collect: #to) do: [ :eachTarget |
+		self assert: eachTarget model equals: 2 ].
+	(builder view edges collect: #from) do: [ :eachSource |
+		self deny: eachSource model = 2 ].
+]
+
 { #category : #layout }
 RTMondrianViewBuilderTest >> testForceBasedLayout [
 	| b |
@@ -249,4 +265,17 @@ RTMondrianViewBuilderTest >> testTreeLayout [
 	b applyLayout.
 	"There are 5 different position, one for each element"
 	self assert: (b view elements collect: #position) asSet size = 5
+]
+
+{ #category : #edges }
+RTMondrianViewBuilderTest >> testTwiceDefiningEdges [
+
+	builder nodes: (1 to: 20).
+	builder shape line 
+		colorElement: [ :edge | (edge from model = 2) 
+								ifTrue: [ Color red. ] 
+								ifFalse: [ Color lightGray ] ].
+		
+	builder edgeFromAssociation: 2 ->  18.
+	builder edgesToAll: [ :v | Array with: v + 3 with: v + 5 with: v *2 ]
 ]
