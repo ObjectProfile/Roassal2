@@ -201,6 +201,11 @@ RTShapeBuilder >> linearFillColor: block within: groupOfObjects [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> noBorder [
+	self borderColor: Color transparent
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> orthoHorizontalLine [
 	^ self shape: RTMultiLine new orthoHorizontal 
 ]
@@ -274,4 +279,14 @@ RTShapeBuilder >> withBorder [
 { #category : #shapes }
 RTShapeBuilder >> withText [
 	shape := shape + RTLabel new
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> withTextAbove [
+	| newShape |
+	newShape := RTMultiCompositeShape new.
+	newShape add: (RTLabel new).
+	newShape add: shape.
+	newShape vertical.
+	shape := newShape
 ]
