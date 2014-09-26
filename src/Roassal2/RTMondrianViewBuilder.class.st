@@ -37,6 +37,13 @@ RTMondrianViewBuilder >> createShapeBuilder [
 	^ RTMondrianShapeBuilder new
 ]
 
+{ #category : #layout }
+RTMondrianViewBuilder >> dominanceTreeLayout [
+	self view edges do: [ :e | e shape withVerticallAttachPoint ].
+	self layout: RTDominanceTreeLayout new.
+	^self layout
+]
+
 { #category : #'adding - edges' }
 RTMondrianViewBuilder >> edgeFromAssociation: association [
 
@@ -137,12 +144,19 @@ RTMondrianViewBuilder >> gridLayout [
 ]
 
 { #category : #layout }
+RTMondrianViewBuilder >> horizontalDominanceTreeLayout [
+	self view edges do: [ :e | e shape withHorizontalAttachPoint ].
+	self layout: RTHorizontalDominanceTreeLayout new.
+	^self layout
+]
+
+{ #category : #layout }
 RTMondrianViewBuilder >> horizontalLineLayout [
 	self layout: RTHorizontalLineLayout new.
 	^self layout
 ]
 
-{ #category : #layouts }
+{ #category : #layout }
 RTMondrianViewBuilder >> horizontalTreeLayout [
 	self view edges do: [ :e | e shape withHorizontalAttachPoint ].
 	self layout: RTHorizontalTreeLayout new.
