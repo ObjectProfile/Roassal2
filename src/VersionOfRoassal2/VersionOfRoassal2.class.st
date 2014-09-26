@@ -4994,3 +4994,14 @@ VersionOfRoassal2 >> version000404 [
 	at: #date put: '26 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000405 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.213';
+	at: 'Roassal2' put: 'Roassal2-akevalion.497';
+	at: #version put: '0.405';
+	at: #comment put: '0.405 : Integrated the fix of Doru, and the UML builder from Milton';
+	at: #date put: '26 September 2014';
+	yourself
+]
