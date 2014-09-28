@@ -278,7 +278,8 @@ RTShapeBuilder >> withBorder [
 
 { #category : #shapes }
 RTShapeBuilder >> withText [
-	shape := shape + RTLabel new
+	shape := shape + RTLabel new.
+	^ shape
 ]
 
 { #category : #shapes }

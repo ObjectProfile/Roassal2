@@ -50,7 +50,7 @@ RTAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 	cursor := self topGap.
 	nodesByLayer do: [:eachSetOfNodes |
 		layerDepthSize := eachSetOfNodes inject: 0 into: [:max :eachNode | 
-			eachNode translateTo: (eachNode bounds left @ cursor ).
+			eachNode translateTo: (eachNode position x @ cursor ).
 			max max: eachNode height ].
 		cursor := cursor + layerDepthSize + self verticalGap ]
 ]
