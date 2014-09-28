@@ -147,6 +147,12 @@ RTMondrianViewBuilder >> edgesToAll: objects [
 ]
 
 { #category : #layout }
+RTMondrianViewBuilder >> flowLayout [
+	self layout: RTFlowLayout new.
+	^self layout
+]
+
+{ #category : #layout }
 RTMondrianViewBuilder >> forceBasedLayout [
 	self layout: RTForceBasedLayout new.
 	^self layout
