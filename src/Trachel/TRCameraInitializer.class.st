@@ -16,6 +16,11 @@ TRCameraInitializer class >> focusOnCenter [
 ]
 
 { #category : #public }
+TRCameraInitializer class >> reset [
+	LastCamera := nil
+]
+
+{ #category : #public }
 TRCameraInitializer class >> restorePrevious [
 	^ self new restorePrevious
 ]
