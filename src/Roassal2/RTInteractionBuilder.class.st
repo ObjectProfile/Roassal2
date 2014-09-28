@@ -28,6 +28,11 @@ RTInteractionBuilder >> draggable [
 	^ i
 ]
 
+{ #category : #'events-registering' }
+RTInteractionBuilder >> fixedPopupText: aBlock [
+	interactions add: [ :element | element @ (RTFixedPopup new text: aBlock) ]
+]
+
 { #category : #public }
 RTInteractionBuilder >> highlight [
 	self highlightColored: Color blue
