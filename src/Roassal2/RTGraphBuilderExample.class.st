@@ -3743,7 +3743,7 @@ b layout
 	partition: [ :c | c inheritsFrom: RTInteraction ];
 	partition: true;
 	force.
-b layout grid.
+b layout flow.
 
 b addAll: RTObject withAllSubclasses.
 b open.

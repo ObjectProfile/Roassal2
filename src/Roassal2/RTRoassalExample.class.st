@@ -341,7 +341,7 @@ es := (RTEllipse new size: 30; color: [ :e | c level: e / 10 ]) elementsOn: (1 t
 v addAll: es.
 es @ RTDraggable.
 
-arrow := RTArrow new 
+arrow := RTArrowwedLine new 
 			color: Color red; 
 			attachPoint: RTVerticalAttachPoint instance.
 
@@ -551,7 +551,7 @@ e4 @ RTDraggable.
 
 v add: e1; add: e2; add: e3; add: e4.
 
-line := RTArrow new color: Color red.
+line := RTArrowwedLine new color: Color red.
 line withOffsetIfMultiple.
 v add: (line  edgeFrom: e1 to: e2).
 v add: (line  edgeFrom: e2 to: e1).
@@ -3196,7 +3196,7 @@ es do: [ :e |
 	| te |
 	te := RTBox element.
 	te translateTo: e position + (0 @ 10).
-	edges add: ((RTArrow new color: Color black) edgeFrom: e to: te).
+	edges add: ((RTArrowwedLine new color: Color black) edgeFrom: e to: te).
 ].
 
 v addAll: edges.

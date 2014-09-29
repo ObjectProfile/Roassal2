@@ -140,7 +140,7 @@ RTEdgeTest >> testMoveBehindItsExtremities2 [
 	e2 := RTBox element.
 	v add: e1; add: e2.
 
-	edge := RTArrow edgeFrom: e1 to: e2.
+	edge := RTArrowwedLine edgeFrom: e1 to: e2.
 
 	v add: edge.
 	self assert: (edge trachelShape shapes allSatisfy: [ :t | t canvas notNil ]).

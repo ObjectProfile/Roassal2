@@ -15,7 +15,7 @@ RTShapeBuilder >> arc [
 
 { #category : #shapes }
 RTShapeBuilder >> arrow [
-	^ self shape: RTArrow new
+	^ self shape: RTArrowwedLine new
 ]
 
 { #category : #shapes }

@@ -59,7 +59,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock to: toBlock [
 		buildEdgesFromObjects: objects
 		from: fromBlock
 		to: toBlock
-		using: self nodeShape
+		using: shapeBuilder current
 		inView: view
 		scope:
 			(RTGroup new
@@ -96,7 +96,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 		buildEdgesFromObjects: objects 
 		from: fromBlock 
 		toAll: toAllBlock 
-		using: shapeBuilder current  "self edgeShape"
+		using: shapeBuilder current
 		inView: view 
 		scope: (RTGroup new addAll: view elements; yourself).
 		"scope: (RTGroup new addAll: topLevelNodes; yourself)."

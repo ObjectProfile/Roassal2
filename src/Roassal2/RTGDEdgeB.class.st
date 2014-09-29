@@ -77,11 +77,7 @@ RTGDEdgeB >> createEdgesFor: object [
 	answer := OrderedCollection new.
 
 	fromObjects := connectFrom rtValue: object.
-	
-	"I haven't seen any case there it is advantageous to consider a compiled method as a collection of bytecode"
-	(fromObjects isCollection and: [ (fromObjects isKindOf: CompiledMethod) not ])
-		ifFalse: [ fromObjects := Array with: fromObjects ].
-		
+	fromObjects isCollection ifFalse: [ fromObjects := Array with: fromObjects ].
 	fromElements := fromObjects 
 							collect: [ :fromObject | self elementFromModel: fromObject ] 
 							thenSelect: #notNil.
