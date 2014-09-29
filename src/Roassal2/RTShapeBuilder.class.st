@@ -14,7 +14,7 @@ RTShapeBuilder >> arc [
 ]
 
 { #category : #shapes }
-RTShapeBuilder >> arrow [
+RTShapeBuilder >> arrowedLine [
 	^ self shape: RTArrowwedLine new
 ]
 

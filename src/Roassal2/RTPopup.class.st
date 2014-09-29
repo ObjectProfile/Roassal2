@@ -115,7 +115,7 @@ RTPopup >> named: aOneArgBlock background: aColor group: aTwoArgBlock [
 	self group: [ :group :el |
 		| background label |
 		background := (RTBox new color: (aColor alpha: 0.4)) element.
-		label := (RTLabel new text: aOneArgBlock) elementOn: el model.
+		label := (RTLabel new text: aOneArgBlock) elementOn: el model; color: Color white.
 		
 		aTwoArgBlock value: group value: el.
 		
@@ -153,9 +153,10 @@ RTPopup >> text: aOneArgBlock [
 RTPopup >> textElement: aOneArgBlock [
 	self group: [ :group :element | 
 		| backRectangle lbl |
-		backRectangle := (RTBox new color: (Color gray alpha: 0.9); borderColor: Color black) element.
+		backRectangle := (RTBox new color: (Color gray alpha: 0.8); borderColor: (Color gray alpha: 0.5)) element.
 		lbl := (RTLabel new 
-				color: Color black;
+				color: Color white;
+				height: [:x | 9];
 				text: (aOneArgBlock rtValue: element) asString) element.
 		RTNest new centerOn: backRectangle elements: (Array with: lbl).
 		group add: backRectangle; add: lbl
