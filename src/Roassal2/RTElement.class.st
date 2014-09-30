@@ -87,6 +87,11 @@ RTElement >> height [
 ]
 
 { #category : #accessing }
+RTElement >> height: aValue [
+	^ trachelShape height: aValue
+]
+
+{ #category : #accessing }
 RTElement >> incomingEdges [
 	connectedEdges ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e to == self ]
@@ -163,4 +168,9 @@ RTElement >> updateConnectedEdges [
 { #category : #accessing }
 RTElement >> width [
 	^ trachelShape width
+]
+
+{ #category : #accessing }
+RTElement >> width: aValue [
+	^ trachelShape width: aValue
 ]

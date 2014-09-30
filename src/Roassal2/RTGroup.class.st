@@ -151,7 +151,7 @@ RTGroup >> position [
 	^ self encompassingRectangle center
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTGroup >> pushBack [
 	self do: #pushBack
 ]
@@ -208,6 +208,11 @@ RTGroup >> translateTopLeftTo: aPosition [
 	| center |
 	center := self encompassingRectangle topLeft.
 	self translateBy: (aPosition - center)
+]
+
+{ #category : #actions }
+RTGroup >> updateShape [
+	self do: #updateShape
 ]
 
 { #category : #accessing }

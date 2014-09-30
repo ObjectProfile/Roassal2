@@ -38,7 +38,7 @@ RTLegend2Builder >> renderIn: aView [
 	background := (RTBox new borderColor: Color lightGray; fillColor: Color white) element.
 
 	RTNest new on: background nest: group.
-	RTConstraint move: background below: (RTGroup withAll: aView elements).
+	TRConstraint move: background below: (RTGroup withAll: aView elements).
 
 	aView add: background.
 	group do: [ :g | aView addAll: g ].
