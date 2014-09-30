@@ -64,7 +64,7 @@ RTInteractionBuilder >> initializeInteractions [
 
 { #category : #public }
 RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
-	interactions add: [ :element | element @ (RTMenuActivable  new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
+	interactions add: [ :element | element @ (RTMenuActivable new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
 ]
 
 { #category : #public }
@@ -73,6 +73,13 @@ RTInteractionBuilder >> menu [
 	i := RTMenuActivable new.
 	interactions add: i. 
 	^ i
+]
+
+{ #category : #'morphic specific' }
+RTInteractionBuilder >> menu: aSymbolOrBlockOrMenu [
+	"the argument has to return a menu morph, when evaluated against the object"
+	interactions add: [ :element | element when: TRMouseRightClick do: [ :evt | (aSymbolOrBlockOrMenu rtValue: evt element model) popUpInWorld ] ]
+
 ]
 
 { #category : #public }
