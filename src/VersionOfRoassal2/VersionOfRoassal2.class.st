@@ -5031,3 +5031,14 @@ VersionOfRoassal2 >> version000407 [
 	at: #date put: '30 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000408 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.215';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.505';
+	at: #version put: '0.408';
+	at: #comment put: '0.408 : Added RTInteractionBuilder>>menu:';
+	at: #date put: '30 September 2014';
+	yourself
+]
