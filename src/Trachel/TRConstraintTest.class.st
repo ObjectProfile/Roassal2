@@ -40,6 +40,58 @@ TRConstraintTest >> setUp [
 	canvas addShape: shape2.
 ]
 
+{ #category : #resizing }
+TRConstraintTest >> testResizingHeight [
+
+	self assert: shape1 height equals: 50.
+	self assert: shape2 height equals: 10.
+	
+	TRConstraint useHeightOf: shape1 for: (Array with: shape2).
+
+	self assert: shape1 height equals: 50.
+	self assert: shape2 height equals: 50.
+
+]
+
+{ #category : #resizing }
+TRConstraintTest >> testResizingToMaxHeight [
+
+	self assert: shape1 height equals: 50.
+	self assert: shape2 height equals: 10.
+	
+	TRConstraint setAllToMaxHeight: (Array with: shape2 with: shape1).
+
+	self assert: shape1 height equals: 50.
+	self assert: shape2 height equals: 50.
+
+]
+
+{ #category : #resizing }
+TRConstraintTest >> testResizingToMaxWidth [
+
+	self assert: shape1 width equals: 50.
+	self assert: shape2 width equals: 10.
+	
+	TRConstraint setAllToMaxWidth: (Array with: shape2 with: shape1).
+
+	self assert: shape1 width equals: 50.
+	self assert: shape2 width equals: 50.
+
+]
+
+{ #category : #resizing }
+TRConstraintTest >> testResizingWidth [
+
+	self assert: shape1 width equals: 50.
+	self assert: shape2 width equals: 10.
+	
+	TRConstraint useWidthOf: shape1 for: (Array with: shape2).
+
+	self assert: shape1 width equals: 50.
+	self assert: shape2 width equals: 50.
+
+]
+
 { #category : #sticking }
 TRConstraintTest >> testStickAbove [
 
@@ -79,4 +131,24 @@ TRConstraintTest >> testStickToTheCenter [
 	self assert: shape1 center = (10 @ 15).
 	self assert: shape2 center = (10 @ 15).
 
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testUseAlignFromBottom [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint use: shape1 alignFromBottom: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: 0 @ 20.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testUseAlignFromTop [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint use: shape1 alignFromTop: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: 0 @ -20.
 ]

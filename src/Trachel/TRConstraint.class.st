@@ -101,6 +101,24 @@ TRConstraint class >> moveCameraToTheRightIn: trachelCanvas [
 	^ trachelCanvas camera translateTo: (trachelCanvas extent x / -2) @ trachelCanvas camera position y
 ]
 
+{ #category : #'public - resizing' }
+TRConstraint class >> setAllToMaxHeight: shapes [
+	| maxHeightShape |
+	maxHeightShape := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS height <= s height
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self useHeightOf: maxHeightShape for: shapes
+]
+
+{ #category : #'public - resizing' }
+TRConstraint class >> setAllToMaxWidth: shapes [
+	| maxWidthShape |
+	maxWidthShape := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS width <= s width
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self useWidthOf: maxWidthShape for: shapes
+]
+
 { #category : #'public - sticking' }
 TRConstraint class >> stick: aShape above: anotherShape [
 	| b |
@@ -216,4 +234,34 @@ TRConstraint class >> stickCameraToTheRightIn: trachelCanvas [
 	trachelCanvas
 		when: TRResizeCanvasEvent
 		do: [ :event | self moveCameraToTheRightIn: trachelCanvas ]
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> use: aShape alignFromBottom: shapes [
+	| topY newY |
+	topY := aShape encompassingRectangle bottomCenter y.
+	shapes do: [ :s |
+		newY := topY - (s encompassingRectangle height / 2).
+		s translateTo: s position x @ newY
+	]
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> use: aShape alignFromTop: shapes [
+	| topY newY |
+	topY := aShape encompassingRectangle topCenter y.
+	shapes do: [ :s |
+		newY := topY + (s encompassingRectangle height / 2).
+		s translateTo: s position x @ newY
+	]
+]
+
+{ #category : #'public - resizing' }
+TRConstraint class >> useHeightOf: aShape for: shapes [
+	shapes do: [ :s | s height: aShape width ]
+]
+
+{ #category : #'public - resizing' }
+TRConstraint class >> useWidthOf: aShape for: shapes [
+	shapes do: [ :s | s width: aShape width ]
 ]
