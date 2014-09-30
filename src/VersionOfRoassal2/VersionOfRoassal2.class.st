@@ -5016,3 +5016,18 @@ VersionOfRoassal2 >> version000406 [
 	at: #date put: '28 September 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000407 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.215';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.504';
+	at: #version put: '0.407';
+	at: #comment put: '0.407 : Added 	TRConstraint>> setAllToMaxHeight:
+	TRConstraint>> setAllToMaxWidth:
+	TRConstraint>> use:alignFromBottom: 
+	TRConstraint>> use:alignFromTop: 
+';
+	at: #date put: '30 September 2014';
+	yourself
+]
