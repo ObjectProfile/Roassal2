@@ -5064,3 +5064,14 @@ VersionOfRoassal2 >> version000410 [
 	at: #date put: '2 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000411 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.508';
+	at: #version put: '0.411';
+	at: #comment put: '0.411 : RTArrowwedLine -> RTArrowedLine. Thanks Jan Bliznicenko ';
+	at: #date put: '2 October 2014';
+	yourself
+]
