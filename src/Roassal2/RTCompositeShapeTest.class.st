@@ -232,6 +232,7 @@ RTCompositeShapeTest >> testNesting [
 	element @ RTDraggable.
 	
 	self assert: element position asIntegerPoint = el position.
+	
 	element translateBy: 20 @ 30.
 	self assert: element position asIntegerPoint = el position.
 
