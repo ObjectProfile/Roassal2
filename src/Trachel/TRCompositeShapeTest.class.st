@@ -85,6 +85,18 @@ TRCompositeShapeTest >> testBasic [
 	self assert: emptyShape element equals: nil
 ]
 
+{ #category : #callbacks }
+TRCompositeShapeTest >> testCallback01 [
+	| t callback |
+	t := 0.
+	callback := TRRemoveCallback new block: [ :shape | t := t + 1 ].
+	multiShape addCallback: callback.
+	self assert: t equals: 0.
+	
+	multiShape remove.
+	self assert: t equals: 1
+]
+
 { #category : #tests }
 TRCompositeShapeTest >> testColor [
 

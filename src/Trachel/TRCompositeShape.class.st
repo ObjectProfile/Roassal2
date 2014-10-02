@@ -32,7 +32,8 @@ TRCompositeShape >> accept: aVisitor [
 
 { #category : #actions }
 TRCompositeShape >> addCallback: aCallback [
-	shape1 addCallback: aCallback.
+	super addCallback: aCallback.
+	"shape1 addCallback: aCallback."
 	"We are adding only to one shape. If we add it to two shapes, then the nesting will register several time the same callback"
 	"shape2 addCallback: aCallback"
 ]
@@ -187,6 +188,7 @@ TRCompositeShape >> pushFront [
 
 { #category : #actions }
 TRCompositeShape >> remove [
+	self triggerRemoveCallbacks.
 	shape1 remove.
 	shape2 remove
 ]
@@ -242,7 +244,7 @@ TRCompositeShape >> signalUpdate [
 
 { #category : #actions }
 TRCompositeShape >> translateBy: aPoint [
-
+	self triggerCallbacksForStep: aPoint.
 	shape1 translateBy: aPoint.
 	shape2 translateBy: aPoint
 ]
