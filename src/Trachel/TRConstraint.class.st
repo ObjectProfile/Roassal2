@@ -314,7 +314,7 @@ TRConstraint class >> use: aShape alignFromTop: shapes [
 
 { #category : #'public - resizing' }
 TRConstraint class >> useHeightOf: aShape for: shapes [
-	shapes do: [ :s | s height: aShape width ]
+	shapes do: [ :s | s height: aShape height ]
 ]
 
 { #category : #'public - resizing' }
