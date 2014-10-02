@@ -66,10 +66,20 @@ RTGroup >> center [
 	^ self encompassingRectangle center
 ]
 
+{ #category : #accessing }
+RTGroup >> edges [
+	^ self select: [ :o | o class == RTEdge ]
+]
+
 { #category : #public }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
+]
+
+{ #category : #accessing }
+RTGroup >> elements [
+	^ self select: [ :o | o class == RTElement ]
 ]
 
 { #category : #public }
@@ -181,8 +191,8 @@ RTGroup >> rightMostElement [
 ]
 
 { #category : #public }
-RTGroup >> rotateByDegrees: degree [
-	self do: [ :e | e rotateByDegrees: degree ]
+RTGroup >> rotateByDegrees: degreeAsABlockOrValue [
+	self do: [ :e | e rotateByDegrees: degreeAsABlockOrValue ]
 ]
 
 { #category : #signalling }
