@@ -2,7 +2,8 @@ Class {
 	#name : #TRKeyDown,
 	#superclass : #TRShapeEvent,
 	#instVars : [
-		'keyValue'
+		'keyValue',
+		'keyCombination'
 	],
 	#category : #'Trachel-Core'
 }
@@ -18,6 +19,16 @@ TRKeyDown >> = anotherKeyDown [
 TRKeyDown >> initialize [
 	super initialize.
 	keyValue := 0
+]
+
+{ #category : #accessing }
+TRKeyDown >> keyCombination [
+	^ keyCombination
+]
+
+{ #category : #accessing }
+TRKeyDown >> keyCombination: anObject [
+	keyCombination := anObject
 ]
 
 { #category : #accessing }

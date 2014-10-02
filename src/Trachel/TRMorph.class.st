@@ -233,7 +233,10 @@ TRMorph >> rtKeyStroke: evt [
 	(evt commandKeyPressed and: [ evt keyCharacter = $w ]) ifTrue: [ self owner delete ].
 	relativePosition := self relativePositionFor: evt.
 	
-	ev := TRKeyDown new keyValue: evt keyValue.
+	ev := TRKeyDown new 
+				keyValue: evt keyValue;
+				keyCombination: evt asKeyCombination;
+				yourself.
 	shape := self shapeWithActionForPositionInPixels: relativePosition.
 
 	ev shape: shape.

@@ -8,6 +8,42 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #'public - aligning' }
+TRConstraint class >> alignFromBottom: shapes [
+	| highestElement |
+	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS encompassingRectangle bottomLeft y >= s encompassingRectangle bottomLeft y
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self use: highestElement alignFromBottom: shapes
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> alignFromLeft: shapes [
+	| highestElement |
+	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS encompassingRectangle topLeft x <= s encompassingRectangle topLeft x
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self use: highestElement alignFromLeft: shapes
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> alignFromRight: shapes [
+	| highestElement |
+	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS encompassingRectangle topLeft x >= s encompassingRectangle topLeft x
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self use: highestElement alignFromRight: shapes
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> alignFromTop: shapes [
+	| highestElement |
+	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+								maxS encompassingRectangle topLeft y <= s encompassingRectangle topLeft y
+										ifTrue: [ s ] ifFalse: [ maxS ] ].
+	self use: highestElement alignFromTop: shapes
+]
+
 { #category : #'public - sticking' }
 TRConstraint class >> fix: aShape for: anotherShape [
 	"When anotherShape is moved, then move aShape"
@@ -243,6 +279,26 @@ TRConstraint class >> use: aShape alignFromBottom: shapes [
 	shapes do: [ :s |
 		newY := topY - (s encompassingRectangle height / 2).
 		s translateTo: s position x @ newY
+	]
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> use: aShape alignFromLeft: shapes [
+	| topX newX |
+	topX := aShape encompassingRectangle topLeft x.
+	shapes do: [ :s |
+		newX := topX + (s encompassingRectangle width / 2).
+		s translateTo: newX @ s position y
+	]
+]
+
+{ #category : #'public - aligning' }
+TRConstraint class >> use: aShape alignFromRight: shapes [
+	| topX newX |
+	topX := aShape encompassingRectangle topRight x.
+	shapes do: [ :s |
+		newX := topX - (s encompassingRectangle width / 2).
+		s translateTo: newX @ s position y
 	]
 ]
 

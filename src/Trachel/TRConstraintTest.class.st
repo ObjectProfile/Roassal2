@@ -40,6 +40,46 @@ TRConstraintTest >> setUp [
 	canvas addShape: shape2.
 ]
 
+{ #category : #aligning }
+TRConstraintTest >> testAlignFromBottom [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint alignFromBottom: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ -20.
+	self assert: shape2 position equals: 0 @ 0.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testAlignFromLeft [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint alignFromLeft: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 20 @ 0.
+	self assert: shape2 position equals: 0 @ 0.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testAlignFromRight [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint alignFromRight: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: 20 @ 0.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testAlignFromTop [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint alignFromTop: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 20.
+	self assert: shape2 position equals: 0 @ 0.
+]
+
 { #category : #resizing }
 TRConstraintTest >> testResizingHeight [
 
@@ -141,6 +181,26 @@ TRConstraintTest >> testUseAlignFromBottom [
 	TRConstraint use: shape1 alignFromBottom: (Array with: shape1 with: shape2).
 	self assert: shape1 position equals: 0 @ 0.
 	self assert: shape2 position equals: 0 @ 20.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testUseAlignFromLeft [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint use: shape1 alignFromLeft: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: -20 @ 0.
+]
+
+{ #category : #aligning }
+TRConstraintTest >> testUseAlignFromRight [
+	"
+	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	"
+	TRConstraint use: shape1 alignFromRight: (Array with: shape1 with: shape2).
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: 20 @ 0.
 ]
 
 { #category : #aligning }
