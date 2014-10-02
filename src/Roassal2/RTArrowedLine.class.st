@@ -13,7 +13,7 @@ line
 
 "
 Class {
-	#name : #RTArrowwedLine,
+	#name : #RTArrowedLine,
 	#superclass : #RTAbstractLine,
 	#instVars : [
 		'line',
@@ -23,76 +23,76 @@ Class {
 }
 
 { #category : #public }
-RTArrowwedLine class >> edgeFrom: el1 to: el2 [
+RTArrowedLine class >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self new
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> attachPoint: anAttachPoint [
+RTArrowedLine >> attachPoint: anAttachPoint [
 	head attachPoint: anAttachPoint.
 	line attachPoint: anAttachPoint
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> color: aColor [
+RTArrowedLine >> color: aColor [
 	head color: aColor.
 	line color: aColor
 ]
 
 { #category : #public }
-RTArrowwedLine >> directed [
+RTArrowedLine >> directed [
 
 	self line: RTDirectedLine new
 ]
 
 { #category : #public }
-RTArrowwedLine >> edgeFrom: el1 to: el2 [
+RTArrowedLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
 { #category : #public }
-RTArrowwedLine >> empty [
+RTArrowedLine >> empty [
 	self head: RTEmptyArrowHead new
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> head [
+RTArrowedLine >> head [
 	^ head
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> head: aLineDecorationShape [
+RTArrowedLine >> head: aLineDecorationShape [
 	head := aLineDecorationShape
 ]
 
 { #category : #initialization }
-RTArrowwedLine >> initialize [
+RTArrowedLine >> initialize [
 	super initialize.
 	self simple; straight
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> line [
+RTArrowedLine >> line [
 	^ line
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> line: aLineShape [
+RTArrowedLine >> line: aLineShape [
 	line := aLineShape
 ]
 
 { #category : #public }
-RTArrowwedLine >> simple [
+RTArrowedLine >> simple [
 	self head: RTSimpleArrowHead new
 ]
 
 { #category : #accessing }
-RTArrowwedLine >> straight [
+RTArrowedLine >> straight [
 	self line: RTLine new
 ]
 
 { #category : #public }
-RTArrowwedLine >> trachelShapeFor: anEdge [
+RTArrowedLine >> trachelShapeFor: anEdge [
 	| lineTrachelShape headTrachelShape |
 	lineTrachelShape := line trachelShapeFor: anEdge.
 	headTrachelShape := head trachelShapeFor: anEdge.
@@ -109,13 +109,13 @@ RTArrowwedLine >> trachelShapeFor: anEdge [
 ]
 
 { #category : #hooks }
-RTArrowwedLine >> updateFor: edge trachelShape: trachelShape [
+RTArrowedLine >> updateFor: edge trachelShape: trachelShape [
 	line updateFor: edge trachelShape: edge trachelShape shapes first.
 	head updateFor: edge trachelShape: edge trachelShape shapes second
 ]
 
 { #category : #public }
-RTArrowwedLine >> withOffsetIfMultiple [
+RTArrowedLine >> withOffsetIfMultiple [
 	| ap |
 	ap := RTShorterDistanceWithOffsetAttachPoint new.
 	line attachPoint: ap.

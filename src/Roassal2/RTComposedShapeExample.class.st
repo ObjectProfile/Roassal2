@@ -28,7 +28,7 @@ v addAll: es.
 RTEdge
 	buildEdgesFromObjects: RTShape withAllSubclasses
 	from: #superclass to: #yourself
-	using: (RTArrowwedLine new color: Color black; attachPoint: (RTShorterDistanceAttachPointAndCompositeShape new composedShapeSelection: #second))
+	using: (RTArrowedLine new color: Color black; attachPoint: (RTShorterDistanceAttachPointAndCompositeShape new composedShapeSelection: #second))
 	inView: v.
 
 RTNest new
