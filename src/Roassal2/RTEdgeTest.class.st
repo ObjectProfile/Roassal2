@@ -165,7 +165,7 @@ RTEdgeTest >> testOnFromTo [
 	edge := RTEdge on: 10 from: el1 to: el2.
 	self assert: edge model = 10.
 	self assert: edge from == el1.
-	self assert: edge to == el2.
+	self assert: edge to == el2
 ]
 
 { #category : #tests }
@@ -219,7 +219,7 @@ RTEdgeTest >> testRemovingEdge [
 RTEdgeTest >> testTrachelShape [
 	edge := RTLine edgeFrom: RTBox element to: RTBox element.
 	self assert: edge trachelShape notNil.
-	self assert: edge trachelShape class == TRLineShape.
+	self assert: edge trachelShape class == TRLineShape
 ]
 
 { #category : #tests }
@@ -239,4 +239,15 @@ RTEdgeTest >> testTranslatingNode [
 	self assert: edge trachelShape from = (old + (10 @ 5)).
 	self assert: edge trachelShape from = el1 position.
 	self assert: edge trachelShape to = el2 position.
+]
+
+{ #category : #tests }
+RTEdgeTest >> testromTo [
+
+	el1 := RTBox elementOn: 4.
+	el2 := RTBox elementOn: 2.
+	edge := RTEdge from: el1 to: el2.
+	self assert: edge model equals: 4->2.
+	self assert: edge from == el1.
+	self assert: edge to == el2
 ]

@@ -287,7 +287,10 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 { #category : #public }
 RTEdge class >> from: fromElement to: toElement [
 	"Takes instances of RTElement as arguments"
-	^ self new from: fromElement; to: toElement; yourself
+	^ self 
+		on: fromElement model -> toElement model 
+		from: fromElement 
+		to: toElement
 ]
 
 { #category : #public }
