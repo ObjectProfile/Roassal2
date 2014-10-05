@@ -8,6 +8,14 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'instance creation' }
+RTMultiCompositeShape class >> with: shape1 with: shape2 [
+	^ self new 
+		add: shape1;
+		add: shape2;
+		yourself
+]
+
 { #category : #adding }
 RTMultiCompositeShape >> add: aRTShape [
 	self add: aRTShape translateBy: 0 @ 0

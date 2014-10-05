@@ -92,40 +92,6 @@ RTShapeTest >> testComposingAndEvent [
 	self assert: t
 ]
 
-{ #category : #composing }
-RTShapeTest >> testCompositingSize [
-
-	| v e s1 s2 trCanvas |
-	v := RTView new.
-	e := RTElement new.
-	s1 := RTBox new size: 50.
-	s2 := RTBox new size: 5.
-	e + s1 + s2.
-	v add: e.
-	trCanvas := v canvas.
-	
-	self assert: trCanvas numberOfShapes equals: 2.
-	self assert: trCanvas shapes first width equals: 50.
-	self assert: trCanvas shapes second width equals: 50.
-]
-
-{ #category : #composing }
-RTShapeTest >> testCompositingSize2 [
-
-	| v e s1 s2 trCanvas |
-	v := RTView new.
-	e := RTElement new.
-	s1 := RTLabel new text: 'hello world'.
-	s2 := RTBox new size: 5.
-	e + s1 + s2.
-	v add: e.
-	trCanvas := v canvas.
-	
-	self assert: trCanvas numberOfShapes equals: 2.
-	self assert: trCanvas shapes first width > 30.
-	self assert: trCanvas shapes second width > 30.
-]
-
 { #category : #tests }
 RTShapeTest >> testElementCreation [
 

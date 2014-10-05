@@ -225,8 +225,8 @@ RTElementTest >> testSharedAnnouncerAndComposedShapes [
 	e := (s1 + s2) element.
 	v := RTView new.
 	v add: e.
-	self assert: e announcer == e trachelShape shape1 announcer.
-	self assert: e announcer == e trachelShape shape2 announcer.
+	self assert: e announcer == e trachelShape shapes first announcer.
+	self assert: e announcer == e trachelShape shapes second announcer.
 	
 ]
 

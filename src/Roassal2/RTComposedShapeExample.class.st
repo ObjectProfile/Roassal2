@@ -154,9 +154,11 @@ H8TPB/FB/K5UAYIdyaudpALHAAAAAElFTkSuQmCC'
 RTComposedShapeExample >> exampleHorizontalCompositeShape1 [
 | view shape els |
 view := RTView new.
-shape := RTHorizontalCompositeShape new
-				shape1: (RTBox new color: Color gray; size: 20);
-				shape2: (RTLabel new text: '+').
+shape := RTMultiCompositeShape new
+				add: (RTBox new color: Color gray; size: 20);
+				add: (RTLabel new text: '+');
+				horizontal;
+				yourself.
 
 els := shape elementsOn: (1 to: 20).
 els @ RTDraggable.
