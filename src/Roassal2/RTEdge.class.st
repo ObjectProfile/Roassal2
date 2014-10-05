@@ -212,6 +212,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 			ifTrue: [  
 				| edge |
 				edge := RTEdge from: fromElement to: toElement. 
+				edge model: object.
 				edge + aLineShape.
 				edges add: edge ] ].
 	^ edges

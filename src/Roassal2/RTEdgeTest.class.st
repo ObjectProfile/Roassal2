@@ -91,6 +91,8 @@ RTEdgeTest >> testBuildingFromObjects [
 	edge := view edges last.
 	self assert: edge from == elements first.
 	self assert: edge to == elements second.
+	self assert: edge model notNil.
+	self assert: (objects includes: edge model)
 ]
 
 { #category : #tests }
