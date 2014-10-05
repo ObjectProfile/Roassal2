@@ -1796,7 +1796,7 @@ b build.
 
 
 "defining the legend"
-lb := RTLegend2Builder new.
+lb := RTLegendBuilder new.
 lb view: b view.
 lb addText: 'Distribution of number of Methods in some classes'.
 clss do: [ :aClass |

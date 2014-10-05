@@ -1,92 +1,46 @@
-"
-I am an handy class to build legend in a visualization
-"
 Class {
 	#name : #RTLegendBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'legend'
+		'group'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
 
-{ #category : #examples }
-RTLegendBuilder >> example01 [
-	"
-	self new example01
-	"
-	| v shape legendBuilder elements |
-	v := RTView new.
-	
-	"We add some elements"
-	shape := RTShapeBuilder new circle
-					size: [ :c | 10 max: (c numberOfMethods) / 7 ];
-					fillColor: Color gray;
-					if: [ :cls | '*Array*' match: cls name ] fillColor: Color blue;
-					if: [ :cls | '*Dictionary*' match: cls name ] fillColor: Color green;
-					if: [ :cls | '*Set*' match: cls name ] fillColor: Color red;
-					current.
-	elements := shape elementsOn: (Collection withAllSubclasses).
-	elements @ RTPopup.
-	v addAll: elements.
-	RTGridLayout on: v elements.
-	
-	"We add the legend"
-	legendBuilder := RTLegendBuilder new view: v.
-	legendBuilder name: 'array' color: Color blue.
-	legendBuilder name: 'dictionary' color: Color green.
-	legendBuilder name: 'set' color: Color red.
-	legendBuilder render.
-	
-	"Open the view"
-	v open
-	
+{ #category : #adding }
+RTLegendBuilder >> addColor: aColor text: aText [
+	| g |
+	g := RTGroup new.
+	g add: (RTBox new size: 10; color: aColor) element.
+	g add: (RTLabel elementOn: aText).
+	RTHorizontalLineLayout new alignCenter; on: g.
+	group add: g.
+]
+
+{ #category : #adding }
+RTLegendBuilder >> addText: aText [
+	group add: (RTGroup new add: (RTLabel elementOn: aText); yourself)
 ]
 
 { #category : #initialization }
 RTLegendBuilder >> initialize [
 	super initialize.
-	legend := OrderedCollection new
-]
-
-{ #category : #public }
-RTLegendBuilder >> name: aName color: aColor [
-	^ self name: aName shape: (RTBox new size: 10; color: aColor)
-]
-
-{ #category : #public }
-RTLegendBuilder >> name: aName element: anElement [
-	legend add: aName -> anElement
-]
-
-{ #category : #public }
-RTLegendBuilder >> name: aName shape: aShape [
-	^ self name: aName element: aShape element
+	group := RTGroup new.
 ]
 
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
+	| background |
+	super renderIn: aView.
+	
+	RTVerticalLineLayout on: group.
+	
+	background := (RTBox new borderColor: Color lightGray; fillColor: Color white) element.
 
-	| groups bigGroup bigbigGroup |
-	groups := legend collect: [ :assoc | 
-		| g |
-		g := RTGroup new
-				add: (RTLabel elementOn: assoc key);
-				add: assoc value;
-				yourself.
-		RTHorizontalLineLayout on: g.
-		g ].
-	RTHorizontalLineLayout on: groups.
+	RTNest new on: background nest: group.
+	TRConstraint move: background below: (RTGroup withAll: aView elements).
 
-	"We move all the legend above all the "
-	bigGroup := RTGroup new.
-	groups do: [ :g | bigGroup addAll: g ].	
-	
-	
-	bigbigGroup := RTGroup new.
-	bigbigGroup addAll: aView elements.
-	
-	TRConstraint move: bigGroup above: bigbigGroup.
-	bigGroup translateBy: 0 @ -30.
-	aView addAll: bigGroup.
+	aView add: background.
+	group do: [ :g | aView addAll: g ].
+	background @ RTDraggable.
 ]

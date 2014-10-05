@@ -52,7 +52,7 @@ RTLayout class >> on: aCollection [
 	
 	"If aCollection is empty, then there is not much to do"
 	aCollection isEmpty ifTrue: [ ^ aCollection ].
-	self new applyOn: (aCollection select: [ :obj | obj class == RTElement ]).
+	self new applyOn: aCollection.
 	^ aCollection
 ]
 
