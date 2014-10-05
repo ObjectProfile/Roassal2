@@ -173,7 +173,7 @@ b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
 
 "Legend"
-lb := RTLegend2Builder new.
+lb := RTLegendBuilder new.
 lb view: b view.
 lb addText: 'Distribution of number of Methods in some classes'.
 normalizer := RTMultiLinearColorForIdentity new objects: myClasses.

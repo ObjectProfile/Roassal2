@@ -11,7 +11,7 @@ RTAbstractExample >> installOn: aView [
 	el @ RTHighlightable.
 	aView add: el.
 	
-	el on: TRMouseClick do: [ :evt |
+	el when: TRMouseClick do: [ :evt |
 		aView clean.
 		self openOn: aView.
 		aView canvas camera focusOnCenter.
