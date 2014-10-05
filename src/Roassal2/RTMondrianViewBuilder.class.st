@@ -21,6 +21,12 @@ RTMondrianViewBuilder >> build [
 ]
 
 { #category : #layout }
+RTMondrianViewBuilder >> cellLayout [
+	self layout: RTCellLayout new.
+	^ self layout
+]
+
+{ #category : #layout }
 RTMondrianViewBuilder >> circleLayout [
 	self layout: RTCircleLayout new.
 	^ self layout
@@ -214,6 +220,13 @@ RTMondrianViewBuilder >> node: anObject [
 	^ (self nodes: (Array with: anObject)) first
 ]
 
+{ #category : #'adding - nodes' }
+RTMondrianViewBuilder >> node: anObject forIt: aBlock [
+	^ (self 
+		nodes: { anObject } 
+		forEach: [ :each | aBlock value ]) first
+]
+
 { #category : #private }
 RTMondrianViewBuilder >> nodeShape [
 	^ shapeBuilder shape
@@ -274,7 +287,7 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		nesting := nesting - 1.
 
 		 ].
-	"self unsetShape."
+	self resetShapeBuilder.
 	^ nodes
 ]
 
