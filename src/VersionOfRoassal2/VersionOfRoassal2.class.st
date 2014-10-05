@@ -5100,3 +5100,14 @@ VersionOfRoassal2 >> version000413 [
 	at: #date put: '5 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000414 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.515';
+	at: #version put: '0.414';
+	at: #comment put: '0.414 : Cleaning and Refactoring of RTNest. Added a new class hierarchy for behavior of nested elements';
+	at: #date put: '5 October 2014';
+	yourself
+]
