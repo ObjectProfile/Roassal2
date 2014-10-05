@@ -5086,3 +5086,17 @@ VersionOfRoassal2 >> version000412 [
 	at: #date put: '2 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000413 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-TudorGirba.510';
+	at: #version put: '0.413';
+	at: #comment put: '0.413 : extended the mondrian builder with:
+- node:forIt:
+- cellLayout
+- by resetting the shape at the end of building nodes';
+	at: #date put: '5 October 2014';
+	yourself
+]
