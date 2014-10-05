@@ -632,12 +632,12 @@ RTDowserBuilder >> positionateTowers [
 	bodyParts := ((self fixText: (self body )) collect: [ :t | (RTElement on: t) +  (RTLabel new color: Color veryLightGray)]).
 	bod := (RTElement new) + (RTBox new color: Color lightGray).
 	
-	RTNest new layout: RTVerticalLineLayout new; on: bod nest: bodyParts.
+	RTNest new layout: RTVerticalLineLayout new; on: bod nest: (RTGroup withAll: bodyParts).
 	bodyElement := bod.
 	self view add: bod.
 	self view addAll: bodyParts.
-	bodyParts do: [ :b | b on: TREvent do: [:e | self view announce: e] ].
-	bod on: TREvent do: [:e | self view announce: e].
+	bodyParts do: [ :b | b when: TREvent do: [:e | self view announce: e] ].
+	bod when: TREvent do: [:e | self view announce: e].
 	
 	viewWidth := (columns size * distance) + (maxWidths sum) max: (legendElement width).
 	bod translateTo: ( ((maxWidths at: 1) + distance - (bod width / 2) ) @ ((bodyParts first height) * (bodyParts size))).

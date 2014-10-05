@@ -32,7 +32,7 @@ RTMenuActivable >> initialize [
 
 { #category : #hooks }
 RTMenuActivable >> initializeElement: element [
-	element on: TRMouseRightClick do: [ :event |
+	element when: TRMouseRightClick do: [ :event |
 		TRUtil instance widgetFactory menuForAssociations: actions on: element
 	]
 ]

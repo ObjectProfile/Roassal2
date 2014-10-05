@@ -1,6 +1,11 @@
 Extension { #name : #Collection }
 
 { #category : #'*Roassal2-Core' }
+Collection >> asGroup [
+	^ RTGroup withAll: self
+]
+
+{ #category : #'*Roassal2-Core' }
 Collection >> maxFor: aSymbolOrBlock [ 
 	"Return one of the elements which has the minimum value returned by aSymbolOrBlock"
 	

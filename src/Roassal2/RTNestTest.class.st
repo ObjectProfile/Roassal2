@@ -38,8 +38,8 @@ RTNestTest >> testChangeExtent [
 	innerElement1 := (RTBox new size: 10) element.
 	innerElement2 := (RTBox new size: 20) element.
 	el translateTo: 100 @ 50.
-	RTNest
-		new 
+	RTNest new
+		stretchable;
 		layout: RTGridLayout new;
 		on: el nest: (Array with: innerElement1 with: innerElement2).
 	view add: el; add: innerElement1; add: innerElement2.
@@ -72,7 +72,7 @@ RTNestTest >> testDifferentSizes [
 	RTNest
 		new 
 		layout: RTGridLayout new;
-		on: el nest: (Array with: innerElement1 with: innerElement2).
+		on: el nest: (RTGroup with: innerElement1 with: innerElement2).
 
 	view add: el.
 	view add: innerElement1.
@@ -363,7 +363,7 @@ RTNestTest >> testMultiline03 [
 	Blah
 	'.
 
-	RTNest new on: b nest: (Array with: e).
+	RTNest new on: b nest: (RTGroup with: e).
 
 	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
 	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10)) "
@@ -454,7 +454,7 @@ RTNestTest >> testSimpleExample [
 	RTNest
 		new 
 		layout: RTGridLayout new;
-		on: el nest: (Array with: inner).
+		on: el nest: (RTGroup with: inner).
 
 	self assert: el position = (0 @ 0).
 	self assert: inner position = ((1 / 2) @ (1 / 2)).

@@ -181,11 +181,6 @@ RTGroup >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
 ]
 
-{ #category : #rendering }
-RTGroup >> renderOn: trachelCanvas [
-	"Do nothing"
-]
-
 { #category : #public }
 RTGroup >> rightMostElement [
 	"Return the element located on the most left"

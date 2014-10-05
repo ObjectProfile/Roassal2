@@ -3,12 +3,18 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'layout',
-		'padding'
+		'padding',
+		'behavior'
 	],
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #public }
+{ #category : #'setting nesting behavior' }
+RTNest >> behavior: aBehavior [
+	behavior := aBehavior 
+]
+
+{ #category : #'to be removed' }
 RTNest >> centerOn: backElement elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
@@ -16,13 +22,9 @@ RTNest >> centerOn: backElement elements: elements [
 		- perform a layout if one is set"
 
 	self centerOnTrachelShape: backElement trachelShape elements: elements
-	
-	"This is a big big question whether we need this or not"
-	"backElement attributes at: #nestedElements put: elements."
-	
 ]
 
-{ #category : #public }
+{ #category : #'to be removed' }
 RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
@@ -63,7 +65,8 @@ RTNest >> for: collectionOfElements add: aTwoArgBlock [
 		| g |
 		g := RTGroup new.
 		aTwoArgBlock value: g value: element model.
-		RTNest new on: element nest: g.
+		self doLayoutIfNecessaryOn: g.
+		self on: element nest: g.
 		element view addAll: g.
 	]
 ]
@@ -86,7 +89,7 @@ RTNest >> for: collectionOfElements inShape: aSymbol add: aTwoArgBlock [
 RTNest >> initialize [
 	super initialize.
 	padding := 5.
-
+	self noBehavior
 ]
 
 { #category : #accessing }
@@ -100,13 +103,13 @@ RTNest >> layout: aLayout [
 	layout := aLayout
 ]
 
-{ #category : #utility }
+{ #category : #'to be removed' }
 RTNest >> makeElements: elements draggableBy: backElement [
 	^ self makeElements: elements draggableByTrachelShape: backElement trachelShape
 	 
 ]
 
-{ #category : #utility }
+{ #category : #'to be removed' }
 RTNest >> makeElements: elements draggableByTrachelShape: trachelShape [
 	| callback |
 	callback := TRTranslationCallback block: [ :shape :step | elements do: [ :e | e translateBy: step ] ].
@@ -141,22 +144,9 @@ RTNest >> makeElements: elements resizableWithoutRecursion: backElement [
 	elements do: [ :e | e trachelShape addCallback: callback1 ; addCallback: callback2 ] 
 ]
 
-{ #category : #utility }
-RTNest >> makeElements: elements transformable: backElement [
-	"It makes a scaling/zooming effect.
-	If you change backElement's extent, it changes proportionaly extent and position of nested elements. 
-	So the overall image --- composition of backElement and elements --- does not change. 
-	It only zoom in/out the overall image."
-	| callback |
-	callback := TRExtentCallback block: [ :shape :ratio | 
-		| mainPosition |
-		mainPosition := backElement position.
-		elements do: [ :eachElement | | eachPosition |
-			eachPosition := eachElement position.
-			eachElement 
-				extent: eachElement extent * ratio;
-				translateTo: mainPosition + ((eachPosition - mainPosition) * ratio) ] ].
-	backElement trachelShape addCallback: callback 
+{ #category : #'setting nesting behavior' }
+RTNest >> noBehavior [
+	self behavior: (RTNoBehavior instance)
 ]
 
 { #category : #public }
@@ -197,16 +187,16 @@ RTNest >> on: backElement nest: elements [
 	 - resize backElement to encapsulate the elements
 	 - perform a layout of the elements if a layout has been set
 	 - make the inner elements draggable"
-	
-	layout ifNotNil: [ layout on: elements ].
-	self centerOn: backElement elements: elements.
-	self makeElements: elements draggableBy: backElement.
-	self makeElements: elements transformable: backElement.
+
+	self doLayoutIfNecessaryOn: elements.
+	behavior on: backElement setNested: elements asGroup
 
 ]
 
-{ #category : #public }
+{ #category : #'to be removed' }
 RTNest >> onResizable: backElement nest: elements [
+	"PROBABLY THIS METHOD HAS TO BE DELETED"
+
 	"public method"
 	"backElement is the elements on which elements are layout-ed"
 	"- position the elements above backElement. 
@@ -247,7 +237,7 @@ RTNest >> padding: aNumber [
 	padding := aNumber
 ]
 
-{ #category : #utility }
+{ #category : #'to be removed' }
 RTNest >> resize: backElement bounds: encompassingRectangle [
 	"it translates backElement, but does not trigger events."
 	| newRec |
@@ -260,7 +250,7 @@ RTNest >> resize: backElement bounds: encompassingRectangle [
 	backElement translateTo: encompassingRectangle center
 ]
 
-{ #category : #utility }
+{ #category : #'to be removed' }
 RTNest >> resize: backElement for: elements [
 	| encompassingRectangle |
 	encompassingRectangle := self encompassingRectangleOf: elements.
@@ -287,4 +277,14 @@ RTNest >> resizeWithoutRecursion: backElement for: elements [
 	encompassingRectangle := self encompassingRectangleOf: elements.
 	self resizeWithoutRecursion: backElement bounds: encompassingRectangle.
 
+]
+
+{ #category : #'setting nesting behavior' }
+RTNest >> stretchable [
+	self behavior: (RTStretchBehavior new)
+]
+
+{ #category : #'setting nesting behavior' }
+RTNest >> topLeft [
+	self behavior: (RTTopLeftBehavior new)
 ]
