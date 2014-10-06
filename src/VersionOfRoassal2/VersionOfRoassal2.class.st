@@ -5177,3 +5177,14 @@ VersionOfRoassal2 >> version000420 [
 	at: #date put: '6 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000421 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.522';
+	at: #version put: '0.421';
+	at: #comment put: '0.421 : Improved the RTShorterDistanceWithOffsetAttachPoint algorithm to compute the offset. ';
+	at: #date put: '6 October 2014';
+	yourself
+]
