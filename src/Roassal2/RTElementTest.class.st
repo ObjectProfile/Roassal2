@@ -123,6 +123,60 @@ RTElementTest >> testModel [
 	self assert: (RTElement on: 10) model = 10
 ]
 
+{ #category : #'nested elements' }
+RTElementTest >> testNestedElements [
+
+	self assert: RTElement new nestedElements equals: #()
+]
+
+{ #category : #'nested elements' }
+RTElementTest >> testNestedElements2 [
+	| nested e v |
+	v := RTView new.
+	e := RTBox element.
+	v add: e.
+	RTNest new
+		for: (Array with: e) add: [ :group :model |
+			nested := RTBox elementsOn: (1 to: 5).
+			group addAll: nested
+		].
+	
+	self assert: e nestedElements equals: nested
+]
+
+{ #category : #'nested elements' }
+RTElementTest >> testNestedElements3 [
+	| added v classShape es |
+	added := RTGroup new.
+	v := RTView new.
+	v @ RTDraggableView.
+
+	classShape := RTMultiCompositeShape new. 
+	classShape add: (RTLabel new).
+	classShape add: (RTBox new color: Color lightGreen).
+	classShape add: (RTBox new color: Color lightRed).
+	classShape vertical.
+
+	es := classShape elementsOn: (Array with: RTShape).
+	v addAll: es.
+
+	RTNest new
+		layout: RTGridLayout new;
+		for: es inShape: #second add: [ :group :model |
+			group addAll: (RTBox elementsOn: model instVarNames).
+			added addAll: group
+		].
+
+	RTNest new
+		layout: RTGridLayout new;
+		for: es inShape: #third add: [ :group :model |
+			group addAll: (RTBox elementsOn: model methods).
+			added addAll: group
+		].
+	
+	self assert: es first nestedElements equals: added
+]
+
 { #category : #popup }
 RTElementTest >> testPopupAndGroup [
 	| v el p es |

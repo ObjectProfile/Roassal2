@@ -110,6 +110,14 @@ RTElement >> isConnectedTo: anEdge [
 ]
 
 { #category : #accessing }
+RTElement >> nestedElements [
+	"Return the list of elements that I may nest. Return an empty array if none"
+	^ (self hasAttribute: #nestedElements)
+		ifTrue: [ self attributeAt: #nestedElements ]
+		ifFalse: [ #() ]
+]
+
+{ #category : #accessing }
 RTElement >> outgoingEdges [
 	connectedEdges ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e from == self ]

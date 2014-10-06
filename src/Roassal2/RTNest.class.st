@@ -144,6 +144,13 @@ RTNest >> makeElements: elements resizableWithoutRecursion: backElement [
 	elements do: [ :e | e trachelShape addCallback: callback1 ; addCallback: callback2 ] 
 ]
 
+{ #category : #utility }
+RTNest >> mark: backElement with: elements [
+	(backElement hasAttribute: #nestedElements)
+		ifFalse: [ backElement attributeAt: #nestedElements put: RTGroup new ].
+	(backElement attributeAt: #nestedElements) addAll: elements
+]
+
 { #category : #'setting nesting behavior' }
 RTNest >> noBehavior [
 	self behavior: (RTNoBehavior instance)
@@ -170,6 +177,7 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 
 	aSymbolLayout rtValue: element trachelShape.
 	element trachelShape relayout.
+	self mark: element with: elements
 ]
 
 { #category : #public }
@@ -182,8 +190,8 @@ RTNest >> on: backElement nest: elements [
 	 - make the inner elements draggable"
 
 	self doLayoutIfNecessaryOn: elements.
-	behavior on: backElement setNested: elements asGroup
-
+	behavior on: backElement setNested: elements asGroup.
+	self mark: backElement with: elements
 ]
 
 { #category : #'to be removed' }
