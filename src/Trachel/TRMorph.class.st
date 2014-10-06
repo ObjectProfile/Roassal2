@@ -237,7 +237,7 @@ TRMorph >> rtKeyStroke: evt [
 				keyValue: evt keyValue;
 				keyCombination: evt asKeyCombination;
 				yourself.
-	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	shape := self shapeWithAction: TRKeyDown forPositionInPixels: relativePosition.
 
 	ev shape: shape.
 	ev morph: self.
@@ -259,7 +259,7 @@ TRMorph >> rtMouseClick: evt [
 	evt blueButtonChanged
 		ifTrue: [ ev := TRMouseClick new ].
 
-	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	shape := self shapeWithAction: TRMouseClick forPositionInPixels: relativePosition.
 	ev commandKeyPressed: evt commandKeyPressed.
 	ev controlKeyPressed: evt controlKeyPressed.
 	ev shiftKeyPressed: evt shiftPressed.
@@ -282,7 +282,7 @@ TRMorph >> rtMouseDoubleClick: evt [
 	evt blueButtonChanged
 		ifTrue: [ ev := TRMouseDoubleClick new ].
 
-	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	shape := self shapeWithAction: TRMouseDoubleClick forPositionInPixels: relativePosition.
 	ev commandKeyPressed: evt commandKeyPressed.
 	ev controlKeyPressed: evt controlKeyPressed.
 	ev shiftKeyPressed: evt shiftPressed.
@@ -300,10 +300,8 @@ TRMorph >> rtMouseDragBegin: evt [
 	eventBeginingDragging := evt copy.
 	
 	relativePosition := self relativePositionFor: evt.
-	shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition.
-	
+	shapeBeingPointed := self shapeWithAction: TRMouseDragging forPositionInPixels: relativePosition.
 
-		
 	ee := TRMouseDragStart new.
 	ee shape: shapeBeingPointed.
 	ee position: relativePosition.
@@ -333,10 +331,8 @@ TRMorph >> rtMouseDragging: evt [
 	relativePosition := self relativePositionFor: evt.
 	step := evt position - eventBeginingDragging position.
 
-	shapeBeingPointed ifNil: 
-		[  
-			shapeBeingPointed := self shapeWithActionForPositionInPixels: relativePosition 
-		].
+	shapeBeingPointed ifNil: [  
+			shapeBeingPointed := self shapeWithAction: TRMouseDragging forPositionInPixels: relativePosition ].
 	
 	event := TRMouseDragging new 
 				morph: self;
@@ -362,7 +358,7 @@ TRMorph >> rtMouseEnter: evt [
 	
 	relativePosition := self relativePositionFor: evt.
 
-	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	shape := self shapeWithAction: TRMouseEnter forPositionInPixels: relativePosition.
 
 	ev := TRMouseEnter new.
 	ev position: relativePosition.
@@ -378,7 +374,7 @@ TRMorph >> rtMouseLeave: evt [
 	| position ev shape |
 	
 	position := self relativePositionFor: evt.
-	shape := self shapeWithActionForPositionInPixels: position.
+	shape := self shapeWithAction: TRMouseLeave forPositionInPixels: position.
 	ev := TRMouseLeave new.
 	ev position: position.
 	ev shape: shape.
@@ -393,7 +389,7 @@ TRMorph >> rtMouseMoving: evt [
 
 	| relativePosition ev shape |
 	relativePosition := self relativePositionFor: evt.	
-	shape := self shapeWithActionForPositionInPixels: relativePosition.
+	shape := self shapeWithAction: TRMouseMove forPositionInPixels: relativePosition.
 
 	ev := TRMouseMove new.
 	ev position: relativePosition.
@@ -424,6 +420,12 @@ TRMorph >> shapeForEvent: anEvent [
 TRMorph >> shapeForPositionInPixels: point [
 	"Return the shape located that contains point"
 	 ^ trachelCanvas shapeForPositionInPixels: point
+]
+
+{ #category : #accessing }
+TRMorph >> shapeWithAction: eventClass forPositionInPixels: position [
+	"Return the shape with event handler located that contains point"
+	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position
 ]
 
 { #category : #accessing }
