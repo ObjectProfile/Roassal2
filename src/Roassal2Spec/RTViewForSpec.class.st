@@ -18,7 +18,7 @@ RTViewForSpec >> addElement: anElement [
 	anElement announcer subscriptions 
 		subscriptionsDo: [ :reg | 
 			anElement 
-				on: reg announcementClass
+				when: reg announcementClass
 				do: [ :ann | lastEvent value: ann ] ]
 ]
 
