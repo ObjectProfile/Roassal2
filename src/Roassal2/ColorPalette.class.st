@@ -186,7 +186,7 @@ ColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	
 	label := (RTLabel new text: subPaletteName) element.	
 	label @ RTHighlightable.
-	label on: TRMouseClick do: [:evt | Workspace new contents: 'ColorPalette ',(self class paletteName asLowercase),' colors: anInteger scheme:','''',subPaletteName,''''; open ].	
+	label when: TRMouseClick do: [:evt | Workspace new contents: 'ColorPalette ',(self class paletteName asLowercase),' colors: anInteger scheme:','''',subPaletteName,''''; open ].	
 	view add: label.
 	TRConstraint stick: label trachelShape onTheLeftOf: group first trachelShape. 
 	
