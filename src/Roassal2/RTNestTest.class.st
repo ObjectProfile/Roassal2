@@ -304,6 +304,56 @@ RTNestTest >> testInnerElement3 [
 	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 0.0) with: (0 @ 20.0))
 ]
 
+{ #category : #'composed shape' }
+RTNestTest >> testInnerElement4 [
+
+	| v shape es |
+	v := RTView new.
+	v @ RTDraggableView.
+
+	shape := RTMultiCompositeShape new.
+	shape add: RTBox new.
+	shape vertical.
+
+	es := shape elementsOn: #(1 2).
+	v addAll: es.
+
+	RTNest new
+		layout: RTGridLayout new;
+		for: es inShape: #first add: [ :group :model |
+			group addAll: ((RTBox new color: Color blue) elementsOn: (1 to: model)).
+		].
+
+	RTHorizontalLineLayout on: es.
+	es @ RTDraggable.
+	
+	self assert: es first position ~= es second position
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testInnerElement5 [
+
+	| v shape es |
+	v := RTView new.
+	v @ RTDraggableView.
+
+	shape := RTMultiCompositeShape new.
+	shape add: RTBox new.
+	shape vertical.
+
+	es := shape elementsOn: #(1 2).
+	v addAll: es.
+
+	RTNest new
+		layout: RTGridLayout new;
+		for: es inShape: #first add: [ :group :model |
+			group addAll: ((RTBox new color: Color blue) elementsOn: (1 to: model)).
+		].
+
+	es first translateTo: 25 @ -20.
+	self assert: es first position equals: 25 @ -20
+]
+
 { #category : #'multi line' }
 RTNestTest >> testMultiline [
 

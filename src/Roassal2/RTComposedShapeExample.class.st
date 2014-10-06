@@ -191,6 +191,7 @@ RTComposedShapeExample >> exampleInnerShapes [
 	shape := RTMultiCompositeShape new.
 	shape add: RTLabel new.
 	shape add: (RTBox new color: (Color blue alpha: 0.3)).
+	shape vertical.
 	
 	es := shape elementsOn: RTShape withAllSubclasses.
 	v addAll: es.

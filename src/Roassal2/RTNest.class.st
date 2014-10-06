@@ -166,14 +166,7 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 	aSymbolLayout is either #vertical or #horizontal"
 	
 	"We assume that the roassal shape of element is composed"
-	| callback |
 	self onTrachelShape: (aSymbol rtValue: element trachelShape shapes) nest: elements.
-
-	callback := TRTranslationCallback block: [ :shape :step | aSymbolLayout rtValue: element trachelShape ].
-	element trachelShape addCallback: callback.
-
-	callback := TRExtentCallback block: [ :shape :step | aSymbolLayout rtValue: element trachelShape ].
-	element trachelShape addCallback: callback.
 
 	aSymbolLayout rtValue: element trachelShape.
 	element trachelShape relayout.
@@ -221,9 +214,11 @@ RTNest >> onTrachelShape: trachelShape nest: elements [
 	 - perform a layout of the elements if a layout has been set
 	 - make the inner elements draggable"
 
-	layout ifNotNil: [ layout on: elements ].
-	self centerOnTrachelShape: trachelShape elements: elements.
-	self makeElements: elements draggableByTrachelShape: trachelShape.
+	self doLayoutIfNecessaryOn: elements.
+	behavior on: trachelShape setNested: elements asGroup
+
+	"self centerOnTrachelShape: trachelShape elements: elements.
+	self makeElements: elements draggableByTrachelShape: trachelShape."
 
 ]
 

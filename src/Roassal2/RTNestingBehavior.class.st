@@ -11,7 +11,11 @@ RTNestingBehavior >> centerOn: backElement elements: elements [
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
 
-	self centerOnTrachelShape: backElement trachelShape elements: elements
+	"A bit ugly here"
+	(backElement isKindOf: TRShape)
+		ifTrue: [ self centerOnTrachelShape: backElement elements: elements ]
+		ifFalse: [ self centerOnTrachelShape: backElement trachelShape elements: elements ]
+	
 ]
 
 { #category : #utility }
@@ -34,8 +38,9 @@ RTNestingBehavior >> centerOnTrachelShape: trachelShape elements: elements [
 
 { #category : #utility }
 RTNestingBehavior >> makeElements: elements draggableBy: backElement [
-	^ self makeElements: elements draggableByTrachelShape: backElement trachelShape
-	 
+	^ (backElement isKindOf: TRShape)
+		ifTrue: [ self makeElements: elements draggableByTrachelShape: backElement ]
+		ifFalse: [ self makeElements: elements draggableByTrachelShape: backElement trachelShape ]
 ]
 
 { #category : #utility }
@@ -62,7 +67,7 @@ RTNestingBehavior >> resize: backElement bounds: encompassingRectangle [
 					((encompassingRectangle width + (padding * 2)) @ 
 					 (encompassingRectangle height + (padding * 2))).
 
-	backElement trachelShape
+	backElement
 		extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).	
 	backElement translateTo: encompassingRectangle center
 ]
