@@ -99,6 +99,11 @@ RTAbstractLine >> withHorizontalAttachPoint [
 	^ ap
 ]
 
+{ #category : #public }
+RTAbstractLine >> withOffsetIfMultiple [
+	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> withShorterDistanceAttachPoint [
 	| ap |

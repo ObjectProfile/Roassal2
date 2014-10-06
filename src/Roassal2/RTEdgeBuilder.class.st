@@ -12,14 +12,10 @@ RTEdgeBuilder >> allowRepetition [
 	allowRepetition := true
 ]
 
-{ #category : #'public associations' }
-RTEdgeBuilder >> fromAssociations: associationsBetweenModels [
-	| fromElement toElement |
-	associationsBetweenModels do: [ :assoc |
-		fromElement := view elementFromModel: assoc key.
-		toElement := view elementFromModel: assoc value.
-		(fromElement notNil and: [ toElement notNil ]) ifTrue: 
-			[ self edgeFrom: fromElement to: toElement ] ]
+{ #category : #public }
+RTEdgeBuilder >> fromAssociations: associations [
+	"associations have to be between model objects"
+	^ self objects: associations from: #key to: #value
 ]
 
 { #category : #'public associations' }
