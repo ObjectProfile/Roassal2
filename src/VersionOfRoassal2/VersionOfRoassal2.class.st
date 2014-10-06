@@ -5144,3 +5144,14 @@ VersionOfRoassal2 >> version000417 [
 	at: #date put: '6 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000418 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.519';
+	at: #version put: '0.418';
+	at: #comment put: '0.418 : Fixed nasty bug with nested shapes and composite shapes. Wow!! ';
+	at: #date put: '6 October 2014';
+	yourself
+]
