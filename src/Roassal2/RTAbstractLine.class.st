@@ -30,6 +30,12 @@ RTAbstractLine >> accept: aVisitor [
 ]
 
 { #category : #'attach point' }
+RTAbstractLine >> attachPoint [
+	"Return the attach point of the line"
+	^ attachPoint
+]
+
+{ #category : #'attach point' }
 RTAbstractLine >> attachPoint: aRTAttachPoint [
 	attachPoint := aRTAttachPoint.
 ]
