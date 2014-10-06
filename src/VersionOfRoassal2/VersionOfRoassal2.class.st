@@ -5133,3 +5133,14 @@ VersionOfRoassal2 >> version000416 [
 	at: #date put: '6 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000417 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.518';
+	at: #version put: '0.417';
+	at: #comment put: '0.417 : Added a test for RTShorterDistanceWithOffset';
+	at: #date put: '6 October 2014';
+	yourself
+]
