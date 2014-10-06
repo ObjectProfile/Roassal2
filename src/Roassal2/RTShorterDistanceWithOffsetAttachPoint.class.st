@@ -1,3 +1,6 @@
+"
+A RTShorterDistanceWithOffsetAttachPoint contains the logic to have edges with a slight offset (normal to the edge direction)
+"
 Class {
 	#name : #RTShorterDistanceWithOffsetAttachPoint,
 	#superclass : #RTAbstractShorterDistanceAttachPoint,
@@ -26,7 +29,7 @@ RTShorterDistanceWithOffsetAttachPoint >> attachPointsFor: anEdge on: anElement 
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - hooks' }
 RTShorterDistanceWithOffsetAttachPoint >> endingPointOf: anEdge [
 	^ (super endingPointOf: anEdge) + (self offsetNormalFor: anEdge)
 ]
@@ -48,23 +51,25 @@ RTShorterDistanceWithOffsetAttachPoint >> offset: anInteger [
 	offset := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
-	"Return the offset in case of multiple edges with the same starting and ending points"
-	| indexOfEdge multipleEdges |
-	multipleEdges := anEdge to connectedEdges select: [ :e | 
-		((e from == anEdge from) and: [ e to == anEdge to ]) or: 
-			[ (e to == anEdge from) and: [ e from == anEdge to ] ]
-		].	
+    "Return the offset in case of multiple edges with the same starting and ending points"
+    | indexOfEdge multipleEdges |
+    multipleEdges := OrderedCollection new.
+    multipleEdges addAll: 
+        (anEdge to connectedEdges select: [ :e | 
+            (e from == anEdge from) and: [ e to == anEdge to ] ]).    
 
-	multipleEdges size <= 1 ifTrue: [ ^ 0 @ 0 ].
-	indexOfEdge := multipleEdges indexOf: anEdge.
-"	indexOfEdge even
-		ifTrue: [ indexOfEdge := 1 + indexOfEdge / -2 ].
-"	^ indexOfEdge * offset * (anEdge to position - anEdge from position) normal
+    multipleEdges addAll: 
+        (anEdge to connectedEdges select: [ :e | 
+            (e to == anEdge from) and: [ e from == anEdge to ] ]).    
+
+    multipleEdges size <= 1 ifTrue: [ ^ 0 @ 0 ].
+    indexOfEdge := multipleEdges indexOf: anEdge.
+	^ indexOfEdge * offset * (anEdge to position - anEdge from position) normal
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - hooks' }
 RTShorterDistanceWithOffsetAttachPoint >> startingPointOf: anEdge [
 	^ (super startingPointOf: anEdge) + (self offsetNormalFor: anEdge)
 ]
