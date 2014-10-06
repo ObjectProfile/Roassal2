@@ -227,7 +227,7 @@ RTExample >> circleWaves [
 	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
 	RTGridLayout on: v elements.
 	
-	v on: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	v when: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
 	v open
 ]
@@ -304,7 +304,7 @@ RTExample >> colorWaves [
 	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
 	RTGridLayout on: v elements.
 	
-	v on: TRMouseMove do: [ :evt | mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	v when: TRMouseMove do: [ :evt | mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
 	v open
 ]
