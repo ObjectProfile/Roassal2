@@ -5166,3 +5166,14 @@ VersionOfRoassal2 >> version000419 [
 	at: #date put: '6 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000420 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.218';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.521';
+	at: #version put: '0.420';
+	at: #comment put: '0.420 : Added RTElement>>nestedElements';
+	at: #date put: '6 October 2014';
+	yourself
+]
