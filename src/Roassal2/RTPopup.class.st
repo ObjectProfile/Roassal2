@@ -115,7 +115,7 @@ RTPopup >> named: aOneArgBlock background: aColor group: aTwoArgBlock [
 	self group: [ :group :el |
 		| background label |
 		background := (RTBox new color: (aColor alpha: 0.4)) element.
-		label := (RTLabel new text: aOneArgBlock) elementOn: el model; color: Color white.
+		label := (RTLabel new text: aOneArgBlock; color: Color white) elementOn: el model.
 		
 		aTwoArgBlock value: group value: el.
 		
