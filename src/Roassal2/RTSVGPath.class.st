@@ -900,7 +900,7 @@ RTSVGPath class >> Zimbabwe [
 
 { #category : #'list of countries' }
 RTSVGPath class >> africa [
-	^ #(#Nigeria #Ethiopia #Egypt #DemocraticRepublicCongo #SouthAfrica #Tanzania #Kenya #Algeria #Uganda #Sudan #Morocco #Ghana #Mozambique #IvoryCoast #Madagascar #Angola #Cameroon #Niger #BurkinaFaso #Mali #Malawi #Zambia #Senegal #Zimbabwe #Chad #Guinea #Tunisia #Rwanda #Benin #Somalia #Burundi #Togo #Libya #SierraLeone #CentralAfricanRepublic #Eritrea #Congo #Liberia #Mauritania #Gabon #Namibia #Botswana #Lesotho #'Equatorial Guinea' #Gambia #GuineaBissau #Swaziland #Djibouti #WesternSahara)
+	^ #(#Nigeria #Ethiopia #Egypt #DemocraticRepublicCongo #SouthAfrica #Tanzania #Kenya #Algeria #Uganda #Sudan #Morocco #Ghana #Mozambique #IvoryCoast #Madagascar #Angola #Cameroon #Niger #BurkinaFaso #Mali #Malawi #Zambia #Senegal #Zimbabwe #Chad #Guinea #Tunisia #Rwanda #Benin #Somalia #Burundi #Togo #Libya #SierraLeone #CentralAfricanRepublic #Eritrea #Congo #Liberia #Mauritania #Gabon #Namibia #Botswana #Lesotho #EquatorialGuinea #Gambia #GuineaBissau #Swaziland #Djibouti #WesternSahara)
 ]
 
 { #category : #icons }
