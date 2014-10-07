@@ -5199,3 +5199,14 @@ VersionOfRoassal2 >> version000422 [
 	at: #date put: '6 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000423 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.219';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.525';
+	at: #version put: '0.423';
+	at: #comment put: '0.423 : Added an example and fixed an African country name';
+	at: #date put: '7 October 2014';
+	yourself
+]
