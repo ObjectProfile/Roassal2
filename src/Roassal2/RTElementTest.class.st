@@ -48,6 +48,17 @@ RTElementTest >> testAttributes [
 	self assert: el hasAttributes.
 ]
 
+{ #category : #'composite shape' }
+RTElementTest >> testCompositeShape [
+
+	| s e |
+	s := RTMultiCompositeShape new.
+	s add: RTBox new.
+	e := s element.
+	
+	e update
+]
+
 { #category : #creating }
 RTElementTest >> testCreatingMany [
 	| els |
