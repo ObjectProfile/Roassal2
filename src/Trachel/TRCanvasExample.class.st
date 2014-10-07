@@ -199,6 +199,9 @@ TRCanvasExample >> arc7 [
 
 { #category : #examples }
 TRCanvasExample >> bezier [
+	"
+	self new bezier.
+	"
 
 	| t points |
 	points := OrderedCollection new.
@@ -209,9 +212,12 @@ TRCanvasExample >> bezier [
 	points add: 80 @ 80.
 	t := TRCanvas new.
 	t addShape: (TRLineShape  new from: 50 @ 50 to: 130 @ 20).
-	t addShape: (TRBezierShape new 
-		points: points; 
-			strokePaint: Color purple).
+	t addShape: 
+		(TRBezierShape new 
+			points: points; 
+			width: 2.5;
+			strokePaint: Color purple;
+			yourself).
 	t open
 ]
 
@@ -419,7 +425,7 @@ TRCanvasExample >> svg01 [
 	svg := TRSVGPath new path: 'M256,116.656L308.021,186H203.979L256,116.656z M256,50L123.966,226h264.068L256,50z M308.021,326
 
 	L256,395.345L203.979,326H308.021z M388.034,286H123.966L256,462L388.034,286z'.
-	svg scale: 0.1.
+	svg scaleBy: 0.1.
 	c addShape: svg.
 	c open
 ]
