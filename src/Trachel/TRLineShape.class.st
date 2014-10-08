@@ -76,8 +76,13 @@ TRLineShape >> from: aPoint to: anotherPoint color: aColor [
 ]
 
 { #category : #testing }
-TRLineShape >> includesPoint: aPoint [
-	^ aPoint onLineFrom: from to: to within: 3
+TRLineShape >> includesPoint: aPoint [ 
+	^ self includesPoint: aPoint delta: 5
+]
+
+{ #category : #testing }
+TRLineShape >> includesPoint: aPoint delta: nbOfPixelsAroundTheLine [
+	^ aPoint onLineFrom: from to: to within: nbOfPixelsAroundTheLine
 ]
 
 { #category : #initialization }
