@@ -46,15 +46,20 @@ RTMultiCompositeShape >> initialize [
 
 { #category : #public }
 RTMultiCompositeShape >> trachelShapeFor: anElement [
-	| ss ts |
+	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new
+]
+
+{ #category : #'as yet unclassified' }
+RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
+	| ss |
 	ss := shapes collect: [ :tupple | 
 		| s |
 		s := tupple first trachelShapeFor: anElement.
 		Array with: s with: tupple second ].
 
-	ts := TRMultiCompositeShape new setShapes: ss; yourself.
-	ts perform: layout.
-	^ ts
+	trachelShape setShapes: ss.
+	trachelShape perform: layout.
+	^ trachelShape
 ]
 
 { #category : #'public - layout' }
