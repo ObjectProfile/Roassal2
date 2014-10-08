@@ -5243,3 +5243,14 @@ VersionOfRoassal2 >> version000426 [
 	at: #date put: '8 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000427 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.221';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.529';
+	at: #version put: '0.427';
+	at: #comment put: '0.427 : removed dependencyAnalyzerBuilder. Obsolsete due to GraphBuilder. Improved GrpahB uilder and added a layout builder. Added a Matrix Builder';
+	at: #date put: '8 October 2014';
+	yourself
+]
