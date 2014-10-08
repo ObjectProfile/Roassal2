@@ -5226,9 +5226,9 @@ VersionOfRoassal2 >> version000424 [
 VersionOfRoassal2 >> version000425 [
 	^ Dictionary new 
 	at: 'Trachel' put: 'Trachel-AlexandreBergel.220';
-	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.526';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.527';
 	at: #version put: '0.425';
-	at: #comment put: '0.425 : Fixed a bug with RTMultiCompositeShape';
-	at: #date put: '7 October 2014';
+	at: #comment put: '0.425 : added UMLClassBuilder from Milton';
+	at: #date put: '8 October 2014';
 	yourself
 ]
