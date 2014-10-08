@@ -5232,3 +5232,14 @@ VersionOfRoassal2 >> version000425 [
 	at: #date put: '8 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000426 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.220';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.528';
+	at: #version put: '0.426 : Merged with:  Fixed a bug with RTMultiCompositeShape';
+	at: #comment put: '0.426 : Merged with:  Fixed a bug with RTMultiCompositeShape';
+	at: #date put: '8 October 2014';
+	yourself
+]
