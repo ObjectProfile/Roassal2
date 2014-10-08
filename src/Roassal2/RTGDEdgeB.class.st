@@ -6,7 +6,8 @@ Class {
 		'connectTo',
 		'edgesUsedForLayout',
 		'attachPoint',
-		'connectFrom'
+		'connectFrom',
+		'highlightable'
 	],
 	#category : #'Roassal2-Builder-Graph'
 }
@@ -97,6 +98,7 @@ RTGDEdgeB >> createEdgesFor: object [
 		answer addAll: edges.
 		
 		usedInLayout ifTrue: [ edgesUsedForLayout addAll: answer ] ].
+		highlightable ifTrue: [ edges @ RTHighlightable ].
 
 	^ answer
 ]
@@ -119,6 +121,12 @@ RTGDEdgeB >> follow: aBlock [
 
 ]
 
+{ #category : #shapes }
+RTGDEdgeB >> highlightable [
+	"Edges are highlightable"
+	highlightable := true
+]
+
 { #category : #public }
 RTGDEdgeB >> horizontalAttachPoint [
 	attachPoint := RTHorizontalAttachPoint new.
@@ -138,6 +146,7 @@ RTGDEdgeB >> if: conditionBlock color: color [
 RTGDEdgeB >> initialize [
 	super initialize.
 	usedInLayout := false.
+	highlightable := false.
 	connectTo := #yourself.
 	connectFrom := #yourself.
 	edgesUsedForLayout := OrderedCollection new.
@@ -208,4 +217,10 @@ RTGDEdgeB >> usedInLayout [
 { #category : #public }
 RTGDEdgeB >> verticalAttachPoint [
 	attachPoint := RTVerticalAttachPoint new.
+]
+
+{ #category : #shapes }
+RTGDEdgeB >> width: aBlock [
+
+	^ shape width: aBlock
 ]

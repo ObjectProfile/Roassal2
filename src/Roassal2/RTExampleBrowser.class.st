@@ -44,7 +44,7 @@ RTExampleBrowser >> listExamplesOn: v [
 RTExampleBrowser >> open [
 	| v |
 	v := RTView new.
-	v @ RTDraggableView.
+	v @ RTVerticalDraggableView.
 	self listExamplesOn: v.
 	self lineUpAndAnimate: v.
 	self show: v.

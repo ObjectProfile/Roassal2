@@ -3138,6 +3138,52 @@ Nr7LjQmqkB3Y219UFt105Qqr71xjlpE74vQHMKy34G5ybtyf3d23VX+rm8jPZ/e1+xv537BF
 ]
 
 { #category : #sources }
+RTGraphBuilderExample >> exampleHighlightingEdges [
+| b |
+b := RTGraphBuilder new.
+b nodes circle size: 20; color: Color lightRed.
+b edges
+	connectTo: #dependentClasses;
+	width: 3;
+	highlightable;
+	useInLayout.
+b layout
+	forceCharge: -80.
+b addAll: (RTShape withAllSubclasses).
+b open.
+b view canvas.
+]
+
+{ #category : #icons }
+RTGraphBuilderExample >> exampleHighlightingEdgesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE6klEQVR4XuWaCW/iMBCF+///
+WumtntCDUqBQznJDmOw8rw2ON1BUGm3oexICcoDkL543M/ZRHPMrTzriHwJ+IPziB8IPhF/8
+QPiB8IsfCD8QfvED4QfCL34g/OIHwg+EX/xA+IHwix8IPxB+8QPhB8IvfiD84gfCD4Rf/ED4
+gfCLHwg/EH7xA+EHwi9+IPziB8IPhF+/EIhEkcj5ucSFQiyPj8IP5H9AqNdFbm9FOh2RlxcD
+w71kPhepVkUqFcFnfiBZw2g2kwDu7pLfFdTqc6HADyRzVatxAgBmgwtZT08JOObFDyTb2SHv
+76kzoNvtmvdIAa3O39zwz5DMYFxfrwdaZ4JMJjIcDmU8HosP5O3tTWQ6Fen3hd/Us9SGUFSr
+1VZAGo2GJl3RXiBMCHx9NcD5gWwbKOsTeC3v73XcqtJut2WBmeCOw+D3+Y9yWfLsP/kCooKh
+i50R7tjs8jKZZS2X6/OzmeB6c+8u/3FxsfG3+IHsqAmM2x9EO/jy+Zl6fOtvaX2zuh6g+WfI
+1yEFoUtaLen1elof1vUhXgqyKTk+lrZXqYuaewIIZsrVlcjJiRhYgZAcqA+ZYlI/CL+pfwUD
+ocob4GnKoM40RDVROOJ6hZYAEoQjc436j6gfwcjdffxZ1q5AwiceA56iTwXlUuHo40Nmz8+i
++bGZGWGLJfEd4cr9l95vahwch9HzA0kBorVF4mnfopo1coCZ2PS17fW8UMdMghk30pnyqulu
+WQEsgkSBH8gWdTudna6raRia6sAv9R0pMrwGcBCa8JqieDw9XUMajdYzJOiP8QPZoo52eHea
+Ud5gL/TpRwU/GAz+uVdseEscg7Gfnf0NWVps8gPZNMj6hI9KJUkdRPUJU6c4bwkq+7ltxcvD
+g7i0dtf6hB/IBhgJE/ZDDNol3rmWhpyZfcLNteoNmB29MDFAI5IfyDcVtN3NdwdEsyn/XF/r
+Ehg6wk0PtYsrFhGy+IFkM0MmoZd45yItGv32SstLkaVY/BuytEiMD0y59BDjE/r0o7M78sIW
+Go1jrTkGKabfyJEx/+peFnyhj/V1NWh4Rtsr7nwtFgvTFuEH8pOzw9YGfrfXHNce1soTYORp
+93qNRtmzRc8PBANaqST8o63LuC9aeTeDDQ+bijgJW/QHlu7mD0iwcOTXIQvvXBctEfUZs1dL
+obmBH3vLvyYLO9Dl3fwAQeXsmn1ByEEF7kwd731vEwRedU1tsawboaurIQ0dXnSF0U6Z+Bsi
+sGOFH8h+wpoIBhefy64ru6FeKad1bQ9sy1C+dy7qQlXf2+bzgeIQ51CD+OHNdntbKe16f43E
+JAf8QL4BIxxwC2JeLJoB7pbLcYTBR72i2ZVoyouKfGxDW+K3cA6hTD3G9ML4gXwDiBf3zTqG
+NhtnpVK8MYvyj8Nf+OuQDKDY1T8YPXaG4ClPZFE6Q9Cm7wQGf+g7GXNt6m6nIjT0t5cixfXh
+2exs27IvP5CfaJtomouqfajtk6GN/2kFnylGsBsxZXGKH0hGxs6i/AIJK/cdl3X5gWQFJFiQ
+OtTe1K/yEEGrxK6N8IcsfvED4Rc/EH4g/OIHwg+EX/xA+IHwix8IPxB+8QPhB8I/BPxA+MUP
+hB8Iv/iB8APhFz8QfiD84gfCD4Rf/ED4xQ+EHwi/+IHwA+EXPxB+IPziB8IPhF/8QPiVqj8v
+0SDbGdfVqQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTGraphBuilderExample >> exampleIfColor [
 | b |
 b := RTGraphBuilder new.

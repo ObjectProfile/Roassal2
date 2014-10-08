@@ -5,7 +5,8 @@ Class {
 		'view',
 		'interactionBuilder',
 		'shapeBuilder',
-		'globalBuilder'
+		'globalBuilder',
+		'layoutBuilder'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
