@@ -5254,3 +5254,14 @@ VersionOfRoassal2 >> version000427 [
 	at: #date put: '8 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000428 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.221';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.530';
+	at: #version put: '0.428';
+	at: #comment put: '0.428 : Added Gambia as an african country. Was missing!';
+	at: #date put: '9 October 2014';
+	yourself
+]
