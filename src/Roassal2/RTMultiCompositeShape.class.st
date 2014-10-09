@@ -26,6 +26,11 @@ RTMultiCompositeShape >> add: aRTShape translateBy: aPoint [
 	shapes add: (Array with: aRTShape with: aPoint)
 ]
 
+{ #category : #'public - layout' }
+RTMultiCompositeShape >> alignRight [
+	layout := #alignRight
+]
+
 { #category : #accessing }
 RTMultiCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
@@ -49,7 +54,7 @@ RTMultiCompositeShape >> trachelShapeFor: anElement [
 	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 	| ss |
 	ss := shapes collect: [ :tupple | 

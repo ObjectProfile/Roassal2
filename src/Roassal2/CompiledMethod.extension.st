@@ -18,6 +18,12 @@ CompiledMethod >> ageInDaysRounded [
 ]
 
 { #category : #'*roassal2' }
+CompiledMethod >> classReferences [
+	^ ((self allLiterals select: [:l | l isKindOf: Association ]) collect: #value) copyWithout: self methodClass
+	
+]
+
+{ #category : #'*roassal2' }
 CompiledMethod >> computeDate [
 	"Return the DateAndTime associated to this method"
 	| s nbOfSpaces |
