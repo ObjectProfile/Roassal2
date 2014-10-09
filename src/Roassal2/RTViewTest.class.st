@@ -13,6 +13,15 @@ RTViewTest >> setUp [
 	view := RTView new
 ]
 
+{ #category : #menu }
+RTViewTest >> testAddLayoutMenu [
+
+	view := RTView new.
+	view addLayoutMenu.
+	self assert: view canvas numberOfFixedShapes > 0.
+	self assert: view canvas numberOfShapes equals: 0
+]
+
 { #category : #'fixed elements' }
 RTViewTest >> testAdding [
 
@@ -169,4 +178,10 @@ RTViewTest >> testMenu [
 	view addMenu: 'foo' callback: [  ].
 	self assert: view canvas numberOfShapes = 1.
 	self assert: view canvas numberOfFixedShapes = 1.
+]
+
+{ #category : #menu }
+RTViewTest >> testSignalUpdate [
+
+	RTView new signalUpdate 
 ]
