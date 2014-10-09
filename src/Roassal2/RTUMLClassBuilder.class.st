@@ -12,7 +12,8 @@ Class {
 		'methodsNames',
 		'superclass',
 		'methodselector',
-		'methodShapeBuilder'
+		'methodShapeBuilder',
+		'layout'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
@@ -56,11 +57,6 @@ RTUMLClassBuilder >> addClass: class [
 ]
 
 { #category : #public }
-RTUMLClassBuilder >> addClasses: classes [
-	classes do: [ :cls | self addClass: cls ]
-]
-
-{ #category : #public }
 RTUMLClassBuilder >> addObject: object [
 	
 	classes add: object.
@@ -73,9 +69,8 @@ RTUMLClassBuilder >> addObjects: objects [
 ]
 
 { #category : #public }
-RTUMLClassBuilder >> build [
-	self buildSchema.
-	super build.
+RTUMLClassBuilder >> applyLayout [
+	self layout on: classesGroup elements.
 ]
 
 { #category : #public }
@@ -121,21 +116,24 @@ RTUMLClassBuilder >> buildSchema [
 		classesGroup add: box.
 		view add: box.
 		view addAll: group.
-].
+	].
+
+	RTEdge buildEdgesFromObjects: 
+		classes from: (self superclass) to: #yourself using: (RTMultiLine new orthoVertical attachPoint: RTVerticalAttachPoint instance) inView: view
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> classNameFor: obj [
 	^ obj perform: self classname.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> classname [
 	^ classname
 	
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> classname: aSelector [
 	classname := aSelector
 	
@@ -154,7 +152,6 @@ RTUMLClassBuilder >> example1 [
 
 	RTUMLClassBuilder new
 		addObjects: RTShape withAllSubclasses;
-		build;
 		gridLayout;
 		open.
 ]
@@ -167,7 +164,6 @@ RTUMLClassBuilder >> example2 [
 
 	RTUMLClassBuilder new
 		addObjects: RTShape withAllSubclasses;
-		build;
 		treeLayout;
 		open.
 		
@@ -189,8 +185,7 @@ RTUMLClassBuilder >> example3 [
 		instanceVariables: #second;
 		methodsNames: #third;
 		methodselector: #yourself;
-		build;
-		gridLayout;
+		superclass: nil;
 		open
 ]
 
@@ -204,13 +199,13 @@ RTUMLClassBuilder >> example4 [
 	b methodShape label
         if: [ :method | method selector beginsWith: 'init' ] color: Color green.
 	b addObjects: RTShape withAllSubclasses.
-	b build; treeLayout; open.
+	b treeLayout; open.
 		
 ]
 
 { #category : #layouts }
 RTUMLClassBuilder >> gridLayout [
-	RTGridLayout on: classesGroup
+	^ self layout: RTGridLayout new.
 ]
 
 { #category : #initialization }
@@ -228,14 +223,25 @@ RTUMLClassBuilder >> initialize [
 	self methodShape: RTMethodShapeBuilder new.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> instanceVariables [
 	^ instanceVariables
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> instanceVariables: aSelector [
 	instanceVariables := aSelector
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> layout [
+	layout ifNil: [ layout := RTHorizontalLineLayout new ].
+	^ layout
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> layout: aRTLayout [
+	^ layout := aRTLayout
 ]
 
 { #category : #shapes }
@@ -243,42 +249,43 @@ RTUMLClassBuilder >> methodShape [
 	^ methodShapeBuilder
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodShape: aMethodShapeBuilder [
 	methodShapeBuilder := aMethodShapeBuilder
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodsForClass: obj [
 	^ obj perform: self methodsNames
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodsNames [
 	^ methodsNames
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodsNames: aSelector [
 	methodsNames := aSelector
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodselector [
 	^ methodselector.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> methodselector: aSelector [
 	methodselector := aSelector.
 ]
 
-{ #category : #'public-ui' }
-RTUMLClassBuilder >> openIn: aView [
-	^ aView open
+{ #category : #hooks }
+RTUMLClassBuilder >> renderIn: aView [
+	self buildSchema.
+	self applyLayout
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> selectorForMethod: met [
 	^ met perform: self methodselector
 ]
@@ -314,24 +321,26 @@ RTUMLClassBuilder >> superClassSelector [
 	^ self selectorsForClass at: 4.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> superclass [
 	^ superclass
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> superclass: aSelector [
 	superclass := aSelector
 ]
 
 { #category : #layouts }
 RTUMLClassBuilder >> treeLayout [
-	RTEdge buildEdgesFromObjects: 
-		classes from: (self superclass) to: #yourself using: (RTMultiLine new orthoVertical attachPoint: RTVerticalAttachPoint instance) inView: view.
-	RTTreeLayout on: classesGroup
+	^ self layout: RTTreeLayout new.
+	
+	
+	".
+	RTTreeLayout on: classesGroup"
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTUMLClassBuilder >> varNamesFor: obj [
 	^ obj perform: self instanceVariables.
 ]
