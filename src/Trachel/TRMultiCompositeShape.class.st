@@ -38,6 +38,16 @@ TRMultiCompositeShape >> addedIn: aCanvas [
 	self translateBy: self position negated
 ]
 
+{ #category : #'public - layout' }
+TRMultiCompositeShape >> alignRight [
+	"Layout the shapes horizontally"
+
+	TRConstraint alignFromRight: (shapeAndOffsets collect: #first).
+	shapeAndOffsets do: [ :tuple | tuple at: 2 put: (tuple first position) ].
+	self resetInnerShapes.
+
+]
+
 { #category : #events }
 TRMultiCompositeShape >> announce: anEvent [
 	self shapes do: [ :s | s announce: anEvent ]
@@ -171,7 +181,7 @@ TRMultiCompositeShape >> pushFront [
 	self shapes do: #pushFront
 ]
 
-{ #category : #'layout inner shapes' }
+{ #category : #'public - layout' }
 TRMultiCompositeShape >> relayout [
 	"This methods places the contained shapes according to the specified layout"
 	| first |
