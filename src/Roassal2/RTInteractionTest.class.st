@@ -8,19 +8,27 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTInteractionTest >> setUp [
 	super setUp.
 	view := RTView new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTInteractionTest >> tearDown [
 	super tearDown.
 	ui ifNotNil: [ :aUI | ui := nil. aUI delete. ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
+RTInteractionTest >> testBlockAsInteraction [
+
+	| e |
+	e := RTBox element.
+	e @ ([ :ee | ee ])
+]
+
+{ #category : #tests }
 RTInteractionTest >> testMouseHoverZoom [
 	| element interaction |
 	element := RTBox new size: #yourself; elementOn: 30.

@@ -7,41 +7,41 @@ Class {
 { #category : #examples }
 RTBitMapExamples >> image01 [
 
-"
-self new image01
-"
+	"
+	self new image01
+	"
 
-| v c s |
-v := RTView new.
-c := v canvas.
-s := TRBitmapShape new.
-s form: ROEaselMorphic new roassalIcon.
-c addShape: s.
-v  open
+	| v c s |
+	v := RTView new.
+	c := v canvas.
+	s := TRBitmapShape new.
+	s form: RTIcon roassal.
+	c addShape: s.
+	v  open
 
 ]
 
 { #category : #examples }
 RTBitMapExamples >> image02 [
 
-"
-self new image02
+	"
+	self new image02
 
-This example directly talk to Trachel
-"
+	This example directly talk to Trachel
+	"
 
-| v  s trachelShape |
-v := RTView new.
+	| v  s trachelShape |
+	v := RTView new.
 
-s := RTBitmap element.
-v add: s.
+	s := RTBitmap element.
+	v add: s.
 
-trachelShape := s trachelShape.
-trachelShape extent: 180 @ 100.
-trachelShape fillColor: Color blue.
+	trachelShape := s trachelShape.
+	trachelShape extent: 180 @ 100.
+	trachelShape fillColor: Color blue.
 
-1 to: 80 do: [ :i |
-	trachelShape at: i @ i put: Color green ].
+	1 to: 80 do: [ :i |
+		trachelShape at: i @ i put: Color green ].
 
-v open
+	v open
 ]
