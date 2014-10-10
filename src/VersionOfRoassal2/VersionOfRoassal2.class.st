@@ -5309,3 +5309,14 @@ VersionOfRoassal2 >> version000432 [
 	at: #date put: '9 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000433 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.222';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.535';
+	at: #version put: '0.433';
+	at: #comment put: '0.433 : Improved Charter. Multiple stacked curves is now possible.';
+	at: #date put: '10 October 2014';
+	yourself
+]
