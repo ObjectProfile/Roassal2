@@ -92,12 +92,3 @@ CompiledMethod >> numberOfLinesOfCode [
 
 	^ self propertyValueAt: #numberOfLinesOfCode 
 ]
-
-{ #category : #'*roassal2' }
-CompiledMethod >> selfCalls [
-	"Return the list of methods that I may call if the receiver is 'self'"
-	| messages |
-	messages := self messages.
-	^ self methodClass theNonMetaClass methods, self methodClass theMetaClass methods
-			select: [ :m | messages includes: m selector ]
-]
