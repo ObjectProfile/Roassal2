@@ -1846,6 +1846,66 @@ EH7xA+EHwi9+IPxA+MUPhB8Iv/iB8APhFz8QfvED4QfCL34g/ED4xQ9ku+s/cBshL5us1nsA
 AAAASUVORK5CYII='
 ]
 
+{ #category : #sources }
+RTCharterExample >> examplemultipleCurveStacking [
+
+| b |
+points1 := TRShape withAllSubclasses sortedAs: #numberOfVariables.
+points2 := TRShape withAllSubclasses sortedAs: #numberOfMethods.
+
+minY := 0.
+maxY := (points1 maxValue: #numberOfVariables) max: (points2 maxValue: #numberOfMethods).
+
+b := RTCharterBuilder new.
+b extent: 400 @ 400.
+b points: points1.
+b connectDotColor: Color blue.
+b y: #numberOfVariables min: minY max: maxY.
+
+b points: points2.
+b connectDotColor: Color green.
+b y: #numberOfMethods min: minY max: maxY.
+b stackX.
+
+b axisXNoLabel; axisY.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> examplemultipleCurveStackingIcon [
+	^ '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
+AElFTkSuQmCC'
+]
+
 { #category : #accessing }
 RTCharterExample >> label [
 	^ 'Charter example'

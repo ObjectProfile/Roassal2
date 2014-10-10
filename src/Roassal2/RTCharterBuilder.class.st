@@ -104,7 +104,7 @@ RTCharterBuilder >> allY: metricAsBlockOrSymbol [
 	"
 	
 	| vs |
-	"We compute the min and the max, useful for labelling"
+	"We compute the min and the max"
 	vs := self allPoints collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minY := minY min: vs min.
 	maxY := maxY max: vs max.
@@ -156,6 +156,19 @@ RTCharterBuilder >> axisX [
 		maxValue: maxX.	
 
 	axisConfiguration axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+]
+
+{ #category : #'public-axis' }
+RTCharterBuilder >> axisXNoLabel [
+	| config centralPoint |
+	config := RTAxisConfiguration new
+					builder: self;
+					numberOfTicks: 0;
+					numberOfLabels: 0;
+					minValue: ((minX > 0) ifTrue: [ 0 ] ifFalse: [ minX ]);
+					maxValue: maxX.
+	centralPoint := self centralPoint.
+	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'public-axis' }
@@ -445,13 +458,34 @@ RTCharterBuilder >> topPoint [
 RTCharterBuilder >> x: metricAsBlockOrSymbol [
 
 	| vs |
+	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
+	minX := minX min: vs min.
+	maxX := maxX max: vs max.
+
+	self x: metricAsBlockOrSymbol min: minX max: maxX
+	
+"	| vs |
 	RTMetricNormalizer new
 		elements: lastAddedElements;
 		normalizeX: metricAsBlockOrSymbol min: 0 max: extent x minValue: 0.
 		
 	vs := lastAddedElements collect: [ :e | metricAsBlockOrSymbol rtValue: e model ].
 	minX := minX min: vs min. 
-	maxX := maxX max: vs max.
+	maxX := maxX max: vs max."
+]
+
+{ #category : #'as yet unclassified' }
+RTCharterBuilder >> x: metricAsBlockOrSymbol min: aMin max: aMax [
+	minX := aMin.
+	maxX := aMax.	"Ensure that 0 is between [ minX ; maxX ]"
+	self adjustMinAndMaxValues.
+	RTMetricNormalizer new
+		elements: lastAddedElements;
+		normalizeX: [ :model | metricAsBlockOrSymbol rtValue: model ]
+			min: 0
+			max: extent x
+			minValue: minX
+			maxValue: maxX
 ]
 
 { #category : #public }
