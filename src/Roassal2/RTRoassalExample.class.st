@@ -4911,8 +4911,8 @@ inheritanceEdges :=
 
 "Layout the whole thing"
 RTForceBasedLayout new 
-	userDefinedEdges: inheritanceEdges;
-	on: v elements.
+	"userDefinedEdges: inheritanceEdges;"
+	on: v elements edges: inheritanceEdges.
 
 "Defining edges from dependencies"
 Collection withAllSubclasses do: [ :cls |
