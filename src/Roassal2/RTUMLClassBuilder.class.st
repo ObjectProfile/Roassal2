@@ -286,39 +286,8 @@ RTUMLClassBuilder >> renderIn: aView [
 ]
 
 { #category : #accessing }
-RTUMLClassBuilder >> selectorForMethod: met [
-	^ met perform: self methodselector
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorsForClass [
-	^ selectorsForClass
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorsForClass: anArray [
-	selectorsForClass := anArray
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorsForClass: anArray1 selectorsForMethod: anArray2 [
-	selectorsForClass := anArray1.
-	selectorsForMethod := anArray2.
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorsForMethod [
-	^ selectorsForMethod
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorsForMethod: anArray [
-	selectorsForMethod := anArray
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> superClassSelector [
-	^ self selectorsForClass at: 4.
+RTUMLClassBuilder >> selectorForMethod: method [
+	^ self methodselector value: method
 ]
 
 { #category : #accessing }
@@ -333,14 +302,10 @@ RTUMLClassBuilder >> superclass: aSelector [
 
 { #category : #layouts }
 RTUMLClassBuilder >> treeLayout [
-	^ self layout: RTTreeLayout new.
-	
-	
-	".
-	RTTreeLayout on: classesGroup"
+	^ self layout: RTTreeLayout new
 ]
 
 { #category : #accessing }
-RTUMLClassBuilder >> varNamesFor: obj [
-	^ obj perform: self instanceVariables.
+RTUMLClassBuilder >> varNamesFor: object [
+	^ self instanceVariables value: object
 ]
