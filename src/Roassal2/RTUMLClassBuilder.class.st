@@ -124,7 +124,7 @@ RTUMLClassBuilder >> buildSchema [
 
 { #category : #accessing }
 RTUMLClassBuilder >> classNameFor: obj [
-	^ obj perform: self classname.
+	^ self classname rtValue: obj
 ]
 
 { #category : #accessing }
@@ -256,7 +256,7 @@ RTUMLClassBuilder >> methodShape: aMethodShapeBuilder [
 
 { #category : #accessing }
 RTUMLClassBuilder >> methodsForClass: obj [
-	^ obj perform: self methodsNames
+	^ self methodsNames rtValue: obj
 ]
 
 { #category : #accessing }
@@ -287,7 +287,7 @@ RTUMLClassBuilder >> renderIn: aView [
 
 { #category : #accessing }
 RTUMLClassBuilder >> selectorForMethod: method [
-	^ self methodselector value: method
+	^ self methodselector rtValue: method
 ]
 
 { #category : #accessing }
@@ -307,5 +307,5 @@ RTUMLClassBuilder >> treeLayout [
 
 { #category : #accessing }
 RTUMLClassBuilder >> varNamesFor: object [
-	^ self instanceVariables value: object
+	^ self instanceVariables rtValue: object
 ]
