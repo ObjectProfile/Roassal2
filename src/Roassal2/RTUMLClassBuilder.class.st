@@ -78,18 +78,18 @@ RTUMLClassBuilder >> buildSchema [
 	| group box r label e1 e2  l h |
 	shapeBuilder := self methodShape.
 	(shapeBuilder shape class = RTNoShape) ifTrue: [
-		shapeBuilder label].
+		shapeBuilder label height: 10].
 	shapeBuilder text: [ :met | (self selectorForMethod: met)].
 	classes do: [ :object | 
 		group := RTGroup new.
 		
-		group add: ((RTLabel new height: 15; 
+		group add: ((RTLabel new height: 12; 
 			text: [:c| self classNameFor: c]) 
 			elementOn: object).
 
 		(self varNamesFor: object) do: [ :varName |
-			group add: (RTLabel elementOn: varName)	].
-		RTVerticalLineLayout on: group.
+			group add: (RTLabel new height: 10; elementOn: varName)	].
+		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		h := r height.
 		
@@ -97,18 +97,18 @@ RTUMLClassBuilder >> buildSchema [
 		(self methodsForClass: object) do: [:method | 
 			group add: (label elementOn: method) ].
 	
-		RTVerticalLineLayout on: group.
+		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		group first trachelShape 
 			translateTo: (r center x @ group first trachelShape center y).
-		box := (RTBox new color: Color white; borderColor: Color black) 
+		box := (RTBox new color: Color white; borderColor: Color gray) 
 			elementOn: object.
 		e1 := (RTBox new extent: 0@0) elementOn: 'p1'.
 		e2 := (RTBox new extent: 0@0) elementOn: 'p2'.
 		e1 trachelShape translateTo: r left@h.
 		e2 trachelShape translateTo: r right@h.
 		l := RTEdge from: e1 to: e2.
-		l + (RTLine new color: Color black).
+		l + (RTLine new color: Color gray).
 		group add: e1; add: e2; add: l.
 		RTNest new on: box nest: group.
 	
