@@ -44,6 +44,24 @@ RTShapeBuilderTest >> testCreatingElements [
 	self assert: builder createdElements size = 0.
 ]
 
+{ #category : #ensure }
+RTShapeBuilderTest >> testEnsure [
+
+	builder rectangle color: Color red.
+	self assert: builder current class equals: RTBox.
+	self assert: ((builder current color) rtValue: RTElement new) equals: Color red.
+	builder ensure: RTBox.
+	self assert: ((builder current color) rtValue: RTElement new) equals: Color red.
+]
+
+{ #category : #ensure }
+RTShapeBuilderTest >> testEnsure2 [
+
+	builder rectangle color: Color red.
+	builder ensure: RTEllipse.
+	self assert: ((builder current color) rtValue: RTElement new) equals: (RTEllipse new color).
+]
+
 { #category : #tests }
 RTShapeBuilderTest >> testLine [
 	builder line.

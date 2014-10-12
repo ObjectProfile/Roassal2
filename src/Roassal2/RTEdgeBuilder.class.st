@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public repetition' }
 RTEdgeBuilder >> allowRepetition [
 	allowRepetition := true
 ]
@@ -29,7 +29,7 @@ RTEdgeBuilder >> globalScope [
 	^ RTGroup withAll: (self view elements collect: #model)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTEdgeBuilder >> initialize [
 	super initialize.
 	allowRepetition := false
@@ -130,7 +130,7 @@ RTEdgeBuilder >> objects: objects fromAll: fromBlock to: toBlock [
 	^ edges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public repetition' }
 RTEdgeBuilder >> shouldAllowRepetition [
 	^ allowRepetition
 ]

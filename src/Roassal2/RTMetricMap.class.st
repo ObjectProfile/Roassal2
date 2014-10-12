@@ -6,10 +6,17 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'countryData',
-		'countryName'
+		'countryName',
+		'pointShapeBuilder'
 	],
 	#category : #'Roassal2-Builder-Map'
 }
+
+{ #category : #public }
+RTMetricMap >> africanCountries [
+	^ self countries: RTSVGPath africa color: Color white
+
+]
 
 { #category : #public }
 RTMetricMap >> allCountriesColor: aColor [
@@ -727,6 +734,13 @@ RTMetricMap >> fillViewWithCountries: collection named: selectorOrBlockForName m
 	].
 ]
 
+{ #category : #initialization }
+RTMetricMap >> initialize [
+	super initialize.
+	pointShapeBuilder := RTShapeBuilder new.
+	
+]
+
 { #category : #public }
 RTMetricMap >> makeSelectable: aBlock as: title [
 	"Public method"
@@ -734,4 +748,46 @@ RTMetricMap >> makeSelectable: aBlock as: title [
 	view canvas addMenu: title callback: [ 
 		self cleanView.
 		self fillViewWithCountries: countryData named: countryName metric: aBlock ]
+]
+
+{ #category : #accessing }
+RTMetricMap >> pointShape [
+	^ pointShapeBuilder
+]
+
+{ #category : #public }
+RTMetricMap >> routes: objects from: aPointBlock to: anotherPointBlock [
+	| toPixel fromPixel fromElement toElement edge |
+	shapeBuilder ensure: RTLine.
+	pointShapeBuilder ensure: RTEllipse.
+	
+	objects do: [ :object |
+		toPixel := self translateGeoPositionToPixels: (aPointBlock rtValue: object).
+		fromPixel := self translateGeoPositionToPixels: (anotherPointBlock rtValue: object).
+		fromElement := pointShapeBuilder elementOn: 'from'.
+		toElement := pointShapeBuilder elementOn: 'to'.
+		fromElement translateTo: fromPixel.
+		toElement translateTo: toPixel.
+		view add: fromElement.
+		view add: toElement.
+		
+		edge := shapeBuilder edgeFrom: fromElement to: toElement.
+		view add: edge.
+	].	
+]
+
+{ #category : #utility }
+RTMetricMap >> translateGeoPositionToPixels: point [
+	"From https://github.com/thebyrd/world-news"
+	
+	| longitud latitud xFactor xoffset yFactor yoffset |
+	latitud := point x.
+	longitud := point y.
+	
+	xFactor := 2.6938.
+	xoffset := 465.4.
+	
+	yFactor := -2.6938.
+	yoffset := 227.066.
+	^ ((longitud * xFactor) + xoffset) @ ((latitud * yFactor) + yoffset)
 ]
