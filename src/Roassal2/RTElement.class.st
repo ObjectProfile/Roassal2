@@ -168,6 +168,12 @@ RTElement >> translateTo: newPosition [
 	self updateConnectedEdges
 ]
 
+{ #category : #accessing }
+RTElement >> unbindNestedElements [
+	"Unlink the nested elements to myself"
+	self removeAttributeAt: #nestedElements ifAbsent: [  ]
+]
+
 { #category : #actions }
 RTElement >> updateConnectedEdges [
 	self connectedEdges do: [ :edge | edge update ]

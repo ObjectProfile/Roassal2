@@ -1767,6 +1767,48 @@ PoifD+KD+Pkgfj6ID+Lng/ggftct4d43QXzhOT8AAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDragAndDrop01 [
+
+| v e1 e2 |
+v := RTView new.
+
+e1 := (RTBox new size: 10; color: Color gray) element. 
+e2 := (RTEllipse new size: 30; color: Color blue) element.
+e1 @ RTDraggable.
+
+e1 translateTo: 50 @ 50.
+v add: e1.
+v add: e2.
+
+e2 @ (RTDragAndDroppable new 
+			host: e1;
+			do: [ :fromElement :toElement | 
+				| newElement alreadyNested |
+				newElement := (RTBox new size: 20) element.
+				v add: newElement.
+				alreadyNested := toElement nestedElements.
+				toElement unbindNestedElements.
+				RTNest new
+					layout: RTGridLayout new;
+					on: toElement nest: alreadyNested, (Array with: newElement) ]).
+
+v open.
+v canvas
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDragAndDrop01Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABU0lEQVR4XuXWwQmDMBiG4dz0
+5kDiTVxLL26mE7jPZysUWtoB1D4v5B7ykD8p++53pYp/BD6Inw/ig/j5ID6Inw/ig/j5ID6I
+nw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P4oP4+SA+iJ8P4oP4+SB+PogP4ueD+CB+
+PogP4ueD+CB+PoifD+KD+PkgPoifCrKuSdclTZPMc+KDnNiyJOW548/V9/+FciuQtv0FKcW/
+Iad1jCkf5EIdb8Y3Rl37I+vUhuGNUlXJtvkgfj6ID+Lng/j5ID6IHw0yjmOmadqT+3yN/xrk
+wPBBLlRe+SPLzwfxQfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80F8ED8fxM8H8UH8fBAf
+xM8H8UH8fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB/HwQH8TPBxF7ALBq
+biDM8YpuAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleDynamicBezierEdges [
 
 	| v es |
