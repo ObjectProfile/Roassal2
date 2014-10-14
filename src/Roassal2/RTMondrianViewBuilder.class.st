@@ -1,3 +1,6 @@
+"
+A RTMondrianViewBuilder is a builder for the Mondrian domain-specific language.
+"
 Class {
 	#name : #RTMondrianViewBuilder,
 	#superclass : #RTBuilder,
@@ -367,13 +370,4 @@ RTMondrianViewBuilder >> verticalLineLayout [
 { #category : #accessing }
 RTMondrianViewBuilder >> view [
 	^ view
-]
-
-{ #category : #private }
-RTMondrianViewBuilder >> with: anElement during: aBlock [
-	| state |
-	state := self shallowCopy.
-	self root: anElement.
-	aBlock ensure: [ self copyFrom: state ]
-
 ]

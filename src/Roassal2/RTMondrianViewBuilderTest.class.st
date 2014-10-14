@@ -225,6 +225,22 @@ RTMondrianViewBuilderTest >> testRadialTreeLayout [
 ]
 
 { #category : #basic }
+RTMondrianViewBuilderTest >> testShapeAndBorderColor [
+
+	| elements |
+	builder shape rectangle
+		borderColor: Color gray;
+		if: #odd borderColor: Color black.
+		
+	elements := builder nodes: #(1 2 3).
+	builder build.
+	
+	self assert: elements size equals: 3.
+	self assert: elements first trachelShape strokePaint equals: Color black.
+	self assert: elements second trachelShape strokePaint equals: Color gray.
+]
+
+{ #category : #basic }
 RTMondrianViewBuilderTest >> testTopLevel [
 	builder nodes: (1 to: 5).
 	builder nodes: (1 to: 5).
@@ -278,4 +294,28 @@ RTMondrianViewBuilderTest >> testTwiceDefiningEdges [
 		
 	builder edgeFromAssociation: 2 ->  18.
 	builder edgesToAll: [ :v | Array with: v + 3 with: v + 5 with: v *2 ]
+]
+
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testVerticalLineLayout [
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape rectangle.
+	b nodes: (1 to: 5).
+	b verticalLineLayout.
+	b applyLayout.
+	self assert: (b view elements collect: #position) asArray equals: 
+((Array new: 5) at: 1 put: ((2.5@2.5)); at: 2 put: ((2.5@17.5)); at: 3 put: ((2.5@32.5)); at: 4 put: ((2.5@47.5)); at: 5 put: ((2.5@62.5)); yourself).
+]
+
+{ #category : #layout }
+RTMondrianViewBuilderTest >> testhorizontalDominanceTreeLayout [
+	| b |
+	b := RTMondrianViewBuilder new.
+	b shape rectangle.
+	b nodes: (1 to: 5).
+	b horizontalDominanceTreeLayout.
+	b applyLayout.
+	self assert: (b view elements collect: #position) asArray equals: 
+ ((Array new: 5) at: 1 put: ((7.5@7.5)); at: 2 put: ((7.5@15.5)); at: 3 put: ((7.5@23.5)); at: 4 put: ((7.5@31.5)); at: 5 put: ((7.5@39.5)); yourself)
 ]

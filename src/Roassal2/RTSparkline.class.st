@@ -2,8 +2,7 @@ Class {
 	#name : #RTSparkline,
 	#superclass : #RTAbstractElementShape,
 	#instVars : [
-		'valueBlock',
-		'borderWidth'
+		'valueBlock'
 	],
 	#category : #'Roassal2-Sparkline'
 }

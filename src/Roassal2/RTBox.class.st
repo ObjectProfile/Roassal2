@@ -25,5 +25,6 @@ RTBox >> updateFor: anElement trachelShape: trachelShape [
 	trachelShape extent: ex.
 	trachelShape color: (self colorFor: anElement).
 	trachelShape strokePaint: (self borderColorFor: anElement).
+	trachelShape strokeWidth: (self borderWidthFor: anElement).
 
 ]

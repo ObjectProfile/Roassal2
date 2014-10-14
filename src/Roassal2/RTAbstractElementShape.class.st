@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'height',
 		'width',
-		'borderColor'
+		'borderColor',
+		'borderWidth'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -28,6 +29,28 @@ RTAbstractElementShape >> borderColorElement: aValueOrAOneArgBlock [
 { #category : #accessing }
 RTAbstractElementShape >> borderColorFor: anElement [
 	^ borderColor rtValue: anElement
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderWidth [
+	^ borderWidth
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderWidth: aValueOrAOneArgBlock [
+	"aValueOrAOneArgBlock is applied on the object model"
+	self borderWidthElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+	
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderWidthElement: aValueOrAOneArgBlock [
+	borderWidth := aValueOrAOneArgBlock
+]
+
+{ #category : #accessing }
+RTAbstractElementShape >> borderWidthFor: anElement [
+	^ borderWidth rtValue: anElement
 ]
 
 { #category : #configuration }
@@ -73,6 +96,7 @@ RTAbstractElementShape >> initialize [
 	super initialize.
 	width := self defaultWidth.
 	height := self defaultHeight.
+	borderWidth := 1
 	
 ]
 

@@ -96,6 +96,7 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 
 { #category : #configuration }
 RTDoubleBarBuilder >> pointName: aOneArgBlock [
+	"The argument is used to set the name of each entry"
 	pointName := aOneArgBlock
 ]
 
