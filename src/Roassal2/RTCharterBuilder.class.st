@@ -474,7 +474,7 @@ RTCharterBuilder >> x: metricAsBlockOrSymbol [
 	maxX := maxX max: vs max."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTCharterBuilder >> x: metricAsBlockOrSymbol min: aMin max: aMax [
 	minX := aMin.
 	maxX := aMax.	"Ensure that 0 is between [ minX ; maxX ]"

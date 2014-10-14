@@ -280,6 +280,11 @@ RTForceBasedLayout >> prepareNodes: nodeElements [
 	alpha := 0.1
 ]
 
+{ #category : #updating }
+RTForceBasedLayout >> removeAllEdges [
+	edges := OrderedCollection new
+]
+
 { #category : #algorithm }
 RTForceBasedLayout >> repulse: aNode from: aQuad [
 

@@ -114,12 +114,14 @@ RTDoubleBarBuilder >> points: someObjects [
 		alignRight; 
 		on: elements.
 	
-	topExtremity := RTBox element.
-	bottomExtremity := RTBox element.
+	topExtremity := (RTBox new size: 0) element.
+	bottomExtremity := (RTBox new size: 0) element.
 	TRConstraint move: topExtremity onTheRightOf: elements first.
 	TRConstraint move: bottomExtremity onTheRightOf: elements last.
 	topExtremity translateBy: 0 @ -15.
 	bottomExtremity translateBy: 0 @ 15.	
+	view add: topExtremity.
+	view add: bottomExtremity.
 	view add: ((RTLine new color: Color red) edgeFrom: topExtremity to: bottomExtremity).
 ]
 

@@ -15,6 +15,12 @@ RTSpringLayoutStepping >> addEdge: anEdge [
 ]
 
 { #category : #updating }
+RTSpringLayoutStepping >> addEdges: someEdges [
+	layout addEdges: someEdges
+
+]
+
+{ #category : #updating }
 RTSpringLayoutStepping >> addNode: anElement [
 	"Designate the collection of elements that have to be layouted"
 	layout 
@@ -57,6 +63,11 @@ RTSpringLayoutStepping >> initialize [
 ]
 
 { #category : #accessing }
+RTSpringLayoutStepping >> layout [
+	^ layout
+]
+
+{ #category : #accessing }
 RTSpringLayoutStepping >> layout: aForceBasedLayout [
 	"Set an instance of the class RTForceBasedLayout. 
 	This is useful in case the layout is initialized from outside"
@@ -91,6 +102,11 @@ RTSpringLayoutStepping >> refresh [
 	layout step.
 	view ifNotNil: [ view canvas signalUpdate ].
 	afterBlock value
+]
+
+{ #category : #updating }
+RTSpringLayoutStepping >> removeAllEdges [
+	layout removeAllEdges
 ]
 
 { #category : #actions }
