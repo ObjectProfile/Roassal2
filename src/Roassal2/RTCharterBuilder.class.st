@@ -47,10 +47,17 @@ Class {
 		'minX',
 		'maxX',
 		'allPointElements',
-		'axisConfiguration'
+		'axisConfiguration',
+		'datasets'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
+
+{ #category : #accessing }
+RTCharterBuilder >> add: aDataSet [
+	datasets add: aDataSet.
+	aDataSet builder: self
+]
 
 { #category : #public }
 RTCharterBuilder >> adjustMinAndMaxValues [
@@ -270,13 +277,6 @@ RTCharterBuilder >> curve [
 ]
 
 { #category : #'public-curve' }
-RTCharterBuilder >> curveColor: aColor [
-	"connect the points in the order they have been added"
-
-	^ self curveUsing: (RTLine new color: aColor)
-]
-
-{ #category : #'public-curve' }
 RTCharterBuilder >> curveUsing: aLineShape [
 	"connect the points in the order they have been added"
 
@@ -385,6 +385,9 @@ RTCharterBuilder >> initialize [
 	"Collection of collection of elements"
 	allPointElements := OrderedCollection new.
 	
+	"Collection of data sets"
+	datasets := OrderedCollection new.
+	
 	self resetAxisConfiguration
 ]
 
@@ -428,6 +431,12 @@ RTCharterBuilder >> points: objects [
 	view addAll: lastAddedElements.
 	self setUpInteractionFor: lastAddedElements.
 	allPointElements add: lastAddedElements.
+]
+
+{ #category : #'as yet unclassified' }
+RTCharterBuilder >> renderIn: aView [
+
+	datasets do: [ :aDataset | aDataset renderIn: aView ]
 ]
 
 { #category : #'public-axis' }
