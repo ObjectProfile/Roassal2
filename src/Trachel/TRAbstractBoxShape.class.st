@@ -2,7 +2,8 @@ Class {
 	#name : #TRAbstractBoxShape,
 	#superclass : #TRShape,
 	#instVars : [
-		'rectangle'
+		'rectangle',
+		'strokeWidth'
 	],
 	#classInstVars : [
 		'nullRectangle'
@@ -51,6 +52,7 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 	| scale ratio |
 	self canvas ifNil: [ ^ self ].
+	self haltOnce.
 	scale := self canvas camera scale.
 	scale < 1 
 		ifTrue: [ ratio := self strokeWidth ] 
@@ -135,7 +137,8 @@ TRAbstractBoxShape >> includesPoint: aPoint [
 { #category : #initialization }
 TRAbstractBoxShape >> initialize [
 	super initialize.
-	rectangle := self class nullRectangle
+	rectangle := self class nullRectangle.
+	strokeWidth := 1
 ]
 
 { #category : #public }
@@ -169,7 +172,12 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
-	^ 1
+	^ strokeWidth
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> strokeWidth: aWidth [
+	strokeWidth := aWidth
 ]
 
 { #category : #accessing }
