@@ -160,6 +160,39 @@ RTCharterBuilderTest >> testPointsAndAxis [
 	self assert: view edges second from position equals: 0 @ 0.
 ]
 
+{ #category : #scaling }
+RTCharterBuilderTest >> testScaling01 [
+
+	| f g xValues b |
+	f := [ :x | x ].
+	g := [ :x | x * x ].
+
+	xValues := (0 to: 100 by: 0.1).
+
+	b := RTCharterBuilder new.
+	b extent: 300 @ 200.
+	b shape rectangle size: 0.
+
+	b points: xValues.
+	b y: f.
+	b x: #yourself.
+	b connectDotColor: Color blue.
+
+	b points: xValues.
+	b y: g.
+	b x: #yourself.
+	b connectDotColor: Color green.
+
+	b axisX; axisY.
+	b build.
+	
+	self assert: b maxX equals: 100.
+	self assert: b minX equals: 0.
+
+	self assert: b maxY equals: 10000.
+	self assert: b minY equals: 0.
+]
+
 { #category : #tests }
 RTCharterBuilderTest >> testSimpleScatterplot [
 

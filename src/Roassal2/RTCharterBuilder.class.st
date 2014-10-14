@@ -394,6 +394,26 @@ RTCharterBuilder >> leftPoint [
 	^ self axisPointFor: minX @ 0
 ]
 
+{ #category : #accessing }
+RTCharterBuilder >> maxX [
+	^ maxX
+]
+
+{ #category : #accessing }
+RTCharterBuilder >> maxY [
+	^ maxY
+]
+
+{ #category : #accessing }
+RTCharterBuilder >> minX [
+	^ minX
+]
+
+{ #category : #accessing }
+RTCharterBuilder >> minY [
+	^ minY
+]
+
 { #category : #'public-axis' }
 RTCharterBuilder >> newAxisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
