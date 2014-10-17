@@ -5419,3 +5419,14 @@ VersionOfRoassal2 >> version000442 [
 	at: #date put: '14 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000443 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.225';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.549';
+	at: #version put: '0.443';
+	at: #comment put: '0.443 : added example about fading letter';
+	at: #date put: '17 October 2014';
+	yourself
+]
