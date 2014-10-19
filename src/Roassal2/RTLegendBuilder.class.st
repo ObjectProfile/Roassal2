@@ -5,13 +5,15 @@ Class {
 	#name : #RTLegendBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'group'
+		'group',
+		'legendElement'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
 
 { #category : #adding }
 RTLegendBuilder >> addColor: aColor text: aText [
+	"Associate a color with a text"
 	| g |
 	g := RTGroup new.
 	g add: (RTBox new size: 10; color: aColor) element.
@@ -21,8 +23,13 @@ RTLegendBuilder >> addColor: aColor text: aText [
 ]
 
 { #category : #adding }
+RTLegendBuilder >> addColoredText: aText color: aColor [
+	group add: (RTGroup new add: ((RTLabel new color: aColor) elementOn: aText); yourself)
+]
+
+{ #category : #adding }
 RTLegendBuilder >> addText: aText [
-	group add: (RTGroup new add: (RTLabel elementOn: aText); yourself)
+	self addColoredText: aText color: Color lightGray
 ]
 
 { #category : #initialization }
@@ -31,19 +38,21 @@ RTLegendBuilder >> initialize [
 	group := RTGroup new.
 ]
 
+{ #category : #accessing }
+RTLegendBuilder >> legendElement [
+	^ legendElement
+]
+
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
-	| background |
 	super renderIn: aView.
-	
 	RTVerticalLineLayout on: group.
-	
-	background := (RTBox new borderColor: Color lightGray; fillColor: Color white) element.
-
-	RTNest new on: background nest: group.
-	TRConstraint move: background below: (RTGroup withAll: aView elements).
-
-	aView add: background.
+	legendElement := (RTBox new
+		borderColor: Color lightGray;
+		fillColor: Color white) element.
+	RTNest new on: legendElement nest: group.
+	TRConstraint move: legendElement below: (RTGroup withAll: aView elements).
+	aView add: legendElement.
 	group do: [ :g | aView addAll: g ].
-	background @ RTDraggable.
+	legendElement @ RTDraggable
 ]
