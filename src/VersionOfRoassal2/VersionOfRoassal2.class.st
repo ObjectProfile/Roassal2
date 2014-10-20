@@ -5441,3 +5441,14 @@ VersionOfRoassal2 >> version000444 [
 	at: #date put: '19 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000445 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.226';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.551';
+	at: #version put: '0.445';
+	at: #comment put: '0.445 : Added utility method in the metric normalizer';
+	at: #date put: '20 October 2014';
+	yourself
+]
