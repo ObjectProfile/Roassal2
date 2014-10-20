@@ -13,48 +13,12 @@ Class {
 		'superclass',
 		'methodselector',
 		'methodShapeBuilder',
-		'layout'
+		'layout',
+		'attributeselector',
+		'attributeShapeBuilder'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
-
-{ #category : #public }
-RTUMLClassBuilder >> addClass: class [
-	| group box r label e1 e2  l h |
-	group := RTGroup new.
-	classes add: class.
-	
-	group add: ((RTLabel new height: 15; 
-		text: [:c| self classNameFor: c]) 
-		elementOn: class).
-		
-	(self varNamesFor: class) do: [ :varName |
-		group add: (RTLabel elementOn: varName)	].
-	RTVerticalLineLayout on: group.
-	r := group encompassingRectangle.
-	h := r height.
-	label := RTLabel new text: [ :e | (self selectorForMethod: e) ].
-	(self methodsForClass: class) do: [:method | 
-		group add: (label elementOn: method) ].
-	
-	RTVerticalLineLayout on: group.
-	r := group encompassingRectangle.
-	group first trachelShape translateTo: (r center x @ group first trachelShape center y).
-	box := (RTBox new color: Color white; borderColor: Color black) elementOn: class.
-	e1 := (RTBox new extent: 0@0) elementOn: 'p1'.
-	e2 := (RTBox new extent: 0@0) elementOn: 'p2'.
-	e1 trachelShape translateTo: r left@h.
-	e2 trachelShape translateTo: r right@h.
-	l := RTEdge from: e1 to: e2.
-	l + (RTLine new color: Color black).
-	group add: e1; add: e2; add: l.
-	RTNest new on: box nest: group.
-	
-	box @ RTDraggable.
-	classesGroup add: box.
-	view add: box.
-	view addAll: group.
-]
 
 { #category : #public }
 RTUMLClassBuilder >> addObject: object [
@@ -73,27 +37,58 @@ RTUMLClassBuilder >> applyLayout [
 	self layout on: classesGroup elements.
 ]
 
+{ #category : #shapes }
+RTUMLClassBuilder >> attributeShape [
+	^ attributeShapeBuilder
+]
+
+{ #category : #shapes }
+RTUMLClassBuilder >> attributeShape: aUMLShapeBuilder [
+	attributeShapeBuilder := aUMLShapeBuilder
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> attributesOf: object [
+	^ self instanceVariables rtValue: object
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> attributeselector [
+	^ attributeselector
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> attributeselector: aSelector [
+	attributeselector := aSelector.
+]
+
+{ #category : #public }
+RTUMLClassBuilder >> buildEdges [
+	RTEdge buildEdgesFromObjects: 
+		classes from: (self superclass) to: #yourself using: (RTMultiLine new orthoVertical attachPoint: RTVerticalAttachPoint instance) inView: view
+]
+
 { #category : #public }
 RTUMLClassBuilder >> buildSchema [
 	| group box r label e1 e2  l h |
-	shapeBuilder := self methodShape.
-	(shapeBuilder shape class = RTNoShape) ifTrue: [
-		shapeBuilder label height: 10].
-	shapeBuilder text: [ :met | (self selectorForMethod: met)].
+	self prepare: self methodShape selector: #methodselector.
+	self prepare: self attributeShape selector: #attributeselector.
+	
 	classes do: [ :object | 
 		group := RTGroup new.
 		
-		group add: ((RTLabel new height: 12; 
+		group add: ((RTLabel new height: self fontSizeOfClassname; 
 			text: [:c| self classNameFor: c]) 
 			elementOn: object).
-
-		(self varNamesFor: object) do: [ :varName |
-			group add: (RTLabel new height: 10; elementOn: varName)	].
+			
+		label := self attributeShape shape.
+		(self attributesOf: object) do: [ :attribute |
+			group add: (label elementOn: attribute) ].
 		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		h := r height.
 		
-		label := shapeBuilder shape.
+		label := self methodShape shape.
 		(self methodsForClass: object) do: [:method | 
 			group add: (label elementOn: method) ].
 	
@@ -117,9 +112,8 @@ RTUMLClassBuilder >> buildSchema [
 		view add: box.
 		view addAll: group.
 	].
-
-	RTEdge buildEdgesFromObjects: 
-		classes from: (self superclass) to: #yourself using: (RTMultiLine new orthoVertical attachPoint: RTVerticalAttachPoint instance) inView: view
+	self buildEdges.
+	
 ]
 
 { #category : #accessing }
@@ -176,8 +170,8 @@ RTUMLClassBuilder >> example3 [
 	"
 	| objects|
 	objects :=  {
-		{ 'MyClass' . { 'iv1' . 'iv2' } . { 'method1' . 'method2' . 'method3' }}  .
-		{ 'MyClass2' . { 'iv2' . 'iv1' } . { 'method1' . 'method2' . 'method4' }}  }.
+		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
+		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }.
 
 	RTUMLClassBuilder new
 		addObjects: objects;
@@ -185,6 +179,7 @@ RTUMLClassBuilder >> example3 [
 		instanceVariables: #second;
 		methodsNames: #third;
 		methodselector: #yourself;
+		attributeselector: #yourself;
 		superclass: nil;
 		open
 ]
@@ -197,10 +192,47 @@ RTUMLClassBuilder >> example4 [
 	| b |
 	b := RTUMLClassBuilder new.
 	b methodShape label
-        if: [ :method | method selector beginsWith: 'init' ] color: Color green.
+		if: [ :method | method selector beginsWith: 'init' ] color: Color green;
+		if: [ :method | method selector beginsWith: 'with' ] color: Color red.
+			
+	b attributeShape label
+		if: [ :attribute | attribute beginsWith: 'a' ] color: Color blue.
 	b addObjects: RTShape withAllSubclasses.
 	b treeLayout; open.
 		
+]
+
+{ #category : #examples }
+RTUMLClassBuilder >> example5 [
+	"
+	self new example5
+	"
+	| objects b |
+	objects :=  {
+		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
+		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }.
+
+	b := RTUMLClassBuilder new.
+	b attributeShape label if: [ :a | a = #iv1 ] color: Color red.
+	b
+		addObjects: objects;
+		classname: #first;
+		instanceVariables: #second;
+		methodsNames: #third;
+		methodselector: #yourself;
+		attributeselector: #yourself;
+		superclass: nil;
+		open
+]
+
+{ #category : #private }
+RTUMLClassBuilder >> fontSizeOfClassname [
+	^ 12
+]
+
+{ #category : #private }
+RTUMLClassBuilder >> fontSizeOfMembers [
+	^ 10
 ]
 
 { #category : #layouts }
@@ -219,8 +251,10 @@ RTUMLClassBuilder >> initialize [
 	self methodsNames: #methods.
 	self superclass: #superclass.
 	self methodselector: #selector.
+	self attributeselector: #yourself.
 
 	self methodShape: RTMethodShapeBuilder new.
+	self attributeShape: RTMethodShapeBuilder new.
 ]
 
 { #category : #accessing }
@@ -249,9 +283,9 @@ RTUMLClassBuilder >> methodShape [
 	^ methodShapeBuilder
 ]
 
-{ #category : #accessing }
-RTUMLClassBuilder >> methodShape: aMethodShapeBuilder [
-	methodShapeBuilder := aMethodShapeBuilder
+{ #category : #shapes }
+RTUMLClassBuilder >> methodShape: aUMLShapeBuilder [
+	methodShapeBuilder := aUMLShapeBuilder
 ]
 
 { #category : #accessing }
@@ -279,15 +313,18 @@ RTUMLClassBuilder >> methodselector: aSelector [
 	methodselector := aSelector.
 ]
 
+{ #category : #private }
+RTUMLClassBuilder >> prepare: builder selector: selector [
+	builder shape class = RTNoShape ifTrue: [ 
+		builder label height: self fontSizeOfMembers ].
+	builder text: [ :obj | (self perform: selector) rtValue: obj ].
+	
+]
+
 { #category : #hooks }
 RTUMLClassBuilder >> renderIn: aView [
 	self buildSchema.
 	self applyLayout
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> selectorForMethod: method [
-	^ self methodselector rtValue: method
 ]
 
 { #category : #accessing }
@@ -303,9 +340,4 @@ RTUMLClassBuilder >> superclass: aSelector [
 { #category : #layouts }
 RTUMLClassBuilder >> treeLayout [
 	^ self layout: RTTreeLayout new
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> varNamesFor: object [
-	^ self instanceVariables rtValue: object
 ]
