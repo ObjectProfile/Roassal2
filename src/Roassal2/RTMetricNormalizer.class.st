@@ -142,11 +142,36 @@ RTMetricNormalizer >> normalizeHeight: metricBlock min: minValue max: maxValue [
 ]
 
 { #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max minValue: aMinValue maxValue: aMaxValue [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeHeight: metricBlock min: min max: max minValue: aMinValue maxValue: aMaxValue using: #yourself
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+
+	| values |
+
+	self checkNotEmpty.
+	
+	values := (self getNormalizedValues: metricBlock 
+							min: min max: max 
+							minValue: minValue maxValue: maxValue 
+							using: transformation).
+	elements with: values do: [ :el :v | el trachelShape height: v ] 
+	
+	
+]
+
+{ #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	
-	| minValue maxValue values |
+	| minValue maxValue |
 	
 	self checkNotEmpty.
 
@@ -159,14 +184,7 @@ RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max using: tran
 		minValue := minValue min: t.
 		maxValue := maxValue max: t ].
 	
-	
-	values := (self getNormalizedValues: metricBlock 
-							min: min max: max 
-							minValue: minValue maxValue: maxValue 
-							using: transformation).
-	elements with: values do: [ :el :v | el trachelShape height: v ] 
-	
-	
+	self normalizeHeight: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
 ]
 
 { #category : #'public normalize position' }
