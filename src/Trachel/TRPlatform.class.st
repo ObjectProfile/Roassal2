@@ -13,11 +13,26 @@ TRPlatform class >> current [
 ]
 
 { #category : #public }
+TRPlatform >> dateAndTimeFromString: aString [
+	self subclassResponsibility
+]
+
+{ #category : #public }
 TRPlatform >> getFontForSize: aNumber [
 	self subclassResponsibility.
 ]
 
 { #category : #public }
+TRPlatform >> roassalIcon [
+	self subclassResponsibility
+]
+
+{ #category : #public }
 TRPlatform >> widthOfString: string font: font [
+	self subclassResponsibility 
+]
+
+{ #category : #public }
+TRPlatform >> widthOfString: string fontFamilyName: fontFamilyName fontSize: fontSize [
 	self subclassResponsibility 
 ]
