@@ -63,6 +63,15 @@ RTView >> addElement: anElement [
 ]
 
 { #category : #menu }
+RTView >> addFindMenu [
+	|element|
+	self addMenu: 'Find' callback: [  
+		element := UIManager default chooseFrom: (self elements collect: #model) values: self elements.
+		element notNil
+			ifTrue: [ self canvas camera translateTo: element position. RTBlink on: element ] ].
+]
+
+{ #category : #menu }
 RTView >> addLayoutMenu [
 	"Simply add some useful menu"
 	| b translator |
