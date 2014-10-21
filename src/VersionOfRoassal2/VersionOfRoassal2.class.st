@@ -5474,3 +5474,14 @@ VersionOfRoassal2 >> version000447 [
 	at: #date put: '21 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000448 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-akevalion.227';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.556';
+	at: #version put: '0.448';
+	at: #comment put: '0.448 : use rtmethods to ease the translation of the example into VisualWorks. Maybe we will reverte this on some points...';
+	at: #date put: '21 October 2014';
+	yourself
+]
