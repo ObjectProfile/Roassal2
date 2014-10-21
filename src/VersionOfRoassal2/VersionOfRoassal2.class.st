@@ -5452,3 +5452,14 @@ VersionOfRoassal2 >> version000445 [
 	at: #date put: '20 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000446 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.226';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.554';
+	at: #version put: '0.446';
+	at: #comment put: '0.446 : Added example abouter GrapherBuilder and added example about UML';
+	at: #date put: '21 October 2014';
+	yourself
+]
