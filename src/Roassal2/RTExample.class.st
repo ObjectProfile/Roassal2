@@ -98,7 +98,7 @@ RTClusterLayout on: v elements edges: v edges.
 "Computing dependencies"
 dep := OrderedCollection new.
 Collection withAllSubclasses do: [ :cls |
-	cls methods do: [ :cm | 
+	cls rtmethods do: [ :cm | 
 		((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass) ifTrue: [ dep add: cls -> depClass ] ] ]
 ].
 
@@ -1464,7 +1464,7 @@ RTForceBasedLayout new
 
 "Defining edges from dependencies"
 Collection withAllSubclasses do: [ :cls |
-cls methods do: [ :cm | 
+cls rtmethods do: [ :cm | 
 			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
 			
 		RTEdge buildEdgesFromAssociations: (Array with: cls -> depClass) using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]

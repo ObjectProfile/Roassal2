@@ -83,10 +83,10 @@ RTMenuBuilderExamples >> example03 [
 	shape := false.
 	
 	b := RTMenuBuilder new view: v.
-	menus := { 
-		'with border'->[:m | withBorder := m selected ].
-		'with text'->[:m | withText := m selected].
-		'ellipse'->[:m | shape := m selected] }.
+	menus := Array with: 
+		'with border'->[:m | withBorder := m selected ] with:
+		'with text'->[:m | withText := m selected] with:
+		'ellipse'->[:m | shape := m selected].
 			
 	b menu: 'add element' callback: [ 
 		| e t s |
@@ -136,17 +136,17 @@ RTMenuBuilderExamples >> example04 [
 		v canvas signalUpdate ].
 	b menu: 'Text' callback: [ text := text,'test'. ].
 
-	menus := { 
-		'Ellipse'->[:m | shape := TREllipseShape ].
-		'Box'->[:m | shape := TRBoxShape].}.
+	menus := Array with: 
+		('Ellipse'->[:m | shape := TREllipseShape ]) with:
+		('Box'->[:m | shape := TRBoxShape]).
 	
 	menus := b menu: 'Shape' subcheckmenus: menus background: Color red.
 	RTMenuGroup on: menus.
 	menus first selected: true.
 	
-	menus := { 
-		'with background'->[:m | withBackground := m selected].
-		'with border'->[:m | withBorder := m selected] }.
+	menus := Array with:  
+		('with background'->[:m | withBackground := m selected]) with:
+		('with border'->[:m | withBorder := m selected]) .
 	menus := b menu: 'opions' subcheckmenus: menus background: Color green.
 	menus first selected: true.
 	v open.

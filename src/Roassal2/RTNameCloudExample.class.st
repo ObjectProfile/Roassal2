@@ -29,7 +29,7 @@ RTNameCloudExample >> exampleRoassalCode [
 	| b |
 	b := RTNameCloud new.
 	RTObject withAllSubclasses do: [ :c | 
-		b addStrings: (c methods collect: #getSource) ].
+		b addStrings: (c rtmethods collect: #getSource) ].
 	b open.
 	b view canvas
 ]

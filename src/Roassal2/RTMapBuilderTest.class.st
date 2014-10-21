@@ -20,7 +20,7 @@ RTMapBuilderTest >> testCities [
 	saopaulo := #('Sao Paulo' 19889559).
 	
 	builder countries: #('Chile' 'Brazil').
-	builder cities: {stgo. brasilia. saopaulo} named: [ :c | c at: 1 ].
+	builder cities: (Array with:stgo with: brasilia with: saopaulo) named: [ :c | c at: 1 ].
 	
 	builder renderIn: builder view.
 	
@@ -63,7 +63,7 @@ RTMapBuilderTest >> testCountries [
 	chile := #('Chile').
 	france := #('France').
 
-	builder countries: {chile. france} named: [ :c | c at: 1 ].
+	builder countries: (Array with: chile with: france) named: [ :c | c at: 1 ].
 	builder renderIn: builder view.
 	self assert: builder view numberOfElements = 2.
 	
@@ -100,10 +100,10 @@ RTMapBuilderTest >> testPixelsToGeoTransformations [
 	pixelsToGeo := [ :p | (builder translatePixelsToGeoPosition: p) roundTo: 0.01]. 
 	
 	stgoPixels := builder translateGeoPositionToPixels: santiago.
-	self assert: (pixelsToGeo value: stgoPixels) = santiago.
+	self assert: ((pixelsToGeo value: stgoPixels) closeTo: santiago).
 	
 	parisPixels := builder translateGeoPositionToPixels: paris.
-	self assert: (pixelsToGeo value: parisPixels) = paris.
+	self assert: ((pixelsToGeo value: parisPixels) closeTo: paris).
 	
 	
 ]

@@ -121,3 +121,8 @@ ClassDescription >> referencedByClasses: aCollectionOfClasses [
 			ifTrue: [ references add: eachClass ] ].
 	^ references
 ]
+
+{ #category : #'*roassal2' }
+ClassDescription >> rtmethods [
+	^ self methods
+]

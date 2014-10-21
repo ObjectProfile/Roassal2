@@ -2851,7 +2851,7 @@ RTGraphBuilderExample >> exampleForceBasedLayoutWithMinSize [
 
 	b global
 		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
 	b open.
@@ -2989,7 +2989,7 @@ RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
 
 	b global
 		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
 	b open.
@@ -3316,7 +3316,7 @@ RTGraphBuilderExample >> exampleLabelledGraph [
 
 	b global
 		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red);
+		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red);
 		alphaColor: 0.4.
 
 	b addAll: (RTObject withAllSubclasses).
@@ -4377,7 +4377,7 @@ RTGraphBuilderExample >> exampleTreeMapAndNormalizeColor [
 	
 	b global
 		minSize: 10;
-		normalizeColor: [ :cls | cls methods size ] using: (Array with: Color green with: Color red).
+		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
 	b open.

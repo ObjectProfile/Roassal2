@@ -226,7 +226,7 @@ RTMondrianViewBuilder >> node: anObject [
 { #category : #'adding - nodes' }
 RTMondrianViewBuilder >> node: anObject forIt: aBlock [
 	^ (self 
-		nodes: { anObject } 
+		nodes: (Array with: anObject)
 		forEach: [ :each | aBlock value ]) first
 ]
 

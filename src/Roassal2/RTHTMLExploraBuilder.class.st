@@ -126,7 +126,7 @@ RTHTMLExploraBuilder >> linearLayout [
 RTHTMLExploraBuilder >> makeChildren: root direction: direction function: block [
 	| children |
 	children := block rtValue: root model.
-	children isCollection ifFalse:[ children := { children } ].
+	children isCollection ifFalse:[ children := Array with: children ].
 	children  := children collect: [ :c | self node: c direction: direction parent: root ].
 	children isEmpty
 		ifFalse: [ children do: [ :c | self makeChildren: c direction: direction function: block] ]. 
@@ -150,7 +150,7 @@ RTHTMLExploraBuilder >> node: anObject direction: direction parent: element [
 				ifTrue: [ edge := RTLine edgeFrom: element to: node.  ].		
 			self view add: edge.	
 			self nodes at: element ifAbsent: [ self nodes at: element put: OrderedCollection new ].
-			(self nodes at: element) add: { direction . node }			
+			(self nodes at: element) add: (Array with: direction with: node)
 			].
 	^ node.
 ]
@@ -173,7 +173,7 @@ RTHTMLExploraBuilder >> onLeftClickExplore: aBlock [
 
 { #category : #action }
 RTHTMLExploraBuilder >> onLeftClickExplore: aBlock edges: edgeDirection [
-	leftClick := { edgeDirection . aBlock }
+	leftClick := Array with: edgeDirection with: aBlock 
 ]
 
 { #category : #action }
@@ -183,7 +183,7 @@ RTHTMLExploraBuilder >> onRightClickExplore: aBlock [
 
 { #category : #action }
 RTHTMLExploraBuilder >> onRightClickExplore: aBlock edges: edgeDirection [
-	rightClick := { edgeDirection . aBlock }
+	rightClick := Array with: edgeDirection with: aBlock 
 ]
 
 { #category : #layout }

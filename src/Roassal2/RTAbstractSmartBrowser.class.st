@@ -132,7 +132,7 @@ RTAbstractSmartBrowser >> expandClassElement: classElement [
 	| class methods methodElements edges |
 	class := classElement model.
 	self clickOnClass: class.
-	methods := class methods.
+	methods := class rtmethods.
 	classElement attributes at: #oldExtent put: classElement extent.
 	classElement attributes at: #oldColor put: classElement trachelShape color.
 	classElement trachelShape color: (Color blue alpha: 0.3).
@@ -147,7 +147,7 @@ RTAbstractSmartBrowser >> expandClassElement: classElement [
 	RTTreeLayout on: methodElements.
 	self addInteractionToMethods: methodElements.
 	RTNest new on: classElement nest: methodElements.
-	classElement attributes at: #methods put: methodElements.
+	classElement attributes at: #rtmethods put: methodElements.
 	classElement attributes at: #edges put: edges.
 	self markElementAsExpanded: classElement
 ]
@@ -518,12 +518,12 @@ RTAbstractSmartBrowser >> shownClasses [
 RTAbstractSmartBrowser >> shrinkClassElement: classElement [
 	"We removed the inner methods"
 	| methods |
-	methods := classElement attributes at: #methods.
+	methods := classElement attributes at: #rtmethods.
 	methods do: [ :m | m connectedEdges do: #remove. m remove ].
 	classElement trachelShape color: (classElement attributes at: #oldColor).
 	(classElement attributes at: #edges) do: #remove.
 
-	classElement attributes removeKey: #methods.
+	classElement attributes removeKey: #rtmethods.
 	classElement attributes removeKey: #oldColor.
 	classElement attributes removeKey: #edges.
 	

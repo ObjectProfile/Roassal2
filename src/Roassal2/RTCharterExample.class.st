@@ -35,8 +35,8 @@ Class {
 RTCharterExample >> exampleAgeOfRoassalAndTrachel [
 
 | methodsRoassal methodsTrachel greatestAge b | 
-methodsRoassal := RTObject withAllSubclasses flatCollect: #methods.
-methodsTrachel := TRObject withAllSubclasses flatCollect: #methods.
+methodsRoassal := RTObject withAllSubclasses flatCollect: #rtmethods.
+methodsTrachel := TRObject withAllSubclasses flatCollect: #rtmethods.
 
 methodsRoassal := methodsRoassal select: [ :m | m numberOfLinesOfCode < 300 ].
 methodsTrachel := methodsTrachel select: [ :m | m numberOfLinesOfCode < 300 ].
@@ -172,7 +172,7 @@ RTCharterExample >> exampleCrosses [
 b := RTCharterBuilder new.
 b extent: 400 @ 400.
 b shape cross color: (Color red alpha: 0.3).
-b points: (RTShape withAllSubclasses flatCollect: #methods).
+b points: (RTShape withAllSubclasses flatCollect: #rtmethods).
 b x: #numberOfLinesOfCode.
 b y: [ :m | m getSource size ].
 b axisX.
@@ -221,7 +221,7 @@ CI38A5O2Qrits48mAAAAAElFTkSuQmCC'
 RTCharterExample >> exampleDateOnXAxis [
 
 | methods oldestMethod b |
-methods := RTObject withAllSubclasses flatCollect: #methods.
+methods := RTObject withAllSubclasses flatCollect: #rtmethods.
 methods := methods reject: [ :m | m numberOfLinesOfCode > 150 ].
 oldestMethod := methods minFor: #date.
 
@@ -252,7 +252,7 @@ b view canvas
 { #category : #sources }
 RTCharterExample >> exampleDateOnXAxis2 [
 | dates minDate b |
-dates := { Date today . Date yesterday . Date yesterday previous }.
+dates := Array with: Date today with: Date yesterday with: Date yesterday previous.
 minDate := dates min.
 
 b := RTCharterBuilder new.
@@ -584,7 +584,7 @@ b := RTCharterBuilder new.
 b extent: 300 @ 200.
 b shape rectangle size: 0.
 b points: (RTShape withAllSubclasses ).
-b y: [ :c | c methods size ].
+b y: [ :c | c rtmethods size ].
 b stackX.
 b shape rectangle color: Color veryLightGray.
 
@@ -597,7 +597,7 @@ b interaction popup
 	group: [ :group :element | 
 		| s ms |
 		s := RTBox new size: #numberOfLinesOfCode; color: Color red.
-		ms := element model methods sortedAs: #numberOfLinesOfCode.
+		ms := element model rtmethods sortedAs: #numberOfLinesOfCode.
 		group addAll: (s elementsOn: ms).
 		RTGridLayout on: group ].
 	
@@ -651,7 +651,7 @@ RTCharterExample >> exampleHistogram [
 	b points: RTShape withAllSubclasses.
 	
 	"The height of a bar will be the number of methods (defined in the instance side)"
-	b allY: [ :c | c methods size ].
+	b allY: [ :c | c rtmethods size ].
 	
 	"We set a color of the rectangle"
 	b shape rectangle color: Color blue.
@@ -773,7 +773,7 @@ RTCharterExample >> exampleMethodSize [
 	normalizer := RTMultiLinearColorForIdentity new objects: classes.
 	classes do: [ :c |
 		| data |
-		data := ((c methods reverseSortedAs: #numberOfLinesOfCode ) collect: [ :m | m numberOfLinesOfCode ]).
+		data := ((c rtmethods reverseSortedAs: #numberOfLinesOfCode ) collect: [ :m | m numberOfLinesOfCode ]).
 		b shape ellipse size: 0.
 		b points: data.
 		b connectDotColor: (normalizer rtValue: c).
@@ -799,7 +799,7 @@ RTCharterExample >> exampleMethodSize2 [
 	normalizer := RTMultiLinearColorForIdentity new objects: classes.
 	classes do: [ :c |
 		| data |
-		data := (c methods reverseSortedAs: #numberOfLinesOfCode ).
+		data := (c rtmethods reverseSortedAs: #numberOfLinesOfCode ).
 		
 		b interaction popup.
 		b shape rectangle color: (normalizer rtValue: c).
@@ -893,8 +893,8 @@ AElFTkSuQmCC'
 RTCharterExample >> exampleMethods [
 
 	| methods trachelMethods b |
-	methods := Collection withAllSubclasses flatCollect: #methods.
-	trachelMethods := TRObject withAllSubclasses flatCollect: #methods.
+	methods := Collection withAllSubclasses flatCollect: #rtmethods.
+	trachelMethods := TRObject withAllSubclasses flatCollect: #rtmethods.
 
 	b := RTCharterBuilder new.
 	b extent: 200 @ 200.
@@ -1510,7 +1510,7 @@ RTCharterExample >> exampleStackingX2 [
 	normalizer := RTMultiLinearColorForIdentity new objects: classes.
 	classes do: [ :c |
 		| data |
-		data := ((c methods reverseSortedAs: #numberOfLinesOfCode ) collect: [ :m | m numberOfLinesOfCode ]).
+		data := ((c rtmethods reverseSortedAs: #numberOfLinesOfCode ) collect: [ :m | m numberOfLinesOfCode ]).
 		b shape ellipse size: 0.
 		b points: data.
 		b connectDotColor: (normalizer rtValue: c).
@@ -1783,10 +1783,10 @@ RTCharterExample >> exampleUsingLegend [
 b := RTCharterBuilder new.
 b extent: 300 @ 200.
 
-clss := {RTElement . RTEdge }.
+clss := Array with: RTElement with: RTEdge.
 n := RTMultiLinearColorForIdentity new objects: clss.
 clss do: [ :cls |
-	b points: (cls methods sortedAs: #numberOfLinesOfCode).
+	b points: (cls rtmethods sortedAs: #numberOfLinesOfCode).
 	b connectDotColor: (n rtValue: cls).
 ].
 	b allY: #numberOfLinesOfCode.

@@ -120,7 +120,7 @@ b2 interaction popup.
 b2 shape rectangle size: 0.
 b2 points: classesToAnalyze.
 
-b2 allY: [ :cls | cls methods size ].
+b2 allY: [ :cls | cls rtmethods size ].
 b2 shape rectangle color: Color lightBlue.
 b2 stackX.
 b2 histogramBarWidth: 5.
@@ -204,7 +204,7 @@ b2 interaction popup.
 b2 shape rectangle size: 0.
 b2 points: classesToAnalyze.
 
-b2 allY: [ :cls | cls methods size ].
+b2 allY: [ :cls | cls rtmethods size ].
 b2 shape rectangle color: Color lightBlue.
 b2 stackX.
 b2 histogramBarWidth: 5.

@@ -35,7 +35,7 @@ RTNest new
 	for: es
 	inShape: #second
 	add: [ :group :model | 
-		group addAll: ((RTBox new color: Color blue) elementsOn: model methods).
+		group addAll: ((RTBox new color: Color blue) elementsOn: model rtmethods).
 		RTGridLayout on: group.
 	].
 
@@ -197,7 +197,7 @@ RTComposedShapeExample >> exampleInnerShapes [
 	v addAll: es.
 
 	es do: [ :e | 
-		methodElements := RTBox new elementsOn: e model methods.
+		methodElements := RTBox new elementsOn: e model rtmethods.
 		RTGridLayout on: methodElements.
 		v addAll: methodElements.
 		RTNest new
@@ -322,7 +322,7 @@ v addAll: es.
 RTNest new
 	for: es
 	add: [ :group :model | 
-		group addAll: ((RTBox new color: Color blue) elementsOn: model methods).
+		group addAll: ((RTBox new color: Color blue) elementsOn: model rtmethods).
 		RTGridLayout on: group.
 	].
 
@@ -363,7 +363,7 @@ RTNest new
 	for: es
 	inShape: #second
 	add: [ :group :model | 
-		group addAll: ((RTBox new color: Color blue) elementsOn: model methods).
+		group addAll: ((RTBox new color: Color blue) elementsOn: model rtmethods).
 		RTGridLayout on: group.
 	].
 

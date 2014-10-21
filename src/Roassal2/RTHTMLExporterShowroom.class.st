@@ -278,7 +278,7 @@ RTHTMLExporterShowroom >> exportExamples [
 	(showroom = nil or: [ (showroom isDirectory) not])
 		ifTrue: [showroom createDirectory].
 	RTHTMLExporter directory: showroom.
-	examples := self class methods select: [ :m |  m category = #examples].
+	examples := self class rtmethods select: [ :m |  m category = #examples].
 	examples do: [ :e | e valueWithReceiver: self arguments: #() ].
 ]
 
@@ -298,10 +298,11 @@ RTHTMLExporterShowroom >> initialize [
 { #category : #html }
 RTHTMLExporterShowroom >> makeExampleList [
 	|examples |
-	examples := self class methods 
+	examples := self class rtmethods 
 		select: [ :m |  m category = #examples] 
 		thenCollect: [ :e | 
-			{(e selector asString copyWithRegex: '#' matchesReplacedWith: '') .  ((e sourceCode lines at: 2) copyWithRegex: '"' matchesReplacedWith: '')}].
+			Array with: (e selector asString copyWithRegex: '#' matchesReplacedWith: '') 
+				with: ((e sourceCode lines at: 2) copyWithRegex: '"' matchesReplacedWith: '')].
 	stream
 		nextPutAll: '<ul>'.
 	examples do:[ :e | stream nextPutAll: '<li><a href=',e first,'.html>',e second,'</a></li>'].

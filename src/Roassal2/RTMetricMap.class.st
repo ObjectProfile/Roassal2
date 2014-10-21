@@ -709,7 +709,7 @@ RTMetricMap >> fillViewWithCountries: collection named: selectorOrBlockForName m
 	"
 	| cn maxValue tcountryName svgCountryName normalizedCountries |
 	"Initialize the color normalizer"
-	cn := RTMultiLinearColor new colors: {(Color r:0.8 g:0.8 b:1) . (Color r:0 g:0 b:0.3)}.
+	cn := RTMultiLinearColor new colors: (Array with:(Color r:0.8 g:0.8 b:1) with: (Color r:0 g:0 b:0.3)).
 	
 	"Get the maximum, useful since we need value between 0.0 and 1.0"
 	maxValue := (collection collect: selectorOrBlockForMetric) max.

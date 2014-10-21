@@ -33,7 +33,7 @@ RTDowserExample >> coolStuff [
 	builder legend: 'Compiler instance variables usage'.
 	builder labelRight: [:a | a selector asString]. 
 	builder left: Compiler instanceVariables.
-	builder right: Compiler methods.
+	builder right: Compiler rtmethods.
 	builder edgesTo: [ :a :b | b referredInstVars includes: a  ].
 	builder open
 ]

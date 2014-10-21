@@ -162,8 +162,8 @@ RTSVGVisitor >> fixedEncompassingRectangle [
 RTSVGVisitor >> getCorrespondingLine: decorator from: lines [
 	lines do: [ :l |
 		^(l class = TRBezierShape) 
-			ifTrue: [ decorator to = l points last ifTrue: [ lines remove: l. {l . decorator} ] ]
-			ifFalse: [ decorator to = l to ifTrue: [ lines remove: l. {l . decorator} ] ].
+			ifTrue: [ decorator to = l points last ifTrue: [ lines remove: l. Array with: l with: decorator ] ]
+			ifFalse: [ decorator to = l to ifTrue: [ lines remove: l. Array with: l with: decorator ] ].
 		 ].
 	^nil
 ]
@@ -356,7 +356,7 @@ RTSVGVisitor >> visitBoxShape: aBox [
 { #category : #visitor }
 RTSVGVisitor >> visitCanvas: aCanvas [
 	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses|
-	lineClasses := {TRLineShape . TRBezierShape}.	
+	lineClasses := Array with: TRLineShape with: TRBezierShape.
 	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
 	elementShapes := aCanvas shapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
 	edgeShapes := (aCanvas shapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.

@@ -110,7 +110,7 @@ RTHTMLMetricMap >> getTripletsFor: collection named: selectorOrBlockForName metr
 	
 	| cn maxValue cName svgCountryName normalizedCountries cFillColor triplets|
 	
-	cn := RTMultiLinearColor new colors: {(Color r:0.8 g:0.8 b:1) . (Color r:0 g:0 b:0.3)}.
+	cn := RTMultiLinearColor new colors: (Array with: (Color r:0.8 g:0.8 b:1) with: (Color r:0 g:0 b:0.3)).
 	maxValue := (collection collect: selectorOrBlockForMetric) max.
 	normalizedCountries := collection select: [ :country | 
 										cName := selectorOrBlockForName rtValue: country.
@@ -121,7 +121,7 @@ RTHTMLMetricMap >> getTripletsFor: collection named: selectorOrBlockForName metr
 		cName := selectorOrBlockForName rtValue: country.
 		svgCountryName := self convertIntoSVGCountryName: cName.
 		cFillColor := [ :cc | cn level: (selectorOrBlockForMetric rtValue: cc) / maxValue ].
-		{country . svgCountryName .  cFillColor}
+		Array with: country with: svgCountryName with: cFillColor
 	].
 	^triplets
 ]

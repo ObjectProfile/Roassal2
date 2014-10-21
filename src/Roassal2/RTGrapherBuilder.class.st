@@ -152,8 +152,8 @@ RTGrapherBuilder >> example03 [
 	"
 
 | methodsRoassal methodsTrachel greatestAge b ds | 
-methodsRoassal := RTObject withAllSubclasses flatCollect: #methods.
-methodsTrachel := TRObject withAllSubclasses flatCollect: #methods.
+methodsRoassal := RTObject withAllSubclasses flatCollect: #rtmethods.
+methodsTrachel := TRObject withAllSubclasses flatCollect: #rtmethods.
 
 methodsRoassal := methodsRoassal select: [ :m | m numberOfLinesOfCode < 300 ].
 methodsTrachel := methodsTrachel select: [ :m | m numberOfLinesOfCode < 300 ].

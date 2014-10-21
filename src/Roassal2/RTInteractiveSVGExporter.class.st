@@ -127,7 +127,7 @@ RTInteractiveSVGExporter >> getFinalBounds: bounds [
 			finalWidth := canvasWidth  + w.
 			finalHeight := canvasHeight max: (h * code lines size) 			
 			  ].
-	^{finalWidth . finalHeight}		
+	^ Array with: finalWidth with: finalHeight
 ]
 
 { #category : #initialization }

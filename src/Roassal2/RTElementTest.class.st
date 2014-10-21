@@ -181,7 +181,7 @@ RTElementTest >> testNestedElements3 [
 	RTNest new
 		layout: RTGridLayout new;
 		for: es inShape: #third add: [ :group :model |
-			group addAll: (RTBox elementsOn: model methods).
+			group addAll: (RTBox elementsOn: model rtmethods).
 			added addAll: group
 		].
 	

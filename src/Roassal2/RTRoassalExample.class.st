@@ -23,7 +23,7 @@ v addAll: es.
 RTMetricNormalizer new
 	elements: es;
 	normalizeSize: #numberOfLinesOfCode min: 5 max: 30 using: [:vv | vv sqrt * 5 ];
-	normalizeColor: #numberOfMethods using: { Color green . Color red };
+	normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red );
 	alphaColor: 0.3.
 	 
 anim := RTSpringLayoutStepping new view: v.
@@ -245,9 +245,9 @@ t8bt/+2frM7BYLwVAAAAAElFTkSuQmCC'
 RTRoassalExample >> exampleAligningGroups [
 
 | rootClasses groups v elements edges |
-rootClasses := { RTShape . RTLayout . RTBuilder }.
+rootClasses := Array with: RTShape with: RTLayout with: RTBuilder.
 
-groups := rootClasses collect: [ :cls |
+groups := rootClasses collect: [ :cls |  | g |
 	g := RTGroup new.
 	elements := (RTEllipse new size: 8; color: Color blue) elementsOn: cls withAllSubclasses.
 	g addAll: elements.
@@ -2304,7 +2304,7 @@ elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
 the second argument, aClassElement, is the class element on which the popup is being triggered."
 elementClasses @ (RTPopup new group: 
 [ :group :aClassElement |
-	methods := aClassElement model methods.
+	methods := aClassElement model rtmethods.
 
 	methodElements := (RTBox new color: Color red) elementsOn: methods.
 
@@ -2550,9 +2550,12 @@ Pnz48OHDhw8fPnwGhpNYGq32Nn6+JQAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleFonts [
 
+	"
+	self new exampleFonts
+	"
 | v fontNames shape es |
 v := RTView new.
-fontNames := FontChooser new fontListStrings  allButFirst.
+fontNames := self fontListStrings  allButFirst.
 
 shape := RTLabel new fontName: #yourself; text: #yourself.
 
@@ -3064,7 +3067,7 @@ allClassElements := OrderedCollection new.
 v := RTView new.
 
 classes do: [ :cls | 
-	es := RTBox elementsOn: cls methods.
+	es := RTBox elementsOn: cls rtmethods.
 	es @ RTPopup.
 	
 	back := (RTBox new color: Color blue) element.
@@ -3839,7 +3842,7 @@ v addAll: es.
 
 RTNest new
 	for: es add: [ :group :model | 
-		group addAll: (RTBox new elementsOn: model methods).
+		group addAll: (RTBox new elementsOn: model rtmethods).
 		RTGridLayout on: group ].
 	
 es @ (RTShowEdge new 
@@ -4088,9 +4091,9 @@ clss do: [ :cls |
 	s := RTPolygon new.
 	ver := OrderedCollection new.
 	d := 0.
-	(cls methods sortedAs: #numberOfLinesOfCode) do: [ :m |
+	(cls rtmethods sortedAs: #numberOfLinesOfCode) do: [ :m |
 		ver add: (Point r: m numberOfLinesOfCode * 5 degrees: d).
-		d := d + (360 / cls methods size).
+		d := d + (360 / cls rtmethods size).
 	 ].
 	s vertices: ver.
 	
@@ -4866,7 +4869,7 @@ classes do: [ :class |
 	v add: classElement.
 
 
-	methods := class methods.
+	methods := class rtmethods.
 
 	methodElements := shapeBuilder elementsOn: methods.
 	v addAll: methodElements.
@@ -5007,7 +5010,7 @@ RTRoassalExample >> exampleTimeLineOfRoassal [
 "We compute the number of methods created for each day. We keep the information in a dictionary"
 d := Dictionary new.
 RTObject withAllSubclasses do: [ :c |
-	c methods do: [ :m |
+	c rtmethods do: [ :m |
 		d at: m ageInDaysAsInteger ifAbsentPut: [ 0 ].
 		d at: m ageInDaysAsInteger put: (d at: m ageInDaysAsInteger) + 1 ].
 ].
@@ -5176,7 +5179,7 @@ RTRoassalExample >> exampleVectorEditing [
 	view addMenu: '+ line' callback: [ selected := #line. statusBar text: 'line' ].
 	view addMenu: '+ circle' callback: [ selected := #circle. statusBar text: 'circle' ].
 	view addMenu: '+ rectangle' callback: [ selected := #rectangle. statusBar text: 'rectangle' ].
-	view addMenu: 'Info' callback: [ UIManager default inform: 'Vectorial editing is hyper cool' ].
+	view addMenu: 'Info' callback: [ TRPlatform current inform: 'Vectorial editing is hyper cool' ].
 
 	statusBar := TRLabelShape new.
 	statusBar text: 'Please, select an option'.
@@ -5230,7 +5233,7 @@ RTForceBasedLayout new
 
 "Defining edges from dependencies"
 Collection withAllSubclasses do: [ :cls |
-cls methods do: [ :cm | 
+cls rtmethods do: [ :cm | 
 			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
 			
 		RTEdge buildEdgesFromAssociations: (Array with: cls -> depClass ) using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
@@ -5440,7 +5443,7 @@ RTRoassalExample >> exampleforAddWithEdges [
 
 | v es elements edges |
 v := RTView new.
-es := (RTBox new color: Color white; borderColor: Color lightGray) elementsOn: { RTLayout . RTShape . RTBuilder }.
+es := (RTBox new color: Color white; borderColor: Color lightGray) elementsOn: (Array with: RTLayout with: RTShape with: RTBuilder ).
 v addAll: es.
 es @ RTDraggable.
 

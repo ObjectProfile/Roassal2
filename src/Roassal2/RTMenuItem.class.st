@@ -41,7 +41,7 @@ RTMenuItem >> callback [
 ]
 
 { #category : #accesing }
-RTMenuItem >> callback: ablock. [
+RTMenuItem >> callback: ablock [
 	callback := ablock
 	
 ]
