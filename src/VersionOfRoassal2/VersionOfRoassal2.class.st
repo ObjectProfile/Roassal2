@@ -5463,3 +5463,14 @@ VersionOfRoassal2 >> version000446 [
 	at: #date put: '21 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000447 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.226';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.555';
+	at: #version put: '0.447';
+	at: #comment put: '0.447 : added another example for UML';
+	at: #date put: '21 October 2014';
+	yourself
+]
