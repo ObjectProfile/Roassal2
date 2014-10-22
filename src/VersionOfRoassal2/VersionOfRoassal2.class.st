@@ -5485,3 +5485,14 @@ VersionOfRoassal2 >> version000448 [
 	at: #date put: '21 October 2014';
 	yourself
 ]
+
+{ #category : #versions }
+VersionOfRoassal2 >> version000449 [
+	^ Dictionary new 
+	at: 'Trachel' put: 'Trachel-AlexandreBergel.228';
+	at: 'Roassal2' put: 'Roassal2-AlexandreBergel.556';
+	at: #version put: '0.449';
+	at: #comment put: '0.449 : Added a tiny scaling factor to render non-fixed element. Useful to remove the long-lasting font problem with Athens';
+	at: #date put: '22 October 2014';
+	yourself
+]
