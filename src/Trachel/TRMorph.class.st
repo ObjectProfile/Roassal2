@@ -59,7 +59,7 @@ TRMorph >> drawOn: aCanvas [
 		].
 	
 		"We display the elements that are _NOT_ subject to the camera"
-		cs pathTransform loadIdentity.
+		cs pathTransform loadIdentity scaleBy: 1.001.
 		trachelCanvas fixedShapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
 		].
