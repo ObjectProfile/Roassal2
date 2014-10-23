@@ -117,6 +117,18 @@ RTShapeBuilder >> if: conditionBlock borderColor: colorBlock [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> if: conditionBlock color: colorBlock [
+	| oldBlockOrValue |
+	oldBlockOrValue := self color.
+	^self color: [ :aModel | (conditionBlock rtValue: aModel)
+									ifTrue: [ colorBlock rtValue: aModel ] 
+									ifFalse: [ 
+										oldBlockOrValue rtValue: (RTElement on: aModel) ]].
+							
+						
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
 	| oldBlockOrValue |

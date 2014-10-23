@@ -49,7 +49,7 @@ RTUMLClassBuilder >> attributeShape: aUMLShapeBuilder [
 
 { #category : #accessing }
 RTUMLClassBuilder >> attributesOf: object [
-	^ self instanceVariables rtValue: object
+	^ self instanceVariables ifNil: [ #() ] ifNotNil: [ :m | m rtValue: object]
 ]
 
 { #category : #accessing }
@@ -69,11 +69,11 @@ RTUMLClassBuilder >> buildEdges [
 ]
 
 { #category : #public }
-RTUMLClassBuilder >> buildSchema [
+RTUMLClassBuilder >> buildSchema: aView [
 	| group box r label e1 e2  l h |
 	self prepare: self methodShape selector: #methodselector.
 	self prepare: self attributeShape selector: #attributeselector.
-	
+
 	classes do: [ :object | 
 		group := RTGroup new.
 		
@@ -109,16 +109,20 @@ RTUMLClassBuilder >> buildSchema [
 	
 		box @ RTDraggable.
 		classesGroup add: box.
-		view add: box.
-		view addAll: group.
+		aView add: box.
+		aView addAll: group.
 	].
-	self buildEdges.
 	
 ]
 
 { #category : #accessing }
 RTUMLClassBuilder >> classNameFor: obj [
 	^ self classname rtValue: obj
+]
+
+{ #category : #accessing }
+RTUMLClassBuilder >> classesGroup [
+	^ classesGroup.
 ]
 
 { #category : #accessing }
@@ -253,8 +257,8 @@ RTUMLClassBuilder >> initialize [
 	self methodselector: #selector.
 	self attributeselector: #yourself.
 
-	self methodShape: RTMethodShapeBuilder new.
-	self attributeShape: RTMethodShapeBuilder new.
+	self methodShape: RTShapeBuilder new.
+	self attributeShape: RTShapeBuilder new.
 ]
 
 { #category : #accessing }
@@ -323,7 +327,8 @@ RTUMLClassBuilder >> prepare: builder selector: selector [
 
 { #category : #hooks }
 RTUMLClassBuilder >> renderIn: aView [
-	self buildSchema.
+	self buildSchema: aView.
+	self buildEdges.
 	self applyLayout
 ]
 
