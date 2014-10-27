@@ -52,7 +52,6 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 	| scale ratio |
 	self canvas ifNil: [ ^ self ].
-	self haltOnce.
 	scale := self canvas camera scale.
 	scale < 1 
 		ifTrue: [ ratio := self strokeWidth ] 
