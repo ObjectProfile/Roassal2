@@ -121,8 +121,8 @@ RTMondrianViewBuilder >> edges: objects fromAll: fromAllBlock to: toBlock [
 	associations := OrderedCollection new.
 	objects do: [ :obj |
 		| to |
-		to := toBlock roValue: obj.
-		(fromAllBlock roValue: obj) do: [:from | 
+		to := toBlock rtValue: obj.
+		(fromAllBlock rtValue: obj) do: [:from | 
 			associations add: (from -> to)
 		]
 	].
