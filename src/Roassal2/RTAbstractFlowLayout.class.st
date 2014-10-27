@@ -1,9 +1,32 @@
+"
+A RTAbstractFlowLayout is a layout based on the size in pixels of elements.
+
+Instance Variables
+	alignment:		<Object>
+	gapSize:		<Object>
+	maxWidth:		<Object>
+
+alignment
+	- xxxxx
+
+gapSize
+	- xxxxx
+
+maxWidth
+	- xxxxx
+
+"
 Class {
 	#name : #RTAbstractFlowLayout,
 	#superclass : #RTLayout,
 	#instVars : [
 		'maxWidth',
-		'gapSize'
+		'gapSize',
+		'alignment'
+	],
+	#classInstVars : [
+		'aBlock',
+		'maxWithBlock'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -30,6 +53,37 @@ RTAbstractFlowLayout class >> withMaxWidth: anInteger withGap: anotherInteger [
 		yourself
 ]
 
+{ #category : #alignment }
+RTAbstractFlowLayout >> alignBottom [
+	alignment := #bottom
+]
+
+{ #category : #alignment }
+RTAbstractFlowLayout >> alignCenter [
+	alignment := #center
+]
+
+{ #category : #alignment }
+RTAbstractFlowLayout >> alignTop [
+	alignment := #top
+]
+
+{ #category : #configuration }
+RTAbstractFlowLayout >> defaultGapSize [
+ ^ 5
+]
+
+{ #category : #configuration }
+RTAbstractFlowLayout >> defaultMaxWidth [
+	
+	^ [ :elements | 
+		(elements size < 4) ifTrue: [ (((elements collect: [ :each | each width * each height]) * 2) sum ) + (elements size * (gapSize squared)) ]
+			ifFalse: [
+			((((elements collect: [ :each | each width * each height]) * 2) sum) + (elements size * (gapSize squared))) sqrt ceiling truncated.
+			]
+		]
+]
+
 { #category : #accessing }
 RTAbstractFlowLayout >> gapSize [
 	
@@ -46,8 +100,23 @@ RTAbstractFlowLayout >> gapSize: aSizeInPixels [
 RTAbstractFlowLayout >> initialize [
 	
 	super initialize.
-	maxWidth := 300.
-	gapSize := 5
+	maxWidth := self defaultMaxWidth.
+	gapSize := self defaultGapSize.
+]
+
+{ #category : #testing }
+RTAbstractFlowLayout >> isAlignBottom [
+	^ alignment = #bottom
+]
+
+{ #category : #testing }
+RTAbstractFlowLayout >> isAlignCenter [
+	^ alignment = #center
+]
+
+{ #category : #testing }
+RTAbstractFlowLayout >> isAlignTop [
+	^ alignment = #top
 ]
 
 { #category : #private }

@@ -105,7 +105,7 @@ RTLayoutTest >> testFlowLayoutAlignmentLayoutBottom [
 		addAll: es;
 		open.
 "		
-	self assert: (es collect: #position) asArray = (Array with: (5@0.0) with: (25.0@ -5.0) with: (55.0@ -10.0))
+	self assert: (es collect: #position) asArray = (Array with: (10.0@0.0) with: (35.0@ -5.0) with: (70.0@ -10.0))
 	
 ]
 
@@ -121,7 +121,7 @@ RTLayoutTest >> testFlowLayoutAlignmentLayoutCenter [
 		addAll: es;
 		open.
 		
-"	self assert: (es collect: #position) asArray = (Array with: (5@5) with: (25.0@5) with: (55.0@5))
+"	self assert: (es collect: #position) asArray = (Array with: (10.0@5) with: (35.0@5) with: (70.0@5))
 
 ]
 
@@ -181,6 +181,64 @@ RTLayoutTest >> testForceWithForeinEdges [
 	"No error should be raised"
 	layout on: es allButLast edges: edges allButFirst.
 	
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutTest >> testHorizontalFlowLayoutAlignment [
+	| l |
+	l := RTHorizontalFlowLayout new.
+	self assert: l isAlignTop.
+	self deny: l isAlignBottom.
+	
+	l alignBottom.
+	self deny: l isAlignTop.
+	self assert: l isAlignBottom.
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutBottom [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTHorizontalFlowLayout new.
+	l alignBottom.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+"		
+	self assert: (es collect: #position) asArray = (Array with: (0@10.0) with: (-5@35.0) with: (-10.0@ 70.0))
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutCenter [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTHorizontalFlowLayout new.
+	l alignCenter.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+		
+"	self assert: (es collect: #position) asArray = (Array with: (5@10.0) with: (5@35.0) with: (5@70.0))
+
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutTop [
+	| l es |
+	es := (RTBox new size: [ :v | v * 10 ]) elementsOn: #(1 2 3).
+	l := RTHorizontalFlowLayout new.
+	l on: es.
+	
+"	RTView new
+		addAll: es;
+		open.
+"		
+	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (15.0@35.0) with: (20.0@70.0))
 ]
 
 { #category : #tests }
