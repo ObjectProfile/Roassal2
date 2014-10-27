@@ -14,7 +14,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTPharoCodeAnalyzer class >> menuCommandOn: aBuilder [
-	<worldMenu>
+	"<worldMenu>"
 
 	(aBuilder item: #'Pharo Code Analyzer')
 		order: 0.1; 
