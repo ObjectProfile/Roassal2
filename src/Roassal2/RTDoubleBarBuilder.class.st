@@ -8,7 +8,6 @@ Class {
 		'elements',
 		'topExtremity',
 		'bottomExtremity',
-		'pointName',
 		'verticalGap',
 		'width'
 	],
@@ -38,6 +37,17 @@ RTDoubleBarBuilder >> bottomValue: aBlock titled: aTitle [
 	configuration numberOfTicks: 4.
 	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (width @ 0).
 	
+]
+
+{ #category : #util }
+RTDoubleBarBuilder >> createPointNameFrom: someObjects [
+	"Create the labels for the objects"
+	| es |
+	shapeBuilder ensure: RTLabel.
+	es := shapeBuilder elementsOn: someObjects.
+	es @ RTHighlightable.
+	self setUpInteractionFor: es.
+	^ es
 ]
 
 { #category : #hooks }
@@ -71,7 +81,6 @@ RTDoubleBarBuilder >> example01 [
 { #category : #initialization }
 RTDoubleBarBuilder >> initialize [
 	super initialize.
-	pointName := #yourself.
 	verticalGap := self defaultVerticalGap.
 	width := self defaultWidth.
 ]
@@ -96,8 +105,8 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 
 { #category : #configuration }
 RTDoubleBarBuilder >> pointName: aOneArgBlock [
-	"The argument is used to set the name of each entry"
-	pointName := aOneArgBlock
+	"Utility method"
+	self shape label text: aOneArgBlock
 ]
 
 { #category : #'public-accessing' }
@@ -107,23 +116,22 @@ RTDoubleBarBuilder >> points [
 
 { #category : #'public-accessing' }
 RTDoubleBarBuilder >> points: someObjects [
-	elements := (RTLabel new text: pointName) elementsOn: someObjects.
+	elements := self createPointNameFrom: someObjects.
 	elements @ RTHighlightable.
 	view addAll: elements.
-	RTVerticalLineLayout new 
+	RTVerticalLineLayout new
 		verticalGap: verticalGap;
-		alignRight; 
+		alignRight;
 		on: elements.
-	
 	topExtremity := (RTBox new size: 0) element.
 	bottomExtremity := (RTBox new size: 0) element.
 	TRConstraint move: topExtremity onTheRightOf: elements first.
 	TRConstraint move: bottomExtremity onTheRightOf: elements last.
 	topExtremity translateBy: 0 @ -15.
-	bottomExtremity translateBy: 0 @ 15.	
+	bottomExtremity translateBy: 0 @ 15.
 	view add: topExtremity.
 	view add: bottomExtremity.
-	view add: ((RTLine new color: Color red) edgeFrom: topExtremity to: bottomExtremity).
+	view add: ((RTLine new color: Color red) edgeFrom: topExtremity to: bottomExtremity)
 ]
 
 { #category : #configuration }

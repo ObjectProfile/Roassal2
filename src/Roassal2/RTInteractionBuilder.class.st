@@ -51,6 +51,18 @@ RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
 			unhighlight: event element ].
 ]
 
+{ #category : #'events-registering' }
+RTInteractionBuilder >> highlightElements: elementsOrABlock [
+	"Highlight the elements, elementsOrABlock may either be a block (which takes as argument the selected element and return a list of elements"
+	interactions add: [ :element | element @ (RTHighlightable highlightElements: (elementsOrABlock rtValue: element model)) ]
+]
+
+{ #category : #'events-registering' }
+RTInteractionBuilder >> highlightNeighbour: aBlock [
+	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
+	interactions add: [ :element | element @ (RTHighlightable highlight: aBlock) ]
+]
+
 { #category : #initialization }
 RTInteractionBuilder >> initialize [
 	super initialize.

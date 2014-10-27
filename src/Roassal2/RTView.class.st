@@ -148,6 +148,12 @@ RTView >> elements [
 ]
 
 { #category : #'accessing-computed' }
+RTView >> elementsFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ elements select: [ :el | el model = anObject ]
+]
+
+{ #category : #'accessing-computed' }
 RTView >> elementsFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	| answer t |
