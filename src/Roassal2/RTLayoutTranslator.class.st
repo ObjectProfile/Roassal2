@@ -41,14 +41,14 @@ RTLayoutTranslator >> translate: element to: newPosition [
 
 { #category : #hook }
 RTLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
-	"Translate the top left corner of the element"
-	self translate: element to: (newPosition + (0 @ (element height / -2)))
+	"Translate the bottom left corner of the element to the newPosition"
+	self translate: element to: (newPosition + ((element width / 2) @ (element height / -2))).
 ]
 
 { #category : #hook }
 RTLayoutTranslator >> translateCenterLeftOf: element to: newPosition [
-	"Translate the top left corner of the element"
-	self translate: element to: (newPosition "+ ((element width / 2) @ 0)")
+	"Translate the left center of the element to newPosition"
+	self translate: element to: (newPosition + ((element width / 2) @ 0)).
 ]
 
 { #category : #hook }
