@@ -45,7 +45,7 @@ RTDoubleBarBuilder >> createPointNameFrom: someObjects [
 	| es |
 	shapeBuilder ensure: RTLabel.
 	es := shapeBuilder elementsOn: someObjects.
-	es @ RTHighlightable.
+	"es @ RTHighlightable."
 	self setUpInteractionFor: es.
 	^ es
 ]
@@ -117,7 +117,6 @@ RTDoubleBarBuilder >> points [
 { #category : #'public-accessing' }
 RTDoubleBarBuilder >> points: someObjects [
 	elements := self createPointNameFrom: someObjects.
-	elements @ RTHighlightable.
 	view addAll: elements.
 	RTVerticalLineLayout new
 		verticalGap: verticalGap;
