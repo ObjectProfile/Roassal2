@@ -105,7 +105,7 @@ RTLayoutTest >> testFlowLayoutAlignmentLayoutBottom [
 		addAll: es;
 		open.
 "		
-	self assert: (es collect: #position) asArray = (Array with: (10.0@0.0) with: (35.0@ -5.0) with: (70.0@ -10.0))
+	self assert: (es collect: #position) asArray = (Array with: (10.0@0.0) with: (30.0@ -5.0) with: (60.0@ -10.0))
 	
 ]
 
@@ -121,7 +121,7 @@ RTLayoutTest >> testFlowLayoutAlignmentLayoutCenter [
 		addAll: es;
 		open.
 		
-"	self assert: (es collect: #position) asArray = (Array with: (10.0@5) with: (35.0@5) with: (70.0@5))
+"	self assert: (es collect: #position) asArray = (Array with: (10.0@5) with: (30.0@5) with: (60.0@5))
 
 ]
 
@@ -136,7 +136,7 @@ RTLayoutTest >> testFlowLayoutAlignmentLayoutTop [
 		addAll: es;
 		open.
 "		
-	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (35.0@15.0) with: (70.0@20.0))
+	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (30.0@15.0) with: (60.0@20.0))
 ]
 
 { #category : #tests }
@@ -207,7 +207,7 @@ RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutBottom [
 		addAll: es;
 		open.
 "		
-	self assert: (es collect: #position) asArray = (Array with: (0@10.0) with: (-5@35.0) with: (-10.0@ 70.0))
+	self assert: (es collect: #position) asArray = (Array with: (0@10.0) with: (-5@30.0) with: (-10.0@ 60.0))
 	
 ]
 
@@ -223,7 +223,7 @@ RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutCenter [
 		addAll: es;
 		open.
 		
-"	self assert: (es collect: #position) asArray = (Array with: (5@10.0) with: (5@35.0) with: (5@70.0))
+"	self assert: (es collect: #position) asArray = (Array with: (5@10.0) with: (5@30.0) with: (5@60.0))
 
 ]
 
@@ -238,7 +238,7 @@ RTLayoutTest >> testHorizontalFlowLayoutAlignmentLayoutTop [
 		addAll: es;
 		open.
 "		
-	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (15.0@35.0) with: (20.0@70.0))
+	self assert: (es collect: #position) asArray = (Array with: (10.0@10.0) with: (15.0@30.0) with: (20.0@60.0))
 ]
 
 { #category : #tests }
