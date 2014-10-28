@@ -20,16 +20,15 @@ RTFlowLayout >> doExecute: elements [
 	
  	elements do:
 		[ :anElement | 
+		(anElement = elements last) ifFalse:  [nextElement := (elements after: anElement)] ifTrue: [nextElement := anElement].	
 
 		self isAlignBottom ifTrue: [ 
 			translator translateBottomLeftOf: anElement to: x @ y.
-			
-			(nextElement = elements last) ifFalse:  [nextElement := (elements after: anElement) ].
-			x := x + anElement width + (2 * self gapSize).
-			x > (self maxWidth rtValue: elements) ifTrue: 
+			x := x + anElement width + (self gapSize).
+			((x > (self maxWidth rtValue: elements)) | ((x + nextElement width) > (self maxWidth rtValue: elements) )) ifTrue:
 				[ x := self gapSize.
 				maxNextLineHeight := self maxNextLineHeightFrom: nextElement for: elements.
-				y := y + (2 * self gapSize) + maxNextLineHeight.
+				y := y + (self gapSize) + maxNextLineHeight.
 				maxNextLineHeight := 0.
 				]
 			].
@@ -37,29 +36,28 @@ RTFlowLayout >> doExecute: elements [
 		self isAlignCenter ifTrue: [ 
 			translator translateCenterLeftOf: anElement to: x @ y.
 					
-			(nextElement = elements last) ifFalse:  [nextElement := (elements after: anElement) ].
-			x := x + (anElement width) +(2 * self gapSize).
+			x := x + (anElement width) +(self gapSize).
 			maxLastLineHeight := maxLastLineHeight max: (anElement height).
-			x > (self maxWidth rtValue: elements) ifTrue: 
+			((x > (self maxWidth rtValue: elements)) | ((x + nextElement width) > (self maxWidth rtValue: elements) )) ifTrue: 
 				[ x := self gapSize.
 				maxNextLineHeight := self maxNextLineHeightFrom: nextElement for: elements.
-				y := y + (2 * self gapSize) + (maxNextLineHeight / 2) + (maxLastLineHeight / 2).
+				y := y + (self gapSize) + (maxNextLineHeight / 2) + (maxLastLineHeight / 2).
 				maxNextLineHeight := 0.
 				maxLastLineHeight := 0.
 				]
 			].
 		
 		self isAlignTop ifTrue: [ 
-			translator translateTopLeftOf: anElement to: (x @ y).	
-			x := x + anElement width + (2 * self gapSize).
+			translator translateTopLeftOf: anElement to: (x @ y).
+			x := x + anElement width + (self gapSize).
 			maxLastLineHeight := maxLastLineHeight max: (anElement height ).
-			x > (self maxWidth rtValue: elements) ifTrue: 
+			( (x > (self maxWidth rtValue: elements)) | ((x + nextElement width) > (self maxWidth rtValue: elements) ))ifTrue: 
 				[ x := self gapSize.
-				y := y + (2 * self gapSize) + maxLastLineHeight.
+				y := y + (self gapSize) + maxLastLineHeight.
 				maxLastLineHeight := 0. 
 				]
-			]
-		]
+		] 
+	]
 ]
 
 { #category : #'initialize-release' }
@@ -74,7 +72,7 @@ RTFlowLayout >> maxNextLineHeightFrom: anElement for: elements [
 	maxNextLineHeight := 0.
 	nextLineX := self gapSize.
 	[ nextLineX < (self maxWidth rtValue: elements) ] whileTrue: [
-		nextLineX := nextLineX + (2 * self gapSize) + (anElement width).
+		nextLineX := nextLineX + (self gapSize) + (anElement width).
 		maxNextLineHeight := maxNextLineHeight max: (anElement height).	
 		(anElement = elements last) ifFalse:  [anElement := (elements after: anElement) ].
 		].
