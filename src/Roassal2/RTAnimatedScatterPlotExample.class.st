@@ -621,8 +621,8 @@ b columns:  #('Country' 'Population' 'Documents' 'Citable documents' 'Citations'
 b x: #third.
 b y: #fourth.
 b size: #fourth.
-b open. 
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1051,10 +1051,8 @@ b columns: #('NOM' 'NOA' 'LOC').
 b if: [ :row | row first endsWith: 'Test' ] color: Color green.
 b if: [ :row | row first endsWith: 'Decorator' ] color: Color blue.
 b if: [ :row | row first endsWith: 'Diagram' ] color: Color red.
-b open.
-"b build.
-b view "
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1115,8 +1113,8 @@ b columns: #('m1' 'm2' 'm3').
 b x: #second.
 b y: #third.
 b size: #fourth.
-b open.
-b view canvas 
+b build.
+^ b view
 ]
 
 { #category : #icons }

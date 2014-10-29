@@ -62,9 +62,7 @@ b add: ds.
 
 b axisX; axisY.
 b build.
-b open.
-b  view canvas.
-		
+^ b view
 ]
 
 { #category : #icons }
@@ -120,8 +118,8 @@ b add: ds.
 b axisX.
 b axisY.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }

@@ -58,9 +58,8 @@ b allY: #numberOfLinesOfCode.
 
 b axisXWithNumberOfTicks: 4.
 b axisYWithNumberOfTicks: 4.
-b open.
-
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -121,8 +120,8 @@ RTCharterExample >> exampleColoredAndInteractionLabel [
 	b points: RTShape withAllSubclasses.
 	b bottomValue: #numberOfMethods.
 	b topValue: #numberOfVariables.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -205,9 +204,8 @@ b connectDotColor: (Color blue alpha: 0.4).
 
 b axisX.
 b axisY.
-
-b open.
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -254,9 +252,8 @@ b x: #numberOfLinesOfCode.
 b y: [ :m | m getSource size ].
 b axisX.
 b axisY.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -321,9 +318,7 @@ b axisConfiguration
 b axisX.
 
 b build.
-
-b open.
-b view canvas
+^ b view
 ]
 
 { #category : #sources }
@@ -348,9 +343,8 @@ b axisConfiguration
 	labelRotation: -30;
 	labelConvertion: [ :v | (Date julianDayNumber: v + minDate julianDayNumber) ].  
 b axisX.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -442,9 +436,8 @@ b allX: #numberOfMethods.
 b allY: #numberOfLinesOfCode.
 
 b axisX; axisY.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -478,8 +471,8 @@ RTCharterExample >> exampleDoubleBar [
 	b points: RTShape withAllSubclasses.
 	b bottomValue: #numberOfMethods.
 	b topValue: #numberOfVariables.
-	b open.
-b view canvas
+	b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -560,8 +553,8 @@ b newAxisConfiguration noDecimals.
 b axisY.
 
 b highlightIf: [ :row | (row at: 10) > 100 ] using: [ :row | row third year ].
-
-b open
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -622,8 +615,8 @@ RTCharterExample >> exampleFunctions [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -683,9 +676,8 @@ b histogram.
 b axisY.
 b newAxisConfiguration plain.
 b axisX.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -742,8 +734,8 @@ RTCharterExample >> exampleHistogram [
 	b axisX.
 	b axisYWithNumberOfTicks: 4.
 	
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -777,8 +769,8 @@ b newAxisConfiguration plain.
 b axisX.
 b build.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -861,8 +853,8 @@ RTCharterExample >> exampleMethodSize [
 
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #sources }
@@ -889,7 +881,8 @@ RTCharterExample >> exampleMethodSize2 [
 
 	b axisX.
 	b axisY.
-	b open.
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -991,7 +984,8 @@ RTCharterExample >> exampleMethods [
 	b axisConfiguration withThousandsSeparator.
 	b axisXTitled: 'LOC'.
 	b axisYTitled: 'Size'.
-	b open
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1040,8 +1034,8 @@ b connectDot.
 b build.
 
 b view add: (RTEllipse new color: Color red) element.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1085,8 +1079,8 @@ b axisConfiguration noDecimals.
 b axisX.
 b axisY.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1123,8 +1117,8 @@ b pointName: [ :row | row at: (tab indexOfName: 'NAME') ].
 b points: tab values allButFirst. 
 b bottomValue: [ :row | ((row at: (tab indexOfName: 'POPESTIMATE2013')) / 1000) asInteger ] titled: 'Pop estimate'.
 b topValue: [ :row | ((row at: (tab indexOfName: 'POPEST18PLUS2013')) / 1000) asInteger ] titled: 'Pop +18 estimate'.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1192,8 +1186,8 @@ RTCharterExample >> exampleRandomScatterplot [
 	b x: #x.
 	b y: #y.
 	b axisXWithNumberOfTicks: 4; axisYWithNumberOfTicks: 4.
-	b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1234,9 +1228,8 @@ RTCharterExample >> exampleScatterPlot [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
-	
+	b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1279,9 +1272,8 @@ RTCharterExample >> exampleScatterPlotSimple [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
-	
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1318,9 +1310,8 @@ RTCharterExample >> exampleScatterplotWithHighlighting [
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
 	b highlightIf: [ :c | (c numberOfLinesOfCode > 2000) or: [ c numberOfVariables > 10 ] ] using: #name.
-	b open.
-	b view canvas
-	
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1386,8 +1377,8 @@ RTCharterExample >> exampleScatterplotWithTitle [
 			title: 'NOM'.
 
 	b axisY.
-	b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1435,8 +1426,8 @@ RTCharterExample >> exampleSimpleCurve [
 		
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #sources }
@@ -1452,8 +1443,8 @@ RTCharterExample >> exampleSimpleCurve2 [
 	b curve.
 	b axisXWithNumberOfTicks: 4.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1525,9 +1516,8 @@ b allY: #yourself.
 b stackX.
 b axisXWithNumberOfTicks: values size.
 b axisYWithNumberOfTicks: 6.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1573,7 +1563,8 @@ RTCharterExample >> exampleStackingX [
 
 	b axisXWithNumberOfTicks: 4.
 	b axisYWithNumberOfTicks: 4.
-	b open.
+b build.
+^ b view
 ]
 
 { #category : #sources }
@@ -1598,8 +1589,8 @@ RTCharterExample >> exampleStackingX2 [
 
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1657,8 +1648,8 @@ RTCharterExample >> exampleStackingX3 [
 
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1777,8 +1768,8 @@ RTCharterExample >> exampleTwoCurves [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1823,8 +1814,8 @@ RTCharterExample >> exampleTwoCurvesSimple [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1881,8 +1872,8 @@ clss do: [ :aClass |
 ].
 lb build.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1926,7 +1917,7 @@ AAAASUVORK5CYII='
 { #category : #sources }
 RTCharterExample >> examplemultipleCurveStacking [
 
-| b |
+| b points1 points2 minY maxY |
 points1 := TRShape withAllSubclasses sortedAs: #numberOfVariables.
 points2 := TRShape withAllSubclasses sortedAs: #numberOfMethods.
 
@@ -1946,8 +1937,8 @@ b stackX.
 
 b axisXNoLabel; axisY.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }

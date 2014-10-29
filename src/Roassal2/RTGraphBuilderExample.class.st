@@ -30,8 +30,8 @@ b edges connectFrom: #superclass; useInLayout.
 
 b addAll: RTObject withAllSubclasses.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -215,9 +215,8 @@ b global
 b layout grid.
 
 b addAll: RTObject withAllSubclasses.
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -380,8 +379,8 @@ b layout grid.
 
 b addAll: RTObject withAllSubclasses.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -531,8 +530,8 @@ b layout grid.
 
 b addAll: RTObject withAllSubclasses.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -703,8 +702,8 @@ b global
 	alphaColor: 0.4.
 b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -956,9 +955,8 @@ b global
 	colorCycles.
 b addAll: RTShape withAllSubclasses.
 
-b open.
-b view canvas
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1033,9 +1031,8 @@ b global
 	alphaColor: 0.4.
 b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
 
-b open.
-b view canvas.
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1248,9 +1245,8 @@ b global
 	alphaColor: 0.4.
 
 b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
-b open.
-b view canvas
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1429,8 +1425,8 @@ b global
 	normalizeSize: #numberOfMethods min: 5 max: 30 using: #sqrt.
 b addAll: (RTObject withAllSubclasses).
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1484,8 +1480,8 @@ RTGraphBuilderExample >> exampleConnectFromAndSelectiveColor [
 	b layout circle radius: 220.
 	b addAll: (1 to: 100).
 
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -1690,8 +1686,8 @@ RTGraphBuilderExample >> exampleDependenciesAndInheritance [
 	b layout use: (RTCircleLayout new initialRadius: 230).
 	b addAll: (Collection withAllSubclasses).
 
-	b open.
-	
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2098,8 +2094,8 @@ b global
 b addAll: RTObject withAllSubclasses.	
 b addAll: TRObject withAllSubclasses.
 b addAll: TREvent withAllSubclasses.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2352,8 +2348,8 @@ RTGraphBuilderExample >> exampleDependenciesInRoassalAndTrachel [
 	b addAll: TRObject withAllSubclasses.
 	b addAll: TREvent withAllSubclasses.
 
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2687,8 +2683,8 @@ b global
 b layout horizontal.
 b addAll: (RTShape withAllSubclasses).
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2783,9 +2779,8 @@ RTGraphBuilderExample >> exampleFading [
 
 	b layout use: RTGridLayout new.
 	b addAll: (1 to: 20).
-	b open.
-	b view canvas
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2854,8 +2849,8 @@ RTGraphBuilderExample >> exampleForceBasedLayoutWithMinSize [
 		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2992,8 +2987,8 @@ RTGraphBuilderExample >> exampleForceLayoutWithGreatCharge [
 		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3150,8 +3145,8 @@ b edges
 b layout
 	forceCharge: -80.
 b addAll: (RTShape withAllSubclasses).
-b open.
-b view canvas.
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3198,9 +3193,8 @@ b edges
 
 b layout radial.
 b addAll: (RTObject withAllSubclasses).
-b open.
-
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3320,8 +3314,8 @@ RTGraphBuilderExample >> exampleLabelledGraph [
 		alphaColor: 0.4.
 
 	b addAll: (RTObject withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3627,8 +3621,8 @@ b := RTGraphBuilder new.
 b nodes color: (RTMultiLinearColorForIdentity new objects: (1 to: 200)).
 b layout grid.
 b addAll: (1 to: 200).
-b open.
-b view canvas.
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3715,8 +3709,8 @@ RTGraphBuilderExample >> exampleNormalizeColor [
 	b layout tree.
 		
 	b addAll: (RTShape withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3792,8 +3786,8 @@ b layout
 b layout grid.
 
 b addAll: RTObject withAllSubclasses.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -3973,10 +3967,8 @@ b global
 	alphaColor: 0.4;
 	normalizeSize: [ :c | c dependentClasses size ] min: 5 max: 30 using: #sqrt.
 b addAll: (RTObject withAllSubclasses).
-b open.
-
-b view canvas
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4165,8 +4157,8 @@ b layout
 	if: [ :c | c inheritsFrom: RTAbstractLine ];
 	use: (RTPushAwayLayout new factor: 2 @ 2).	
 b addAll: (RTShape withAllSubclasses).
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4198,9 +4190,8 @@ RTGraphBuilderExample >> exampleSimple01 [
 	b layout
 		if: [ :obj | obj >= 15 ]; use: (RTGridLayout new).
 	b addAll: (1 to: 20).
-	b open.
-	b view canvas.
-
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4237,8 +4228,8 @@ RTGraphBuilderExample >> exampleSmallTree [
 	b layout  tree.
 		
 	b addAll: (RTShape withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4295,8 +4286,8 @@ b global
 	normalizeColor: #numberOfVariables using: (Array with: Color green with: Color red).
 
 b addAll: RTObject withAllSubclasses.
-b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4380,8 +4371,8 @@ RTGraphBuilderExample >> exampleTreeMapAndNormalizeColor [
 		normalizeColor: [ :cls | cls rtmethods size ] using: (Array with: Color green with: Color red).
 
 	b addAll: (RTObject withAllSubclasses).
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4473,8 +4464,8 @@ b edges
 b layout tree.
 b addAll: TRShape withAllSubclasses, RTShape withAllSubclasses.
 
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -4548,9 +4539,8 @@ b layout circle radius: 250.
 b global 
 	normalizeSize: [ :c | c dependentClasses size ] min: 5 max: 30 using: #sqrt.
 b addAll: (RTObject withAllSubclasses).
-b open.
-
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }

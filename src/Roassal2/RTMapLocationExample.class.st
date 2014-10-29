@@ -35,8 +35,8 @@ b shape circle
 size: [ :v | (2 raisedTo: v) / 2 ];
 color: (Color red alpha: 0.3).
 tab values do: [ :row | b addPoint: row second @ row third value: row fifth ].
-b open.
-b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

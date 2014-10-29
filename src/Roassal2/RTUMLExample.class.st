@@ -36,8 +36,8 @@ b addObjects: RTShape withAllSubclasses.
 b treeLayout.
 
 b view setDefaultMenu.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -114,9 +114,9 @@ RTUMLExample >> exampleexampleWithNonClasses [
 		methodsNames: #third;
 		methodselector: #yourself;
 		attributeselector: #yourself;
-		superclass: nil;
-		open.
-b view canvas
+		superclass: nil.
+b build.
+^ b view
 ]
 
 { #category : #icons }

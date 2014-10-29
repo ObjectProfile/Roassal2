@@ -39,8 +39,8 @@ v addMenu: 'remove edges' callback: [
 	v edges do: #remove.
 	anim removeAllEdges.
 	v signalUpdate ].
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -137,8 +137,8 @@ v canvas addMenu: 'Add connected circle' callback: [
 	stepping addNode: el; addEdge: edge.
 	v signalUpdate.
 ].
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -263,8 +263,8 @@ groups do: [ :aGroup | v addAll: aGroup ].
 RTHorizontalLineLayout new gapSize: 30; on: groups.
 
 TRConstraint alignFromBottom: groups.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -324,8 +324,8 @@ RTRoassalExample >> exampleAnimatedCircle [
 	
 	v when: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -365,8 +365,7 @@ elements @ RTDraggable.
 s := RTSpringLayoutStepping new view: v.
 v addAnimation: s.
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -425,8 +424,7 @@ stepping addStartStopButton.
 "Uncomment the next line to have the animation from the beginning"
 "v addAnimation: stepping."
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -459,8 +457,8 @@ RTRoassalExample >> exampleAnotherTreeLayout [
 	view edges do: [ :e | e trachelShape pushBack ].
 	
 	view @ RTDraggableView.
-	view openWithMenu.
-	view canvas
+
+	^ view
 ]
 
 { #category : #icons }
@@ -518,8 +516,7 @@ RTEdge
 
 RTTreeLayout new on: es.
 
-v  open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -576,8 +573,7 @@ e2 @ RTLabelled.
 "Note that the RTLabelled interaction has to be set after having added the element in the view"
 l @ (RTLabelled new text: 'lining up!').
 
-v open.
-v canvas.
+	^ v
 ]
 
 { #category : #icons }
@@ -608,8 +604,7 @@ RTRoassalExample >> exampleArrowedBezier [
 	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTEmptyArrowHead new) ).
 	v add: edge.
 
-	v open.
-	v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -638,9 +633,8 @@ RTEdge
         inView: view.
 
 RTTreeLayout on: els.
-view open.
 
-view  canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -726,8 +720,8 @@ v add: (line  edgeFrom: e2 to: e2).
 v add: (line  edgeFrom: e3 to: e4).
 
 RTCircleLayout on: (Array with: e1 with: e2 with: e3 with: e4 ).
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -763,8 +757,7 @@ v elements last translateBy: 150 @ 100.
 edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
 v add: edge.
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #sources }
@@ -791,8 +784,8 @@ startingElement translateBy: -150 @ 0.
 shape := RTBezierLine new
 				centerOfObjects: (1 to: 20) inView: v.
 v addAll: (shape edgesFrom: startingElement toAll: es).		
-v open.
-v  canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -877,8 +870,8 @@ v add: e1.
 v add: e2.
 
 v add: l.
-v open.
-v canvas 
+
+	^ v
 ]
 
 { #category : #icons }
@@ -921,8 +914,8 @@ v := RTView new.
 shape := RTBox new size: 50; borderColor: Color black; borderWidth: #yourself.
 v addAll: (shape elementsOn: (1 to: 10)).
 RTHorizontalLineLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -952,8 +945,7 @@ RTRoassalExample >> exampleCellLayout [
 	
 	RTCellLayout on: view elements.
 	view @ RTDraggableView.
-	view open.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -1001,8 +993,7 @@ RTRoassalExample >> exampleCellLayoutWithCircle [
 	
 	RTCellLayout new lineItemsCount: 5; on: view elements.
 	view @ RTDraggableView.
-	view open.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -1049,8 +1040,8 @@ execute.
 RTRectanglePackLayout on: v elements.
 
 "elements provided to #elementsToConsider: are resized and have a colors chosen between these elements."
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -1120,8 +1111,8 @@ RTRoassalExample >> exampleCircleLayoutAndEdges [
 	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2 ] to: #yourself using: (RTLine new color: (Color blue alpha: 0.4); withVerticallAttachPoint; yourself) inView: v.
 	RTCircleLayout new initialRadius: 260; on: v elements.
 	v @ RTDraggableView.
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -1282,8 +1273,8 @@ RTRoassalExample >> exampleClusterLayout [
 	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
 	RTClusterLayout on: v elements edges: v edges.
 	v edges do: [ :e | e trachelShape pushBack ].
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -1455,9 +1446,8 @@ view addAll: es3.
 RTForceBasedLayout new 
 	charge: -800;
 	on: (Array with: es1 with: es2 with: es3).
-view open.
 
-view canvas
+^ view
 ]
 
 { #category : #icons }
@@ -1519,8 +1509,7 @@ v canvas addMenu: 'Up!' callback: [  elements do: [ :e | RTLinearMove new to: 0 
 
 v canvas addMenu: 'Down!' callback: [  elements do: [ :e | RTLinearMove new to: 0 @ e model during: 1 on: e in: v ] ].
 
-v open.
-v  canvas
+^ v
 ]
 
 { #category : #icons }
@@ -1575,8 +1564,7 @@ es := s elementsOn: (1 to: nbOfCrosses).
 v addAll: es.
 RTGridLayout on: es.
 
-v  open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -1678,8 +1666,7 @@ v canvas addFixedShape: helpBar2.
 TRConstraint stick: helpBar1 above: helpBar2.
 TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -1831,7 +1818,8 @@ RTHorizontalLineLayout on: groups.
 groups do: [ :aGroup | v addAll: aGroup ].
 
 v canvas color: Color black.
-v open.
+
+	^ v
 ]
 
 { #category : #icons }
@@ -1875,8 +1863,8 @@ es := (RTBox new color: Color purple; size: 25) elementsOn: (1 to: 100).
 es when: TRMouseDoubleClick do: [ :e | e element trachelShape color: Color red. v signalUpdate ].
 v addAll: es.
 RTGridLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -1916,8 +1904,7 @@ e2 @ (RTDragAndDroppable new
 					layout: RTGridLayout new;
 					on: toElement nest: alreadyNested, (Array with: newElement) ]).
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -1947,8 +1934,8 @@ RTRoassalExample >> exampleDynamicBezierEdges [
 									centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
 									color: (Color blue alpha: 0.4) ] ).
 
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2027,8 +2014,7 @@ RTRoassalExample >> exampleDynamicEdges [
 
 	es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
 
-	v open.
-	v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -2097,8 +2083,7 @@ RTRoassalExample >> exampleDynamicLabelsAndEdges [
 	elements @ (RTShowEdge new 
 						connectTo: [ :value | value - 5 to: value + 5]; 
 						shape: (RTLine new color: (Color blue alpha: 0.4))).
-	view open.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -2150,8 +2135,7 @@ RTEdge
 
 es @ RTPopup @ RTSetEdgeAlpha.	
  
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -2244,9 +2228,7 @@ v addAnimation: (RTSpringLayoutStepping new view: v).
 
 v @ RTDraggableView.
 
-v open.
-v canvas
-
+	^ v
 ]
 
 { #category : #icons }
@@ -2333,8 +2315,8 @@ elementClasses @ (RTPopup new group:
 ]).
 v addAll: elementClasses.
 RTFlowLayout on: elementClasses.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2387,8 +2369,8 @@ v when: TRMouseMove do: [ :evt |
 	es updateShape.
 	v signalUpdate
 ].
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2517,8 +2499,8 @@ RTRoassalExample >> exampleFontSize [
 	els := label elementsOn: (1 to: 30).
 	v addAll: els.
 	RTFlowLayout on: els.
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2555,7 +2537,7 @@ RTRoassalExample >> exampleFonts [
 	"
 | v fontNames shape es |
 v := RTView new.
-fontNames := self fontListStrings  allButFirst.
+fontNames :=  FontChooser new fontListStrings  allButFirst.
 
 shape := RTLabel new fontName: #yourself; text: #yourself.
 
@@ -2564,8 +2546,8 @@ es @ RTPopup.
 
 v addAll: es.
 RTVerticalLineLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2618,9 +2600,8 @@ RTRoassalExample >> exampleForceBasedLayout [
 	RTForceBasedLayout on: v elements edges: v edges.
 	"v addAnimation: (RTSpringLayoutStepping new view: v)."
 	v @ RTDraggableView.
-	v open.
 
-	v canvas
+	^ v
 ]
 
 { #category : #sources }
@@ -2640,9 +2621,8 @@ RTRoassalExample >> exampleForceBasedLayoutAnimated [
 	"RTForceBasedLayout on: v elements edges: v edges."
 	v addAnimation: (RTSpringLayoutStepping new view: v).
 	v @ RTDraggableView.
-	v open.
 
-	v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -2784,8 +2764,8 @@ RTRoassalExample >> exampleGrayScaling [
 	es @ RTPopup.
 	RTGridLayout on: es.
 
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2845,8 +2825,8 @@ groups doWithIndex: [ :assoc :index |
 ].
 
 RTFlowLayout on: groupsOfElements.
-v  open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -2945,8 +2925,7 @@ RTRoassalExample >> exampleGroupedLayout [
 
 	view @ RTDraggableView.
 	
-	view open.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -3013,7 +2992,7 @@ RTRoassalExample >> exampleHappyNewYear [
 		].
 	   x := 0.
 	].
-	view openInWindowSized: 800 @ 450
+	^ view
 ]
 
 { #category : #icons }
@@ -3043,8 +3022,7 @@ RTRoassalExample >> exampleHighlightingNeighbourg [
 
 	RTGridLayout on: es.
 	v addAll: es.
-	v open.
-	v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -3092,8 +3070,8 @@ classes do: [ :cls |
 	allClassElements add: enclosing.
 ].
 RTFlowLayout on: allClassElements.
-v open .
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3159,8 +3137,8 @@ v addAll: es.
 es @ RTPopup @ RTLabelled @ RTDraggable.
 RTFlowLayout new maxWidth: 900; gapSize: 50; on: es.
 
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3244,8 +3222,8 @@ RTGridLayout new gapSize: 90; on: elements.
 "To make sure if we drag and drop a form, the view get translated"
 elements @ RTEventForwarder.
 
-v  open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3302,8 +3280,8 @@ RTEdge buildEdgesFromObjects: associations from: #key to: #value using: (RTLine 
 RTForceBasedLayout new 
 	charge: -500;
 	on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3347,11 +3325,11 @@ RTRoassalExample >> exampleMakingVisualizationFit [
 	view edges do: [ :e | e trachelShape pushBack ].
 	
 	(RTGroup withAll: view elements) translateTo: 0 @ 0.
-	view open.
 
 	"Removing this line will make the visualization larger than the window"
 	view canvas camera focusOnCenterScaled: 500.
 
+	^ view
 ]
 
 { #category : #icons }
@@ -3408,8 +3386,8 @@ RTMetricNormalizer new
 	normalizeSize: #numberOfMethods min: 5 max: 15;
 	normalizeX: #numberOfMethods min: 0 max: 300;
 	normalizeY: #numberOfVariables min: 0 max: 300.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #sources }
@@ -3426,8 +3404,8 @@ RTMetricNormalizer new
 	alphaColor: 0.3;
 	normalizeSize: #numberOfVariables min: 5 max: 20;
 	normalizePosition: [ :aClass | aClass numberOfLinesOfCode @ aClass numberOfMethods ] min: 0 @ 0  max: 300 @ -300.
-v  open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3494,8 +3472,8 @@ shape := RTBezierLine new
 				midPointInCenterOfObjects: (1 to: 20) inView: v.
 v addAll: (shape edgesFrom: startingElement toAll: es).		
 
-v open.
-v  canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3552,8 +3530,8 @@ RTRoassalExample >> exampleMovingCamera [
 	menu menu: 'V' callback: [ v canvas camera translateBy: 0 @ 10. v signalUpdate ].
 	menu menu: '^' callback: [ v canvas camera translateBy: 0 @ -10. v signalUpdate ].
 	 
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3594,9 +3572,8 @@ v when: TRMouseMove do: [ :evt |
 	].
 	v signalUpdate.
 ].
-v open.
 
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -3732,8 +3709,8 @@ step :=  RTSpringLayoutStepping new
 				layout: layout.
 v addAnimation: step.
 	
-v  open.
-v canvas 
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3814,8 +3791,8 @@ es @ (RTPopup new
 		]).
 
 RTHorizontalLineLayout on: es.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3853,8 +3830,8 @@ es @ (RTShowLabel new
 			color: Color red;
 			highlight: #dependentClasses; top; yourself).
 RTGridLayout on: es.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3920,8 +3897,8 @@ eb	objects: Collection withAllSubclasses
 
 v elements @ RTDraggable @ RTPopup.
 RTHorizontalTreeLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -3961,8 +3938,8 @@ eb	objects: Collection withAllSubclasses
 
 v elements @ RTDraggable @ RTPopup.
 RTTreeLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #sources }
@@ -3983,8 +3960,8 @@ RTEdge
 v elements @ RTDraggable @ RTPopup.
 	
 RTTreeLayout on: v elements. 
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4044,8 +4021,8 @@ RTTreeLayout on: g2.
 
 TRConstraint move: g1 onTheRightOf: g2.
 
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4104,8 +4081,8 @@ clss do: [ :cls |
 	e @ RTPopup @ RTDraggable.
 	v add: e ].
 RTGridLayout on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4172,8 +4149,8 @@ v := RTView new.
 v @ RTDraggableView.
 v addAll: ((RTBox new size: [ :value | value / 2 ]; borderColor: Color black) elementsOn: (1 to: 100)).
 RTRectanglePackLayout new on: v elements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4221,8 +4198,8 @@ v canvas addMenu: 'Press me!' callback: [
 		v addAnimation: resizeAnimation ] ].
 v addAnimation: (RTLayoutAnimation new elements: es; yourself).
 
-v  open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4259,8 +4236,8 @@ callback := TRTranslationCallback new block: [ :shape :step |
 	elements extent: (handle encompassingRectangle topLeft - elements encompassingRectangle topLeft). v signalUpdate ].
 handle trachelShape addCallback: callback.
 
-v  open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4308,7 +4285,8 @@ RTRoassalExample >> exampleRotatingAnimatedLabels [
 	v canvas color: Color white.
 	v addAnimation: TRResetAllShapes new.
 	timer start.
-	v open
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4380,8 +4358,7 @@ es when: TRMouseEnter do: [ :evt |  evt element trachelShape rotateByDegrees: 5.
 es @ RTDraggable.
 RTGridLayout on: es.
 
-v open.
-
+	^ v
 ]
 
 { #category : #icons }
@@ -4448,8 +4425,8 @@ RTRoassalExample >> exampleRotatingLabels [
 	v addAll: (shape elementsOn: Collection withAllSubclasses).
 
 	v canvas color: Color white.
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4614,8 +4591,8 @@ v addAll: es.
 es when: TRMouseClick do: [ :e | e inspect ].
 es @ RTHighlightable.
 RTGridLayout on: es.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4694,8 +4671,7 @@ RTRoassalExample >> exampleScaledNesting [
 													toExtent: resizable extent * (1 / 0.6) 
 													during: 0.3 on: resizable) ].
 	
-	view openWithMenu.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -4839,8 +4815,8 @@ RTRoassalExample >> exampleScrollZoom [
 'Scroll your mouse wheel
 while hovering cursor
 over the view to zoom it').
-	v open.
-	v canvas 
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4889,8 +4865,8 @@ classes do: [ :class |
 
 RTEdge buildEdgesFromObjects: classes from: #superclass to: #yourself using: (RTLine new attachPoint: RTVerticalAttachPoint instance) inView: v.
 RTTreeLayout on: classElements.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -4963,8 +4939,8 @@ RTRoassalExample >> exampleSmoothLayout [
 	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.
 
 	RTTreeLayout new  on: v elements edges: v edges.
-	v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -5037,8 +5013,7 @@ v @ RTHorizontalDraggableView.
 v canvas addFixedShape: (TRLabelShape new text: 'Each circle is a day. Size of the circle indicates the number of methods produced that day').
 TRConstraint stickAtTheBottomOfTheWindow: v canvas fixedShapes last.
 
-v open.
-v canvas
+	^ v
 ]
 
 { #category : #icons }
@@ -5077,8 +5052,7 @@ RTRoassalExample >> exampleTreeLayout [
 	RTTreeLayout on: view elements edges: view edges.
 	view @ RTDraggableView.
 	view edges do: [ :e | e trachelShape pushBack ].
-	view open.
-	
+	^ view
 ]
 
 { #category : #icons }
@@ -5188,8 +5162,7 @@ RTRoassalExample >> exampleVectorEditing [
 	TRConstraint stickAtTheBottomOfTheWindow: statusBar.
 
 	view canvas color: Color white.
-	view open.
-	view canvas
+	^ view
 ]
 
 { #category : #icons }
@@ -5247,11 +5220,7 @@ v canvas addFixedShape: helpBar2.
 TRConstraint stick: helpBar1 above: helpBar2.
 TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
 
-
-"Open the view"
-v open.
-v canvas
-
+	^ v
 ]
 
 { #category : #icons }
@@ -5405,8 +5374,8 @@ v when: TRMouseMove do: [ :evt |
 	v canvas signalUpdate ].
 
 head translateBy: -150 @ -150.
-v open.
-	v canvas
+
+	^ v
 ]
 
 { #category : #icons }
@@ -5459,8 +5428,8 @@ RTNest new
 	].
 
 RTGridLayout on: es.
-v open.
-v canvas
+
+	^ v
 ]
 
 { #category : #icons }

@@ -24,8 +24,8 @@ RTMapExample >> exampleAfricanPopulation [
 		(c at: 1) asString, ': ',
 		(((c at: 2) / sum * 100 asFloat roundTo: 0.01) printString), '%'].
 	b scale: 2.
-	b open.
-b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -155,10 +155,8 @@ RTMapExample >> exampleCity01 [
 	b color: Color veryVeryLightGray.
 	b scale: 3.
 	b withPopup.
-	
-	b open.
-	b view canvas.
-
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -268,9 +266,8 @@ RTMapExample >> exampleSouthAmericaPopulation [
 		(c at: 1) asString, ': ',
 		(((c at: 2) / sum * 100 asFloat roundTo: 0.01) printString), '%'].
 	b scale: 2.
-	b open.
-	b view canvas.
-
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -343,9 +340,8 @@ RTMapExample >> exampleWorldPopulation [
 	b countries: countries named: [ :c | c at: 1 ].
 	b color: [ :dic | cn rtValue: (dic at: 2) ].
 	b withPopup: [ :c | (c at: 1) asString, ': ',(((c at: 2) / 1000000 asFloat roundTo: 0.001) asString, ' Million') ].
-	b open.
-	b view canvas.
-
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

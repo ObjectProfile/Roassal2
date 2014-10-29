@@ -1,11 +1,6 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*roassal2-core' }
-SequenceableCollection >> reverseSortedAs: aSortBlockOrSymbol [
-	^ (self sortedAs: aSortBlockOrSymbol) reverse
-]
-
-{ #category : #'*roassal2-core' }
 SequenceableCollection >> rtSwapElement: u withElement: v [
 	| index1 index2 |
 	index1 := self indexOf: u.

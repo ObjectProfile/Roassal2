@@ -23,8 +23,8 @@ b globalRule distinctColor.
 b labelled.
 b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -69,8 +69,8 @@ b objects: { Dictionary . Collection . Set . OrderedCollection }.
 b slice: #numberOfMethods.
 b globalRule distinctColor.	
 b labelled.
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -113,8 +113,8 @@ b objects: RTShape withAllSubclasses.
 b slice: #numberOfMethods.
 b globalRule distinctColor.	
 b labelledIf: [ :c | c numberOfMethods > 18 ].
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -181,10 +181,8 @@ myClasses do: [ :aClass |
 	lb addColor: (normalizer rtValue: aClass) text: aClass name.
 ].
 lb build.
-
-
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -248,8 +246,8 @@ b shape current
 b objects: { Dictionary . Collection . Set . OrderedCollection }.
 b slice: #numberOfMethods.
 b globalRule distinctColor.	
-b open.
-b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }

@@ -12,7 +12,11 @@ Class {
 
 { #category : #sources }
 RTColorPaletteExample >> exampleDivergingPalette [
-CPDiverging show canvas
+	| v |
+	v := RTView new.
+	v @ RTDraggableView.
+	CPDiverging new viewOn: v.
+	^ v
 ]
 
 { #category : #icons }
@@ -56,7 +60,11 @@ P/KFyBciP/KFyBciP88m/wAWA3WQRJl+fAAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTColorPaletteExample >> exampleQualitativePalette [
-CPQualitative show canvas
+	| v |
+	v := RTView new.
+	v @ RTDraggableView.
+	CPQualitative new viewOn: v.
+	^ v
 ]
 
 { #category : #icons }
@@ -106,7 +114,11 @@ vk+I6urw4cP6N7IgVFr4jaw9e/bID2SrjSFlPS30Yfk5Bl5XLw+KyZPzLgOvP2VNHjqbb2Xg
 
 { #category : #sources }
 RTColorPaletteExample >> exampleSequentialPalette [
-CPSequential show canvas
+	| v |
+	v := RTView new.
+	v @ RTDraggableView.
+	CPSequential new viewOn: v.
+	^ v
 ]
 
 { #category : #icons }
@@ -172,7 +184,7 @@ caKCNeflCAXrd09sULAmByxWuDIQOiiAjl6iO9zpjHfaiNq4cSP47CxZZdkfyBh9QpyW+NWr
 zl2KFAqdSEqVVmZmpqqy7A/k/vofLt9V3vY9IUMAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTColorPaletteExample >> label [
 	^ 'Color palettes'
 ]

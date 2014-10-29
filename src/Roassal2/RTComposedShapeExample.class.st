@@ -42,8 +42,7 @@ RTNest new
 RTHorizontalTreeLayout on: es.
 es @ RTPopup @ RTDraggable.
 
-v open.
-v canvas
+^ v
 ]
 
 { #category : #icons }
@@ -134,9 +133,8 @@ els @ RTDraggable.
 view addAll: els.
 
 RTGridLayout new on: els.
-view open.
 
-view canvas
+^ view
 ]
 
 { #category : #icons }
@@ -165,8 +163,7 @@ els @ RTDraggable.
 view addAll: els.
 
 RTGridLayout new on: els.
-view open.
-view canvas
+^ view
 ]
 
 { #category : #icons }
@@ -208,8 +205,7 @@ RTComposedShapeExample >> exampleInnerShapes [
 
 	RTFlowLayout on: es.
 	es @ RTDraggable.
-	v open.
-	v canvas
+^ v
 ]
 
 { #category : #icons }
@@ -291,8 +287,7 @@ es @ (RTPopup new
 		]).
 
 RTHorizontalLineLayout on: es.
-v open.
-v canvas
+^ v
 ]
 
 { #category : #icons }
@@ -328,8 +323,7 @@ RTNest new
 
 RTFlowLayout new on: es.
 es @ RTPopup @ RTDraggable.
-v open.
-v canvas
+^ v
 ]
 
 { #category : #icons }
@@ -369,8 +363,7 @@ RTNest new
 
 RTFlowLayout new on: es.
 es @ RTPopup @ RTDraggable.
-v open.
-v canvas
+^ v
 ]
 
 { #category : #icons }

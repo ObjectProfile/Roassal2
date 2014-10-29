@@ -117,5 +117,6 @@ ClassDescription >> referencedByClasses: aCollectionOfClasses [
 
 { #category : #'*roassal2' }
 ClassDescription >> rtmethods [
+	"This method is useful to have examples working on VisualWorks"
 	^ self methods
 ]

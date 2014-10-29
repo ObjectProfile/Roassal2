@@ -34,8 +34,8 @@ RTMondrianExample >> exampleClasses [
 				fillColor: Color white.
 	b nodes: RTObject withAllSubclasses.
 	b gridLayout.
-	b open.
-	b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -69,8 +69,8 @@ RTMondrianExample >> exampleSimpleTreeLayout [
 	b nodes: (1 to: 100).
 	b edges: (1 to: 100) from: [ :v | v // 2 ] to: #yourself.
 	b treeLayout.
-	b open.
-	b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -116,8 +116,8 @@ RTMondrianExample >> exampleSystemComplexity [
 	b nodes: RTObject withAllSubclasses.
 	b edgesFrom: #superclass.
 	b treeLayout.
-	b open.
-	b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

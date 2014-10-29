@@ -32,8 +32,8 @@ RTSpectrographExample >> exampleClassMethods [
 	b lineBlock: [ :cls | cls rtmethods, cls class rtmethods ].
 	b highlight: [ :aClass :cm | cm methodClass isMeta ].
 	b title: 'Proportion of class methods'.
-	b open.
-	b view canvas
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -70,8 +70,8 @@ RTSpectrographExample >> exampleRoassalVisualization [
 	b popupText: [ :cls :age | cls name, '  ', age printString , ' days old' ].
 	b lineBlock: [ :cls | 0 to: cls livingInDays ].
 	
-	b open.
-	
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -150,7 +150,8 @@ RTSpectrographExample >> exampleVeryBasic [
 	b objects: #(1 2 3 4 5).
 	b lineBlock: [ :v | (1 to: v) ].
 	b highlight: [ :x :y | y odd ].
-	b open
+b build.
+^ b view
 ]
 
 { #category : #icons }

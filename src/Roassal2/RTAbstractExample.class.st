@@ -4,6 +4,28 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
+{ #category : #'instance creation' }
+RTAbstractExample >> gtOpenOn: v [
+
+	| exampleSymbols icon64Mime form element  |
+
+	exampleSymbols := self class selectors 
+								select: [ :symbol | (symbol beginsWith: 'example') 
+															and: [ (symbol endsWith: 'Icon') not ] ].
+	exampleSymbols do: [ :k |
+		icon64Mime := self perform: (k, #Icon) asSymbol.
+		form := Form fromBinaryStream: 
+							(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
+		element := (RTBitmap new form: form) elementOn: (RTExampleSelection new selector: k; exampleObject: self).
+		element @ (RTPopup new text: k asString).
+		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
+		v add: element.
+	].
+
+	RTGridLayout new on: v elements.
+	
+]
+
 { #category : #installing }
 RTAbstractExample >> installOn: aView [
 	| el |
@@ -93,7 +115,7 @@ RTAbstractExample >> open [
 { #category : #'instance creation' }
 RTAbstractExample >> openOn: v [
 
-	| exampleSymbols icon64Mime form element helpBar |
+	| exampleSymbols icon64Mime form element  helpBar |
 
 	exampleSymbols := self class selectors 
 								select: [ :symbol | (symbol beginsWith: 'example') 

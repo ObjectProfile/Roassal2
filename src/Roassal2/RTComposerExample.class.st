@@ -169,8 +169,8 @@ c nameGroup: #hierarchy as: 'class hierarchy'.
 c nameGroup: #stat as: '#methods'.
 "c nameGroup: #pie as: '#LOC'."
 c nameGroup: #plot as: 'NOM x NOA x LOC'.
-c open.
-c view canvas
+
+^ c view
 ]
 
 { #category : #sources }
@@ -253,8 +253,7 @@ c nameGroup: #hierarchy as: 'class hierarchy'.
 c nameGroup: #stat as: '#methods'.
 "c nameGroup: #pie as: '#LOC'."
 c nameGroup: #plot as: 'NOM x NOA x LOC'.
-c open.
-c view canvas
+^ c view
 ]
 
 { #category : #icons }
@@ -378,8 +377,7 @@ c group.
 c layout: RTVerticalLineLayout new.
 c propagateHighlightToAll.
 "======"
-c open.
-c view canvas
+^ c view
 ]
 
 { #category : #icons }
