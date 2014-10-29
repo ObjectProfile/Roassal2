@@ -6,7 +6,8 @@ Class {
 	#superclass : #RTAnimation,
 	#instVars : [
 		'animatedValue',
-		'trachelCanvas'
+		'trachelCanvas',
+		'blockToExecute'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -16,9 +17,25 @@ RTNopAnimation >> addedIn: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas
 ]
 
+{ #category : #accessing }
+RTNopAnimation >> blockToExecute [
+	^ blockToExecute
+]
+
+{ #category : #accessing }
+RTNopAnimation >> blockToExecute: aZeroArgBlock [
+	blockToExecute := aZeroArgBlock
+]
+
 { #category : #testing }
 RTNopAnimation >> hasCompleted [
 	^ animatedValue hasCompleted
+]
+
+{ #category : #'as yet unclassified' }
+RTNopAnimation >> initialize [
+	super initialize.
+	blockToExecute := [  ]
 ]
 
 { #category : #actions }
@@ -36,7 +53,7 @@ RTNopAnimation >> start [
 { #category : #'waiting-specific' }
 RTNopAnimation >> waitFor: seconds [
 	animatedValue := VIAnimatedValue new
-							evaluator: [ :t | ];
+							evaluator: [ :t | blockToExecute value ];
 							timer: (VITimer new cycleLength: seconds);
 							yourself.
 	
