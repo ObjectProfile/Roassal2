@@ -18,33 +18,25 @@ Class {
 		'weight',
 		'rootElements',
 		'rectangle',
-		'inset'
+		'inset',
+		'popup'
 	],
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
 { #category : #building }
 RTTreeMapBuilder >> buildEdges [
-	| interestingEdges rtEdge children |
-	interestingEdges := self edges select: [ :assoc |
-		(((assoc key notNil and: [ assoc value notNil ])
-			and: [ (assoc key ~~ assoc value) and: [ assoc key ~= assoc value ] ])
-			and: [ self nodes includes: assoc key ] )and: [ self nodes includes: assoc value ] ].
-	interestingEdges := interestingEdges asOrderedCollection removeDuplicates.
-	
-	interestingEdges do: [ :edge | | fromNode toNode |
-		fromNode := self elements select: [:each | each model = edge key ].
-		toNode := self elements select: [:each | each model = edge value].
+	| fromNode toNode children |
+	self rtEdges do: [ :ed |
+		fromNode := self elements select: [ :each | each model = ed key]. 
+		toNode := self elements select: [ :each | each model = ed value ].
 		((fromNode size = 1) and: [ toNode size = 1 ]) ifTrue: [ 
 			fromNode := fromNode first.
 			toNode := toNode first.
-			
-			rtEdge := RTEdge from: fromNode to: toNode.
-			self rtEdges add: rtEdge.
 			children := fromNode attributes at: #elements ifAbsentPut: [ OrderedCollection new ].
 			children add: toNode.
-			 ] ].
-	
+			toNode attributes at: #parent put: fromNode ]
+		 ].
 	self computeRootElements.
 	
 	
@@ -54,14 +46,26 @@ RTTreeMapBuilder >> buildEdges [
 RTTreeMapBuilder >> buildElements [
 	shapeBuilder borderColor: Color black.
 	nodes do: [ :n |
-		self elements add: ((shapeBuilder elementOn: n)@RTDraggable @RTPopup). ]
+		self elements add: ((shapeBuilder elementOn: n)@RTDraggable @ popup). ]
 ]
 
 { #category : #building }
 RTTreeMapBuilder >> computeRootElements [
-	| elementsTo |
-	elementsTo := (self rtEdges collect: #to) removeDuplicates.
-	self rootElements: (self elements difference: elementsTo).
+	
+	self rootElements: (self elements select: [ :e | (e attributes includesKey: #parent) not ]).
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> createNodes: atree using: ablock [
+	| children |
+	self nodes add: atree.
+	
+	children := ablock rtValue: atree.
+	
+	children do: [ :child | 
+		self createNodes: child using: ablock.
+		self rtEdges add: (atree -> child). ].
+	
 ]
 
 { #category : #hooks }
@@ -90,8 +94,44 @@ RTTreeMapBuilder >> edges: anObject [
 ]
 
 { #category : #accesing }
+RTTreeMapBuilder >> edgesFrom: fromBlock toAll: toBlock [
+	| from to |
+	self nodes do: [ :m | 
+		from := fromBlock rtValue: m.
+		to := toBlock rtValue: m.
+		from isCollection ifFalse: [ from := Array with: from. ].
+		to isCollection ifFalse: [ to := Array with: to. ].
+		from do: [ :f |	to do: [ :t | self rtEdges add: f -> t ] ] ].
+]
+
+{ #category : #accesing }
+RTTreeMapBuilder >> edgesFromAssociations: anObject [
+	| interestingEdges |
+	
+	edges := anObject.
+	
+	interestingEdges := self edges select: [ :assoc |
+		(((assoc key notNil and: [ assoc value notNil ])
+			and: [ (assoc key ~~ assoc value) and: [ assoc key ~= assoc value ] ])
+			and: [ self nodes includes: assoc key ] )and: [ self nodes includes: assoc value ] ].
+	interestingEdges := interestingEdges asOrderedCollection removeDuplicates.
+	
+	interestingEdges do: [ :edge |
+		self rtEdges add: edge. ].
+	
+	
+]
+
+{ #category : #accesing }
 RTTreeMapBuilder >> elements [
 	^ elements ifNil: [ elements := OrderedCollection new ]
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> explore: atree using: ablock [
+	self nodes: OrderedCollection new.
+	self createNodes: atree using: ablock.
+	
 ]
 
 { #category : #accesing }
@@ -126,6 +166,7 @@ RTTreeMapBuilder >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 RTTreeMapBuilder >> initialize [
 	super initialize.
 	shapeBuilder rectangle.
+	popup := RTPopup new.
 ]
 
 { #category : #accesing }
@@ -205,6 +246,11 @@ RTTreeMapBuilder >> nodes: anObject [
 	
 ]
 
+{ #category : #accesing }
+RTTreeMapBuilder >> popup [
+	^ popup
+]
+
 { #category : #'layout-utils' }
 RTTreeMapBuilder >> prepareElementsForLayout: elms inRectangle: rec [
 	| elementsArea viewArea area |
@@ -244,8 +290,9 @@ RTTreeMapBuilder >> renderIn: aView [
 	
 	self buildElements.
 	self buildEdges.
-	self layoutElements.
 	aView addAll: self elements.
+	self layoutElements.
+	
 	
 ]
 
@@ -288,6 +335,7 @@ RTTreeMapBuilder >> squarify: children currentRow: row remainingSpace: remaining
 			currentRow: (OrderedCollection new)
 			remainingSpace: self getRemainingSpace.
 	 ].
+	firstElement pushBack
 ]
 
 { #category : #layout }
