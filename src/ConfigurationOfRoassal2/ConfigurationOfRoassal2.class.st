@@ -251,3 +251,20 @@ ConfigurationOfRoassal2 >> version10: spec [
 			package: 'Roassal2Spec' with: 'Roassal2Spec-BenjaminVanRyseghem.4'. ].
 
 ]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version1458: spec [
+	<version: '1.458' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.458'.
+		spec author: 'AndreiChis'.
+		spec timestamp: '10/29/2014 18:15'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.230';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.569';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+
+]
