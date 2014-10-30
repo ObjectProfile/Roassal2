@@ -16,12 +16,57 @@ Class {
 		'elements',
 		'rtEdges',
 		'weight',
+		'rootElements',
 		'rectangle',
 		'inset',
 		'popup'
 	],
 	#category : #'Roassal2-Builder-TreeMap'
 }
+
+{ #category : #building }
+RTTreeMapBuilder >> buildEdges [
+	| fromNode toNode children |
+	self rtEdges do: [ :ed |
+		fromNode := self elements select: [ :each | each model = ed key]. 
+		toNode := self elements select: [ :each | each model = ed value ].
+		((fromNode size = 1) and: [ toNode size = 1 ]) ifTrue: [ 
+			fromNode := fromNode first.
+			toNode := toNode first.
+			children := fromNode attributes at: #elements ifAbsentPut: [ OrderedCollection new ].
+			children add: toNode.
+			toNode attributes at: #parent put: fromNode ]
+		 ].
+	self computeRootElements.
+	
+	
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> buildElements [
+	shapeBuilder borderColor: Color black.
+	nodes do: [ :n |
+		self elements add: ((shapeBuilder elementOn: n)@RTDraggable @ popup). ]
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> computeRootElements [
+	
+	self rootElements: (self elements select: [ :e | (e attributes includesKey: #parent) not ]).
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> createNodes: atree using: ablock [
+	| children |
+	self nodes add: atree.
+	
+	children := ablock rtValue: atree.
+	
+	children do: [ :child | 
+		self createNodes: child using: ablock.
+		self rtEdges add: (atree -> child). ].
+	
+]
 
 { #category : #hooks }
 RTTreeMapBuilder >> createView [
@@ -44,26 +89,49 @@ RTTreeMapBuilder >> edges [
 ]
 
 { #category : #accesing }
+RTTreeMapBuilder >> edges: anObject [
+	edges := anObject.
+]
+
+{ #category : #accesing }
+RTTreeMapBuilder >> edgesFrom: fromBlock toAll: toBlock [
+	| from to |
+	self nodes do: [ :m | 
+		from := fromBlock rtValue: m.
+		to := toBlock rtValue: m.
+		from isCollection ifFalse: [ from := Array with: from. ].
+		to isCollection ifFalse: [ to := Array with: to. ].
+		from do: [ :f |	to do: [ :t | self rtEdges add: f -> t ] ] ].
+]
+
+{ #category : #accesing }
+RTTreeMapBuilder >> edgesFromAssociations: anObject [
+	| interestingEdges |
+	
+	edges := anObject.
+	
+	interestingEdges := self edges select: [ :assoc |
+		(((assoc key notNil and: [ assoc value notNil ])
+			and: [ (assoc key ~~ assoc value) and: [ assoc key ~= assoc value ] ])
+			and: [ self nodes includes: assoc key ] )and: [ self nodes includes: assoc value ] ].
+	interestingEdges := interestingEdges asOrderedCollection removeDuplicates.
+	
+	interestingEdges do: [ :edge |
+		self rtEdges add: edge. ].
+	
+	
+]
+
+{ #category : #accesing }
 RTTreeMapBuilder >> elements [
 	^ elements ifNil: [ elements := OrderedCollection new ]
 ]
 
 { #category : #building }
 RTTreeMapBuilder >> explore: atree using: ablock [
-	| children e |
+	self nodes: OrderedCollection new.
+	self createNodes: atree using: ablock.
 	
-	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
-	self elements add: e.
-	
-	children := ablock rtValue: atree.
-	
-	children := children collect: [ :child | | e2 |
-		e2 := self explore: child using: ablock.
-		e2 attributes at: #parent put: e.
-		e2 ].
-	children ifNotNil: [e attributes at: #elements put: children].
-	
-	^ e.
 ]
 
 { #category : #accesing }
@@ -98,7 +166,6 @@ RTTreeMapBuilder >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 RTTreeMapBuilder >> initialize [
 	super initialize.
 	shapeBuilder rectangle.
-	shapeBuilder borderColor: Color black.
 	popup := RTPopup new.
 ]
 
@@ -128,7 +195,7 @@ RTTreeMapBuilder >> layoutChildrenOfRow: row [
 { #category : #layout }
 RTTreeMapBuilder >> layoutElements [
 	
-	self squarify: (Array with: self elements first)
+	self squarify: self rootElements 
 		inRectangle: (RTRectangleTreeMap origin: 0@0 extent: self extent).
 
 	
@@ -221,10 +288,22 @@ RTTreeMapBuilder >> rectangle: anObject [
 { #category : #hooks }
 RTTreeMapBuilder >> renderIn: aView [
 	
+	self buildElements.
+	self buildEdges.
 	aView addAll: self elements.
 	self layoutElements.
 	
 	
+]
+
+{ #category : #accesing }
+RTTreeMapBuilder >> rootElements [
+	^ rootElements
+]
+
+{ #category : #accesing }
+RTTreeMapBuilder >> rootElements: anObject [
+	rootElements := anObject
 ]
 
 { #category : #accesing }
