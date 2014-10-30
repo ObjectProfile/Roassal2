@@ -21,6 +21,24 @@ Class {
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
+{ #category : #building }
+RTTreeMapBuilder >> createElements: atree using: ablock [
+	| children e |
+	
+	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
+	self elements add: e.
+	
+	children := ablock rtValue: atree.
+	
+	children := children collect: [ :child | | e2 |
+		e2 := self createElements: child using: ablock.
+		e2 attributes at: #parent put: e.
+		e2 ].
+	children ifNotNil: [e attributes at: #elements put: children].
+	
+	^ e.
+]
+
 { #category : #hooks }
 RTTreeMapBuilder >> createView [
 	^ super createView @ RTDraggableView.
@@ -43,20 +61,8 @@ RTTreeMapBuilder >> elements [
 
 { #category : #building }
 RTTreeMapBuilder >> explore: atree using: ablock [
-	| children e |
+	^ (self exploreNodes: (Array with: atree) using: ablock) first.
 	
-	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
-	self elements add: e.
-	
-	children := ablock rtValue: atree.
-	
-	children := children collect: [ :child | | e2 |
-		e2 := self explore: child using: ablock.
-		e2 attributes at: #parent put: e.
-		e2 ].
-	children ifNotNil: [e attributes at: #elements put: children].
-	
-	^ e.
 ]
 
 { #category : #accesing }
@@ -68,6 +74,14 @@ RTTreeMapBuilder >> extent [
 RTTreeMapBuilder >> extent: anObject [
 	extent := anObject.
 	
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> from: objects using: ablock [
+
+	rootNodes := objects collect: [:obj | self createElements: obj using: ablock ].
+	
+	^ rootNodes
 ]
 
 { #category : #'layout-utils' }
@@ -121,7 +135,7 @@ RTTreeMapBuilder >> layoutChildrenOfRow: row [
 { #category : #layout }
 RTTreeMapBuilder >> layoutElements [
 	
-	self squarify: (Array with: self elements first)
+	self squarify: rootNodes
 		inRectangle: (RTRectangleTreeMap origin: 0@0 extent: self extent).
 
 	

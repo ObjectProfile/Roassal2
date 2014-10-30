@@ -41,8 +41,8 @@ RTTreeMapExample >> example02 [
 	
 	b
 		extent: 400@400;
-		explore: RTShape using: #subclasses;
-		weight: [:el | el numberOfMethods ].
+		explore: TRShape using: #subclasses;
+		weight: [:el | el numberOfMethods == 0 ifTrue: [ 1 ] ifFalse: [ el numberOfMethods ]  ].
 	b open.
 ]
 
@@ -53,6 +53,10 @@ RTTreeMapExample >> example03 [
 	"
 	| b |
 	b := RTTreeMapBuilder new.
+	b shape 
+		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
+		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
+	
 	b
 		extent: 400@400;
 		weight: [:m | m tally ].
@@ -60,6 +64,24 @@ RTTreeMapExample >> example03 [
 		spyEvery: 1
 		on: [Nautilus open]; yourself)
 		using: #children.
+	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
+	b open.
+]
+
+{ #category : #examples }
+RTTreeMapExample >> example04 [
+	"
+	self new example04
+	"
+	| b |
+	b := RTTreeMapBuilder new.
+	b
+		extent: 400@400;
+		weight: [:n | n ].
+	b shape if: [ :n | n even ] fillColor: Color blue;
+		if: [ :n | n odd ] fillColor: Color lightGray.
 		
+	b from: (1 to: 10)
+		using: [:n | n < 5 ifTrue: [ { n+1. n+2 } ] ifFalse: [ {  } ] ].
 	b open.
 ]
