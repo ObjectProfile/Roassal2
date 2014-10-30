@@ -78,9 +78,9 @@ RTGDEdgeB >> createEdgesFor: object [
 	answer := OrderedCollection new.
 
 	fromObjects := connectFrom rtValue: object.
-	
+
 	"I haven't seen any case there it is advantageous to consider a compiled method as a collection of bytecode"
-	(fromObjects isCollection and: [ (fromObjects isKindOf: CompiledMethod) not ])
+	(self isRelevantCollection: fromObjects)
 		ifFalse: [ fromObjects := Array with: fromObjects ].
 		
 	fromElements := fromObjects 
@@ -90,7 +90,8 @@ RTGDEdgeB >> createEdgesFor: object [
 	fromElements do: [ :fromElement |
 		attachPoint ifNotNil: [ shape attachPoint: attachPoint ].
 		toObjects := connectTo rtValue: object.
-		toObjects isCollection ifFalse: [ toObjects := Array with: toObjects ]. 
+		(self isRelevantCollection: toObjects)
+			ifFalse: [ toObjects := Array with: toObjects ]. 
 		
 		subToObjects := toObjects select: [ :o | condition value: fromElement model value: o ].
 		 
@@ -152,6 +153,15 @@ RTGDEdgeB >> initialize [
 	edgesUsedForLayout := OrderedCollection new.
 	self shape: RTLine new.
 	condition := [ :f :t | true ]
+]
+
+{ #category : #utility }
+RTGDEdgeB >> isRelevantCollection: anObject [
+	"Return true if anObject is a collection that is not a symbol or a string or a compiled method"
+	^ anObject isCollection and: [ 
+		anObject isSymbol not and: [ 
+			anObject isString not and: [ 
+				(anObject isKindOf: CompiledMethod) not ] ] ] 
 ]
 
 { #category : #public }
