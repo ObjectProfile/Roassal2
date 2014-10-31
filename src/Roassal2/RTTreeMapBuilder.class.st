@@ -22,17 +22,17 @@ Class {
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
-{ #category : #building }
-RTTreeMapBuilder >> createElements: atree using: ablock [
+{ #category : #private }
+RTTreeMapBuilder >> createElements: atree using: ablock depth: depth [
 	| children e |
 	
 	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
 	self elements add: e.
 	
 	children := ablock rtValue: atree.
-	
+	e attributes at: #depth put: depth.
 	children := children collect: [ :child | | e2 |
-		e2 := self createElements: child using: ablock.
+		e2 := self createElements: child using: ablock depth: depth + 1.
 		e2 attributes at: #parent put: e.
 		e2 ].
 	children ifNotNil: [e attributes at: #elements put: children].
@@ -53,6 +53,17 @@ RTTreeMapBuilder >> defaultExtent [
 { #category : #'default-values' }
 RTTreeMapBuilder >> defaultInset [
 	^ 4
+]
+
+{ #category : #customizing }
+RTTreeMapBuilder >> depthShadedBorder [
+	| normalizer |
+	normalizer := RTNColorLinearNormalizer 
+		inContext: self elements 
+		withCommand: [ :e | e attributes at: #depth ] 
+		lowColor: Color gray
+		highColor: Color veryVeryLightGray .
+	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e) ].
 ]
 
 { #category : #accesing }
@@ -80,7 +91,7 @@ RTTreeMapBuilder >> extent: anObject [
 { #category : #building }
 RTTreeMapBuilder >> from: objects using: ablock [
 
-	rootNodes := objects collect: [:obj | self createElements: obj using: ablock ].
+	rootNodes := objects collect: [:obj | self createElements: obj using: ablock depth: 1 ].
 	
 	^ rootNodes
 ]
@@ -303,4 +314,16 @@ RTTreeMapBuilder >> weight [
 { #category : #accesing }
 RTTreeMapBuilder >> weight: anObject [
 	weight := anObject
+]
+
+{ #category : #customizing }
+RTTreeMapBuilder >> withShadedFramesFromColor: fromColor toColor: toColor [
+
+	| normalizer |
+	
+	normalizer := RTNColorLinearNormalizer 
+		inContext: self elements 
+		withCommand: [ :e | self weight rtValue: e model ] 
+		lowColor: fromColor highColor: toColor.
+	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e ) ].
 ]

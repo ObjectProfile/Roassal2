@@ -85,3 +85,75 @@ RTTreeMapExample >> example04 [
 		using: [:n | n < 5 ifTrue: [ { n+1. n+2 } ] ifFalse: [ {  } ] ].
 	b open.
 ]
+
+{ #category : #examples }
+RTTreeMapExample >> example05 [
+	"
+	self new example05
+	"
+	| b normalizer tally methods |
+	b := RTTreeMapBuilder new.
+	b shape 
+		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
+		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
+	
+	tally := (MessageTally new
+		spyEvery: 1
+		on: [Nautilus open]; yourself).
+	methods := tally withDeepCollect: #children.
+	
+	normalizer := RTNColorLinearNormalizer inContext: methods withCommand: #tally lowColor: Color gray highColor: Color red.
+	b shape borderColor: [ :e |normalizer rtValue: e ];
+		borderWidth: 2.
+	
+	b
+		extent: 500@500;
+		weight: [:m | m tally ].
+	b explore: tally
+		using: #children.
+	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
+	b open.
+]
+
+{ #category : #examples }
+RTTreeMapExample >> example06 [
+	"
+	self new example06
+	"
+	| b |
+	b := RTTreeMapBuilder new.
+	b shape 
+		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
+		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red;
+		borderWidth: 2.
+	
+	b
+		extent: 400@400;
+		weight: [:m | m tally ].
+	b explore: (MessageTally new
+		spyEvery: 1
+		on: [Nautilus open]; yourself)
+		using: #children.
+	b withShadedFramesFromColor: Color gray toColor: Color red.
+	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
+	
+	b open.
+]
+
+{ #category : #examples }
+RTTreeMapExample >> example07 [
+	"
+	self new example07
+	"
+	| b |
+	b := RTTreeMapBuilder new.
+	b
+		extent: 400@400;
+		weight: [:m | m tally ];
+		explore: (MessageTally new
+		spyEvery: 1
+		on: [Nautilus open]; yourself)
+		using: #children;
+		depthShadedBorder.
+	b open.
+]
