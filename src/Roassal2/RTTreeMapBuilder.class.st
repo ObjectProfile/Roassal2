@@ -16,7 +16,8 @@ Class {
 		'weight',
 		'rectangle',
 		'inset',
-		'popup'
+		'popup',
+		'rootNodes'
 	],
 	#category : #'Roassal2-Builder-TreeMap'
 }
@@ -61,7 +62,7 @@ RTTreeMapBuilder >> elements [
 
 { #category : #building }
 RTTreeMapBuilder >> explore: atree using: ablock [
-	^ (self exploreNodes: (Array with: atree) using: ablock) first.
+	^ (self from: (Array with: atree) using: ablock) first.
 	
 ]
 
