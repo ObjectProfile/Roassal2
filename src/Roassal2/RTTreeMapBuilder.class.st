@@ -62,13 +62,13 @@ RTTreeMapBuilder >> depthShadedBorder [
 		inContext: self elements 
 		withCommand: [ :e | e attributes at: #depth ] 
 		lowColor: Color gray
-		highColor: Color veryVeryLightGray .
+		highColor: Color white darker.
 	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e) ].
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> elements [
-	^ elements ifNil: [ elements := OrderedCollection new ]
+	^ elements
 ]
 
 { #category : #building }
@@ -79,7 +79,7 @@ RTTreeMapBuilder >> explore: atree using: ablock [
 
 { #category : #accesing }
 RTTreeMapBuilder >> extent [
-	^ extent ifNil: [ extent := self defaultExtent ].
+	^ extent
 ]
 
 { #category : #accesing }
@@ -116,14 +116,18 @@ RTTreeMapBuilder >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 { #category : #initialization }
 RTTreeMapBuilder >> initialize [
 	super initialize.
-	shapeBuilder rectangle.
-	shapeBuilder borderColor: Color black.
+	shapeBuilder rectangle 
+		fillColor: Color white;
+		borderColor: Color gray.
 	popup := RTPopup new.
+	inset := self defaultInset.
+	extent := self defaultExtent.
+	elements := OrderedCollection new 
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> inset [
-	^ inset ifNil: [ inset := self defaultInset ].
+	^ inset
 ]
 
 { #category : #accesing }
