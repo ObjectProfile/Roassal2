@@ -1,6 +1,3 @@
-"
-I am a utility class to hepl th layout process in RTTreeMapBuilder
-"
 Class {
 	#name : #RTRectangleTreeMap,
 	#superclass : #Rectangle,

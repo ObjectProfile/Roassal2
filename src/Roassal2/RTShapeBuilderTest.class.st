@@ -82,21 +82,6 @@ RTShapeBuilderTest >> testLinearFillColorWithin [
 ]
 
 { #category : #tests }
-RTShapeBuilderTest >> testOrthoLine [
-
-	| v eb |
-	v := RTView new.
-	v addAll: (RTBox new elementsOn: (1 to: 4)).
-
-	eb := RTEdgeBuilder new.
-	eb shape orthoHorizontalLine color: Color veryLightGray.
-	eb view: v.
-	eb objects: (1 to: 4) from: #yourself to: [ :vv | vv - 1 ].
-	self assert: (v canvas shapes noneSatisfy: [ :s | s class == TRMultiCompositeShape ])
-
-]
-
-{ #category : #tests }
 RTShapeBuilderTest >> testShape [
 	| e1 e2 e3 |
 	builder rectangle

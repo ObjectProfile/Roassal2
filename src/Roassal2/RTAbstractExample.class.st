@@ -4,26 +4,23 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #accessing }
-RTAbstractExample >> gtExamples [
-
-	^ (self class selectors 
-			select: [ :symbol | (symbol beginsWith: 'example') and: [ (symbol endsWith: 'Icon') not ] ])	
-				collect: [ :symbol | RTExampleSelection new exampleObject: self; selector: symbol ]
-]
-
 { #category : #'instance creation' }
 RTAbstractExample >> gtOpenOn: v [
-	|  icon64Mime form element  |
 
-	self gtExamples do: [ :anExample |
-		icon64Mime := self perform: (anExample selector, #Icon) asSymbol.
+	| exampleSymbols icon64Mime form element  |
+
+	exampleSymbols := self class selectors 
+								select: [ :symbol | (symbol beginsWith: 'example') 
+															and: [ (symbol endsWith: 'Icon') not ] ].
+	exampleSymbols do: [ :k |
+		icon64Mime := self perform: (k, #Icon) asSymbol.
 		form := Form fromBinaryStream: 
 							(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
-		element := (RTBitmap new form: form) elementOn: anExample.
-		element @ (RTPopup new text: anExample selector asString).
+		element := (RTBitmap new form: form) elementOn: (RTExampleSelection new selector: k; exampleObject: self).
+		element @ (RTPopup new text: k asString).
 		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
-		v add: element ].
+		v add: element.
+	].
 
 	RTGridLayout new on: v elements.
 	

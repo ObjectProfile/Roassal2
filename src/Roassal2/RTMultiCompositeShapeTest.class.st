@@ -41,6 +41,28 @@ RTMultiCompositeShapeTest >> testColor [
 ]
 
 { #category : #tests }
+RTMultiCompositeShapeTest >> testScenario [
+
+	| v s2 s e |
+	v := RTView new.
+
+	s2 := RTMultiCompositeShape new.
+	s2 add: RTEllipse new.
+	s2 add: RTEllipse new.
+	s2 horizontal.
+
+	s := RTMultiCompositeShape new.
+	s add: (RTLabel new text: 'hello').
+	s add: s2.
+	s vertical.
+
+	e := s element.
+	v add: e.
+	v 
+
+]
+
+{ #category : #tests }
 RTMultiCompositeShapeTest >> testSetColorOnEmpty [
 
 	self should: [ RTMultiCompositeShape new color: Color blue ] raise: Error

@@ -22,6 +22,35 @@ InstanceSpy >> example01 [
 ]
 
 { #category : #'as yet unclassified' }
+InstanceSpy >> example02 [
+	"
+	self new example02
+	"
+
+	| spy |
+	spy := InstanceSpy new.
+	spy monitor: ROMouseMove.
+	spy monitor: ROMouseEnter.
+	spy monitor: ROMouseLeave.
+	spy open
+]
+
+{ #category : #'as yet unclassified' }
+InstanceSpy >> example03 [
+	"
+	self new example03
+	"
+
+	| spy |
+	spy := InstanceSpy new.
+	spy monitor: ROElement.
+	spy monitor: ROEdge.
+	spy monitor: ROLabel.
+	spy monitor: ROMouseEnter.
+	spy open
+]
+
+{ #category : #'as yet unclassified' }
 InstanceSpy >> example04 [
 	"
 	self new example04

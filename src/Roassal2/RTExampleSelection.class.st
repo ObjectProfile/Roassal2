@@ -19,12 +19,6 @@ RTExampleSelection >> exampleObject: anObject [
 ]
 
 { #category : #accessing }
-RTExampleSelection >> result [
-
-	^ self exampleObject perform: self selector
-]
-
-{ #category : #accessing }
 RTExampleSelection >> selector [
 	^ selector
 ]
