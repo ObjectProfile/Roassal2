@@ -31,25 +31,6 @@ TRCompositeShapeTest >> testAddingShape [
 ]
 
 { #category : #tests }
-TRCompositeShapeTest >> testAlignRight [
-
-	box2 translateBy: 5 @ 5.
-	self assert: box1 position equals: (0 @ 0).
-	self assert: box2 position equals: (5 @ 5).
-	multiShape alignRight.
-	self assert: box1 position equals: (0 @ 0).
-	self assert: box2 position equals: (0 @ 0).
-	multiShape relayout.
-	
-	"Below is a strange result!"
-	self assert: box1 position equals: (10 @ 0).
-	self assert: box2 position equals: (15 @ 5).
-
-
-"TRCanvas new addShape: multiShape ; yourself"
-]
-
-{ #category : #tests }
 TRCompositeShapeTest >> testAnnounce [
 	| t |
 	t := 0.
@@ -86,7 +67,15 @@ TRCompositeShapeTest >> testAnnounce2 [
 
 { #category : #tests }
 TRCompositeShapeTest >> testAnnouncer [
-	self should: [ multiShape announcer ] raise: Error
+
+	self should: [ multiShape announcer ] raise: Exception
+
+"	emptyShape := TRMultiCompositeShape new.
+	multiShape := TRMultiCompositeShape new.
+	box1 := TRBoxShape new size: 20. 
+	box2 := TRBoxShape new size: 30.
+	multiShape addShape: box1; addShape: box2.
+	canvas := TRCanvas new."
 ]
 
 { #category : #tests }
@@ -114,8 +103,6 @@ TRCompositeShapeTest >> testColor [
 	multiShape color: Color red.
 	self assert: box1 color equals: Color red.
 	self assert: box2 color ~= Color red.
-	
-	self assert: multiShape color equals: Color red
 
 "	emptyShape := TRMultiCompositeShape new.
 	multiShape := TRMultiCompositeShape new.
@@ -167,17 +154,6 @@ TRCompositeShapeTest >> testElementOnNonEmpty [
 ]
 
 { #category : #tests }
-TRCompositeShapeTest >> testExtent [
-
-	self assert: box1 extent equals: (20 @ 20).
-	self assert: box2 extent equals: (30 @ 30).	
-	multiShape extent: 25 @ 25.
-	self assert: box1 extent equals: (25 @ 25).
-	self assert: box2 extent equals: (25 @ 25).	
-
-]
-
-{ #category : #tests }
 TRCompositeShapeTest >> testHeight [
 	self assert: multiShape height equals: 30.
 	multiShape horizontal.
@@ -196,53 +172,21 @@ TRCompositeShapeTest >> testHeight [
 ]
 
 { #category : #tests }
-TRCompositeShapeTest >> testIncludesPoint [
-
-	self assert: (multiShape includesPoint: 5 @ 5).
-	self deny: (multiShape includesPoint: -65 @ 5)
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testIsFixed [
-	| c |
-	c := TRCanvas new.
-	c addShape: multiShape.
-	self deny: multiShape isFixed.
-	
-	multiShape setAsFixed.
-	self assert: multiShape isFixed.
-]
-
-{ #category : #tests }
 TRCompositeShapeTest >> testNoCanvas [
 	self assert: box1 canvas equals: nil.
 	self assert: multiShape canvas equals: nil
 ]
 
-{ #category : #tests }
+{ #category : #'testing layout' }
 TRCompositeShapeTest >> testNoLayout [
-	multiShape noLayout
+	canvas addShape: multiShape.
+	self assert: box1 position equals: 0 @ 0.
+	self assert: box2 position equals: 0 @ 0.
 ]
 
 { #category : #tests }
 TRCompositeShapeTest >> testNoShapeInEmptyShape [
 	self assert: emptyShape numberOfShapes equals: 0
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testOffsets [
-
-	self assert: multiShape offsets asArray equals: (Array with: 0 @ 0 with: 0 @ 0).
-	box2 translateBy: 5 @ 6.
-	self assert: multiShape offsets asArray  equals: (Array with: 0 @ 0 with: 0 @ 0).
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testOffsets2 [ 
-	box2 translateBy: 5 @ 6.
-	emptyShape addShape: box1; addShape: box2.
-	"Humm.... I do not really understand this. is offset always made of 0@0?"
-	self assert: emptyShape offsets asArray equals: (Array with: 0 @ 0 with: 0 @ 0).
 ]
 
 { #category : #'testing translation' }
@@ -286,38 +230,6 @@ TRCompositeShapeTest >> testPositionWithOffsetTranslationBy [
 ]
 
 { #category : #tests }
-TRCompositeShapeTest >> testPushBack [
-	| c aShape |
-	aShape := TRBoxShape new.
-
-	c := TRCanvas new.
-	c addShape: aShape.
-	c addShape: multiShape.
-
-	self assert: c numberOfShapes equals: (multiShape numberOfShapes + 1).
-	multiShape pushBack.	
-	self assert: (c shapes indexOf: aShape) equals: multiShape numberOfShapes + 1.
-	self assert: (c shapes indexOf: multiShape shapes first) equals: multiShape numberOfShapes.
-	self assert: (c shapes indexOf: multiShape shapes last) equals: 1
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testPushFront [
-	| c aShape |
-	aShape := TRBoxShape new.
-
-	c := TRCanvas new.
-	c addShape: multiShape.
-	c addShape: aShape.
-	
-	self assert: c numberOfShapes equals: (multiShape numberOfShapes + 1).
-	multiShape pushFront.	
-	self assert: (c shapes indexOf: aShape) equals: 1.
-	self assert: (c shapes indexOf: multiShape shapes first) equals: 2.
-	self assert: (c shapes indexOf: multiShape shapes last) equals: multiShape numberOfShapes + 1.
-]
-
-{ #category : #tests }
 TRCompositeShapeTest >> testRemove [
 	| c |
 	c := TRCanvas new.
@@ -335,29 +247,12 @@ TRCompositeShapeTest >> testRemove [
 ]
 
 { #category : #tests }
-TRCompositeShapeTest >> testResetPath [
-	multiShape resetPath
-]
-
-{ #category : #tests }
 TRCompositeShapeTest >> testSetCanvas [
 	| c |
 	c := TRCanvas new.
 	multiShape canvas: c.
 	self assert: box1 canvas equals: c.
 	self assert: multiShape canvas equals: c
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testSignalUpdate [
-
-	multiShape signalUpdate
-]
-
-{ #category : #tests }
-TRCompositeShapeTest >> testSignalUpdate2 [
-
-	TRMultiCompositeShape new signalUpdate
 ]
 
 { #category : #'testing translation' }

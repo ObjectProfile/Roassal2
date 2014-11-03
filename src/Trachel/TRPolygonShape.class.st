@@ -6,7 +6,8 @@ Class {
 	#name : #TRPolygonShape,
 	#superclass : #TRShape,
 	#instVars : [
-		'vertices'
+		'vertices',
+		'strokeWidth'
 	],
 	#category : #'Trachel-Core'
 }
@@ -24,6 +25,22 @@ TRPolygonShape >> computePath [
 			builder closePath ]
 ]
 
+{ #category : #'as yet unclassified' }
+TRPolygonShape >> drawOn: athensCanvas [
+	| pt w |
+	pt := athensCanvas pathTransform.
+	pt restoreAfter: [
+		pt scaleBy: matrix sx @ matrix sy.
+		
+		athensCanvas
+			setPaint: color;
+			drawShape: self path.
+			
+		w := athensCanvas setStrokePaint: strokePaint.
+		w width: strokeWidth.
+		athensCanvas drawShape: self path  ]
+]
+
 { #category : #accessing }
 TRPolygonShape >> encompassingRectangle [
 	^ vertices min corner: vertices max
@@ -31,7 +48,7 @@ TRPolygonShape >> encompassingRectangle [
 
 { #category : #accessing }
 TRPolygonShape >> height [
-^ self encompassingRectangle height 
+	^ self encompassingRectangle height 
 ]
 
 { #category : #testing }
@@ -39,6 +56,22 @@ TRPolygonShape >> includesPoint: point [
 
   ^ ( AthensPolygonTester new polygon: vertices ) includesPoint: point.
 "self encompassingRectangle containsPoint: point"
+]
+
+{ #category : #'as yet unclassified' }
+TRPolygonShape >> initialize [
+	super initialize.
+	strokeWidth := 1.0
+]
+
+{ #category : #'as yet unclassified' }
+TRPolygonShape >> strokeWidth [
+	^ strokeWidth
+]
+
+{ #category : #'as yet unclassified' }
+TRPolygonShape >> strokeWidth: aWidth [
+	strokeWidth := aWidth
 ]
 
 { #category : #actions }
@@ -50,7 +83,7 @@ TRPolygonShape >> translateBy: aPoint [
 
 { #category : #actions }
 TRPolygonShape >> translateTo: aPoint [
-| dist |
+	| dist |
 	dist := aPoint - self encompassingRectangle center.
 	self translateBy: dist.
 ]
@@ -62,5 +95,5 @@ TRPolygonShape >> vertices: aCollection [
 
 { #category : #accessing }
 TRPolygonShape >> width [
-^ self encompassingRectangle width
+	^ self encompassingRectangle width
 ]

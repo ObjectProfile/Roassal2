@@ -38,18 +38,6 @@ TRMultiCompositeShape >> addedIn: aCanvas [
 	self translateBy: self position negated
 ]
 
-{ #category : #actions }
-TRMultiCompositeShape >> addedIn: aCanvas atIndex: index [
-	self propagateElement.
-	shapeAndOffsets
-		do: [ :tupple | 
-			aCanvas addShape: tupple first atIndex: index.
-			tupple first translateBy: tupple second ].
-		
-	"Make sure we are in the center"
-	self translateBy: self position negated
-]
-
 { #category : #'public - layout' }
 TRMultiCompositeShape >> alignRight [
 	"Layout the shapes horizontally"
@@ -115,6 +103,11 @@ TRMultiCompositeShape >> encompassingRectangle [
 	^ Rectangle merging: (self shapes collect: #encompassingRectangle)
 ]
 
+{ #category : #accessing }
+TRMultiCompositeShape >> extent [
+	^ self encompassingRectangle extent
+]
+
 { #category : #actions }
 TRMultiCompositeShape >> extent: anExtent [
 	self shapes do: [ :s | s extent: anExtent ]
@@ -145,20 +138,10 @@ TRMultiCompositeShape >> includesPoint: aPoint [
 	^ self shapes anySatisfy: [ :s | s includesPoint: aPoint ]
 ]
 
-{ #category : #accessing }
-TRMultiCompositeShape >> indexInCanvas [
-	^ canvas privateIndexInCanvasOf: self shapes first
-]
-
 { #category : #initialization }
 TRMultiCompositeShape >> initialize [
 	super initialize.
 	shapeAndOffsets := OrderedCollection new
-]
-
-{ #category : #actions }
-TRMultiCompositeShape >> isFixed [
-	^ self shapes allSatisfy: #isFixed
 ]
 
 { #category : #'public - layout' }
@@ -246,9 +229,6 @@ TRMultiCompositeShape >> shapes [
 
 { #category : #actions }
 TRMultiCompositeShape >> signalUpdate [
-	"Signal that the canvas should be refreshed"
-	"Do nothing if I have no shapes added"
-	self shapes ifEmpty: [ ^ self ].
 	self shapes first signalUpdate
 ]
 
