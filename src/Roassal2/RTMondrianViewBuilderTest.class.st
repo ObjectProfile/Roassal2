@@ -23,6 +23,20 @@ RTMondrianViewBuilderTest >> testBasic [
 	self assert: builder view numberOfEdges = 4.
 ]
 
+{ #category : #basic }
+RTMondrianViewBuilderTest >> testCheckCanvas [
+
+	| b c |
+	b := RTMondrianViewBuilder new.
+	b shape label text: #asString.
+	b nodes: (1 to: 100).
+	b shape orthoHorizontalLine color: Color veryLightGray.
+	b edgesFrom: [:x | x // 10].
+	b horizontalTreeLayout layered.
+	c := b view canvas.
+	self assert: (c shapes noneSatisfy: [ :s | s class == TRMultiCompositeShape ])
+]
+
 { #category : #layout }
 RTMondrianViewBuilderTest >> testDefaultLayout [
 

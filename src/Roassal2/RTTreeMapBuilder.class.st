@@ -12,60 +12,32 @@ Class {
 	#instVars : [
 		'extent',
 		'nodes',
-		'edges',
 		'elements',
-		'rtEdges',
 		'weight',
-		'rootElements',
 		'rectangle',
 		'inset',
-		'popup'
+		'popup',
+		'rootNodes'
 	],
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
-{ #category : #building }
-RTTreeMapBuilder >> buildEdges [
-	| fromNode toNode children |
-	self rtEdges do: [ :ed |
-		fromNode := self elements select: [ :each | each model = ed key]. 
-		toNode := self elements select: [ :each | each model = ed value ].
-		((fromNode size = 1) and: [ toNode size = 1 ]) ifTrue: [ 
-			fromNode := fromNode first.
-			toNode := toNode first.
-			children := fromNode attributes at: #elements ifAbsentPut: [ OrderedCollection new ].
-			children add: toNode.
-			toNode attributes at: #parent put: fromNode ]
-		 ].
-	self computeRootElements.
+{ #category : #private }
+RTTreeMapBuilder >> createElements: atree using: ablock depth: depth [
+	| children e |
 	
-	
-]
-
-{ #category : #building }
-RTTreeMapBuilder >> buildElements [
-	shapeBuilder borderColor: Color black.
-	nodes do: [ :n |
-		self elements add: ((shapeBuilder elementOn: n)@RTDraggable @ popup). ]
-]
-
-{ #category : #building }
-RTTreeMapBuilder >> computeRootElements [
-	
-	self rootElements: (self elements select: [ :e | (e attributes includesKey: #parent) not ]).
-]
-
-{ #category : #building }
-RTTreeMapBuilder >> createNodes: atree using: ablock [
-	| children |
-	self nodes add: atree.
+	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
+	self elements add: e.
 	
 	children := ablock rtValue: atree.
+	e attributes at: #depth put: depth.
+	children := children collect: [ :child | | e2 |
+		e2 := self createElements: child using: ablock depth: depth + 1.
+		e2 attributes at: #parent put: e.
+		e2 ].
+	children ifNotNil: [e attributes at: #elements put: children].
 	
-	children do: [ :child | 
-		self createNodes: child using: ablock.
-		self rtEdges add: (atree -> child). ].
-	
+	^ e.
 ]
 
 { #category : #hooks }
@@ -83,66 +55,45 @@ RTTreeMapBuilder >> defaultInset [
 	^ 4
 ]
 
-{ #category : #accesing }
-RTTreeMapBuilder >> edges [
-	^ edges.
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> edges: anObject [
-	edges := anObject.
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> edgesFrom: fromBlock toAll: toBlock [
-	| from to |
-	self nodes do: [ :m | 
-		from := fromBlock rtValue: m.
-		to := toBlock rtValue: m.
-		from isCollection ifFalse: [ from := Array with: from. ].
-		to isCollection ifFalse: [ to := Array with: to. ].
-		from do: [ :f |	to do: [ :t | self rtEdges add: f -> t ] ] ].
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> edgesFromAssociations: anObject [
-	| interestingEdges |
-	
-	edges := anObject.
-	
-	interestingEdges := self edges select: [ :assoc |
-		(((assoc key notNil and: [ assoc value notNil ])
-			and: [ (assoc key ~~ assoc value) and: [ assoc key ~= assoc value ] ])
-			and: [ self nodes includes: assoc key ] )and: [ self nodes includes: assoc value ] ].
-	interestingEdges := interestingEdges asOrderedCollection removeDuplicates.
-	
-	interestingEdges do: [ :edge |
-		self rtEdges add: edge. ].
-	
-	
+{ #category : #customizing }
+RTTreeMapBuilder >> depthShadedBorder [
+	| normalizer |
+	normalizer := RTNColorLinearNormalizer 
+		inContext: self elements 
+		withCommand: [ :e | e attributes at: #depth ] 
+		lowColor: Color gray
+		highColor: Color white darker.
+	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e) ].
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> elements [
-	^ elements ifNil: [ elements := OrderedCollection new ]
+	^ elements
 ]
 
 { #category : #building }
 RTTreeMapBuilder >> explore: atree using: ablock [
-	self nodes: OrderedCollection new.
-	self createNodes: atree using: ablock.
+	^ (self from: (Array with: atree) using: ablock) first.
 	
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> extent [
-	^ extent ifNil: [ extent := self defaultExtent ].
+	^ extent
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> extent: anObject [
 	extent := anObject.
 	
+]
+
+{ #category : #building }
+RTTreeMapBuilder >> from: objects using: ablock [
+
+	rootNodes := objects collect: [:obj | self createElements: obj using: ablock depth: 1 ].
+	
+	^ rootNodes
 ]
 
 { #category : #'layout-utils' }
@@ -165,13 +116,18 @@ RTTreeMapBuilder >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 { #category : #initialization }
 RTTreeMapBuilder >> initialize [
 	super initialize.
-	shapeBuilder rectangle.
+	shapeBuilder rectangle 
+		fillColor: Color white;
+		borderColor: Color gray.
 	popup := RTPopup new.
+	inset := self defaultInset.
+	extent := self defaultExtent.
+	elements := OrderedCollection new 
 ]
 
 { #category : #accesing }
 RTTreeMapBuilder >> inset [
-	^ inset ifNil: [ inset := self defaultInset ].
+	^ inset
 ]
 
 { #category : #accesing }
@@ -195,7 +151,7 @@ RTTreeMapBuilder >> layoutChildrenOfRow: row [
 { #category : #layout }
 RTTreeMapBuilder >> layoutElements [
 	
-	self squarify: self rootElements 
+	self squarify: rootNodes
 		inRectangle: (RTRectangleTreeMap origin: 0@0 extent: self extent).
 
 	
@@ -288,27 +244,10 @@ RTTreeMapBuilder >> rectangle: anObject [
 { #category : #hooks }
 RTTreeMapBuilder >> renderIn: aView [
 	
-	self buildElements.
-	self buildEdges.
 	aView addAll: self elements.
 	self layoutElements.
 	
 	
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> rootElements [
-	^ rootElements
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> rootElements: anObject [
-	rootElements := anObject
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> rtEdges [
-	^ rtEdges ifNil: [ rtEdges := OrderedCollection new ]
 ]
 
 { #category : #layout }
@@ -379,4 +318,16 @@ RTTreeMapBuilder >> weight [
 { #category : #accesing }
 RTTreeMapBuilder >> weight: anObject [
 	weight := anObject
+]
+
+{ #category : #customizing }
+RTTreeMapBuilder >> withShadedFramesFromColor: fromColor toColor: toColor [
+
+	| normalizer |
+	
+	normalizer := RTNColorLinearNormalizer 
+		inContext: self elements 
+		withCommand: [ :e | self weight rtValue: e model ] 
+		lowColor: fromColor highColor: toColor.
+	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e ) ].
 ]
