@@ -70,6 +70,11 @@ TRCanvas >> addShape: shape [
 	shape addedIn: self
 ]
 
+{ #category : #'as yet unclassified' }
+TRCanvas >> addShape: shape atIndex: index. [
+	shape addedIn: self atIndex: index
+]
+
 { #category : #animations }
 TRCanvas >> animations [
 	^ animations
@@ -331,15 +336,27 @@ TRCanvas >> playAnimations [
 		animations := animations reject: [ :animation | animation hasCompleted ] ].
 ]
 
-{ #category : #building }
+{ #category : #private }
 TRCanvas >> privateAdd: shape [
 	shapes add: shape
 ]
 
+{ #category : #private }
+TRCanvas >> privateAdd: shape atIndex: index [
+	shapes add: shape beforeIndex: index
+]
+
+{ #category : #private }
+TRCanvas >> privateIndexInCanvasOf: aShape [
+	^ shapes indexOf: aShape
+]
+
 { #category : #actions }
 TRCanvas >> push: aShape behind: anotherShape [
+	| index |
 	aShape remove.
-	shapes add: aShape before: anotherShape.
+	index := anotherShape indexInCanvas.
+	aShape addedIn: self atIndex: index.
 	aShape canvas: self 
 ]
 
