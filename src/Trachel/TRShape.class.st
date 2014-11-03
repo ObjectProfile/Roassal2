@@ -26,6 +26,12 @@ TRShape >> addedIn: aCanvas [
 	self canvas: aCanvas
 ]
 
+{ #category : #actions }
+TRShape >> addedIn: aCanvas atIndex: index. [
+	aCanvas privateAdd: self atIndex: index.
+	self canvas: aCanvas
+]
+
 { #category : #accessing }
 TRShape >> angleInDegrees [
 	^ rotationAngleDegrees
@@ -172,6 +178,12 @@ TRShape >> height [
 { #category : #testing }
 TRShape >> includesPoint: aPoint [
 	^ false
+]
+
+{ #category : #accessing }
+TRShape >> indexInCanvas [
+	"Return the index of myself in the list shapes, in the canvas"
+	^ canvas privateIndexInCanvasOf: self
 ]
 
 { #category : #initialization }
