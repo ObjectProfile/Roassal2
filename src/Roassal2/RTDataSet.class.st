@@ -7,18 +7,20 @@ Class {
 		'y',
 		'builder',
 		'dotBuilder',
+		'histogramBuilder',
 		'lineBuilder',
 		'minX',
 		'maxX',
 		'minY',
 		'maxY',
+		'shouldHaveHistogramBars',
 		'shouldConnect',
 		'interaction'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTDataSet >> adjustMinAndMaxValues [
 	"Values are adjusted to always have 0 @ 0 in the chart"
 	minY > 0
@@ -33,17 +35,23 @@ RTDataSet >> adjustMinAndMaxValues [
 ]
 
 { #category : #'as yet unclassified' }
+RTDataSet >> barShape [
+	shouldHaveHistogramBars := true.
+	^ histogramBuilder
+]
+
+{ #category : #accessing }
 RTDataSet >> builder: aBuilder [
 	builder := aBuilder 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTDataSet >> computeMinAndMax [
 	self computeMinAndMaxForX.
 	self computeMinAndMaxForY.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTDataSet >> computeMinAndMaxForX [
 	| computed |
 	computed := points collect: x.
@@ -53,7 +61,7 @@ RTDataSet >> computeMinAndMaxForX [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTDataSet >> computeMinAndMaxForY [
 	| computed |
 	computed := points collect: y.
@@ -63,7 +71,7 @@ RTDataSet >> computeMinAndMaxForY [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #ssl }
 RTDataSet >> connect [
 	shouldConnect := true
 ]
@@ -79,12 +87,12 @@ RTDataSet >> connectUsing: aShape [
 	self connect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTDataSet >> defaultMaxValue [
 	^ 1000000
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTDataSet >> defaultMinValue [
 	^ -1000000
 ]
@@ -94,7 +102,7 @@ RTDataSet >> dotShape [
 	^ dotBuilder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTDataSet >> initialize [
 	super initialize.
 	points := #().
@@ -105,17 +113,24 @@ RTDataSet >> initialize [
 	dotBuilder := RTShapeBuilder new.
 	dotBuilder circle size: 5.
 	
+	"Maybe this can be lazily done"
+	histogramBuilder := RTShapeBuilder new.
+	histogramBuilder rectangle.
+	
+	"Maybe this can be lazily done"
 	lineBuilder := RTShapeBuilder new.
+	
 	interaction := RTInteractionBuilder new.
-	shouldConnect := false
+	shouldConnect := false.
+	shouldHaveHistogramBars := false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> interaction [
 	^ interaction
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> lineShape [
 	^ lineBuilder
 ]
@@ -160,27 +175,25 @@ RTDataSet >> minY: anObject [
 	minY := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> points [
 	^ points
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> points: objects [
 	points := objects
 ]
 
-{ #category : #'as yet unclassified' }
-RTDataSet >> renderIn: aView [
+{ #category : #hooks }
+RTDataSet >> renderDotAndLinesIn: aView [
 
 	| elements |
 	elements := dotBuilder elementsOn: points.
 	builder view addAll: elements.
 	interaction setUpElements: elements.
 	
-"	self computeMinAndMax.
-	self adjustMinAndMaxValues.
-"	RTMetricNormalizer new
+	RTMetricNormalizer new
 		elements: elements;
 		normalizeX: [ :model | x rtValue: model ]
 			min: 0
@@ -197,6 +210,49 @@ RTDataSet >> renderIn: aView [
 			maxValue: maxY.
 			
 	self renderLinesFor: elements in: aView
+]
+
+{ #category : #hooks }
+RTDataSet >> renderHistogramIn: aView [
+
+	| elements  |
+	elements := histogramBuilder elementsOn: points.
+		
+	builder view addAll: elements.
+	interaction setUpElements: elements.
+	
+	RTMetricNormalizer new
+		elements: elements;
+		normalizeX: [ :model | x rtValue: model ]
+			min: 0
+			max: builder extent x
+			minValue: minX
+			maxValue: maxX.
+			
+	RTMetricNormalizer new
+		elements: elements;
+		normalizeHeight: [ :model | y rtValue: model ]
+			min: 0
+			max: builder extent y
+			minValue: minY
+			maxValue: maxY.
+	
+	TRConstraint alignFromBottom: elements.
+	
+"	elements do: [ :el |
+		bar := (histogramBuilder current height: el position y abs; width: 10) elementOn: el model.
+		bar translateTo: el position x @ (el position y / 2) ].
+"	
+	"self renderLinesFor: elements in: aView"
+]
+
+{ #category : #hooks }
+RTDataSet >> renderIn: aView [
+
+	"This is a bit ugly. Maybe having a class hierarchy would be better"
+	shouldHaveHistogramBars 
+		ifTrue: [ self renderHistogramIn: aView ]
+		ifFalse: [ self renderDotAndLinesIn: aView ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -220,22 +276,22 @@ RTDataSet >> resetMinAndMax [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> shouldConnect [
 	^ shouldConnect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTDataSet >> stackX [
-	
+	self x: [ :aPoint | points indexOf: aPoint ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> x: blockOrSymbol [
 	x := blockOrSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDataSet >> y: blockOrSymbol [
 	y := blockOrSymbol
 ]

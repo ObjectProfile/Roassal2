@@ -9,13 +9,13 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTGrapherBuilder >> add: aDataSet [
 	datasets add: aDataSet.
 	aDataSet builder: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTGrapherBuilder >> axisPointFor: aPoint [
 	"Return the position in the view to have the 0 @ 0"
 	| centralPointX centralPointY |
@@ -25,7 +25,7 @@ RTGrapherBuilder >> axisPointFor: aPoint [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisX [
 	| centralPoint |
 	self computeMinAndMax.
@@ -40,7 +40,19 @@ RTGrapherBuilder >> axisX [
 	axisConfiguration axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-axis' }
+RTGrapherBuilder >> axisXNoLabel [
+	| config centralPoint |
+	self computeMinAndMax.
+	config := RTAxisConfiguration new
+					builder: self;
+					numberOfTicks: 0;
+					numberOfLabels: 0.
+	centralPoint := self centralPoint.
+	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+]
+
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	self computeMinAndMax.
@@ -56,7 +68,7 @@ RTGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisY [
 	| centralPoint |
 	self computeMinAndMax.
@@ -71,7 +83,7 @@ RTGrapherBuilder >> axisY [
 	axisConfiguration axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
 	self computeMinAndMax.
@@ -87,30 +99,30 @@ RTGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	config axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTGrapherBuilder >> centralPoint [
 	"Return the position in the view to have the 0 @ 0"
 	^ self axisPointFor: 0 @ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTGrapherBuilder >> computeMinAndMax [
 	self computeMinAndMaxForX.
 	self computeMinAndMaxForY.
 	self homogenizeMinAndMax
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTGrapherBuilder >> computeMinAndMaxForX [
 	datasets do: #computeMinAndMaxForX
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTGrapherBuilder >> computeMinAndMaxForY [
 	datasets do: #computeMinAndMaxForY
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGrapherBuilder >> example01 [
 
 	"
@@ -124,7 +136,7 @@ RTGrapherBuilder >> example01 [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGrapherBuilder >> example02 [
 
 	"
@@ -144,7 +156,7 @@ RTGrapherBuilder >> example02 [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGrapherBuilder >> example03 [
 
 	"
@@ -191,7 +203,7 @@ b open.
 b view canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTGrapherBuilder >> example04 [
 
 | b ds |
@@ -221,17 +233,17 @@ b open.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> extent [
 	^ extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTGrapherBuilder >> homogenizeMinAndMax [
 	| minX maxX minY maxY |
 	minX := self minX.
@@ -245,7 +257,7 @@ RTGrapherBuilder >> homogenizeMinAndMax [
 		ds maxY: maxY. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTGrapherBuilder >> initialize [
 	super initialize.
 	extent := 100 @ 100.
@@ -256,32 +268,32 @@ RTGrapherBuilder >> initialize [
 	self resetAxisConfiguration
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> maxX [
 	^ (datasets collect: #maxX) max
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> maxY [
 	^ (datasets collect: #maxY) max
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> minX [
 	^ (datasets collect: #minX) min
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBuilder >> minY [
 	^ (datasets collect: #minY) min
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTGrapherBuilder >> renderIn: aView [
 	datasets do: [ :aDataset | aDataset renderIn: aView ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-axis' }
 RTGrapherBuilder >> resetAxisConfiguration [
 	axisConfiguration := RTAxisConfiguration new.
 	axisConfiguration builder: self

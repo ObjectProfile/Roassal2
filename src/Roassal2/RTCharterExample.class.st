@@ -1915,6 +1915,90 @@ AAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTCharterExample >> examplehistogramAndLegend [
+| data b |
+data := {
+	Dictionary new
+		at: 'COLOR' put: Color gray;
+		at: 'TIME' put: (DateAndTime fromString: '2014-10-30 12:11:28.0');
+		at: 'SECONDS' put: 4;
+		yourself.
+	Dictionary new
+		at: 'COLOR' put: Color gray;
+		at: 'TIME' put: (DateAndTime fromString: '2014-10-31 12:11:28.0');
+		at: 'SECONDS' put: 5;
+		yourself.
+	Dictionary new
+		at: 'COLOR' put: Color red;
+		at: 'TIME' put: (DateAndTime fromString: '2014-10-31 12:41:28.0');
+		at: 'SECONDS' put: 15;
+		yourself.
+	Dictionary new
+		at: 'COLOR' put: Color green;
+		at: 'TIME' put: (DateAndTime fromString: '2014-11-01 12:11:28.0');
+		at: 'SECONDS' put: 7;
+		yourself.
+	Dictionary new
+		at: 'COLOR' put: Color gray;
+		at: 'TIME' put: (DateAndTime fromString: '2014-11-02 12:11:28.0');
+		at: 'SECONDS' put: 1;
+		yourself.
+	Dictionary new
+		at: 'COLOR' put: Color gray;
+		at: 'TIME' put: (DateAndTime fromString: '2014-11-03 12:11:28.0');
+		at: 'SECONDS' put: 4;
+		yourself.
+	}.
+b := RTCharterBuilder new.
+b extent: 300 @ 200.
+b shape rectangle size: 0.
+b points: data.
+b y: [ :entry | entry at: 'SECONDS' ].
+b stackX.
+b shape rectangle 
+	color: [ :entry | entry at: 'COLOR' ].
+
+b interaction 
+	highlightColored: Color red.
+	
+b histogramWithBarTitle: [ :entry | entry at: 'TIME' ].
+
+b axisY.
+b newAxisConfiguration plain.
+b axisX.
+b build.
+
+b open.
+b view canvas
+]
+
+{ #category : #icons }
+RTCharterExample >> examplehistogramAndLegendIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEaklEQVR4XuWcSU/rMBSF+8cf
+QrACVkiAgB8BAjYgVGAB7JhBzPM8z4MYTl9P9CKhRxq7bWKcnFtFKeKoHj772r6xUyiV9M0n
+K+hXgT4QfdMHog9E3/SB6APRN30g+kD0TR+IPhB90weib/pA9IHomz4QfSD65h2Qt7c3tLa2
+oqurC/y7vb0dnZ2d+F/38vKC29vb4K5f7SkCeX9/R3NzMxYXF9HR0YGenh709vZGAqHGGZBC
+IfJCQwP0XdY/29nZcVcZ+kD0gegD0QeiD0QfiD4QfSD6QPSB6APJLZDR0VEcHx8HhXx+fkZ3
+dzf6+/t/LAD1F4aOgExMTIDhE14bGxsYHh7G4eEhhoaG9IHouyx9IPpA9IHoA9EHog9EH4g+
+EH0g+kD0gSgBGRkZCQq6vb0dWWD9haFDIJ+fn0Ehp6amUCwW9YHou6zagTQg+lNEEfpAfgFI
+AeVP6efnD/7oA9EHog9EH4g+kJwBQYzpA/kFII2NjZHX+Pi4fg/RB+IhkL29PfT19QWZX1hY
+CJ6nn5ycVL3ZmhUade3u7mYKSDkfiCqHbWOsG8js7CxaWlqwvr4OrtRZ6W1tbVUDsa1o34GU
+84Ko/I2NjSFTLksfiD4QfSD6QPSB6APRB6IPRB+IIhDb9YU+EEdAbCvaCyADAwMYHBzEx8cH
+mpqaKj7CnZ6eLmV1YZgpIGtra1hZWcHl5SWOjo4qAmEYRP/FAQ5dFl8i8Pr6WnOFPzw8RMbB
+atXx3Aobiut0bXW/PoaYCjEzMxOcM0lCRxiMs/GsSqVem0a6tjrvgbACWYivry8koSu7RyOM
+NNK11XkL5OrqKjgSxwLEFcJWd3p6ivn5efB43d3dHVyla6vzGsjBwQH4POX+/h6Vdjx+HwtM
+Ok4Y+JucXITnHuv5vaR13gNha76+vjYWgBMFk/vhlJv35eXlWBi2v5eGzlsgS0tLQUu+ublB
+Ejq6p8nJSWxubsJlurY6r4GwR7Alzc3NxU4NbXX8H3vF4+MjX5AGV+na6rwHUnZTJQ66Jldl
+o2PP4MVZzf7+PlylW43OWyD08VwX8Pv5+Tnq1YW9gzOpi4sLuEq3mvx5C4SF4LogbFn16mgc
+MzjVNFVekulWkz+vgdCt8M6dKUnpOKCa3EUa6drovAYSLpLi3EqedN4CYWsKp6FxA25edF4D
+4bx8a2sryDxfSJN3nddAvoe843w8dU9PT8514frBpAtjUyad10DYmniZwgihhtPWuMWcrS6M
+idnqTOsH2xhbJnpIeCLXRvfjTEeNujAmZqszPUSzjbF5CyR0U3GtMy0d3ZRrnddAWAj6W5Ob
+SkPHyjO5qaR1meghtoVIQ2cTaU1a5yUQ7rE6OzsLKi7Od+dF5zUQxnGYedPzh7zovAbCKSHv
+jHhyh0XedV4D4bqAm+J4jytEXnSZ6CHcDLe6ugoVnfdAOAAq6TI57dU3fSD6QPRNH4g+EH3T
+B6Jv+kD0geibPhB9IPqmD0QfiL7pA9EHom/6QPTtu/0FqmGYm4sjmtYAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTCharterExample >> examplemultipleCurveStacking [
 
 | b points1 points2 minY maxY |
