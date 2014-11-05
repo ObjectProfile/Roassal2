@@ -232,7 +232,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.0'.
+	spec for: #'common' version: '1.1'.
 
 ]
 
@@ -253,18 +253,16 @@ ConfigurationOfRoassal2 >> version10: spec [
 ]
 
 { #category : #versions }
-ConfigurationOfRoassal2 >> version1458: spec [
-	<version: '1.458' imports: #('1.1-baseline' )>
+ConfigurationOfRoassal2 >> version11: spec [
+	<version: '1.1' imports: #('1.1-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
-		spec description: 'version 1.458'.
+		spec description: 'version 1.1'.
 		spec author: 'AndreiChis'.
-		spec timestamp: '10/29/2014 18:15'.
 		spec 
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.230';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.569';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.234';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.585';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
-
 
 ]
