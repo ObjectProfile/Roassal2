@@ -373,6 +373,21 @@ RTCharterBuilder >> histogramWithBarTitle: aBlockOrSymbol [
 	^ bars 
 ]
 
+{ #category : #'public-histogram' }
+RTCharterBuilder >> histogramWithBarTitle: aBlockOrSymbol width: aWidth [
+	"Draw an histogram with title"
+	| bars lbl |
+	bars := self histogramBarWidth: aWidth.
+	bars do: [ :e |
+		lbl := (RTLabel new text: aBlockOrSymbol; color: Color lightGray) elementOn: e model.
+		lbl rotateByDegrees: -45.
+		TRConstraint move: lbl below: e.
+		lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
+		view add: lbl.
+	].
+	^ bars 
+]
+
 { #category : #initialization }
 RTCharterBuilder >> initialize [
 	super initialize.
