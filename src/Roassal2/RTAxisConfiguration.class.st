@@ -16,7 +16,8 @@ Class {
 		'builder',
 		'color',
 		'titlePosition',
-		'labelRotation'
+		'labelRotation',
+		'lineThickness'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -28,12 +29,12 @@ RTAxisConfiguration >> areLabelRotated [
 ]
 
 { #category : #rendering }
-RTAxisConfiguration >> axisFrom: fromPosition to: toPosition [
+RTAxisConfiguration >> axisFrom: fromPosition to: toPosition [ 
 	| renderer |
 	renderer := RTAxisRenderer new.
 	renderer builder: self builder.
 	renderer config: self.
-	renderer axisFrom: fromPosition to: toPosition
+	renderer axisFrom: fromPosition to: toPosition width: lineThickness
 ]
 
 { #category : #accessing }
@@ -91,6 +92,7 @@ RTAxisConfiguration >> initialize [
 	positionLabel := [ :aLabel :aTick | aLabel translateTo: aTick position ].
 	numberOfTicks := 4.
 	numberOfLabels := numberOfTicks.
+	lineThickness := 1.
 	minValue := 0.
 	maxValue := 0.
 	self twoDecimals.
@@ -122,6 +124,16 @@ RTAxisConfiguration >> labelRotation [
 RTAxisConfiguration >> labelRotation: rotationAsDegrees [
 	"Rotate the labels"
 	labelRotation := rotationAsDegrees
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> lineThickness [
+	^ lineThickness
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> lineThickness: lineThicknessInPixels [
+	lineThickness := lineThicknessInPixels
 ]
 
 { #category : #accessing }

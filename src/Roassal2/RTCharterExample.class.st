@@ -1968,8 +1968,7 @@ b newAxisConfiguration plain.
 b axisX.
 b build.
 
-b open.
-b view canvas
+^ b view
 ]
 
 { #category : #icons }

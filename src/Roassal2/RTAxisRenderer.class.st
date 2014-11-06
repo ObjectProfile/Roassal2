@@ -43,10 +43,18 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition [
 	"THIS IS A PUBLIC METHOD"
 
 	"fromPosition is the starting point of the axis. toPosition is the ending point"
+	self axisFrom: fromPosition to: toPosition width: 1
+]
+
+{ #category : #'public-rendering' }
+RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPixels [
+	"THIS IS A PUBLIC METHOD"
+
+	"fromPosition is the starting point of the axis. toPosition is the ending point"
 
 	| ticks labelShape labelValues labels tickIntervalForLabel labelledTicks |
 	"We add the labels"
-	self axisLineFrom: fromPosition to: toPosition.
+	self axisLineFrom: fromPosition to: toPosition width: lineThicknessInPixels.
 	ticks := self addTicksFrom: toPosition to: fromPosition.
 	self numberOfLabels = 0
 		ifTrue: [ ^ self ].
@@ -69,12 +77,18 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition [
 { #category : #rendering }
 RTAxisRenderer >> axisLineFrom: aPositionFrom to: aPositionTo [
 	"Add the lines"
+	self axisLineFrom: aPositionFrom to: aPositionTo width: 1
+]
+
+{ #category : #rendering }
+RTAxisRenderer >> axisLineFrom: aPositionFrom to: aPositionTo width: numberOfPixels [
+	"Add the lines, with a width of numberOfPixels"
 	| edge ex2 ex1 |		
 	ex1 := (RTBox new size: 0) element.
 	ex2 := (RTBox new size: 0) element.
 	ex2 translateTo: (aPositionTo).
 	ex1 translateTo: (aPositionFrom).
-	edge := (RTLine new color: config color) edgeFrom: ex1 to: ex2.
+	edge := (RTLine new color: config color; width: numberOfPixels) edgeFrom: ex1 to: ex2.
 	self addToView: ex1; addToView: ex2.
 	self addToView: edge
 ]

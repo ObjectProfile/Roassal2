@@ -81,16 +81,6 @@ RTElement >> extent: aPoint [
 	self updateConnectedEdges
 ]
 
-{ #category : #testing }
-RTElement >> getInteractionForClass: anInteractionClass [
-	^ self announcer subscriptions getInteractionForClass: anInteractionClass
-]
-
-{ #category : #testing }
-RTElement >> hasInteraction: anInteractionClass [
-	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
-]
-
 { #category : #accessing }
 RTElement >> height [
 	^ trachelShape height

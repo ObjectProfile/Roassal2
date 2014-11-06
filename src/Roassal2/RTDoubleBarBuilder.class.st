@@ -35,6 +35,7 @@ RTDoubleBarBuilder >> bottomValue: aBlock titled: aTitle [
 	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
+	configuration lineThickness: 3.
 	configuration axisFrom: bottomExtremity position to: bottomExtremity position + (width @ 0).
 	
 ]
@@ -154,5 +155,6 @@ RTDoubleBarBuilder >> topValue: aBlock titled: aTitle [
 	configuration positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (0 @ 15) ].
 	configuration maxValue: (self points collect: aBlock) max.
 	configuration numberOfTicks: 4.
+	configuration lineThickness: 3.
 	configuration axisFrom: topExtremity position to: topExtremity position + (width @ 0).
 ]

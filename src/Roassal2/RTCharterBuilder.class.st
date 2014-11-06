@@ -132,18 +132,6 @@ RTCharterBuilder >> axisConfiguration [
 ]
 
 { #category : #utility }
-RTCharterBuilder >> axisLineFrom: aPositionFrom to: aPositionTo [
-	| edge ex2 ex1 |		
-	ex1 := (RTBox new size: 0) element.
-	ex2 := (RTBox new size: 0) element.
-	ex2 translateTo: (aPositionTo).
-	ex1 translateTo: (aPositionFrom).
-	edge := RTLine edgeFrom: ex1 to: ex2.
-	view add: ex1; add: ex2.
-	view add: edge
-]
-
-{ #category : #utility }
 RTCharterBuilder >> axisPointFor: aPoint [
 	"Return the position in the view to have the 0 @ 0"
 	| centralPointX centralPointY |
