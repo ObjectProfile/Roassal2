@@ -14,6 +14,12 @@ RTLayoutBuilder >> cell [
 ]
 
 { #category : #'as yet unclassified' }
+RTLayoutBuilder >> flow [
+	layout := RTFlowLayout new.
+	^ layout
+]
+
+{ #category : #'as yet unclassified' }
 RTLayoutBuilder >> gapSize: aValue [
 	layout gapSize: aValue
 ]
@@ -22,6 +28,12 @@ RTLayoutBuilder >> gapSize: aValue [
 RTLayoutBuilder >> grid [
 	layout := RTGridLayout new.
 	^ layout
+]
+
+{ #category : #'as yet unclassified' }
+RTLayoutBuilder >> initialize [
+	super initialize.
+	layout := RTFlowLayout new.
 ]
 
 { #category : #'as yet unclassified' }
