@@ -236,9 +236,16 @@ RTView >> removeElement: anElement [
 ]
 
 { #category : #actions }
+RTView >> resetCamera [
+	TRCameraInitializer reset
+]
+
+{ #category : #actions }
 RTView >> restoreCamera [
 	"Reuse a previous camera. This is useful when scripting in a playground"
-	self view numberOfElements = 0 ifTrue: [ TRCameraInitializer reset ].
+
+	self view numberOfElements = 0
+		ifTrue: [ self resetCamera ].
 	self view canvas camera toAdjust: TRCameraInitializer restorePrevious
 ]
 
