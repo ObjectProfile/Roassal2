@@ -8,3 +8,8 @@ Class {
 TRCameraScaleCallback >> isCameraScaleCallback [
 	^ true
 ]
+
+{ #category : #action }
+TRCameraScaleCallback >> scaleChanged: aScaleFactorAsInteger [
+	^ block cull: self cull: aScaleFactorAsInteger
+]

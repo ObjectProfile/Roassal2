@@ -172,12 +172,14 @@ TRCamera >> position [
 
 { #category : #accessing }
 TRCamera >> scale [
+	"Return an integer corresponding to the scaling"
 	^ scale
 ]
 
 { #category : #accessing }
-TRCamera >> scale: aNewScale [
-	scale := aNewScale
+TRCamera >> scale: aNewScaleAsInteger [
+	scale := aNewScaleAsInteger.
+	self triggerCallbacksForScale: aNewScaleAsInteger
 ]
 
 { #category : #accessing }
@@ -197,4 +199,12 @@ TRCamera >> translateTo: newPosition [
 	step := newPosition - position.
 	position := newPosition.
 	self triggerCallbacksForStep: step.
+]
+
+{ #category : #callbacks }
+TRCamera >> triggerCallbacksForScale: aScaleFactor [
+	callbacks ifNil: [ ^ self ].
+	callbacks do: [ :c | 
+		c isCameraScaleCallback ifTrue: [ 
+			c scaleChanged: aScaleFactor ] ]
 ]
