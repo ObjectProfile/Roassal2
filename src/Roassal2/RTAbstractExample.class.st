@@ -143,12 +143,3 @@ RTAbstractExample >> openOn: v [
 	TRConstraint stickAtTheBottomOfTheWindow: helpBar.
 	
 ]
-
-{ #category : #'instance creation' }
-RTAbstractExample >> pressedBackButtonOn: view [
-	view cleanAll.
-	RTExampleBrowser new
-		listExamplesOn: view;
-		lineUpAndAnimate: view;
-		positionCameraOn: view
-]

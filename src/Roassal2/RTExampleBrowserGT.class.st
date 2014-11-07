@@ -35,5 +35,5 @@ RTExampleBrowserGT >> open [
 							gtInspectorPresentationsIn: d 
 							inContext: pager ])
 							startOn: x ] ].
-	pager openOn: RTAbstractExample allSubclasses
+	pager openOn: (RTAbstractExample allSubclasses collect: #new)
 ]
