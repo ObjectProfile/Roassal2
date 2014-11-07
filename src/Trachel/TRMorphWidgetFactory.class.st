@@ -1,6 +1,6 @@
 Class {
 	#name : #TRMorphWidgetFactory,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#category : #'Trachel-Core'
 }
 

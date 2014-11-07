@@ -1,6 +1,6 @@
 Class {
 	#name : #TRResetAllShapes,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#instVars : [
 		'trCanvas'
 	],

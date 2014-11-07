@@ -1,6 +1,6 @@
 Class {
 	#name : #TRUtil,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#classInstVars : [
 		'instance'
 	],

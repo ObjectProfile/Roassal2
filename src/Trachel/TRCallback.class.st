@@ -31,6 +31,11 @@ TRCallback >> initialize [
 ]
 
 { #category : #testing }
+TRCallback >> isCameraScaleCallback [
+	^ false
+]
+
+{ #category : #testing }
 TRCallback >> isExtentCallback [
 	^ false
 ]
