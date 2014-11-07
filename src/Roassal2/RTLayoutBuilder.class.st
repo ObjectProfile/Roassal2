@@ -28,3 +28,8 @@ RTLayoutBuilder >> grid [
 RTLayoutBuilder >> layout [
 	^ layout
 ]
+
+{ #category : #'as yet unclassified' }
+RTLayoutBuilder >> setUpElements: elements [
+	layout on: elements
+]
