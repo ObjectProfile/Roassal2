@@ -32,6 +32,17 @@ RTMenuActivable >> initialize [
 
 { #category : #hooks }
 RTMenuActivable >> initializeElement: element [
+
+	| menuActivable |
+	(element hasInteraction: self class) ifFalse: [ ^ self initializeFirstTimeElement: element ].
+	
+	menuActivable := element getInteractionForClass: self class.
+	actions do: [ :assoc |
+		menuActivable item: assoc key action: assoc value ]
+]
+
+{ #category : #hooks }
+RTMenuActivable >> initializeFirstTimeElement: element [
 	element when: TRMouseRightClick do: [ :event |
 		TRUtil instance widgetFactory menuForAssociations: actions on: element
 	]

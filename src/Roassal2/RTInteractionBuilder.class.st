@@ -9,6 +9,7 @@ Class {
 
 { #category : #public }
 RTInteractionBuilder >> action: aBlockOrSymbol [
+	"Add a new action, the argument is taken from the argument"
 	^ self item: aBlockOrSymbol action: aBlockOrSymbol
 ]
 
@@ -105,6 +106,11 @@ RTInteractionBuilder >> menu: aSymbolOrBlockOrMenu [
 { #category : #public }
 RTInteractionBuilder >> noInteractions [
 	self initializeInteractions.
+]
+
+{ #category : #'accessing - computed' }
+RTInteractionBuilder >> numberOfMenuEntries [
+	^ interactions size
 ]
 
 { #category : #public }
