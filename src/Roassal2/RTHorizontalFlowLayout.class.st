@@ -19,7 +19,7 @@ RTHorizontalFlowLayout >> doExecute: elements [
 	elements do:
 		[ :anElement | 
 		
-		(anElement = elements last) ifFalse:  [nextElement := (elements after: anElement)] ifTrue: [nextElement = anElement].
+		(anElement = elements last) ifFalse:  [nextElement := (elements after: anElement)] ifTrue: [nextElement := anElement].
 		
 		self isAlignBottom ifTrue: [ 
 			translator translate: anElement to: ((x @ y) + ((anElement width / -2) @ (anElement height / 2))).	
