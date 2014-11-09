@@ -521,6 +521,20 @@ RTNestTest >> testSimpleExample [
 ]
 
 { #category : #tests }
+RTNestTest >> testView [
+
+	| v n |
+	self assert: RTNest new view isNil.
+	
+	v := RTView new.
+	
+	n := RTNest new.
+	n view: v.
+
+	self assert: n view equals: v
+]
+
+{ #category : #tests }
 RTNestTest >> testWithTwoInnerNodes [
 
 	| view el shape innerElement innerElement2 |

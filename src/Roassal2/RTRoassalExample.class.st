@@ -2113,6 +2113,41 @@ fiD8QPjFD4QfCL/4gfAD4deg+gdk9tXngy6lfAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDynamicallyAdding [
+
+	| c v |
+	c := OrderedCollection new.
+
+	v := RTView new.
+	v canvas addMenu: '+1' callback: [ c add: 42 ].
+
+	RTActiveAnimation new
+		blockToExecute: [ 
+			(v numberOfElements ~~ c size) ifTrue: 
+				[ v clean. 
+				  v addAll: ((RTBox new size: 8; color: Color blue) elementsOn: c).
+				  RTGridLayout on: v elements.
+				   ] ];
+		inView: v.
+
+	^ v
+
+
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDynamicallyAddingIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAABVklEQVR4XuXXMQrDIBSAYW+e
+3UPpXXKFLC55acUGOrTNFizfD4FH3PzQNuk4/GYq+Vvgg/hdgazrGqWU8LdjEpCOkXP2QWYB
+2bYtaq3RWvNR/N8QPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/EzwfxQfx8EB/Ezwfx
+80F8ED8fxAfx80F8ED8fxAfx80H8fBAfxM8H8UH8fBAfxM8H8UH8fBA/H8QH8fNBfBA/HiSl
+8Zzzsoynz/Hs1/q+R/ggPoh/ZflXln9CXJBzg8+51vH0uYNcrfsgPoh/ZflX1o3Fq0/zt/X3
+dz7ILSdknIxxQsbsnxD/yvK/Q/zvEP+E+CD+314/H8QH8fNB/HwQH8TPB/FB/HwQH8TPB/FB
+/HwQPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/EzwfxQfx8EB/Ezwfx80F8ED8f5N96
+AGxOp0bY2FZoAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleEdgeTransparency [
 
 | v es |

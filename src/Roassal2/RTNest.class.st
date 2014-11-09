@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'layout',
 		'padding',
-		'behavior'
+		'behavior',
+		'view'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -67,7 +68,13 @@ RTNest >> for: collectionOfElements add: aTwoArgBlock [
 		aTwoArgBlock value: g value: element model.
 		self doLayoutIfNecessaryOn: g.
 		self on: element nest: g.
-		element view addAll: g.
+		
+		"Add the elements in the view. If no view has been set, it try to use the view of the elements"
+		view isNil
+			ifTrue: [ 
+				element view ifNil: [ self error: 'Please, specify in RTNest a view to which elements have to be added in using #view:.' ].
+				element view addAll: g ]
+			ifFalse: [ view addAll: g ].
 	]
 ]
 
@@ -159,6 +166,7 @@ RTNest >> noBehavior [
 { #category : #public }
 RTNest >> on: element inShape: aSymbol nest: elements [
 	"public method"
+	"add nested elements, in a particular shape of the composed shape of the element. Assume that the shape of element is composed"
 	"aSymbol could be #first, #second, #third, #fourth"
 	
 	"We assume that the roassal shape of element is composed"
@@ -290,4 +298,15 @@ RTNest >> stretchable [
 { #category : #'setting nesting behavior' }
 RTNest >> topLeft [
 	self behavior: (RTTopLeftBehavior new)
+]
+
+{ #category : #accessing }
+RTNest >> view [
+	^ view
+]
+
+{ #category : #accessing }
+RTNest >> view: aRTView [
+	"Set the view in which elements have to be added in for:add:"
+	view := aRTView
 ]
