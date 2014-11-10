@@ -51,7 +51,7 @@ TRMorph >> drawOn: aCanvas [
 		
 		"We display the elements that are subject to the camera"
 		cs pathTransform
-			translateBy: self extent / 2;
+			translateBy: (self extent / 2) asFloatPoint;
 			    scaleBy: trachelCanvas camera scale asFloat;
 			translateBy: trachelCanvas camera position negated.
 		trachelCanvas shapes do: [ :trachelShape |
@@ -452,6 +452,11 @@ TRMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds. This default implementation requests that the 'step' method be called once every second."
 
 	^ 20
+]
+
+{ #category : #accessing }
+TRMorph >> surface [
+	^ surface
 ]
 
 { #category : #'events-processing' }
