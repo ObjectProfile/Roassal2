@@ -1,3 +1,7 @@
+"
+A RTTextBuilderExamples has examples of RTTextBuilder class.
+
+"
 Class {
 	#name : #RTTextBuilderExamples,
 	#superclass : #RTObject,
@@ -40,12 +44,12 @@ RTTextBuilderExamples >> example03ShowCode [
 
 	| builder |
 	builder := RTTextBuilder new.
-	builder shape rectangle withBorder; color: (Color purple alpha: 0.2).
-	builder wordShape color: Color yellow.
+	builder shape rectangle withBorder; color: (Color gray alpha: 0.2).
+	builder wordShape color: Color brown.
 	builder wordInteraction  
 					highlight;
 					when: TRMouseClick do: [ :event | event element model inspect ].
-	builder addText: (RTTextBuilderExamples>>#example03ShowCode) getSource.
+	builder addText: (RTTextBuilderExamples >> #example03ShowCode) getSource.
 	^ builder open
 ]
 
