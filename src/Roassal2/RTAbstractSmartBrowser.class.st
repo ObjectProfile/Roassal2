@@ -57,11 +57,9 @@ RTAbstractSmartBrowser >> addInteractionLineToReferencedClasses: classElements [
 								shape: ([ :el | RTBezierLine new 
 												centerOfObjects: el model classReferences inView: self view; 
 												color: (Color blue alpha: 0.4) ])).
-	classElements @ (RTShowLabel new
-							highlight: [ :aClass | 
+	classElements @ (RTShowLabel highlight: [ :aClass | 
 								(aClass classReferences, (aClass referencedByClasses: self addedClasses))
-									removeDuplicates ];
-							color: Color brown).
+									removeDuplicates ]).
 								
 	classElements @ (RTShowEdge new 
 								connectTo: [ :aClass | aClass referencedByClasses: self addedClasses ]; 
