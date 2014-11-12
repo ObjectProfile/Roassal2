@@ -1,3 +1,41 @@
+"
+A RTTextBuilder parses a text and displays it on a RTView.
+
+It uses textTokenizer for splitting text into lines and lines into words. For each word an RTElement is created. It allows to have different shape or/and interaction on each word. User can define how to split text by implementing a textTokenizer; by default RTTextTokenizer. 
+
+All the RTElements representing words are nested to a main RTElement object with padding.
+
+On each word, wordShapeBuilder and wordInteractionBuilder are applied. 
+
+Before applying shape and interaction builders on any RTElement object, hook for main element and wordHook for wor elements are called. It allows to make extra customization for each element.
+
+Instance Variables
+	hook:						<BlockClosure>
+	padding:					<Integer>
+	textTokenizer:				<RTTextTokenizer>
+	wordHook:					<BlockClosure>
+	wordInteractionBuilder:		<RTInteractionBuilder>
+	wordShapeBuilder:			<RTShapeBuilder>
+
+hook
+	- is one-orgument-block which receives a main RTElement object; the RTElement object nests all the other objects for a displayed text. It is called before any element initialization. 
+
+padding
+	- number of pixes between main RTElement object and nested text.
+
+textTokenizer
+	- is responsible for splitting a text into lines and lines into words.
+
+wordHook
+	- is two-argument-block which receives a word element and interval of a word in the original text
+
+wordInteractionBuilder
+	- interaction builder applied on each word element
+
+wordShapeBuilder
+	- shape builder applied on each word element
+
+"
 Class {
 	#name : #RTTextBuilder,
 	#superclass : #RTBuilder,
@@ -6,7 +44,8 @@ Class {
 		'wordHook',
 		'wordInteractionBuilder',
 		'wordShapeBuilder',
-		'padding'
+		'padding',
+		'textTokenizer'
 	],
 	#category : #'Roassal2-Builder-TextBuilder'
 }
@@ -28,29 +67,23 @@ RTTextBuilder >> buildText: aText [
 
 { #category : #protocol }
 RTTextBuilder >> buildText: aString in: element [
-	| elements lines |
+	| tokenizedString elements lines |
+	tokenizedString := textTokenizer tokenize: aString.
 	lines := RTGroup new.
 	elements := RTGroup new.
-	aString lineIndicesDo: [ :startLine :endLine :endLineWithEOL | 
-		| line lineString wordStrings startWord endWord |
-		lineString := aString copyFrom: startLine to: endLine.
+	tokenizedString linesDo: [ :eachLine | 
+		| line |
 		line := RTGroup new.
-		wordStrings := lineString findTokens: Character separators keep: Character separators. 
-		startWord := 0.
-		wordStrings do: [ :wordString | |  wordElement |
-			endWord := startWord + wordString size.
-			wordElement := RTElement on: (self normalizeString: wordString).
-			wordHook value: wordElement value: ((startLine + startWord) to: (startLine + endWord - 1)).
+		eachLine wordsDo: [ :eachWord | | wordElement |
+			wordElement := RTElement on: eachWord text.
+			wordHook cull: wordElement cull: eachWord interval.
 			wordShapeBuilder setUpElements: wordElement.
 			wordInteractionBuilder setUpElements: wordElement.
 			line add: wordElement.
 			elements add: wordElement.
-			view add: wordElement.
-			startWord := endWord.
-		].
+			view add: wordElement ].
 		RTHorizontalLineLayout new gapSize: 0; on: line.
-		lines add: line.
-	].
+		lines add: line ].
 	RTVerticalLineLayout new gapSize: 0; on: lines.
 	RTNest new padding: padding; on: element nest: elements.
 	element attributeAt: self nestedElementsAttribute put: elements.
@@ -69,6 +102,11 @@ RTTextBuilder >> buildText: aText model: anObject [
 	^ el
 ]
 
+{ #category : #initialization }
+RTTextBuilder >> defaultTokenizer [
+	^ RTTextTokenizer new
+]
+
 { #category : #accessing }
 RTTextBuilder >> hook: aOneArgBlock [
 	hook := aOneArgBlock
@@ -76,26 +114,14 @@ RTTextBuilder >> hook: aOneArgBlock [
 
 { #category : #initialization }
 RTTextBuilder >> initialize [
-
 	super initialize.
+	textTokenizer := self defaultTokenizer.
 	wordShapeBuilder := RTShapeBuilder new.
 	wordShapeBuilder text.
 	wordInteractionBuilder := RTInteractionBuilder new.
 	wordHook := [ :anElement :anInterval | nil ].
 	hook := [ :anElement | nil ].
-	padding := 5.
-]
-
-{ #category : #protected }
-RTTextBuilder >> normalizeString: aString [
-
-	^ String streamContents: [ :aStream |
-		aString do: [ :eachChar |
-			eachChar = Character tab
-				ifTrue: [ aStream nextPutAll: '       ' ]
-				ifFalse: [ aStream nextPut: eachChar ]
-			 ]		
-	]
+	padding := 5
 ]
 
 { #category : #accessing }
