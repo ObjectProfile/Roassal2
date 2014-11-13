@@ -6,10 +6,10 @@ Class {
 
 { #category : #'public - hooks' }
 RTCenteredAttachPoint >> endingPointOf: anEdge [
-	^ anEdge to position asIntegerPoint
+	^ anEdge to position
 ]
 
 { #category : #'public - hooks' }
 RTCenteredAttachPoint >> startingPointOf: anEdge [
-	^ anEdge from position asIntegerPoint
+	^ anEdge from position
 ]

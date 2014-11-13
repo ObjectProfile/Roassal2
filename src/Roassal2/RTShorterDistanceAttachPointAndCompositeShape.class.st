@@ -18,13 +18,13 @@ RTShorterDistanceAttachPointAndCompositeShape >> attachPointsFor: anEdge on: anE
 	center := rec center.
 	^ Array 
 		"upper side"
-		with: ((center x) @ rec top) asIntegerPoint
+		with: ((center x) @ rec top)
 		 "right side"
-		with: (rec right @ (center y)) asIntegerPoint
+		with: (rec right @ (center y))
 		"lower side"
-		with: ((center x) @ rec bottom) asIntegerPoint
+		with: ((center x) @ rec bottom)
 		"left side"
-		with: (rec left @ (center y)) asIntegerPoint
+		with: (rec left @ (center y))
 	
 ]
 
