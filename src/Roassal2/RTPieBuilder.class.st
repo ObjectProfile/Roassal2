@@ -62,9 +62,10 @@ RTPieBuilder >> label: object [
 						rotateBy: ((trachelShape betaAngle - trachelShape alphaAngle) / 2 + trachelShape alphaAngle) * 3.1415 / 180
 						about: trachelShape position.
 
-	lbl := TRLabelShape new text: object asString.
-	view canvas addShape: lbl.
-	lbl translateTo: labelPosition
+	lbl := RTLabel elementOn: object asString.
+	view add: lbl.
+	"view canvas addShape: lbl."
+	lbl trachelShape translateTo: labelPosition
 ]
 
 { #category : #shapes }
