@@ -50,12 +50,8 @@ RTNest >> doLayoutIfNecessaryOn: elements [
 
 { #category : #utility }
 RTNest >> encompassingRectangleOf: elements [
-	"Maybe in the future, we should enforce to have a group provided as argument, and not a collection"
-	| encompassingRectangle |
-	elements isEmpty ifTrue: [ ^ (0 @ 0) extent: (0 @ 0) ]. 
-	encompassingRectangle := elements anyOne encompassingRectangle.
-	elements do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
-	^ encompassingRectangle 
+	^ elements asGroup encompassingRectangle 
+
 ]
 
 { #category : #public }

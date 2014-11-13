@@ -87,6 +87,17 @@ RTPNGExporter >> fileName: aFilenameAsString [
 	fileName := aFilenameAsString
 ]
 
+{ #category : #initialization }
+RTPNGExporter >> initialize [
+	super initialize.
+	self setDefaultFileName
+]
+
+{ #category : #initialization }
+RTPNGExporter >> setDefaultFileName [
+	self fileName: 'roassal.png'
+]
+
 { #category : #util }
 RTPNGExporter >> trachelCanvas [
 	^ self builder view canvas
