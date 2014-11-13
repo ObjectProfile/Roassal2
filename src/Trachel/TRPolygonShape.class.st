@@ -25,7 +25,7 @@ TRPolygonShape >> computePath [
 			builder closePath ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 TRPolygonShape >> drawOn: athensCanvas [
 	| pt w |
 	pt := athensCanvas pathTransform.
@@ -58,18 +58,18 @@ TRPolygonShape >> includesPoint: point [
 "self encompassingRectangle containsPoint: point"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TRPolygonShape >> initialize [
 	super initialize.
 	strokeWidth := 1.0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRPolygonShape >> strokeWidth [
 	^ strokeWidth
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRPolygonShape >> strokeWidth: aWidth [
 	strokeWidth := aWidth
 ]
