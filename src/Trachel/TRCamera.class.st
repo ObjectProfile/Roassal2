@@ -62,6 +62,11 @@ TRCamera >> canvas: aTrachelCanvas [
 	canvas := aTrachelCanvas
 ]
 
+{ #category : #initialization }
+TRCamera >> defaultCameraScale [
+	^ 1.0001
+]
+
 { #category : #convertion }
 TRCamera >> distanceFromPixelToSpace: aPoint [
 	^ (aPoint / self scale) asFloatPoint
@@ -77,10 +82,8 @@ TRCamera >> encompassingRectangle [
 
 { #category : #utility }
 TRCamera >> encompassingRectangleOf: shapes [
-	| encompassingRectangle |
-	encompassingRectangle := shapes anyOne encompassingRectangle.
-	shapes do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
-	^ encompassingRectangle 
+	^ shapes asGroup encompassingRectangle 
+
 ]
 
 { #category : #actions }
@@ -145,7 +148,7 @@ TRCamera >> fromSpaceToPixelForRectangle: aRectangle [
 TRCamera >> initialize [
 	super initialize.
 	position := 0 @ 0.
-	scale := 1.0001.
+	scale := self defaultCameraScale.
 	initializer := TRCameraInitializer focusOnCenter
 ]
 

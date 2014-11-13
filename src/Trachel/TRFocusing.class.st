@@ -11,10 +11,8 @@ TRFocusing class >> on: canvas [
 
 { #category : #utility }
 TRFocusing >> encompassingRectangleOf: shapes [
-	| encompassingRectangle |
-	encompassingRectangle := shapes anyOne encompassingRectangle.
-	shapes do: [ :e | encompassingRectangle := encompassingRectangle merge: e encompassingRectangle ].
-	^ encompassingRectangle 
+	^ shapes asGroup encompassingRectangle 
+
 ]
 
 { #category : #hooks }
