@@ -1,3 +1,6 @@
+"
+A RTPNGExporter export the view or builder provided as argument as a PNG file
+"
 Class {
 	#name : #RTPNGExporter,
 	#superclass : #RTObject,
@@ -10,37 +13,67 @@ Class {
 
 { #category : #accessing }
 RTPNGExporter >> builder [
+	"Return a view or a builder that has been previous assigned"
 	^ view
 ]
 
 { #category : #accessing }
-RTPNGExporter >> builder: anObject [
-	view := anObject
+RTPNGExporter >> builder: aViewOrABuilder [
+	view := aViewOrABuilder
+]
+
+{ #category : #util }
+RTPNGExporter >> cameraPositionNegated [
+	^ self trachelCanvas camera position negated
+]
+
+{ #category : #util }
+RTPNGExporter >> cameraScale [
+	^ self trachelCanvas camera scale asFloat
+]
+
+{ #category : #util }
+RTPNGExporter >> createFormCanvas [
+	"Return a new form"
+	| form |
+	form := FormCanvas extent: self viewExtent.
+	form fillRectangle: self encompassingRectangle color: self trachelCanvas color.
+	^ form
+]
+
+{ #category : #util }
+RTPNGExporter >> createSurface [
+	^ AthensCairoSurface extent: self viewExtent
+]
+
+{ #category : #util }
+RTPNGExporter >> encompassingRectangle [
+	^ self trachelCanvas encompassingRectangle
 ]
 
 { #category : #public }
 RTPNGExporter >> exportToFile [
-	| trachelCanvas form session surface |
-	trachelCanvas := self builder view canvas.
-	form := FormCanvas extent: (trachelCanvas encompassingRectangle) extent.
-	session := Smalltalk session.
-	surface := AthensCairoSurface extent: (trachelCanvas encompassingRectangle extent) asIntegerPoint.
-	form fillRectangle: trachelCanvas encompassingRectangle color: trachelCanvas color.
-	"The drawing has to be done when a change in the shapes occured or when there is an animation."
-	surface drawDuring: [:cs |
-		surface clear.
-		"We display the elements that are subject to the camera"
-		trachelCanvas shapes do: [ :trachelShape |
-			trachelShape drawOn: cs.
-		].
-		"We display the elements that are _NOT_ subject to the camera"
-		trachelCanvas fixedShapes do: [ :trachelShape |
-			trachelShape drawOn: cs.
-		].
-	].
-	"aCanvas translucentImage: surface asForm at: self bounds origin."
-	"asForm creates a new Form, which is likely to be expensive. This can be cached"
-	form image: surface asForm at: trachelCanvas encompassingRectangle origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
+	| trachelCanvas form surface viewExtent |
+	trachelCanvas := self trachelCanvas.
+	viewExtent := self viewExtent.
+	form := self createFormCanvas.
+	surface := self createSurface.
+	surface
+		drawDuring: [ :cs | 
+			"Probably not necessary since we have just created a surface"
+			surface clear.
+			cs pathTransform
+				translateBy: self viewHalfExtent;
+				scaleBy: self cameraScale;
+				translateBy: self cameraPositionNegated.
+			trachelCanvas shapes do: [ :trachelShape | trachelShape drawOn: cs ].
+			cs pathTransform loadIdentity scaleBy: 1.001.
+			"trachelCanvas fixedShapes do: [ :trachelShape | trachelShape drawOn: cs ]" ].
+	form
+		image: surface asForm
+		at: 0 @ 0
+		sourceRect: (0 @ 0 extent: surface extent)
+		rule: 34.
 	surface writeToPng: self fileName
 ]
 
@@ -50,6 +83,21 @@ RTPNGExporter >> fileName [
 ]
 
 { #category : #accessing }
-RTPNGExporter >> fileName: anObject [
-	fileName := anObject
+RTPNGExporter >> fileName: aFilenameAsString [
+	fileName := aFilenameAsString
+]
+
+{ #category : #util }
+RTPNGExporter >> trachelCanvas [
+	^ self builder view canvas
+]
+
+{ #category : #util }
+RTPNGExporter >> viewExtent [
+	^ self encompassingRectangle extent asIntegerPoint + (5 @ 5)
+]
+
+{ #category : #util }
+RTPNGExporter >> viewHalfExtent [
+	^ (self viewExtent / 2) asFloatPoint
 ]
