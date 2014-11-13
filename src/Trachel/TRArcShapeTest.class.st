@@ -90,7 +90,7 @@ TRArcShapeTest >> setUp [
 
 { #category : #'basic tests' }
 TRArcShapeTest >> testEncompassingRectangle [
-	self assert: (arc1 encompassingRectangle = ((-100.0@ 100.0) corner: (100.0@ -100.0))).
+	self assert: (arc1 encompassingRectangle = ((-100.0@ -100.0) corner: (100.0@100.0))).
 	self assert: (arc1 encompassingRectangle width abs = 200).
 	self assert:(arc2 encompassingRectangle width abs < 50).  
 	self assert:(arc2 encompassingRectangle height abs < 50).
