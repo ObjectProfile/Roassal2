@@ -281,3 +281,18 @@ ConfigurationOfRoassal2 >> version12: spec [
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version13: spec [
+	<version: '1.3' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.3'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.240';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.604';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
