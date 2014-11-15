@@ -13,10 +13,22 @@ RTViewTest >> setUp [
 	view := RTView new
 ]
 
+{ #category : #edges }
+RTViewTest >> testAccept [
+	view accept: RTVisitor new
+]
+
+{ #category : #menu }
+RTViewTest >> testAddFindMenu [
+
+	view addFindMenu.
+	self assert: view canvas numberOfFixedShapes > 0.
+	self assert: view canvas numberOfShapes equals: 0
+]
+
 { #category : #menu }
 RTViewTest >> testAddLayoutMenu [
 
-	view := RTView new.
 	view addLayoutMenu.
 	self assert: view canvas numberOfFixedShapes > 0.
 	self assert: view canvas numberOfShapes equals: 0
@@ -71,6 +83,11 @@ RTViewTest >> testAddingEdges [
 	self assert: view numberOfEdges = 1.	
 ]
 
+{ #category : #edges }
+RTViewTest >> testBuild [
+	view build
+]
+
 { #category : #camera }
 RTViewTest >> testCameraProjection [
 	| v camera |
@@ -105,6 +122,19 @@ RTViewTest >> testDefault [
 	self deny: (RTElement new setAsNotFixed; isFixed).
 ]
 
+{ #category : #edges }
+RTViewTest >> testEdgeFromModel [
+
+	| e1 e2 edge |
+	e1 := RTBox elementOn: 1.
+	e2 := RTBox elementOn: 2.
+	edge := RTLine edgeFrom: e1 to: e2.
+	edge model: 'hello'.
+	view add: e1; add: e2; add: edge.
+	
+	self assert: (view edgeFromModel: 'hello') equals: edge
+]
+
 { #category : #tests }
 RTViewTest >> testElementFromModel [
 
@@ -115,6 +145,23 @@ RTViewTest >> testElementFromModel [
 	self assert: (view elementFromModel: 1) == els first.
 	self assert: (view elementFromModel: 2) == els second.
 	self assert: (view elementFromModel: 3) == els third.
+]
+
+{ #category : #edges }
+RTViewTest >> testElementsFromModel [
+
+	| e1 e2 e3 edge |
+	e1 := RTBox elementOn: 1.
+	e2 := RTBox elementOn: 2.
+	e3 := RTBox elementOn: 1.
+	edge := RTLine edgeFrom: e1 to: e2.
+	edge model: 'hello'.
+	view add: e1; add: e2; add: e3; add: edge.
+	
+	self assert: (view elementsFromModel: 'hello') isEmpty.
+	self assert: (view elementsFromModel: 1) size equals: 2.
+	self assert: (view elementsFromModel: 2) size equals: 1.
+	self assert: (view elementsFromModel: 3) size equals: 0
 ]
 
 { #category : #tests }
@@ -173,15 +220,127 @@ RTViewTest >> testLowLevelEvent3 [
 { #category : #menu }
 RTViewTest >> testMenu [
 
-	view := RTView new.
 	view add: (RTEllipse new size: 50) element.
 	view addMenu: 'foo' callback: [  ].
 	self assert: view canvas numberOfShapes = 1.
 	self assert: view canvas numberOfFixedShapes = 1.
 ]
 
+{ #category : #opening }
+RTViewTest >> testOpenWithMenu [
+
+	| window |
+	window := view openWithMenu.
+	self assert: view numberOfElements equals: 0.
+	self assert: view canvas numberOfFixedShapes > 0.
+	window delete.
+]
+
+{ #category : #opening }
+RTViewTest >> testOpening [
+
+	| window |
+	window := RTView new openInWindowSized: 500 @ 300.
+	self assert: window extent equals: 500 @ 300.
+	window delete.
+]
+
+{ #category : #opening }
+RTViewTest >> testOpeningInWindowSizedTitled [
+
+	| window |
+	window := RTView new openInWindowSized: 500 @ 300 titled: 'Hello World'.
+	self assert: window extent equals: 500 @ 300.
+	window delete.
+]
+
+{ #category : #opening }
+RTViewTest >> testOpeningRaw [
+
+	| window |
+	window := view openRaw.
+	self assert: window notNil.
+	window delete.
+]
+
+{ #category : #edges }
+RTViewTest >> testPushBackEdges [
+
+	| es lastEdge |
+	es := RTBox new elementsOn: (1 to: 10).
+	view addAll: es.
+	
+	RTEdgeBuilder new
+		view: view;
+		objects: (1 to: 10) from: [ :aValue | aValue // 3 ] to:  #yourself.
+	view add: (RTBox element).
+	RTTreeLayout on: es.
+	
+	
+	lastEdge := view edges last.
+	self assert: (view canvas shapes indexOf: lastEdge trachelShape) equals: 18.
+	view pushBackEdges.
+	self assert: (view canvas shapes indexOf: lastEdge trachelShape) equals: 1.
+]
+
+{ #category : #edges }
+RTViewTest >> testPushFrontEdges [
+
+	| es lastEdge |
+	es := RTBox new elementsOn: (1 to: 10).
+	view addAll: es.
+	
+	RTEdgeBuilder new
+		view: view;
+		objects: (1 to: 10) from: [ :aValue | aValue // 3 ] to:  #yourself.
+	view add: (RTBox element).
+	RTTreeLayout on: es.
+	
+	
+	lastEdge := view edges last.
+	self assert: (view canvas shapes indexOf: lastEdge trachelShape) equals: 18.
+	view pushFrontEdges.
+	self assert: (view canvas shapes indexOf: lastEdge trachelShape) equals: 19.
+]
+
+{ #category : #camera }
+RTViewTest >> testRestoreCamera [
+	"
+	self debug: #testRestoreCamera
+	"
+
+	view resetCamera.
+	view add: (RTBox element).
+	view restoreCamera.
+	view canvas camera translateTo: 5 @ 5.
+	view setUpCanvas.
+	
+	view := RTView new.
+	view add: (RTBox element).
+	view restoreCamera.
+	self assert: view canvas camera position equals: 0 @ 0.
+
+	view setUpCanvas.
+	self assert: view canvas camera position equals: 5 @ 5.
+]
+
 { #category : #menu }
 RTViewTest >> testSignalUpdate [
 
 	RTView new signalUpdate 
+]
+
+{ #category : #menu }
+RTViewTest >> testTrachelShape [
+
+	self assert: view trachelShape class equals: TRNoShape
+	
+]
+
+{ #category : #menu }
+RTViewTest >> testsetDefaultMenu [
+
+	view setDefaultMenu.
+	self assert: view canvas numberOfFixedShapes > 0.
+	self assert: view canvas numberOfShapes equals: 0
 ]

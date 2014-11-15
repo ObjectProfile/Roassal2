@@ -218,13 +218,14 @@ RTView >> pushBackEdges [
 ]
 
 { #category : #actions }
-RTView >> pushBackFront [
+RTView >> pushFrontEdges [
 	"Move all the edges in the front"
 	self edges do: [ :e | e trachelShape pushFront ]
 ]
 
 { #category : #actions }
 RTView >> removeEdge: anEdge [
+	"Remove an edge from the view"
 	edges remove: anEdge ifAbsent: [ ].
 	anEdge trachelShape remove.
 ]

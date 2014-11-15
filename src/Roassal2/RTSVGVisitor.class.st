@@ -484,8 +484,3 @@ RTSVGVisitor >> visitSVGPath: aSVGPath [
 RTSVGVisitor >> visitShape: aShape [
 	aShape accept: self 
 ]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitView: aView [
-	aView canvas accept: self
-]
