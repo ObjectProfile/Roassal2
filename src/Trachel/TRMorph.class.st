@@ -69,6 +69,12 @@ TRMorph >> drawOn: aCanvas [
 	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34
 ]
 
+{ #category : #'as yet unclassified' }
+TRMorph >> extent: aPoint [
+	"aPoint ~= self extent ifTrue: [ self inform: 'extended !!! ' ]."
+	super extent: aPoint
+]
+
 { #category : #'events-processing' }
 TRMorph >> handleKeystroke: anEvent [
 	
