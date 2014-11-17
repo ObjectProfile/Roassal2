@@ -17,7 +17,7 @@ RTSBFadeInteractionExamples >> example01 [
 	b := RTSunburstBuilder new.
 	
 	"This should be called before the explore method"
-	b visitor interactions add: (RTSBFadeInteraction new).
+	b interactions add: RTSBFadeInteraction new.
 	
 	b radialSpacing: 5.
 	b angularSpacing: 1.
@@ -48,7 +48,7 @@ RTSBFadeInteractionExamples >> example02 [
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
 	"This should'nt work"
-	b visitor interactions add: (RTSBFadeInteraction new).
+	b interactions add: (RTSBFadeInteraction new).
 	b open
 ]
 
@@ -67,7 +67,7 @@ RTSBFadeInteractionExamples >> example03 [
 	b shape current 
 				color: [ :cls | cls subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
 	Transcript open.	
-	b visitor interactions add: (RTSBFadeInteraction action: [:cls | Transcript show: cls name; cr.]).
+	b interactions add: (RTSBFadeInteraction action: [:cls | Transcript show: cls name; cr.]).
 	
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.

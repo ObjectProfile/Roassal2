@@ -33,8 +33,8 @@ RTSBFadeInteraction >> action: ablock [
 
 { #category : #computing }
 RTSBFadeInteraction >> children: element [
-	(element attributes includesKey: #sbChildren) ifTrue: [ 
-		^ element attributes at: #sbChildren ]
+	(element attributes includesKey: #children) ifTrue: [ 
+		^ element attributes at: #children ]
 	ifFalse: [ ^ #() ].
 ]
 
@@ -124,10 +124,9 @@ RTSBFadeInteraction >> path: element [
 	e := element.
 	path := OrderedCollection new.
 	path add: e.
-	[ e attributes includesKey: #sbParent ] whileTrue: [ 
-		e := e attributes at: #sbParent.
-		(e isKindOf: RTNullNode) ifTrue: [ ^ path ].
-		e := e element.
+	[ e attributes includesKey: #parent ] whileTrue: [ 
+		e := e attributes at: #parent.
+		(e isNil) ifTrue: [ ^ path ].
 		path add: e. ].
 	^ path.
 ]
