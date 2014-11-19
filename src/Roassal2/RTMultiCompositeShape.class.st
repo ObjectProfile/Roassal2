@@ -43,6 +43,11 @@ RTMultiCompositeShape >> colorElement: aOneArgBlock [
 	shapes do: [ :s | s first colorElement: aOneArgBlock ]
 ]
 
+{ #category : #public }
+RTMultiCompositeShape >> edgeFrom: el1 to: el2 [
+	^ (RTEdge from: el1 to: el2) addShape: self
+]
+
 { #category : #'public - layout' }
 RTMultiCompositeShape >> horizontal [
 	layout := #horizontal
