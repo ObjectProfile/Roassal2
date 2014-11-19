@@ -294,12 +294,6 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 	^ nodes
 ]
 
-{ #category : #'instance creation' }
-RTMondrianViewBuilder >> open [
-	self applyLayout.
-	^ view open
-]
-
 { #category : #layout }
 RTMondrianViewBuilder >> radialTreeLayout [
 	self layout: RTRadialTreeLayout new.

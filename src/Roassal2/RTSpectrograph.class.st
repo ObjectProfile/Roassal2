@@ -8,8 +8,7 @@ Class {
 		'objects',
 		'lineBlock',
 		'pointSize',
-		'highlightBlock',
-		'title'
+		'highlightBlock'
 	],
 	#category : #'Roassal2-Builder-Spectrograph'
 }
@@ -103,9 +102,4 @@ RTSpectrograph >> setTitleIfNecessary [
 	label := (RTLabel new text: title) element.
 	TRConstraint move: label below: g.
 	view add: label
-]
-
-{ #category : #accessing }
-RTSpectrograph >> title: aTitle [
-	title := aTitle
 ]

@@ -204,6 +204,11 @@ RTView >> openRaw [
 ]
 
 { #category : #opening }
+RTView >> openTitled: aTitle [
+	^ self setUpCanvas openTitled: aTitle
+]
+
+{ #category : #opening }
 RTView >> openWithMenu [
 	self canvas addMenu: 'In' callback: [ RTZoomInMove on: self ].
 	self canvas addMenu: 'Out' callback: [ RTZoomOutMove on: self ].

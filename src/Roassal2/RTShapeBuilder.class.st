@@ -95,6 +95,15 @@ RTShapeBuilder >> extensibleLabel [
 	^ self shape: RTExtensibleLabel new
 ]
 
+{ #category : #'text shape' }
+RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
+	"Make sure we have something that this message is meaningful"
+	self assert: [ #(RTLabel RTMultiCompositeShape) includes: shape class name ].
+	
+	shape class == RTLabel ifTrue: [ shape height: aValueOrASymbolOrABlock. ^ self ].
+	shape class == RTMultiCompositeShape ifTrue: [ (shape allShapes select: [ :s | s class == RTLabel ]) do: [ :s | s height: aValueOrASymbolOrABlock ] ]
+]
+
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape
@@ -297,7 +306,12 @@ RTShapeBuilder >> withBorder [
 
 { #category : #shapes }
 RTShapeBuilder >> withText [
-	shape := shape + RTLabel new.
+	^ self withText: #yourself
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> withText: aSymbolOrABlock [
+	shape := shape + (RTLabel new text: aSymbolOrABlock).
 	^ shape
 ]
 

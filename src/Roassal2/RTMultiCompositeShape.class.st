@@ -32,6 +32,12 @@ RTMultiCompositeShape >> alignRight [
 ]
 
 { #category : #accessing }
+RTMultiCompositeShape >> allShapes [
+	"Return all the shapes contained in me."
+	^ shapes collect: #first as: Array
+]
+
+{ #category : #accessing }
 RTMultiCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
 	shapes do: [ :s | s first colorElement: aOneArgBlock ]

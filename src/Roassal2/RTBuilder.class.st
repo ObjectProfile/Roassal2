@@ -6,7 +6,8 @@ Class {
 		'interactionBuilder',
 		'shapeBuilder',
 		'globalBuilder',
-		'layoutBuilder'
+		'layoutBuilder',
+		'title'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -68,6 +69,11 @@ RTBuilder >> createdElements [
 	^ shapeBuilder createdElements
 ]
 
+{ #category : #initialization }
+RTBuilder >> defaultWindowName [
+	^ 'Roassal'
+]
+
 { #category : #public }
 RTBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
@@ -114,6 +120,7 @@ RTBuilder >> globalRule [
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.
+	title := self defaultWindowName.
 	view := self createView.
 	self resetShape.
 	self resetInteraction.
@@ -143,7 +150,7 @@ RTBuilder >> open [
 { #category : #'public-ui' }
 RTBuilder >> openIn: aView [
 	self build.
-	^ aView open
+	^ aView openTitled: title
 ]
 
 { #category : #copying }
@@ -209,6 +216,18 @@ RTBuilder >> shape [
 RTBuilder >> shapeBuilder: anRTShapeBuilder [
 
 	shapeBuilder := anRTShapeBuilder
+]
+
+{ #category : #accessing }
+RTBuilder >> title [
+	"Return the name of the builder"
+	^ title
+]
+
+{ #category : #accessing }
+RTBuilder >> title: aString [
+	"Set the name of the builder. The name is used when opening the builder, in the window"
+	title := aString
 ]
 
 { #category : #accessing }
