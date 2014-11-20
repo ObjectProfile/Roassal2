@@ -13,7 +13,7 @@ RTShapeBuilder >> arc [
 	^ self shape: RTArc new
 ]
 
-{ #category : #shapes }
+{ #category : #'shape - edges' }
 RTShapeBuilder >> arrowedLine [
 	^ self shape: RTArrowedLine new
 ]
@@ -44,7 +44,7 @@ RTShapeBuilder >> current [
 	^ shape
 ]
 
-{ #category : #shapes }
+{ #category : #'shape - edges' }
 RTShapeBuilder >> directedLine [
 	^ self shape: RTDirectedLine new
 ]
@@ -210,7 +210,7 @@ RTShapeBuilder >> labelledAs: aBlock [
 	^ label
 ]
 
-{ #category : #shapes }
+{ #category : #'shape - edges' }
 RTShapeBuilder >> line [
 	^ self shape: RTLine new
 ]

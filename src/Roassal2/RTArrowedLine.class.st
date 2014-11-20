@@ -115,6 +115,11 @@ RTArrowedLine >> updateFor: edge trachelShape: trachelShape [
 ]
 
 { #category : #public }
+RTArrowedLine >> width: aValue [
+	line width: aValue
+]
+
+{ #category : #public }
 RTArrowedLine >> withOffsetIfMultiple [
 	| ap |
 	ap := RTShorterDistanceWithOffsetAttachPoint new.

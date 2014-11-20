@@ -89,7 +89,8 @@ Class {
 		'length',
 		'fixedNodes',
 		'center',
-		'initialLayout'
+		'initialLayout',
+		'nbIterations'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -169,14 +170,11 @@ RTForceBasedLayout >> defaultInitialLayout [
 
 { #category : #hook }
 RTForceBasedLayout >> doExecute: nodeElements [
-
-	
 	self start: nodeElements.
-	
-	[ alpha := alpha * 0.99 .  alpha > 0.005 ] whileTrue: [ self step ].
-	
+	nbIterations = 0 
+		ifTrue: [ [ alpha := alpha * 0.99. alpha > 0.005 ] whileTrue: [ self step ] ]
+		ifFalse: [ nbIterations timesRepeat: [ alpha := alpha * 0.99. self step ] ].
 	alpha := 0.
-	
 	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
 	
 ]
@@ -201,13 +199,13 @@ RTForceBasedLayout >> initialLayout: aLayout [
 
 { #category : #hook }
 RTForceBasedLayout >> initialPositionOfNodes: nodeElements [
-
 	initialLayout executeOnElements: nodeElements
 ]
 
 { #category : #'initialize-release' }
 RTForceBasedLayout >> initialize [
 	super initialize.
+	nbIterations := 0.
 	edges := #().
 	nodes := #().
 	initialLayout := self defaultInitialLayout.
@@ -241,6 +239,16 @@ RTForceBasedLayout >> length: aFloat [
 RTForceBasedLayout >> lengthOf: anEdge [
 
 	^ lengths at: anEdge ifAbsent: [ ^ length ] 
+]
+
+{ #category : #accessing }
+RTForceBasedLayout >> nbIterations [
+	^ nbIterations
+]
+
+{ #category : #accessing }
+RTForceBasedLayout >> nbIterations: anObject [
+	nbIterations := anObject
 ]
 
 { #category : #accessing }
