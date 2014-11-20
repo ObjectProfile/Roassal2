@@ -62,6 +62,11 @@ TRBitmapShape >> erase [
 	self fillColor: Color white
 ]
 
+{ #category : #accessing }
+TRBitmapShape >> extent [
+	^ self width @ self height
+]
+
 { #category : #actions }
 TRBitmapShape >> extent: anExtent [
 	form := Form extent: anExtent depth: 32.
