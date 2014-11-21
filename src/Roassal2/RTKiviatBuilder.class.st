@@ -76,7 +76,7 @@ RTKiviatBuilder >> addNodesAndEdgesToView [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> addObject: anObject [
-	objects add anObject.
+	objects add: anObject.
 ]
 
 { #category : #'as yet unclassified' }
@@ -199,9 +199,9 @@ RTKiviatBuilder >> executePolygonsColor: alpha [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> getNormalizedValue: val min: min max: max minValue: minValue maxValue: maxValue [ 
-	"aBlock is evaluated on each node model"
 
-	(maxValue = minValue) ifTrue: [ self error: 'maxValue = minValue' ].
+	(val = min) ifTrue: [ ^ min].
+	(maxValue = minValue) ifTrue: [ ^ max].
 	
  	^ (min + ((max - min) * ( (val - minValue) / (maxValue - minValue)))).
 ]
