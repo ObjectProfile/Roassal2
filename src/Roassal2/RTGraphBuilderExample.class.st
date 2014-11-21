@@ -3701,7 +3701,7 @@ RTGraphBuilderExample >> exampleNormalizeColor [
 		normalizeColor: [ :cls | cls numberOfMethods ] using: (Array with: Color green with: Color red).
 
 	b edges
-		if: [ :obj | obj isBehavior ];
+		if: [ :from :to | from isBehavior ];
 		connectTo: [ :c | c subclasses ];
 		useInLayout;
 		shape: (RTLine new color: Color gray).
