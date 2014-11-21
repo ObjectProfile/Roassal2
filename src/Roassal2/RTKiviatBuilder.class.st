@@ -50,12 +50,14 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> activateHighlight [
+"activate the Highlight of a chart node when mouse is over and reduce alpha of ther chart nodes."
 	highlight := #activated.
 
 ]
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> activatePolygons [
+"activate the polygons in the view to identify chart nodes"
 	polygons := #activated.
 
 ]
@@ -67,7 +69,7 @@ RTKiviatBuilder >> addMetric: blockOrSymbol [
 
 { #category : #adding }
 RTKiviatBuilder >> addNodesAndEdgesToView [
-
+"add to the view the chart nodes created"
 	kiviatNodes do: [ :kn |
 		view addAll: kn edgeElements. 
 		view addAll: kn nodeElements.
@@ -81,6 +83,7 @@ RTKiviatBuilder >> addObject: anObject [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> axis: aRTKiviatMetric [
+"creation of an metric axis"
 	| config centralPoint |
 	kiviatMetrics := kiviatMetrics copyWith: aRTKiviatMetric.	
 		
@@ -107,12 +110,14 @@ RTKiviatBuilder >> axisSize [
 ]
 
 { #category : #accessing }
-RTKiviatBuilder >> axisSize: aSize [
-	axisSize := aSize
+RTKiviatBuilder >> axisSize: aSizeInPixels [
+"define the size in pixel of all the axis"
+	axisSize := aSizeInPixels
 ]
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> buildAxis [
+"define the blocks of the metrics, divise 360° by the number of total metrics, and call the axis creation according to metrics"
 	| angle |
 	angle := 0.
 	
@@ -127,6 +132,7 @@ RTKiviatBuilder >> configureView: aView [
 
 { #category : #hooks }
 RTKiviatBuilder >> createShapeBuilder [
+"redefinition for default shape"
 	| sb |
 	sb := super createShapeBuilder.
 	sb shape: (RTEllipse new color: (Color blue alpha: 0.3); size: 10).
@@ -164,7 +170,7 @@ RTKiviatBuilder >> executeHighlight [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
-
+"define the alpha values of the highlighted and others chart nodes to the view"
 	((kiviatNodes flatCollect: [ :kn | kn nodeElements]) asGroup) do: [  :e | 
 		e @ (RTShowLabel new labelledInteraction: (RTLabelled new text: [ :el | el named])).
 		].
@@ -196,7 +202,7 @@ RTKiviatBuilder >> executePolygons [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> executePolygonsColor: alpha [
-
+"define the alpha value and create polygons"
 	kiviatNodes do: [  :kn | 
 		view add: ((RTPolygon new borderColor: ((kn nodeElements first color) alpha: alpha);  color: ((kn nodeElements first color)alpha: alpha); vertices: ((kn nodeElements collect: [ :ne | ne position ]) asArray)) elementOn: kn).
 		]
@@ -205,7 +211,7 @@ RTKiviatBuilder >> executePolygonsColor: alpha [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> getNormalizedValue: val min: min max: max minValue: minValue maxValue: maxValue [ 
-
+"obtain a normalized value from the original value given by a metric calculation according to the size of the axis"
 	(val = min) ifTrue: [ ^ min].
 	(maxValue = minValue) ifTrue: [ ^ max].
 	
@@ -243,6 +249,8 @@ RTKiviatBuilder >> metrics [
 
 { #category : #accessing }
 RTKiviatBuilder >> node: anRTKiviatNode [
+"a chart node is represented by a set of elements according to the metrics values and connected by edges.
+ Finish the creation of a chart node, creating elements in the view in edges."
 | nodeElems edgeElems shapeNode shapeEdge |
 
 	kiviatNodes add: anRTKiviatNode.
@@ -273,6 +281,7 @@ RTKiviatBuilder >> objects [
 
 { #category : #accessing }
 RTKiviatBuilder >> objects: anObjectsCollection [
+"Define the number of objects to be evaluated by the metrics"
 	objects := anObjectsCollection
 ]
 
@@ -284,9 +293,11 @@ RTKiviatBuilder >> recordElement: anElement [
 { #category : #hooks }
 RTKiviatBuilder >> renderIn: aView [
 	
-	(metrics size = 0) ifFalse: [ self buildAxis ].
+	(kiviatMetrics size ~= metrics size) ifTrue:[
+	(metrics size = 0) ifFalse: [ self buildAxis ]].
 	self resetCreatedElements.
 	
+	"a chart node is represented by a set of elements according to the metrics values and connected by edges."
 	objects do: [ :p | self node: (RTKiviatNode new values:(metrics collect: [ :m | m rtValue: p ]); named: p; shapeNode: self shape). ].
 	
 	( polygons = #activated ) ifTrue: [ self executePolygons ].
