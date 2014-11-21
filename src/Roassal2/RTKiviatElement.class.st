@@ -10,47 +10,47 @@ Class {
 	#category : #'Roassal2-Builder-Kiviat'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTKiviatElement >> initialize [
 	super initialize.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> kiviatNode [
 	^ kiviatNode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> kiviatNode: anRTKiviatNode [
 	kiviatNode := anRTKiviatNode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> named [
  ^ named
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> named: aString [
  named:= aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> position [
 	^ position
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> position: aPoint [
 	position:= aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> value [
 	^ value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatElement >> value: anObject [
 	value := anObject
 ]

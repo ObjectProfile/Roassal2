@@ -10,22 +10,22 @@ Class {
 	#category : #'Roassal2-Builder-Kiviat'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> block: aOneArgBlock [
 	modelBlock := aOneArgBlock 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RTKiviatMetric >> defaultMaxSize [
 	maxSize := 200
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #default }
 RTKiviatMetric >> defaultModelBlock [
 	self block: [ :v | (v@0) ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTKiviatMetric >> initialize [
 	super initialize.
 	self defaultModelBlock.
@@ -34,37 +34,37 @@ RTKiviatMetric >> initialize [
 	minValue := 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> maxSize [
 	^ maxSize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> maxSize: aNumber [
 	maxSize := aNumber.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> maxValue [
 	^ maxValue.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> maxValue: aNumber [
 	maxValue := aNumber.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> minValue [
 	^ minValue.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> minValue: aNumber [
 	minValue := aNumber.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatMetric >> modelBlock [
 	^ modelBlock
 ]

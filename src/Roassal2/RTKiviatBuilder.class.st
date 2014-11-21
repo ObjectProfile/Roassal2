@@ -60,12 +60,12 @@ RTKiviatBuilder >> activatePolygons [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTKiviatBuilder >> addMetric: blockOrSymbol [
 	metrics := metrics copyWith: blockOrSymbol.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTKiviatBuilder >> addNodesAndEdgesToView [
 
 	kiviatNodes do: [ :kn |
@@ -74,7 +74,7 @@ RTKiviatBuilder >> addNodesAndEdgesToView [
 		]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTKiviatBuilder >> addObject: anObject [
 	objects add: anObject.
 ]
@@ -101,12 +101,12 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> axisSize [
-	^ axisSize.
+	^ axisSize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> axisSize: aSize [
 	axisSize := aSize
 ]
@@ -116,20 +116,26 @@ RTKiviatBuilder >> buildAxis [
 	| angle |
 	angle := 0.
 	
-	(1 to: metrics size) do: [ :i | self axis: (RTKiviatMetric new block: [:v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize)].
+	(1 to: metrics size) do: [ :i | 
+		self axis: (RTKiviatMetric new block: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize) ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #view }
 RTKiviatBuilder >> configureView: aView [
 	aView @ RTDraggableView.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTKiviatBuilder >> createShapeBuilder [
 	| sb |
 	sb := super createShapeBuilder.
 	sb shape: (RTEllipse new color: (Color blue alpha: 0.3); size: 10).
 	^ sb
+]
+
+{ #category : #initialization }
+RTKiviatBuilder >> createView [
+	^ super createView @ RTDraggableView
 ]
 
 { #category : #'as yet unclassified' }
@@ -206,12 +212,9 @@ RTKiviatBuilder >> getNormalizedValue: val min: min max: max minValue: minValue 
  	^ (min + ((max - min) * ( (val - minValue) / (maxValue - minValue)))).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTKiviatBuilder >> initialize [
 	super initialize.
-	
-	view := RTView new.
-	view @ RTDraggableView.
 
 	self configureView: view.	
 	self defaultAxisSize.
@@ -228,17 +231,17 @@ RTKiviatBuilder >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> kiviatNodes [
- ^ kiviatNodes.
+	^ kiviatNodes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> metrics [
 	^ metrics
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> node: anRTKiviatNode [
 | nodeElems edgeElems shapeNode shapeEdge |
 
@@ -263,22 +266,22 @@ RTKiviatBuilder >> node: anRTKiviatNode [
 	nodeElems do: [  :e | e translateBy: (e model position) ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> objects [
 	^ objects
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> objects: anObjectsCollection [
-	objects := anObjectsCollection.
+	objects := anObjectsCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTKiviatBuilder >> recordElement: anElement [
 	anElement attributes at: #originalColor put: (anElement trachelShape color)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTKiviatBuilder >> renderIn: aView [
 	
 	(metrics size = 0) ifFalse: [ self buildAxis ].
@@ -297,7 +300,7 @@ RTKiviatBuilder >> renderIn: aView [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTKiviatBuilder >> shapes: aColorArray [
 "shapes: takes in argument a collection of colors, at least of the size of the numbers of objects"
 	shapes := aColorArray.
