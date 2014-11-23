@@ -34,8 +34,9 @@ TRMultiCompositeShape >> addedIn: aCanvas [
 			aCanvas addShape: tupple first.
 			tupple first translateBy: tupple second ].
 		
-	"Make sure we are in the center"
-	self translateBy: self position negated
+	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
+	(shapeAndOffsets anySatisfy: [ :tupple | tupple first class == TRLineShape ])
+		ifFalse: [ self translateBy: self position negated ]
 ]
 
 { #category : #actions }
