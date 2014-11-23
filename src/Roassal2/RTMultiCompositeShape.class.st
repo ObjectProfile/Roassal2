@@ -69,6 +69,19 @@ RTMultiCompositeShape >> setAutomaticRelayout [
 	automaticallyUpdateLayout := true
 ]
 
+{ #category : #hooks }
+RTMultiCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape [
+	automaticallyUpdateLayout
+		ifTrue: [ 
+			| b |
+			b := TRExtentCallback new
+				block: [ :aShape :ratio | 
+					trachelShape resetInnerShapes.
+					trachelShape perform: layout.
+					trachelShape relayout ].
+			ss do: [ :tupple | tupple first addCallback: b ] ]
+]
+
 { #category : #public }
 RTMultiCompositeShape >> trachelShapeFor: anElement [
 	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new
@@ -77,22 +90,14 @@ RTMultiCompositeShape >> trachelShapeFor: anElement [
 { #category : #hooks }
 RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 	| ss |
-	ss := shapes collect: [ :tupple | 
-		| s |
-		s := tupple first trachelShapeFor: anElement.
-		Array with: s with: tupple second ].
-
+	ss := shapes
+		collect: [ :tupple | 
+			| s |
+			s := tupple first trachelShapeFor: anElement.
+			Array with: s with: tupple second ].
 	trachelShape setShapes: ss.
 	trachelShape perform: layout.
-
-	automaticallyUpdateLayout ifTrue: [ 
-		| b |
-		b := TRExtentCallback new block: [ :aShape :ratio | 
-					trachelShape resetInnerShapes. 
-					trachelShape perform: layout.
-					trachelShape relayout ].
-		ss do: [ :tupple | tupple first addCallback: b ]
-	].
+	self setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape.
 	^ trachelShape
 ]
 

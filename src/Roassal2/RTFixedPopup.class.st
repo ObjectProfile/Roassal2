@@ -1,3 +1,7 @@
+"
+A RTFixedPopup creates a popup, located at a fixed position, in the window.
+
+"
 Class {
 	#name : #RTFixedPopup,
 	#superclass : #RTPopup,
