@@ -317,10 +317,16 @@ RTShapeBuilder >> withText: aSymbolOrABlock [
 
 { #category : #shapes }
 RTShapeBuilder >> withTextAbove [
+	^ self withTextAbove: #yourself
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> withTextAbove: aSymbolOrABlock [
 	| newShape |
 	newShape := RTMultiCompositeShape new.
-	newShape add: (RTLabel new).
+	newShape add: (RTLabel new text: aSymbolOrABlock).
 	newShape add: shape.
 	newShape vertical.
-	shape := newShape
+	newShape setAutomaticRelayout.
+	shape := newShape.
 ]

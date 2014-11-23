@@ -277,9 +277,9 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		addedEdges := view edges copyWithoutAll: allEdges.
 
 		self applyLayout.
-
-		RTNest new
-			on: n nest: addedElements.
+		n shape class == RTMultiCompositeShape
+			ifTrue: [ RTNest new on: n inShape: #second nest: addedElements ]
+			ifFalse: [ RTNest new on: n nest: addedElements ].
 
 		addedElements do: [ :e | e trachelShape pushFront ].
 		

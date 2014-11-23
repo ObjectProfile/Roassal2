@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'shapes',
-		'layout'
+		'layout',
+		'automaticallyUpdateLayout'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -57,7 +58,15 @@ RTMultiCompositeShape >> horizontal [
 RTMultiCompositeShape >> initialize [
 	super initialize.
 	shapes := OrderedCollection new.
-	layout := #noLayout
+	layout := #noLayout.
+	
+	"If one of the shape changes its size, should we relayout. By default no"
+	automaticallyUpdateLayout := false
+]
+
+{ #category : #public }
+RTMultiCompositeShape >> setAutomaticRelayout [
+	automaticallyUpdateLayout := true
 ]
 
 { #category : #public }
@@ -75,6 +84,15 @@ RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 
 	trachelShape setShapes: ss.
 	trachelShape perform: layout.
+
+	automaticallyUpdateLayout ifTrue: [ 
+		| b |
+		b := TRExtentCallback new block: [ :aShape :ratio | 
+					trachelShape resetInnerShapes. 
+					trachelShape perform: layout.
+					trachelShape relayout ].
+		ss do: [ :tupple | tupple first addCallback: b ]
+	].
 	^ trachelShape
 ]
 
