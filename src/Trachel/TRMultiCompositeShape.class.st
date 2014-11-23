@@ -195,6 +195,7 @@ TRMultiCompositeShape >> position [
 
 { #category : #actions }
 TRMultiCompositeShape >> propagateElement [
+	"Make all the shape aware of the element"
 	self shapes do: [ :s | s element: self element ]
 ]
 
@@ -227,6 +228,11 @@ TRMultiCompositeShape >> remove [
 { #category : #'public - layout' }
 TRMultiCompositeShape >> resetInnerShapes [
 	self shapes do: [ :ss | ss translateTo: 0 @ 0 ]
+]
+
+{ #category : #'public - layout' }
+TRMultiCompositeShape >> resetInnerShapesOffset [
+	shapeAndOffsets := shapeAndOffsets collect: [ :tupple | Array with: tupple first with: 0 @ 0 ]
 ]
 
 { #category : #private }
