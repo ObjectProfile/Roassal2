@@ -1,6 +1,6 @@
 Class {
 	#name : #TRBezierShape,
-	#superclass : #TRShape,
+	#superclass : #TRAbstractLineShape,
 	#instVars : [
 		'width',
 		'listOfPoints'

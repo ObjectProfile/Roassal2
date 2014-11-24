@@ -35,7 +35,7 @@ TRMultiCompositeShape >> addedIn: aCanvas [
 			tupple first translateBy: tupple second ].
 		
 	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
-	(shapeAndOffsets anySatisfy: [ :tupple | tupple first class == TRLineShape ])
+	(shapeAndOffsets anySatisfy: [ :tupple | tupple first isKindOf: TRAbstractLineShape ])
 		ifFalse: [ self translateBy: self position negated ]
 ]
 

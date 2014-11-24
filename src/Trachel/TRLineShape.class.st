@@ -1,6 +1,6 @@
 Class {
 	#name : #TRLineShape,
-	#superclass : #TRShape,
+	#superclass : #TRAbstractLineShape,
 	#instVars : [
 		'width',
 		'from',
