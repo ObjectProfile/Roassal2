@@ -133,7 +133,7 @@ RTExample >> beziersWithArrow [
 	els := (shape elementsOn: (1 to: 6)) @ RTDraggable.
 	v addAll: els .
 	RTHorizontalLineLayout on: v elements.
-	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements)  + (RTEmptyArrowHead new) ).
+	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements) + (RTEmptyArrowHead new)).
 	v add: edge.
 
 	v open

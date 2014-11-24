@@ -88,9 +88,9 @@ RTLineDecoration >> updateFor: edge trachelShape: trachelShape [
 	f := (attachPoint startingPointOf: edge).
 	(line ~= nil)
 		ifTrue: [ | tShape |
-			tShape := edge trachelShape shape1.
+			tShape := edge trachelShape shapes first.
 			tShape class = TRBezierShape 
-				ifTrue: [	f := tShape points allButLast last ]].
+				ifTrue: [	f := tShape points allButLast last ] ].
 	trachelShape from: f.
 	trachelShape to: (attachPoint endingPointOf: edge).
 	trachelShape color: (self colorFor: edge).

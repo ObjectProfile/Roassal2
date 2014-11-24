@@ -154,14 +154,15 @@ RTBezierLine >> setControllingElementsFromFollowFor: anEdge [
 
 { #category : #public }
 RTBezierLine >> trachelShapeFor: anEdge [
-	| shape realControllingElements |
-	shape := TRBezierShape new.
-	shape width: (self widthFor: anEdge).
+	| trachelShape realControllingElements |
+	trachelShape := TRBezierShape new.
+	self updateFor: anEdge trachelShape: trachelShape.
+"	shape width: (self widthFor: anEdge).
 	shape points: (self getListOfPointsForTrachel: anEdge).
-	shape strokePaint: (self colorFor: anEdge).
+	shape strokePaint: (self colorFor: anEdge)."
 	realControllingElements := controllingElements rtValue: anEdge. 
 	realControllingElements do: [ :e | e addConnectedEdge: anEdge ].
-	^ shape
+	^ trachelShape
 ]
 
 { #category : #rendering }
