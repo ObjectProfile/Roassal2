@@ -135,30 +135,7 @@ RTLabelTest >> testMultiline01 [
 	v add: lbl.
 	
 	lbl trachelShape setAsFixed.
-	self assert: lbl trachelShape class == TRCompositeShape
-]
-
-{ #category : #'test multilines' }
-RTLabelTest >> testMultiline02Size [
-	| lbl helloLabel blahLabel expected |
-	lbl := RTLabel elementOn: 'Hello
-World
-Bonjour
-Blah
-'.
-
-	helloLabel := lbl trachelShape shape2 shape1.
-	blahLabel := lbl trachelShape shape2 shape2 shape2 shape2 shape1.
-	
-	self assert: helloLabel text = 'Hello'.
-	self assert: blahLabel text = 'Blah'.
-	
-	expected := Rectangle merging: 
-					(Array with: helloLabel encompassingRectangle with: blahLabel encompassingRectangle).
-					
-	"This has to be fixed"
-	"self assert: lbl encompassingRectangle extent equals: expected extent + (20 @ 0)."
-
+	self assert: lbl trachelShape class == TRMultiCompositeShape
 ]
 
 { #category : #tests }
