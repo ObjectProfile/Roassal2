@@ -79,7 +79,6 @@ RTMultiCompositeShapeTest >> testComposedCompositedShape [
 	s1 add: (RTBox new color: Color red; size: 20).
 	s1 vertical.
 
-	
 	s2 add: s1.
 	s2 add: (RTBox new color: Color green; size: 20).
 	s2 vertical.
