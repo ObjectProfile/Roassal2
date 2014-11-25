@@ -29,9 +29,11 @@ TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 { #category : #actions }
 TRMultiCompositeShape >> addedIn: aCanvas [
 	self propagateElement.
+
 	shapeAndOffsets
 		do: [ :tupple | 
-			aCanvas addShape: tupple first.
+			tupple first addedIn: aCanvas.
+			"aCanvas addShape: tupple first."
 			tupple first translateBy: tupple second ].
 		
 	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
@@ -89,6 +91,11 @@ TRMultiCompositeShape >> canvas: aSurface [
 ]
 
 { #category : #accessing }
+TRMultiCompositeShape >> center [
+	^ self encompassingRectangle center
+]
+
+{ #category : #accessing }
 TRMultiCompositeShape >> color [
 	^ self shapes first color
 	"shape2 color: aColor."
@@ -118,7 +125,24 @@ TRMultiCompositeShape >> encompassingRectangle [
 
 { #category : #accessing }
 TRMultiCompositeShape >> extent [
-	^ self encompassingRectangle extent
+	| res |
+"	shapeAndOffsets
+		do: [ :tupple | 
+			tupple first translateTo: 0 @ 0 ].
+"
+	shapeAndOffsets
+		do: [ :tupple | 
+			tupple first translateBy: tupple second ].
+ 
+	res := self encompassingRectangle extent.
+	shapeAndOffsets
+		do: [ :tupple | 
+			tupple first translateTo: 0 @ 0 ].
+	
+	^ res.
+	
+	"We cannot do that, because we may need to get the extent, without having the elements added (and correctly positioned)"
+	"^ self encompassingRectangle extent"
 ]
 
 { #category : #actions }
@@ -294,7 +318,7 @@ TRMultiCompositeShape >> vertical [
 TRMultiCompositeShape >> verticalAndLeft [
 	"Layout the shapes vertically and aligned on the left hand side"
 	TRConstraint alignFromLeft: (shapeAndOffsets collect: #first).
-	RTVerticalLineLayout on: (shapeAndOffsets collect: #first).
+	RTVerticalLineLayout new gapSize: 0; on: (shapeAndOffsets collect: #first).
 	shapeAndOffsets doWithIndex: [ :tuple :index | tuple at: 2 put: (tuple first position "x @ (index * 20)") ].
 	self resetInnerShapes.
 
