@@ -104,6 +104,11 @@ RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 	shape class == RTMultiCompositeShape ifTrue: [ (shape allShapes select: [ :s | s class == RTLabel ]) do: [ :s | s height: aValueOrASymbolOrABlock ] ]
 ]
 
+{ #category : #'shape - edges' }
+RTShapeBuilder >> gradientLineFrom: fromColor to: toColor [
+	^ self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); precision: 100; gradientColorShape)
+]
+
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape

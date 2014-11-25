@@ -136,6 +136,11 @@ RTView >> edges [
 	^ edges copy
 ]
 
+{ #category : #enumeration }
+RTView >> edgesDo: aBlock [
+	self edges do: aBlock
+]
+
 { #category : #'accessing-computed' }
 RTView >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
@@ -145,6 +150,11 @@ RTView >> elementFromModel: anObject [
 { #category : #accessing }
 RTView >> elements [
 	^ RTGroup withAll: elements
+]
+
+{ #category : #enumeration }
+RTView >> elementsDo: aBlock [
+	self elements do: aBlock
 ]
 
 { #category : #'accessing-computed' }

@@ -100,8 +100,7 @@ RTEdgeBuilder >> objects: objects from: fromBlock toAll: toAllBlock [
 					(self shouldCreateEdgeFrom: fromElement to: toElement) ifTrue: 
 						[ | edge |
 						edge := self edgeFrom: fromElement to: toElement. 
-						edges add: edge.
-						view add: edge ] ] ] ].
+						edges add: edge ] ] ] ].
 	^ edges
 
 ]
