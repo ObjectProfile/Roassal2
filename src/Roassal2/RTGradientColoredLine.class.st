@@ -1,5 +1,5 @@
 "
-A RTGradientColoredLine is an alpha and color gradiant shape between the two first values of colorArray. Precision define the number of gradient colors for the edges.
+A RTGradientColoredLine is an alpha gradient colored shape between the two first values of colorArray with precision.
 
 Instance Variables
 	precision :		<Object>
@@ -14,17 +14,6 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #accessing }
-RTGradientColoredLine >> getColorAtStep: anInteger [
-
-	^ Color fromRgbTriplet: {
-	((colorArray first red * (1 - ((1 / precision) * anInteger))) + (colorArray second red * (1 / precision) * anInteger)).
-	 ((colorArray first green * (1 - ((1 / precision) * anInteger))) + (colorArray second green * (1 / precision) * anInteger)). 
-	((colorArray first blue * (1 - ((1 / precision) * anInteger))) + (colorArray second blue * (1 / precision) * anInteger))
-	}
-
-]
-
 { #category : #'as yet unclassified' }
 RTGradientColoredLine >> gradientColorShape [
 	| diff  gradientColorArray |
@@ -32,8 +21,7 @@ RTGradientColoredLine >> gradientColorShape [
 	diff := (colorArray second alpha - colorArray first alpha).
 	gradientColorArray := Array with: (colorArray first).
 
-	"(2 to: (precision - 1)) do: [ :i | gradientColorArray := gradientColorArray copyWith: ((gradientColorArray atWrap: i - 1) alpha: ( (colorArray first) alpha + ((i - 1) * diff / (precision - 1)) )) ]. "
-	(2 to: (precision - 1)) do: [ :i | gradientColorArray := gradientColorArray copyWith: ((self getColorAtStep: i) alpha: ( (colorArray first) alpha + ((i - 1) * diff / (precision - 1)) )) ]. 
+	(2 to: (precision - 1)) do: [ :i | gradientColorArray := gradientColorArray copyWith: ((gradientColorArray atWrap: i - 1) alpha: ( (colorArray first) alpha + ((i - 1) * diff / (precision - 1)) )) ]. 
 
 	gradientColorArray := gradientColorArray copyWith: (colorArray last).
 	colorArray := gradientColorArray.
