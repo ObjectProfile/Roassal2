@@ -7,41 +7,47 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - layout' }
 RTLayoutBuilder >> cell [
 	layout := RTCellLayout new.
 	^ layout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - layout' }
 RTLayoutBuilder >> flow [
 	layout := RTFlowLayout new.
 	^ layout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuring }
 RTLayoutBuilder >> gapSize: aValue [
 	layout gapSize: aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - layout' }
 RTLayoutBuilder >> grid [
 	layout := RTGridLayout new.
 	^ layout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - layout' }
+RTLayoutBuilder >> horizontalLine [
+	layout := RTHorizontalLineLayout new.
+	^ layout
+]
+
+{ #category : #initialization }
 RTLayoutBuilder >> initialize [
 	super initialize.
 	layout := RTFlowLayout new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLayoutBuilder >> layout [
 	^ layout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
 	layout on: elements
 ]

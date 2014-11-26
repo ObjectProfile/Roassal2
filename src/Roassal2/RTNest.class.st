@@ -57,7 +57,9 @@ RTNest >> encompassingRectangleOf: elements [
 { #category : #public }
 RTNest >> for: collectionOfElements add: aTwoArgBlock [
 	"aTwoArgBlock follows [ :group :model | ... ]"
-	
+	"Return all the elements added by the argument block"
+	| allAddedObject |
+	allAddedObject := RTGroup new.
 	collectionOfElements do: [ :element |
 		| g |
 		g := RTGroup new.
@@ -71,7 +73,9 @@ RTNest >> for: collectionOfElements add: aTwoArgBlock [
 				element view ifNil: [ self error: 'Please, specify in RTNest a view to which elements have to be added in using #view:.' ].
 				element view addAll: g ]
 			ifFalse: [ view addAll: g ].
-	]
+		allAddedObject addAll: g
+	].
+	^ allAddedObject
 ]
 
 { #category : #public }
