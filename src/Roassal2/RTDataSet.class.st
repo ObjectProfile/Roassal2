@@ -15,7 +15,9 @@ Class {
 		'maxY',
 		'shouldHaveHistogramBars',
 		'shouldConnect',
-		'interaction'
+		'interaction',
+		'elementActions',
+		'shouldStackX'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -54,9 +56,18 @@ RTDataSet >> computeMinAndMax [
 { #category : #'min and max' }
 RTDataSet >> computeMinAndMaxForX [
 	| computed |
-	computed := points collect: x.
-	minX := computed min.
-	maxX := computed max.
+	shouldStackX 
+		ifTrue: [ 
+			minX := 1.
+			maxX := points size ]
+		ifFalse: [ 
+			computed := points collect: x.
+			minX := computed min.
+			maxX := computed max ].
+
+	(minX < 0 and: [maxX < 0]) ifTrue: [ maxX := 0 ].
+	(minX > 0 and: [maxX > 0]) ifTrue: [ minX := 0 ].
+	
 
 
 ]
@@ -67,8 +78,10 @@ RTDataSet >> computeMinAndMaxForY [
 	computed := points collect: y.
 	minY := computed min.
 	maxY := computed max.
-
-
+	
+	(minY < 0 and: [maxY < 0]) ifTrue: [ maxY := 0 ].
+	(minY > 0 and: [maxY > 0]) ifTrue: [ minY := 0 ].
+	
 ]
 
 { #category : #ssl }
@@ -102,6 +115,29 @@ RTDataSet >> dotShape [
 	^ dotBuilder
 ]
 
+{ #category : #public }
+RTDataSet >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation [
+
+	elementActions add: [ :elements |
+		RTMetricNormalizer new
+			elements: elements;
+			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
+]
+
+{ #category : #public }
+RTDataSet >> highlightIf: aOneArgBlock using: secondOneArgBlock [
+	"
+	aOneArgBlock is the a one-arg condition
+	If true, secondOneArgBlock is then used for the label
+	"
+
+	elementActions add: [ :elements |
+		elements do: [ :element |
+		(aOneArgBlock rtValue: element model) ifTrue: [ 
+			element @ (RTLabelled new text: [ :model | secondOneArgBlock rtValue: model ]; setAsHighlightable).
+		] ] ]
+]
+
 { #category : #initialization }
 RTDataSet >> initialize [
 	super initialize.
@@ -110,6 +146,7 @@ RTDataSet >> initialize [
 	y := #yourself.
 	self resetMinAndMax.
 	
+	shouldStackX := false. 
 	dotBuilder := RTShapeBuilder new.
 	dotBuilder circle size: 5.
 	
@@ -122,7 +159,9 @@ RTDataSet >> initialize [
 	
 	interaction := RTInteractionBuilder new.
 	shouldConnect := false.
-	shouldHaveHistogramBars := false
+	shouldHaveHistogramBars := false.
+	
+	elementActions := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -193,13 +232,23 @@ RTDataSet >> renderDotAndLinesIn: aView [
 	builder view addAll: elements.
 	interaction setUpElements: elements.
 	
-	RTMetricNormalizer new
-		elements: elements;
-		normalizeX: [ :model | x rtValue: model ]
-			min: 0
-			max: builder extent x
-			minValue: minX
-			maxValue: maxX.
+	shouldStackX 
+		ifTrue: [  
+			RTMetricNormalizer new
+				elements: elements;
+				normalizeElementX: [ :element | elements indexOf: element ] 
+					min: 0 
+					max: builder extent x 
+					minValue: 1 
+					maxValue: elements size ]
+		ifFalse: 	
+			[ RTMetricNormalizer new
+				elements: elements;
+				normalizeX: [ :model | x rtValue: model ]
+					min: 0
+					max: builder extent x
+					minValue: minX
+					maxValue: maxX ].
 			
 	RTMetricNormalizer new
 		elements: elements;
@@ -208,6 +257,8 @@ RTDataSet >> renderDotAndLinesIn: aView [
 			max: builder extent y negated
 			minValue: minY
 			maxValue: maxY.
+			
+	elementActions do: [ :act | act rtValue: elements ].
 			
 	self renderLinesFor: elements in: aView
 ]
@@ -259,6 +310,7 @@ RTDataSet >> renderIn: aView [
 RTDataSet >> renderLinesFor: elements in: aView [
 	| t |
 	shouldConnect ifFalse: [ ^ self ].
+
 	t := elements first.
 	elements allButFirst
 		do: [ :tt | 
@@ -283,7 +335,8 @@ RTDataSet >> shouldConnect [
 
 { #category : #public }
 RTDataSet >> stackX [
-	self x: [ :aPoint | points indexOf: aPoint ]
+	"self x: [ :aPoint | points indexOf: aPoint ]"
+	shouldStackX := true
 ]
 
 { #category : #accessing }

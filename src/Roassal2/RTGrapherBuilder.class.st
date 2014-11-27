@@ -122,6 +122,11 @@ RTGrapherBuilder >> computeMinAndMaxForY [
 	datasets do: #computeMinAndMaxForY
 ]
 
+{ #category : #'as yet unclassified' }
+RTGrapherBuilder >> createView [
+	^ RTView new @ RTDraggableView
+]
+
 { #category : #examples }
 RTGrapherBuilder >> example01 [
 

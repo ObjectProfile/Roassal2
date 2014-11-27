@@ -524,81 +524,6 @@ Fo0K+7f25pj494f4Z1kZk9+mjW3qWVhazAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTCharterExample >> exampleEbola [
-
-| tab data b |
-"Preparing the data"
-tab := RTTabTable new input: (ZnEasy get: 'http://mapstory.org/geoserver/wfs?typename=geonode%3AEbola2&outputFormat=csv&version=1.0.0&request=GetFeature&service=WFS') contents usingDelimiter: $,.
-tab removeFirstRow.
-tab replaceEmptyValuesWith: '0' inColumns: #(10 11).
-tab convertColumnsAsInteger: #(10 11).
-tab convertColumnsAsDateAndTime: #(3 4).
-data := tab values reversed.
-
-"Charting the data"
-b := RTCharterBuilder new.
-b extent: 400 @ 200.
-b interaction popupText: [ :row | row at: 12 ]. 
-b shape ellipse 
-	color: (Color blue alpha: 0.3);
-	size: [ :row  | (row at: 11) / 5 ].
-b points: data.
-b connectDotColor: Color blue.
-b allY: [ :r | r at: 10 ].
-b stackX.
-
-b axisConfiguration noLabel; numberOfTicks: tab values size.
-b axisX.
-b newAxisConfiguration noDecimals.
-b axisY.
-
-b highlightIf: [ :row | (row at: 10) > 100 ] using: [ :row | row third year ].
-b build.
-^ b view
-]
-
-{ #category : #icons }
-RTCharterExample >> exampleEbolaIcon [
-	^ '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
-BAAAAABJRU5ErkJggg=='
-]
-
-{ #category : #sources }
 RTCharterExample >> exampleFunctions [
 
 	| b |
@@ -1211,51 +1136,6 @@ fYibkGb39Omr3WykmYyFROl02vbfaNhdm8lkZDAYiNUeYGYy9g9b7kYdXt83MCBuQpqVdBay
 VCrZzkaayVhIpNPL2qhWC4nsrtUvUCqVstwDzEzG/mG5XE6en589vS8/ZNHzEL74QPhA+OID
 4QPhiw+ED4QvPhC++ED4QPjiA+ED4YsPhA+ELz4QPhC+QtYPIMsvvK/HaI8AAAAASUVORK5C
 YII='
-]
-
-{ #category : #sources }
-RTCharterExample >> exampleScatterPlot [
-
-	| b |
-
-	b := RTCharterBuilder new.
-	b extent: 290 @ 200.
-	b interaction popup.
-	b shape ellipse size: 15; color: (Color red alpha: 0.3).
-	b points: RTObject withAllSubclasses.
-	b x: #numberOfMethods; y: #numberOfVariables.
-	b size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
-	
-	b axisXWithNumberOfTicks: 3.
-	b axisYWithNumberOfTicks: 4.
-	b build.
-^ b view
-]
-
-{ #category : #icons }
-RTCharterExample >> exampleScatterPlotIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEX0lEQVR4XuWc20pbQRSGfRBf
-oHc+Qh+iF70qpd71IPgEXigUL0QEFbWoBe96UKhoTesBEi2C4AkUtZXYakXtSWtikdbfzpok
-smtj467RaL4fhu2OZkjmc601/xqSksNDvi6TSvhLwAfCFx8IHwhffCB8IHzxgfCB8MUHwgfC
-Fx8IX3wgfCB88YHwgfDFB8IHwhcfCB8IX3wgfPGB8IHwxQfCB8IXHwgfCF98IHwgIVVZWamG
-hgY1NTXJ7qenp5VIJHT879bX12XjX3NpbU0aGhIfxxmAVFdXq7W1VW1tbVpcXFQsFtPe3t5f
-i7q9vZ318T+A/Pghg8LHcQEpKxcMvvhA+ED4y8wHwgfCB8IHwgdyXkC0uioNDkovXogPhB8h
-xQMkEon4xW5ubj5x0dec4cvl1PnKExBrnSwtLWl2dlaNjY1ZF/00Tp0vfsriA8lV0Pko+BHC
-B/JHZExNHT2uz5+l8XE+uIICCTwuk4PCx3GFUpadmfCB5BmId+OuiGdd8H+4dHcChnHx/KJe
-TECWl5eVMYiZs/XTOHW9e6dgCpIzj4pG/bm63r/3gw8kpDY3N936DXmnbq2T9vb2Uzv1bPXA
-Q/nwQUok/OADKXDKIkO4dEB8VNTUHBV88yiC1h5+UUdve9PFXF1d0sKCTnLuV1H69ElXD0i6
-mPtWya9fOsm58yOEn7LATv3GDenuXamiwrtvfvudHyHFCSSZTKqlpSX0mbqePJFzkVJnp1Rb
-e9R291vdrS2pp0d8IP+zq3AaGBgIfaauL1+k798l5/R9ukq33a2o6+DAu3U+kAKkrKAzP95K
-0coKv3VynkDk0ptKS6Vr16Rbt6QHD6Tycvk0FWitB6+Kx/lOnVLU9fOn1N+f2uV9/ChehMRi
-UlWV9OiRVF8v3bwpvXqVipDAR9ns9xcCxHUJPIz0QEaIvn1LpS4r5L29slaDvw8Ucb19ezFA
-3DnOEZCXL4VPWcGiXaizcg/FIuVYC4eRssrKpJIS6c4dqaNDun9fFg16/lx6+JBvHAuSsgzM
-GT5pq9HRlJl8+lT56qwWFZCdnR1NTEzkPFNfcelp7c0b7V2/ruS9e0o+fqykc/YGKsxIuny/
-9fq1H8mxsdDPzzbi8fhhPuaxYR2JfOwo/xvI7u6uRkZGcp6p2wvdnpmRbt9O7bTs52g09AvX
-s2f62t2tr5GIlP5HOKsMSL5k7aGCArnwImy7sjQMEz9lnVNKy6W+vj7t7+/LvsojeD/jIi3s
-XDbH3Nyc84T9slQ6PDzsr90u8jL3YV+bXXvdNr7HNUUtQoLv+1IBOW1KyyVrYNobtK/ysK/w
-yNyPuToSdi6bY35+3h2/DGpyclJ1dXX+Wuu6zpn7MPNFXerd2Njwz111/srATDmza++76FMW
-f9vLFx8IX3wgfCB88YHwgfDFB8IHwhcfCB8IX3wgfCD8JeAD4YsPhA+ELz4QPhC++ED4QPji
-A+ED4YsPhC8+ED4QvvhA+ED4yrd+A46HB/nwt5ceAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
