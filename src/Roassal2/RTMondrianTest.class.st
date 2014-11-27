@@ -7,13 +7,13 @@ Class {
 	#category : #'Roassal2-Builder-NewMondrian'
 }
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> setUp [
 	super setUp.
 	b := RTMondrian new.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testBasic [
 	| pos someNodes |
 	someNodes := b nodes: (1 to: 5).
@@ -25,7 +25,30 @@ RTMondrianTest >> testBasic [
 	self assert: someNodes equals: b view elements
 ]
 
-{ #category : #tests }
+{ #category : #'tests - edges' }
+RTMondrianTest >> testBasicEdges [
+
+	b nodes: #(1 2).
+	b edges
+		connectTo: [ :v | v + 1 ].
+	b build.
+	
+	self assert: b view edges size equals: 1
+]
+
+{ #category : #'tests - edges' }
+RTMondrianTest >> testBasicEdgesAndTree [
+
+	b nodes: #(1 2).
+	b edges
+		connectTo: [ :v | v + 1 ].
+	b layout tree.
+	b build.
+	
+	self assert: b view edges size equals: 1
+]
+
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testBasicWithNesting [
 	| result pos |
 	b nodes: (1 to: 2) forEach: [ :nb | 
@@ -40,7 +63,7 @@ RTMondrianTest >> testBasicWithNesting [
 	self assert: pos asArray equals: result
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testBasicWithNestingAndDifferentSizeOfInner [
 	| result pos |
 	b nodes: (1 to: 2) forEach: [ :nb | 
@@ -58,7 +81,7 @@ RTMondrianTest >> testBasicWithNestingAndDifferentSizeOfInner [
 	self assert: pos asArray equals: result
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testBasicWithNestingAndGridLayout [
 	| result pos |
 	b nodes: (1 to: 2) forEach: [ :nb | 
@@ -74,7 +97,7 @@ RTMondrianTest >> testBasicWithNestingAndGridLayout [
 	self assert: pos asArray equals: result
 ]
 
-{ #category : #tests }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testBasicWithNestingAndNesting [
 	| result pos |
 	b nodes: (1 to: 2) forEach: [ :nb | 
@@ -91,4 +114,13 @@ RTMondrianTest >> testBasicWithNestingAndNesting [
 	
 	pos := b view canvas shapes collect: #position.
 	self assert: pos asArray equals: result
+]
+
+{ #category : #'tests - edges' }
+RTMondrianTest >> testNoLineShape [
+
+	b := RTMondrian new.
+	b nodes: (1 to: 2).
+	b edges connectTo: 2.
+	
 ]

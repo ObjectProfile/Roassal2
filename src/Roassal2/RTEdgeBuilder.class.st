@@ -2,7 +2,8 @@ Class {
 	#name : #RTEdgeBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'allowRepetition'
+		'allowRepetition',
+		'elements'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -10,6 +11,52 @@ Class {
 { #category : #'public repetition' }
 RTEdgeBuilder >> allowRepetition [
 	allowRepetition := true
+]
+
+{ #category : #public }
+RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
+
+	| edges fromElement |
+	edges := OrderedCollection new.
+	self elements copy do: [ :e | 
+		fromElement := self elements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		fromElement ifNotNil: [ edges add: (self edgeFrom: fromElement to: e) ] ].
+	^ edges
+]
+
+{ #category : #public }
+RTEdgeBuilder >> connectTo: aBlockOrASymbol [
+
+	| edges toElement |
+	edges := OrderedCollection new.
+	self elements copy do: [ :e | 
+		toElement := self elements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		toElement ifNotNil: [ edges add: (self edgeFrom: e to: toElement) ] ].
+	^ edges
+]
+
+{ #category : #public }
+RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
+
+	| edges toElements |
+	edges := OrderedCollection new.
+	self elements copy do: [ :e | 
+		toElements := self elements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		toElements ifNotNil: [ 
+			toElements do: [ :toE | 
+				edges add: (self edgeFrom: e to: toE) ] ] ].
+	^ edges
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> elements [
+	elements ifNil: [ ^ self view elements ].
+	^ elements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> elements: someElements [
+	elements := someElements
 ]
 
 { #category : #public }

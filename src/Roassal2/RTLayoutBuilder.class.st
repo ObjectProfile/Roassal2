@@ -2,7 +2,8 @@ Class {
 	#name : #RTLayoutBuilder,
 	#superclass : #RTObject,
 	#instVars : [
-		'layout'
+		'layout',
+		'actionOnEdges'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -14,8 +15,21 @@ RTLayoutBuilder >> cell [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> cluster [
+
+	layout := RTClusterLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> flow [
 	layout := RTFlowLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> force [
+	layout := RTForceBasedLayout new.
 	^ layout
 ]
 
@@ -40,6 +54,7 @@ RTLayoutBuilder >> horizontalLine [
 RTLayoutBuilder >> initialize [
 	super initialize.
 	layout := RTFlowLayout new.
+	actionOnEdges := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -49,5 +64,18 @@ RTLayoutBuilder >> layout [
 
 { #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
+	| allEdges |
+	allEdges := OrderedCollection new.
+	elements do: [ :e | allEdges addAll: e connectedEdges ].
+	actionOnEdges do: [ :act | allEdges do: [ :e | act rtValue: e ] ].
+	
 	layout on: elements
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> tree [
+	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
+
+	layout := RTTreeLayout new.
+	^ layout
 ]

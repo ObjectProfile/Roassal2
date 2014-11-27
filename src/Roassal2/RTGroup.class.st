@@ -87,6 +87,17 @@ RTGroup >> elements [
 ]
 
 { #category : #public }
+RTGroup >> elementsFromModels: objects [
+	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
+	| answer t |
+	answer := RTGroup new.
+	objects do: [ :o |
+		t := self elementFromModel: o.
+		t notNil ifTrue: [ answer add: t ] ].
+	^ answer
+]
+
+{ #category : #public }
 RTGroup >> encompassingRectangle [
 	^ self 
 		ifEmpty: [ (0 @ 0) corner: (0 @ 0) ]

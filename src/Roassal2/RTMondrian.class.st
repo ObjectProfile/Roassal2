@@ -14,6 +14,64 @@ RTMondrian >> applyLayout [
 ]
 
 { #category : #'as yet unclassified' }
+RTMondrian >> benchmark [
+
+"
+
+[ 100 timesRepeat: [| b | b := RTMondrianViewBuilder new.
+b shape rectangle
+	width: [ :c | c numberOfVariables * 4];
+	height: #numberOfMethods;
+	linearFillColor: #numberOfLinesOfCode within: RTShape withAllSubclasses.
+b nodes: RTShape withAllSubclasses.
+b edgesFrom: #superclass.
+b treeLayout.
+b build] ] timeToRun
+
+ 0:00:00:00.393"
+
+"
+[ 100 timesRepeat: [|b| b := RTMondrian new.
+b shape rectangle
+	width: [ :c | c numberOfVariables * 4];
+	height: #numberOfMethods;
+	linearFillColor: #numberOfLinesOfCode within: RTShape withAllSubclasses.
+b nodes: RTShape withAllSubclasses.
+b edges connectFrom: #superclass.
+b layout tree.
+b build ] ] timeToRun
+ 0:00:00:00.393"
+]
+
+{ #category : #'as yet unclassified' }
+RTMondrian >> benchmark02 [
+
+"
+
+[ 100 timesRepeat: [| b | b := RTMondrianViewBuilder new.
+b nodes: RTShape withAllSubclasses forEach: [ :c | b nodes: c methods ].
+b edgesFrom: #superclass.
+b treeLayout.
+b build] ] timeToRun
+
+ 0:00:00:02.804"
+
+"
+[ 100 timesRepeat: [|b| b := RTMondrian new.
+b nodes: RTShape withAllSubclasses forEach: [ :c | b nodes: c methods ].
+b edges connectFrom: #superclass.
+b layout tree.
+b build ] ] timeToRun
+ 0:00:00:01.414"
+]
+
+{ #category : #'as yet unclassified' }
+RTMondrian >> build [
+	super build.
+	self applyLayout 
+]
+
+{ #category : #'as yet unclassified' }
 RTMondrian >> createInteractionBuilder [
 	^ RTInteractionBuilder new popup; draggable; yourself
 ]
@@ -29,13 +87,22 @@ RTMondrian >> createLayoutBuilder [
 { #category : #'as yet unclassified' }
 RTMondrian >> createShapeBuilder [
 	| sb |
-	sb := RTShapeBuilder new.
-	sb rectangle color: Color white; borderColor: Color black.
+	sb := RTBoundedShapeBuilder new.
+	"sb rectangle color: Color white; borderColor: Color black."
 	^ sb
 ]
 
 { #category : #'as yet unclassified' }
+RTMondrian >> createView [
+	^ super createView @ RTDraggableView
+]
+
+{ #category : #'as yet unclassified' }
 RTMondrian >> edges [
+	edgeBuilder 
+		elements: self topElements; 
+		view: view;
+		shapeBuilder: shapeBuilder.
 	^ edgeBuilder
 ]
 

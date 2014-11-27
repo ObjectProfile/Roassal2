@@ -112,7 +112,8 @@ RTShowEdge >> recordElement: anElement [
 { #category : #actions }
 RTShowEdge >> removeAllAddedEdges [
 	self class lastHighlightedElements ifNil: [ ^ self ].
-	self class lastHighlightedElements do: #remove.
+	(self class lastHighlightedElements select: [ :edge | edge view notNil ]) 
+		do: #remove.
 	self class lastHighlightedElements: nil
 ]
 

@@ -22,6 +22,19 @@ RTEdgeBuilderTest >> testDefault [
 ]
 
 { #category : #tests }
+RTEdgeBuilderTest >> testElements [
+
+	| b es |
+	b := RTEdgeBuilder new.
+	b view: view.
+	self assert: b elements equals: view elements.
+	
+	es := RTBox elementsOn: (1 to: 4).
+	b elements: es.
+	self assert: b elements equals: es.
+]
+
+{ #category : #tests }
 RTEdgeBuilderTest >> testFrom [
 
 	| v es |
@@ -123,7 +136,7 @@ RTEdgeBuilderTest >> testSimple5 [
 		view: view;
 		objects: #(1 2 3 6) from: #yourself toAll: [ :v | Array with: v + 1 with: v + 2 ].
 		
-	self assert: view numberOfEdges equals: 16.
+	self assert: view numberOfEdges equals: 8.
 
 ]
 

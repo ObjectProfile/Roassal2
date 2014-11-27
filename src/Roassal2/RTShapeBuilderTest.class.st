@@ -62,6 +62,19 @@ RTShapeBuilderTest >> testEnsure2 [
 	self assert: ((builder current color) rtValue: RTElement new) equals: (RTEllipse new color).
 ]
 
+{ #category : #hasSetShape }
+RTShapeBuilderTest >> testHasSetShape [
+
+	self deny: builder hasSetShape.
+	builder rectangle.
+	self assert: builder hasSetShape.
+	self deny: builder hasSetLineShape.
+	
+	builder line.
+	self assert: builder hasSetShape.
+	self assert: builder hasSetLineShape.
+]
+
 { #category : #tests }
 RTShapeBuilderTest >> testLine [
 	builder line.

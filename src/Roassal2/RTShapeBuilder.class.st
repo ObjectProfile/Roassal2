@@ -60,7 +60,7 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 
 { #category : #building }
 RTShapeBuilder >> edgeFrom: element1 to: element2 [
-	self hasSetShape ifFalse: [ self line ].
+	self hasSetLineShape ifFalse: [ self line ].
 	^ shape edgeFrom: element1 to: element2
 ]
 
@@ -107,6 +107,11 @@ RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 { #category : #'shape - edges' }
 RTShapeBuilder >> gradientLineFrom: fromColor to: toColor [
 	^ self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); precision: 100; gradientColorShape)
+]
+
+{ #category : #testing }
+RTShapeBuilder >> hasSetLineShape [
+	^ shape isKindOf: RTAbstractLine
 ]
 
 { #category : #testing }

@@ -1337,34 +1337,6 @@ RTExample >> popupView2 [
 ]
 
 { #category : #popup }
-RTExample >> popupView3WithBackground [
-	"
-	self new popupView3WithBackground
-	"
-| view |
-view := RTMondrianViewBuilder new.
-view interaction noInteractions.
-
-view interaction popup group: [ :group :el |
-	| background elements | 
-	elements := OrderedCollection new.
-	background := (RTBox new color: (Color green alpha: 0.5)) element.
-	el model timesRepeat: [ 
-			elements add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
-			].
-	RTGridLayout on: elements.
-	RTNest new centerOn: background elements: elements.
-	group add: background .
-	group addAll: elements ].
-
-view shape rectangle size: #yourself.
-view nodes: (1 to:50).
-view gridLayout.
-view open
-
-]
-
-{ #category : #popup }
 RTExample >> popupWithLegend [
 	"
 	self new popupWithLegend
