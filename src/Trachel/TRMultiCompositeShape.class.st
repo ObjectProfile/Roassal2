@@ -7,15 +7,6 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #callbacks }
-TRMultiCompositeShape >> addCallback: aCallback [
-	super addCallback: aCallback.
-"	self shapes ifEmpty: [ ^ self ]."
-	"We are adding only to one shape. If we add it to two shapes, then the nesting will register several time the same callback"
-	"self shapes last addCallback: aCallback 
-"
-]
-
 { #category : #'public - adding' }
 TRMultiCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0
@@ -28,17 +19,11 @@ TRMultiCompositeShape >> addShape: aShape translateBy: aPoint [
 
 { #category : #actions }
 TRMultiCompositeShape >> addedIn: aCanvas [
-	self propagateElement.
-
-	shapeAndOffsets
-		do: [ :tupple | 
-			tupple first addedIn: aCanvas.
-			"aCanvas addShape: tupple first."
-			tupple first translateBy: tupple second ].
-		
 	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
-	(shapeAndOffsets anySatisfy: [ :tupple | tupple first isKindOf: TRAbstractLineShape ])
-		ifFalse: [ self translateBy: self position negated ]
+	self propagateElement.
+	shapeAndOffsets do: [ :tupple | tupple first addedIn: aCanvas ].
+	self positionShapesAfterBeingAdded.
+	
 ]
 
 { #category : #actions }
@@ -120,7 +105,16 @@ TRMultiCompositeShape >> drawOn: athensCanvas [
 
 { #category : #accessing }
 TRMultiCompositeShape >> encompassingRectangle [
-	^ Rectangle merging: (self shapes collect: #encompassingRectangle)
+	"Really ugly method."
+	| ans c |
+	(self shapes anySatisfy: [ :ss | ss canvas notNil ])
+		ifTrue: [ ^ Rectangle merging: (self shapes collect: #encompassingRectangle). ]. 
+	
+	c := shapeAndOffsets collect: [ :s | s first position ].
+	self positionShapesAfterBeingAdded.
+	ans := Rectangle merging: (self shapes collect: #encompassingRectangle).
+	shapeAndOffsets with: c do: [ :s :p | s first translateTo: p ].
+	^ ans
 ]
 
 { #category : #accessing }
@@ -215,7 +209,19 @@ TRMultiCompositeShape >> offsets [
 { #category : #accessing }
 TRMultiCompositeShape >> position [
 	self shapes ifEmpty: [ ^ 0 @ 0 ].
-	^ self encompassingRectangle center
+	^ (Rectangle merging: (self shapes collect: #encompassingRectangle)) center
+	"^ self encompassingRectangle center"
+]
+
+{ #category : #actions }
+TRMultiCompositeShape >> positionShapesAfterBeingAdded [
+	| p |
+	shapeAndOffsets do: [ :tupple | tupple first translateTo: tupple second ].	
+		
+	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
+	p := self position negated.
+	(shapeAndOffsets anySatisfy: [ :tupple | tupple first isKindOf: TRAbstractLineShape ])
+		ifFalse: [ self translateBy: p ]
 ]
 
 { #category : #actions }
@@ -291,6 +297,11 @@ TRMultiCompositeShape >> signalUpdate [
 { #category : #actions }
 TRMultiCompositeShape >> translateBy: aPoint [
 	shapeAndOffsets do: [ :tupple | tupple first translateBy: aPoint ]
+	
+"	shapeAndOffsets do: [ :tupple | 
+		tupple first class == TRMultiCompositeShape
+			ifTrue: [ tupple first translateBy: aPoint + (tupple first encompassingRectangle extent / 2) ]
+			ifFalse: [ tupple first translateBy: aPoint ] ]"
 ]
 
 { #category : #actions }
