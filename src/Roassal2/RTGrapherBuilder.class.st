@@ -11,8 +11,17 @@ Class {
 
 { #category : #adding }
 RTGrapherBuilder >> add: aDataSet [
+	"Essential method. Add a dataset into the grapher. Only non-empty set are considered"
+	aDataSet numberOfPoints = 0 ifTrue: [ ^ self ].
+	
 	datasets add: aDataSet.
 	aDataSet builder: self
+]
+
+{ #category : #accessing }
+RTGrapherBuilder >> axisConfiguration [
+	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
+	^ axisConfiguration
 ]
 
 { #category : #utility }
@@ -28,6 +37,7 @@ RTGrapherBuilder >> axisPointFor: aPoint [
 { #category : #'public-axis' }
 RTGrapherBuilder >> axisX [
 	| centralPoint |
+	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	centralPoint := self centralPoint.
 	axisConfiguration
@@ -71,6 +81,7 @@ RTGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 { #category : #'public-axis' }
 RTGrapherBuilder >> axisY [
 	| centralPoint |
+	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	centralPoint := self centralPoint.
 	axisConfiguration
@@ -103,6 +114,11 @@ RTGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 RTGrapherBuilder >> centralPoint [
 	"Return the position in the view to have the 0 @ 0"
 	^ self axisPointFor: 0 @ 0
+]
+
+{ #category : #utility }
+RTGrapherBuilder >> checkIfDataSetHaveBeenAdded [
+	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
 ]
 
 { #category : #'min and max' }
@@ -248,6 +264,12 @@ RTGrapherBuilder >> extent: aPoint [
 	extent := aPoint
 ]
 
+{ #category : #accessing }
+RTGrapherBuilder >> getMaxNumberOfPoints [
+	"Return the maximum number of points any of the dataset has."
+	^ datasets inject: 0 into: [ :max :ds | max max: ds numberOfPoints ]
+]
+
 { #category : #'min and max' }
 RTGrapherBuilder >> homogenizeMinAndMax [
 	| minX maxX minY maxY |
@@ -291,6 +313,18 @@ RTGrapherBuilder >> minX [
 { #category : #accessing }
 RTGrapherBuilder >> minY [
 	^ (datasets collect: #minY) min
+]
+
+{ #category : #'public-axis' }
+RTGrapherBuilder >> newAxisConfiguration [
+	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
+	self resetAxisConfiguration.
+	^ axisConfiguration
+]
+
+{ #category : #accessing }
+RTGrapherBuilder >> numberOfDataSets [
+	^ datasets size
 ]
 
 { #category : #hooks }

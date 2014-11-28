@@ -2391,7 +2391,7 @@ shape := RTLabel new
 		d := d max: 1.
 		d := (10000 / d) asInteger.
 		d := d min: 256.
-		Color grayScale256: d  ];
+		Color gray256: d  ];
 	text: [ :aChar | aChar asString ].
 v := RTView new.
 es := shape elementsOn: data.

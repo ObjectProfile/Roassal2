@@ -31,8 +31,9 @@ RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
-	| encompassingRectangle off |
-	self doLayoutIfNecessaryOn: elements.
+
+	behavior centerOnTrachelShape: trachelShape elements: elements asGroup.
+"	self doLayoutIfNecessaryOn: elements.
 	encompassingRectangle := self encompassingRectangleOf: elements.
 
 	trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
@@ -40,7 +41,7 @@ RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 	off := trachelShape encompassingRectangle center - encompassingRectangle center. 
 	off := off asIntegerPoint.
 	elements do: [ :e | e translateBy: off ].
-	
+	"
 ]
 
 { #category : #utility }
