@@ -20,7 +20,7 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #public }
+{ #category : #utility }
 RTAbstractDataSet >> adjustMinAndMaxValues [
 	"Values are adjusted to always have 0 @ 0 in the chart"
 	minY > 0
@@ -71,18 +71,20 @@ RTAbstractDataSet >> computeMinAndMaxForY [
 	
 ]
 
-{ #category : #ssl }
+{ #category : #'public - lines' }
 RTAbstractDataSet >> connect [
 	shouldConnect := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - lines' }
 RTAbstractDataSet >> connectColor: aColor [
+	"Draw a line between each point, of a given color"
 	^ self connectUsing: (RTLine new color: aColor)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - lines' }
 RTAbstractDataSet >> connectUsing: aShape [
+	"Connect all the point, using a particular shape"
 	lineBuilder shape: aShape.
 	self connect
 ]
@@ -97,21 +99,21 @@ RTAbstractDataSet >> defaultMinValue [
 	^ -1000000
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - dots' }
 RTAbstractDataSet >> dotShape [
 	^ dotBuilder
 ]
 
-{ #category : #public }
+{ #category : #'public - effects' }
 RTAbstractDataSet >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation [
-
+	"Set the size of the dots for each element"
 	elementActions add: [ :elements |
 		RTMetricNormalizer new
 			elements: elements;
 			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
 ]
 
-{ #category : #public }
+{ #category : #'public - effects' }
 RTAbstractDataSet >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 	"
 	aOneArgBlock is the a one-arg condition
@@ -197,6 +199,12 @@ RTAbstractDataSet >> minY [
 { #category : #accessing }
 RTAbstractDataSet >> minY: anObject [
 	minY := anObject
+]
+
+{ #category : #'public - dots' }
+RTAbstractDataSet >> noDot [
+	"No dot are shown"
+	self dotShape rectangle size: 0
 ]
 
 { #category : #accessing }
@@ -287,8 +295,9 @@ RTAbstractDataSet >> renderIn: aView [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTAbstractDataSet >> renderLinesFor: elements in: aView [
+	"Render the lines between elements if necessary"
 	| t |
 	shouldConnect ifFalse: [ ^ self ].
 
@@ -299,7 +308,7 @@ RTAbstractDataSet >> renderLinesFor: elements in: aView [
 			t := tt ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTAbstractDataSet >> resetMinAndMax [
 
 	minY := self defaultMaxValue.
