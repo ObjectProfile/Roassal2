@@ -53,6 +53,7 @@ RTGrapherBuilder >> axisX [
 { #category : #'public-axis' }
 RTGrapherBuilder >> axisXNoLabel [
 	| config centralPoint |
+	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	config := RTAxisConfiguration new
 					builder: self;
@@ -63,8 +64,15 @@ RTGrapherBuilder >> axisXNoLabel [
 ]
 
 { #category : #'public-axis' }
+RTGrapherBuilder >> axisXTitled: aTitle [
+	axisConfiguration title: aTitle.
+	self axisX
+]
+
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
+	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	config := RTAxisConfiguration new
 					builder: self;
@@ -95,8 +103,15 @@ RTGrapherBuilder >> axisY [
 ]
 
 { #category : #'public-axis' }
+RTGrapherBuilder >> axisYTitled: aTitle [
+	axisConfiguration title: aTitle.
+	self axisY
+]
+
+{ #category : #'public-axis' }
 RTGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	| config centralPoint |
+	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	config := RTAxisConfiguration new
 					builder: self;

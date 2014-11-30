@@ -13,7 +13,6 @@ Class {
 		'maxX',
 		'minY',
 		'maxY',
-		'shouldHaveHistogramBars',
 		'shouldConnect',
 		'interaction',
 		'elementActions'
@@ -33,12 +32,6 @@ RTAbstractDataSet >> adjustMinAndMaxValues [
 		ifTrue: [ minX := 0 ].
 	maxX < 0
 		ifTrue: [ maxX := 0 ].
-]
-
-{ #category : #'as yet unclassified' }
-RTAbstractDataSet >> barShape [
-	shouldHaveHistogramBars := true.
-	^ histogramBuilder
 ]
 
 { #category : #accessing }
@@ -152,7 +145,6 @@ RTAbstractDataSet >> initialize [
 	
 	interaction := RTInteractionBuilder new.
 	shouldConnect := false.
-	shouldHaveHistogramBars := false.
 	
 	elementActions := OrderedCollection new.
 ]
@@ -232,12 +224,12 @@ RTAbstractDataSet >> renderDotAndLinesIn: aView [
 	interaction setUpElements: elements.
 	
 	RTMetricNormalizer new
-				elements: elements;
-				normalizeX: [ :model | x rtValue: model ]
-					min: 0
-					max: builder extent x
-					minValue: minX
-					maxValue: maxX.
+		elements: elements;
+		normalizeX: [ :model | x rtValue: model ]
+			min: 0
+			max: builder extent x
+			minValue: minX
+			maxValue: maxX.
 			
 	RTMetricNormalizer new
 		elements: elements;
@@ -262,20 +254,13 @@ RTAbstractDataSet >> renderHistogramIn: aView [
 	interaction setUpElements: elements.
 	
 	  
-			RTMetricNormalizer new
-				elements: elements;
-				normalizeElementX: [ :element | (elements indexOf: element) + 1 ] 
-					min: 0
-					max: builder extent x 
-					minValue: 1 
-					maxValue: elements size + 1 .
-	"RTMetricNormalizer new
+	RTMetricNormalizer new
 		elements: elements;
-		normalizeX: [ :model | x rtValue: model ]
+		normalizeElementX: [ :element | (elements indexOf: element) + 1 ] 
 			min: 0
-			max: builder extent x
-			minValue: minX
-			maxValue: maxX."
+			max: builder extent x 
+			minValue: 1 
+			maxValue: elements size + 1 .
 			
 	RTMetricNormalizer new
 		elements: elements;
@@ -286,7 +271,7 @@ RTAbstractDataSet >> renderHistogramIn: aView [
 			maxValue: maxY.
 	
 	TRConstraint alignFromBottom: elements.
-	
+	elementActions do: [ :act | act rtValue: elements ].
 "	elements do: [ :el |
 		bar := (histogramBuilder current height: el position y abs; width: 10) elementOn: el model.
 		bar translateTo: el position x @ (el position y / 2) ].
@@ -298,9 +283,8 @@ RTAbstractDataSet >> renderHistogramIn: aView [
 RTAbstractDataSet >> renderIn: aView [
 
 	"This is a bit ugly. Maybe having a class hierarchy would be better"
-	shouldHaveHistogramBars 
-		ifTrue: [ self renderHistogramIn: aView ]
-		ifFalse: [ self renderDotAndLinesIn: aView ]
+	self renderDotAndLinesIn: aView.
+
 ]
 
 { #category : #'as yet unclassified' }
