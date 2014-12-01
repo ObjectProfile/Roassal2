@@ -85,16 +85,27 @@ RTMondrian >> createLayoutBuilder [
 ]
 
 { #category : #'as yet unclassified' }
+RTMondrian >> createNewFrame [
+	^ RTMondrianFrame new depth: self currentDepth; yourself
+]
+
+{ #category : #'as yet unclassified' }
 RTMondrian >> createShapeBuilder [
 	| sb |
 	sb := RTBoundedShapeBuilder new.
-	"sb rectangle color: Color white; borderColor: Color black."
+	sb rectangle color: (Color gray: ((5 - (self currentDepth min: 5)) / 5.0) asFloat).	"sb rectangle color: Color white; borderColor: Color black."
 	^ sb
 ]
 
 { #category : #'as yet unclassified' }
 RTMondrian >> createView [
 	^ super createView @ RTDraggableView
+]
+
+{ #category : #'as yet unclassified' }
+RTMondrian >> currentDepth [
+	self hasAnyFrame ifFalse: [ ^ 1 ].
+	^ self topFrame depth
 ]
 
 { #category : #'as yet unclassified' }
@@ -107,11 +118,17 @@ RTMondrian >> edges [
 ]
 
 { #category : #'as yet unclassified' }
+RTMondrian >> hasAnyFrame [
+	^ stack notNil and: [ stack notEmpty ]
+]
+
+{ #category : #'as yet unclassified' }
 RTMondrian >> initialize [
 	super initialize.
 	stack := OrderedCollection new.
 	layoutBuilder := self createLayoutBuilder.
-	edgeBuilder := RTEdgeBuilder new
+	edgeBuilder := RTEdgeBuilder new.
+	self pushNewFrame.
 ]
 
 { #category : #'as yet unclassified' }
@@ -133,7 +150,6 @@ RTMondrian >> node: anObject forIt: aBlock [
 { #category : #'as yet unclassified' }
 RTMondrian >> nodes: objects [
 	| els |
-	self pushFrame: (RTMondrianFrame new).
 	els := self elementsOn: objects.
 	self topFrame setTopElements: els.
 	view addAll: els.
@@ -144,8 +160,12 @@ RTMondrian >> nodes: objects [
 RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	| result |
 	result := self nodes: objects.
-
+	
 	self topElements do: [ :element | 
+		self pushNewFrame.
+		self topFrame increaseDepth.
+		self resetShapeBuilder.
+			
 		aOneArgBlock rtValue: element model.
 		
 		RTNest new
@@ -165,6 +185,16 @@ RTMondrian >> popFrame [
 { #category : #'as yet unclassified' }
 RTMondrian >> pushFrame: aFrame [
 	stack add: aFrame
+]
+
+{ #category : #'as yet unclassified' }
+RTMondrian >> pushNewFrame [
+	self pushFrame: self createNewFrame
+]
+
+{ #category : #'as yet unclassified' }
+RTMondrian >> resetShapeBuilder [
+	shapeBuilder := self createShapeBuilder
 ]
 
 { #category : #'as yet unclassified' }

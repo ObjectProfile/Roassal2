@@ -79,7 +79,6 @@ RTMondrianNewExample >> exampleColoredNodes [
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b build.
-	b open.
 	^ b view canvas
 ]
 
@@ -133,19 +132,19 @@ RTMondrianNewExample >> exampleForce [
 
 { #category : #sources }
 RTMondrianNewExample >> exampleForceAndNested [
-| b |
-b := RTMondrian new.
-b nodes: RTShape withAllSubclasses forEach: [ :cls |
-	b shape rectangle color: Color blue.
-	b nodes: cls methods.
-	b shape line color: Color black.
-	b edges connectToAll: #dependentMethods.
-	b layout force.
-].
-b edges connectFrom: #superclass.
-b layout tree.
-b build.
-	b open.
+	| b |
+	b := RTMondrian new.
+	b nodes: RTShape withAllSubclasses forEach: [ :cls |
+		b shape rectangle color: Color blue.
+		b nodes: cls methods.
+		b shape line color: Color black.
+		b edges connectToAll: #dependentMethods.
+		b layout force.
+	].
+	b edges connectFrom: #superclass.
+	b layout tree.
+	b build.
+	
 	^ b view canvas
 ]
 
@@ -251,53 +250,51 @@ MAAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTMondrianNewExample >> exampleLegendInPopup [
-| view |
+	| view |
 
-view := RTMondrianViewBuilder new.
-view interaction noInteractions.
+	view := RTMondrianViewBuilder new.
+	view interaction noInteractions.
 
-view interaction popup group: [ :group :el |
+	view interaction popup group: [ :group :el |
 	
-	| background elements cls legend1 legend2 | 
-	elements := RTGroup new.
-	background := (RTBox new color: (Color green alpha: 0.8)) element.
-	
-	el model timesRepeat: [ 
-			cls := RTEllipse.
-			50 atRandom > 25
-				ifTrue: [ cls := RTBox ].
-			elements add: (cls new size: 10; color: (Color purple alpha: 0.5)) element
-			].
-	RTGridLayout on: elements.
-	
-	
-	"Legend Good"
-	legend1 := RTGroup new.
-	legend1 add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
-	legend1 add: (RTLabel elementOn: '= Good').
-	RTHorizontalLineLayout on: legend1.
-	
-	"Legend Bad"
-	legend2 := RTGroup new.
-	legend2 add: (RTEllipse new size: 10; color: (Color purple alpha: 0.5)) element.
-	legend2 add: (RTLabel elementOn: '= Bad').
-	RTHorizontalLineLayout on: legend2.
-	
-	RTVerticalLineLayout new gapSize: 0; on: (Array with: legend1 with: legend2 with: elements). 
-	
-		RTNest new centerOn: background elements: (Array with: legend1 with: legend2 with: elements).
+		| background elements cls legend1 legend2 | 
+		elements := RTGroup new.
+		background := (RTBox new color: (Color green alpha: 0.8)) element.
+		
+		el model timesRepeat: [ 
+				cls := RTEllipse.
+				50 atRandom > 25
+					ifTrue: [ cls := RTBox ].
+				elements add: (cls new size: 10; color: (Color purple alpha: 0.5)) element
+				].
+		RTGridLayout on: elements.
+		
+		
+		"Legend Good"
+		legend1 := RTGroup new.
+		legend1 add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
+		legend1 add: (RTLabel elementOn: '= Good').
+		RTHorizontalLineLayout on: legend1.
+		
+		"Legend Bad"
+		legend2 := RTGroup new.
+		legend2 add: (RTEllipse new size: 10; color: (Color purple alpha: 0.5)) element.
+		legend2 add: (RTLabel elementOn: '= Bad').
+		RTHorizontalLineLayout on: legend2.
+		
+		RTVerticalLineLayout new gapSize: 0; on: (Array with: legend1 with: legend2 with: elements). 
+		
+			RTNest new centerOn: background elements: (Array with: legend1 with: legend2 with: elements).
 
+		group add: background.
+		group addAll: legend1.
+		group addAll: legend2.
+		group addAll: elements ].
+
+	view shape rectangle size: #yourself.
+	view nodes: (1 to:50).
+	view gridLayout.
 	
-	group add: background.
-	group addAll: legend1.
-	group addAll: legend2.
-	group addAll: elements ].
-
-
-view shape rectangle size: #yourself.
-view nodes: (1 to:50).
-view gridLayout.
-view open.
 	^ view view canvas
 ]
 
@@ -325,28 +322,28 @@ hA+ELz4QPhC++ED44gPhA+GLD4QPhC8+ED4QvvhA+ED44gPhiw+ED4QvPhA+EL74QPhA+OID
 
 { #category : #sources }
 RTMondrianNewExample >> exampleNestingAndPopup [
-| view |
-view := RTMondrian new.
-view interaction noInteractions.
+	| b |
+	b := RTMondrian new.
+	b interaction noInteractions.
 
-view interaction popup group: [ :group :el |
-	| background elements | 
-	elements := OrderedCollection new.
-	background := (RTBox new color: (Color green alpha: 0.5)) element.
-	el model timesRepeat: [ 
-			elements add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
-			].
-	RTGridLayout on: elements.
-	RTNest new centerOn: background elements: elements.
-	group add: background .
-	group addAll: elements ].
+	b interaction popup group: [ :group :el |
+		| background elements | 
+		elements := OrderedCollection new.
+		background := (RTBox new color: (Color green alpha: 0.5)) element.
+		el model timesRepeat: [ 
+				elements add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
+				].
+		RTGridLayout on: elements.
+		RTNest new centerOn: background elements: elements.
+		group add: background .
+		group addAll: elements ].
 
-view shape rectangle size: #yourself.
-view nodes: (1 to:50).
-view layout grid.
-view open.
-
-	^ view view canvas
+	b shape rectangle size: #yourself.
+	b nodes: (1 to:50).
+	b layout grid.
+	
+	b build.
+	^ b view canvas
 ]
 
 { #category : #icons }

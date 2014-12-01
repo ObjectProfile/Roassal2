@@ -124,3 +124,24 @@ RTMondrianTest >> testNoLineShape [
 	b edges connectTo: 2.
 	
 ]
+
+{ #category : #'tests - nodes' }
+RTMondrianTest >> testSingleNode [
+
+	b node: 10.
+	b build.
+	
+	self assert: b view numberOfElements equals: 1.
+	self assert: b view elements anyOne position equals: 2.5 @ 2.5.
+]
+
+{ #category : #'tests - nodes' }
+RTMondrianTest >> testSingleNodeForIt [
+
+	b node: 10 forIt: [ b node: 5 ].
+	b build.
+	
+	self assert: b view numberOfElements equals: 2.
+	self assert: b view elements first position equals: 7.5 @ 7.5.
+	self assert: b view elements second position equals: 8.0 @ 8.0.
+]
