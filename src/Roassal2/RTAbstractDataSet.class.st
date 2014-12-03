@@ -253,41 +253,6 @@ RTAbstractDataSet >> renderDotAndLinesIn: aView [
 ]
 
 { #category : #hooks }
-RTAbstractDataSet >> renderHistogramIn: aView [
-
-	| elements  |
-	elements := histogramBuilder elementsOn: points.
-		
-	builder view addAll: elements.
-	interaction setUpElements: elements.
-	
-	  
-	RTMetricNormalizer new
-		elements: elements;
-		normalizeElementX: [ :element | (elements indexOf: element) + 1 ] 
-			min: 0
-			max: builder extent x 
-			minValue: 1 
-			maxValue: elements size + 1 .
-			
-	RTMetricNormalizer new
-		elements: elements;
-		normalizeHeight: [ :model | y rtValue: model ]
-			min: 0
-			max: builder extent y
-			minValue: minY
-			maxValue: maxY.
-	
-	TRConstraint alignFromBottom: elements.
-	elementActions do: [ :act | act rtValue: elements ].
-"	elements do: [ :el |
-		bar := (histogramBuilder current height: el position y abs; width: 10) elementOn: el model.
-		bar translateTo: el position x @ (el position y / 2) ].
-"	
-	"self renderLinesFor: elements in: aView"
-]
-
-{ #category : #hooks }
 RTAbstractDataSet >> renderIn: aView [
 
 	"This is a bit ugly. Maybe having a class hierarchy would be better"

@@ -61,7 +61,7 @@ RTStackedDataSet >> renderDotAndLinesIn: aView [
 			min: 0
 			max: builder extent x 
 			minValue: 1 
-			maxValue: maxX + 1.
+			maxValue: maxX + 2.
 			
 	RTMetricNormalizer new
 		elements: elements;
@@ -76,10 +76,45 @@ RTStackedDataSet >> renderDotAndLinesIn: aView [
 	self renderLinesFor: elements in: aView
 ]
 
+{ #category : #hooks }
+RTStackedDataSet >> renderHistogramIn: aView [
+
+	| elements  |
+	elements := histogramBuilder elementsOn: points.
+		
+	builder view addAll: elements.
+	interaction setUpElements: elements.
+	
+	RTMetricNormalizer new
+		elements: elements;
+		normalizeElementX: [ :element | (elements indexOf: element) + 1 ] 
+			min: 0
+			max: builder extent x 
+			minValue: 1 
+			maxValue: elements size + 2 .
+			
+	RTMetricNormalizer new
+		elements: elements;
+		normalizeHeight: [ :model | y rtValue: model ]
+			min: 0
+			max: builder extent y
+			minValue: minY
+			maxValue: maxY.
+	
+	TRConstraint use: RTElement new alignFromBottom: elements.
+	elementActions do: [ :act | act rtValue: elements ].
+"	elements do: [ :el |
+		bar := (histogramBuilder current height: el position y abs; width: 10) elementOn: el model.
+		bar translateTo: el position x @ (el position y / 2) ].
+"	
+	"self renderLinesFor: elements in: aView"
+]
+
 { #category : #'as yet unclassified' }
 RTStackedDataSet >> renderIn: aView [
 
 	"This is a bit ugly. Maybe having a class hierarchy would be better"
+	self adjustMinAndMaxValues.
 	shouldHaveHistogramBars 
 		ifTrue: [ self renderHistogramIn: aView ]
 		ifFalse: [ self renderDotAndLinesIn: aView ]
