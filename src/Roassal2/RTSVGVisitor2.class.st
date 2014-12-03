@@ -346,7 +346,7 @@ RTSVGVisitor2 >> visitInteraction: sub with: anObject [
 { #category : #visitor }
 RTSVGVisitor2 >> visitInteractions: anObject [
 	| first list temp |
-	
+	(anObject isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
 	first := true.
 	list := OrderedCollection new.
 	temp := OrderedCollection new.
@@ -395,6 +395,11 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 	| e |
 	self flag: 'TODO'.
 	e := aLine element.
+	
+	e = nil ifTrue: [ ^ self ].
+	e shape = nil ifTrue: [ ^ self ].
+	e shape class = RTMultiCompositeShape ifTrue: [ ^ self ].
+	
 	stream nextPutAll: '
 		{type: "line", id: "';
 		nextPutAll: (self nameFor: aLine);
@@ -416,11 +421,13 @@ RTSVGVisitor2 >> visitLineShape: aLine with: aLineDecoration [
 	svgE addOn: stream using: self. "
 	
 "TODO"
+	self halt.
 ]
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 	"TODO"
+	
 ]
 
 { #category : #visitor }

@@ -79,9 +79,3 @@ RTLayoutBuilder >> tree [
 	layout := RTTreeLayout new.
 	^ layout
 ]
-
-{ #category : #'public - layout' }
-RTLayoutBuilder >> verticalLine [
-	layout := RTVerticalLineLayout new.
-	^ layout
-]
