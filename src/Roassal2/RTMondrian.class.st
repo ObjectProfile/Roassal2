@@ -2,18 +2,19 @@ Class {
 	#name : #RTMondrian,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'stack',
+		'rootFrame',
+		'currentFrame',
 		'edgeBuilder'
 	],
 	#category : #'Roassal2-Builder-NewMondrian'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTMondrian >> applyLayout [
 	layoutBuilder setUpElements: self topElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #benchmarking }
 RTMondrian >> benchmark [
 
 "
@@ -43,7 +44,7 @@ b build ] ] timeToRun
  0:00:00:00.393"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #benchmarking }
 RTMondrian >> benchmark02 [
 
 "
@@ -65,18 +66,18 @@ b build ] ] timeToRun
  0:00:00:01.414"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTMondrian >> build [
 	super build.
 	self applyLayout 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMondrian >> createInteractionBuilder [
 	^ RTInteractionBuilder new popup; draggable; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factories }
 RTMondrian >> createLayoutBuilder [
 	| newLayoutBuilder |
 	newLayoutBuilder := RTLayoutBuilder new.
@@ -84,125 +85,138 @@ RTMondrian >> createLayoutBuilder [
 	^ newLayoutBuilder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factories }
 RTMondrian >> createNewFrame [
-	^ RTMondrianFrame new depth: self currentDepth; yourself
+	^ RTMondrianFrame new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMondrian >> createShapeBuilder [
 	| sb |
 	sb := RTBoundedShapeBuilder new.
-	sb rectangle color: (Color gray: ((5 - (self currentDepth min: 5)) / 5.0) asFloat).	"sb rectangle color: Color white; borderColor: Color black."
+	sb rectangle color: (Color gray: (5 - ((self currentDepth + 1 min: 5)) / 5.0) asFloat).	"sb rectangle color: Color white; borderColor: Color black."
 	^ sb
+	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMondrian >> createView [
 	^ super createView @ RTDraggableView
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMondrian >> currentDepth [
-	self hasAnyFrame ifFalse: [ ^ 1 ].
-	^ self topFrame depth
+	^ self currentFrame depth
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTMondrian >> currentElements [
+	^ self currentFrame elements
+]
+
+{ #category : #accessing }
+RTMondrian >> currentFrame [
+	^ currentFrame
+]
+
+{ #category : #accessing }
 RTMondrian >> edges [
 	edgeBuilder 
-		elements: self topElements; 
+		elements: self currentElements; 
 		view: view;
 		shapeBuilder: shapeBuilder.
 	^ edgeBuilder
 ]
 
-{ #category : #'as yet unclassified' }
-RTMondrian >> hasAnyFrame [
-	^ stack notNil and: [ stack notEmpty ]
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTMondrian >> initialize [
+	rootFrame := self createNewFrame.
+	currentFrame := rootFrame.
 	super initialize.
-	stack := OrderedCollection new.
 	layoutBuilder := self createLayoutBuilder.
 	edgeBuilder := RTEdgeBuilder new.
-	self pushNewFrame.
+	"self pushNewFrame."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMondrian >> layout [
 	^ layoutBuilder 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - nodes' }
 RTMondrian >> node: anObject [
 	"Add a new node to the view"
 	^ (self nodes: (Array with: anObject)) first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - nodes' }
 RTMondrian >> node: anObject forIt: aBlock [
 	^ (self nodes: (Array with: anObject) forEach: [ :each | aBlock value ]) first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - nodes' }
 RTMondrian >> nodes: objects [
 	| els |
 	els := self elementsOn: objects.
-	self topFrame setTopElements: els.
+	self currentFrame addElements: els.
 	view addAll: els.
+	self resetShapeBuilder.
 	^ els
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - nodes' }
 RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	| result |
 	result := self nodes: objects.
 	
-	self topElements do: [ :element | 
+	result do: [ :element | 
 		self pushNewFrame.
-		self topFrame increaseDepth.
 		self resetShapeBuilder.
 			
 		aOneArgBlock rtValue: element model.
-		
 		RTNest new
 			layout: layoutBuilder layout;
-			on: element nest: self topFrame topElements.
+			on: element nest: self currentFrame elements.
 		self popFrame.
 	].
+	self resetShapeBuilder.
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stack }
+RTMondrian >> numberOfAllFrames [
+	"Return the number of all the frame accessible within the builder"
+	^ rootFrame numberOfAllFrames
+]
+
+{ #category : #stack }
 RTMondrian >> popFrame [
-	^ stack removeLast
-	
+	currentFrame := currentFrame parentFrame
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stack }
 RTMondrian >> pushFrame: aFrame [
-	stack add: aFrame
+	currentFrame pushFrame: aFrame.
+	currentFrame := aFrame.
+	^ aFrame
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stack }
 RTMondrian >> pushNewFrame [
-	self pushFrame: self createNewFrame
+	^ self pushFrame: self createNewFrame
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTMondrian >> resetShapeBuilder [
 	shapeBuilder := self createShapeBuilder
 ]
 
-{ #category : #'as yet unclassified' }
-RTMondrian >> topElements [
-	^ self topFrame topElements
+{ #category : #accessing }
+RTMondrian >> rootFrame [
+	^ rootFrame
 ]
 
-{ #category : #'as yet unclassified' }
-RTMondrian >> topFrame [
-	^ stack last
+{ #category : #stack }
+RTMondrian >> topElements [
+	^ rootFrame elements
 ]

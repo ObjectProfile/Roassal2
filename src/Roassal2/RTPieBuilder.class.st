@@ -9,8 +9,10 @@ Class {
 	#category : #'Roassal2-Builder-PieChart'
 }
 
-{ #category : #public }
+{ #category : #'public - pies' }
 RTPieBuilder >> emphasize: object by: anIntegerOrASymbolOrABlock [
+	"public method"
+	"Move the pie to a given offset"
 	"anIntegerOrASymbolOrABlock is the distance for which object has to be moved away"
 	| element trachelShape delta v |
 	element := view elementFromModel: object.
@@ -24,7 +26,7 @@ RTPieBuilder >> emphasize: object by: anIntegerOrASymbolOrABlock [
 	
 ]
 
-{ #category : #public }
+{ #category : #'public - shapes' }
 RTPieBuilder >> emphasizeBy: anIntegerOrASymbolOrABlock [
 	"anIntegerOrASymbolOrABlock is the distance for which object has to be moved away"
 	objects do: [ :object |
@@ -48,13 +50,14 @@ RTPieBuilder >> initializeShapeBuilder [
 		color: RTNIdentityNormalizer new
 ]
 
-{ #category : #utility }
+{ #category : #'private - utility' }
 RTPieBuilder >> innerAngleOf: object [
 	^ (self ratioOf: object) * 360
 ]
 
-{ #category : #public }
+{ #category : #'private - utility' }
 RTPieBuilder >> label: object [
+	"Private method"
 	| element trachelShape labelPosition lbl |
 	element := view elementFromModel: object.
 	trachelShape := element trachelShape.
@@ -68,28 +71,29 @@ RTPieBuilder >> label: object [
 	lbl trachelShape translateTo: labelPosition
 ]
 
-{ #category : #shapes }
+{ #category : #'public - shapes' }
 RTPieBuilder >> labelled [
+	"Make each pie having a label"
 	self labelledIf: true
 ]
 
-{ #category : #public }
+{ #category : #'public - shapes' }
 RTPieBuilder >> labelledIf: aBlock [
 	objects do: [ :object |
 		(aBlock rtValue: object) ifTrue: [ self label: object ] ]
 ]
 
-{ #category : #public }
+{ #category : #'public - pies' }
 RTPieBuilder >> objects: aSetOfObjects [
 	objects := aSetOfObjects
 ]
 
-{ #category : #utility }
+{ #category : #'private - utility' }
 RTPieBuilder >> outerAngleOf: object [
 	^ ((values copyFrom: 1 to: (objects indexOf: object) - 1), (Array with: 0)) sum * 360.0 / sum
 ]
 
-{ #category : #utility }
+{ #category : #'private - utility' }
 RTPieBuilder >> ratioOf: anObject [
 	| i |
 	i := objects indexOf: anObject.
@@ -98,7 +102,7 @@ RTPieBuilder >> ratioOf: anObject [
 
 ]
 
-{ #category : #public }
+{ #category : #'public - pies' }
 RTPieBuilder >> slice: aBlockOrASymbol [
 	| es |
 	values := objects collect: aBlockOrASymbol.

@@ -3203,9 +3203,8 @@ En este caso se van a disponer de manera circular"
 RTCircleLayout on: { e1 . e2 . e3 . e4 }.
 
 "Abrimos la vista"
-vista canvas.
-
-^ vista
+vista open.
+vista canvas
 ]
 
 { #category : #icons }

@@ -52,7 +52,7 @@ RTHTML5Exporter >> addStart: aView [
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
-		<script src="roassal.js"></script>
+		<script src="mamani.js"></script>
 		<style type="text/css">
 			body, svg { 
 				margin: 0;
@@ -78,7 +78,7 @@ function buildView() {
 RTHTML5Exporter >> createJS [
 	| dir s |
 	dir := self directory.
-	s := dir / 'roassal.js'.
+	s := dir / 'mamani.js'.
 	s exists ifTrue: [ ^ self ].
 	s := s writeStream.
 	[ s nextPutAll:
@@ -1024,7 +1024,7 @@ RTHTML5Exporter >> defaultDirectory [
 
 { #category : #defaults }
 RTHTML5Exporter >> defaultFileName [
-	^ 'index.html'
+	^ 'thePage.html'
 ]
 
 { #category : #defaults }
