@@ -7,6 +7,47 @@ Class {
 	#category : #'Roassal2-Exporter-HTML5'
 }
 
+{ #category : #private }
+RTHTML5ExporterExample >> createIndexFor: aCollection [
+	| index stream |
+	index := FileSystem disk workingDirectory / 'index.html'.
+	index exists ifTrue: [ index delete ].
+	stream := index writeStream.
+	[ stream nextPutAll: 
+'<!DOCTYPE html>
+<html>
+	<head>
+		<title>Roassal Examples</title>
+		<style type="text/css">
+			body{
+				margin: 0 auto
+			}
+			h1{
+				text-align: center
+			}
+			iframe{
+				left: 50%;
+				position: relative;
+				margin-left: -400px;
+			}
+		</style>
+	</head>
+	<body>
+	'.
+	(aCollection sorted: [ :a :b| a selector <= b selector ]) do: [ :met |
+		stream nextPutAll: '
+	<h1>',met selector asString,'</h1>'.
+		stream nextPutAll: '
+	<iframe width="800" height="800" src="',met selector,'.html"></iframe>'.
+		].
+	stream nextPutAll: 
+'	</body>
+</html>'. ] ensure: [ stream close ].
+	^ index.
+
+
+]
+
 { #category : #examples }
 RTHTML5ExporterExample >> example01 [
 	"
@@ -31,20 +72,27 @@ RTHTML5ExporterExample >> exportAll [
 	"
 	self new exportAll
 	"
-	"This example is incomplete"
-	| e view exporter |
+	| e view exporter list error |
 	(self confirm: 'Are you sure to run this example? Warning: Several files are created') ifFalse: [ ^ self ].
- 	e := RTRoassalExample new. 
 	exporter := RTHTML5Exporter new.
-	
-	RTRoassalExample methods do: [ :met | (met selector endsWith: 'Icon') ifFalse: [  
-		view := e perform: met selector.
-		(view isKindOf: RTView) ifTrue: [ 
+	list := OrderedCollection new.
+	(RTAbstractExample subclasses flatCollect: [ :cls | cls methods ])
+	do: [ :met | (met selector endsWith: 'Icon') ifFalse: [  
+		e := met methodClass new.
+		error := false.
+		[view := e perform: met selector.] 
+		on: Error do: [ :er | error := true ].
+		
+		((view isKindOf: RTView) and: [ error not ]) ifTrue: [ 
+			list add: met.
 			exporter fileName: met selector, '.html'.
 			exporter title: met selector.
 			exporter export: view.
 			 ].
-	] ] displayingProgress: 'Exporting...'
+		
+	] ] displayingProgress: 'Exporting...'.
+
+	(self createIndexFor: list) "asUrl open"
 
 ]
 
