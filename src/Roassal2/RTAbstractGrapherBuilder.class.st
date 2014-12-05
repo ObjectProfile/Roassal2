@@ -18,9 +18,16 @@ RTAbstractGrapherBuilder >> add: aDataSet [
 	aDataSet builder: self
 ]
 
+{ #category : #testing }
+RTAbstractGrapherBuilder >> areAxisDefined [
+	"Return true is axis have been defined"
+	^ axisConfiguration notNil
+]
+
 { #category : #accessing }
 RTAbstractGrapherBuilder >> axisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
+	axisConfiguration ifNil: [ self resetAxisConfiguration ].
 	^ axisConfiguration
 ]
 
@@ -40,7 +47,7 @@ RTAbstractGrapherBuilder >> axisX [
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	centralPoint := self centralPoint.
-	axisConfiguration
+	self axisConfiguration
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ];
 		minValue:
 				(self minX > 0
@@ -65,7 +72,7 @@ RTAbstractGrapherBuilder >> axisXNoLabel [
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisXTitled: aTitle [
-	axisConfiguration title: aTitle.
+	self axisConfiguration title: aTitle.
 	self axisX
 ]
 
@@ -92,7 +99,7 @@ RTAbstractGrapherBuilder >> axisY [
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	centralPoint := self centralPoint.
-	axisConfiguration
+	self axisConfiguration
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ];
 		minValue:
 				(self minY > 0
@@ -104,7 +111,7 @@ RTAbstractGrapherBuilder >> axisY [
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisYTitled: aTitle [
-	axisConfiguration title: aTitle.
+	self axisConfiguration title: aTitle.
 	self axisY
 ]
 
@@ -158,6 +165,12 @@ RTAbstractGrapherBuilder >> createView [
 	^ RTView new @ RTDraggableView
 ]
 
+{ #category : #utility }
+RTAbstractGrapherBuilder >> defineAxesIfNecessary [
+	self areAxisDefined ifTrue: [ ^ self ].
+	self axisX; axisY
+]
+
 { #category : #accessing }
 RTAbstractGrapherBuilder >> extent [
 	^ extent
@@ -196,7 +209,6 @@ RTAbstractGrapherBuilder >> initialize [
 	"Collection of data sets"
 	datasets := OrderedCollection new.
 	
-	self resetAxisConfiguration
 ]
 
 { #category : #accessing }
@@ -223,7 +235,7 @@ RTAbstractGrapherBuilder >> minY [
 RTAbstractGrapherBuilder >> newAxisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
 	self resetAxisConfiguration.
-	^ axisConfiguration
+	^ self axisConfiguration
 ]
 
 { #category : #accessing }
@@ -233,6 +245,7 @@ RTAbstractGrapherBuilder >> numberOfDataSets [
 
 { #category : #hooks }
 RTAbstractGrapherBuilder >> renderIn: aView [
+	self defineAxesIfNecessary.
 	datasets do: [ :aDataset | aDataset renderIn: aView ]
 ]
 

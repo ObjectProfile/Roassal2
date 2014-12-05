@@ -7,10 +7,17 @@ Class {
 	#category : #'Roassal2-Builder-Charter'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTStackedDataSet >> barShape [
 	shouldHaveHistogramBars := true.
 	^ histogramBuilder
+]
+
+{ #category : #hooks }
+RTStackedDataSet >> centralDot [
+	^ (RTEllipse new
+		size: 0;
+		color: Color red) element translateTo: (builder axisPointFor: 0 @ 0)
 ]
 
 { #category : #'min and max' }
@@ -78,39 +85,49 @@ RTStackedDataSet >> renderDotAndLinesIn: aView [
 
 { #category : #hooks }
 RTStackedDataSet >> renderHistogramIn: aView [
-
-	| elements  |
+	| centralDot elements positiveElements negativeElements |
+	centralDot := self centralDot.
+	
 	elements := histogramBuilder elementsOn: points.
-		
 	builder view addAll: elements.
 	interaction setUpElements: elements.
-	
 	RTMetricNormalizer new
 		elements: elements;
-		normalizeElementX: [ :element | (elements indexOf: element) + 1 ] 
+		normalizeElementX: [ :element | (elements indexOf: element) + 1 ]
 			min: 0
-			max: builder extent x 
-			minValue: 1 
-			maxValue: elements size + 2 .
-			
-	RTMetricNormalizer new
-		elements: elements;
-		normalizeHeight: [ :model | y rtValue: model ]
-			min: 0
-			max: builder extent y
-			minValue: minY
-			maxValue: maxY.
-	
-	TRConstraint use: RTElement new alignFromBottom: elements.
-	elementActions do: [ :act | act rtValue: elements ].
-"	elements do: [ :el |
-		bar := (histogramBuilder current height: el position y abs; width: 10) elementOn: el model.
-		bar translateTo: el position x @ (el position y / 2) ].
-"	
-	"self renderLinesFor: elements in: aView"
+			max: builder extent x
+			minValue: 1
+			maxValue: elements size + 2.	
+
+	"We treat the element with a positive value"
+	positiveElements := elements select: [ :el | (y rtValue: el model) > 0 ].
+	positiveElements
+		ifNotEmpty: [
+			RTMetricNormalizer new
+				elements: positiveElements;
+				normalizeHeight: [ :model | y rtValue: model ]
+					min: centralDot position y
+					max: builder extent y + centralDot position y
+					minValue: 0
+					maxValue: maxY ].
+	TRConstraint use: centralDot alignFromBottom: positiveElements.	
+		
+	"We treat the element with a negative value"
+	negativeElements := elements copyWithoutAll: positiveElements.
+	negativeElements
+		ifNotEmpty: [ 
+			RTMetricNormalizer new
+				elements: negativeElements;
+				normalizeHeight: [ :model | y rtValue: model ]
+					min: "builder extent y -"  centralDot position y negated 
+					max: 0
+					minValue: minY
+					maxValue: 0.
+			TRConstraint use: centralDot alignFromTop: negativeElements ].	"We set the actions, if any"
+	elementActions do: [ :act | act rtValue: elements ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTStackedDataSet >> renderIn: aView [
 
 	"This is a bit ugly. Maybe having a class hierarchy would be better"

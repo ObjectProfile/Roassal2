@@ -22,7 +22,7 @@ RTDoubleGrapherBuilder >> axisYRight [
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
 	centralPoint := self extent x @ self centralPoint y.
-	axisConfiguration
+	self axisConfiguration
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (40 @ 0) ];
 		minValue:
 				(self minYRight > 0

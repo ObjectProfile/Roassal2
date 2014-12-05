@@ -129,6 +129,100 @@ a2XJPUXLpBo9I42eUtk9sreq7lmdy6H6IfzFwTqG/IU/EP5A+At/IPyB8Bf+QPgD4S/8gfAX
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleBarAndCurve [
+
+
+| b ds |
+b := RTGrapherBuilder new.
+b extent: 400 @ 400.
+
+ds := RTStackedDataSet new.
+ds barShape color: (Color red).
+ds points: (-3 to: 3.1415 * 5 by: 0.1).
+ds y: [ :v | v sin ].
+
+b add: ds.
+
+ds := RTStackedDataSet new.
+ds noDot.
+ds connectColor: Color blue.
+ds points: (-3 to: 3.1415 * 5 by: 0.1).
+ds y: [ :v | v cos ].
+b add: ds.
+
+b build.
+^ b view canvas
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleBarAndCurveIcon [
+	^ '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
+DqzquEBjAy0AAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleColoredAndInteractionLabel [
 
 	| b |
@@ -763,6 +857,51 @@ B+GHD8IH4YcPwg8fhA/CDx+ED8IPH4QPwg8fBJF3z7uGtXujWGMAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleHistogramWithNegativeValues [
+
+	| data b ds |
+	data := (1 to: 20) collect: [ :v | 10 atRandom - 5 ].
+	 
+	b := RTGrapherBuilder new.
+
+	b extent: 300 @ 200.
+
+	ds := RTStackedDataSet new.
+	ds interaction popup.
+	ds points: data.
+	ds barShape width: 8; 
+	      color: (Color green alpha: 0.3);
+	     if: [:value | value < 0 ] fillColor: (Color red alpha: 0.3).
+	b add: ds.
+
+	^ b view canvas
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleHistogramWithNegativeValuesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD+0lEQVR4XuXbzU7iUBiHcW/O
+W/EOXJmIH9GFC5fGRHeuTFyocWEgiooGiRkM+B1HUwwgxAQDOpqoeZm+xympTtFSqQPz/Jum
+B9LTlvOjPRwoPfU6P52UHn4T8EH44YPwQfjhg/BB+OGD8EH44YPwQfjhg/DDB+GD8MMH4YPw
+wwfhg/DDB+GD8MMH4YcPwgfhhw/CB+GHD8IH4YcPwgfhp7tBZmZmJJFIyPPzs4yMjIjXOk9P
+T/Lw8CC65Dd1yCBiZ2trS25ubiSfz3s2eK1Wk7OzM9Gln20uy7Ls2xMfJEBeXl7EOQseHx+b
+NmKlUvHdwHyQb+hD+CB8ED4IH4QPwgfhg/BB+CD/AsSN8L58ak85e9LyL3vigzTJ0dGRTE1N
+mQYaGBiQ+fl5mZ2dFa+RerFY/HCkzgdpA4iO0re3t00DraysiA4SR0dHJchInQ/SxkuW+53f
+7CzgX7L4fQgfhA/CB+GD8EH4IL5BYhIz67TrmN3b02XanvggfBA+SFeDZDIZ2d9/bbxmP+Hq
+2OT6+jr0kTofxM75+bnorOXJycnAv6nzQdoEomdHNpuVnZ0dmZ6ebnrAlmUFvmTtVfcCg9ze
+3gZulMXaYmCQr+z3W/qQZDJZz+VyUrDxyomEaLmUTDbKUSsqKSvlWV7dW61nrawp/7R+mue9
+5rgVN+u4n0ulUnX3Y92fHkOzbbjnhR8LdWd7uty1dhvbKKbTb9bNHx+b568uLszjw8PDzgZx
+zhA5PRVZfn3XSSzWKIf1bntfV/enx/CVd7nZRvrt2SJXV+a1yP29dPQZojfQ6ayfsgqFgrQC
+Uq1WRWcta91W9nt3dyflcrlRxyn7AdG6ep+Z3tznrusHpGJ/sPHab8eAaGeu88nJiTnQVkDm
+5uZkY2NDSqWStPrCJiYmZGhoSIaHhxtLvyBad3x83OzXXdcPSGxpyXO/HQMSjUZFZ+30BwcH
+WwJZW1szde3+x9Rt5YNGb2+vubVV76pcX1+XsbExXyBOXb1FVvftrvsZSMZeL9Lf77nfrhgY
++u1D2plW+pAPt/FJH9KVI3U+SAggTmerHbde7/Xy4nTE7pG612/qfJA2g+g10v14c3NTP/eb
+mx38jNT5ICGcIfF43HS+CuGUDw4OxNclyx5EfbVx+CAhfdvLB+GD8EH4IHwQPggB5DvCB+GD
+8EFCA7m8vDRfVevv6/ZYJNDd73yQNoHoILCvr898sxmJRHT+ax0doSuI3/+phwryJ//9JUv/
+o+58n1Xnp/P7EH74IHwQfvggfBB++CB8EH74IPzwQfgg/PBB+CD88EH4IPzwQfgg/PBB+OGD
+8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DjK78B7gqeCFF7BtEAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleLabelledBars [
 
 
@@ -1192,6 +1331,76 @@ Nyom7vb21jPu1Gw3f+YZ615IoSktgz0Czpw8epGJscvtQnG2RhoeHvaMs0Xt1NSUVldXGUIK
 TWnvpzZ78lgorrOzU4eHhxocHFShuIODA83OznrGdXV1aW1tTUNDQ8JMWXz4QvhC+PCF8IXw
 4QvhC+HDF8IXwocvhA9fCF8IH74QvhA+fCF8IXz4QvhC+PCF8OEL4QvhwxfCF8KHL4QvhA9f
 CF8IH74QvhA+fCF8+EL4QvjwhfCF8OEL4QvhwxdC5g9sF+trm6wBMAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTGrapherExample >> examplePopulationUSA [
+
+| b  tab |
+tab := RTTabTable new input: (ZnEasy get: 'https://www.census.gov/popest/data/state/asrh/2013/files/SCPRC-EST2013-18+POP-RES.csv') contents usingDelimiter: $,.
+tab removeFirstRow.
+tab convertColumnsAsInteger: #('POPESTIMATE2013' 'POPEST18PLUS2013').
+
+b := RTDoubleBarBuilder new.
+b pointName: [ :row | row at: (tab indexOfName: 'NAME') ].
+b points: tab values allButFirst. 
+b bottomValue: [ :row | ((row at: (tab indexOfName: 'POPESTIMATE2013')) / 1000) asInteger ] titled: 'Pop estimate'.
+b topValue: [ :row | ((row at: (tab indexOfName: 'POPEST18PLUS2013')) / 1000) asInteger ] titled: 'Pop +18 estimate'.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> examplePopulationUSAIcon [
+	^ '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
+XcWjA7UAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }

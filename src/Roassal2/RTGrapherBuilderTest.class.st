@@ -14,6 +14,11 @@ RTGrapherBuilderTest >> setUp [
 ]
 
 { #category : #tests }
+RTGrapherBuilderTest >> testDefault [
+	self deny: b areAxisDefined
+]
+
+{ #category : #tests }
 RTGrapherBuilderTest >> testGetMaxNumberOfPoints [
 	| ds |
 	self assert: b getMaxNumberOfPoints equals: 0.
