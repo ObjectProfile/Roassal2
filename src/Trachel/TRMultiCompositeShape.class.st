@@ -7,6 +7,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRMultiCompositeShape >> accept: aVisitor [
+	aVisitor visitMultiCompositeShape: self.
+]
+
 { #category : #'public - adding' }
 TRMultiCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0

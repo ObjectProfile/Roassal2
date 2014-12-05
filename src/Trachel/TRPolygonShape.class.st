@@ -12,6 +12,11 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #visitor }
+TRPolygonShape >> accept: aVisitor [
+	aVisitor visitPolygonShape: self
+]
+
 { #category : #private }
 TRPolygonShape >> computePath [
 	canvas ifNil: [ ^ self ].
