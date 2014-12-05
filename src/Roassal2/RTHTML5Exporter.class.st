@@ -83,6 +83,7 @@ RTHTML5Exporter >> createJS [
 	s := s writeStream.
 	[ s nextPutAll:
 '
+
 /* Simple JavaScript for handle Roassal2 in javascript
  * By milton mamani akevalion@gmail.com
 
@@ -493,7 +494,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.svg.appendChild(this.canvas);
 		this.svg.appendChild(this.fixedCanvas);
 		this.camera = new TRCamera(this);
-		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, "label": TRLabelShape, "bitmap": TRBitmapShape};
+		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, 
+		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape};
 		var self = this;
 		$(this.svg).
 			mousedown(function (e){self.mousedown(e)}).
@@ -520,13 +522,13 @@ var TRCanvas = TRAnnouceableObject.extend({
 	},
 	addShape: function (s){
 		var shape = this.createShape(s);
-		this.canvas.appendChild(shape.path);
+		shape.addInCanvas();
 		this.shapes[s.id] = shape;
 		return shape;
 	},
 	addFixedShape: function(s){
 		var shape = this.createShape(s);
-		this.fixedCanvas.appendChild(shape.path);
+		shape.addInFixedCanvas();
 		this.fixedShapes[s.id] = shape;
 		return shape;
 	},
@@ -768,6 +770,12 @@ var TRShape = TRAnnouceableObject.extend({
 	setCanvas: function(canvas){
 		this.canvas = canvas;
 	},
+	addInFixedCanvas: function(){
+		if(this.path != null) this.canvas.fixedCanvas.appendChild(this.path);
+	},
+	addInCanvas: function(){
+		if(this.path != null) this.canvas.canvas.appendChild(this.path);
+	},
 	setColor: function(c){
 		if(c == null) return;
 		this.color = c;
@@ -791,6 +799,7 @@ var TRShape = TRAnnouceableObject.extend({
 	},
 	position: function (){
 		var m = this.matrix;
+		if(this.matrix == null) debugger;
 		return {x: m.x, y: m.y}
 	},
 	update: function(){
@@ -884,6 +893,63 @@ var TRBitmapShape = TRShape.extend({
 	}
 });
 
+var TRMultiCompositeShape = TRShape.extend({
+	objs: null,
+	offsets: null,
+	shapes: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.objs = obj.shapes;
+		this.offsets = obj.offsets;
+	},
+	encompassingRectangle: function(){
+		var s = this.shapes;
+		var r = s[0].encompassingRectangle();
+		for(var k = 1;k<s.length; k++) r.mergeRect(s[k].encompassingRectangle());
+		return r;
+	},
+	addInFixedCanvas: function(){
+		this.addIn(this.canvas.fixedCanvas, this.canvas.fixedShapes);
+		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].addInFixedCanvas();
+		this.postAdd();
+	},
+	postAdd: function(){
+		this.update();
+		var c = this.encompassingRectangle().center();
+		c = {x: -c.x, y: -c.y};
+		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].translateBy(c);
+	},
+	addInCanvas: function(){
+		this.addIn(this.canvas.canvas, this.canvas.shapes);
+		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].addInCanvas();
+		this.postAdd();
+	},
+	addIn: function(g, list){
+		var o = this.objs;
+		this.shapes = [];
+		for(var k = 0; k<o.length; k++){
+			var s = this.canvas.createShape(o[k]);
+			this.shapes[k] = s;
+			s.setPosition(this.offsets[k]);
+			list[s.id] = s;
+		}
+	},
+	update: function(){
+		for(var k = 0; k<this.shapes.length; k++)
+			this.shapes[k].update();
+	},
+	translateBy: function(p){
+		for(var k = 0; k<this.shapes.length; k++)
+			this.shapes[k].translateBy(p);
+	},
+	remove: function(){
+		delete this.canvas.shapes[this.id];
+		delete this.canvas.fixedShapes[this.id];
+		for(var k = 0; k<this.shapes.length; k++)
+			this.shapes[k].remove();
+	}
+});
+
 var TRLabelShape = TRShape.extend({
 	text: null,
 	font: null,
@@ -970,7 +1036,8 @@ var TRLineShape = TRAbstractBoxShape.extend({
 		var from = this.from().position();
 		var to = this.to().position();
 		return r.encompassing([{x: from.x, y: from.y}, {x: to.x, y: to.y}]);
-	}
+	},
+	translateBy: function(p){}
 });
 
 /*main events*/
