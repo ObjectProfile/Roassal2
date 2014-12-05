@@ -36,7 +36,7 @@ b edgesFrom: #superclass.
 b forceBasedLayout charge: -500; nbIterations: 50..
 
 b build.
-^ b
+^ b view
 ]
 
 { #category : #icons }

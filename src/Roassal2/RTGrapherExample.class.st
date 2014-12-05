@@ -69,7 +69,7 @@ b add: ds.
 b axisXWithNumberOfTicks: 4.
 b axisYWithNumberOfTicks: 4.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -380,7 +380,7 @@ b add: ds.
 b axisX.
 b axisY.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -448,7 +448,7 @@ b axisConfiguration
 b axisX.
 
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #sources }
@@ -476,7 +476,7 @@ b axisConfiguration
 	labelConvertion: [ :v | (Date julianDayNumber: v + minDate julianDayNumber) ].  
 b axisX.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -643,7 +643,7 @@ RTGrapherExample >> exampleDoubleYAXis [
 	b axisYRight.
 	b build.
 
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -701,7 +701,7 @@ RTGrapherExample >> exampleEbola [
 
 	b build.
 
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -775,7 +775,7 @@ RTGrapherExample >> exampleFunctions [
 	b axisYWithNumberOfTicks: 4.
 b build.
 
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -841,7 +841,7 @@ b newAxisConfiguration plain.
 b axisX.
 b build.
 
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -896,7 +896,7 @@ RTGrapherExample >> exampleHistogram2 [
 	b axisYWithNumberOfTicks: 4.
 	
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -984,7 +984,7 @@ b axisY.
 b newAxisConfiguration plain.
 b axisX.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1065,7 +1065,7 @@ RTGrapherExample >> exampleMethodSize [
 	b axisYWithNumberOfTicks: 4.
 
 	b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #sources }
@@ -1093,7 +1093,7 @@ RTGrapherExample >> exampleMethodSize2 [
 	b axisX.
 	b axisY.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1209,7 +1209,7 @@ RTGrapherExample >> exampleMethods [
 
 	b build.
 
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -1268,7 +1268,7 @@ b add: ds2.
 b axisXNoLabel; axisY.
 
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1317,7 +1317,7 @@ b axisYWithNumberOfTicks: 4.
 
 b build.
 
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1370,7 +1370,7 @@ b axisY.
 
 b build.
 
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1482,7 +1482,7 @@ b extent: 300 @ 200.
 ].
 b axisX; axisY.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1561,7 +1561,7 @@ RTGrapherExample >> exampleScatterPlot2 [
 	b axisYWithNumberOfTicks: 4.
 	b build.
 
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -1627,7 +1627,7 @@ RTGrapherExample >> exampleScatterplotWithHighlighting [
 	b axisY.
 	
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1693,7 +1693,7 @@ RTGrapherExample >> exampleSimpleCurve [
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #sources }
@@ -1713,7 +1713,7 @@ RTGrapherExample >> exampleSimpleCurve2 [
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1788,7 +1788,7 @@ b add: ds.
 b axisXWithNumberOfTicks: values size.
 b axisYWithNumberOfTicks: 6.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1841,7 +1841,7 @@ RTGrapherExample >> exampleStackingX [
 	b axisXWithNumberOfTicks: 4.
 	b axisYWithNumberOfTicks: 4.
 	b build.
- 	^ b view canvas
+ 	^ b view
 ]
 
 { #category : #sources }
@@ -1867,7 +1867,7 @@ RTGrapherExample >> exampleStackingX3 [
 	b axisYWithNumberOfTicks: 4.
 b build.
 
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -1999,7 +1999,7 @@ RTGrapherExample >> exampleTwoInteractions [
 	b axisX; axisY.
 
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -2046,7 +2046,7 @@ RTGrapherExample >> exampleTwoStackedCurves [
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -2105,7 +2105,7 @@ clss do: [ :aClass |
 ].
 lb build.
 
-^ lb view canvas
+^ lb view
 ]
 
 { #category : #icons }

@@ -53,7 +53,7 @@ RTGradientColoredLineExample >> exampleA [
 	edge := RTEdge from:elem1 to:elem2.
 	v add: (edge + (RTGradientColoredLine new colors: (Array with: (elem1 color) with: (elem2 color)); precision: 100; gradientColorShape)).
 
-^ v canvas
+^ v
 ]
 
 { #category : #icons }
@@ -86,7 +86,7 @@ RTGradientColoredLineExample >> exampleB [
 	edge := RTEdge from:elem1 to:elem2.
 	v add: (edge + (RTGradientColoredLine new colors: (Array with: (elem1 color) with: (elem2 color)); precision: 100; gradientColorShape)).
 
-^ v canvas
+^ v
 ]
 
 { #category : #icons }

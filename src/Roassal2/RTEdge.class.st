@@ -304,6 +304,11 @@ RTEdge class >> on: aModel from: fromElement to: toElement [
 	^ (self model: aModel) from: fromElement to: toElement; yourself
 ]
 
+{ #category : #visitor }
+RTEdge >> accept: aVisitor [
+	aVisitor visitEdge: self.
+]
+
 { #category : #accessing }
 RTEdge >> addedIn: aView [
 	view := aView.

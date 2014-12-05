@@ -34,7 +34,7 @@ RTMondrianNewExample >> exampleClasses [
 	b nodes: RTObject withAllSubclasses.
 	b layout grid.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -79,7 +79,7 @@ RTMondrianNewExample >> exampleColoredNodes [
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -127,7 +127,7 @@ RTMondrianNewExample >> exampleForce [
 	b layout force charge: -500; nbIterations: 50.
 
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #sources }
@@ -145,7 +145,7 @@ RTMondrianNewExample >> exampleForceAndNested [
 	b layout tree.
 	b build.
 	
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -295,7 +295,7 @@ RTMondrianNewExample >> exampleLegendInPopup [
 	view nodes: (1 to:50).
 	view gridLayout.
 	
-	^ view view canvas
+	^ view view
 ]
 
 { #category : #icons }
@@ -343,7 +343,7 @@ RTMondrianNewExample >> exampleNestingAndPopup [
 	b layout grid.
 	
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -372,7 +372,7 @@ RTMondrianNewExample >> exampleNestingAndTitle [
 		b nodes: cls methods. b layout grid ].
 	b layout flow.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -462,7 +462,7 @@ RTMondrianNewExample >> exampleSimpleTree [
 	b edges objects: (1 to: 100) from: [ :v | v // 2 ] to: #yourself.
 	b layout tree.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -512,7 +512,7 @@ RTMondrianNewExample >> exampleSystemComplexity [
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }

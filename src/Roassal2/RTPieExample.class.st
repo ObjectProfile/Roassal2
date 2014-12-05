@@ -279,6 +279,8 @@ EHwQ/DQo/wGK0Xg+nbEqTgAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTPieExample >> exampleSimple [
 
+|b|
+
 b := RTPieBuilder new.
 b interaction popup.
 
@@ -287,8 +289,7 @@ b slice: [ :aNumber | aNumber ].
 b globalRule distinctColor.
 b labelled.
 b build.
-b open.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }

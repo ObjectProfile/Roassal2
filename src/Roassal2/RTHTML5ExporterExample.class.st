@@ -9,7 +9,7 @@ Class {
 
 { #category : #private }
 RTHTML5ExporterExample >> createIndexFor: aCollection [
-	| index stream |
+	| index stream text |
 	index := FileSystem disk workingDirectory / 'index.html'.
 	index exists ifTrue: [ index delete ].
 	stream := index writeStream.
@@ -34,11 +34,13 @@ RTHTML5ExporterExample >> createIndexFor: aCollection [
 	</head>
 	<body>
 	'.
+	
 	(aCollection sorted: [ :a :b| a selector <= b selector ]) do: [ :met |
+		text := met methodClass name,'-', met selector asString.
 		stream nextPutAll: '
-	<h1>',met selector asString,'</h1>'.
+	<h1>',text,'</h1>'.
 		stream nextPutAll: '
-	<iframe width="800" height="800" src="',met selector,'.html"></iframe>'.
+	<iframe width="800" height="800" src="',met methodClass name, '-',met selector,'.html"></iframe>'.
 		].
 	stream nextPutAll: 
 '	</body>
@@ -85,14 +87,15 @@ RTHTML5ExporterExample >> exportAll [
 		
 		((view isKindOf: RTView) and: [ error not ]) ifTrue: [ 
 			list add: met.
-			exporter fileName: met selector, '.html'.
+			exporter fileName: met methodClass name,'-',met selector, '.html'.
 			exporter title: met selector.
 			exporter export: view.
 			 ].
 		
 	] ] displayingProgress: 'Exporting...'.
 
-	(self createIndexFor: list) "asUrl open"
+	(self createIndexFor: list) asUrl open
+	
 
 ]
 

@@ -89,12 +89,6 @@ RTSVGVisitor2 >> nameFor: anElement [
 	 ]
 ]
 
-{ #category : #visitor }
-RTSVGVisitor2 >> setCanvas [
-	self canvas = nil
-		ifTrue: [ self fixedEncompassingRectangle ]
-]
-
 { #category : #accessing }
 RTSVGVisitor2 >> stream [
 
@@ -117,13 +111,6 @@ RTSVGVisitor2 >> view [
 RTSVGVisitor2 >> view: aView [
 
 	view := aView.
-]
-
-{ #category : #visitor }
-RTSVGVisitor2 >> visit [
-	self setCanvas.
-	self visitView: self view.
-	self afterStream do: [ :s | s value: 1 ]
 ]
 
 { #category : #visitor }
@@ -230,7 +217,6 @@ RTSVGVisitor2 >> visitBitMapShape: aBitmapShape [
 		nextPutAll: ', '.
 	self addInteractions: aBitmapShape element.
 	self addMatrix: aBitmapShape matrix.
-	self flag: 'review'.
 	s close.
 ]
 
@@ -253,13 +239,7 @@ RTSVGVisitor2 >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitCanvas: aCanvas [
-	stream nextPutAll:'
-	var shapes = ['.
-	aCanvas shapes do: [ :s | s accept: self ].
-	stream nextPutAll:'
-	];
-	mamani.addShapes(shapes);
-'.
+	
 	aCanvas fixedShapes ifEmpty: [ ^ self ].
 	stream nextPutAll:'	shapes = ['.
 	aCanvas fixedShapes do: [ :s | s accept: self ].
@@ -297,6 +277,17 @@ RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 ]
 
 { #category : #visitor }
+RTSVGVisitor2 >> visitEdge: edge [
+	edge trachelShape accept: self.
+	
+]
+
+{ #category : #visitor }
+RTSVGVisitor2 >> visitElement: e [
+	e trachelShape accept: self
+]
+
+{ #category : #visitor }
 RTSVGVisitor2 >> visitEllipseShape: anEllipse [	
 	| box |
 	box := anEllipse encompassingRectangle.
@@ -319,18 +310,31 @@ RTSVGVisitor2 >> visitGroup: aRTGroup [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitInteraction: sub with: anObject [
-	| elements |
-	(sub subscriber class = RTDraggable) ifTrue: [ 
+	| elements list |
+	(sub subscriber class = RTDraggable) ifTrue: [
+		list := OrderedCollection new.
+		
 		(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
-			self flag: 'redo to handle callbacks'.
-			stream nextPutAll: 'new RTDraggable(["';
-				nextPutAll: (self nameFor: (anObject attributes at: #RTLabelledLabel) );
-				nextPutAll: '"])'.
-			^ self.
-			] ].
+			list add: (anObject attributes at: #RTLabelledLabel).
+			].
+		(anObject attributes includesKey: #nestedElements) ifTrue: [ 
+			(anObject attributes at: #nestedElements) do: [ :e |
+				e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
+				ifFalse: [ list add: e trachelShape ] ].
+			 ].
+		
+		list isEmpty ifFalse: [
+			stream nextPutAll: 'new RTDraggable(['.
+			list do: [ :e | 
+				stream nextPutAll: '"';
+					nextPutAll: (self nameFor:e);
+					nextPutAll: '", ' ].
+			stream nextPutAll: '])'.
+			^ self ] ].
 	
 	(sub subscriber class = RTPopup) ifTrue: [ 
-		elements := sub subscriber createPopupFor: anObject.
+		[elements := sub subscriber createPopupFor: anObject] 
+		on: Error do: [ ^ self ].
 		stream nextPutAll: 'new RTPopup(['.
 		elements do: [ :e | e trachelShape accept: self ].
 		stream nextPutAll: ']) '.
@@ -369,13 +373,6 @@ RTSVGVisitor2 >> visitInteractions: anObject [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitLabelShape: aLabel [
-	"| color rectangle position text svgE|
-	color := aLabel color.	
-	rectangle := aLabel encompassingRectangle.
-	position := ((rectangle topLeft x + (rectangle width/4)) @ rectangle center y).
-	text := aLabel text.
-	svgE := RTSVGText new element: aLabel element text: text at: position color: color.
-	svgE addOn: stream using: self."
 	| box |
 	box := aLabel encompassingRectangle.
 	stream nextPutAll: '
@@ -386,14 +383,13 @@ RTSVGVisitor2 >> visitLabelShape: aLabel [
 	self addStringWithFont: aLabel.
 	self addInteractions: aLabel element.
 	self addMatrix: aLabel matrix.
-	self flag: 'review'
+
 ]
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitLineShape: aLine [
 	
 	| e |
-	self flag: 'TODO'.
 	e := aLine element.
 	
 	e = nil ifTrue: [ ^ self ].
@@ -413,21 +409,17 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitLineShape: aLine with: aLineDecoration [
-	"|startingPoint endingPoint svgE|
-	startingPoint := aLine from.
-	endingPoint := aLine to.
-	svgE := RTSVGLine new element: (aLine element) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint) decoration: aLineDecoration.
-	svgE addOn: stream using: self. "
-	
-"TODO"
-	self halt.
-]
-
-{ #category : #visitor }
 RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
-	"TODO"
-	
+	stream nextPutAll: '
+		{id: "';
+		nextPutAll: (self nameFor: aShape);
+		nextPutAll: '", type:"multi", shapes:['.
+	aShape shapes do: [ :s| s accept: self].
+	stream nextPutAll: '], offsets: ['.
+	aShape offsets do: [ :o | 
+		stream nextPutAll: ('{x: <1p>, y: <2p>},' 
+			expandMacrosWith: o x with: o y) ].
+	stream nextPutAll: ']}'
 ]
 
 { #category : #visitor }
@@ -473,7 +465,7 @@ RTSVGVisitor2 >> visitShape: aShape [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitView: aView [
-	
+	| elements |
 	stream nextPutAll: ('mamani.color(<1p>);
 	mamani.camera.setScale(<2p>);' 
 	expandMacrosWith: aView canvas color printHtmlString with: aView canvas camera scale).
@@ -483,6 +475,15 @@ RTSVGVisitor2 >> visitView: aView [
 		self visitInteractions: aView.
 		stream nextPutAll: ');
 	'].
-
+	elements := aView canvas shapes collect: [ :s | 
+		s element isNil ifTrue: [ s ] ifFalse: [ s element ] ].
+	
+	stream nextPutAll:'
+	var shapes = ['.
+	elements do: [ :e | e accept: self ].
+	stream nextPutAll:'
+	];
+	mamani.addShapes(shapes);
+'.
 	aView canvas accept: self
 ]
