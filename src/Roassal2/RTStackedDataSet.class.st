@@ -106,7 +106,7 @@ RTStackedDataSet >> renderHistogramIn: aView [
 			RTMetricNormalizer new
 				elements: positiveElements;
 				normalizeHeight: [ :model | y rtValue: model ]
-					min: centralDot position y
+					min: 0
 					max: builder extent y + centralDot position y
 					minValue: 0
 					maxValue: maxY ].
