@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'layout',
-		'actionOnEdges'
+		'actionOnEdges',
+		'partitions'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -27,6 +28,12 @@ RTLayoutBuilder >> flow [
 	^ layout
 ]
 
+{ #category : #'public - partition' }
+RTLayoutBuilder >> for: aBlockCondition use: aLayout [
+
+	partitions add: (Array with: aBlockCondition with: aLayout)
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> force [
 	layout := RTForceBasedLayout new.
@@ -44,6 +51,11 @@ RTLayoutBuilder >> grid [
 	^ layout
 ]
 
+{ #category : #'public - partition' }
+RTLayoutBuilder >> hasPartition [
+	^ partitions notEmpty
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> horizontalLine [
 	layout := RTHorizontalLineLayout new.
@@ -55,11 +67,27 @@ RTLayoutBuilder >> initialize [
 	super initialize.
 	layout := RTFlowLayout new.
 	actionOnEdges := OrderedCollection new.
+	partitions := OrderedCollection new
 ]
 
 { #category : #accessing }
 RTLayoutBuilder >> layout [
 	^ layout
+]
+
+{ #category : #'public - partition' }
+RTLayoutBuilder >> processPartitions: elements [
+
+	| groupOfElements els |
+	groupOfElements := OrderedCollection new.
+	partitions do: [ :tupple |
+		"tupple = { conditionblock . layout }"
+		els := elements select: [ :el | tupple first rtValue: el model ].
+		tupple second on: els.
+		groupOfElements add: els asGroup.
+		 ].
+	
+	layout on: groupOfElements
 ]
 
 { #category : #building }
@@ -69,7 +97,11 @@ RTLayoutBuilder >> setUpElements: elements [
 	elements do: [ :e | allEdges addAll: e connectedEdges ].
 	actionOnEdges do: [ :act | allEdges do: [ :e | act rtValue: e ] ].
 	
-	layout on: elements
+	self hasPartition
+		ifTrue: [ self processPartitions: elements ]
+		ifFalse: [ layout on: elements ]
+		
+	
 ]
 
 { #category : #'public - layout' }

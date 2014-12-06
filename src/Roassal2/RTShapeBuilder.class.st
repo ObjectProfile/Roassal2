@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTScopedBuilder,
 	#instVars : [
 		'shape',
-		'createdElements'
+		'createdElements',
+		'shapeInitializer'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -20,7 +21,7 @@ RTShapeBuilder >> arrowedLine [
 
 { #category : #shapes }
 RTShapeBuilder >> circle [
-	^ self shape: RTEllipse new
+	self shape: RTEllipse new
 ]
 
 { #category : #accessing }
@@ -58,18 +59,18 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 		withArguments: aMessage arguments
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTShapeBuilder >> edgeFrom: element1 to: element2 [
 	self hasSetLineShape ifFalse: [ self line ].
 	^ shape edgeFrom: element1 to: element2
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTShapeBuilder >> elementOn: object [
 	^ (self elementsOn: (RTGroup with: object)) first
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTShapeBuilder >> elementsOn: objects [
 	| answer |
 	self hasSetShape ifFalse: [ self rectangle ].
@@ -80,14 +81,14 @@ RTShapeBuilder >> elementsOn: objects [
 
 { #category : #shapes }
 RTShapeBuilder >> ellipse [
-	shape := RTEllipse new
+	self shape: RTEllipse new
 ]
 
-{ #category : #shapes }
+{ #category : #'public - building' }
 RTShapeBuilder >> ensure: aClassShape [
 	"Make sure the current shape is instance of aClassShapeName. If no, then set it"
 	(shape isKindOf: aClassShape)
-		ifFalse: [ shape := aClassShape new ]
+		ifFalse: [ self shape: aClassShape new ]
 ]
 
 { #category : #shapes }
@@ -106,7 +107,9 @@ RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> gradientLineFrom: fromColor to: toColor [
-	^ self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); precision: 100; gradientColorShape)
+	^ self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); 
+							precision: 100; 
+							gradientColorShape)
 ]
 
 { #category : #testing }
@@ -199,7 +202,7 @@ RTShapeBuilder >> ifElement: conditionBlock fillColor: colorBlock [
 RTShapeBuilder >> initialize [
 	super initialize.
 	self reset.
- 
+ 	shapeInitializer := #yourself
 ]
 
 { #category : #shapes }
@@ -217,6 +220,8 @@ RTShapeBuilder >> labelledAs: aBlock [
 	shape add: label.
 	
 	shape vertical.
+	shapeInitializer rtValue: shape.
+	
 	^ label
 ]
 
@@ -261,7 +266,7 @@ RTShapeBuilder >> postCopy [
 
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
-	^ self shape: RTBox new
+	self shape: RTBox new
 ]
 
 { #category : #accessing }
@@ -280,13 +285,13 @@ RTShapeBuilder >> resetShape [
 	shape := RTNoShape instance
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTShapeBuilder >> setUpElement: anElement [
 	self hasSetShape ifFalse: [ self rectangle ].
 	^ anElement + shape
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTShapeBuilder >> setUpElements: elements [
 	self hasSetShape ifFalse: [ self rectangle ].
 	^ elements + shape
@@ -301,12 +306,19 @@ RTShapeBuilder >> shape [
 { #category : #accessing }
 RTShapeBuilder >> shape: aRoassalShape [
 	shape := aRoassalShape.
-	
+	shapeInitializer rtValue: shape.
+	^ aRoassalShape
+]
+
+{ #category : #accessing }
+RTShapeBuilder >> shapeInitializer: aBlock [
+	"Invoked after a shape has been designed"
+	shapeInitializer := aBlock
 ]
 
 { #category : #shapes }
 RTShapeBuilder >> text [
-	shape := RTLabel new
+	self shape: RTLabel new
 ]
 
 { #category : #shapes }

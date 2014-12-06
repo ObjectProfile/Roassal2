@@ -6,7 +6,7 @@ Class {
 
 { #category : #shapes }
 RTMondrianShapeBuilder >> circle [
-	^ super circle
+	super circle
 		withBorder
 ]
 

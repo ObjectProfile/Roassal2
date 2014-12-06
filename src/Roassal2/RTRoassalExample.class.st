@@ -3726,6 +3726,198 @@ Dz/8rFr+AnBX68ww1MTcAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleMonticelloScript [
+
+| myRepository packageNames lista autores fechas horas c v popup elements builder listTags test newTag last aAuthor |
+myRepository := MCCacheRepository default.
+myRepository allVersionNames.
+packageNames := myRepository allVersionNames select: [ :e | '*' match: e ].
+"packageNames := myRepository allVersionNames. "
+
+lista := packageNames collect: [ :packageName | 
+	myRepository versionInfoFromVersionNamed: packageName. ].
+
+autores := lista groupedBy: [ :e | e author ].  
+fechas  := lista groupedBy: [ :e | e date ].  
+horas := lista groupedBy: [ :e | e time hour ].	
+	
+c := RTComposer new.
+v := c view.
+c gap: 50.
+
+popup := RTPopup text: [:assoc | assoc key asString, ', commits:', assoc value size asString].
+elements := (RTEllipse elementsOn: fechas associations).
+v addAll: elements @ popup.
+builder := RTGlobalBuilder new.
+builder
+	view: v;
+	normalizeX: [ :e | e key asTimeStamp asUnixTime ] 
+		min: 0 
+		max: 50000;
+	normalizeSize: [:e | e value size ] min: 10 max: 20;
+	normalizeColor: [:e | e value size ];
+	alphaColor: 0.3;
+	elementsToConsider: elements; 
+	execute.
+			
+"We add a line from the left most element to the right most element"
+v add: ((RTLine new color: Color lightGray) edgeFrom: v elements leftMostElement to: v elements rightMostElement).
+
+"It make sense to only drag horizontally"
+v @ RTHorizontalDraggableView.
+
+c propagateHighlight.
+c group: 'date'.
+
+listTags := Array new: autores size.
+
+autores doWithIndex: [ :each :i| 
+	test := each groupedBy: [ :e | e date ]. 
+	elements := (RTEllipse elementsOn: test associations).
+	v addAll: elements @ popup.
+	builder 
+	   elementsToConsider: elements;
+	execute. 
+	
+	v add: ((RTLine new color: Color lightGray) edgeFrom: elements leftMostElement to: elements rightMostElement).	
+	
+	newTag := 'Author' asString, i asString.
+	listTags at: i put: newTag.
+	c propagateHighlight.
+	c group: newTag.
+	
+].
+
+
+popup := RTPopup text: [:assoc | 'Hour: ' asString, assoc key asString, ', commits:', assoc value size asString].
+elements := (RTEllipse elementsOn: horas associations).
+v addAll: elements @ popup.
+builder := RTGlobalBuilder new.
+builder
+	view: v;
+	normalizeX: [ :e | e key ] 
+		min: 0 
+		max: 380;
+	normalizeSize: [:e | e value size ] min: 10 max: 20;
+	normalizeColor: [:e | e value size ];
+	alphaColor: 0.3;
+	elementsToConsider: elements; 
+	execute.
+	
+	v add: ((RTLine new color: Color lightGray) edgeFrom: elements leftMostElement to: elements rightMostElement).	
+	c propagateHighlight.
+	c group: 'Hour'.
+	
+
+
+
+popup := RTPopup text: [:assoc | assoc author asString, ', ' , ' message size: ', assoc message size asString].
+elements := (RTEllipse elementsOn: lista).
+v addAll: elements @ popup.
+builder := RTGlobalBuilder new.
+builder
+	view: v;
+	normalizeX: [ :e | e timeStamp asUnixTime ] 
+		min: 0 
+		max: 50000;
+	normalizeSize: [ :e | e message size ] min: 10 max: 20;
+	normalizeColor: [ :e | e message size ];
+	alphaColor: 0.3;
+	elementsToConsider: elements; 
+	execute.
+	
+	v add: ((RTLine new color: Color lightGray) edgeFrom: elements leftMostElement to: elements rightMostElement).	
+	c propagateHighlight.
+	c group: 'Comment'.
+
+
+listTags doWithIndex: [ :e :i| 
+	(i == 1)
+	 ifTrue: [ 
+		c move: e below: 'date'.
+		last := e.
+		c nameGroup: 'date' as: 'History by Date'.
+		aAuthor := autores keys at: i.
+		c nameGroup: e as: 'History by: ' asString,  aAuthor asString.
+		 ]
+	 ifFalse: [ 
+		c move: e below: last.
+		last := e.
+		aAuthor := autores keys at: i.
+		c nameGroup: e as: 'History by: ' asString, aAuthor asString.
+		 ]
+].
+	
+c move: 'Hour' below: last.
+c nameGroup: 'Hour' as: 'History by Hour'.
+
+c move: 'Comment' below: 'Hour'.
+c nameGroup: 'Comment' as: 'History by Comment'.
+
+	
+"We add a small legend"
+v canvas addFixedShape: (TRLabelShape new text: 'History of Changes').
+TRConstraint stickAtTheBottomOfTheWindow: v canvas fixedShapes last.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleMonticelloScriptIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleMovingCamera [
 	
 	| v menu |
