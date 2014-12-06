@@ -7,13 +7,13 @@ Class {
 { #category : #tests }
 RTMondrianFrameTest >> testDefault [
 
-	self assert: RTMondrianFrame new topElements isEmpty
+	self assert: RTMondrianFrame new elements isEmpty
 ]
 
 { #category : #tests }
 RTMondrianFrameTest >> testDefaultDepth [
 
-	self assert: RTMondrianFrame new depth equals: 0
+	self assert: RTMondrianFrame new depth equals: 1
 ]
 
 { #category : #tests }
