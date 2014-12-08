@@ -2,8 +2,7 @@ Class {
 	#name : #RTMetricNormalizer,
 	#superclass : #RTObject,
 	#instVars : [
-		'elements',
-		'view'
+		'elements'
 	],
 	#category : #'Roassal2-ColorNormalizer'
 }
@@ -20,7 +19,7 @@ RTMetricNormalizer >> alphaColor: anAlphaValue [
 { #category : #utility }
 RTMetricNormalizer >> checkNotEmpty [
 	"Raise an error if no elements have been added"
-	elements ifEmpty: [ self error: 'Please specify what are the elements I should operate on using #elements:' ]
+	elements ifEmpty: [ self error: 'Please specify what are the element I should operate on using #elements:' ]
 ]
 
 { #category : #accessing }
@@ -554,21 +553,4 @@ RTMetricNormalizer >> normalizeY: metricBlock min: min max: max using: transform
 		maxValue := maxValue max: t ].
 	
 	self normalizeY: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
-]
-
-{ #category : #accessing }
-RTMetricNormalizer >> objects: someObjects [
-	self assert: [ view notNil ] description: 'A view has to be set'.
-	
-	self elements: (self view elementsFromModels: someObjects)
-]
-
-{ #category : #accessing }
-RTMetricNormalizer >> view [
-	^ view
-]
-
-{ #category : #accessing }
-RTMetricNormalizer >> view: anObject [
-	view := anObject
 ]

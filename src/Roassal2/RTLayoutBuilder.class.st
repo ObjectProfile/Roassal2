@@ -90,12 +90,6 @@ RTLayoutBuilder >> processPartitions: elements [
 	layout on: groupOfElements
 ]
 
-{ #category : #'public - layout' }
-RTLayoutBuilder >> radialTree [
-	layout := RTRadialTreeLayout new.
-	^ layout
-]
-
 { #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
 	| allEdges |
