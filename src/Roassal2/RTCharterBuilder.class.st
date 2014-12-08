@@ -134,9 +134,11 @@ RTCharterBuilder >> axisConfiguration [
 { #category : #utility }
 RTCharterBuilder >> axisPointFor: aPoint [
 	"Return the position in the view to have the 0 @ 0"
-	| centralPointX centralPointY |
-	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - minX) / (maxX - minX))) asInteger.
-	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - minY) / (maxY - minY))) asInteger.
+	| centralPointX centralPointY diffBetweenMaxAndMin |
+	diffBetweenMaxAndMin := self maxX - self minX.
+	diffBetweenMaxAndMin = 0 ifTrue: [ 100 ] ifFalse: [ diffBetweenMaxAndMin ].
+	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - self minX) / diffBetweenMaxAndMin )) asInteger.
+	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - self minY) / diffBetweenMaxAndMin)) asInteger.
 	^ centralPointX @ centralPointY negated.
 
 ]
