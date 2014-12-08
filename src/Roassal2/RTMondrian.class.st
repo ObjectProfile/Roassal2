@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'rootFrame',
 		'currentFrame',
-		'edgeBuilder'
+		'edgeBuilder',
+		'metricNormalizer'
 	],
 	#category : #'Roassal2-Builder-NewMondrian'
 }
@@ -184,6 +185,12 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	].
 	self resetShapeBuilder.
 	^ result
+]
+
+{ #category : #accessing }
+RTMondrian >> normalizer [
+	metricNormalizer ifNil: [ metricNormalizer := RTMetricNormalizer new. metricNormalizer view: self view ].
+	^ metricNormalizer
 ]
 
 { #category : #stack }
