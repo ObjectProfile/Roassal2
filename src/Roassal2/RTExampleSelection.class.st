@@ -25,6 +25,14 @@ RTExampleSelection >> gtDisplayString [
 ]
 
 { #category : #accessing }
+RTExampleSelection >> iconForm [
+	|icon64Mime|
+	icon64Mime := self exampleObject perform: (self selector, 'Icon') asSymbol.
+	^ Form fromBinaryStream: 
+		(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream) 
+]
+
+{ #category : #accessing }
 RTExampleSelection >> result [
 
 	^ self exampleObject perform: self selector
