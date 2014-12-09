@@ -31,6 +31,21 @@ Class {
 	#category : #'Roassal2-Exporter-HTML5'
 }
 
+{ #category : #public }
+RTHTML5Exporter class >> interactiveExport: view [
+	| filename |
+	filename := UITheme builder
+		fileSave: 'Export as html'
+		extensions: #('html')
+		path: nil.
+	filename ifNil: [ self inform: 'Saving cancelled'. ^ self ].
+	RTHTML5Exporter new
+		directory: filename parent;
+		fileName: filename basename;
+		export: view.
+	filename asUrl open.
+]
+
 { #category : #'exporting-html' }
 RTHTML5Exporter >> addEnd [
 	stream nextPutAll:

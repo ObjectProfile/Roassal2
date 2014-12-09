@@ -48,11 +48,11 @@ RTSVGVisitor2 >> addInteractions: aShape. [
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addMatrix: m [
 	
-	stream nextPutAll: 'matrix: { shx: ', m shx floor asString, 
+	stream nextPutAll: 'matrix:{shx: ', m shx floor asString, 
 		', shy: ',  m shy asString, 
 		', sx: ', m sx asString, 
 		', sy: ', m sy asString, 
-		', x: ', (m x round: 2) asString, ', y: ', (m y round: 2) asString, ' } }, '.
+		', x: ', (m x round: 2) asString, ', y: ', (m y round: 2) asString, '}}, '.
 	
 ]
 
@@ -419,7 +419,7 @@ RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 	aShape offsets do: [ :o | 
 		stream nextPutAll: ('{x: <1p>, y: <2p>},' 
 			expandMacrosWith: o x with: o y) ].
-	stream nextPutAll: ']}'
+	stream nextPutAll: ']},'
 ]
 
 { #category : #visitor }
