@@ -4,6 +4,13 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'test countries' }
+RTSVGPathTest >> testCountries [
+
+	self assert: ((RTSVGPath countries collect: [ :k | RTSVGPath perform: k ]) allSatisfy: #isString)
+	
+]
+
 { #category : #'point inclusion' }
 RTSVGPathTest >> testIncludesPointBasic [
 	| v e |
@@ -14,7 +21,7 @@ RTSVGPathTest >> testIncludesPointBasic [
 	self assert: (e trachelShape includesPoint: 200@80) not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
 	res := '{#m->{(100.0@100.0)}. #l->{(300.0@100.0)}. #l->{(200.0@300.0)}. #l->{(100.0@100.0)}}'.
@@ -44,7 +51,7 @@ RTSVGPathTest >> testTranslateBy [
 	self assert: (e trachelShape includesPoint: 0@0) not.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testTranslateTo [
 	| v e |
 	v := RTView new.
@@ -56,7 +63,7 @@ RTSVGPathTest >> testTranslateTo [
 	self assert: (e trachelShape includesPoint: 0@0) not.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTSVGPathTest >> testTranslateToCentered [
 	| v e rectangle |
 	v := RTView new.
