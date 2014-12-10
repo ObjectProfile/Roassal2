@@ -232,7 +232,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.1'.
+	spec for: #'common' version: '1.5'.
 
 ]
 
@@ -297,7 +297,7 @@ ConfigurationOfRoassal2 >> version13: spec [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version14: spec [
 	<version: '1.4' imports: #('1.1-baseline' )>
 
@@ -308,6 +308,21 @@ ConfigurationOfRoassal2 >> version14: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-akevalion.251';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.640';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version15: spec [
+	<version: '1.5' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.5'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.251';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.647';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
