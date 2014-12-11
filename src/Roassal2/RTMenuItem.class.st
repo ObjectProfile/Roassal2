@@ -24,17 +24,6 @@ RTMenuItem >> after: ablock [
 ]
 
 { #category : #accesing }
-RTMenuItem >> background [
-	^ background 
-]
-
-{ #category : #accesing }
-RTMenuItem >> background: aShape [
-
-	background := aShape
-]
-
-{ #category : #accesing }
 RTMenuItem >> callback [
 	^ callback
 	
@@ -82,6 +71,17 @@ RTMenuItem >> menu: menu [
 ]
 
 { #category : #accesing }
+RTMenuItem >> menuBackground [
+	^ background 
+]
+
+{ #category : #accesing }
+RTMenuItem >> menuBackground: aShape [
+
+	background := aShape
+]
+
+{ #category : #accesing }
 RTMenuItem >> name [
 	^ name
 ]
@@ -109,11 +109,11 @@ RTMenuItem >> selected: abool [
 { #category : #public }
 RTMenuItem >> update [
 	| width pos ext|
-	width := self background width.
+	width := self menuBackground width.
 	ext := self rawmenu encompassingRectangle extent.
-	pos := self background position + (( (ext x - width)/2 )@0).
+	pos := self menuBackground position + (( (ext x - width)/2 )@0).
 	
-	self background extent: ext.
-	self background translateTo: pos.
+	self menuBackground extent: ext.
+	self menuBackground translateTo: pos.
 	self rawmenu translateTo: pos.
 ]

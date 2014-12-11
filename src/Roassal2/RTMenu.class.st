@@ -4,14 +4,41 @@ Class {
 	#instVars : [
 		'view',
 		'items',
-		'isOpen'
+		'isOpen',
+		'color',
+		'labelBackground',
+		'label',
+		'savedLabelBackgroundColor',
+		'menuBackgroundColor',
+		'menuBackground',
+		'highlightColor'
 	],
 	#category : #'Roassal2-Builder-Menu'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTMenu >> add: menuitem [
 	self items add: menuitem.
+]
+
+{ #category : #accessing }
+RTMenu >> color [
+	^ color
+]
+
+{ #category : #accessing }
+RTMenu >> color: aColor [
+	color:= aColor
+]
+
+{ #category : #accessing }
+RTMenu >> endHighlight [
+	self labelBackgroundColor: self savedLabelBackgroundColor.
+]
+
+{ #category : #accessing }
+RTMenu >> executeHighlight [
+	self labelBackgroundColor: self highlightColor.
 ]
 
 { #category : #'as yet unclassified' }
@@ -26,34 +53,141 @@ RTMenu >> hideItems [
 	self isOpen ifFalse: [ ^ self ].
 	self isOpen: false.
 	self items do: [:item |
-		item rawmenu remove.
-		item background remove.].
+		item rawmenu remove].
+	menuBackground remove.	
+]
+
+{ #category : #accessing }
+RTMenu >> highlightColor [
+	^ highlightColor
+]
+
+{ #category : #accessing }
+RTMenu >> highlightColor: aColor [
+	highlightColor := aColor.
 ]
 
 { #category : #initialization }
 RTMenu >> initialize [
 	super initialize.
+	color := Color gray darker alpha: 0.3.
 	view := nil.
 	isOpen := false.
+	savedLabelBackgroundColor := color.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMenu >> isOpen [
 	^ isOpen
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMenu >> isOpen: abool [
 	isOpen := abool
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMenu >> items [
 	^ items ifNil: [ items := OrderedCollection new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+RTMenu >> label [
+	^ label
+]
+
+{ #category : #adding }
+RTMenu >> label: aLabel [
+	label := aLabel.
+]
+
+{ #category : #accessing }
+RTMenu >> labelBackground [
+	 ^ labelBackground
+]
+
+{ #category : #accessing }
+RTMenu >> labelBackground: aShape [
+	labelBackground := aShape
+]
+
+{ #category : #accessing }
+RTMenu >> labelBackgroundColor [
+	^ labelBackground color
+]
+
+{ #category : #accessing }
+RTMenu >> labelBackgroundColor: aColor [
+	labelBackground color: aColor.
+
+]
+
+{ #category : #accessing }
+RTMenu >> labelBackgroundShapeAndColor: aColor [
+	| box |
+	
+	box := TRBoxShape new extent: label encompassingRectangle extent + (10@7).
+	self labelBackground: box.
+	box color: aColor.
+	self saveLabelBackgroundColor.
+	box strokePaint: "(Color black)"nil.
+	TRConstraint move: box onTheCenterOf: label.
+
+	view canvas addFixedShape: box.
+	box pushBack.
+]
+
+{ #category : #accessing }
+RTMenu >> menuBackground [
+	^ menuBackground 
+]
+
+{ #category : #accessing }
+RTMenu >> menuBackground: aShape [
+	menuBackground :=  aShape
+]
+
+{ #category : #accessing }
+RTMenu >> menuBackgroundColor [
+	^ menuBackgroundColor 
+]
+
+{ #category : #accessing }
+RTMenu >> menuBackgroundColor: aColor [
+	menuBackgroundColor := aColor 
+]
+
+{ #category : #accessing }
+RTMenu >> saveLabelBackgroundColor [
+	savedLabelBackgroundColor :=  self labelBackground color. 
+]
+
+{ #category : #accessing }
+RTMenu >> savedLabelBackgroundColor [
+	^ savedLabelBackgroundColor. 
+]
+
+{ #category : #accessing }
+RTMenu >> update [
+|pos1 pos2 maxWidth parentMenu y |
+		
+	parentMenu := view canvas fixedShapes select: [ :t | t class == TRLabelShape and: [ t text = label text ] ].
+	parentMenu := parentMenu first.
+	
+	y := 0.
+	maxWidth := items ifNotEmpty: [(items collect: [ :item | item rawmenu width]) max] ifEmpty: [0].
+	pos1:= parentMenu position + ((((parentMenu width)/2+5)negated)@((parentMenu height)/2+3.5)).
+	items do: [ :item | y := y + (item rawmenu height).].
+	pos2:= pos1 + ((maxWidth+10)@(y+5)).
+	self menuBackground: (TRBoxShape new from: pos1 to: pos2; color: (self menuBackgroundColor); strokePaint: nil"(Color gray darker alpha: 0.3)").
+	
+	view canvas addFixedShape: (self menuBackground).
+	(self menuBackground) pushBack.
+	^ (self menuBackground). 
+]
+
+{ #category : #accessing }
 RTMenu >> view: v [
 	view := v
 ]
