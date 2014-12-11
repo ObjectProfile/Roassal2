@@ -258,6 +258,16 @@ TRConstraint class >> stick: aShape onTheTopLeftOf: anotherShape withPadding: pa
 ]
 
 { #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheTopLeftOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| b |
+	self move: aShape onTheTopLeftOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding. 
+
+	b := [ :shape :step | self move: aShape onTheTopLeftOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b).
+]
+
+{ #category : #'public - sticking' }
 TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
 	self moveAtTheBottomOfTheWindow: trachelShape.
 	trachelShape canvas
