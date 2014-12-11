@@ -381,11 +381,12 @@ RTSVGVisitor2 >> visitInteractions: anObject [
 { #category : #visitor }
 RTSVGVisitor2 >> visitLabelShape: aLabel [
 	| box |
-	box := aLabel encompassingRectangle.
+	box := aLabel basicEncompassingRectangle.
 	stream nextPutAll: '
 		{type: "label", id: "';
 		nextPutAll: (self nameFor: aLabel);
-		nextPutAll: '",'.
+		nextPutAll: ('",o: {x: <1p>, y: <2p>},' expandMacrosWith: box origin x with: box origin y);
+		nextPutAll: ('c: {x: <1p>, y: <2p>},' expandMacrosWith: box corner x with: box corner y).
 	self addColor: aLabel color.
 	self addStringWithFont: aLabel.
 	self addInteractions: aLabel element.
@@ -458,8 +459,10 @@ RTSVGVisitor2 >> visitRotatedLabelShape: aRotatedLabel [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitSVGPath: aSVGPath [
-	| r |
+	| r c |
 	r := aSVGPath basicEncompassingRectangle.
+	c := aSVGPath color.
+	c ifNil: [ c:= Color black ].
 	stream nextPutAll: '
 		{type: "path", id: "';
 		nextPutAll: (self nameFor: aSVGPath);
@@ -470,7 +473,8 @@ RTSVGVisitor2 >> visitSVGPath: aSVGPath [
 	
 	self addBorderColor: aSVGPath strokePaint.
 	self addBorderWidth: aSVGPath.
-	self addColor: aSVGPath color.
+	
+	self addColor: c.
 	self addInteractions: aSVGPath element.
 	self addMatrix: aSVGPath matrix.
 ]

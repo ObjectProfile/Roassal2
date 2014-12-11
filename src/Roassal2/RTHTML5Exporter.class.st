@@ -66,7 +66,6 @@ RTHTML5Exporter >> addStart: aView [
 		<title>',self title, '</title>
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
 		<script src="roassal.js"></script>
 		<style type="text/css">
 			body, svg { 
@@ -1149,7 +1148,9 @@ var TRSVGPath = TRShape.extend({
 var TRLabelShape = TRShape.extend({
 	text: null,
 	font: null,
-	rectangle: null,
+	rect: null,
+	calc: false,
+	vars: {},
 	init: function(obj){
 		this.id = obj.id;
 		this.path = createSVG("text");
@@ -1157,29 +1158,39 @@ var TRLabelShape = TRShape.extend({
 		this.matrix = new MatrixTransform(obj.matrix);
 		this.setText(obj.text);
 		this.setFont(obj.font);
+		this.rect=new Rectangle(obj.o, obj.c);
 	},
 	setFont: function(f){
 		this.font = f;
+		this.loadFont(f.n);
 		$(this.path).css({"font-family":f.n, "font-size":f.s});
-		this.rectangle = null;
+	},
+	loadFont: function(f){
+		var fonts = this.vars.fonts
+		if(fonts == null) fonts =this.vars.fonts = [];
+		if(fonts[f] == null){
+			 fonts[f] = 1;
+			 $("head").append("<link href=\"https://fonts.googleapis.com/css?family=" + 
+			 (f.replace(/ /g, "+"))+ "\" rel=\"stylesheet\" type=\"text/css\">");
+		}
 	},
 	setText: function(t){
 		this.text = t;
 		$(this.path).append(t);
-		this.rectangle = null;
 	},
 	update: function (){
 		$(this.path).attr("transform", this.matrix.asString());
-		if(this.rectangle != null) return;
+		if(this.calc) return;
+		this.calc = true;
 		var r = this.path.getBBox();
 		var w = r.width;
 		var h = r.height;
-		var o = {x: -w/2, y:h/2};
-		this.rectangle = new Rectangle(o, {x: w/2, y: h/2});
-		$(this.path).attr(o);
+		$(this.path).attr({x: this.rect.origin.x, y: this.rect.origin.y+h});
+		this.path.setAttribute("textLength",this.rect.width());
+		this.path.setAttribute("lengthAdjust", "spacingAndGlyphs");
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rectangle); 
+		return this.matrix.transformRect(this.rect); 
 	}
 });
 
