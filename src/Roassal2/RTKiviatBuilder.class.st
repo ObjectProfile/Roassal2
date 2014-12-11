@@ -40,7 +40,6 @@ Class {
 		'kiviatMetrics',
 		'kiviatNodes',
 		'objects',
-		'shapes',
 		'axisSize',
 		'highlight',
 		'polygons'
