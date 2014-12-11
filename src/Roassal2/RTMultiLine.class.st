@@ -31,32 +31,46 @@ RTMultiLine >> initialize [
 
 { #category : #'public - configuration' }
 RTMultiLine >> orthoHorizontal [
+	self orthoHorizontalBalanceTo: 0.5
+]
 
-	self block: [ :fromPoint :toPoint | 
-		| edgeBound midx |
-		
-		edgeBound := fromPoint corner: toPoint.
-		midx := ((edgeBound corner x - edgeBound origin x) / 2) asInteger + edgeBound origin x.
-		Array 
-			with: fromPoint 
-			with: (midx @ edgeBound origin y) 
-			with: (midx @ edgeBound corner y) 
-			with: toPoint ]
+{ #category : #'public - configuration' }
+RTMultiLine >> orthoHorizontalBalanceTo: balance [
+	"0 = level of fromPoint
+	 0.5 = middle
+	 1 = level of toPoint"
+
+	self
+		block: [ :fromPoint :toPoint | 
+			| midx |
+			midx := toPoint x * balance + (fromPoint x * (1 - balance)).
+			Array
+				with: fromPoint
+				with: midx @ fromPoint y
+				with: midx @ toPoint y
+				with: toPoint ]
 ]
 
 { #category : #'public - configuration' }
 RTMultiLine >> orthoVertical [
-	self block: [ :fromPoint :toPoint | 
-		| edgeBound midy |
-		
-		edgeBound := fromPoint corner: toPoint.
-		midy := ((edgeBound corner y - edgeBound origin y) / 2) asInteger +
-					 edgeBound origin y.
-		Array 
-			with: fromPoint 
-			with: (edgeBound origin x @ midy) 
-			with: (edgeBound corner x @ midy) 
-			with: toPoint ]
+	self orthoVerticalBalanceTo: 0.5
+]
+
+{ #category : #'public - configuration' }
+RTMultiLine >> orthoVerticalBalanceTo: balance [
+	"0 = level of fromPoint
+	 0.5 = middle
+	 1 = level of toPoint"
+
+	self
+		block: [ :fromPoint :toPoint | 
+			| midy |
+			midy := toPoint y * balance + (fromPoint y * (1 - balance)).
+			Array
+				with: fromPoint
+				with: fromPoint x @ midy
+				with: toPoint x @ midy
+				with: toPoint ]
 ]
 
 { #category : #'public - configuration' }
