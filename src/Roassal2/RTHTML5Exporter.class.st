@@ -309,7 +309,8 @@ var RTDraggable = TRInteraction.extend({
 			var t = new TRGroup();
 			t.addAll(self.getGroup(s));
 			if(! t.includes(s)) t.add(s);
-			t.translateBy(e.step);
+			var sc = s.canvas.camera.scale;
+			t.translateBy({x: e.step.x/sc, y: e.step.y/sc});
 			e.canvas.update();
 		});
 	},
@@ -589,7 +590,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.svg.appendChild(this.fixedCanvas);
 		this.camera = new TRCamera(this);
 		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, 
-		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape};
+		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape,
+		"path": TRSVGPath};
 		var self = this;
 		$(this.svg).
 			mousedown(function (e){self.mousedown(e)}).
@@ -802,10 +804,8 @@ var TRCamera = Class.extend({
 	update: function(){
 		var ww = $(window).width();
 		var wh = $(window).height();
-		var x = ww/2 + this.position.x;
-		var y = wh/2+ this.position.y;
 		$(this.canvas.svg).css("width", ww).css("height", wh);
-		$(this.canvas.canvas).attr("transform", "translate(" +x+", " +y+") scale("+this.scale+")");
+		$(this.canvas.canvas).attr("transform", "translate(" +(ww/2)+", " +(wh/2)+") scale("+this.scale+") translate(" +this.position.x+","+ this.position.y+")");;
 	},
 	translateTo: function (point){
 		this.position = point;
@@ -884,6 +884,16 @@ var TRShape = TRAnnouceableObject.extend({
 		else $(this.path).css("stroke", "rgb("+c.r+","+c.g+"," +c.b+")");
 		if(c.a != null)	$(this.path).css("stroke-opacity", c.a);
 	},
+	setBorder: function(obj){
+		if(obj.bordercolor != null){
+			this.setStrokeColor(obj.bordercolor);
+			this.setStrokeWidth(obj.sw);
+		}
+	},
+	setStrokeWidth: function(w){
+		this.strokeWidth = w;
+		$(this.path).css("stroke-width", w);
+	},
 	translateBy: function(p){
 		var u = this.position();
 		this.setPosition({x: p.x + u.x, y: p.y+ u.y});
@@ -919,16 +929,6 @@ var TRAbstractBoxShape = TRShape.extend({
 	extent: function(newExtent){
 		this.rectangle = new Rectangle ( {x: -newExtent.x/2,y: -newExtent.y/2}, newExtent);
 		this.resetPath();
-	},
-	setBorder: function(obj){
-		if(obj.bordercolor != null){
-			this.setStrokeColor(obj.bordercolor);
-			this.setStrokeWidth(obj.sw);
-		}
-	},
-	setStrokeWidth: function(w){
-		this.strokeWidth = w;
-		$(this.path).css("stroke-width", w);
 	},
 	encompassingRectangle: function(){
 		return this.matrix.transformRect(this.rectangle); 
@@ -1057,7 +1057,6 @@ var TRMultiCompositeShape = TRShape.extend({
 			l = s.length;
 			for(var k = 0; k<l; k++){
 				p2 = {x: (k+1)*(to.x-from.x)/l, y:(k+1)*(to.y-from.y)/l};
-				console.log(p2);
 				$(s[k].path).attr({x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y});
 				p1 = p2;
 			}
@@ -1130,13 +1129,29 @@ var TRLineShape = TRAbstractBoxShape.extend({
 	setPosition: function(p){}
 });
 
+var TRSVGPath = TRShape.extend({
+	d: null,
+	rect: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.path = createSVG("path");
+		$(this.path).attr({id: obj.id, d: obj.d});
+		this.matrix = new MatrixTransform(obj.matrix);
+		this.d = obj.d;
+		this.rect = new Rectangle(obj.o,obj.c);
+		this.setBorder(obj);
+	},
+	encompassingRectangle: function(){
+		return this.matrix.transformRect(this.rect); 
+	}
+});
+
 var TRLabelShape = TRShape.extend({
 	text: null,
 	font: null,
 	rectangle: null,
 	init: function(obj){
 		this.id = obj.id;
-		this.color = obj.color;
 		this.path = createSVG("text");
 		$(this.path).attr({id: obj.id});
 		this.matrix = new MatrixTransform(obj.matrix);
@@ -1150,7 +1165,7 @@ var TRLabelShape = TRShape.extend({
 	},
 	setText: function(t){
 		this.text = t;
-		$(this.path).html(t);
+		$(this.path).append(t);
 		this.rectangle = null;
 	},
 	update: function (){
@@ -1167,6 +1182,8 @@ var TRLabelShape = TRShape.extend({
 		return this.matrix.transformRect(this.rectangle); 
 	}
 });
+
+
 /*main events*/
 var mamani;
 
@@ -1199,16 +1216,18 @@ $(document).ready( function(){
 
 
 
+
 ' ] ensure: [ s close ].
 ]
 
 { #category : #'initialize-release' }
 RTHTML5Exporter >> createStream [
-	| dir |
+	| dir fn |
 	dir := self directory.
-	stream := dir / self fileName.
+	fn := stream := dir / self fileName.
 	stream exists ifTrue: [ stream delete ].
 	stream := stream writeStream.
+	^ fn
 ]
 
 { #category : #defaults }
@@ -1238,13 +1257,15 @@ RTHTML5Exporter >> directory: aFile [
 
 { #category : #exporting }
 RTHTML5Exporter >> export: aView [
+	|fn |
 	self createJS.
-	self createStream.
+	fn := self createStream.
 	[
 		self addStart: aView.
 		self exportSVG: aView.
 		self addEnd.
 	] ensure: [ stream close. ].
+	^ fn.
 ]
 
 { #category : #'exporting-html' }

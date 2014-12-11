@@ -458,16 +458,21 @@ RTSVGVisitor2 >> visitRotatedLabelShape: aRotatedLabel [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitSVGPath: aSVGPath [
-	"|borderColor fillColor svgE|
-	((aSVGPath color) isNil)
-		ifTrue: [ fillColor := Color r: 0 g: 0 b: 0]
-		ifFalse: [ fillColor := aSVGPath color].
-	((aSVGPath strokePaint) isNil)
-		ifTrue: [ borderColor := fillColor]
-		ifFalse: [ borderColor := aSVGPath strokePaint].
-	svgE := RTSVGPathEntity new element: (aSVGPath element) path: (aSVGPath pathString) center: (self center) scale: (aSVGPath scale) fillColor: fillColor borderColor: borderColor width: 1.
-	svgE addOn: stream using: self. "
-	"TODO"
+	| r |
+	r := aSVGPath basicEncompassingRectangle.
+	stream nextPutAll: '
+		{type: "path", id: "';
+		nextPutAll: (self nameFor: aSVGPath);
+		nextPutAll: '", d:"';
+		nextPutAll: aSVGPath pathString;
+		nextPutAll: ('", o: {x: <1p>, y: <2p>}' expandMacrosWith: r origin x with: r origin y);
+		nextPutAll: (', c: {x: <1p>, y: <2p>},' expandMacrosWith: r corner x with: r corner y).
+	
+	self addBorderColor: aSVGPath strokePaint.
+	self addBorderWidth: aSVGPath.
+	self addColor: aSVGPath color.
+	self addInteractions: aSVGPath element.
+	self addMatrix: aSVGPath matrix.
 ]
 
 { #category : #visitor }
