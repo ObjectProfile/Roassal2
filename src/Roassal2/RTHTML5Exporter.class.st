@@ -94,7 +94,8 @@ RTHTML5Exporter >> createJS [
 	| dir s |
 	dir := self directory.
 	s := dir / 'roassal.js'.
-	s exists ifTrue: [ ^ self ].
+	"s exists ifTrue: [ ^ self ]."
+	s exists ifTrue: [ s delete ].
 	s := s writeStream.
 	[ s nextPutAll:
 '
@@ -330,6 +331,84 @@ var RTDraggableView = TRInteraction.extend({
 			var s = canvas.camera.scale;
 			canvas.camera.translateBy({x: e.step.x/s, y: e.step.y/s});
 		});
+	}
+});
+
+var RTAbstractHighlightable = TRInteraction.extend({
+	shapes: null,
+	ides: null,
+	vars: {},
+	initOn: function(s){
+		var self = this;
+		s.whenDo(TRMouseEnter, function(e){
+			self.doHighlight(s);
+		});
+		s.whenDo(TRMouseLeave, function(e){
+			self.doUnhighlight(s);
+		})
+	},
+	doHighlight: function(s){
+		this.unhighlightRecordedShapes();
+		var shapes = this.highlightShapes(s);
+		for(var k = 0; k<shapes.length; k++)
+			this.doHighlightShape(shapes[k]);
+		s.hshapes = shapes;
+		this.vars.lastShapes = shapes;
+	},
+	unhighlightRecordedShapes: function(){
+		var shapes = this.vars.lastShapes;
+		if(shapes == null) return;
+		for(var k = 0; k<shapes.length; k++)
+			this.doUnhighlightShape(shapes[k]);
+		this.vars.lastShapes = null;
+	},
+	highlightShapes: function(s){
+		if(this.shapes == null){
+			var g = this.shapes = [];
+			var ides = this.ides;
+			if(ides == null){
+				this.shapes[0] = s;
+				return this.shapes;
+			}
+			for(var k = 0; k<ides.length; k++){
+				var e = s.canvas.getShapeById(ides[k]);
+				if(e == null) continue;
+				g[g.length] = e;
+			}
+		}
+		return this.shapes;
+	},
+	doUnhighlight: function(s){
+		var shapes = s.hshapes;
+		if(shapes == null) return;
+		for(var k = 0; k<shapes.length; k++)
+			this.doUnhighlightShape(shapes[k]);
+		s.hshapes = null;
+	},
+	doHighlightShape: function(s){
+		//override
+	},
+	doUnhighlightShape: function(s){
+		//override
+	}
+});
+
+var RTHighlightable = RTAbstractHighlightable.extend({
+	color: null,
+	init:function(obj){
+		this.color = obj.color;
+		this.ides = obj.ides;
+	},
+	doHighlightShape: function(s){
+		try{
+		s.ocolor=s.color;
+		s.setColor(this.color);
+		}catch(ex){debugger;}
+	},
+	doUnhighlightShape: function(s){
+		if(s.ocolor == null) return;
+		s.setColor(s.ocolor);
+		s.ocolor = null;
 	}
 });
 
@@ -796,7 +875,8 @@ var TRShape = TRAnnouceableObject.extend({
 		this.color = c;
 		if(c.r == undefined) $(this.path).css("fill", c);
 		else $(this.path).css("fill", "rgb("+c.r+","+c.g+"," +c.b+")");
-		if(c.a != null)	$(this.path).css("fill-opacity", c.a);
+		if(c.a == null)	c.a = 1;
+		$(this.path).css("fill-opacity", c.a);
 	},
 	setStrokeColor: function(c){
 		this.strokeColor = c;
@@ -912,10 +992,12 @@ var TRMultiCompositeShape = TRShape.extend({
 	objs: null,
 	offsets: null,
 	shapes: null,
+	ap: null,
 	init: function(obj){
 		this.id = obj.id;
 		this.objs = obj.shapes;
 		this.offsets = obj.offsets;
+		this.ap = obj.ap;
 	},
 	encompassingRectangle: function(){
 		var s = this.shapes;
@@ -924,7 +1006,7 @@ var TRMultiCompositeShape = TRShape.extend({
 		return r;
 	},
 	addInFixedCanvas: function(){
-		this.addIn(this.canvas.fixedCanvas, this.canvas.fixedShapes);
+		this.addIn(this.canvas.fixedCanvas, this.canvas.fixedShapes, true);
 		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].addInFixedCanvas();
 		this.postAdd();
 	},
@@ -935,23 +1017,51 @@ var TRMultiCompositeShape = TRShape.extend({
 		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].translateBy(c);
 	},
 	addInCanvas: function(){
-		this.addIn(this.canvas.canvas, this.canvas.shapes);
+		this.addIn(this.canvas.canvas, this.canvas.shapes, false);
 		for(var k = 0;k<this.shapes.length; k++) this.shapes[k].addInCanvas();
-		this.postAdd();
 	},
-	addIn: function(g, list){
+	addIn: function(g, list, b){
 		var o = this.objs;
 		this.shapes = [];
 		for(var k = 0; k<o.length; k++){
 			var s = this.canvas.createShape(o[k]);
 			this.shapes[k] = s;
-			s.setPosition(this.offsets[k]);
+			try{
+				if(b)s.setPosition(this.offsets[k]);
+			}catch(x){debugger;}
 			list[s.id] = s;
 		}
 	},
 	update: function(){
-		for(var k = 0; k<this.shapes.length; k++)
-			this.shapes[k].update();
+		var s = this.shapes;
+		this.updateForAp(s);
+		for(var k = 0; k<s.length; k++)
+			s[k].update();
+	},
+	updateForAp: function(s){
+		if(this.ap != null){
+			if(this.from == null)
+				for(var k = 0; k<s.length; k++)
+					if(s[k] instanceof TRLineShape){
+						var f = s[k].from();
+						this.from = function (){return f};
+						var t = s[k].to();
+						this.to = function(){return t};
+						s[k].ignoreap = true;
+					}
+			var ap = this.ap, p1, p2, l;
+			ap = new ap();
+			var from = ap.startingPointOf(this);
+			var to = ap.endingPointOf(this);
+			p1 = from;
+			l = s.length;
+			for(var k = 0; k<l; k++){
+				p2 = {x: (k+1)*(to.x-from.x)/l, y:(k+1)*(to.y-from.y)/l};
+				console.log(p2);
+				$(s[k].path).attr({x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y});
+				p1 = p2;
+			}
+		}
 	},
 	translateBy: function(p){
 		for(var k = 0; k<this.shapes.length; k++)
@@ -963,6 +1073,61 @@ var TRMultiCompositeShape = TRShape.extend({
 		for(var k = 0; k<this.shapes.length; k++)
 			this.shapes[k].remove();
 	}
+});
+
+var TRLineShape = TRAbstractBoxShape.extend({
+	width: null,
+	fromid: null,
+	toid: null,
+	attachPoint: null,
+	ignoreap: false,
+	init: function (obj){
+		this.id = obj.id;
+		this.fromid = obj.fromid;
+		this.toid = obj.toid;
+		this.path = createSVG("line");
+		$(this.path).attr("id", obj.id);
+		this.setWidth(obj.width);
+		this.setAttachPoint(obj.ap);
+	},
+	setAttachPoint: function (ap){
+		this.attachPoint = new ap();
+	},
+	setColor: function(c){
+		this.color = c;
+		$(this.path).css("stroke","rgb("+c.r+","+c.g+"," +c.b+")");
+		
+		if(c.a != null){
+			$(this.path).css("opacity", c.a);
+		}
+	},
+	setWidth: function(w){
+		this.width = w;
+		$(this.path).css("stroke-width", this.width);
+	},
+	update: function (){
+		if(this.ignoreap) return;
+		var from = this.from();
+		var to = this.to();
+		if(from == null || to == null ) return;
+		from = this.attachPoint.startingPointOf(this);
+		to = this.attachPoint.endingPointOf(this);
+		$(this.path).attr({x1: from.x, y1: from.y, x2: to.x, y2: to.y});
+	},
+	from: function (){
+		return this.canvas.getShapeById(this.fromid);
+	},
+	to: function(){
+		return this.canvas.getShapeById(this.toid);
+	},
+	encompassingRectangle: function(){
+		var r = new Rectangle();
+		var from = this.from().position();
+		var to = this.to().position();
+		return r.encompassing([{x: from.x, y: from.y}, {x: to.x, y: to.y}]);
+	},
+	translateBy: function(p){},
+	setPosition: function(p){}
 });
 
 var TRLabelShape = TRShape.extend({
@@ -1002,59 +1167,6 @@ var TRLabelShape = TRShape.extend({
 		return this.matrix.transformRect(this.rectangle); 
 	}
 });
-
-var TRLineShape = TRAbstractBoxShape.extend({
-	width: null,
-	fromid: null,
-	toid: null,
-	attachPoint: null,
-	init: function (obj){
-		this.id = obj.id;
-		this.fromid = obj.fromid;
-		this.toid = obj.toid;
-		this.path = createSVG("line");
-		$(this.path).attr("id", obj.id);
-		this.setWidth(obj.width);
-		this.setAttachPoint(obj.ap);
-	},
-	setAttachPoint: function (ap){
-		this.attachPoint = new ap();
-	},
-	setColor: function(c){
-		this.color = c;
-		$(this.path).css("stroke","rgb("+c.r+","+c.g+"," +c.b+")");
-		
-		if(c.a != null){
-			$(this.path).css("opacity", c.a);
-		}
-	},
-	setWidth: function(w){
-		this.width = w;
-		$(this.path).css("stroke-width", this.width);
-	},
-	update: function (){
-		var from = this.from();
-		var to = this.to();
-		if(from == null || to == null) return;
-		from = this.attachPoint.startingPointOf(this);
-		to = this.attachPoint.endingPointOf(this);
-		$(this.path).attr({x1: from.x, y1: from.y, x2: to.x, y2: to.y});
-	},
-	from: function (){
-		return this.canvas.getShapeById(this.fromid);
-	},
-	to: function(){
-		return this.canvas.getShapeById(this.toid);
-	},
-	encompassingRectangle: function(){
-		var r = new Rectangle();
-		var from = this.from().position();
-		var to = this.to().position();
-		return r.encompassing([{x: from.x, y: from.y}, {x: to.x, y: to.y}]);
-	},
-	translateBy: function(p){}
-});
-
 /*main events*/
 var mamani;
 

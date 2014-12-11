@@ -11,6 +11,7 @@ RTMultiColoredLineExample >> edgePaletteColored [
 	elem1 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 1.
 	elem2 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 2.
 	elem2 translateBy: 200@0.
+	elem2 @ RTDraggable.
 	v add: elem1.
 	v add: elem2.
 	edge := RTEdge from:elem1 to:elem2.

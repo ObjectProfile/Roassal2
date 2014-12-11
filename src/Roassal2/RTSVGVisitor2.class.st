@@ -72,7 +72,7 @@ RTSVGVisitor2 >> addStringWithFont: aLabel [
 RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
-	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup).
+	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup #RTHighlightable).
 	
 
 ]
@@ -234,7 +234,6 @@ RTSVGVisitor2 >> visitBoxShape: aBox [
 	self addColor: aBox color.
 	self addInteractions: aBox element.
 	self addMatrix: aBox matrix.
-	self flag: 'review'.
 ]
 
 { #category : #visitor }
@@ -340,8 +339,16 @@ RTSVGVisitor2 >> visitInteraction: sub with: anObject [
 		stream nextPutAll: ']) '.
 		^ self
 	 ].
-		
 	
+	(sub subscriber class = RTHighlightable) ifTrue: [ 
+		stream nextPutAll: 'new RTHighlightable({'.
+		self addColor: sub subscriber highlightedColor.
+		stream nextPutAll: 'ides: ['.
+		((sub subscriber instVarNamed: #highlightElements) rtValue: anObject) 
+		do: [ :e |
+			stream nextPutAll: '"', (self nameFor: e trachelShape), '",' ].
+		stream nextPutAll: ']})'.
+		^ self. ].
 	stream nextPutAll: sub subscriber class name.
 
 	
@@ -419,7 +426,12 @@ RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 	aShape offsets do: [ :o | 
 		stream nextPutAll: ('{x: <1p>, y: <2p>},' 
 			expandMacrosWith: o x with: o y) ].
-	stream nextPutAll: ']},'
+	
+	stream nextPutAll: ']'.
+
+	(aShape element isNil not and: [aShape element shape isKindOf: RTMultiColoredLine]) ifTrue: [ 
+		stream nextPutAll: ', ap: ', aShape element shape attachPoint class name ].
+	stream nextPutAll: '},'.
 ]
 
 { #category : #visitor }
@@ -475,8 +487,8 @@ RTSVGVisitor2 >> visitView: aView [
 		self visitInteractions: aView.
 		stream nextPutAll: ');
 	'].
-	elements := aView canvas shapes collect: [ :s | 
-		s element isNil ifTrue: [ s ] ifFalse: [ s element ] ].
+	elements := (aView canvas shapes collect: [ :s | 
+		s element isNil ifTrue: [ s ] ifFalse: [ s element ] ]) asOrderedCollection removeDuplicates.
 	
 	stream nextPutAll:'
 	var shapes = ['.
