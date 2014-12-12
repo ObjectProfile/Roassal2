@@ -300,6 +300,13 @@ RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max minValue: mi
 ]
 
 { #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue [
+	"aBlock is evaluated on each node model"
+	
+	^ self normalizeWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: #yourself
+]
+
+{ #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"

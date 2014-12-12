@@ -132,6 +132,16 @@ RTInteractionBuilder >> popupText: aBlock [
 ]
 
 { #category : #'events-registering' }
+RTInteractionBuilder >> popupText: aBlock color: aColorBlock [
+	interactions add: [ :element | element @ (RTPopup new text: aBlock; color: aColorBlock) ]
+]
+
+{ #category : #'events-registering' }
+RTInteractionBuilder >> popupTextColor: aColorBlock [
+	self popupText: #yourself color: aColorBlock
+]
+
+{ #category : #'events-registering' }
 RTInteractionBuilder >> popupView: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
 	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."

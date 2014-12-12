@@ -6,7 +6,9 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'group',
-		'legendElement'
+		'legendElement',
+		'offset',
+		'position'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -32,10 +34,32 @@ RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: Color lightGray
 ]
 
+{ #category : #'public - positioning' }
+RTLegendBuilder >> below [
+	position := #below
+]
+
+{ #category : #initialization }
+RTLegendBuilder >> defaultOffset [
+	^ 20
+]
+
 { #category : #initialization }
 RTLegendBuilder >> initialize [
 	super initialize.
 	group := RTGroup new.
+	offset := self defaultOffset.
+	position := #below
+]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> isBelow [
+	^ position = #below
+]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> isRight [
+	^ position = #right
 ]
 
 { #category : #accessing }
@@ -51,8 +75,21 @@ RTLegendBuilder >> renderIn: aView [
 		borderColor: Color lightGray;
 		fillColor: Color white) element.
 	RTNest new on: legendElement nest: group.
-	TRConstraint move: legendElement below: (RTGroup withAll: aView elements).
+	
+	self isBelow ifTrue: [ 
+		TRConstraint move: legendElement below: (RTGroup withAll: aView elements).
+		legendElement translateBy: 0 @ offset. ].
+
+	self isRight ifTrue: [ 
+		TRConstraint move: legendElement onTheRightOf: (RTGroup withAll: aView elements).
+		legendElement translateBy: offset @ 0. ].
+	
 	aView add: legendElement.
 	group do: [ :g | aView addAll: g ].
 	legendElement @ RTDraggable
+]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> right [
+	position := #right
 ]
