@@ -84,7 +84,7 @@ RTMondrianTest >> testBasicWithNestingAndDifferentSizeOfInner [
 
 	b applyLayout.
 		
-	result := ((Array new: 8) at: 1 put: ((15.0@20.0)); at: 2 put: ((50.0@20.0)); at: 3 put: ((7.5@7.5)); at: 4 put: ((20.0@10.0)); at: 5 put: ((12.5@27.5)); at: 6 put: ((42.5@7.5)); at: 7 put: ((55.0@10.0)); at: 8 put: ((47.5@27.5)); yourself).
+	result := ((Array new: 8) at: 1 put: ((15.0@20.0)); at: 2 put: ((55.0@20.0)); at: 3 put: ((7.5@7.5)); at: 4 put: ((20.0@10.0)); at: 5 put: ((12.5@27.5)); at: 6 put: ((47.5@7.5)); at: 7 put: ((60.0@10.0)); at: 8 put: ((52.5@27.5)); yourself).
 	
 	pos := b view canvas shapes collect: #position.
 	self assert: pos asArray equals: result
@@ -98,9 +98,9 @@ RTMondrianTest >> testBasicWithNestingAndGridLayout [
 		b nodes: (1 to: 3).
 		b layout grid ].
 
-	b applyLayout.
+	b build.
 	
-	result := ((Array new: 8) at: 1 put: ((12.5@12.5)); at: 2 put: ((42.5@12.5)); at: 3 put: ((8.0@8.0)); at: 4 put: ((18.0@8.0)); at: 5 put: ((8.0@18.0)); at: 6 put: ((38.0@8.0)); at: 7 put: ((48.0@8.0)); at: 8 put: ((38.0@18.0)); yourself).
+	result := ((Array new: 8) at: 1 put: ((12.5@12.5)); at: 2 put: ((47.5@12.5)); at: 3 put: ((8.0@8.0)); at: 4 put: ((18.0@8.0)); at: 5 put: ((8.0@18.0)); at: 6 put: ((43.0@8.0)); at: 7 put: ((53.0@8.0)); at: 8 put: ((43.0@18.0)); yourself).
 	
 	pos := b view canvas shapes collect: #position.
 	self assert: pos asArray equals: result
@@ -119,7 +119,7 @@ RTMondrianTest >> testBasicWithNestingAndNesting [
 
 	b build.
 
-	result := ((Array new: 26) at: 1 put: ((52.5@22.5)); at: 2 put: ((142.5@32.5)); at: 3 put: ((28.0@13.0)); at: 4 put: ((78.0@13.0)); at: 5 put: ((28.0@33.0)); at: 6 put: ((13.5@13.5)); at: 7 put: ((28.5@13.5)); at: 8 put: ((43.5@13.5)); at: 9 put: ((63.5@13.5)); at: 10 put: ((78.5@13.5)); at: 11 put: ((93.5@13.5)); at: 12 put: ((13.5@33.5)); at: 13 put: ((28.5@33.5)); at: 14 put: ((43.5@33.5)); at: 15 put: ((128.0@18.0)); at: 16 put: ((158.0@18.0)); at: 17 put: ((128.0@48.0)); at: 18 put: ((123.5@13.5)); at: 19 put: ((133.5@13.5)); at: 20 put: ((123.5@23.5)); at: 21 put: ((153.5@13.5)); at: 22 put: ((163.5@13.5)); at: 23 put: ((153.5@23.5)); at: 24 put: ((123.5@43.5)); at: 25 put: ((133.5@43.5)); at: 26 put: ((123.5@53.5)); yourself).
+	result := ((Array new: 26) at: 1 put: ((52.5@22.5)); at: 2 put: ((167.5@22.5)); at: 3 put: ((28.0@13.0)); at: 4 put: ((78.0@13.0)); at: 5 put: ((28.0@33.0)); at: 6 put: ((13.5@13.5)); at: 7 put: ((28.5@13.5)); at: 8 put: ((43.5@13.5)); at: 9 put: ((63.5@13.5)); at: 10 put: ((78.5@13.5)); at: 11 put: ((93.5@13.5)); at: 12 put: ((13.5@33.5)); at: 13 put: ((28.5@33.5)); at: 14 put: ((43.5@33.5)); at: 15 put: ((143.0@13.0)); at: 16 put: ((193.0@13.0)); at: 17 put: ((143.0@33.0)); at: 18 put: ((128.5@13.5)); at: 19 put: ((143.5@13.5)); at: 20 put: ((158.5@13.5)); at: 21 put: ((178.5@13.5)); at: 22 put: ((193.5@13.5)); at: 23 put: ((208.5@13.5)); at: 24 put: ((128.5@33.5)); at: 25 put: ((143.5@33.5)); at: 26 put: ((158.5@33.5)); yourself).
 	
 	pos := b view canvas shapes collect: #position.
 	self assert: pos asArray equals: result
@@ -325,6 +325,19 @@ RTMondrianTest >> testParentFrame [
 	
 	b popFrame.
 	self assert: b currentFrame equals: b rootFrame.
+]
+
+{ #category : #'tests - frames' }
+RTMondrianTest >> testPartitionedLayoutInInnerFrame [
+
+	b := RTMondrian new.
+	b node: 5 forIt: [ 
+		b node: 'hello'.
+		b layout
+			for: [ :str | str size > 5 ] use: RTGridLayout new;
+			horizontalLine ].
+	b layout grid.
+	b build.
 ]
 
 { #category : #'tests - frames' }

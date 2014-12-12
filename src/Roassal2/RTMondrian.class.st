@@ -137,9 +137,8 @@ RTMondrian >> initialize [
 	rootFrame := self createNewFrame.
 	currentFrame := rootFrame.
 	super initialize.
-	layoutBuilder := self createLayoutBuilder.
-	edgeBuilder := RTEdgeBuilder new.
-	"self pushNewFrame."
+	self resetLayoutBuilder.
+	edgeBuilder := RTEdgeBuilder new	"self pushNewFrame."
 ]
 
 { #category : #accessing }
@@ -165,6 +164,7 @@ RTMondrian >> nodes: objects [
 	self currentFrame addElements: els.
 	view addAll: els.
 	self resetShapeBuilder.
+	self resetLayoutBuilder.
 	^ els
 ]
 
@@ -176,6 +176,7 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	result do: [ :element | 
 		self pushNewFrame.
 		self resetShapeBuilder.
+		self resetLayoutBuilder.
 			
 		aOneArgBlock rtValue: element model.
 		RTNest new
@@ -184,6 +185,7 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 		self popFrame.
 	].
 	self resetShapeBuilder.
+	self resetLayoutBuilder.
 	^ result
 ]
 
@@ -214,6 +216,11 @@ RTMondrian >> pushFrame: aFrame [
 { #category : #stack }
 RTMondrian >> pushNewFrame [
 	^ self pushFrame: self createNewFrame
+]
+
+{ #category : #initialization }
+RTMondrian >> resetLayoutBuilder [
+	layoutBuilder := self createLayoutBuilder
 ]
 
 { #category : #initialization }
