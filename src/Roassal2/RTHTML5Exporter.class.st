@@ -64,8 +64,11 @@ RTHTML5Exporter >> addStart: aView [
 <html>
 	<head>
 		<title>',self title, '</title>
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script type="text/javascript">
+			var protocol = ("https:" == document.location.protocol)? "https" : "http";
+			document.write(unescape("%3Cscript src=\""+ protocol + "://code.jquery.com/jquery-1.11.0.min.js\" type=\"text/javascript\"%3E%3C/script%3E"));
+			document.write(unescape("%3Cscript src=\""+ protocol + "://code.jquery.com/jquery-migrate-1.2.1.min.js\" type=\"text/javascript\"%3E%3C/script%3E"));
+		</script>
 		<script src="roassal.js"></script>
 		<style type="text/css">
 			body, svg { 
@@ -156,6 +159,10 @@ Number.prototype.max = function (n){
 Number.prototype.min = function (n){
 	if(this < n ) return this;
 	return n;
+}
+
+Number.prototype.degreesToRadians=function(){
+	return this* 0.017453292519943295;
 }
 
 var Rectangle = Class.extend({
@@ -330,6 +337,28 @@ var RTDraggableView = TRInteraction.extend({
 		canvas.whenDo(TRMouseDragging, function(e){
 			var s = canvas.camera.scale;
 			canvas.camera.translateBy({x: e.step.x/s, y: e.step.y/s});
+		});
+	}
+});
+
+var RTLabelled = TRInteraction.extend({
+	color: null,
+	lowcolor: null,
+	init: function(obj){
+		this.color = obj.color;
+		this.lowcolor = obj.lowcolor;
+		this.lbl = obj.lbl;
+	},
+	initOn: function (s){
+		var self = this;
+		s.whenDo(TRMouseEnter, function(e){
+			var shape = e.canvas.getShapeById(self.lbl);
+			shape.setColor(self.color);
+			shape.pushFront();
+		});
+		s.whenDo(TRMouseLeave, function(e){
+			var shape = e.canvas.getShapeById(self.lbl);
+			shape.setColor(self.lowcolor);
 		});
 	}
 });
@@ -590,7 +619,7 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.camera = new TRCamera(this);
 		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, 
 		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape,
-		"path": TRSVGPath};
+		"path": TRSVGPath, "arc": TRArcShape, "polygon": TRPolygonShape};
 		var self = this;
 		$(this.svg).
 			mousedown(function (e){self.mousedown(e)}).
@@ -913,6 +942,10 @@ var TRShape = TRAnnouceableObject.extend({
 		$(this.path).remove();
 		delete this.canvas.shapes[this.id];
 		delete this.canvas.fixedShapes[this.id];
+	},
+	pushFront: function(){
+		if(this.path == null) return;
+		this.path.parentNode.appendChild(this.path);
 	}
 });
 
@@ -1141,6 +1174,67 @@ var TRSVGPath = TRShape.extend({
 		this.setBorder(obj);
 	},
 	encompassingRectangle: function(){
+		return this.matrix.transformRect(this.rect); 
+	}
+});
+
+var TRPolygonShape = TRShape.extend({
+	points: null,
+	rect: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.path = createSVG("polygon");
+		$(this.path).attr({id: obj.id, points: obj.p});
+		this.matrix = new MatrixTransform(obj.matrix);
+		this.rect = new Rectangle(obj.o,obj.c);
+		this.setBorder(obj);
+	},
+	encompassingRectangle: function(){
+		return this.matrix.transformRect(this.rect); 
+	}
+});
+
+var TRArcShape = TRShape.extend({
+	i: null,
+	e: null,
+	a: null,
+	b: null,
+	rect: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.path = createSVG("path");
+		$(this.path).attr("id",obj.id);
+		this.matrix=new MatrixTransform(obj.matrix);
+		this.i=obj.ir;
+		this.e=obj.er;
+		this.a= obj.aAngle;
+		this.b=obj.bAngle;
+		this.rect = new Rectangle(obj.o, obj.c);
+		this.createD();
+	},
+	createD: function(){
+		var aAngle = -this.a.degreesToRadians();
+		var bAngle = -this.b.degreesToRadians();
+		var i = this.i;
+		var e = this.e;
+		var xAngle = (aAngle+bAngle)/2;
+		var xCos = Math.cos(xAngle);
+		var xSin = Math.sin(xAngle);
+		var aCos = Math.cos(aAngle);
+		var aSin = Math.sin(aAngle);
+		var bCos = Math.cos(bAngle);
+		var bSin = Math.sin(bAngle);
+		var str= "M "+(i*aCos)+" "+(i*aSin)+
+		" L "+(e*aCos)+" "+(e*aSin)+
+		" A "+e+" "+e+" 0 0 0 "+(e*xCos)+" "+(e*xSin)+
+		" A "+e+" "+e+" 0 0 0 "+(e*bCos)+" "+(e*bSin)+
+		" L "+(i*bCos)+" "+(i*bSin)+
+		" A "+i+" "+i+" 0 0 1 "+(i*xCos)+" "+(i*xSin)+
+		" A "+i+" "+i+" 0 0 1 "+(i*aCos)+" "+(i*aSin)+ " Z";
+		$(this.path).attr("d",str);
+		
+	},
+	encompassingRectangle: function (){
 		return this.matrix.transformRect(this.rect); 
 	}
 });

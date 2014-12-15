@@ -49,7 +49,8 @@ Class {
 		'lowColor',
 		'canvas',
 		'offsetOnEdge',
-		'highlightable'
+		'highlightable',
+		'lbl'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -92,7 +93,7 @@ RTLabelled >> initialize [
 
 { #category : #hooks }
 RTLabelled >> initializeElement: element [
-	| lbl s t callback |
+	| s t callback |
 	t := text rtValue: element.
 	t isNil ifTrue: [ ^ self ].
 	
@@ -159,8 +160,18 @@ RTLabelled >> isTop [
 ]
 
 { #category : #accessing }
+RTLabelled >> lbl [
+	^ lbl
+]
+
+{ #category : #accessing }
 RTLabelled >> left [
 	position := #left
+]
+
+{ #category : #accessing }
+RTLabelled >> lowColor [
+	^ lowColor
 ]
 
 { #category : #accessing }

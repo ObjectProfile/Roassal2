@@ -32,7 +32,7 @@ RTSVGVisitor2 >> addBorderWidth: aShape [
 
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addColor: c [
-	stream nextPutAll: (' color: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
+	stream nextPutAll: ('color: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
 	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}, ' ]
 	ifFalse: [ stream nextPutAll: (', a: <1p>}, ' expandMacrosWith: c alpha) ]
 ]
@@ -72,7 +72,8 @@ RTSVGVisitor2 >> addStringWithFont: aLabel [
 RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
-	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup #RTHighlightable).
+	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
+	#RTHighlightable #RTLabelled).
 	
 
 ]
@@ -130,12 +131,22 @@ RTSVGVisitor2 >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitArcShape: aShape [
-	"|sCenter svgE|
-	sCenter := self alignPoint: (aShape center).
-	svgE := RTSVGArc new element: (aShape element) center: sCenter r1: (aShape innerRadius) r2: (aShape externalRadius) aAngle: (aShape alphaAngle) bAngle: (aShape betaAngle) color: (aShape color).
-	svgE addOn: stream using: self. "
-	
-"TODO"
+	aShape topLeft ifNil: [ aShape computeRectangle ].
+	stream nextPutAll: '
+		{type: "arc", id: "';
+		nextPutAll: (self nameFor: aShape);
+		nextPutAll: ('", ir: <1p>, er: <2p>,' expandMacrosWith: aShape innerRadius 
+			with: aShape externalRadius );
+		nextPutAll: (' aAngle: <1p>, bAngle: <2p>,' expandMacrosWith: aShape alphaAngle
+			with: aShape betaAngle );
+		nextPutAll: (' o: {x: <1p>, y: <2p>},' expandMacrosWith: aShape topLeft x
+			 with: aShape topLeft y);
+		nextPutAll: (' c: {x: <1p>, y: <2p>},' expandMacrosWith: aShape bottomRight x
+			 with: aShape bottomRight y).
+	self addColor: aShape color.
+	self addInteractions: aShape element.
+	self addMatrix: aShape matrix.
+
 ]
 
 { #category : #visitor }
@@ -299,7 +310,6 @@ RTSVGVisitor2 >> visitEllipseShape: anEllipse [
 	self addColor: anEllipse color.
 	self addInteractions: anEllipse element.
 	self addMatrix: anEllipse matrix.
-	self flag: 'review'
 ]
 
 { #category : #visitor }
@@ -349,8 +359,17 @@ RTSVGVisitor2 >> visitInteraction: sub with: anObject [
 			stream nextPutAll: '"', (self nameFor: e trachelShape), '",' ].
 		stream nextPutAll: ']})'.
 		^ self. ].
+	(sub subscriber class = RTLabelled) ifTrue: [ 
+		stream nextPutAll: 'new RTLabelled({'.
+		self addColor: sub subscriber color.
+		stream nextPutAll: 'low'.
+		self addColor: sub subscriber lowColor.
+		stream nextPutAll: 'lbl: '.
+		stream nextPutAll: '"',(self nameFor: sub subscriber lbl),'"'.
+		stream nextPutAll: '})'.
+		^ self ].
 	stream nextPutAll: sub subscriber class name.
-
+	"this is ugly, we need to update this code"
 	
 ]
 
@@ -442,7 +461,26 @@ RTSVGVisitor2 >> visitNoShape: aNoShape [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitPolygonShape: aPolygon [
-	"TODO"
+	| r c |
+	r := aPolygon encompassingRectangle.
+	c := aPolygon color.
+	c ifNil: [ c:= Color transparent ].
+	
+	stream nextPutAll: '
+		{type: "polygon", id: "';
+		nextPutAll: (self nameFor: aPolygon);
+		nextPutAll: ('", o: {x: <1p>, y: <2p>}' expandMacrosWith: r origin x with: r origin y);
+		nextPutAll: (', c: {x: <1p>, y: <2p>}, p: "' expandMacrosWith: r corner x with: r corner y).
+	
+	aPolygon vertices do: [ :p |
+		stream nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p x with: p y).
+		 ].
+	stream nextPutAll: '",'.
+	self addBorderColor: aPolygon strokePaint.
+	self addBorderWidth: aPolygon.
+	self addColor: c.
+	self addInteractions: aPolygon element.
+	self addMatrix: aPolygon matrix.
 ]
 
 { #category : #visitor }
@@ -462,7 +500,7 @@ RTSVGVisitor2 >> visitSVGPath: aSVGPath [
 	| r c |
 	r := aSVGPath basicEncompassingRectangle.
 	c := aSVGPath color.
-	c ifNil: [ c:= Color black ].
+	c ifNil: [ c:= Color transparent ].
 	stream nextPutAll: '
 		{type: "path", id: "';
 		nextPutAll: (self nameFor: aSVGPath);
