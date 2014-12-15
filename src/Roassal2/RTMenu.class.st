@@ -11,7 +11,8 @@ Class {
 		'savedLabelBackgroundColor',
 		'menuBackgroundColor',
 		'menuBackground',
-		'highlightColor'
+		'highlightColor',
+		'isLocked'
 	],
 	#category : #'Roassal2-Builder-Menu'
 }
@@ -52,9 +53,11 @@ RTMenu >> hideAll [
 RTMenu >> hideItems [
 	self isOpen ifFalse: [ ^ self ].
 	self isOpen: false.
+	self isLocked: false.
 	self items do: [:item |
 		item rawmenu remove].
-	menuBackground remove.	
+	menuBackground remove.
+	self endHighlight.	
 ]
 
 { #category : #accessing }
@@ -73,8 +76,19 @@ RTMenu >> initialize [
 	color := Color gray darker alpha: 0.3.
 	view := nil.
 	isOpen := false.
+	isLocked := false.
 	savedLabelBackgroundColor := color.
 
+]
+
+{ #category : #accessing }
+RTMenu >> isLocked [
+	^ isLocked
+]
+
+{ #category : #accessing }
+RTMenu >> isLocked: abool [
+	isLocked := abool
 ]
 
 { #category : #accessing }

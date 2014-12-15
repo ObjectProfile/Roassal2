@@ -59,9 +59,8 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor highlightColor: aCo
 	self addParentMenu: menu.
 	lbl element: (menu).
 	
-	"(lbl element labelBackground) when: TRMouseClick do: [ :event | self showSubmenuOf: lbl]."
 	lbl when: TRMouseEnter do: [ :event |  self enterSubmenuOf: lbl].
-	"lbl element labelBackground when: TRMouseLeave do: [ :event |  self leaveSubmenuOf: lbl]."	
+	lbl when: TRMouseClick do: [ :e | self showSubmenuOf: lbl].
 
 	^ lbl
 ]
@@ -79,14 +78,14 @@ RTMenuBuilder >> createView [
 
 { #category : #utility }
 RTMenuBuilder >> enterSubmenuOf: lbl [
-	| menu labels flag |
+	| menu labels |
 	
-	flag := false.
 	menu := lbl element.
 	
 	"We mark the submenu as open" 
 	menu hideAll.
 	menu isOpen: true.
+	menu isLocked: false.
 	
 	menu executeHighlight.
 	
@@ -105,16 +104,17 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 	menu update.
 		
 	menu labelBackground when: TRMouseLeave do: [ :e |
-			menu endHighlight.
-			self signalUpdate.].
+			menu isLocked ifFalse: [  
+				menu endHighlight.
+				self signalUpdate.]].
 			
 	menu menuBackground when: TRMouseLeave do: [ :e | 
-			menu hideItems.
-			menu endHighlight.
-			self signalUpdate].
+			menu isLocked ifFalse: [
+				menu hideItems.
+				menu endHighlight.
+				self signalUpdate]].
 
-	self signalUpdate.
-
+	self signalUpdate. 
 ]
 
 { #category : #hooks }
@@ -241,37 +241,43 @@ RTMenuBuilder >> parentMenus [
 
 { #category : #utility }
 RTMenuBuilder >> showSubmenuOf: lbl [
-	| menu labels |
+	| menu  labels |
 	menu := lbl element.
 	
-	"Check if submenu is open"
-	menu isOpen
+	"Check if submenu is locked"
+	menu isLocked
 		ifTrue: [ 
 			menu hideItems.
 			menu endHighlight.
 			self signalUpdate.
 			 ^ self].
+		
+	"We mark the submenu as locked" 
+	menu isLocked: true.
+	menu isOpen
+		ifFalse: [ 
 	
 	"We mark the submenu as open" 
-	menu hideAll.
-	menu isOpen: true.
+		menu hideAll.
+		menu isOpen: true.
 
-	menu saveLabelBackgroundColor.
-	menu executeHighlight.
+		menu saveLabelBackgroundColor.
+		menu executeHighlight.
 	
-	labels := menu items collect: [ :item | | m |
-		m := nil.
-		m := self menu: item label callback: [item execute: m].
-		item menu: m.
-		m ].
+		labels := menu items collect: [ :item | | m |
+			m := nil.
+			m := self menu: item label background: (Color white alpha:0) callback: [item execute: m].
+			item menu: m.
+			m 
+		].
 
-	labels doWithIndex: [ :l :i | | p |
-		p := ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*i)).
-		l translateTo: lbl position.
-		view addAnimation: (RTLinearMove to: p during: 0.2 on: l).
-	].
-
+		labels doWithIndex: [ :l :i | | p |
+			p := ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*i) +3.5).
+			l translateTo: ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1)).
+			view addAnimation: (RTLinearMove to: p during: 0.2 on: l).
+		].
 	menu update.
+	].
 	
 	self signalUpdate.
 
