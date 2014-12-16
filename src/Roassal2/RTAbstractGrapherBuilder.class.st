@@ -34,11 +34,15 @@ RTAbstractGrapherBuilder >> axisConfiguration [
 { #category : #utility }
 RTAbstractGrapherBuilder >> axisPointFor: aPoint [
 	"Return the position in the view to have the 0 @ 0"
-	| centralPointX centralPointY diffBetweenMaxAndMin |
-	diffBetweenMaxAndMin := self maxX - self minX.
-	diffBetweenMaxAndMin = 0 ifTrue: [ 100 ] ifFalse: [ diffBetweenMaxAndMin ].
-	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - self minX) / diffBetweenMaxAndMin )) asInteger.
-	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - self minY) / diffBetweenMaxAndMin)) asInteger.
+	| centralPointX centralPointY diffBetweenMaxAndMinX diffBetweenMaxAndMinY |
+	diffBetweenMaxAndMinX := self maxX - self minX.
+	diffBetweenMaxAndMinY := self maxY - self minY.
+	
+	diffBetweenMaxAndMinX = 0 ifTrue: [ diffBetweenMaxAndMinX := 100 ].
+	diffBetweenMaxAndMinY = 0 ifTrue: [ diffBetweenMaxAndMinY := 100 ].
+	
+	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - self minX) / diffBetweenMaxAndMinX)) asInteger.
+	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - self minY) / diffBetweenMaxAndMinY)) asInteger.
 	^ centralPointX @ centralPointY negated.
 
 ]

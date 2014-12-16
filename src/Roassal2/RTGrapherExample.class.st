@@ -936,8 +936,8 @@ RTGrapherExample >> exampleHistogramWithNegativeValues [
 	      color: (Color green alpha: 0.3);
 	     if: [:value | value < 0 ] fillColor: (Color red alpha: 0.3).
 	b add: ds.
-
-	^ b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
