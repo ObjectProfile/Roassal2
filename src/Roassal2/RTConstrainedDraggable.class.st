@@ -1,3 +1,6 @@
+"
+A RTConstrainedDraggable is like Draggable, but restraint the element to move within a provided rectangle
+"
 Class {
 	#name : #RTConstrainedDraggable,
 	#superclass : #RTAbstractDraggable,
@@ -25,7 +28,7 @@ RTConstrainedDraggable >> constraintIfNecessary: anElement [
 			anElement translateTo: newX @ newY ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTConstrainedDraggable >> initialize [
 	super initialize.
 	rectangle := (-5 @ -5) extent: (10 @ 10)

@@ -11,7 +11,7 @@ Class {
 	#category : #'Roassal2-Builder-UI-Slider'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTSlider >> build [
 	| allElements res |
 	allElements := view elements.
@@ -26,11 +26,11 @@ RTSlider >> callback [
 ]
 
 { #category : #accessing }
-RTSlider >> callback: anObject [
-	callback := anObject
+RTSlider >> callback: aOneArgBlock [
+	callback := aOneArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTSlider >> createShapeBuilder [
 	"RTBox new color: (Color red alpha: 0.5); width: 15; height: 20"
 	^ super createShapeBuilder
@@ -41,7 +41,7 @@ RTSlider >> createShapeBuilder [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSlider >> example01 [
 
 	| v label slider |
@@ -60,7 +60,7 @@ RTSlider >> example01 [
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSlider >> initialize [
 	super initialize.
 	labelled := false.
@@ -69,7 +69,7 @@ RTSlider >> initialize [
 	max := 1.0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSlider >> labelled [
 	labelled := true
 ]
@@ -84,12 +84,12 @@ RTSlider >> max: aNumber [
 	max := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTSlider >> moveBelow [
 	position := #moveBelow
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTSlider >> renderIn: aView [
 
 	| extremity1 extremity2 line cursor dragAndConstraint trachelShape aValue | 
