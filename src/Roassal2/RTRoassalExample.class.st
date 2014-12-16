@@ -5448,6 +5448,58 @@ RD8Q/aIfiH4g+kU/EP1A9It+IPqB6Bf9QPSLfiDXQP4DZX2wCWyQSwgAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleSliderAndCubeHelix [
+	| v helix shape elements slider |
+	v := RTView new.
+	helix := RTCubeHelix new.
+	helix rotations: 2.
+	helix gamma: 2.
+	shape := (RTBox new height: 300; width: 1; color: [ :model | helix level: model ]).
+	elements := shape elementsOn: (0.0 to: 1.0 by: 0.002).
+	v addAll: elements.
+	RTHorizontalLineLayout new gapSize: 0; on: elements.
+
+	"Set the gamma value"
+	slider := RTSlider new.
+	slider view: v.
+	slider labelled.
+	slider callback: [ :aValue | helix gamma: 5 * aValue. elements updateShape ].
+	slider moveBelow.
+	slider build.
+
+	"Set the rotation value"
+	slider := RTSlider new.
+	slider view: v.
+	slider labelled.
+	slider callback: [ :aValue | helix rotations: 5 * aValue. elements updateShape ].
+	slider moveBelow.
+	slider build.
+
+	^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleSliderAndCubeHelixIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADMUlEQVR4XuXd7UtTYRzGcf+y
+szkTRVEyxLYzMzNFbFGKhYqOzfmYUSIZZEWPVioYEQRmoCAEkUTlA5UF0fZiZeUgadjYLjuz
+GREEhQOX32tccHMGN4fzYefHXt1Z6+v8ZFKy+I+AD8IPH4QPwg8fhA/CDx+ED8IPH4QPwg8f
+hB8+CB+EHz4IH4SftIMYhqFfa/utdpuh7FQdydqtZhvKcaSaYzU31Tzru3yrBVYLbcousste
+7JBtd45se3JlK82XUVooo6xYxt4S2Zxlspmm7GaFHGaVdrlrlec+rAJ3vYrcx1TiblaZ2SrT
+9KnSDKjG1SmPq0sNrh41WfVa7XB164R1vd/6ftDt11B5my5VtOjqgeMarm7QzdojGjlUp9Gj
+NRptrNJI837d8pZrOGDqWo9TV047dfGMU+eGTA1e3qeBG5U6NVatvjt16r5Xr477TQpM+eSf
+6ZX/4YD8j86rfXZYnU9uq+fphE4+m1H/88c6OzevC3OvdX0+pLGFD7q7ENHk4qpmFtc0+yKm
++ZdxLS0l9O6N9P6t9DkorYal6MeEvkXiin+NKxFLiA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4
+IHwQPggfhA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQPggfhA/C
+B+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQ
+PggfhA/CB+GD8EH4IHwQPggfhA/CB+GD8EH4IHwQPsgOA+n0BNR3sJ0PkikgXZ529Xr8fJCM
+eWWZO+iVlUgk9F93akoJn+9Hk+vUdf1Df+711x/9sVvNtpyOsLKyouXlZUWj0S13bWJC016v
+XrW1bazTsWfy3pL3iDmuIhKJrIdCIYXD4S330/i4Jlta9MBqcp2OPYPBIAtk8+eZlr2mpxWz
+XldK1lpn2v3hDnRJIijNILgTdtI9Q2KtrRvlz5AMmSFfGhs3yp8hGTJDxJ8hGTRDktn8T7FN
+D5EPwj82jx8+CB+EHz4IP3wQPgg/fBA+CD98ED4IP3wQPgg/fBB++CAZne8rE5WE57/UxQAA
+AABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleSmoothLayout [
 
 	| v translator |
