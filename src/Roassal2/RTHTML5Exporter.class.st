@@ -96,8 +96,8 @@ RTHTML5Exporter >> createJS [
 	| dir s |
 	dir := self directory.
 	s := dir / 'roassal.js'.
-	s exists ifTrue: [ ^ self ].
-	"s exists ifTrue: [ s delete ]."
+	"s exists ifTrue: [ ^ self ]."
+	s exists ifTrue: [ s delete ].
 	s := s writeStream.
 	[ s nextPutAll:
 '

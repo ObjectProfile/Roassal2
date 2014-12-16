@@ -40,7 +40,6 @@ RTSVGVisitor2 >> addColor: c [
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addInteractions: aShape. [
 	aShape isNil ifTrue: [ ^ self ].
-	(aShape isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
 	stream nextPutAll: 'ints: '.
 	self visitInteractions: aShape.
 	stream nextPutAll: ', '
@@ -377,7 +376,7 @@ RTSVGVisitor2 >> visitInteraction: sub with: anObject [
 { #category : #visitor }
 RTSVGVisitor2 >> visitInteractions: anObject [
 	| first list temp |
-	
+	(anObject isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
 	first := true.
 	list := OrderedCollection new.
 	temp := OrderedCollection new.
