@@ -96,8 +96,8 @@ RTHTML5Exporter >> createJS [
 	| dir s |
 	dir := self directory.
 	s := dir / 'roassal.js'.
-	s exists ifTrue: [ ^ self ].
-	"s exists ifTrue: [ s delete ]."
+	"s exists ifTrue: [ ^ self ]."
+	s exists ifTrue: [ s delete ].
 	s := s writeStream.
 	[ s nextPutAll:
 '
@@ -619,7 +619,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.camera = new TRCamera(this);
 		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, 
 		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape,
-		"path": TRSVGPath, "arc": TRArcShape, "polygon": TRPolygonShape};
+		"path": TRSVGPath, "arc": TRArcShape, "polygon": TRPolygonShape, "simplearrow": TRSimpleArrowShape,
+		"headarrow": TREmptyHeadArrowShape, "bezier": TRBezierShape};
 		var self = this;
 		$(this.svg).
 			mousedown(function (e){self.mousedown(e)}).
@@ -946,6 +947,32 @@ var TRShape = TRAnnouceableObject.extend({
 	pushFront: function(){
 		if(this.path == null) return;
 		this.path.parentNode.appendChild(this.path);
+	},
+	minus: function(a, b){
+		return {x: a.x - b.x, y: a.y - b.y};
+	},
+	plus: function(a, b){
+		return {x: a.x+b.x, y: a.y+b.y};
+	},
+	product: function(a, b){
+		if(b.x != null)return {x: a.x*b.x, y: a.y*b.y};
+		return {x: a.x * b, y: a.y*b};
+	},
+	normal: function(p){
+		var n = {x: -p.y, y: p.x};
+		var d = n.x*n.x + n.y*n.y;
+		if(d == 0) return {x:-1, y:0};
+		return this.div(n, Math.sqrt(d));
+	},
+	div: function(a, b){
+		if(b.x!=null)return {x: a.x/b.x, y: a.y/b.y};
+		return {x: a.x/b, y: a.y/b};
+	},
+	r: function(p){
+		return Math.sqrt(this.dotProduct(p, p));
+	},
+	dotProduct: function(a, b){
+		return a.x*b.x + a.y*b.y;
 	}
 });
 
@@ -1063,6 +1090,11 @@ var TRMultiCompositeShape = TRShape.extend({
 			}catch(x){debugger;}
 			list[s.id] = s;
 		}
+		if(o.length == 2)
+			if(this.shapes[0] instanceof TRBezierShape){
+				var l = this.shapes[0].ides;
+				this.shapes[1].fromid = l[l.length - 2];
+			}
 	},
 	update: function(){
 		var s = this.shapes;
@@ -1127,7 +1159,6 @@ var TRLineShape = TRAbstractBoxShape.extend({
 	setColor: function(c){
 		this.color = c;
 		$(this.path).css("stroke","rgb("+c.r+","+c.g+"," +c.b+")");
-		
 		if(c.a != null){
 			$(this.path).css("opacity", c.a);
 		}
@@ -1159,6 +1190,120 @@ var TRLineShape = TRAbstractBoxShape.extend({
 	},
 	translateBy: function(p){},
 	setPosition: function(p){}
+});
+
+var TRBezierShape = TRLineShape.extend({
+	ides: null,
+	init: function (obj){
+		this.id = obj.id;
+		this.fromid = obj.fromid;
+		this.toid = obj.toid;
+		this.path = createSVG("path");
+		this.ides = obj.ides;
+		$(this.path).attr("id", obj.id);
+		$(this.path).css("fill","none");
+		this.setWidth(obj.width);
+		this.setAttachPoint(obj.ap);
+	},
+	update: function (){
+		if(this.ignoreap) return;
+		var from = this.from();
+		var to = this.to();
+		if(from == null || to == null ) return;
+		from = this.attachPoint.startingPointOf(this);
+		to = this.attachPoint.endingPointOf(this);
+		var d = "M "+from.x+" "+from.y;
+		for(var k = 1; k<this.ides.length-1; k++){
+			var p1 = this.getP(this.ides[k]);
+			var p2 = this.getP(this.ides[k+1]);
+			d +=" Q "+p1.x+" "+p1.y+" "+((p1.x+p2.x)/2)+" "+((p1.y+p2.y)/2);
+		}
+		d += "L "+to.x+" "+to.y;
+		$(this.path).attr("d",d);
+	},
+	getP: function(id){
+		return this.canvas.getShapeById(id).position();
+	}
+});
+
+var TRSimpleArrowShape = TRLineShape.extend({
+	size: null,
+	baseSize: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.fromid = obj.fromid;
+		this.toid = obj.toid;
+		this.path = createSVG("path");
+		$(this.path).attr("id", obj.id);
+		$(this.path).css("fill", "none");
+		this.setWidth(obj.width);
+		this.setAttachPoint(obj.ap);
+		this.size = obj.size;
+		this.baseSize = obj.base;
+	},
+	update: function(){
+		var from = this.from();
+		var to = this.to();
+		if(from == null || to == null ) return;
+		var base = this.baseSize;
+		from = this.attachPoint.startingPointOf(this);
+		to = this.attachPoint.endingPointOf(this);
+		var vector = this.minus(to, from);
+		var u = this.normal(vector);
+		var unit = this.div(vector, this.r(vector));
+		var middle = this.minus(to, this.product(unit, this.size));
+		var left = this.minus(middle, this.product(u, base/2));
+		var right = this.plus(middle, this.product(u, base/2));
+		var d = "M "+left.x+" "+left.y+" L "+to.x+" "+to.y+" L "+right.x+ " "+right.y;
+		$(this.path).attr("d", d);
+	}
+});
+
+var TREmptyHeadArrowShape = TRLineShape.extend({
+	size: null,
+	baseSize: null,
+	init: function(obj){
+		this.id = obj.id;
+		this.fromid = obj.fromid;
+		this.toid = obj.toid;
+		this.path = createSVG("path");
+		$(this.path).attr("id", obj.id);
+		this.setWidth(obj.width);
+		this.setAttachPoint(obj.ap);
+		this.size = obj.size;
+		this.baseSize = obj.base;
+		this.setBorder(obj);
+	},
+	update: function(){
+		var from = this.from();
+		var to = this.to();
+		if(from == null || to == null ) return;
+		var base = this.baseSize;
+		from = this.attachPoint.startingPointOf(this);
+		to = this.attachPoint.endingPointOf(this);
+		var vector = this.minus(to, from);
+		var u = this.normal(vector);
+		var unit = this.div(vector, this.r(vector));
+		var middle = this.minus(to, this.product(unit, this.size));
+		var left = this.minus(middle, this.product(u, base));
+		var right = this.plus(middle, this.product(u, base));
+		var d = "M "+left.x+" "+left.y+" L "+to.x+" "+to.y+" L "+right.x+ " "+right.y+" L "+left.x+" "+left.y+" Z";
+		$(this.path).attr("d", d);
+	},
+	setColor: function(c){
+		if(c == null) return;
+		this.color = c;
+		if(c.r == undefined) $(this.path).css("fill", c);
+		else $(this.path).css("fill", "rgb("+c.r+","+c.g+"," +c.b+")");
+		if(c.a == null)	c.a = 1;
+		$(this.path).css("fill-opacity", c.a);
+	},
+	setStrokeColor: function(c){
+		this.strokeColor = c;
+		if(c.r == null) $(this.path).css("stroke", c);
+		else $(this.path).css("stroke", "rgb("+c.r+","+c.g+"," +c.b+")");
+		if(c.a != null)	$(this.path).css("stroke-opacity", c.a);
+	},
 });
 
 var TRSVGPath = TRShape.extend({
@@ -1255,8 +1400,10 @@ var TRLabelShape = TRShape.extend({
 		this.rect=new Rectangle(obj.o, obj.c);
 	},
 	setFont: function(f){
+		if(f.n == "Source Sans Pro")
+			f.n = "Verdana, Geneva, sans-serif";
+		else this.loadFont(f.n);
 		this.font = f;
-		this.loadFont(f.n);
 		$(this.path).css({"font-family":f.n, "font-size":f.s});
 	},
 	loadFont: function(f){

@@ -126,5 +126,6 @@ RTSVGStringConverter >> initializeValues [
 		at: $û put: '&ucirc;';
 		at: $ü put: '&uuml;';
 		at: $ý put: '&yacute;';
-		at: $þ put: '&thorn;'
+		at: $þ put: '&thorn;';
+		at: Character cr put: ''.
 ]

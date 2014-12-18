@@ -23,6 +23,20 @@ Class {
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
+{ #category : #examples }
+RTTreeMapExample >> example08 [
+	"
+	self new example08
+	"
+	| b |
+	b := RTTreeMapBuilder new.
+	b shape fillColor: Color random.
+	
+	b from: (1 to: 5) using: [{}].
+	b weight: #yourself.
+	b build.
+]
+
 { #category : #sources }
 RTTreeMapExample >> exampleNumber [
 

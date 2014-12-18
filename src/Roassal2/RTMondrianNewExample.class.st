@@ -309,7 +309,7 @@ RTMondrianNewExample >> exampleInnerAndPopup [
 		b nodes: cls methods. b layout grid ].
 	b layout flow.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -385,7 +385,7 @@ AAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTMondrianNewExample >> exampleLayoutPartition [
-| b |
+| b classes |
 classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
 
 b := RTMondrian new.
@@ -398,8 +398,7 @@ b layout
 		for: [ :c | (classes intersection: (Array with: c superclass), c subclasses) isEmpty ] use: RTGridLayout new;
 		horizontalLine.
 b build.
-	b open.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -767,7 +766,7 @@ b layout
 		for: [ :c | c includesBehavior: RTShape ] use: RTForceBasedLayout new;
 		flow.
 b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -827,7 +826,7 @@ RTMondrianNewExample >> exampleRadialTree [
 	b edges connectFrom: [ :v | v // 2 ].
 	b layout radialTree.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }

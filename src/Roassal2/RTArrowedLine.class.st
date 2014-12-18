@@ -29,6 +29,7 @@ RTArrowedLine class >> edgeFrom: el1 to: el2 [
 
 { #category : #accessing }
 RTArrowedLine >> attachPoint: anAttachPoint [
+	super attachPoint: anAttachPoint.
 	head attachPoint: anAttachPoint.
 	line attachPoint: anAttachPoint
 ]

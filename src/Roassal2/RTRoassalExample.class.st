@@ -5228,7 +5228,7 @@ RTRoassalExample >> exampleScrollZoomIcon [
 { #category : #sources }
 RTRoassalExample >> exampleSeisms [
 
-| b tab |
+| b tab l|
 tab := RTTabTable new input: 'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv' asZnUrl retrieveContents usingDelimiter: $,.
 tab removeFirstRow.
 tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).
@@ -5244,8 +5244,7 @@ l := RTLegendBuilder new.
 l view: b view.
 l addText: 'Seisms of a magniture of 2.5 or more, over the last 30 days'.
 l build.
-b open.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }

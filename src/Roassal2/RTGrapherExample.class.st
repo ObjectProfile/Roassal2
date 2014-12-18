@@ -151,7 +151,7 @@ ds y: [ :v | v cos ].
 b add: ds.
 
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }
@@ -247,7 +247,7 @@ ds y: #cos.
 b add: ds.
 
 b build.
-^ b view canvas
+^ b view
 ]
 
 { #category : #icons }

@@ -29,7 +29,7 @@ RTStackBarPlotExample >> exampleSimple [
 	b add: #(4 3 2 1).
 	b add: #(5 3 2 0).
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -57,7 +57,7 @@ RTStackBarPlotExample >> exampleSimpleWithDifferentColor [
 
 	b barWidth: 200 height: 20.
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
@@ -89,7 +89,7 @@ RTStackBarPlotExample >> exampleSurveyResult [
 	b addLabelToBars: [ :assoc | (assoc key  / b totalSum * 100) asInteger asString, '%' ] if: [:assoc | assoc key > 5 ] color: Color white.
 
 	b build.
-	^ b view canvas
+	^ b view
 ]
 
 { #category : #icons }
