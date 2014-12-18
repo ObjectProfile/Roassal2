@@ -42,6 +42,11 @@ RTMenu >> executeHighlight [
 	self labelBackgroundColor: self highlightColor.
 ]
 
+{ #category : #accessing }
+RTMenu >> executeLockHighlight [
+	self labelBackgroundColor: (self highlightColor alpha: ((self highlightColor alpha) + 0.3)).
+]
+
 { #category : #'as yet unclassified' }
 RTMenu >> hideAll [
 	view canvas fixedShapes do: [ :s |
@@ -139,7 +144,7 @@ RTMenu >> labelBackgroundColor: aColor [
 
 { #category : #accessing }
 RTMenu >> labelBackgroundShapeAndColor: aColor [
-	| box |
+	| box form |
 	
 	box := TRBoxShape new extent: label encompassingRectangle extent + (10@7).
 	self labelBackground: box.
@@ -147,7 +152,11 @@ RTMenu >> labelBackgroundShapeAndColor: aColor [
 	self saveLabelBackgroundColor.
 	box strokePaint: "(Color black)"nil.
 	TRConstraint move: box onTheCenterOf: label.
-
+	form := (TRBitmapShape new form: (ColorForm allInstances first)).
+	form strokePaint: "(Color black)"nil.
+	TRConstraint move: form onTheRightOf: box.
+	
+	"view canvas addFixedShape: form."
 	view canvas addFixedShape: box.
 	box pushBack.
 ]

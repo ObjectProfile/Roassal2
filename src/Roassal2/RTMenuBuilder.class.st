@@ -1,3 +1,14 @@
+"
+A RTMenuBuilder create menus, submenus, buttons in a view.
+Titles, callback, colors and callback can be defined.
+
+Instance Variables
+	parentMenus:		<Object>
+
+parentMenus
+	- xxxxx
+
+"
 Class {
 	#name : #RTMenuBuilder,
 	#superclass : #RTBuilder,
@@ -83,9 +94,11 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 	menu := lbl element.
 	
 	"We mark the submenu as open" 
+	(menu isLocked) ifTrue: [ ^ self signalUpdate].
 	menu hideAll.
-	menu isOpen: true.
 	menu isLocked: false.
+	menu isOpen: true.
+	
 	
 	menu executeHighlight.
 	
@@ -254,6 +267,7 @@ RTMenuBuilder >> showSubmenuOf: lbl [
 		
 	"We mark the submenu as locked" 
 	menu isLocked: true.
+	menu executeLockHighlight.
 	menu isOpen
 		ifFalse: [ 
 	
@@ -261,8 +275,7 @@ RTMenuBuilder >> showSubmenuOf: lbl [
 		menu hideAll.
 		menu isOpen: true.
 
-		menu saveLabelBackgroundColor.
-		menu executeHighlight.
+		menu executeLockHighlight.
 	
 		labels := menu items collect: [ :item | | m |
 			m := nil.
