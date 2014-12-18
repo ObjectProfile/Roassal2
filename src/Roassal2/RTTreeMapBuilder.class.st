@@ -122,7 +122,8 @@ RTTreeMapBuilder >> initialize [
 	popup := RTPopup new.
 	inset := self defaultInset.
 	extent := self defaultExtent.
-	elements := OrderedCollection new 
+	elements := OrderedCollection new.
+	rootNodes := OrderedCollection new
 ]
 
 { #category : #accesing }

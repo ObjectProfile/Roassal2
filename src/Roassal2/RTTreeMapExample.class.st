@@ -1,159 +1,74 @@
 "
-Examples of RTTreeMap
-"
-Class {
-	#name : #RTTreeMapExample,
-	#superclass : #Object,
-	#category : #'Roassal2-Builder-TreeMap'
-}
-
-{ #category : #examples }
-RTTreeMapExample >> example01 [
-	"
-	self new example01
-	"
+RTTreeMapExample new installTitle: 'Number' 
+		code:
+		'
 	| b |
 	b := RTTreeMapBuilder new.
 	b shape 
-		if: [:n | n even ] fillColor: Color lightGray;
-		if: [ :n | n odd ] fillColor: Color purple.
+		if: #even fillColor: Color lightGray;
+		if: #odd fillColor: Color purple.
 	b
 		extent: 400@400;
 		explore: 1
-		using: [ :n | n< 8 ifTrue: [{ n+1. n+2}] ifFalse: [ {  } ] ];
-		weight: [:n | n].
+		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
+		weight: [ :n | n ].
 	
-	b open.
-]
+	b  open.
+b view canvas'
+	
+"
+Class {
+	#name : #RTTreeMapExample,
+	#superclass : #RTAbstractExample,
+	#category : #'Roassal2-Builder-TreeMap'
+}
 
-{ #category : #examples }
-RTTreeMapExample >> example02 [
-	"
-	self new example02
-	"
+{ #category : #sources }
+RTTreeMapExample >> exampleNumber [
+
 	| b |
 	b := RTTreeMapBuilder new.
 	b shape 
-		if: [ :cls| Smalltalk includesKey: (cls name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :cls | cls name endsWith: 'Line' ] fillColor: Color purple;
-		if: [ :cls | cls hasAbstractMethods ] fillColor: Color red.
-	b popup text: [ :cls | cls name, ' number of methods: ', cls numberOfMethods asString ].
-	
+		if: #even fillColor: Color lightGray;
+		if: #odd fillColor: Color purple.
 	b
 		extent: 400@400;
-		explore: TRShape using: #subclasses;
-		weight: [:el | el numberOfMethods == 0 ifTrue: [ 1 ] ifFalse: [ el numberOfMethods ]  ].
-	b open.
+		explore: 1
+		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
+		weight: [ :n | n ].
+	
+	b  open.
+b view canvas
 ]
 
-{ #category : #examples }
-RTTreeMapExample >> example03 [
-	"
-	self new example03
-	"
-	| b |
-	b := RTTreeMapBuilder new.
-	b shape 
-		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
-	
-	b
-		extent: 400@400;
-		weight: [:m | m tally ].
-	b explore: (MessageTally new
-		spyEvery: 1
-		on: [Nautilus open]; yourself)
-		using: #children.
-	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
-	b open.
-]
-
-{ #category : #examples }
-RTTreeMapExample >> example04 [
-	"
-	self new example04
-	"
-	| b |
-	b := RTTreeMapBuilder new.
-	b
-		extent: 400@400;
-		weight: [:n | n ].
-	b shape if: [ :n | n even ] fillColor: Color blue;
-		if: [ :n | n odd ] fillColor: Color lightGray.
-		
-	b from: (1 to: 10)
-		using: [:n | n < 5 ifTrue: [ { n+1. n+2 } ] ifFalse: [ {  } ] ].
-	b open.
-]
-
-{ #category : #examples }
-RTTreeMapExample >> example05 [
-	"
-	self new example05
-	"
-	| b normalizer tally methods |
-	b := RTTreeMapBuilder new.
-	b shape 
-		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
-	
-	tally := (MessageTally new
-		spyEvery: 1
-		on: [Nautilus open]; yourself).
-	methods := tally withDeepCollect: #children.
-	
-	normalizer := RTNColorLinearNormalizer inContext: methods withCommand: #tally lowColor: Color gray highColor: Color red.
-	b shape borderColor: [ :e |normalizer rtValue: e ];
-		borderWidth: 2.
-	
-	b
-		extent: 500@500;
-		weight: [:m | m tally ].
-	b explore: tally
-		using: #children.
-	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
-	b open.
-]
-
-{ #category : #examples }
-RTTreeMapExample >> example06 [
-	"
-	self new example06
-	"
-	| b |
-	b := RTTreeMapBuilder new.
-	b shape 
-		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red;
-		borderWidth: 2.
-	
-	b
-		extent: 400@400;
-		weight: [:m | m tally ].
-	b explore: (MessageTally new
-		spyEvery: 1
-		on: [Nautilus open]; yourself)
-		using: #children.
-	b withShadedFramesFromColor: Color gray toColor: Color red.
-	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
-	
-	b open.
-]
-
-{ #category : #examples }
-RTTreeMapExample >> example07 [
-	"
-	self new example07
-	"
-	| b |
-	b := RTTreeMapBuilder new.
-	b
-		extent: 400@400;
-		weight: [:m | m tally ];
-		explore: (MessageTally new
-		spyEvery: 1
-		on: [Nautilus open]; yourself)
-		using: #children;
-		depthShadedBorder.
-	b open.
+{ #category : #icons }
+RTTreeMapExample >> exampleNumberIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFi0lEQVR4XuXd62/bVBgG8Aox
+xEWANmkSnygb+8BAExLbYBoglSGmaWhiH4aQNiEhBm3TJl2TtFopo3Rb2uZiO46d2E56+8eY
+2N/RD3vx68ojiU8S24kdt8+RHlWesuPL79gnsU9OJojwS5LKBP4hwAfBL/gg+CD4BR8EHwS/
+4IPgg+AXfBB8EF9l8bJC6fd1/ITMs3+evRgpSHpSp729PTIMY6xpNBpj34YgaTab9OeNejQg
+hmHSwtm6vYJG4Cxdqo+kpeWnJKpvtaiYMUYSaU0ny7IiCTce0zSjBeHKtzJ1Wr2u+87jaYWe
+3tmm9ftVKuUaoTP9iuWAOHX9NlxdbpamZJJXrED74zeMEQvI6vU6aZrmaRELH9WErTr3tewc
+xKqsUvqMJnzNwx8qfVubqqo08+r/IP3q4jz6UR3Ygnd2dhyQjXtNqhSUga+vlCX/Z7O9bbGC
+8Ir4AGXOapQ61SBl0/77jkH7+/sdmTlhdYDwcvdrOEtTivDf3YhAeFn0WqNhOJfJfvVx2kGU
+ojbw9bzO6Ymmr4wFJHPmcCc2fm7igyQBhFfKK2cIfJAEgKTeNSj7heKcKfggCQDZ3d19Ge7k
+GWTudKMjIpDs54onYUFEdS3fLGOCtG+srusOSPeGiUBEOxAWRFQXv9HAB8EHwQfBB+kC4R1y
+4/Yhqbc7gw8SE0jZ/mTLO9Ge7FWZFi9WPWkHmTtdp9TJhifLNyTa3t7uGRFIr7o4j25rfevj
+HBuQyqpOWzOm7xTyhwdxY61M8hMtdNpBNtdKQ9XlhkFK2Yb99r068sQGwitZvlmh3JWqr3Dr
+5oOY+9Jujb9YtCnI+j2tZ2vnZD7sBOlXF+evO7W+9XFmTpgOCJ8pg86OMIkVhJe7N4AvTaJO
+vR2En6mINl7X9L6XAP6/3SC96uLIhdrAy8rsWwY+CD4IPgg+CD7ImEDWb7U64nS8r5sd4ad8
++CAxgEiSRDW15iv4IDGAdN86GfQpGx8EHwQfBB8EHwQfBB8EHwQfxA/IoFvb3bfO3YPY82bf
+qQE3Al+zPCB9bx4OqI9z+BzmiIM8/LZGWlUPnMe/1ujBp+rQYZDivEHZi+pI8sfdkvO0M4oo
+ihItSKvVorXvrbGmMF8LdHaOOzwENTKQ/FcKfkLkwQU1GhAeEJeUljeof0hKFs6rzrGLDKS4
+YNh/9XDX7EvVofsQHnzHnXDuapUssxmqPxMlij7EHW4bOQg/gy6mjZ6PT4W5b5FStjvl82bo
+/iP/iUnZy8pLkI27LVq5pg/dL/Fd6ajeZcUGwsvyU2/y1yRhy561d5pBCj+1Qu9gwQboBlFK
+taEPXOqkcTxARBvBz0SEH8LwQfBB8EHwQfBB8EHwQZILInp7mzknHjGIDxIxiFSWSZVrvlOV
+VAdk8eM6rXynhUr2gu4BeTIn09bv1lA5FiBBnodw+GtvDOIMDfI5gtxz2XvT+8GQ52AJW58b
+fBB8EHwQfBB8EHwQfBB8EHwQfBB8kKMBwkN7goZB0pOaM4QnTNIfaF6Qz6pDz1I3+8YRfkBV
+WuTbINZY44LUK82RzCrHiWK+xVhAeCW6Xne+sx04ihrqzGqPO2EBTzKT9JlInZlc4wDhiQP+
+vm06IwiDhO8ED3sZ4BkjHBB7Z9dvNUd2eeFveg3bF3kmD5jU4wMJ2qm7t+bxQfBB8EHwQfBB
+8EHwQfBB8EHwQfBB8EHwQY4JSP4byfkiSpDgg0QIwstBNxAfBB8EHwQfBB8EHwQfBB8EHwQf
+BB8EHwQfBB8EHyQykBCjMPBBIgBJwm/RuiD8OyFJTvaKHC0IzzNS4pGLCchR+ZXozLkoz5CE
+t8ikZv69CObLev7v8xf4CZ+Dg4PRguCXeAo+CD4IfsEHwQfBL/gg+CD4BR8EHwS/xF3+A8ir
++VLeOJwSAAAAAElFTkSuQmCC'
 ]
