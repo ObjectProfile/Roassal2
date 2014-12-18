@@ -30,6 +30,17 @@ RTLegendBuilder >> addColoredText: aText color: aColor [
 ]
 
 { #category : #adding }
+RTLegendBuilder >> addLineColor: aColor text: aText [
+	"Associate a color with a text"
+	| g |
+	g := RTGroup new.
+	g add: (RTBox new height: 3; width: 10; color: aColor) element.
+	g add: (RTLabel elementOn: aText).
+	RTHorizontalLineLayout new alignCenter; on: g.
+	group add: g.
+]
+
+{ #category : #adding }
 RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: Color lightGray
 ]
@@ -42,6 +53,12 @@ RTLegendBuilder >> below [
 { #category : #initialization }
 RTLegendBuilder >> defaultOffset [
 	^ 20
+]
+
+{ #category : #accessing }
+RTLegendBuilder >> group [
+	"Return all the elements added by the legend builder"
+	^ group
 ]
 
 { #category : #initialization }
