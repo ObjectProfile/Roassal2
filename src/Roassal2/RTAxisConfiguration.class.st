@@ -17,7 +17,9 @@ Class {
 		'color',
 		'titlePosition',
 		'labelRotation',
-		'lineThickness'
+		'lineThickness',
+		'fromPoint',
+		'toPoint'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -78,6 +80,16 @@ RTAxisConfiguration >> defaultTitlePosition [
 { #category : #configuration }
 RTAxisConfiguration >> doNotRotateLabels [
 	labelRotation := 0
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> fromPoint [
+	^ fromPoint
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> fromPoint: anObject [
+	fromPoint := anObject
 ]
 
 { #category : #action }
@@ -232,6 +244,12 @@ RTAxisConfiguration >> rotateLabels [
 ]
 
 { #category : #accessing }
+RTAxisConfiguration >> step [
+	"Return the step between each tick"
+	^ (self maxValue - self minValue) / self numberOfTicks
+]
+
+{ #category : #accessing }
 RTAxisConfiguration >> tickIntervalForLabel [
 	^ numberOfTicks / numberOfLabels
 ]
@@ -256,6 +274,16 @@ RTAxisConfiguration >> titlePosition: aPoint [
 	"Set the position of the title according to the toPosition when rendering the axis"
 	"The argument is added to the toPosition"
 	titlePosition := aPoint
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> toPoint [
+	^ toPoint
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> toPoint: anObject [
+	toPoint := anObject
 ]
 
 { #category : #configuration }

@@ -17,7 +17,7 @@ RTStackedDataSet >> barShape [
 RTStackedDataSet >> centralDot [
 	^ (RTEllipse new
 		size: 0;
-		color: Color red) element translateTo: (builder axisPointFor: 0 @ 0)
+		color: Color red) element translateTo: (builder getPixelPositionOf: 0 @ 0)
 ]
 
 { #category : #'min and max' }

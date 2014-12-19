@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'extent',
 		'axisConfiguration',
-		'datasets'
+		'datasets',
+		'plugins',
+		'axisX',
+		'axisY'
 	],
 	#category : #'Roassal2-Builder-Charter'
 }
@@ -18,10 +21,16 @@ RTAbstractGrapherBuilder >> add: aDataSet [
 	aDataSet builder: self
 ]
 
+{ #category : #adding }
+RTAbstractGrapherBuilder >> addPlugin: aPlugin [
+	"Add a plugin"
+	plugins add: aPlugin
+]
+
 { #category : #testing }
 RTAbstractGrapherBuilder >> areAxisDefined [
 	"Return true is axis have been defined"
-	^ axisConfiguration notNil
+	^ axisX notNil and: [ axisY notNil ]
 ]
 
 { #category : #accessing }
@@ -31,20 +40,13 @@ RTAbstractGrapherBuilder >> axisConfiguration [
 	^ axisConfiguration
 ]
 
-{ #category : #utility }
-RTAbstractGrapherBuilder >> axisPointFor: aPoint [
-	"Return the position in the view to have the 0 @ 0"
-	| centralPointX centralPointY diffBetweenMaxAndMinX diffBetweenMaxAndMinY |
-	diffBetweenMaxAndMinX := self maxX - self minX.
-	diffBetweenMaxAndMinY := self maxY - self minY.
-	
-	diffBetweenMaxAndMinX = 0 ifTrue: [ diffBetweenMaxAndMinX := 100 ].
-	diffBetweenMaxAndMinY = 0 ifTrue: [ diffBetweenMaxAndMinY := 100 ].
-	
-	centralPointX := aPoint x + ((extent x - aPoint x) * ((aPoint x - self minX) / diffBetweenMaxAndMinX)) asInteger.
-	centralPointY := aPoint y + ((extent y - aPoint y) * ((aPoint y - self minY) / diffBetweenMaxAndMinY)) asInteger.
-	^ centralPointX @ centralPointY negated.
-
+{ #category : #'private-axis' }
+RTAbstractGrapherBuilder >> axisFrom: aPoint to: anotherPoint [
+	"Draw the axis from aPoint to anotherPoint"
+	axisConfiguration fromPoint: aPoint.
+	axisConfiguration toPoint: anotherPoint.
+	axisConfiguration axisFrom: aPoint to: anotherPoint.
+	self resetAxisConfiguration
 ]
 
 { #category : #'public-axis' }
@@ -60,20 +62,29 @@ RTAbstractGrapherBuilder >> axisX [
 						ifTrue: [ 0 ]
 						ifFalse: [ self minX ]);
 		maxValue: self maxX.
-	axisConfiguration axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+]
+
+{ #category : #'private-axis' }
+RTAbstractGrapherBuilder >> axisXFrom: aPoint to: anotherPoint [
+	"Draw the axis from aPoint to anotherPoint"
+	axisX := axisConfiguration.
+	self axisFrom: aPoint to: anotherPoint.
+	
+
 ]
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisXNoLabel [
-	| config centralPoint |
+	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
-	config := RTAxisConfiguration new
+	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: 0;
 					numberOfLabels: 0.
 	centralPoint := self centralPoint.
-	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'public-axis' }
@@ -84,10 +95,10 @@ RTAbstractGrapherBuilder >> axisXTitled: aTitle [
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
-	| config centralPoint |
+	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
-	config := RTAxisConfiguration new
+	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
@@ -96,7 +107,7 @@ RTAbstractGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 	centralPoint := self centralPoint.
-	config axisFrom: 0 @ centralPoint y to: extent x @ centralPoint y
+	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'public-axis' }
@@ -112,7 +123,16 @@ RTAbstractGrapherBuilder >> axisY [
 						ifTrue: [ 0 ]
 						ifFalse: [ self minY ]);
 		maxValue: self maxY.
-	axisConfiguration axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
+	self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
+]
+
+{ #category : #'private-axis' }
+RTAbstractGrapherBuilder >> axisYFrom: aPoint to: anotherPoint [
+	"Draw the axis from aPoint to anotherPoint"
+	axisY := axisConfiguration.
+	self axisFrom: aPoint to: anotherPoint.
+	
+
 ]
 
 { #category : #'public-axis' }
@@ -123,10 +143,10 @@ RTAbstractGrapherBuilder >> axisYTitled: aTitle [
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
-	| config centralPoint |
+	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
-	config := RTAxisConfiguration new
+	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: nbOfTicks;
 					numberOfLabels: nbOfTicks;
@@ -135,13 +155,13 @@ RTAbstractGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ].
 	centralPoint := self centralPoint.
-	config axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
+	self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
 { #category : #utility }
 RTAbstractGrapherBuilder >> centralPoint [
 	"Return the position in the view to have the 0 @ 0"
-	^ self axisPointFor: 0 @ 0
+	^ self getPixelPositionOf: 0 @ 0
 ]
 
 { #category : #utility }
@@ -184,13 +204,30 @@ RTAbstractGrapherBuilder >> extent [
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> extent: aPoint [
+	"Set the size of the graph"
 	extent := aPoint
+]
+
+{ #category : #accessing }
+RTAbstractGrapherBuilder >> getAxisX [
+	^ axisX
+]
+
+{ #category : #accessing }
+RTAbstractGrapherBuilder >> getAxisY [
+	^ axisY
 ]
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> getMaxNumberOfPoints [
 	"Return the maximum number of points any of the dataset has."
 	^ datasets inject: 0 into: [ :max :ds | max max: ds numberOfPoints ]
+]
+
+{ #category : #accessing }
+RTAbstractGrapherBuilder >> getPixelPositionOf: aPoint [
+	"Return the position in pixel in the View for a given data point"
+	^ datasets first getPixelPositionOf: aPoint
 ]
 
 { #category : #'min and max' }
@@ -215,6 +252,9 @@ RTAbstractGrapherBuilder >> initialize [
 	"Collection of data sets"
 	datasets := OrderedCollection new.
 	
+	"Collection of plugins"
+	plugins := OrderedCollection new.
+
 ]
 
 { #category : #accessing }
@@ -249,10 +289,16 @@ RTAbstractGrapherBuilder >> numberOfDataSets [
 	^ datasets size
 ]
 
+{ #category : #utility }
+RTAbstractGrapherBuilder >> renderAllPlugins [
+	plugins do: [ :aPlugin | aPlugin builder: self; render ]
+]
+
 { #category : #hooks }
 RTAbstractGrapherBuilder >> renderIn: aView [
 	self defineAxesIfNecessary.
-	datasets do: [ :aDataset | aDataset renderIn: aView ]
+	datasets do: [ :aDataset | aDataset renderIn: aView ].
+	self renderAllPlugins
 ]
 
 { #category : #'public-axis' }

@@ -113,6 +113,19 @@ RTAbstractDataSet >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue 
 			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
 ]
 
+{ #category : #hooks }
+RTAbstractDataSet >> getPixelPositionOf: aPoint [
+	"Return the position in the Roassal view of a point"
+
+	| anX anY |
+	anX := RTMetricNormalizer new
+		getValue: aPoint x min: 0 max: builder extent x minValue: minX maxValue: maxX.
+	anY := RTMetricNormalizer new
+		getValue: aPoint y min: 0 max: builder extent y negated minValue: minY maxValue: maxY.
+			
+	^ anX @ anY
+]
+
 { #category : #'public - effects' }
 RTAbstractDataSet >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 	"
@@ -263,13 +276,15 @@ RTAbstractDataSet >> renderIn: aView [
 { #category : #utility }
 RTAbstractDataSet >> renderLinesFor: elements in: aView [
 	"Render the lines between elements if necessary"
-	| t |
+	| t l |
 	shouldConnect ifFalse: [ ^ self ].
 
 	t := elements first.
 	elements allButFirst
 		do: [ :tt | 
-			aView add: (lineBuilder edgeFrom: t to: tt).
+			l := lineBuilder edgeFrom: t to: tt.
+			interaction setUpElement: l.
+			aView add: l.
 			t := tt ]
 ]
 

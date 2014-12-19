@@ -29,7 +29,7 @@ RTDoubleGrapherBuilder >> axisYRight [
 						ifTrue: [ 0 ]
 						ifFalse: [ self minYRight ]);
 		maxValue: self maxYRight.
-	axisConfiguration axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
+	self axisFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
 { #category : #'as yet unclassified' }

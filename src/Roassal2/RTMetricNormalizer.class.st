@@ -41,6 +41,12 @@ RTMetricNormalizer >> getNormalizedValues: metricBlock min: min max: max minValu
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
 ]
 
+{ #category : #utility }
+RTMetricNormalizer >> getValue: t min: min max: max minValue: minValue maxValue: maxValue [
+	^ min + ((max - min) * ( (t - minValue) / (maxValue - minValue)))
+			 
+]
+
 { #category : #initialization }
 RTMetricNormalizer >> initialize [
 	super initialize.
@@ -425,7 +431,7 @@ RTMetricNormalizer >> normalizeX: metricBlock min: min max: max minValue: minVal
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
+			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
 			el translateBy: tt @ 0 ] ] 
 ]
 
@@ -520,7 +526,7 @@ RTMetricNormalizer >> normalizeY: metricBlock min: min max: max minValue: minVal
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
+			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
 			el translateBy: 0 @ tt ] ] 
 ]
 
