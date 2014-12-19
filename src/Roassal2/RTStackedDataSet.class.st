@@ -100,7 +100,7 @@ RTStackedDataSet >> renderHistogramIn: aView [
 			maxValue: elements size + 2.	
 
 	"We treat the element with a positive value"
-	positiveElements := elements select: [ :el | (y rtValue: el model) > 0 ].
+	positiveElements := elements select: [ :el | (y rtValue: el model) >= 0 ].
 	positiveElements
 		ifNotEmpty: [
 			RTMetricNormalizer new

@@ -885,9 +885,6 @@ RTGrapherExample >> exampleHistogram2 [
 	"We set a color of the rectangle"
 	ds dotShape rectangle color: Color blue.
 	
-	"All the bar have to be stacked from left to right"
-	ds stackX.
-	
 	"Set the width of a bar"
 	ds barShape color: Color blue; width: 10.
 	b add: ds.
