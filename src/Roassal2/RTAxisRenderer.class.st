@@ -30,6 +30,9 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	RTMetricNormalizer new
 		elements: ticks;
 		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.
+
+	"Ticks should not have any model"
+	ticks do: [ :el | el model: nil ].
 	^ ticks
 ]
 
@@ -123,7 +126,7 @@ RTAxisRenderer >> insertLabelIfNecessaryTo: toPosition [
 	| lbl |
 	self title notEmpty
 		ifTrue: [ 
-			lbl := RTLabel elementOn: self title.
+			lbl := (RTLabel new text: self title) element.
 			self addToView: lbl.
 			lbl translateTo: toPosition - config titlePosition ]
 ]
