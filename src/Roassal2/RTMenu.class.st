@@ -35,6 +35,7 @@ RTMenu >> color: aColor [
 { #category : #accessing }
 RTMenu >> endHighlight [
 	self labelBackgroundColor: self savedLabelBackgroundColor.
+	self label color: Color black.
 ]
 
 { #category : #accessing }
@@ -45,6 +46,11 @@ RTMenu >> executeHighlight [
 { #category : #accessing }
 RTMenu >> executeLockHighlight [
 	self labelBackgroundColor: (self highlightColor alpha: ((self highlightColor alpha) + 0.3)).
+]
+
+{ #category : #accessing }
+RTMenu >> executeTextHighlight [
+	self label color: Color blue.
 ]
 
 { #category : #'as yet unclassified' }
@@ -200,9 +206,9 @@ RTMenu >> update [
 	
 	y := 0.
 	maxWidth := items ifNotEmpty: [(items collect: [ :item | item rawmenu width]) max] ifEmpty: [0].
-	pos1:= parentMenu position + ((((parentMenu width)/2+5)negated)@((parentMenu height)/2+3.5)).
+	pos1:= parentMenu position + ((((parentMenu width)/2 + 5)negated)@((parentMenu height)/2+3.4)).
 	items do: [ :item | y := y + (item rawmenu height).].
-	pos2:= pos1 + ((maxWidth+10)@(y+5)).
+	pos2:= pos1 + ((maxWidth+20)@(y + 5)).
 	self menuBackground: (TRBoxShape new from: pos1 to: pos2; color: (self menuBackgroundColor); strokePaint: nil"(Color gray darker alpha: 0.3)").
 	
 	view canvas addFixedShape: (self menuBackground).

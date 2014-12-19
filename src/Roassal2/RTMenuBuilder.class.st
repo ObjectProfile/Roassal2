@@ -13,7 +13,8 @@ Class {
 	#name : #RTMenuBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'parentMenus'
+		'parentMenus',
+		'closingSubmenuFlag'
 	],
 	#category : #'Roassal2-Builder-Menu'
 }
@@ -60,8 +61,10 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor [
 { #category : #utility }
 RTMenuBuilder >> createParentMenu: aTitle background: aColor highlightColor: aColor2 [
 	| lbl index menu |
+	
 	index := view canvas fixedShapes 
-						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 5) ].
+						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
+						
 	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +10) @ 20.
 	lbl color: Color black.
 	view canvas addFixedShape: lbl.
@@ -70,9 +73,24 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor highlightColor: aCo
 	self addParentMenu: menu.
 	lbl element: (menu).
 	
-	lbl when: TRMouseEnter do: [ :event |  self enterSubmenuOf: lbl].
-	lbl when: TRMouseClick do: [ :e | self showSubmenuOf: lbl].
-
+	lbl element labelBackground when: TRMouseEnter do: [ :event | self enterSubmenuOf: lbl].
+	lbl element labelBackground when: TRMouseClick do: [ :e | self showSubmenuOf: lbl].
+	
+	lbl element labelBackground when: TRMouseLeave do: [ :e |	
+		| anim |
+		lbl element isLocked ifFalse: [ 
+			anim := RTNopAnimation new
+				waitFor: 0.1 after: [ 
+					closingSubmenuFlag ifTrue: [ 
+						lbl element hideItems.
+						lbl element endHighlight
+						]
+					].
+			view addAnimation: anim.
+			self signalUpdate.
+			]
+		].
+	
 	^ lbl
 ]
 
@@ -89,7 +107,7 @@ RTMenuBuilder >> createView [
 
 { #category : #utility }
 RTMenuBuilder >> enterSubmenuOf: lbl [
-	| menu labels |
+	| menu labels|
 	
 	menu := lbl element.
 	
@@ -98,6 +116,7 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 	menu hideAll.
 	menu isLocked: false.
 	menu isOpen: true.
+	closingSubmenuFlag := true.
 	
 	
 	menu executeHighlight.
@@ -109,25 +128,33 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 		m ].
 
 	labels doWithIndex: [ :l :i | | p |
-		p := ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*i) +3.5).
+		p := ((lbl position x) + (l width/2) - (lbl width/2) + 5)@(lbl position y + (l height*i) +3.5).
 		l translateTo: p"((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1))".
 		"view addAnimation: (RTLinearMove to: p during: 0.2 on: l)."
 	].
 
 	menu update.
+	self signalUpdate.
 		
-	menu labelBackground when: TRMouseLeave do: [ :e |
-			menu isLocked ifFalse: [  
-				menu endHighlight.
-				self signalUpdate.]].
+	lbl element menuBackground when: TRMouseEnter do: [ :e | 
+				closingSubmenuFlag := false.
+				self signalUpdate].
 			
-	menu menuBackground when: TRMouseLeave do: [ :e | 
-			menu isLocked ifFalse: [
-				menu hideItems.
-				menu endHighlight.
-				self signalUpdate]].
-
-	self signalUpdate. 
+	lbl element menuBackground when: TRMouseLeave do: [ :e | 
+			| anim |
+			closingSubmenuFlag := true.
+			anim := RTNopAnimation new
+				waitFor: 0.1 after: [ 
+					lbl element isLocked ifFalse: [
+						closingSubmenuFlag ifTrue: [  
+							lbl element hideItems.
+							lbl element endHighlight.
+							]
+						]
+					].
+			view addAnimation: anim.
+			self signalUpdate
+			].
 ]
 
 { #category : #hooks }
@@ -135,6 +162,7 @@ RTMenuBuilder >> initialize [
 	super initialize.
 	self configureView: view.
 	parentMenus := OrderedCollection new.
+	closingSubmenuFlag := false.
 ]
 
 { #category : #utility }
@@ -157,14 +185,14 @@ RTMenuBuilder >> menu: aTitle background: aColor highlightColor: aColor2 callbac
 	"Return a trachel shape, in which the callback has been set up"
 	| lbl index |
 	index := view canvas fixedShapes 
-						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 5) ].
+						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
 	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +10) @ 20.
 	lbl color: Color black.
 	view canvas addFixedShape: lbl.
 	lbl element: (RTMenu new view: view; label: lbl; menuBackgroundColor: aColor; labelBackgroundShapeAndColor: aColor; highlightColor: aColor2 ).
 	
 	lbl when: TRMouseClick do: [ :event | callback value.].
-	lbl when: TRMouseEnter do: [ :event | lbl element executeHighlight. self signalUpdate. ].
+	lbl when: TRMouseEnter do: [ :event | closingSubmenuFlag := false. lbl element executeHighlight; executeTextHighlight. self signalUpdate. ].
 	lbl when: TRMouseLeave do: [ :event | lbl element endHighlight. self signalUpdate. ].
 
 	^ lbl
@@ -285,7 +313,7 @@ RTMenuBuilder >> showSubmenuOf: lbl [
 		].
 
 		labels doWithIndex: [ :l :i | | p |
-			p := ((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*i) +3.5).
+			p := ((lbl position x) + (l width/2) - (lbl width/2) + 5)@(lbl position y + (l height*i) +3.5).
 			l translateTo: p."((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1))".
 			"view addAnimation: (RTLinearMove to: p during: 0.2 on: l)."
 		].

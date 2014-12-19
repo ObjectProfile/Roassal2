@@ -42,7 +42,8 @@ Class {
 		'objects',
 		'axisSize',
 		'highlight',
-		'polygons'
+		'polygons',
+		'shapes'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
