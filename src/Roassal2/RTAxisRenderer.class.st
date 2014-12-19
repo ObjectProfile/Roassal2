@@ -70,7 +70,8 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	labels := labelShape elementsOn: (0 to: self numberOfLabels).
 	labels withIndexDo: [ :label :i | 
 		self moveLabel: label againstTick: (labelledTicks at: i).
-		self rotateLabelIfNecessary: label ].
+		self rotateLabelIfNecessary: label.
+		label model: nil ].
 	
 	self addAllToView: labels.	"We insert the label if necessary"
 	self insertLabelIfNecessaryTo: toPosition.
