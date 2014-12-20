@@ -122,8 +122,5 @@ RTArrowedLine >> width: aValue [
 
 { #category : #public }
 RTArrowedLine >> withOffsetIfMultiple [
-	| ap |
-	ap := RTShorterDistanceWithOffsetAttachPoint new.
-	line attachPoint: ap.
-	head attachPoint: ap
+	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new.
 ]
