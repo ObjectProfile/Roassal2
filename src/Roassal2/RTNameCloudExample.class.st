@@ -20,7 +20,7 @@ b  view canvas.
 Class {
 	#name : #RTNameCloudExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-ExampleBrowser'
+	#category : #'Roassal2-Builder-NameCloud'
 }
 
 { #category : #sources }

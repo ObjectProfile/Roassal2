@@ -48,8 +48,13 @@ RTAbstractExample >> installOn: aView [
 RTAbstractExample >> installTitle: aTitle code: sourceCode [
 	"SourceCode should be a complete example, executable within a workspace"
 	
-	| canvas icon64Mime stream | 
-	canvas := (Compiler evaluate: sourceCode).
+	| viewOrBuilder canvas icon64Mime stream window | 
+	viewOrBuilder := (Compiler evaluate: sourceCode).
+	window := viewOrBuilder open.
+	viewOrBuilder class == RTView 
+		ifTrue: [ canvas := viewOrBuilder canvas ]
+		ifFalse: [ canvas := viewOrBuilder view canvas ].
+	
 	canvas morph ifNil: [ self error: 'You have forgotten to open the view!' ].
 	
 	(self class methodDict includesKey: ('example', aTitle) asSymbol)
@@ -63,7 +68,7 @@ RTAbstractExample >> installTitle: aTitle code: sourceCode [
 				onStream: stream .
 	icon64Mime := (Base64MimeConverter mimeEncode: stream contents readStream) contents.
 	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, '''' classified: 'icons'.
-	
+	window delete.
 ]
 
 { #category : #installing }

@@ -1,29 +1,34 @@
 "
-RTMondrianNewExample new installTitle: 'SystemComplexity' 
+RTMondrianExample new installTitle: 'ClusterLayout' 
 		code:
-		'| b |
-	b := RTMondrian new.
-	b shape rectangle 
-				withBorder;
-				width: [ :cls | cls numberOfVariables * 5];
-				height: #numberOfMethods;
-				linearFillColor: #numberOfLinesOfCode within: RTObject withAllSubclasses.
-	b nodes: RTObject withAllSubclasses.
-	b edges connectFrom: #superclass.
-	b layout tree.
-	b build.
-	b open.
-	^ b view canvas'
+		'
+| b |
+b := RTMondrian new.
+
+b shape circle.
+b nodes: RTObject withAllSubclasses.
+
+b shape line color: (Color blue alpha: 0.4).
+b edges connectFrom: #superclass.
+
+b normalizer
+	objects: RTObject withAllSubclasses;
+	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
+	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
+	
+b layout cluster.
+b build.
+^ b'
 	
 "
 Class {
-	#name : #RTMondrianNewExample,
+	#name : #RTMondrianExample,
 	#superclass : #RTAbstractExample,
 	#category : #'Roassal2-Builder-NewMondrian'
 }
 
 { #category : #sources }
-RTMondrianNewExample >> exampleArrowedLines [
+RTMondrianExample >> exampleArrowedLines [
 
 | b |
 b := RTMondrianViewBuilder new.
@@ -40,7 +45,7 @@ b build.
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleArrowedLinesIcon [
+RTMondrianExample >> exampleArrowedLinesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAHX0lEQVR4XuWdh3IqMQxF8/9f
 l957770X8zjMU0Zx5AWy3mWNNONJgbCgu5Kuip2ZXs+/dElm/KvAPyD+xT8g/gHxL/4B8Q+I
 f/EPiH9A/It/QPwDUqw8Pj6GtbW1sLOz02Pt7e0F/4BMUFZXV7/BkHV+fh78A9Kw7O/vh+3t
@@ -80,7 +85,7 @@ c5sY+gfEv/gHxL/4B8Q/IP7FPyD+AfEv/gHxD4h/aUb+Ac60UX9EAJ28AAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleClasses [
+RTMondrianExample >> exampleClasses [
 
 	| b |
 	b := RTMondrianViewBuilder new.
@@ -96,7 +101,7 @@ RTMondrianNewExample >> exampleClasses [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleClassesIcon [
+RTMondrianExample >> exampleClassesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAADOElEQVR4XuXdTW7CMBBAYW7K
 UdjBMdjBLWDHMWAHtyCtkaYaTcexQ5zEzpuN1SSklT/s+Cd2N1237rher93lcnm38vduOj4I
 H4QPwgfhg9QSj8eju9/vfJDcCJklmZablv6d9hgf5DcjQrUSqpfb7fbebrd/P9vzJaqfcA/J
@@ -117,7 +122,160 @@ rlx6vgkAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleColoredNodes [
+RTMondrianExample >> exampleClusterLayout [
+
+| b |
+b := RTMondrian new.
+
+b shape circle.
+b nodes: RTObject withAllSubclasses.
+
+b shape line color: (Color blue alpha: 0.4).
+b edges connectFrom: #superclass.
+
+b normalizer
+	objects: RTObject withAllSubclasses;
+	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
+	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
+	
+b layout cluster.
+b build.
+^ b
+]
+
+{ #category : #icons }
+RTMondrianExample >> exampleClusterLayoutIcon [
+	^ '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'
+]
+
+{ #category : #sources }
+RTMondrianExample >> exampleColoredNodes [
 
 	| b |
 	b := RTMondrian new.
@@ -134,7 +292,7 @@ RTMondrianNewExample >> exampleColoredNodes [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleColoredNodesIcon [
+RTMondrianExample >> exampleColoredNodesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFhklEQVR4XuWay07cQBBF/WdI
 +SY2QZHYZsEy6yTrfER+Iksk3u83DK8Bppw5DnfUNMYzA3Z43Gu1bI/tcnWd7up2a4qy9Ndb
 UuEfAn8g/vIH4g/EX/5A/IH4yx+IPxB/+QPxB+IvfyD+8gfiD8Rf/kD8gfjLH4g/EH/5A/EH
@@ -166,7 +324,7 @@ vwAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleForce [
+RTMondrianExample >> exampleForce [
 	| b |
 	b := RTMondrian new.
 
@@ -182,7 +340,7 @@ RTMondrianNewExample >> exampleForce [
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleForceAndNested [
+RTMondrianExample >> exampleForceAndNested [
 	| b |
 	b := RTMondrian new.
 	b nodes: RTShape withAllSubclasses forEach: [ :cls |
@@ -200,7 +358,7 @@ RTMondrianNewExample >> exampleForceAndNested [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleForceAndNestedIcon [
+RTMondrianExample >> exampleForceAndNestedIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAMV0lEQVR4XuWdaUyVRxfHb/qt
 X5qYfrI1tWkTo/1Yo4nGRNO0H2xqa5oaIy1o3KoxirxSXFgU2RQFUagiggvIS0FQUFnEDQXc
 UBARlE12QUBRXLAuM53/0Evv8jz3eZ67wHOZSU7gPtt9nvnNmTlzzpnnGigVv+ipGMSvAvGB
@@ -264,7 +422,7 @@ ogcgZ86ckX2zjvhAhhEIXk3x+++Z4ltZegFSVtZCt2/vER+IO1hZlpNF8YGIPzEUC4j4RXwg
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleForceIcon [
+RTMondrianExample >> exampleForceIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAGXklEQVR4XuWdh3LjOgxF9f8f
 md5776HfHk+QwWNAFZuUKAEzmkwi21rjEu0C5DarlX+pSRr/KvAPiH/xD4h/QPyLf0D8A+Jf
 /APiHxD/4h8Q/4D4F/+AdMv393c4PDwMu7u7K66zs7PgH5AJRYMh19XVVfAPyEQSgyGXf0Aq
@@ -300,7 +458,7 @@ MAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleInnerAndPopup [
+RTMondrianExample >> exampleInnerAndPopup [
 	| b |
 	b := RTMondrian new.
 	b shape rectangle withTextAbove.
@@ -313,7 +471,7 @@ RTMondrianNewExample >> exampleInnerAndPopup [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleInnerAndPopupIcon [
+RTMondrianExample >> exampleInnerAndPopupIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAANv0lEQVR4XuWd+Y8URRvHR/8W
 r79AoxGD+pOgxMQEfhNBjQRR3GVDMAQWgUUE5BAMCLycgsp93+wulxy7K4fIFQIeu2tAELnC
 RuGZtz/FPpPapnume6bn2K1KKtUz01XPU/Wtqu5+vs/Tk/riiy9kx44dsmLFCtm9e7esW7dO
@@ -384,7 +542,7 @@ AAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleLayoutPartition [
+RTMondrianExample >> exampleLayoutPartition [
 | b classes |
 classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
 
@@ -402,7 +560,7 @@ b build.
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleLayoutPartitionIcon [
+RTMondrianExample >> exampleLayoutPartitionIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAGI0lEQVR4XuWZh04kOxBF+f8v
 IIPIOeecc84555wzxdtjPY9aaGYHhtl98G5JVjftdrV9T7nKQMLbm759J0vQl0AfiL7pA9EH
 om/6QPSB6Js+EH0g+qYPRB+IvukD0Td9IPpA9E0fiD4QfdMHog9E3/SB6APRN30g+qYPRB+I
@@ -437,7 +595,7 @@ SUVORK5CYII='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleLegendInPopup [
+RTMondrianExample >> exampleLegendInPopup [
 	| view |
 
 	view := RTMondrianViewBuilder new.
@@ -487,7 +645,7 @@ RTMondrianNewExample >> exampleLegendInPopup [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleLegendInPopupIcon [
+RTMondrianExample >> exampleLegendInPopupIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADgElEQVR4XuWbsW7qMBiF+4oI
 0T4G5QloxVMwdGJC3WDswMAEA4JSCRaoOrWVKE9A7ZsT4SpNY8dX1dUlfEc6SmL/RFE+Y/tP
 nAtr+TolXfBvAR8IX3wgfCB88YHwgfDFB8IHwhcfCB8IX3wgfPGB8IHwxQfCB8IXHwgfCF98
@@ -509,7 +667,7 @@ hA+ELz4QPhC++ED44gPhA+GLD4QPhC8+ED4QvvhA+ED44gPhiw+ED4QvPhA+EL74QPhA+OID
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleNestingAndPopup [
+RTMondrianExample >> exampleNestingAndPopup [
 	| b |
 	b := RTMondrian new.
 	b interaction noInteractions.
@@ -535,7 +693,7 @@ RTMondrianNewExample >> exampleNestingAndPopup [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleNestingAndPopupIcon [
+RTMondrianExample >> exampleNestingAndPopupIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACO0lEQVR4XuXbzYrCMBQGUN//
 IXXnUsGFgos6c4VAJjQ/ZaDang9KMbZReuJNK+3h9fLzTTn4h8AH8eOD+CB+fBAfxI8P4oP4
 8UF8ED8+iB8fxAfx44P4IH58EB/Ejw/ig/jxQfz4ID6IHx/EB/Hjg/ggfnwQH8TPdkDO5/P0
@@ -551,7 +709,7 @@ xAfx44P48UF8ED+t/AB/sRc/XKQU+AAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleNestingAndTitle [
+RTMondrianExample >> exampleNestingAndTitle [
 
 	| b |
 	b := RTMondrianViewBuilder new.
@@ -564,7 +722,7 @@ RTMondrianNewExample >> exampleNestingAndTitle [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleNestingAndTitleIcon [
+RTMondrianExample >> exampleNestingAndTitleIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAQWUlEQVR4XuWd19MURRfG9z/y
 gj/BK26UKykLigKqBAuJAgWWAVERVLKgIiAiQZQowQQSDICBoEhWsERKgiKiqID0fP1r32e/
 ppmZndmd2Xdfpqu6zs7udHw6zJznnN7a8uXLzVdffWX279/v5KeffmqWLFliIhs2b95s+vfv
@@ -647,7 +805,7 @@ niF+rD4g3Rf+B8DXE47u+JxlAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleNormalization [
+RTMondrianExample >> exampleNormalization [
 
 		| b |
 	b := RTMondrian new.
@@ -665,7 +823,7 @@ b build.
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleNormalizationIcon [
+RTMondrianExample >> exampleNormalizationIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAPp0lEQVR4XuWdW2xcxRnHj3lA
 rZAaHugLPFRBfQgvlehDHypix1CgJIEC4R4IRUQVrYgq1KoghLMOuZEQwiVQUhFfco9zMQlQ
 kgbb67tjJ8G5IAfHeH13wA5Z26y9vu13ev6znuNvZs96dxNf1jmf9NOe68zs/u35Zr6ZM8cw
@@ -745,7 +903,7 @@ dUYAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> examplePartitioningAndNormalization [
+RTMondrianExample >> examplePartitioningAndNormalization [
 | b classes |
 classes := RTLayout withAllSubclasses, RTBuilder withAllSubclasses, RTShape withAllSubclasses.
 
@@ -770,7 +928,7 @@ b build.
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> examplePartitioningAndNormalizationIcon [
+RTMondrianExample >> examplePartitioningAndNormalizationIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAI8UlEQVR4XuWZa0yb1xnH+bov
 u3WfknXTUm2q1lTq9mXTtGbtpFVZpTTaKrQsyzSxrIm2pcskhtYmSxOWiCxV27VNVxISpYQV
 kjikTVZSwNzB2FxtTDA2NtixzcUYbK7G8e3/zs9BNgZs4oJT7Dz/V+g1533fc/ud85znOSdL
@@ -818,7 +976,7 @@ eiD6P5rJTjj+5tZzAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleRadialTree [
+RTMondrianExample >> exampleRadialTree [
 | b |
 	b := RTMondrian new.
 	b shape circle size: 10.
@@ -830,7 +988,7 @@ RTMondrianNewExample >> exampleRadialTree [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleRadialTreeIcon [
+RTMondrianExample >> exampleRadialTreeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAK00lEQVR4XuWdBZPkOAyF9///
 gmVmZmaqZWZmZkbP3ZcaTflyBjlx0pm2qqZ2djud7uhZ0hPYO2NionwZkswoXwXlA1K+lA9I
 +YCUL+UDUj4g5Uv5gJQPSPlSPiDlA1K+lA9I+VI+IOUD8l/5+/ev+fr1q8l1P+41a9asiTNn
@@ -887,7 +1045,7 @@ eVqoeUse4lsAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleSimpleNesting [
+RTMondrianExample >> exampleSimpleNesting [
 
 	| b |
 	b := RTMondrian new.
@@ -901,7 +1059,7 @@ RTMondrianNewExample >> exampleSimpleNesting [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleSimpleNestingIcon [
+RTMondrianExample >> exampleSimpleNestingIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAACz0lEQVR4XuWZzY3CMBCFqZY2
 aIACoAyogSMFUACcOMGJU7L7VjvS7Mh/sPwk+Z40smKPEuSP57GTWd/zNSTN+FPAB8IXHwgf
 CF98IHwgfPGB8IHwxQfCB8IXHwhffCB8IHzxgfCB8MUHwgfCFx8IHwhffCB88YHwgfDFB8IH
@@ -920,7 +1078,7 @@ A+GLD4QPhC8+ED4QvvhA+OID4QPhiw+ED4QvPhA+EL74QPhA+OID4YsPhA+ELz4QPhC+nqov
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleSimpleTree [
+RTMondrianExample >> exampleSimpleTree [
 
 	| b |
 	b := RTMondrian new.
@@ -933,7 +1091,7 @@ RTMondrianNewExample >> exampleSimpleTree [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleSimpleTreeIcon [
+RTMondrianExample >> exampleSimpleTreeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAGAUlEQVR4XuWb6W7jMAyE/f4P
 2f7qfd+3u/sFOwVBSLGcKK23Q8CwHZISqRFFWnaGz09/WhIN/kPgD4g/+QPiD4g/+QPiD4g/
 +QPiD4g/+QPiD4g/+QPiT/6A+APiT/6A+APiT/6A+APiT/6A+APiT/6A+JM/IP6A+JM/IP6A
@@ -967,7 +1125,7 @@ QPzJHxB/QPzJHxB/8gfEHxB/8gfEHxB/8gfEHxB/8gfEHxB/8gfEn/wB8QfEn/wB8QfEn/wB
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleSimpleTreeLayout [
+RTMondrianExample >> exampleSimpleTreeLayout [
 
 
 | b |
@@ -981,7 +1139,7 @@ RTMondrianNewExample >> exampleSimpleTreeLayout [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleSimpleTreeLayoutIcon [
+RTMondrianExample >> exampleSimpleTreeLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAFQUlEQVR4XuWbuU7sMBSG82S8
 Ei1ILAUSPAodLRJi6aCkQKJBghKExL5vnstn3YNyfZ0ZJ/FkwvxHGiVxvByfL7b/OFAMBvrW
 Jyv0Q6APRN/0gegD0Td9IPpA9E0fiD4QfdMHog9E3/SB6Js+EH0g+qYPRB+IvukD0Qeib/pA
@@ -1011,7 +1169,7 @@ QPRNH4g+EH3TB6IPRN/0gegD0Td9IPpA9E0fiL5F7A9htB21NeOvdgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> exampleSystemComplexity [
+RTMondrianExample >> exampleSystemComplexity [
 
 	| b |
 	b := RTMondrian new.
@@ -1028,7 +1186,7 @@ RTMondrianNewExample >> exampleSystemComplexity [
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> exampleSystemComplexityIcon [
+RTMondrianExample >> exampleSystemComplexityIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHUUlEQVR4XuWc2U4UQRSG5+Xw
 FUw08g7IpoKaiMhTqIlxueNKBVTkTm5NlIjirrgji4KgWG19Fc6kpulmpmE25z/JSXdPd9dy
 vlrOqe6eUpLoSztJSd8E+kD0RR+IPhB90QeiD0Rf9IHoA9EXfSD6QPRFH4i+6APRB6Iv+kD0
@@ -1068,7 +1226,7 @@ A9EXfSD6QPRFH4g+EH3RB9LR8g/dmWDi7HSqOwAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTMondrianNewExample >> examplenestedTree [
+RTMondrianExample >> examplenestedTree [
 
 	| b |
 	b := RTMondrian new.
@@ -1079,11 +1237,12 @@ RTMondrianNewExample >> examplenestedTree [
 		b layout cluster.
 	].
 	b layout grid.
+	b build.
 	^ b view 
 ]
 
 { #category : #icons }
-RTMondrianNewExample >> examplenestedTreeIcon [
+RTMondrianExample >> examplenestedTreeIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAJtElEQVR4XuWd6Y7UOhCF/bTA
 sA4Chp1h2Pd9fRz+It4BCYnXmL73a6nmunMTuxanO91pyYKGpGP7VJ1aXHbSYjH/z5Q+6fv3
 74ttab9+/Tr++fPn8Tb12drUgFy/fn3x9OnTlX87derUzgLy4MGDZZPvh4eHyzZ0/Zs3b5at
@@ -1134,7 +1293,7 @@ rccdLqVoJullMQiMfP5aOO9JD6X97dFXXWs0Vs7T5U9Nv7fK7UWysQOtXvndQhO7No/vbObH
 QmCC'
 ]
 
-{ #category : #'as yet unclassified' }
-RTMondrianNewExample >> label [
+{ #category : #accessing }
+RTMondrianExample >> label [
 	^ 'Mondrian'
 ]
