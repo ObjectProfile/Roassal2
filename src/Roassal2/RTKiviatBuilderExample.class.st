@@ -22,7 +22,8 @@ Class {
 
 { #category : #sources }
 RTKiviatBuilderExample >> exampleColored [
-b := RTKiviatBuilder new.
+	| b n |
+	b := RTKiviatBuilder new.
 	b objects: RTAbstractCircleLayout withAllSubclasses.
 	
 	n := RTMultiLinearColorForIdentity new objects: (b objects).
