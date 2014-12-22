@@ -228,6 +228,22 @@ RTMenuBuilder >> menu: aTitle subcheckmenu: menuname background: color callback:
 ]
 
 { #category : #public }
+RTMenuBuilder >> menu: aTitle subcheckmenu: menuname callback: callback [
+	| checkmenu |
+	checkmenu := nil.
+	checkmenu := self
+		 menu: aTitle
+		 submenu: menuname
+		 callback: [ 
+			checkmenu selected: checkmenu selected not.
+			callback value: checkmenu].
+	checkmenu after: [ :menu | 
+		menu text: checkmenu label.
+		self signalUpdate].
+	^ checkmenu.
+]
+
+{ #category : #public }
 RTMenuBuilder >> menu: aTitle subcheckmenus: menus background: color [
 	"format for menus
 	{'Title'->[:m | do something ]}"

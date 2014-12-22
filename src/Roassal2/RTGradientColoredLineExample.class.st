@@ -46,6 +46,8 @@ RTGradientColoredLineExample >> exampleA [
 
 	elem1 := (RTEllipse new color: (Color blue alpha:0.3); size:20) elementOn: 1.
 	elem2 := (RTEllipse new color: (Color red alpha:0.9); size:20) elementOn: 2.
+	elem1 @ RTDraggable.
+	elem2 @ RTDraggable.
 	elem2 translateBy: 300@0.
 	v add: elem1.
 	v add: elem2.

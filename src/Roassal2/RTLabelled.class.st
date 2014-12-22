@@ -55,6 +55,11 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #visitor }
+RTLabelled >> accept: aVisitor with: args [
+	aVisitor visitLabelledInteraction: self with: args
+]
+
 { #category : #accessing }
 RTLabelled >> below [
 	position := #below

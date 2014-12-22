@@ -71,8 +71,8 @@ RTKiviatBuilder >> addMetric: blockOrSymbol [
 RTKiviatBuilder >> addNodesAndEdgesToView [
 "add to the view the chart nodes created"
 	kiviatNodes do: [ :kn |
-		view addAll: kn edgeElements. 
-		view addAll: kn nodeElements.
+		view addAll: kn edgeKiviatElements. 
+		view addAll: kn nodeKiviatElements.
 		]
 ]
 
@@ -83,12 +83,13 @@ RTKiviatBuilder >> addObject: anObject [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> axis: aRTKiviatMetric [
-"creation of an metric axis"
-	| config centralPoint |
-	kiviatMetrics := kiviatMetrics copyWith: aRTKiviatMetric.	
-		
-	aRTKiviatMetric maxValue: ((objects collect: [ :p | (metrics at: (kiviatMetrics indexOf:(aRTKiviatMetric)))  rtValue: p ]) max).
-	aRTKiviatMetric minValue: ((objects collect: [ :p | (metrics at: (kiviatMetrics indexOf:(aRTKiviatMetric)))  rtValue: p]) min).
+"creation of a metric axis"
+	| config centralPoint allValues |
+	kiviatMetrics add: aRTKiviatMetric.	
+	
+	allValues := (objects collect: [ :p | (aRTKiviatMetric named)  rtValue: p ]).	
+	aRTKiviatMetric maxValue: ( allValues max).
+	aRTKiviatMetric minValue: ( allValues min).
 		
 	config := RTAxisConfiguration new
 					builder: self;
@@ -121,8 +122,8 @@ RTKiviatBuilder >> buildAxis [
 	| angle |
 	angle := 0.
 	
-	(1 to: metrics size) do: [ :i | 
-		self axis: (RTKiviatMetric new block: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize) ].
+	metrics doWithIndex: [ :m :i | 
+		self axis: (RTKiviatMetric new block: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize; named: m) ].
 ]
 
 { #category : #view }
@@ -171,25 +172,25 @@ RTKiviatBuilder >> executeHighlight [
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 "define the alpha values of the highlighted and others chart nodes to the view"
-	((kiviatNodes flatCollect: [ :kn | kn nodeElements]) asGroup) do: [  :e | 
-		e @ (RTShowLabel new labelledInteraction: (RTLabelled new text: [ :el | el named])).
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
+		e @ (RTShowLabel new labelledInteraction: (RTLabelled new text: [ :el | el kiviatNode named])).
 		].
 	
-	((kiviatNodes flatCollect: [ :kn | kn nodeElements]) asGroup)  when: TRMouseEnter do: [  :evt | 
-		(kiviatNodes select: [ :kn | kn named = evt element model named ]) do: [ :kn |
-			kn nodeElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
-			kn edgeElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup)  when: TRMouseEnter do: [  :evt | 
+		(kiviatNodes select: [ :kn | kn named = evt element model kiviatNode named ]) do: [ :kn |
+			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
+			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
 			view signalUpdate].
-		(kiviatNodes select: [ :kn | kn named ~= evt element model named ]) do: [ :kn |
-			kn nodeElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
-			kn edgeElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
+		(kiviatNodes select: [ :kn | kn named ~= evt element model kiviatNode named ]) do: [ :kn |
+			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
+			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
 			view signalUpdate].		
 		].
 	
-	((kiviatNodes flatCollect: [ :kn | kn nodeElements]) asGroup) when: TRMouseLeave do: [  :evt | 
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) when: TRMouseLeave do: [  :evt | 
 		kiviatNodes do: [ :kn |
-			kn nodeElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
-			kn edgeElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
+			kn nodeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
+			kn edgeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
 			view signalUpdate]
 		].
 ]
@@ -204,7 +205,7 @@ RTKiviatBuilder >> executePolygons [
 RTKiviatBuilder >> executePolygonsColor: alpha [
 "define the alpha value and create polygons"
 	kiviatNodes do: [  :kn | 
-		view add: ((RTPolygon new borderColor: ((kn nodeElements first color) alpha: alpha);  color: ((kn nodeElements first color)alpha: alpha); vertices: ((kn nodeElements collect: [ :ne | ne position ]) asArray)) elementOn: kn).
+		view add: ((RTPolygon new borderColor: ((kn nodeKiviatElements first color) alpha: alpha);  color: ((kn nodeKiviatElements first color)alpha: alpha); vertices: ((kn nodeKiviatElements collect: [ :ne | ne position ]) asArray)) elementOn: kn).
 		]
 
 ]
@@ -250,7 +251,7 @@ RTKiviatBuilder >> metrics [
 { #category : #accessing }
 RTKiviatBuilder >> node: anRTKiviatNode [
 "a chart node is represented by a set of elements according to the metrics values and connected by edges.
- Finish the creation of a chart node, creating elements in the view in edges."
+ Finish the creation of a chart node, creating elements in the view and edges."
 | nodeElems edgeElems shapeNode shapeEdge |
 
 	kiviatNodes add: anRTKiviatNode.
@@ -261,7 +262,7 @@ RTKiviatBuilder >> node: anRTKiviatNode [
 	shapeEdge := anRTKiviatNode shapeEdge. 
 	
 	kiviatMetrics do: [ :m |
-		nodeElems add: ((shapeNode) elementOn: ( RTKiviatElement new named:(anRTKiviatNode named); position: (m modelBlock value: (self getNormalizedValue: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))  min: 0  max: (m maxSize)  minValue: 0  maxValue:(m maxValue))); kiviatNode: anRTKiviatNode; value: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))) ).
+		nodeElems add: ((shapeNode) elementOn: ( RTKiviatElement new metric:(m named); position: (m modelBlock value: (self getNormalizedValue: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))  min: 0  max: (m maxSize)  minValue: 0  maxValue:(m maxValue))); kiviatNode: anRTKiviatNode; value: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))) ).
 		].
 	
 	anRTKiviatNode addNodeElements: nodeElems.	

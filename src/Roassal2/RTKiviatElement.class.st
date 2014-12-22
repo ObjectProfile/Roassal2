@@ -1,11 +1,33 @@
+"
+A RTKiviatElement is one element in the view. It has a reference on its kiviatNode, the name of the metric, its value and it position.
+
+Instance Variables
+	kiviatNode:		<Object>
+	metric:		<Object>
+	position:		<Object>
+	value:		<Object>
+
+kiviatNode
+	- xxxxx
+
+metric
+	- xxxxx
+
+position
+	- xxxxx
+
+value
+	- xxxxx
+
+"
 Class {
 	#name : #RTKiviatElement,
 	#superclass : #RTObject,
 	#instVars : [
-		'named',
+		'kiviatNode',
+		'metric',
 		'value',
-		'position',
-		'kiviatNode'
+		'position'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
@@ -26,13 +48,13 @@ RTKiviatElement >> kiviatNode: anRTKiviatNode [
 ]
 
 { #category : #accessing }
-RTKiviatElement >> named [
- ^ named
+RTKiviatElement >> metric [
+ ^ metric
 ]
 
 { #category : #accessing }
-RTKiviatElement >> named: aString [
- named:= aString
+RTKiviatElement >> metric: aBlockOrSymbol [
+ metric:= aBlockOrSymbol
 ]
 
 { #category : #accessing }

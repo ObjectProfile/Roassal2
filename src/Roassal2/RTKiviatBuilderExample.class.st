@@ -28,7 +28,7 @@ RTKiviatBuilderExample >> exampleColored [
 	b objects: RTAbstractCircleLayout withAllSubclasses.
 	
 	n := RTMultiLinearColorForIdentity new objects: (b objects).
-	b shape circle color: [ :value | n rtValue: value named]; size: 10.
+	b shape circle color: [ :value | n rtValue: value kiviatNode named]; size: 10.
 
 	b addMetric: #numberOfLinesOfCode.
 	b addMetric: #numberOfMethods.
@@ -111,7 +111,7 @@ RTKiviatBuilderExample >> exampleColored3 [
 	b addMetric: #numberOfVariables.
 	b build.
 	myKiviatNodesElems := (b view elements select: [ :e | (e model isKindOf: RTKiviatElement)]).
-	b objects do: [:o | m:= myKiviatNodesElems select: [ :e | (e model named name= o name)]. col := 	(Color random alpha: 0.6). m do: [:e | e color: col]].
+	b objects do: [:o | m:= myKiviatNodesElems select: [ :e | (e model kiviatNode named name= o name)]. col := (Color random alpha: 0.6). m do: [:e | e color: col]].
 	
 	^ b view
 ]
@@ -263,7 +263,7 @@ RTKiviatBuilderExample >> exampleWithArea [
 	b := RTKiviatBuilder new.
 	b objects: RTAbstractCircleLayout withAllSubclasses.
 	n := RTMultiLinearColorForIdentity new objects: (b objects).
-	b shape circle color: [ :value | n rtValue: value named]; size: 10.
+	b shape circle color: [ :value | n rtValue: value kiviatNode named]; size: 10.
 
 	b addMetric: #numberOfLinesOfCode.
 	b addMetric: #numberOfMethods.

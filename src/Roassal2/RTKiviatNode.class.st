@@ -1,35 +1,65 @@
+"
+A RTKiviatNode represent a polygon in the view, it represent one objects that is studied. It is composed by as many kiviatElement as the umber of metrics, connected by edges. 
+
+Instance Variables
+	arrayValues:		<Object>
+	edgeElements:		<Object>
+	named:		<Object>
+	nodeElements:		<Object>
+	shapeEdge:		<Object>
+	shapeNode:		<Object>
+
+arrayValues
+	- xxxxx
+
+edgeElements
+	- xxxxx
+
+named
+	- xxxxx
+
+nodeElements
+	- xxxxx
+
+shapeEdge
+	- xxxxx
+
+shapeNode
+	- xxxxx
+
+"
 Class {
 	#name : #RTKiviatNode,
 	#superclass : #RTObject,
 	#instVars : [
-		'arrayValues',
-		'shapeNode',
-		'shapeEdge',
 		'named',
-		'nodeElements',
-		'edgeElements'
+		'arrayValues',
+		'nodeKiviatElements',
+		'edgeKiviatElements',
+		'shapeNode',
+		'shapeEdge'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
 
 { #category : #adding }
 RTKiviatNode >> addEdgeElement: anElement [
-	edgeElements add: anElement.
+	edgeKiviatElements add: anElement.
 ]
 
 { #category : #adding }
 RTKiviatNode >> addEdgeElements: anElementsCollection [
-	anElementsCollection do: [ :e | edgeElements add: e].
+	anElementsCollection do: [ :e | edgeKiviatElements add: e].
 ]
 
 { #category : #adding }
 RTKiviatNode >> addNodeElement: anElement [
-	nodeElements add: anElement.
+	nodeKiviatElements add: anElement.
 ]
 
 { #category : #adding }
 RTKiviatNode >> addNodeElements: anElementsCollection [
-	anElementsCollection do: [ :e | nodeElements add: e].
+	anElementsCollection do: [ :e | nodeKiviatElements add: e].
 ]
 
 { #category : #accessing }
@@ -53,8 +83,8 @@ RTKiviatNode >> defaultShapeNode [
 ]
 
 { #category : #accessing }
-RTKiviatNode >> edgeElements [
-	^ edgeElements
+RTKiviatNode >> edgeKiviatElements [
+	^ edgeKiviatElements
 ]
 
 { #category : #initialization }
@@ -63,8 +93,8 @@ RTKiviatNode >> initialize [
 	self defaultArrayValues.
 	self defaultShapeNode.
 	self defaultShapeEdge.
-	nodeElements := OrderedCollection new.
-	edgeElements := OrderedCollection new.
+	nodeKiviatElements := OrderedCollection new.
+	edgeKiviatElements := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -78,8 +108,8 @@ RTKiviatNode >> named: aString [
 ]
 
 { #category : #accessing }
-RTKiviatNode >> nodeElements [
-	^ nodeElements
+RTKiviatNode >> nodeKiviatElements [
+	^ nodeKiviatElements
 ]
 
 { #category : #accessing }
