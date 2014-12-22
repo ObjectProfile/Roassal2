@@ -43,10 +43,19 @@ Class {
 		'axisSize',
 		'highlight',
 		'polygons',
-		'shapes'
+		'shapes',
+		'axisTitle',
+		'axisTitles'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
+
+{ #category : #'as yet unclassified' }
+RTKiviatBuilder >> activateAxisTitle [
+"activate the axis titles in the view to identify metrics axis"
+	axisTitle := #activated.
+
+]
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> activateHighlight [
@@ -64,7 +73,7 @@ RTKiviatBuilder >> activatePolygons [
 
 { #category : #adding }
 RTKiviatBuilder >> addMetric: blockOrSymbol [
-	metrics := metrics copyWith: blockOrSymbol.
+	metrics add: blockOrSymbol.
 ]
 
 { #category : #adding }
@@ -99,6 +108,9 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 					maxValue: aRTKiviatMetric maxValue;					
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
+					(axisTitle = #activated) ifTrue: [ config title: (aRTKiviatMetric named) asString].
+					
+					
 	centralPoint := (0@0).
 	
 	config axisFrom: 0@0 to: (aRTKiviatMetric modelBlock value: (self getNormalizedValue:(aRTKiviatMetric maxValue)  min:0  max:(aRTKiviatMetric maxSize)  minValue:(aRTKiviatMetric minValue) maxValue: (aRTKiviatMetric maxValue))).
@@ -114,6 +126,11 @@ RTKiviatBuilder >> axisSize [
 RTKiviatBuilder >> axisSize: aSizeInPixels [
 "define the size in pixel of all the axis"
 	axisSize := aSizeInPixels
+]
+
+{ #category : #accessing }
+RTKiviatBuilder >> axisTitles [
+	^ axisTitles.
 ]
 
 { #category : #'as yet unclassified' }
@@ -151,6 +168,13 @@ RTKiviatBuilder >> defaultAxisSize [
 ]
 
 { #category : #'as yet unclassified' }
+RTKiviatBuilder >> desactivateAxisTitle [
+"desactivate the axis titles in the view to identify metrics axis"
+	axisTitle := #desactivated.
+
+]
+
+{ #category : #'as yet unclassified' }
 RTKiviatBuilder >> desactivateHighlight [
 	highlight := #desactivated.
 
@@ -171,7 +195,14 @@ RTKiviatBuilder >> executeHighlight [
 
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
+| titles |
 "define the alpha values of the highlighted and others chart nodes to the view"
+	
+	( axisTitle = #activated ) ifTrue: [ 
+		titles := OrderedCollection new.
+		self metrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m asString) ] ])].
+		 ].
+
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
 		e @ (RTShowLabel new labelledInteraction: (RTLabelled new text: [ :el | el kiviatNode named])).
 		].
@@ -180,19 +211,23 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 		(kiviatNodes select: [ :kn | kn named = evt element model kiviatNode named ]) do: [ :kn |
 			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
 			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
-			view signalUpdate].
+			].
 		(kiviatNodes select: [ :kn | kn named ~= evt element model kiviatNode named ]) do: [ :kn |
 			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
-			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)].
-			view signalUpdate].		
+			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: lowColor)]
+			].
+		( axisTitle = #activated ) ifTrue: [ titles do: [ :t | t trachelShape color: (t trachelShape color alpha: 0)]].
+		view signalUpdate.
 		].
 	
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) when: TRMouseLeave do: [  :evt | 
 		kiviatNodes do: [ :kn |
 			kn nodeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
 			kn edgeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
-			view signalUpdate]
-		].
+			view signalUpdate].
+		( axisTitle = #activated ) ifTrue: [ titles do: [ :t | t trachelShape color: (t trachelShape color alpha: 1)]].
+		view signalUpdate.
+		]. 
 ]
 
 { #category : #'as yet unclassified' }
@@ -228,6 +263,9 @@ RTKiviatBuilder >> initialize [
 	
 	highlight := #activated.
 	polygons := #desactivated.
+	axisTitle := #desactivated.
+	
+	axisTitles := OrderedCollection new.
 	
 	metrics := OrderedCollection new.
 	objects := OrderedCollection new.
