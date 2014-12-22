@@ -92,7 +92,7 @@ Class {
 { #category : #sources }
 RTComposerExample >> exampleClassAnalysis [
 
-| classesToAnalyze c b b2 b3 b4 es |
+| classesToAnalyze c b b2 b3 b4 es ds |
 classesToAnalyze := TRShape withAllSubclasses.
 
 c := RTComposer new.
@@ -113,17 +113,17 @@ c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
-b2 := RTCharterBuilder new.
+b2 := RTGrapherBuilder new.
 b2 view: c view.
 b2 extent: 200 @ 150.
-b2 interaction popup.
-b2 shape rectangle size: 0.
-b2 points: classesToAnalyze.
 
-b2 allY: [ :cls | cls rtmethods size ].
-b2 shape rectangle color: Color lightBlue.
-b2 stackX.
-b2 histogramBarWidth: 5.
+ds := RTStackedDataSet new.
+ds interaction popup.
+ds points: classesToAnalyze.
+ds y: [ :cls | cls rtmethods size ].
+ds barShape rectangle color: Color lightBlue.
+"b2 histogramBarWidth: 5."
+b2 add: ds.
 
 b2 axisX; axisYWithNumberOfTicks: 4.
 b2 build.
@@ -145,18 +145,21 @@ c propagateHighlight.
 c group: #pie.
 
 "-------"
-b4 := RTCharterBuilder new.
-b4 view: c view.
+b4 := RTGrapherBuilder new.
+
 b4 extent: 290 @ 200.
-b4 interaction popup.
-b4 shape ellipse size: 15; color: (Color red alpha: 0.3).
-b4 points: classesToAnalyze.
-b4 x: #numberOfMethods; y: #numberOfVariables min: 0 max: 10.
-b4 size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
-	
-b4 axisXWithNumberOfTicks: 3.
-b4 axisYWithNumberOfTicks: 4.
-b4 highlightIf: [ :cls | (cls numberOfLinesOfCode > 2000) or: [ cls numberOfVariables > 10 ] ] using: #name.
+ds := RTDataSet new.
+ds interaction popup.
+ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
+ds points: classesToAnalyze.
+ds x: #numberOfMethods.
+ds y: #numberOfVariables" min: 0 max: 10".
+ds dotSize: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
+ds highlightIf: [ :cls | (cls numberOfLinesOfCode > 2000) or: [ cls numberOfVariables > 10 ] ] using: #name.
+b4 add: ds.
+
+"b4 axisXWithNumberOfTicks: 3.
+b4 axisYWithNumberOfTicks: 4."
 c propagateHighlight.
 c group: #plot.
 
@@ -176,7 +179,7 @@ c nameGroup: #plot as: 'NOM x NOA x LOC'.
 { #category : #sources }
 RTComposerExample >> exampleClassAnalysis2 [
 
-| classesToAnalyze c b b2 b3 b4 es |
+| classesToAnalyze c b b2 b3 b4 es ds |
 classesToAnalyze := RTShape withAllSubclasses.
 
 c := RTComposer new.
@@ -197,19 +200,18 @@ c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
-b2 := RTCharterBuilder new.
+b2 := RTGrapherBuilder new.
 b2 view: c view.
 b2 extent: 200 @ 150.
-b2 interaction popup.
-b2 shape rectangle size: 0.
-b2 points: classesToAnalyze.
 
-b2 allY: [ :cls | cls rtmethods size ].
-b2 shape rectangle color: Color lightBlue.
-b2 stackX.
-b2 histogramBarWidth: 5.
-
-b2 axisX; axisYWithNumberOfTicks: 4.
+ds := RTStackedDataSet new.
+ds interaction popup.
+ds points: classesToAnalyze.
+ds y: [ :cls | cls rtmethods size ].
+ds barShape rectangle color: Color lightBlue.
+b2 add: ds.
+"b2 axisX; axisYWithNumberOfTicks: 4.
+"
 b2 build.
 
 c propagateHighlight.
@@ -229,18 +231,23 @@ c propagateHighlight.
 c group: #pie.
 
 "-------"
-b4 := RTCharterBuilder new.
+b4 := RTGrapherBuilder new.
 b4 view: c view.
 b4 extent: 290 @ 200.
-b4 interaction popup.
-b4 shape ellipse size: 15; color: (Color red alpha: 0.3).
-b4 points: classesToAnalyze.
-b4 x: #numberOfMethods; y: #numberOfVariables min: 0 max: 10.
-b4 size: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
-	
-b4 axisXWithNumberOfTicks: 3.
+
+ds := RTDataSet new.
+ds interaction popup.
+ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
+ds points: classesToAnalyze.
+ds x: #numberOfMethods; y: #numberOfVariables "min: 0 max: 10".
+ds dotSize: #numberOfLinesOfCode min: 4 max: 20 using: #sqrt.
+ds highlightIf: [ :cls | (cls numberOfLinesOfCode > 2000) or: [ cls numberOfVariables > 10 ] ] using: #name.
+b4 add: ds.
+
+"b4 axisXWithNumberOfTicks: 3.
 b4 axisYWithNumberOfTicks: 4.
-b4 highlightIf: [ :cls | (cls numberOfLinesOfCode > 2000) or: [ cls numberOfVariables > 10 ] ] using: #name.
+"
+b4 build.
 c propagateHighlight.
 c group: #plot.
 
@@ -321,7 +328,7 @@ jIgUtaLIAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTComposerExample >> exampleClassAnalysis3 [
 
-| c b c2 |
+| c b c2 ds |
 c := RTComposer new.
 
 "======"
@@ -355,21 +362,24 @@ b build.
 c group.
 
 "======"
-c2 := RTCharterBuilder new.
+c2 := RTGrapherBuilder new.
 c2 view: c view.
+c2 extent: 300 @ 200.
 
-c2 interaction popup.
-c2 extent: 300 @ 200. 
-c2 points: (RTShape withAllSubclasses sortedAs: #numberOfMethods).
-c2 connectDotColor: Color blue.
+ds := RTStackedDataSet new.
+ds interaction popup. 
+ds points: (RTShape withAllSubclasses sortedAs: #numberOfMethods).
+ds connectColor: Color blue.
+ds y: #numberOfMethods.
+c2 add: ds.
 
-c2 points: (TRShape withAllSubclasses sortedAs: #numberOfMethods).
-c2 stackX.
-c2 allY: #numberOfMethods.
-c2 connectDotColor: Color red.
+ds := RTStackedDataSet new.
+ds interaction popup. 
+ds points: (TRShape withAllSubclasses sortedAs: #numberOfMethods).
+ds y: #numberOfMethods.
+ds connectColor: Color red.
+c2 add: ds.
 
-c2 axisX.
-c2 axisY.
 c2 build.
 c group.
 "======"

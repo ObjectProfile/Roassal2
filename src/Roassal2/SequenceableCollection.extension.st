@@ -13,29 +13,21 @@ SequenceableCollection >> cumsum [
 
 { #category : #'*roassal2-core' }
 SequenceableCollection >> plot [
-
-	| b |
-	b := RTCharterBuilder new.
+	"
+	#(1 2 3 4 5) plot
+	"
+	| b ds |
+	b := RTGrapherBuilder new.
 	
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
 	
+	ds := RTStackedDataSet new.
 	"When the mouse is above a bar, say which class we are point at"
-	b interaction popup.
-	
-	b points: self.
-	b allY: #yourself.
-	
-	
-	b shape rectangle color: Color blue.
-	
-	"All the bar have to be stacked from left to right"
-	b stackX.
-	
-	b histogramBarWidth: 10.
-	
-	b axisX.
-	b axisYWithNumberOfTicks: 4.
+	ds interaction popup.
+	ds points: self.
+	ds dotShape rectangle color: Color blue.
+	b add: ds.
 	
 	b build.
 	^ b view
@@ -49,30 +41,25 @@ SequenceableCollection >> plotFrequency [
 
 { #category : #'*roassal2-core' }
 SequenceableCollection >> plotFrequency: nbOfInterval [
-
-	| b |
-	b := RTCharterBuilder new.
+	
+	"
+	#(1 1 1 3 4 3 4) plotFrequency: 3
+	"
+	
+	| b ds |
+	b := RTGrapherBuilder new.
 	
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
 	
+	ds := RTStackedDataSet new.
 	"When the mouse is above a bar, say which class we are point at"
-	b interaction popup.
-	
-	b points: (RTDistribution on: self).
-	b allY: #yourself.
-	
-	
-	b shape rectangle color: Color blue.
-	
-	"All the bar have to be stacked from left to right"
-	b stackX.
-	
-	b histogramBarWidth: 10.
-	
-	b axisX.
-	b axisYWithNumberOfTicks: 4.
-	
+	ds interaction popupText: [ :set | set size printString, ' x ', set anyOne printString ].
+	ds points: ((RTDistribution on: self) frequencyWithAmountOfIntervals: nbOfInterval).
+	ds y: #size.
+	ds dotShape rectangle color: Color blue.
+	b add: ds.
+
 	b build.
 	^ b view
 	

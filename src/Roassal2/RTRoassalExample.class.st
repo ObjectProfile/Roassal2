@@ -633,7 +633,7 @@ RTEdge
         inView: view.
 
 RTTreeLayout on: els.
-view @ RTDraggableView.
+
 	^ view
 ]
 

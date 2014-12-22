@@ -45,11 +45,6 @@ RTPopup class >> text: aBlockOrSymbol [
 	^ self new text: aBlockOrSymbol
 ]
 
-{ #category : #visitor }
-RTPopup >> accept: aVisitor with: args [
-	aVisitor visitPopupInteraction: self with: args.
-]
-
 { #category : #public }
 RTPopup >> background: aColor group: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]

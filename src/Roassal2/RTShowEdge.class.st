@@ -36,11 +36,6 @@ RTShowEdge class >> lastHighlightedElements: elements [
 	lastHighlightedElements := elements
 ]
 
-{ #category : #visitor }
-RTShowEdge >> accept: aVisitor with: args [
-	aVisitor visitShowEdgeInteraction: self with: args
-]
-
 { #category : #public }
 RTShowEdge >> connectTo: aBlock [
 	"aBlock accepts an object and returns a list of objects"
@@ -50,11 +45,6 @@ RTShowEdge >> connectTo: aBlock [
 		objects := aBlock rtValue: el model.
 		(objects collect: [ :o | el view elementFromModel: o ]) copyWithout: nil
 		]
-]
-
-{ #category : #accessing }
-RTShowEdge >> connectToElements [
-	^ connectToElements
 ]
 
 { #category : #public }

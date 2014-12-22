@@ -8,7 +8,7 @@ Class {
 RTDataSetTest >> testBasic [
 
 	| charter |
-	charter := RTCharterBuilder new.
+	charter := RTGrapherBuilder new.
 	charter add: (RTDataSet new points: #(#(1 2) #(3 4) #(2 5)); x: #first; y: #second).
 	charter build.
 ]

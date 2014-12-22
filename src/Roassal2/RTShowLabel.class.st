@@ -17,11 +17,6 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #visitor }
-RTShowLabel >> accept: aVisitor with: args [
-	aVisitor visitShowLabelInteraction: self with: args
-]
-
 { #category : #actions }
 RTShowLabel >> doHighlightElement: anElement [ 
 	anElement @ labelledInteraction.

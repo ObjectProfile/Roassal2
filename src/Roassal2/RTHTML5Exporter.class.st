@@ -31,23 +31,6 @@ Class {
 	#category : #'Roassal2-Exporter-HTML5'
 }
 
-{ #category : #'as yet unclassified' }
-RTHTML5Exporter class >> importRoassalJS: fileName [
-	"
-	self importRoassalJS: 'roassal.js'
-	"
-	| content code |
-	content := (((fileName asFileReference readStream contents)
-		copyReplaceAll: '''' with: '"')
-		copyReplaceAll: String cr with: '')
-		copyReplaceAll: String lf with: String cr.
-	code :=
-'roassalJSContent
-	^ ''' , content , ''''.
-	self compile: code classified: 'dependencies'
-	
-]
-
 { #category : #public }
 RTHTML5Exporter class >> interactiveExport: view [
 	| filename |
@@ -65,7 +48,7 @@ RTHTML5Exporter class >> interactiveExport: view [
 
 { #category : #'exporting-html' }
 RTHTML5Exporter >> addEnd [
-	self writeText:
+	stream nextPutAll:
 '}
 		</script>
 	</head>
@@ -76,7 +59,7 @@ RTHTML5Exporter >> addEnd [
 
 { #category : #'exporting-html' }
 RTHTML5Exporter >> addStart: aView [
-	self writeText: 
+	stream 	nextPutAll: 
 '<!DOCTYPE html>
 <html>
 	<head>
@@ -116,85 +99,8 @@ RTHTML5Exporter >> createJS [
 	"s exists ifTrue: [ ^ self ]."
 	s exists ifTrue: [ s delete ].
 	s := s writeStream.
-	[ self to: s writeText: self roassalJSContent ] ensure: [ s close ].
-]
-
-{ #category : #'initialize-release' }
-RTHTML5Exporter >> createStream [
-	| dir fn |
-	dir := self directory.
-	fn := stream := dir / self fileName.
-	stream exists ifTrue: [ stream delete ].
-	stream := stream writeStream.
-	^ fn
-]
-
-{ #category : #defaults }
-RTHTML5Exporter >> defaultDirectory [
-	^ FileSystem disk workingDirectory
-]
-
-{ #category : #defaults }
-RTHTML5Exporter >> defaultFileName [
-	^ 'index.html'
-]
-
-{ #category : #defaults }
-RTHTML5Exporter >> defaultTitle [
-	^ 'Roassal Page'.
-]
-
-{ #category : #accesing }
-RTHTML5Exporter >> directory [
-	^ directory ifNil: [ directory := self defaultDirectory ].
-]
-
-{ #category : #accesing }
-RTHTML5Exporter >> directory: aFile [
-	directory := aFile.
-]
-
-{ #category : #exporting }
-RTHTML5Exporter >> export: aView [
-	|fn |
-	self createJS.
-	fn := self createStream.
-	[
-		self addStart: aView.
-		self exportSVG: aView.
-		self addEnd.
-	] ensure: [ stream close. ].
-	^ fn.
-]
-
-{ #category : #'exporting-html' }
-RTHTML5Exporter >> exportSVG: aView [
-	| visitor |
-
-	visitor := RTSVGVisitor2 new.
-	visitor stream: stream.
-	visitor visitView: aView.
-]
-
-{ #category : #accesing }
-RTHTML5Exporter >> fileName [
-	^ fileName ifNil: [ fileName := self defaultFileName. ]
-]
-
-{ #category : #accesing }
-RTHTML5Exporter >> fileName: string [
-	fileName := string.
-]
-
-{ #category : #'initialize-release' }
-RTHTML5Exporter >> initialize [
-	super initialize.
-	
-]
-
-{ #category : #dependencies }
-RTHTML5Exporter >> roassalJSContent [
-	^ '
+	[ s nextPutAll:
+'
 
 /* Simple JavaScript for handle Roassal2 in javascript
  * By milton mamani akevalion@gmail.com
@@ -259,38 +165,6 @@ Number.prototype.degreesToRadians=function(){
 	return this* 0.017453292519943295;
 }
 
-/*point functions*/
-function minus(a, b){
-	return {x: a.x - b.x, y: a.y - b.y};
-}
-function plus(a, b){
-	return {x: a.x+b.x, y: a.y+b.y};
-}
-function product(a, b){
-	if(b.x != null)return {x: a.x*b.x, y: a.y*b.y};
-	return {x: a.x * b, y: a.y*b};
-}
-function normal(p){
-	var n = {x: -p.y, y: p.x};
-	var d = n.x*n.x + n.y*n.y;
-	if(d == 0) return {x:-1, y:0};
-	return this.div(n, Math.sqrt(d));
-}
-function div(a, b){
-	if(b.x!=null)return {x: a.x/b.x, y: a.y/b.y};
-	return {x: a.x/b, y: a.y/b};
-}
-function r(p){
-	return Math.sqrt(dotProduct(p, p));
-}
-function dotProduct(a, b){
-	return a.x*b.x + a.y*b.y;
-}
-function lessThan(a,b){
-	return a.x<b.x && a.y<b.y;
-}
-
-/*roassal/pharo classes*/	
 var Rectangle = Class.extend({
 	origin: null,
 	corner: null,
@@ -548,24 +422,6 @@ var RTAbstractHighlightable = TRInteraction.extend({
 	}
 });
 
-var RTShowLabel = RTAbstractHighlightable.extend({
-	lbl:null,
-	init: function(lbl){
-		this.lbl = lbl;
-	},
-	doHighlightShape: function(s){
-		s.slabels = [];
-		for(var k = 0; k<this.lbl.length;k++){
-			s.slabels[k] = s.canvas.addShape(this.lbl[k]);
-			s.slabels[k].update();
-		}
-	},
-	doUnhighlightShape: function(s){
-		for(var k = 0; k<s.slabels.length; k++)
-			s.slabels[k].remove();
-	}
-});
-
 var RTHighlightable = RTAbstractHighlightable.extend({
 	color: null,
 	init:function(obj){
@@ -573,47 +429,15 @@ var RTHighlightable = RTAbstractHighlightable.extend({
 		this.ides = obj.ides;
 	},
 	doHighlightShape: function(s){
+		try{
 		s.ocolor=s.color;
 		s.setColor(this.color);
+		}catch(ex){debugger;}
 	},
 	doUnhighlightShape: function(s){
 		if(s.ocolor == null) return;
 		s.setColor(s.ocolor);
 		s.ocolor = null;
-	}
-});
-
-var RTShowEdge = TRInteraction.extend({
-	objs: null,
-	vars: {},
-	init: function(t){
-		this.objs = t;
-	},
-	initOn: function (s){
-		var self = this;
-		s.whenDo(TRMouseEnter, function(evt){
-			self.doShowEdges(s);
-		});
-		s.whenDo(TRMouseLeave, function(evt){
-			self.removeEdges();
-		});
-	},
-	doShowEdges: function(s){
-		this.removeEdges();
-		var list = [];
-		for(var k = 0;k<this.objs.length; k++){
-			var d = s.canvas.addShape(this.objs[k]);
-			d.update();
-			list[k] = d;
-		}
-		
-		this.vars.edges = list;
-	},
-	removeEdges: function(){
-		var l = this.vars.edges;
-		if(!l) return;
-		for(var k =0;k<l.length; k++)l[k].remove();
-		this.vars.edges = null;
 	}
 });
 
@@ -649,12 +473,17 @@ var RTAbstractPopup = TRInteraction.extend({
 	closestPositionOf: function(popup, p){
 		var ww = $(window).width();
 		var wh = $(window).height();
+		
 		var	pe = popup.encompassingRectangle().extent();
 		var off = this.popupOffset();
+		
 		if(pe.x > ww || pe.y > wh)
 			return {x: p.x + off.x, y: p.y+ off.y};
+		
 		var virtualX = (p.x + pe.x + off.x) < ww? p.x+off.x: p.x-pe.x-off.x;
+		//camera TODO
 		var virtualY = (p.y + pe.y + off.y) < wh? p.y+off.y: p.y-pe.y-off.y;
+		//camera TODO
 		return {x: virtualX, y: virtualY};
 	},
 	popupOffset: function(){
@@ -722,82 +551,6 @@ var RTCenteredAttachPoint = RTAttachPoint.extend({
 	startingPointOf: function(anEdge){
 		return anEdge.from().position();
 	}
-});
-
-var RTAbstractShorterDistanceAttachPoint = RTAttachPoint.extend({
-	endingPointOf: function (anEdge){
-		return this.attachPointFor(anEdge, anEdge.from(), this.destinationAttachPointsFor(anEdge));
-	},
-	destinationAttachPointsFor: function(anEdge){
-		return this.attachPoints(anEdge, anEdge.to());
-	},
-	startingPointOf: function(anEdge){
-		
-		return this.attachPointFor(anEdge, anEdge.to(), this.startingAttachPointsFor(anEdge));
-	},
-	startingAttachPointsFor: function(anEdge){
-		return this.attachPoints(anEdge, anEdge.from());
-	},
-	attachPointFor: function(anEdge, aShape, list){
-		var p = aShape.encompassingRectangle().corner;
-		var dp = [];
-		for(var k=0;k<list.length; k++){
-			var t = minus(p, list[k]);
-			dp[k] = {a: dotProduct(t,t), b: list[k]};
-		}
-		var res = dp[0];
-		for(var k=0; k<dp.length; k++)
-			if(dp[k].a<res.a)
-				res = dp[k];
-		return res.b;
-	},
-	attachPoints: function(anEdge, aShape){
-		//override
-	}
-});
-
-var RTShorterDistanceWithOffsetAttachPoint = RTAbstractShorterDistanceAttachPoint.extend({
-	offset: null,
-	edges: null,
-	init: function(){
-		this.offset = 5;
-	},
-	attachPoints: function(anEdge, aShape){
-		var rec = aShape.encompassingRectangle();
-		var c = rec.center();
-		return [{x: c.x, y: rec.origin.y}, {x: rec.origin.x,y:c.y}, {x:c.x,y:rec.corner.y},{x:rec.corner.x,y:c.y}];
-	},
-	endingPointOf: function(anEdge){
-		return plus(this._super(anEdge), this.offsetNormalFor(anEdge));
-	},
-	startingPointOf: function(anEdge){
-		return plus(this._super(anEdge), this.offsetNormalFor(anEdge));
-	},
-	offsetNormalFor: function(anEdge){
-		if(!this.edges){
-			var eds = [];
-			for(var k in anEdge.canvas.shapes){
-				var s = anEdge.canvas.shapes[k];
-				if((s instanceof TRLineShape) && ( (s.to()==anEdge.to() && s.from()==anEdge.from())
-					||(s.to()==anEdge.from() && s.from()==anEdge.to())) ){
-					if(s.multi != null) s = s.multi
-					if(eds.indexOf(s)==-1) eds[eds.length] = s;
-				}
-			}
-			this.edges = eds;
-		}
-		if(this.edges.length <=1) return {x:0,y:0};
-		var index = this.edges.indexOf(anEdge.multi?anEdge.multi: anEdge);
-		return product(normal(minus(anEdge.to().position(), anEdge.from().position())), index * this.offset);
-	}
-});
-
-var RTShorterDistanceAttachPoint = RTAbstractShorterDistanceAttachPoint.extend({
-	attachPoints: function(anEdge, aShape){
-		var rec = aShape.encompassingRectangle();
-		var c = rec.center();
-		return [{x: c.x, y: rec.origin.y}, {x: rec.origin.x,y:c.y}, {x:c.x,y:rec.corner.y},{x:rec.corner.x,y:c.y}];
-	},
 });
 
 var TRAnnouceableObject = Class.extend({
@@ -1113,7 +866,7 @@ var TRCamera = Class.extend({
 		this.update();
 	},
 	fromPixelToSpace: function (e){
-		var p = e.pageX?{x: e.pageX, y: e.pageY}:e;
+		var p = {x: e.pageX, y: e.pageY};
 		var ww = $(window).width();
 		var wh = $(window).height();
 		var p2 = this.position;
@@ -1194,6 +947,32 @@ var TRShape = TRAnnouceableObject.extend({
 	pushFront: function(){
 		if(this.path == null) return;
 		this.path.parentNode.appendChild(this.path);
+	},
+	minus: function(a, b){
+		return {x: a.x - b.x, y: a.y - b.y};
+	},
+	plus: function(a, b){
+		return {x: a.x+b.x, y: a.y+b.y};
+	},
+	product: function(a, b){
+		if(b.x != null)return {x: a.x*b.x, y: a.y*b.y};
+		return {x: a.x * b, y: a.y*b};
+	},
+	normal: function(p){
+		var n = {x: -p.y, y: p.x};
+		var d = n.x*n.x + n.y*n.y;
+		if(d == 0) return {x:-1, y:0};
+		return this.div(n, Math.sqrt(d));
+	},
+	div: function(a, b){
+		if(b.x!=null)return {x: a.x/b.x, y: a.y/b.y};
+		return {x: a.x/b, y: a.y/b};
+	},
+	r: function(p){
+		return Math.sqrt(this.dotProduct(p, p));
+	},
+	dotProduct: function(a, b){
+		return a.x*b.x + a.y*b.y;
 	}
 });
 
@@ -1306,7 +1085,6 @@ var TRMultiCompositeShape = TRShape.extend({
 		for(var k = 0; k<o.length; k++){
 			var s = this.canvas.createShape(o[k]);
 			this.shapes[k] = s;
-			s.multi = this;
 			try{
 				if(b)s.setPosition(this.offsets[k]);
 			}catch(x){debugger;}
@@ -1330,10 +1108,10 @@ var TRMultiCompositeShape = TRShape.extend({
 				for(var k = 0; k<s.length; k++)
 					if(s[k] instanceof TRLineShape){
 						var f = s[k].from();
-						this.from = function (){return f;};
+						this.from = function (){return f};
 						var t = s[k].to();
-						this.to = function(){return t;};
-						s[k].ignoreap=true;
+						this.to = function(){return t};
+						s[k].ignoreap = true;
 					}
 			var ap = this.ap, p1, p2, l;
 			ap = new ap();
@@ -1342,7 +1120,7 @@ var TRMultiCompositeShape = TRShape.extend({
 			p1 = from;
 			l = s.length;
 			for(var k = 0; k<l; k++){
-				p2 = plus(from,product(div(minus(to, from), l), k+1));
+				p2 = {x: (k+1)*(to.x-from.x)/l, y:(k+1)*(to.y-from.y)/l};
 				$(s[k].path).attr({x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y});
 				p1 = p2;
 			}
@@ -1357,16 +1135,6 @@ var TRMultiCompositeShape = TRShape.extend({
 		delete this.canvas.fixedShapes[this.id];
 		for(var k = 0; k<this.shapes.length; k++)
 			this.shapes[k].remove();
-	},
-	position: function(){
-		if(this.shapes.length==0) return {x:0,y:0};
-		var r = null;
-		for(var k = 0; k<this.shapes.length; k++){
-			var er = this.shapes[k].encompassingRectangle();
-			if (r == null) r = er;
-			else r.mergeRect(er);
-		}
-		return r.center();
 	}
 });
 
@@ -1386,8 +1154,7 @@ var TRLineShape = TRAbstractBoxShape.extend({
 		this.setAttachPoint(obj.ap);
 	},
 	setAttachPoint: function (ap){
-		if(!(ap instanceof RTAttachPoint)) ap = new ap();
-		this.attachPoint = ap;
+		this.attachPoint = new ap();
 	},
 	setColor: function(c){
 		this.color = c;
@@ -1417,11 +1184,8 @@ var TRLineShape = TRAbstractBoxShape.extend({
 	},
 	encompassingRectangle: function(){
 		var r = new Rectangle();
-		var from, to;
-		try{ from = this.from().position();
-		}catch(ex){from = {x:0,y:0}}
-		try{ to = this.to().position();
-		}catch(ex){to = {x:0, y: 0}}
+		var from = this.from().position();
+		var to = this.to().position();
 		return r.encompassing([{x: from.x, y: from.y}, {x: to.x, y: to.y}]);
 	},
 	translateBy: function(p){},
@@ -1478,19 +1242,18 @@ var TRSimpleArrowShape = TRLineShape.extend({
 		this.baseSize = obj.base;
 	},
 	update: function(){
-		if(this.fromid == this.toid) return;
 		var from = this.from();
 		var to = this.to();
 		if(from == null || to == null ) return;
 		var base = this.baseSize;
 		from = this.attachPoint.startingPointOf(this);
 		to = this.attachPoint.endingPointOf(this);
-		var vector = minus(to, from);
-		var u = normal(vector);
-		var unit = div(vector, r(vector));
-		var middle = minus(to, product(unit, this.size));
-		var left = minus(middle, product(u, base/2));
-		var right = plus(middle, product(u, base/2));
+		var vector = this.minus(to, from);
+		var u = this.normal(vector);
+		var unit = this.div(vector, this.r(vector));
+		var middle = this.minus(to, this.product(unit, this.size));
+		var left = this.minus(middle, this.product(u, base/2));
+		var right = this.plus(middle, this.product(u, base/2));
 		var d = "M "+left.x+" "+left.y+" L "+to.x+" "+to.y+" L "+right.x+ " "+right.y;
 		$(this.path).attr("d", d);
 	}
@@ -1517,13 +1280,13 @@ var TREmptyHeadArrowShape = TRLineShape.extend({
 		if(from == null || to == null ) return;
 		var base = this.baseSize;
 		from = this.attachPoint.startingPointOf(this);
-		to = this.attachattachPoint.endingPointOf(this);
-		var vector = minus(to, from);
-		var u = normal(vector);
-		var unit = div(vector, r(vector));
-		var middle = minus(to, product(unit, this.size));
-		var left = minus(middle, product(u, base));
-		var right = plus(middle, product(u, base));
+		to = this.attachPoint.endingPointOf(this);
+		var vector = this.minus(to, from);
+		var u = this.normal(vector);
+		var unit = this.div(vector, this.r(vector));
+		var middle = this.minus(to, this.product(unit, this.size));
+		var left = this.minus(middle, this.product(u, base));
+		var right = this.plus(middle, this.product(u, base));
 		var d = "M "+left.x+" "+left.y+" L "+to.x+" "+to.y+" L "+right.x+ " "+right.y+" L "+left.x+" "+left.y+" Z";
 		$(this.path).attr("d", d);
 	},
@@ -1637,7 +1400,9 @@ var TRLabelShape = TRShape.extend({
 		this.rect=new Rectangle(obj.o, obj.c);
 	},
 	setFont: function(f){
-		if(f.n != "Verdana, Geneva, sans-serif") this.loadFont(f.n);
+		if(f.n == "Source Sans Pro")
+			f.n = "Verdana, Geneva, sans-serif";
+		else this.loadFont(f.n);
 		this.font = f;
 		$(this.path).css({"font-family":f.n, "font-size":f.s});
 	},
@@ -1669,6 +1434,7 @@ var TRLabelShape = TRShape.extend({
 		return this.matrix.transformRect(this.rect); 
 	}
 });
+
 
 /*main events*/
 var mamani;
@@ -1703,7 +1469,80 @@ $(document).ready( function(){
 
 
 
-'
+' ] ensure: [ s close ].
+]
+
+{ #category : #'initialize-release' }
+RTHTML5Exporter >> createStream [
+	| dir fn |
+	dir := self directory.
+	fn := stream := dir / self fileName.
+	stream exists ifTrue: [ stream delete ].
+	stream := stream writeStream.
+	^ fn
+]
+
+{ #category : #defaults }
+RTHTML5Exporter >> defaultDirectory [
+	^ FileSystem disk workingDirectory
+]
+
+{ #category : #defaults }
+RTHTML5Exporter >> defaultFileName [
+	^ 'index.html'
+]
+
+{ #category : #defaults }
+RTHTML5Exporter >> defaultTitle [
+	^ 'Roassal Page'.
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> directory [
+	^ directory ifNil: [ directory := self defaultDirectory ].
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> directory: aFile [
+	directory := aFile.
+]
+
+{ #category : #exporting }
+RTHTML5Exporter >> export: aView [
+	|fn |
+	self createJS.
+	fn := self createStream.
+	[
+		self addStart: aView.
+		self exportSVG: aView.
+		self addEnd.
+	] ensure: [ stream close. ].
+	^ fn.
+]
+
+{ #category : #'exporting-html' }
+RTHTML5Exporter >> exportSVG: aView [
+	| visitor |
+
+	visitor := RTSVGVisitor2 new.
+	visitor stream: stream.
+	visitor visitView: aView.
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> fileName [
+	^ fileName ifNil: [ fileName := self defaultFileName. ]
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> fileName: string [
+	fileName := string.
+]
+
+{ #category : #'initialize-release' }
+RTHTML5Exporter >> initialize [
+	super initialize.
+	
 ]
 
 { #category : #accesing }
@@ -1714,14 +1553,4 @@ RTHTML5Exporter >> title [
 { #category : #accesing }
 RTHTML5Exporter >> title: string [
 	title := string
-]
-
-{ #category : #public }
-RTHTML5Exporter >> to: outputStream writeText: text [
-	outputStream nextPutAll: (text copyReplaceAll: String cr with: String crlf)
-]
-
-{ #category : #'as yet unclassified' }
-RTHTML5Exporter >> writeText: text [
-	self to: stream writeText: text
 ]

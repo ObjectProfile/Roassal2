@@ -13,11 +13,6 @@ RTInteraction class >> initializeElement: element [
 	^ self new initializeElement: element; yourself
 ]
 
-{ #category : #visitor }
-RTInteraction >> accept: aVisitor with: args [
-	aVisitor visitInteraction: self with: args
-]
-
 { #category : #hooks }
 RTInteraction >> initializeElement: element [
 	self subclassResponsibility 

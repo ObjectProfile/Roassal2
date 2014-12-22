@@ -24,7 +24,7 @@ Class {
 { #category : #public }
 RTAbstractHighlightable class >> allSibblings [
 
-	^ self highlightElements: [ :el | el view elements select: [ :e | e model == el model ] ]
+	^ self highlightElements: [ :el | el view elements select: [ :e | e model notNil and: [ e model == el model ]] ]
 ]
 
 { #category : #public }

@@ -16,11 +16,6 @@ RTHighlightable class >> highlightedColor [
 	^ Color blue
 ]
 
-{ #category : #visitor }
-RTHighlightable >> accept: aVisitor with: args [
-	aVisitor visitHightlightableInteraction: self with: args.
-]
-
 { #category : #actions }
 RTHighlightable >> doHighlightElement: anElement [
 	| v |

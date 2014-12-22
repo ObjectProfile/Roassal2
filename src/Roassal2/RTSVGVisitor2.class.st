@@ -49,24 +49,22 @@ RTSVGVisitor2 >> addInteractions: aShape. [
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addMatrix: m [
 	
-	stream nextPutAll: 'matrix:{shx: ', m shx asString, 
+	stream nextPutAll: 'matrix:{shx: ', m shx floor asString, 
 		', shy: ',  m shy asString, 
 		', sx: ', m sx asString, 
 		', sy: ', m sy asString, 
-		', x: ', m x asString, ', y: ', m y asString, '}}, '.
+		', x: ', (m x round: 2) asString, ', y: ', (m y round: 2) asString, '}}, '.
 	
 ]
 
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addStringWithFont: aLabel [
-	| converter fn |
+	| converter |
 	converter := RTSVGStringConverter new.
-	fn := aLabel fontName.
-	fn = 'Source Sans Pro' ifTrue: [ fn := 'Verdana, Geneva, sans-serif' ].
 	stream nextPutAll: ' text: "';
 		nextPutAll: (converter convertString: aLabel text);
 		nextPutAll: '", font: {n: "';
-		nextPutAll: fn;
+		nextPutAll: aLabel fontName;
 		nextPutAll: '", s: ', aLabel fontSize asString;
 		nextPutAll: '},'
 ]
@@ -76,7 +74,7 @@ RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
-	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel).
+	#RTHighlightable #RTLabelled).
 	
 
 ]
@@ -125,6 +123,14 @@ RTSVGVisitor2 >> visitAbstractLine: anAbstractLine [
 ]
 
 { #category : #visitor }
+RTSVGVisitor2 >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
+	"anAbstractLineDecoration accept: anAbstractLineDecoration
+	"
+	"TODO"
+	
+]
+
+{ #category : #visitor }
 RTSVGVisitor2 >> visitArcShape: aShape [
 	aShape topLeft ifNil: [ aShape computeRectangle ].
 	stream nextPutAll: '
@@ -158,11 +164,11 @@ RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
 	self addColor: arrowShape color.
 	self addBorderColor: arrowShape strokePaint.
 	ap := e shape class = RTMultiCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
+		ifTrue: [ RTCenteredAttachPoint ] 
+		ifFalse: [ e shape attachPoint class ].
 	stream nextPutAll: ' width: ', arrowShape width asString;
 		nextPutAll: ', size: ', arrowShape mySize asString, ', ap: ';
-		nextPutAll: ap attachPoint class name;
+		nextPutAll: ap name;
 		nextPutAll: ', base: ', arrowShape baseSize asString;
 		nextPutAll: '},'.
 	
@@ -195,11 +201,11 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape strokePaint.
 	ap := e shape class = RTMultiCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
+		ifTrue: [ RTCenteredAttachPoint ] 
+		ifFalse: [ e shape attachPoint class ].
 	stream nextPutAll: ' width: ', arrowShape width asString;
 		nextPutAll: ', size: ', arrowShape mySize asString, ', ap: ';
-		nextPutAll: ap attachPoint class name;
+		nextPutAll: ap name;
 		nextPutAll: ', base: ', arrowShape baseSize asString;
 		nextPutAll: '},'.
 	
@@ -255,7 +261,7 @@ RTSVGVisitor2 >> visitBitMapShape: aBitmapShape [
 RTSVGVisitor2 >> visitBoxShape: aBox [
 	
 	| box |
-	box := aBox basicEncompassingRectangle.
+	box := aBox encompassingRectangle.
 	stream nextPutAll: '
 		{type: "box", id: "';
 		nextPutAll: (self nameFor: aBox);
@@ -306,30 +312,6 @@ RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 	
 ]
 
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
-	| list |
-	list := OrderedCollection new.
-	(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
-		list add: (anObject attributes at: #RTLabelledLabel).
-	].
-	(anObject attributes includesKey: #nestedElements) ifTrue: [ 
-		(anObject attributes at: #nestedElements) do: [ :e |
-			e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
-			ifFalse: [ list add: e trachelShape ] ].
-	].
-	list isEmpty ifTrue: [ self visitInteraction: anInteraction with: anObject ]
-	ifFalse: [
-		stream nextPutAll: 'new RTDraggable(['.
-		list do: [ :e | 
-			stream nextPutAll: '"';
-				nextPutAll: (self nameFor:e);
-				nextPutAll: '", ' ].
-			stream nextPutAll: '])'.
-	]
-	
-]
-
 { #category : #visitor }
 RTSVGVisitor2 >> visitEdge: edge [
 	edge trachelShape accept: self.
@@ -344,7 +326,7 @@ RTSVGVisitor2 >> visitElement: e [
 { #category : #visitor }
 RTSVGVisitor2 >> visitEllipseShape: anEllipse [	
 	| box |
-	box := anEllipse basicEncompassingRectangle.
+	box := anEllipse encompassingRectangle.
 	stream nextPutAll: '
 		{type: "ellipse", id: "';
 		nextPutAll: (self nameFor: anEllipse);
@@ -361,24 +343,63 @@ RTSVGVisitor2 >> visitGroup: aRTGroup [
 	aRTGroup accept: self.
 ]
 
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitHightlightableInteraction: anInt with: el [
-	stream nextPutAll: 'new RTHighlightable({'.
-	self addColor: anInt highlightedColor.
-	stream nextPutAll: 'ides: ['.
-		((anInt instVarNamed: #highlightElements) rtValue: el) 
+{ #category : #visitor }
+RTSVGVisitor2 >> visitInteraction: sub with: anObject [
+	| elements list |
+	(sub subscriber class = RTDraggable) ifTrue: [
+		list := OrderedCollection new.
+		
+		(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
+			list add: (anObject attributes at: #RTLabelledLabel).
+			].
+		(anObject attributes includesKey: #nestedElements) ifTrue: [ 
+			(anObject attributes at: #nestedElements) do: [ :e |
+				e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
+				ifFalse: [ list add: e trachelShape ] ].
+			 ].
+		
+		list isEmpty ifFalse: [
+			stream nextPutAll: 'new RTDraggable(['.
+			list do: [ :e | 
+				stream nextPutAll: '"';
+					nextPutAll: (self nameFor:e);
+					nextPutAll: '", ' ].
+			stream nextPutAll: '])'.
+			^ self ] ].
+	
+	(sub subscriber class = RTPopup) ifTrue: [ 
+		[elements := sub subscriber createPopupFor: anObject] 
+		on: Error do: [ ^ self ].
+		stream nextPutAll: 'new RTPopup(['.
+		elements do: [ :e | e trachelShape accept: self ].
+		stream nextPutAll: ']) '.
+		^ self
+	 ].
+	
+	(sub subscriber class = RTHighlightable) ifTrue: [ 
+		stream nextPutAll: 'new RTHighlightable({'.
+		self addColor: sub subscriber highlightedColor.
+		stream nextPutAll: 'ides: ['.
+		((sub subscriber instVarNamed: #highlightElements) rtValue: anObject) 
 		do: [ :e |
 			stream nextPutAll: '"', (self nameFor: e trachelShape), '",' ].
 		stream nextPutAll: ']})'.
-]
-
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitInteraction: interaction with: anObject [
-	stream nextPutAll: interaction class name.
+		^ self. ].
+	(sub subscriber class = RTLabelled) ifTrue: [ 
+		stream nextPutAll: 'new RTLabelled({'.
+		self addColor: sub subscriber color.
+		stream nextPutAll: 'low'.
+		self addColor: sub subscriber lowColor.
+		stream nextPutAll: 'lbl: '.
+		stream nextPutAll: '"',(self nameFor: sub subscriber lbl),'"'.
+		stream nextPutAll: '})'.
+		^ self ].
+	stream nextPutAll: sub subscriber class name.
+	"this is ugly, we need to update this code"
 	
 ]
 
-{ #category : #'visitor-interactions' }
+{ #category : #visitor }
 RTSVGVisitor2 >> visitInteractions: anObject [
 	| first list temp |
 	
@@ -393,10 +414,10 @@ RTSVGVisitor2 >> visitInteractions: anObject [
 	stream nextPutAll: '['.
 	list do: [ :sub | 
 		first ifTrue: [ first := false.
-			sub subscriber accept: self with: anObject ]
+			self visitInteraction: sub with: anObject ]
 		ifFalse: [ 
 			stream nextPutAll: ', '.
-			sub subscriber accept: self with: anObject ]
+			self visitInteraction: sub with: anObject ]
 		 ].
 	stream nextPutAll: ']'.
 	self flag: 'review'.
@@ -418,17 +439,6 @@ RTSVGVisitor2 >> visitLabelShape: aLabel [
 
 ]
 
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitLabelledInteraction: anInt with: el [
-	stream nextPutAll: 'new RTLabelled({'.
-		self addColor: anInt color.
-		stream nextPutAll: 'low'.
-		self addColor: anInt lowColor.
-		stream nextPutAll: 'lbl: '.
-		stream nextPutAll: '"',(self nameFor: anInt lbl),'"'.
-		stream nextPutAll: '})'.
-]
-
 { #category : #visitor }
 RTSVGVisitor2 >> visitLineShape: aLine [
 	
@@ -444,11 +454,11 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	ap := e shape class = RTMultiCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
+		ifTrue: [ RTCenteredAttachPoint ] 
+		ifFalse: [ e shape attachPoint class ].
 	self addColor: aLine color.
 	stream nextPutAll: ' width: ', aLine width asString, ', ap: '.
-	stream nextPutAll: ap attachPoint class name.
+	stream nextPutAll: ap name.
 	stream nextPutAll: '},'.
 	
 ]
@@ -501,22 +511,16 @@ RTSVGVisitor2 >> visitPolygonShape: aPolygon [
 	self addMatrix: aPolygon matrix.
 ]
 
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitPopupInteraction: anInt with: el [
-	| elements |
-	[elements := anInt createPopupFor: el] 
-		on: Error do: [ ^ self ].
-		
-	stream nextPutAll: 'new RTPopup(['.
-	elements do: [ :e | 
-		e trachelShape element: e.
-		e trachelShape accept: self ].
-	stream nextPutAll: ']) '.
-]
-
 { #category : #visitor }
 RTSVGVisitor2 >> visitRotatedLabelShape: aRotatedLabel [
-	self visitLabelShape: aRotatedLabel
+	"| color rectangle position text angle svgE|
+	color := aRotatedLabel color.	
+	rectangle := aRotatedLabel encompassingRectangle.
+	position := (rectangle topLeft x + (rectangle width/4)) @ rectangle center y.
+	text := aRotatedLabel text.
+	angle := aRotatedLabel angle.
+	svgE := RTSVGText new element: aRotatedLabel element text: text at: position color: color angle: angle.
+	svgE addOn: stream using: self."
 ]
 
 { #category : #visitor }
@@ -544,30 +548,6 @@ RTSVGVisitor2 >> visitSVGPath: aSVGPath [
 { #category : #visitor }
 RTSVGVisitor2 >> visitShape: aShape [
 	aShape accept: self 
-]
-
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitShowEdgeInteraction: anInt with: el [
-	|edges t |
-	t := (anInt connectToElements rtValue: el).
-	t := t copyWithout: nil.
-	edges := (anInt shape rtValue: el) edgesFrom: el toAll: t.
-	stream nextPutAll: 'new RTShowEdge(['.
-	edges do: [ :e |
-		e trachelShape element: e.
-		e trachelShape accept: self ].
-	stream nextPutAll: ']) '.
-]
-
-{ #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitShowLabelInteraction: anInt with: el [
-	
-	stream nextPutAll: 'new RTShowLabel(['.
-	((anInt instVarNamed: #highlightElements) rtValue: el) do: [:ele |
-		(anInt labelledInteraction initializeElement: ele) accept: self.
-	].
-	stream nextPutAll: ']) '.
-	anInt doUnhighlightElement: el
 ]
 
 { #category : #visitor }
