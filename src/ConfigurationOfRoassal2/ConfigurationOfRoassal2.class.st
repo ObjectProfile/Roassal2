@@ -336,7 +336,7 @@ ConfigurationOfRoassal2 >> version16: spec [
 		spec description: 'version 1.6'.
 		spec author: 'TudorGirba'.
 		spec 
-			package: 'Trachel' with: 'Trachel-akevalion.252';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.252';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.658';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
