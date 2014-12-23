@@ -199,6 +199,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 "define the alpha values of the highlighted and others chart nodes to the view"
 	
 	( axisTitle = #activated ) ifTrue: [ 
+		"for now this way to recover the axis Titles elements in the view is not really clean, but because of using RTAxisRenderer to create the axis and titles in the same time I did not found a way to get only the title element from it."
 		titles := OrderedCollection new.
 		self metrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m asString) ] ])].
 		 ].
