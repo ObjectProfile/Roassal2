@@ -232,7 +232,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.5'.
+	spec for: #'common' version: '1.6'.
 
 ]
 
@@ -323,6 +323,21 @@ ConfigurationOfRoassal2 >> version15: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-akevalion.251';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.647';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version16: spec [
+	<version: '1.6' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.6'.
+		spec author: 'TudorGirba'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.252';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.658';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
