@@ -135,6 +135,7 @@ RTMenuBuilderExamples >> example04 [
 		s pushBack.
 		v canvas signalUpdate ].
 	b menu: 'Text' callback: [ text := text,'test'. ].
+	
 
 	menus := Array with: 
 		('Ellipse'->[:m | shape := TREllipseShape ]) with:
