@@ -27,12 +27,6 @@ RTAbstractGrapherBuilder >> addPlugin: aPlugin [
 	plugins add: aPlugin
 ]
 
-{ #category : #testing }
-RTAbstractGrapherBuilder >> areAxisDefined [
-	"Return true is axis have been defined"
-	^ axisX notNil and: [ axisY notNil ]
-]
-
 { #category : #accessing }
 RTAbstractGrapherBuilder >> axisConfiguration [
 	"Return an instance of RTAxisConfiguration. This method is useful to let a script to particularize the axis"
@@ -193,8 +187,10 @@ RTAbstractGrapherBuilder >> createView [
 
 { #category : #utility }
 RTAbstractGrapherBuilder >> defineAxesIfNecessary [
-	self areAxisDefined ifTrue: [ ^ self ].
-	self axisX; axisY
+	
+	self isXAxisDefined ifFalse: [ self axisX ].
+	self isYAxisDefined ifFalse: [ self axisY ].
+	
 ]
 
 { #category : #accessing }
@@ -255,6 +251,18 @@ RTAbstractGrapherBuilder >> initialize [
 	"Collection of plugins"
 	plugins := OrderedCollection new.
 
+]
+
+{ #category : #testing }
+RTAbstractGrapherBuilder >> isXAxisDefined [
+	"Return true is X axis has been defined"
+	^ axisX notNil
+]
+
+{ #category : #testing }
+RTAbstractGrapherBuilder >> isYAxisDefined [
+	"Return true is X axis has been defined"
+	^ axisY notNil
 ]
 
 { #category : #accessing }

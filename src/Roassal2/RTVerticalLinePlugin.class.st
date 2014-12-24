@@ -7,6 +7,7 @@ Class {
 { #category : #drawing }
 RTVerticalLinePlugin >> render [	
 	| axis xLine mm |
+
 	axis := builder getAxisX.
 	mm := RTMetricNormalizer new.
 	(axis minValue to: axis maxValue by: axis step) do: [ :x |

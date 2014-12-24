@@ -15,7 +15,8 @@ RTGrapherBuilderTest >> setUp [
 
 { #category : #tests }
 RTGrapherBuilderTest >> testDefault [
-	self deny: b areAxisDefined
+	self deny: b isXAxisDefined.
+	self deny: b isYAxisDefined.
 ]
 
 { #category : #tests }
@@ -51,6 +52,40 @@ RTGrapherBuilderTest >> testIgnoringEmptyDataSets [
 	b add: ds.
 	self assert: b numberOfDataSets equals: 1.
 
+]
+
+{ #category : #tests }
+RTGrapherBuilderTest >> testIsAxisDefined [
+
+	b := RTGrapherBuilder new.
+	b add: (RTDataSet new points: #(1 2 3)).
+	
+	self deny: b isXAxisDefined.
+	self deny: b isYAxisDefined.
+	
+	b axisXWithNumberOfTicks: 2.
+	self assert: b isXAxisDefined.
+	self deny: b isYAxisDefined.
+
+	b axisY.
+	self assert: b isXAxisDefined.
+	self assert: b isYAxisDefined.
+
+
+	self assert: b getAxisX step equals: 3 / 2.
+	b build.
+	self assert: b getAxisX step equals: 3 / 2.
+]
+
+{ #category : #tests }
+RTGrapherBuilderTest >> testStepOnXAxis [
+
+	b := RTGrapherBuilder new.
+	b add: (RTDataSet new points: #(1 2 3)).
+	b axisXWithNumberOfTicks: 2.
+	self assert: b getAxisX step equals: 3 / 2.
+	b build.
+	self assert: b getAxisX step equals: 3 / 2.
 ]
 
 { #category : #tests }
