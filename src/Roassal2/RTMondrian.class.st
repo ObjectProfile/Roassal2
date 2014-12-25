@@ -138,7 +138,7 @@ RTMondrian >> initialize [
 	currentFrame := rootFrame.
 	super initialize.
 	self resetLayoutBuilder.
-	edgeBuilder := RTEdgeBuilder new	"self pushNewFrame."
+	edgeBuilder := RTEdgeBuilder new
 ]
 
 { #category : #accessing }
@@ -191,7 +191,10 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 
 { #category : #accessing }
 RTMondrian >> normalizer [
-	metricNormalizer ifNil: [ metricNormalizer := RTMetricNormalizer new. metricNormalizer view: self view ].
+	metricNormalizer ifNil: [ 
+		metricNormalizer := RTMetricNormalizer new. 
+		metricNormalizer view: self view.
+		metricNormalizer elements: self currentElements ].
 	^ metricNormalizer
 ]
 

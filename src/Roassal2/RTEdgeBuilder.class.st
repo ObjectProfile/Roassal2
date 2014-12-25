@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'allowRepetition',
-		'elements'
+		'elements',
+		'shouldMoveBehind'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -16,11 +17,13 @@ RTEdgeBuilder >> allowRepetition [
 { #category : #public }
 RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 
-	| edges fromElement |
-	edges := OrderedCollection new.
+	| edges fromElement aModel |
+	edges := RTGroup new.
 	self elements copy do: [ :e | 
-		fromElement := self elements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		aModel := aBlockOrASymbol rtValue: e model.
+		fromElement := self elements elementFromModel: aModel.
 		fromElement ifNotNil: [ edges add: (self edgeFrom: fromElement to: e) ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 ]
 
@@ -28,10 +31,11 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 RTEdgeBuilder >> connectTo: aBlockOrASymbol [
 
 	| edges toElement |
-	edges := OrderedCollection new.
+	edges := RTGroup new.
 	self elements copy do: [ :e | 
 		toElement := self elements elementFromModel: (aBlockOrASymbol rtValue: e model).
 		toElement ifNotNil: [ edges add: (self edgeFrom: e to: toElement) ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 ]
 
@@ -39,12 +43,13 @@ RTEdgeBuilder >> connectTo: aBlockOrASymbol [
 RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
 
 	| edges toElements |
-	edges := OrderedCollection new.
+	edges := RTGroup new.
 	self elements copy do: [ :e | 
 		toElements := self elements elementsFromModels: (aBlockOrASymbol rtValue: e model).
 		toElements ifNotNil: [ 
 			toElements do: [ :toE | 
 				edges add: (self edgeFrom: e to: toE) ] ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 ]
 
@@ -79,7 +84,20 @@ RTEdgeBuilder >> globalScope [
 { #category : #initialization }
 RTEdgeBuilder >> initialize [
 	super initialize.
-	allowRepetition := false
+	allowRepetition := false.
+	shouldMoveBehind := false
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> moveBehind [
+	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"
+	shouldMoveBehind := true
+]
+
+{ #category : #'private - utility' }
+RTEdgeBuilder >> moveBehindIfNecessary: someEdges [
+	shouldMoveBehind ifFalse: [ ^ self ].
+	someEdges pushBack
 ]
 
 { #category : #public }
@@ -97,8 +115,16 @@ RTEdgeBuilder >> object: object fromAll: fromBlock to: toBlock [
 						[ | edge |
 						edge := self edgeFrom: fromElement to: toElement. 
 						edges add: edge ] ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> objects: someObjects [
+	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
+	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	self elements: (view elementsFromModels: someObjects)
 ]
 
 { #category : #public }
@@ -127,6 +153,7 @@ RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock scope: aGroup [
 				(self shouldCreateEdgeFrom: fromElement to: toElement)
 					ifTrue: [   
 						edges add: (self edgeFrom: fromElement to: toElement) ] ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 
 ]
@@ -148,6 +175,7 @@ RTEdgeBuilder >> objects: objects from: fromBlock toAll: toAllBlock [
 						[ | edge |
 						edge := self edgeFrom: fromElement to: toElement. 
 						edges add: edge ] ] ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
 
 ]
@@ -173,7 +201,13 @@ RTEdgeBuilder >> objects: objects fromAll: fromBlock to: toBlock [
 							| edge |
 							edge := self edgeFrom: fromElement to: toElement.
 							edges add: edge ] ] ].
+	self moveBehindIfNecessary: edges.
 	^ edges
+]
+
+{ #category : #public }
+RTEdgeBuilder >> objects: objects to: toBlock [
+	^ self objects: objects from: toBlock to: #yourself
 ]
 
 { #category : #'public repetition' }

@@ -16,6 +16,12 @@ RTLayoutBuilder >> cell [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> circle [
+	layout := RTCircleLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> cluster [
 
 	layout := RTClusterLayout new.

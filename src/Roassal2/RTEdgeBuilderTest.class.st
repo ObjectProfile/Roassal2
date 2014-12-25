@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTTest,
 	#instVars : [
 		'view',
-		'elements'
+		'elements',
+		'b'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -14,6 +15,50 @@ RTEdgeBuilderTest >> setUp [
 	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
 	view addAll: elements. 
+	b := RTEdgeBuilder new.
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testConnectFrom [
+	| e |
+	b view: view.
+	b objects: #(1 2).
+	b connectFrom: [ :v | v - 1 ].
+	
+	self assert: view numberOfEdges equals: 1.
+	
+	e := view edges anyOne.
+	self assert: e from model equals: 1.
+	self assert: e to model equals: 2.
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testConnectTo [
+	| e |
+	b view: view.
+	b objects: #(1 2).
+	b connectTo: [ :v | v - 1 ].
+	
+	self assert: view numberOfEdges equals: 1.
+	
+	e := view edges anyOne.
+	self assert: e from model equals: 2.
+	self assert: e to model equals: 1.
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testConnectToAll [
+	| eFrom eTo |
+	b view: view.
+	b objects: #(1 2 3).
+	b connectToAll: [ :v | Array with: v - 1 with: v - 2 ].
+	
+	self assert: view numberOfEdges equals: 3.
+	 
+	eFrom := (view edges collect: [ :edge | edge from model ]) sorted asArray.
+	eTo := (view edges collect: [ :edge | edge to model ]) sorted asArray.
+	self assert: eFrom equals: #(2 3 3).
+	self assert: eTo equals: #(1 1 2).
 ]
 
 { #category : #tests }
@@ -32,27 +77,6 @@ RTEdgeBuilderTest >> testElements [
 	es := RTBox elementsOn: (1 to: 4).
 	b elements: es.
 	self assert: b elements equals: es.
-]
-
-{ #category : #tests }
-RTEdgeBuilderTest >> testFrom [
-
-	| v es |
-	v := RTView new.
-
-	es := (RTEllipse new size: 20) elementsOn: (1 to: 2).
-	v addAll: es.
-	RTEdgeBuilder new
-		view: v;
-		objects: (1 to: 2) from: 1 to: 2;
-		build.
-
-	es @ RTPopup.
-	RTTreeLayout on: es.
-
-	self assert: v edges size equals: 1.
-	self assert: v edges first from position equals: (15.0@15.0).
-	self assert: v edges first to position equals: (15.0@55.0).
 ]
 
 { #category : #tests }
@@ -84,6 +108,44 @@ RTEdgeBuilderTest >> testInit [
 	self deny: eb shouldAllowRepetition.
 	eb allowRepetition.
 	self assert: eb shouldAllowRepetition.
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testNoMoveBehind [
+
+	RTEdgeBuilder new
+		view: view;
+		fromAssociations: (Array 
+									with: 1 -> 2
+									with: 2 -> 3
+									with: 5 -> 6).
+	self assert: (view canvas shapes collect: [ :c | c class name ]) asArray equals: #(#TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRLineShape #TRLineShape #TRLineShape)
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testObjectFrom [
+	| e |
+	b view: view.
+	b objects: #(1 2) from: [ :v | v - 1 ].
+	
+	self assert: view numberOfEdges equals: 1.
+	
+	e := view edges anyOne.
+	self assert: e from model equals: 1.
+	self assert: e to model equals: 2.
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testObjectTo [
+	| e |
+	b view: view.
+	b objects: #(1 2) to: [ :v | v - 1 ].
+	
+	self assert: view numberOfEdges equals: 1.
+	
+	e := view edges anyOne.
+	self assert: e from model equals: 1.
+	self assert: e to model equals: 2.
 ]
 
 { #category : #tests }
@@ -150,4 +212,27 @@ RTEdgeBuilderTest >> testSimple6 [
 		
 	self assert: view numberOfEdges equals: 1.
 
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testWithMoveBehind [
+
+	RTEdgeBuilder new
+		view: view;
+		moveBehind;
+		fromAssociations: (Array 
+									with: 1 -> 2
+									with: 2 -> 3
+									with: 5 -> 6).
+	self assert: (view canvas shapes collect: [ :c | c class name ]) asArray equals: #(#TRLineShape #TRLineShape #TRLineShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape)
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testWithMoveBehind02 [
+
+	RTEdgeBuilder new
+		view: view;
+		moveBehind;
+		connectFrom: [ :v | v - 1 ].
+	self assert: (view canvas shapes collect: [ :c | c class name ]) asArray equals: #(#TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRLineShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape #TRBoxShape)
 ]
