@@ -104,10 +104,11 @@ RTLayoutBuilder >> radialTree [
 
 { #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
-	| allEdges |
+	| allEdges asSet |
 	allEdges := OrderedCollection new.
 	elements do: [ :e | allEdges addAll: e connectedEdges ].
-	actionOnEdges do: [ :act | allEdges do: [ :e | act rtValue: e ] ].
+	asSet := allEdges asSet.
+	actionOnEdges do: [ :act | asSet do: [ :e | act rtValue: e ] ].
 	
 	self hasPartition
 		ifTrue: [ self processPartitions: elements ]

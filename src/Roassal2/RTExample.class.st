@@ -530,7 +530,10 @@ RTExample >> edges2 [
 	elements @ RTDraggable.
 	view addAll: elements.
 	
-	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
+	RTEdgeBuilder new
+		view: view;
+		fromAssociation: 1 -> 2.
+	
 	RTHorizontalLineLayout on: elements.
 	view open
 ]

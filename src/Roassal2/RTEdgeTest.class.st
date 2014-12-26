@@ -62,8 +62,10 @@ RTEdgeTest >> testBuildingFromAssociations [
 	view := RTView new.
 	elements := RTBox elementsOn: #(1 2).
 	view addAll: elements.
-	
-	RTEdge buildEdgesFromAssociations: (Array with: 1 -> 2) inView: view.
+
+	RTEdgeBuilder new
+		view: view;
+		fromAssociations: (Array with: 1 -> 2).
 	
 	self assert: view numberOfElements = 2.
 	self assert: view numberOfEdges = 1.
@@ -213,6 +215,18 @@ RTEdgeTest >> testRemovingEdge [
 	self assert: e2 incomingEdges size = 0.
 	self assert: e1 outgoingEdges size = 0.
 	
+]
+
+{ #category : #tests }
+RTEdgeTest >> testShouldBeUsedInLayout [
+
+	self assert: RTEdge new isUsedInLayout
+]
+
+{ #category : #tests }
+RTEdgeTest >> testShouldBeUsedInLayout02 [
+ 
+	self deny: (RTEdge new notUseInLayout; isUsedInLayout)
 ]
 
 { #category : #tests }

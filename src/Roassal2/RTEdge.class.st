@@ -3,26 +3,11 @@ Class {
 	#superclass : #RTShapedObject,
 	#instVars : [
 		'from',
-		'to'
+		'to',
+		'shouldBeUsedInLayout'
 	],
 	#category : #'Roassal2-Core'
 }
-
-{ #category : #'public - edge construction' }
-RTEdge class >> buildEdgesFromAssociations: associations inView: view [
-	"associations could be {2 -> 5 . 1 -> 5 }.
-	 Takes the model of element into account"
-	
-	^ self buildEdgesFromAssociations: associations using: RTLine inView: view
-]
-
-{ #category : #'public - edge construction' }
-RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape [
-	"associations could be {2 -> 5 . 1 -> 5 }.
-	 Takes the model of element into account"
-	
-	^ self buildEdgesFromElements: associations from: #key to: #value using: aLineShape
-]
 
 { #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inView: view [
@@ -340,6 +325,18 @@ RTEdge >> from: fromElement to: toElement [
 	self to: toElement
 ]
 
+{ #category : #initialization }
+RTEdge >> initialize [
+	super initialize.
+	shouldBeUsedInLayout := true
+]
+
+{ #category : #testing }
+RTEdge >> isUsedInLayout [
+	"If return true, then it is considered in the layout"
+	^ shouldBeUsedInLayout
+]
+
 { #category : #actions }
 RTEdge >> moveBehind: elements [
 	self trachelShape pushBehindAll: (elements collect: [:each | each trachelShape])
@@ -349,6 +346,12 @@ RTEdge >> moveBehind: elements [
 RTEdge >> moveBehindItsExtremities [
 	"Make the edge be displayed before its extremities are displayed. This is useful to not have the edge over the extremity nodes"
 	self trachelShape pushBehindAll: (Array with: self from trachelShape with: self to trachelShape)
+]
+
+{ #category : #actions }
+RTEdge >> notUseInLayout [
+	"Make the edge not used by layout"
+	shouldBeUsedInLayout := false
 ]
 
 { #category : #actions }

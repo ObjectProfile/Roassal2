@@ -125,6 +125,7 @@ RTEdgeDrivenLayout >> executeOnElements: elements [
 				each isCollection 
 					ifTrue: [ flat addAll: each ]
 					ifFalse: [ flat add: each ] ].
+			flat := flat select: #isUsedInLayout. 
 			self edges: flat ].
 		
 	super executeOnElements: elements
@@ -161,7 +162,8 @@ RTEdgeDrivenLayout >> setEdgesFromElements: elements [
 	
 	view := elements anyOne view.
 	view ifNil: [ ^ self ].
-	self edges: (view edges select: [ :el | (elements includes: el from) and: [ elements includes: el to ] ]).
+	self edges: (view edges select: [ :el | 
+		(el isUsedInLayout and: [ elements includes: el from ]) and: [ elements includes: el to ] ]).
 	
 ]
 

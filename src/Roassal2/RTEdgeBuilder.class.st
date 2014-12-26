@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'allowRepetition',
 		'elements',
-		'shouldMoveBehind'
+		'shouldMoveBehind',
+		'shouldNotBeUsedInLayout'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -23,6 +24,21 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 		aModel := aBlockOrASymbol rtValue: e model.
 		fromElement := self elements elementFromModel: aModel.
 		fromElement ifNotNil: [ edges add: (self edgeFrom: fromElement to: e) ] ].
+	self moveBehindIfNecessary: edges.
+	^ edges
+]
+
+{ #category : #public }
+RTEdgeBuilder >> connectFrom: aFromBlock ToAll: aBlockOrASymbol [
+
+	| edges toElements fromElement |
+	edges := RTGroup new.
+	self elements copy do: [ :e | 
+		fromElement := self elements elementsFromModel: (aFromBlock rtValue: e model). 
+		toElements := self elements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		toElements ifNotNil: [ 
+			toElements do: [ :toE | 
+				edges add: (self edgeFrom: fromElement to: toE) ] ] ].
 	self moveBehindIfNecessary: edges.
 	^ edges
 ]
@@ -53,6 +69,15 @@ RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	^ edges
 ]
 
+{ #category : #public }
+RTEdgeBuilder >> edgeFrom: source to: target [ 
+	"source and target are elements"
+	| edge |
+	edge := super edgeFrom: source to: target.
+	shouldNotBeUsedInLayout ifFalse: [ edge notUseInLayout ].
+	^ edge
+]
+
 { #category : #accessing }
 RTEdgeBuilder >> elements [
 	elements ifNil: [ ^ self view elements ].
@@ -64,7 +89,13 @@ RTEdgeBuilder >> elements: someElements [
 	elements := someElements
 ]
 
-{ #category : #public }
+{ #category : #'public associations' }
+RTEdgeBuilder >> fromAssociation: assoc [
+	"assoc have to be between model objects"
+	self fromAssociations: (Array with: assoc)
+]
+
+{ #category : #'public associations' }
 RTEdgeBuilder >> fromAssociations: associations [
 	"associations have to be between model objects"
 	^ self objects: associations from: #key to: #value
@@ -85,7 +116,8 @@ RTEdgeBuilder >> globalScope [
 RTEdgeBuilder >> initialize [
 	super initialize.
 	allowRepetition := false.
-	shouldMoveBehind := false
+	shouldMoveBehind := false.
+	shouldNotBeUsedInLayout := true
 ]
 
 { #category : #accessing }
@@ -98,6 +130,11 @@ RTEdgeBuilder >> moveBehind [
 RTEdgeBuilder >> moveBehindIfNecessary: someEdges [
 	shouldMoveBehind ifFalse: [ ^ self ].
 	someEdges pushBack
+]
+
+{ #category : #configuration }
+RTEdgeBuilder >> notUseInLayout [
+	shouldNotBeUsedInLayout := false
 ]
 
 { #category : #public }

@@ -19,6 +19,23 @@ RTShapeBuilder >> arrowedLine [
 	^ self shape: RTArrowedLine new
 ]
 
+{ #category : #'shape - edges' }
+RTShapeBuilder >> bezierLineFollowing: aFollowBlock [
+	"aFollowBlock return an element"
+	^ self shape: (RTBezierLine new follow: aFollowBlock)
+]
+
+{ #category : #'shape - edges' }
+RTShapeBuilder >> bezierLineUsingObjects: aFollowBlock [
+	"aFollowBlock return an element"
+	| elements |
+	self error: 'Method is not finished!!!'.
+	elements := #().
+	^ self shape: (RTBezierLine new controllingElements: elements)
+	
+ 
+]
+
 { #category : #shapes }
 RTShapeBuilder >> circle [
 	self shape: RTEllipse new

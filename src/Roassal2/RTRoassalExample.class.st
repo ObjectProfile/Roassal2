@@ -5773,7 +5773,7 @@ hNsTaxN+e3srWwkPDw9u9djLWxm2WlqtljvOnnbbZyvBVoB9tmN+QNlLd3d37jw71sa2ibfr
 { #category : #sources }
 RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
 
-| v inheritanceEdges shape helpBar1 helpBar2 elements |
+| v inheritanceEdges shape helpBar1 helpBar2 elements eb |
 v := RTView new.
 shape := RTEllipse new color: (Color red alpha: 0.4); size: [ :e | e numberOfMethods / 5 max: 5].
 elements := shape elementsOn: Collection withAllSubclasses.
@@ -5793,8 +5793,12 @@ RTForceBasedLayout new
 Collection withAllSubclasses do: [ :cls |
 cls rtmethods do: [ :cm | 
 			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
-			
-		RTEdge buildEdgesFromAssociations: (Array with: cls -> depClass ) using: (RTBezierLine new follow: #superclass; color: (Color blue alpha: 0.1)) inView: v ] ] ]
+		
+eb := RTEdgeBuilder new.
+eb view: v.
+eb shape bezierLineFollowing: #superclass; color: (Color blue alpha: 0.1).
+eb fromAssociations: (Array with: cls -> depClass).
+] ] ]
 ].
 
 
