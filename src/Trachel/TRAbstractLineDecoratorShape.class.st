@@ -132,6 +132,11 @@ TRAbstractLineDecoratorShape >> initialize [
 
 ]
 
+{ #category : #testing }
+TRAbstractLineDecoratorShape >> isOpen [
+	^ open
+]
+
 { #category : #accessing }
 TRAbstractLineDecoratorShape >> mySize [
 	^ size

@@ -266,6 +266,11 @@ TRSVGPath >> separateSubPaths [
 ]
 
 { #category : #accessing }
+TRSVGPath >> strokeWidth [
+	^ borderWidth
+]
+
+{ #category : #accessing }
 TRSVGPath >> width [
 	^ self encompassingRectangle width
 ]

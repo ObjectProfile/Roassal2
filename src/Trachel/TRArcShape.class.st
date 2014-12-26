@@ -44,6 +44,11 @@ TRArcShape >> betaAngle [
 ]
 
 { #category : #accessing }
+TRArcShape >> bottomRight [
+	^ bottomRight
+]
+
+{ #category : #accessing }
 TRArcShape >> center [
 	^center
 ]
@@ -192,6 +197,11 @@ TRArcShape >> initialize [
 { #category : #accessing }
 TRArcShape >> innerRadius [
 	^innerRadius 
+]
+
+{ #category : #accessing }
+TRArcShape >> topLeft [
+	^ topLeft
 ]
 
 { #category : #accessing }

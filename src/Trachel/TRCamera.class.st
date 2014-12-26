@@ -98,19 +98,19 @@ TRCamera >> focusOnCenter [
 
 { #category : #actions }
 TRCamera >> focusOnCenterScaled [
-	self focusOnCenterScaled: 500.
+	self focusOnCenterScaled: 500@500.
 	
 	
 ]
 
 { #category : #actions }
 TRCamera >> focusOnCenterScaled: aFactor [
-	| sc rec max |
+	| sc rec |
 	canvas numberOfShapes = 0 ifTrue: [ ^ self ].
-	self focusOnCenter.
 	rec := self encompassingRectangle.
-	max := rec width max: rec height.
-	sc := aFactor / max.
+	self translateTo: rec center.
+	sc := aFactor / rec extent.
+	sc := (sc x < sc y) ifTrue: [sc x] ifFalse: [ sc y ].
 	self scale: sc.
 ]
 

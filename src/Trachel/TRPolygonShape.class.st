@@ -32,18 +32,16 @@ TRPolygonShape >> computePath [
 
 { #category : #drawing }
 TRPolygonShape >> drawOn: athensCanvas [
-	| pt w |
+	| pt |
 	pt := athensCanvas pathTransform.
 	pt restoreAfter: [
 		pt scaleBy: matrix sx @ matrix sy.
 		
 		athensCanvas
-			setPaint: color;
-			drawShape: self path.
-			
-		w := athensCanvas setStrokePaint: strokePaint.
-		w width: strokeWidth.
-		athensCanvas drawShape: self path  ]
+			setShape: self path.
+		color isNotNil ifTrue: [ athensCanvas setPaint: color; draw ].
+		strokePaint isNotNil ifTrue: [ (athensCanvas setStrokePaint: strokePaint) width: strokeWidth].
+		athensCanvas draw ]
 ]
 
 { #category : #accessing }
@@ -91,6 +89,11 @@ TRPolygonShape >> translateTo: aPoint [
 	| dist |
 	dist := aPoint - self encompassingRectangle center.
 	self translateBy: dist.
+]
+
+{ #category : #accessing }
+TRPolygonShape >> vertices [
+	^ vertices
 ]
 
 { #category : #accessing }
