@@ -13,6 +13,27 @@ RTShapeBuilderTest >> setUp [
 	builder := RTShapeBuilder new
 ]
 
+{ #category : #'attach point' }
+RTShapeBuilderTest >> testAttachPoint01 [
+
+	builder line; verticalAttachPoint.
+	self assert: RTVerticalAttachPoint equals: builder shape attachPoint class
+]
+
+{ #category : #'attach point' }
+RTShapeBuilderTest >> testAttachPoint02 [
+
+	builder line; horizontalAttachPoint.
+	self assert: builder shape attachPoint class equals: RTHorizontalAttachPoint
+]
+
+{ #category : #'attach point' }
+RTShapeBuilderTest >> testAttachPoint03 [
+
+	builder line; centeredAttachPoint.
+	self assert: builder shape attachPoint class equals: RTCenteredAttachPoint
+]
+
 { #category : #tests }
 RTShapeBuilderTest >> testBasic [
 

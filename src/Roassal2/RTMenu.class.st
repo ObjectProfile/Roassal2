@@ -23,21 +23,6 @@ RTMenu >> add: menuitem [
 ]
 
 { #category : #accessing }
-RTMenu >> buttonLabelBackgroundShapeAndColor: aColor [
-	| box |
-	
-	box := TRBoxShape new extent: label encompassingRectangle extent + (10@7).
-	self labelBackground: box.
-	box color: aColor.
-	self saveLabelBackgroundColor.
-	box strokePaint: "(Color black)"nil.
-	TRConstraint move: box onTheCenterOf: label.
-
-	view canvas addFixedShape: box.
-	box pushBack.
-]
-
-{ #category : #accessing }
 RTMenu >> color [
 	^ color
 ]
@@ -164,6 +149,25 @@ RTMenu >> labelBackgroundColor: aColor [
 ]
 
 { #category : #accessing }
+RTMenu >> labelBackgroundShapeAndColor: aColor [
+	| box form |
+	
+	box := TRBoxShape new extent: label encompassingRectangle extent + (10@7).
+	self labelBackground: box.
+	box color: aColor.
+	self saveLabelBackgroundColor.
+	box strokePaint: "(Color black)"nil.
+	TRConstraint move: box onTheCenterOf: label.
+	form := (TRBitmapShape new form: (ColorForm allInstances first)).
+	form strokePaint: "(Color black)"nil.
+	TRConstraint move: form onTheRightOf: box.
+	
+	"view canvas addFixedShape: form."
+	view canvas addFixedShape: box.
+	box pushBack.
+]
+
+{ #category : #accessing }
 RTMenu >> menuBackground [
 	^ menuBackground 
 ]
@@ -181,28 +185,6 @@ RTMenu >> menuBackgroundColor [
 { #category : #accessing }
 RTMenu >> menuBackgroundColor: aColor [
 	menuBackgroundColor := aColor 
-]
-
-{ #category : #accessing }
-RTMenu >> menuLabelBackgroundShapeAndColor: aColor [
-	| box form |
-	
-	box := TRBoxShape new extent: label encompassingRectangle extent + (20@7).
-	self labelBackground: box.
-	box color: aColor.
-	self saveLabelBackgroundColor.
-	box strokePaint: "(Color black)"nil.
-	TRConstraint move: box onTheCenterOf: label.
-	form := TRPolygonShape new color: Color black; vertices: { 0@0. 6@0. 3@6}.
-	form strokePaint: (Color black).
-	TRConstraint move: form onTheRightOf: box.
-	
-	view canvas addFixedShape: form.
-	form translateBy: (-12)@(2).
-	label translateBy: (-5)@(0).
-	view canvas addFixedShape: box.
-	form pushBack.
-	box pushBack.
 ]
 
 { #category : #accessing }

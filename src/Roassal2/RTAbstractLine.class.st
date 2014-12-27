@@ -98,6 +98,14 @@ RTAbstractLine >> widthFor: anElement [
 ]
 
 { #category : #'attach point' }
+RTAbstractLine >> withCenteredAttachPoint [
+	| ap |
+	ap := RTCenteredAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
 RTAbstractLine >> withHorizontalAttachPoint [
 	| ap |
 	ap := RTHorizontalAttachPoint new.

@@ -3432,7 +3432,7 @@ RTRoassalExample >> exampleMakingVisualizationFit [
 	(RTGroup withAll: view elements) translateTo: 0 @ 0.
 
 	"Removing this line will make the visualization larger than the window"
-	view canvas camera focusOnCenterScaled: 500@500.
+	view canvas camera focusOnCenterScaled: 500.
 
 	^ view
 ]

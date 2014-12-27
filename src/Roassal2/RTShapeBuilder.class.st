@@ -19,6 +19,11 @@ RTShapeBuilder >> arrowedLine [
 	^ self shape: RTArrowedLine new
 ]
 
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> attachPoint: aBlockOrSymbol [
+	aBlockOrSymbol rtValue: shape 
+]
+
 { #category : #'shape - edges' }
 RTShapeBuilder >> bezierLineFollowing: aFollowBlock [
 	"aFollowBlock return an element"
@@ -34,6 +39,14 @@ RTShapeBuilder >> bezierLineUsingObjects: aFollowBlock [
 	^ self shape: (RTBezierLine new controllingElements: elements)
 	
  
+]
+
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> centeredAttachPoint [
+	"Set the vertical attach point for the edges to be built"
+	self attachPoint: #withCenteredAttachPoint
+
+	
 ]
 
 { #category : #shapes }
@@ -137,6 +150,14 @@ RTShapeBuilder >> hasSetLineShape [
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape
+]
+
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> horizontalAttachPoint [
+	"Set the vertical attach point for the edges to be built"
+	self attachPoint: #withHorizontalAttachPoint
+
+	
 ]
 
 { #category : #shapes }
@@ -333,9 +354,26 @@ RTShapeBuilder >> shapeInitializer: aBlock [
 	shapeInitializer := aBlock
 ]
 
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> shortestDistanceAttachPoint [
+	"Set the vertical attach point for the edges to be built"
+	self attachPoint: #withShorterDistanceAttachPoint
+
+
+	
+]
+
 { #category : #shapes }
 RTShapeBuilder >> text [
 	self shape: RTLabel new
+]
+
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> verticalAttachPoint [
+	"Set the vertical attach point for the edges to be built"
+	self attachPoint: #withVerticallAttachPoint
+
+	
 ]
 
 { #category : #shapes }
