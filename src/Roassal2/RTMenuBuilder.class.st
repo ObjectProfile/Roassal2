@@ -42,8 +42,20 @@ RTMenuBuilder >> addParentMenu: aRTMenu [
 ]
 
 { #category : #signalling }
-RTMenuBuilder >> configureView: aView [
-	aView 
+RTMenuBuilder >> configureViewEvents [
+	view when: TRMouseClick do: [ :evt | | anim |
+			anim := RTNopAnimation new
+				waitFor: 0.1 after: [
+					closingSubmenuFlag ifTrue: [  
+						parentMenus ifNotEmpty: [parentMenus first hideAll].
+						view signalUpdate.
+						]
+					].
+					view addAnimation: anim.
+				 view signalUpdate].
+	view when: TRMouseEnter do: [ :evt | closingSubmenuFlag := true].
+
+	view when: TRMouseLeave do: [ :evt | closingSubmenuFlag := false].
 ]
 
 { #category : #utility }
@@ -65,11 +77,11 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor highlightColor: aCo
 	index := view canvas fixedShapes 
 						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
 						
-	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +10) @ 20.
+	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +20) @ 20.
 	lbl color: Color black.
 	view canvas addFixedShape: lbl.
 	
-	menu := RTMenu new view: view; label: lbl; labelBackgroundShapeAndColor: aColor; menuBackgroundColor: aColor; highlightColor: aColor2.
+	menu := RTMenu new view: view; label: lbl; menuLabelBackgroundShapeAndColor: aColor; menuBackgroundColor: aColor; highlightColor: aColor2.
 	self addParentMenu: menu.
 	lbl element: (menu).
 	
@@ -90,7 +102,7 @@ RTMenuBuilder >> createParentMenu: aTitle background: aColor highlightColor: aCo
 			self signalUpdate.
 			]
 		].
-	
+		
 	^ lbl
 ]
 
@@ -102,7 +114,7 @@ RTMenuBuilder >> createParentMenu: aTitle highlight: aColor [
 
 { #category : #hooks }
 RTMenuBuilder >> createView [
-	^ RTView new
+	^ RTView new.
 ]
 
 { #category : #utility }
@@ -116,8 +128,6 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 	menu hideAll.
 	menu isLocked: false.
 	menu isOpen: true.
-	closingSubmenuFlag := true.
-	
 	
 	menu executeHighlight.
 	
@@ -129,8 +139,8 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 
 	labels doWithIndex: [ :l :i | | p |
 		p := ((lbl position x) + (l width/2) - (lbl width/2) + 5)@(lbl position y + (l height*i) +3.5).
-		l translateTo: p"((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1))".
-		"view addAnimation: (RTLinearMove to: p during: 0.2 on: l)."
+		l translateTo: p."((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1)).
+		view addAnimation: (RTLinearMove to: p during: 0.2 on: l)."
 	].
 
 	menu update.
@@ -159,10 +169,11 @@ RTMenuBuilder >> enterSubmenuOf: lbl [
 
 { #category : #hooks }
 RTMenuBuilder >> initialize [
-	super initialize.
-	self configureView: view.
-	parentMenus := OrderedCollection new.
+
 	closingSubmenuFlag := false.
+	super initialize.
+	parentMenus := OrderedCollection new.
+	
 ]
 
 { #category : #utility }
@@ -184,12 +195,15 @@ RTMenuBuilder >> menu: aTitle background: aColor callback: callback [
 RTMenuBuilder >> menu: aTitle background: aColor highlightColor: aColor2 callback: callback [ 
 	"Return a trachel shape, in which the callback has been set up"
 	| lbl index |
+	
+	self configureViewEvents.
+	
 	index := view canvas fixedShapes 
 						inject: 0 into: [ :s :e | s max: (e encompassingRectangle topRight x + 10) ].
-	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +10) @ 20.
+	lbl := TRLabelShape new text: aTitle; translateLeftTo: (index +20) @ 20.
 	lbl color: Color black.
 	view canvas addFixedShape: lbl.
-	lbl element: (RTMenu new view: view; label: lbl; menuBackgroundColor: aColor; labelBackgroundShapeAndColor: aColor; highlightColor: aColor2 ).
+	lbl element: (RTMenu new view: view; label: lbl; menuBackgroundColor: aColor; buttonLabelBackgroundShapeAndColor: aColor; highlightColor: aColor2 ).
 	
 	lbl when: TRMouseClick do: [ :event | callback value.].
 	lbl when: TRMouseEnter do: [ :event | closingSubmenuFlag := false. lbl element executeHighlight; executeTextHighlight. self signalUpdate. ].
