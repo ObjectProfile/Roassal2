@@ -15,7 +15,8 @@ Class {
 	#name : #RTElement,
 	#superclass : #RTShapedObject,
 	#instVars : [
-		'connectedEdges'
+		'connectedEdges',
+		'shouldUpdateEdges'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -113,7 +114,7 @@ RTElement >> incomingEdges [
 { #category : #initialization }
 RTElement >> initialize [
 	super initialize.
-
+	self updateEdgesON
 ]
 
 { #category : #testing }
@@ -165,6 +166,11 @@ RTElement >> rotateByDegrees: degree [
 	"self updateConnectedEdges"
 ]
 
+{ #category : #testing }
+RTElement >> shouldUpdateEdges [
+	^ shouldUpdateEdges
+]
+
 { #category : #actions }
 RTElement >> translateBy: delta [
 	"Translate the element by an incremental step. If I am connected to some edges, the edges are also updated."
@@ -189,7 +195,18 @@ RTElement >> unbindNestedElements [
 
 { #category : #actions }
 RTElement >> updateConnectedEdges [
+	shouldUpdateEdges ifFalse: [ ^ self ].
 	self connectedEdges do: [ :edge | edge update ]
+]
+
+{ #category : #configuration }
+RTElement >> updateEdgesOFF [
+	shouldUpdateEdges := false
+]
+
+{ #category : #configuration }
+RTElement >> updateEdgesON [
+	shouldUpdateEdges := true
 ]
 
 { #category : #accessing }

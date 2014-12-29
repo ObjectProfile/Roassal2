@@ -285,6 +285,7 @@ RTMetricNormalizer >> normalizeSize: metricBlock min: min max: max using: transf
 	| minValue maxValue |
 	
 	self checkNotEmpty.
+	elements size <= 1 ifTrue: [ ^ self ].
 
 	"We get the min and the max of the metric for all the elements"
 	minValue := transformation rtValue: (metricBlock rtValue: elements anyOne model).

@@ -28,6 +28,21 @@ RTLayoutBuilder >> cluster [
 	^ layout
 ]
 
+{ #category : #building }
+RTLayoutBuilder >> doActionsOnEdgesFor: elements [
+	| allEdges asSet |
+	actionOnEdges ifEmpty: [ ^ self ].
+	allEdges := OrderedCollection new.
+	elements do: [ :e | allEdges addAll: e connectedEdges ].
+	asSet := allEdges asSet.
+	actionOnEdges
+		do: [ :act | 
+			asSet
+				do: [ :e | 
+					e isUsedInLayout
+						ifTrue: [ act rtValue: e ] ] ]
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> flow [
 	layout := RTFlowLayout new.
@@ -112,18 +127,16 @@ RTLayoutBuilder >> radialTree [
 
 { #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
-	| allEdges asSet |
-	allEdges := OrderedCollection new.
-	elements do: [ :e | allEdges addAll: e connectedEdges ].
-	asSet := allEdges asSet.
-	actionOnEdges do: [ :act | asSet do: [ :e | 
-		e isUsedInLayout ifTrue: [ act rtValue: e ] ] ].
+
+	self doActionsOnEdgesFor: elements.
 	
+	elements do: #updateEdgesOFF.
 	self hasPartition
 		ifTrue: [ self processPartitions: elements ]
-		ifFalse: [ layout on: elements ]
-		
-	
+		ifFalse: [ layout on: elements ].
+	elements do: #updateEdgesON.
+	elements do: #updateConnectedEdges.
+
 ]
 
 { #category : #'public - layout' }
