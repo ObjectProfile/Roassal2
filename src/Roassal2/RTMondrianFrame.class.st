@@ -1,3 +1,29 @@
+"
+A RTMondrianFrame is an elementary unit in Mondrian.
+
+Instance Variables
+	childrenFrame:		<RTMondrianFrame>
+	depth:		<SmallInteger>
+	elements:		<RTGroup>
+	parent:		<RTMondrianFrame>
+	parentFrame:		<RTMondrianFrame>
+
+childrenFrame
+	- xxxxx
+
+depth
+	- xxxxx
+
+elements
+	- xxxxx
+
+parent
+	- xxxxx
+
+parentFrame
+	- xxxxx
+
+"
 Class {
 	#name : #RTMondrianFrame,
 	#superclass : #RTObject,
@@ -11,12 +37,12 @@ Class {
 	#category : #'Roassal2-Builder-NewMondrian'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTMondrianFrame >> addElements: someElements [
 	elements addAll: someElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #frames }
 RTMondrianFrame >> childrenFrames [
 	^ childrenFrame copy
 ]
@@ -33,12 +59,12 @@ RTMondrianFrame >> depth: anInteger [
 	depth := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTMondrianFrame >> elements [
 	^ elements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTMondrianFrame >> initialize [
 	super initialize.
 	depth := 1.
@@ -46,17 +72,17 @@ RTMondrianFrame >> initialize [
 	elements := RTGroup new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #frames }
 RTMondrianFrame >> numberOfAllFrames [
 	^ 1 + (childrenFrame inject: 0 into: [ :sum :frame | sum + frame numberOfAllFrames ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #frames }
 RTMondrianFrame >> numberOfChildrenFrames [
 	^ childrenFrame size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-computed' }
 RTMondrianFrame >> numberOfElements [
 	^ elements size
 ]
@@ -71,7 +97,7 @@ RTMondrianFrame >> parentFrame: anObject [
 	parentFrame := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #frames }
 RTMondrianFrame >> pushFrame: aFrame [
 	childrenFrame add: aFrame.
 	aFrame parentFrame: self.
