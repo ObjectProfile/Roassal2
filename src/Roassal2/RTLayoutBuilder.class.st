@@ -46,6 +46,14 @@ RTLayoutBuilder >> force [
 	^ layout
 ]
 
+{ #category : #'public - layout' }
+RTLayoutBuilder >> forceWithCharge: aBlockOrANumber [
+	"E.g -300"
+	layout := RTForceBasedLayout new.
+	layout charge: aBlockOrANumber.
+	^ layout
+]
+
 { #category : #configuring }
 RTLayoutBuilder >> gapSize: aValue [
 	layout gapSize: aValue
