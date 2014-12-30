@@ -516,24 +516,6 @@ UH4oP5Qfyg/lh/JD+aH8UH4oP5Qfyg/lh/JD+aH8UH4oP/7fx/8CeukGqezMesYAAAAASUVO
 RK5CYII='
 ]
 
-{ #category : #sources }
-RTGraphBuilderExample >> exampleColorPalette4 [
-| b |
-b := RTGraphBuilder new.
-
-b nodes size: 20.
-b global  
-	normalizeColor: #numberOfLinesOfCode 
-	using: (ColorPalette sequential colors: 9 scheme: 'PuBu') 
-	using: #ln.
-b layout grid.
-
-b addAll: RTObject withAllSubclasses.
-
-b build.
-^ b view
-]
-
 { #category : #icons }
 RTGraphBuilderExample >> exampleColorPalette4Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAbiklEQVR4XuVce1RTV7rPTDtt
@@ -1226,27 +1208,6 @@ WDINXPfwFz1KGuQkzys/jhNfFR9Bu75/ToYEWzoNpy2fntU9E/FJRbWtvdlbMWLbx5nek57j
 gwGS2I4qQaChMMazqtLriTN5ktlR+bHD4pWPtfWW3jIovu3V89eXRU+Jbks/g7Ewzk0IlCoo
 7Z6ec0+SAlEDfVad6J9i+yhGnSbYyxpB6h0eUnySCTFqr+tdH+f9XwYQkgrqZ3rXR3ifRM1J
 QOj1QwSAH2v7D7cQROa38QW2AAAAAElFTkSuQmCC'
-]
-
-{ #category : #sources }
-RTGraphBuilderExample >> exampleColoringGraph3 [
-| b |
-b := RTGraphBuilder new.
-b nodes color: Color gray.
-b edges connectTo: #dependentClasses; useInLayout.
-b layout force charge: -80.	
-
-b global
-	minSize: 15;
-	normalizeSize: [ :c | c dependentClasses size ]
-		min: 5 max: 25 using: #log;
-	normalizeColor: [ :c | c dependentClasses size ] 
-		using: (Array with: Color green with: Color  red ) using: #log;
-	alphaColor: 0.4.
-
-b addAll: RTObject withAllSubclasses, TRObject withAllSubclasses.
-b build.
-^ b view
 ]
 
 { #category : #icons }
@@ -4443,29 +4404,6 @@ srUNv0LtAvGlNMGEyDO34mdxJ8Blea4mvdxliU/IDQbxCbnBYFzbaOK/fMp3fFH9On4vKL5U
 JtKLYW3jTXpL0Uldxu+6isSPsiYW8rWNaIoRXyDiQ3yID/EhPsSH+BAf4kN8iA/xIT7Eh/gQ
 H+JDfIgP8SE+xIf4EB/iQ3yID/EhPsSH+BAf4kN8iA/xcXPif2LjXofiPS+iAAAAAElFTkSu
 QmCC'
-]
-
-{ #category : #sources }
-RTGraphBuilderExample >> exampleTrees [
-| b |
-b := RTGraphBuilder new.
-b nodes if: [ :c | '*Line*' match: c name ]; color: Color red.
-b nodes color: Color gray.
-
-b edges 
-	follow: #superclass;
-	connectTo: #dependentClasses;
-	color: (Color blue alpha: 0.2).
-
-b edges 
-	connectFrom: #superclass;
-	useInLayout.
-
-b layout tree.
-b addAll: TRShape withAllSubclasses, RTShape withAllSubclasses.
-
-b build.
-^ b view
 ]
 
 { #category : #icons }

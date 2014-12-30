@@ -52,7 +52,7 @@ RTElementTest >> testAttributes [
 RTElementTest >> testCompositeShape [
 
 	| s e |
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: RTBox new.
 	e := s element.
 	
@@ -162,7 +162,7 @@ RTElementTest >> testNestedElements3 [
 	v := RTView new.
 	v @ RTDraggableView.
 
-	classShape := RTMultiCompositeShape new. 
+	classShape := RTCompositeShape new. 
 	classShape add: (RTLabel new).
 	classShape add: (RTBox new color: Color lightGreen).
 	classShape add: (RTBox new color: Color lightRed).

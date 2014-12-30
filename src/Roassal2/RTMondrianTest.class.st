@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-NewMondrian'
+	#category : #'Roassal2-Builder-Mondrian'
 }
 
 { #category : #'tests - nodes' }

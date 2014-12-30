@@ -31,7 +31,7 @@ Class {
 		'edgeBuilder',
 		'metricNormalizer'
 	],
-	#category : #'Roassal2-Builder-NewMondrian'
+	#category : #'Roassal2-Builder-Mondrian'
 }
 
 { #category : #public }

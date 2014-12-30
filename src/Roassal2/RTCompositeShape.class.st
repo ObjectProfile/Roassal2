@@ -1,5 +1,5 @@
 Class {
-	#name : #RTMultiCompositeShape,
+	#name : #RTCompositeShape,
 	#superclass : #RTShape,
 	#instVars : [
 		'shapes',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RTMultiCompositeShape class >> with: shape1 with: shape2 [
+RTCompositeShape class >> with: shape1 with: shape2 [
 	^ self new 
 		add: shape1;
 		add: shape2;
@@ -18,44 +18,44 @@ RTMultiCompositeShape class >> with: shape1 with: shape2 [
 ]
 
 { #category : #adding }
-RTMultiCompositeShape >> add: aRTShape [
+RTCompositeShape >> add: aRTShape [
 	self add: aRTShape translateBy: 0 @ 0
 ]
 
 { #category : #adding }
-RTMultiCompositeShape >> add: aRTShape translateBy: aPoint [
+RTCompositeShape >> add: aRTShape translateBy: aPoint [
 	shapes add: (Array with: aRTShape with: aPoint)
 ]
 
 { #category : #'public - layout' }
-RTMultiCompositeShape >> alignRight [
+RTCompositeShape >> alignRight [
 	layout := #alignRight
 ]
 
 { #category : #accessing }
-RTMultiCompositeShape >> allShapes [
+RTCompositeShape >> allShapes [
 	"Return all the shapes contained in me."
 	^ shapes collect: #first as: Array
 ]
 
 { #category : #accessing }
-RTMultiCompositeShape >> colorElement: aOneArgBlock [
+RTCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
 	shapes do: [ :s | s first colorElement: aOneArgBlock ]
 ]
 
 { #category : #public }
-RTMultiCompositeShape >> edgeFrom: el1 to: el2 [
+RTCompositeShape >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
 { #category : #'public - layout' }
-RTMultiCompositeShape >> horizontal [
+RTCompositeShape >> horizontal [
 	layout := #horizontal
 ]
 
 { #category : #initialization }
-RTMultiCompositeShape >> initialize [
+RTCompositeShape >> initialize [
 	super initialize.
 	shapes := OrderedCollection new.
 	layout := #noLayout.
@@ -65,12 +65,12 @@ RTMultiCompositeShape >> initialize [
 ]
 
 { #category : #public }
-RTMultiCompositeShape >> setAutomaticRelayout [
+RTCompositeShape >> setAutomaticRelayout [
 	automaticallyUpdateLayout := true
 ]
 
 { #category : #hooks }
-RTMultiCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape [
+RTCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape [
 	automaticallyUpdateLayout
 		ifTrue: [ 
 			| b |
@@ -83,7 +83,7 @@ RTMultiCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachel
 ]
 
 { #category : #public }
-RTMultiCompositeShape >> trachelShapeFor: anElement [
+RTCompositeShape >> trachelShapeFor: anElement [
 "	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new"
 	
 	| ss trachelShape |
@@ -102,7 +102,7 @@ RTMultiCompositeShape >> trachelShapeFor: anElement [
 ]
 
 { #category : #hooks }
-RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
+RTCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 	| ss |
 	ss := shapes
 		collectWithIndex: [ :tupple :shapeIndex | 
@@ -119,6 +119,6 @@ RTMultiCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 ]
 
 { #category : #'public - layout' }
-RTMultiCompositeShape >> vertical [
+RTCompositeShape >> vertical [
 	layout := #vertical
 ]

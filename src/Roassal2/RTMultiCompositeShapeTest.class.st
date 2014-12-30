@@ -11,7 +11,7 @@ RTMultiCompositeShapeTest >> testAlignRight [
 	v := RTView new.
 	box := RTBox new.
 	box2 := RTBox new.
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: box.
    s add: box2.
 	s alignRight.
@@ -25,7 +25,7 @@ RTMultiCompositeShapeTest >> testAllShapes [
 	v := RTView new.
 	box := RTBox new.
 	box2 := RTBox new.
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: box.
    s add: box2.
 
@@ -59,7 +59,7 @@ RTMultiCompositeShapeTest >> testColor [
 	| v box s e |
 	v := RTView new.
 	box := RTBox new.
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: box.
 	s color: Color red.
 	e := s element.
@@ -72,8 +72,8 @@ RTMultiCompositeShapeTest >> testColor [
 RTMultiCompositeShapeTest >> testComposedCompositedShape [
 
 	| s1 s2 e v |
-	s1 := RTMultiCompositeShape new.
-	s2 := RTMultiCompositeShape new.
+	s1 := RTCompositeShape new.
+	s2 := RTCompositeShape new.
 	
 	s1 add: (RTBox new color: Color blue; size: 20).
 	s1 add: (RTBox new color: Color red; size: 20).
@@ -96,7 +96,7 @@ RTMultiCompositeShapeTest >> testComposedCompositedShape [
 RTMultiCompositeShapeTest >> testExtentCompositedShape [
 
 	| s1  e v |
-	s1 := RTMultiCompositeShape new.
+	s1 := RTCompositeShape new.
 	
 	s1 add: (RTBox new color: Color blue; size: 20).
 	s1 add: (RTBox new color: Color red; size: 20).
@@ -114,12 +114,12 @@ RTMultiCompositeShapeTest >> testScenario [
 	| v s2 s e |
 	v := RTView new.
 
-	s2 := RTMultiCompositeShape new.
+	s2 := RTCompositeShape new.
 	s2 add: RTEllipse new.
 	s2 add: RTEllipse new.
 	s2 horizontal.
 
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: (RTLabel new text: 'hello').
 	s add: s2.
 	s vertical.
@@ -133,7 +133,7 @@ RTMultiCompositeShapeTest >> testScenario [
 { #category : #tests }
 RTMultiCompositeShapeTest >> testSetColorOnEmpty [
 
-	self should: [ RTMultiCompositeShape new color: Color blue ] raise: Error
+	self should: [ RTCompositeShape new color: Color blue ] raise: Error
 ]
 
 { #category : #tests }
@@ -141,7 +141,7 @@ RTMultiCompositeShapeTest >> testTranslationBy [
 
 	| view shape el ps ps2 |
 	view := RTView new.
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new color: Color blue; height: 20; width: 15).
 	shape add: (RTBox new color: Color white; height: 20; width: 15) translateBy: 15 @ 0.
 	shape add: (RTBox new color: Color red; height: 20; width: 15) translateBy: 30 @ 0.
@@ -151,7 +151,7 @@ RTMultiCompositeShapeTest >> testTranslationBy [
 	view add: el.
 
 	self assert: view canvas numberOfShapes equals: 3.
-	self assert: el shape class equals: RTMultiCompositeShape.
+	self assert: el shape class equals: RTCompositeShape.
 	
 	ps := view canvas shapes collect: #position.
 	self assert: ps equals: (Array with: (-15 @ 0) with: (0 @ 0) with: (15 @ 0)).
@@ -166,7 +166,7 @@ RTMultiCompositeShapeTest >> testTranslationTo [
 
 	| view shape el ps ps2 |
 	view := RTView new.
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new color: Color blue; height: 20; width: 15).
 	shape add: (RTBox new color: Color white; height: 20; width: 15) translateBy: 15 @ 0.
 	shape add: (RTBox new color: Color red; height: 20; width: 15) translateBy: 30 @ 0.
@@ -176,7 +176,7 @@ RTMultiCompositeShapeTest >> testTranslationTo [
 	view add: el.
 
 	self assert: view canvas numberOfShapes equals: 3.
-	self assert: el shape class equals: RTMultiCompositeShape.
+	self assert: el shape class equals: RTCompositeShape.
 	
 	ps := view canvas shapes collect: #position.
 	self assert: ps equals: (Array with: (-15 @ 0) with: (0 @ 0) with: (15 @ 0)).
@@ -190,7 +190,7 @@ RTMultiCompositeShapeTest >> testTranslationTo [
 RTMultiCompositeShapeTest >> testVerticalAndChangingElementSize [
 
 	| s b1 b2 e view |
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	b1 := RTBox new color: Color green.
 	b2 := RTBox new color: Color blue; size: 20.
 	s add: b1.
@@ -217,7 +217,7 @@ RTMultiCompositeShapeTest >> testVerticalAndChangingElementSize [
 RTMultiCompositeShapeTest >> testVerticalAndChangingElementSize2 [
 
 	| s b1 b2 e view |
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	b1 := RTBox new color: Color green.
 	b2 := RTBox new color: Color blue.
 	s add: b1.
@@ -244,7 +244,7 @@ RTMultiCompositeShapeTest >> testVerticalLayoutAndTranslation [
 	v := RTView new.
 	b1 := RTBox new color: Color red; size: 16.
 	b2 := RTBox new color: Color blue; size: 16.
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: b1.
 	s add: b2.
 	s vertical.

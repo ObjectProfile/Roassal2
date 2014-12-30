@@ -157,7 +157,7 @@ RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape color.
 	self addBorderColor: arrowShape strokePaint.
-	ap := e shape class = RTMultiCompositeShape 
+	ap := e shape class = RTCompositeShape 
 		ifTrue: [ e shape allShapes first ] 
 		ifFalse: [ e shape ].
 	stream nextPutAll: ' width: ', arrowShape width asString;
@@ -194,7 +194,7 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape strokePaint.
-	ap := e shape class = RTMultiCompositeShape 
+	ap := e shape class = RTCompositeShape 
 		ifTrue: [ e shape allShapes first ] 
 		ifFalse: [ e shape ].
 	stream nextPutAll: ' width: ', arrowShape width asString;
@@ -209,7 +209,7 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 RTSVGVisitor2 >> visitBezierShape: aBezierShape [
 	| e shape |
 	e := aBezierShape element.
-	shape := (e shape class = RTMultiCompositeShape) ifTrue: [ shape := e shape allShapes first ] ifFalse: [ e shape ].
+	shape := (e shape class = RTCompositeShape) ifTrue: [ shape := e shape allShapes first ] ifFalse: [ e shape ].
 	stream nextPutAll: '
 		{type: "bezier", id: "';
 		nextPutAll: (self nameFor: aBezierShape);
@@ -443,7 +443,7 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 		nextPutAll: (self nameFor: aLine);
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
-	ap := e shape class = RTMultiCompositeShape 
+	ap := e shape class = RTCompositeShape 
 		ifTrue: [ e shape allShapes first ] 
 		ifFalse: [ e shape ].
 	self addColor: aLine color.

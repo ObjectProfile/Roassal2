@@ -175,7 +175,7 @@ RTShapeBuilderTest >> testWithText [
 	el := builder elementOn: 'hello'.
 	v add: el.
 	
-	self assert: el shape class == RTMultiCompositeShape.
+	self assert: el shape class == RTCompositeShape.
 	
 ]
 
@@ -193,6 +193,6 @@ RTShapeBuilderTest >> testWithTextAndTranslation [
 	el translateTo: 20 @ 20.
 	v add: el.
 	
-	self assert: el shape class == RTMultiCompositeShape.
+	self assert: el shape class == RTCompositeShape.
 	
 ]

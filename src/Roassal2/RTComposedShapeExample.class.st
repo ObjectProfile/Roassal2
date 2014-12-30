@@ -18,7 +18,7 @@ RTComposedShapeExample >> exampleEdgesFromComposedShape [
 | v shape es |
 v := RTView new.
 v @ RTDraggableView.
-shape := RTMultiCompositeShape new.
+shape := RTCompositeShape new.
 shape add: RTLabel new.
 shape add: RTBox new.
 es := shape elementsOn: RTShape withAllSubclasses.
@@ -117,7 +117,7 @@ RTComposedShapeExample >> exampleFlags [
 
 | view shape els flags |
 view := RTView new.
-shape := RTMultiCompositeShape new.
+shape := RTCompositeShape new.
 shape add: (RTBox new color: #first; height: 20; width: 15).
 shape add: (RTBox new color: #second; height: 20; width: 15) translateBy: 15 @ 0.
 shape add: (RTBox new color: #third; height: 20; width: 15) translateBy: 30 @ 0.
@@ -152,7 +152,7 @@ H8TPB/FB/K5UAYIdyaudpALHAAAAAElFTkSuQmCC'
 RTComposedShapeExample >> exampleHorizontalCompositeShape1 [
 | view shape els |
 view := RTView new.
-shape := RTMultiCompositeShape new
+shape := RTCompositeShape new
 				add: (RTBox new color: Color gray; size: 20);
 				add: (RTLabel new text: '+');
 				horizontal;
@@ -185,7 +185,7 @@ RTComposedShapeExample >> exampleInnerShapes [
 	v := RTView new.
 	v @ RTDraggableView.
 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: RTLabel new.
 	shape add: (RTBox new color: (Color blue alpha: 0.3)).
 	shape vertical.
@@ -346,7 +346,7 @@ RTComposedShapeExample >> exampleNesting2 [
 
 | v shape es |
 v := RTView new.
-shape := RTMultiCompositeShape new.
+shape := RTCompositeShape new.
 shape add: RTLabel new.
 shape add: RTBox new.
 es := shape elementsOn: RTShape withAllSubclasses.

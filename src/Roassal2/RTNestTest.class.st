@@ -4,6 +4,35 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'composed shape' }
+RTNestTest >> testAutomaticLayout [
+
+	| v lbl box cs e bigElement bigElement2 |
+	v := RTView new.
+
+	lbl := RTLabel new text: ''.
+	box := RTBox new.
+	cs := RTCompositeShape new.
+	cs add: lbl.
+	cs add: box.
+	cs vertical.
+
+	e := cs element.
+	v add: e.
+
+	bigElement := ((RTBox new size: 20; color: Color red) element).
+	bigElement2 := ((RTBox new size: 20; color: Color red) element).
+	v add: bigElement.
+	v add: bigElement2.
+
+	RTNest new 
+		layout: RTFlowLayout new;
+		on: e nest: (Array with: bigElement with: bigElement2).
+
+	self assert: bigElement position equals: (-12.0@23.5).
+	self assert: bigElement2 position equals: (13.0@23.5).
+]
+
 { #category : #tests }
 RTNestTest >> testBasic [
 	| view el el2 |
@@ -92,7 +121,7 @@ RTNestTest >> testDifferentSizes [
 RTNestTest >> testDragAndDrop [
 	| v shape es outer  inner |
 	v := RTView new.
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: RTBox new.
 	shape add: RTBox new.
 	
@@ -234,7 +263,7 @@ RTNestTest >> testInnerElement1 [
 	| v shape e innerBox innerElement |
 	v := RTView new.
 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new size: 20; color: (Color green alpha: 0.3)).
 	shape add: (RTBox new size: 20; color: (Color blue alpha: 0.3)) translateBy: 0 @ 20.
 
@@ -257,7 +286,7 @@ RTNestTest >> testInnerElement2 [
 	| v shape e innerBox innerElements |
 	v := RTView new.
 	
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new size: 20; color: (Color green alpha: 0.3)).
 	shape add: (RTBox new size: 20; color: (Color blue alpha: 0.3)) translateBy: 0 @ 20.
 
@@ -282,7 +311,7 @@ RTNestTest >> testInnerElement3 [
 
 	v := RTView new.
 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new size: 20; color: (Color green alpha: 0.3)).
 	shape add: (RTBox new size: 20; color: (Color blue alpha: 0.3)) translateBy: 0 @ 20.
 
@@ -311,7 +340,7 @@ RTNestTest >> testInnerElement4 [
 	v := RTView new.
 	v @ RTDraggableView.
 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: RTBox new.
 	shape vertical.
 
@@ -337,7 +366,7 @@ RTNestTest >> testInnerElement5 [
 	v := RTView new.
 	v @ RTDraggableView.
 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: RTBox new.
 	shape vertical.
 
@@ -352,6 +381,79 @@ RTNestTest >> testInnerElement5 [
 
 	es first translateTo: 25 @ -20.
 	self assert: es first position equals: 25 @ -20
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testLabelInCompositeShape [
+
+	| v lbl box cs e bigElement |
+	v := RTView new.
+
+	lbl := RTLabel new text: ''.
+	box := RTBox new.
+	cs := RTCompositeShape new.
+	cs add: lbl.
+	cs add: box.
+	cs vertical.
+
+	e := cs element.
+	v add: e.
+
+	RTNest new
+		for: (Array with: e) add: [ :group :model | 
+			bigElement := ((RTBox new size: 20; color: Color red) element).
+			group add: bigElement. ].
+
+	self assert: bigElement position ~= e position.
+	self assert: bigElement trachelShape position equals: e trachelShape shapes second position.
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testLabelNotInCompositeShape [
+
+	| v box  e bigElement |
+	v := RTView new.
+
+	box := RTBox new.
+	e := box element.
+	v add: e.
+
+	RTNest new
+		for: (Array with: e) add: [ :group :model | 
+			bigElement := ((RTBox new size: 20; color: Color red) element).
+			group add: bigElement ].
+
+	self assert: bigElement position equals: e position.
+	self assert: bigElement trachelShape position equals: e trachelShape position.
+]
+
+{ #category : #'composed shape' }
+RTNestTest >> testLayout [
+
+	| v lbl box cs e bigElement bigElement2 |
+	v := RTView new.
+
+	lbl := RTLabel new text: ''.
+	box := RTBox new.
+	cs := RTCompositeShape new.
+	cs add: lbl.
+	cs add: box.
+	cs vertical.
+
+	e := cs element.
+	v add: e.
+
+	bigElement := ((RTBox new size: 20; color: Color red) element).
+	bigElement2 := ((RTBox new size: 20; color: Color red) element).
+	v add: bigElement.
+	v add: bigElement2.
+	
+	RTFlowLayout on: (Array with: bigElement with: bigElement2).
+	RTNest new 
+		on: e nest: (Array with: bigElement with: bigElement2).
+
+	self assert: bigElement position equals: (-12.0@23.5).
+	self assert: bigElement2 position equals: (13.0@23.5).
 ]
 
 { #category : #'multi line' }

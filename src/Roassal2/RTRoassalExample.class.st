@@ -4474,7 +4474,7 @@ clss do: [ :cls |
 	 ].
 	s vertices: ver.
 	
-	composedShape := RTMultiCompositeShape new.
+	composedShape := RTCompositeShape new.
 	composedShape add: s.
 	composedShape add: (RTEllipse new color: (Color red)).
 	e := composedShape elementOn: cls.

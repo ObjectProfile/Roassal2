@@ -5,7 +5,8 @@ Class {
 		'layout',
 		'padding',
 		'behavior',
-		'view'
+		'view',
+		'labelShape'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -93,11 +94,24 @@ RTNest >> for: collectionOfElements inShape: aSymbol add: aTwoArgBlock [
 	]
 ]
 
+{ #category : #public }
+RTNest >> indexOfNonLabelShapeIn: backElement [
+	| nonLabelShape |
+	nonLabelShape := backElement shape allShapes detect: [ :aShape | aShape class ~~ RTLabel ].
+	^ backElement shape allShapes indexOf: nonLabelShape
+]
+
 { #category : #initialization }
 RTNest >> initialize [
 	super initialize.
 	padding := 5.
 	self noBehavior
+]
+
+{ #category : #public }
+RTNest >> isCompositeAndHasLabel: backElement [
+	^ backElement shape class == RTCompositeShape
+		and: [ backElement shape allShapes anySatisfy: [ :aShape | aShape class == RTLabel ] ]
 ]
 
 { #category : #accessing }
@@ -181,8 +195,11 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 	
 	aSymbolLayout is either #vertical or #horizontal"
 	
+	self doLayoutIfNecessaryOn: elements.
+	
 	"We assume that the roassal shape of element is composed"
-	self onTrachelShape: (aSymbol rtValue: element trachelShape shapes) nest: elements.
+	behavior on: (aSymbol rtValue: element trachelShape shapes) setNested: elements asGroup.
+	"self onTrachelShape: (aSymbol rtValue: element trachelShape shapes) nest: elements."
 
 	aSymbolLayout rtValue: element trachelShape.
 	element trachelShape relayout.
@@ -192,12 +209,21 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 { #category : #public }
 RTNest >> on: backElement nest: elements [
 	"public method"
+
 	"backElement is the elements on which elements are layout-ed"
+
 	"- position the elements above backElement. 
 	 - resize backElement to encapsulate the elements
 	 - perform a layout of the elements if a layout has been set
 	 - make the inner elements draggable"
 
+	"We check if the shape of backElement is a composite shape. nested elements should not be on the Label. We manually consider this situation since it is recurrent"
+
+	| indexOfNonLabel |
+	(self isCompositeAndHasLabel: backElement)
+		ifTrue: [ 
+			indexOfNonLabel := self indexOfNonLabelShapeIn: backElement.
+			^ self on: backElement inShape: [ :array | array at: indexOfNonLabel ] nest: elements ].
 	self doLayoutIfNecessaryOn: elements.
 	behavior on: backElement setNested: elements asGroup.
 	self mark: backElement with: elements
@@ -222,7 +248,7 @@ RTNest >> onResizable: backElement nest: elements [
 
 ]
 
-{ #category : #public }
+{ #category : #'to be removed' }
 RTNest >> onTrachelShape: trachelShape nest: elements [
 	"public method"
 	"backElement is the elements on which elements are layout-ed"

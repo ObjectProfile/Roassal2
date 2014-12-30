@@ -34,7 +34,7 @@ Class {
 		'elements',
 		'childrenFrame'
 	],
-	#category : #'Roassal2-Builder-NewMondrian'
+	#category : #'Roassal2-Builder-Mondrian'
 }
 
 { #category : #adding }

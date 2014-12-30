@@ -61,7 +61,7 @@ RTShape class >> instance [
 
 { #category : #public }
 RTShape >> + anotherShape [
-	^ RTMultiCompositeShape with: self with: anotherShape instance
+	^ RTCompositeShape with: self with: anotherShape instance
 ]
 
 { #category : #accessing }

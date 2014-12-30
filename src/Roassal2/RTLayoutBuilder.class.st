@@ -22,6 +22,13 @@ RTLayoutBuilder >> circle [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> circleWithRadius: aRadiusInPixels [
+	layout := RTCircleLayout new.
+	layout radius: aRadiusInPixels.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> cluster [
 
 	layout := RTClusterLayout new.

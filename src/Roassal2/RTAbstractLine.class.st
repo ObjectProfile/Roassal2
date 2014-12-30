@@ -21,7 +21,7 @@ RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
 { #category : #public }
 RTAbstractLine >> + anotherShape [
 	anotherShape line: self.
-	^ RTMultiCompositeShape with: self with: anotherShape instance
+	^ RTCompositeShape with: self with: anotherShape instance
 ]
 
 { #category : #visitor }

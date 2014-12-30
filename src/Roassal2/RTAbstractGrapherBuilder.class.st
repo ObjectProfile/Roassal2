@@ -243,7 +243,7 @@ RTAbstractGrapherBuilder >> homogenizeMinAndMax [
 { #category : #initialization }
 RTAbstractGrapherBuilder >> initialize [
 	super initialize.
-	extent := 100 @ 100.
+	extent := 300 @ 200.
 	
 	"Collection of data sets"
 	datasets := OrderedCollection new.

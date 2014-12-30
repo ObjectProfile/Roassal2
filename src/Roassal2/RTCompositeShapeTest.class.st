@@ -8,7 +8,7 @@ Class {
 RTCompositeShapeTest >> testCenter [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 
@@ -25,7 +25,7 @@ RTCompositeShapeTest >> testCenter [
 RTCompositeShapeTest >> testCenter2 [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape horizontal.
@@ -43,7 +43,7 @@ RTCompositeShapeTest >> testCenter2 [
 RTCompositeShapeTest >> testCenter2AndTranslation [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape horizontal.
@@ -62,7 +62,7 @@ RTCompositeShapeTest >> testCenter2AndTranslation [
 RTCompositeShapeTest >> testCenter3 [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape vertical.
@@ -80,7 +80,7 @@ RTCompositeShapeTest >> testCenter3 [
 RTCompositeShapeTest >> testCenter3AndTranslation [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape vertical.
@@ -99,7 +99,7 @@ RTCompositeShapeTest >> testCenter3AndTranslation [
 RTCompositeShapeTest >> testCenterAndTranslation [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 
@@ -117,7 +117,7 @@ RTCompositeShapeTest >> testCenterAndTranslation [
 RTCompositeShapeTest >> testCenterVerticalLineLayout [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape horizontal.
@@ -145,7 +145,7 @@ RTCompositeShapeTest >> testCenterVerticalLineLayout [
 RTCompositeShapeTest >> testCenterVerticalLineLayout2 [
 	| v es shape |
 	v := RTView new. 
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: (RTBox new height: 10; color: Color green; width: #yourself).
 	shape add: (RTBox new height: 10; color: Color red; width: [ :cc | 100 - cc ]).
 	shape horizontal.
@@ -167,7 +167,7 @@ RTCompositeShapeTest >> testCenterVerticalLineLayout2 [
 RTCompositeShapeTest >> testRemoving [
 
 	| s e v |
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: RTLabel new.
 	s add: RTBox new.
 	e := s element.

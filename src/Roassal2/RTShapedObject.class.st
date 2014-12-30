@@ -58,7 +58,7 @@ RTShapedObject >> + aRTShape [
 RTShapedObject >> addShape: aRTShape [
 	(shape class == RTNoShape)  
 		ifTrue: [	shape := aRTShape instance ]
-		ifFalse: [ shape := RTMultiCompositeShape with: shape with: aRTShape ].
+		ifFalse: [ shape := RTCompositeShape with: shape with: aRTShape ].
 	trachelShape := shape trachelShapeFor: self
 
 ]

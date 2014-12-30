@@ -62,7 +62,7 @@ RTShapeBuilder >> createdElements [
 { #category : #shapes }
 RTShapeBuilder >> cross [
 	| s |
-	s := RTMultiCompositeShape new.
+	s := RTCompositeShape new.
 	s add: (RTBox new height: 10; width: 3). 
 	s add: (RTBox new height: 3; width: 10).
 
@@ -129,10 +129,10 @@ RTShapeBuilder >> extensibleLabel [
 { #category : #'text shape' }
 RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 	"Make sure we have something that this message is meaningful"
-	self assert: [ #(RTLabel RTMultiCompositeShape) includes: shape class name ].
+	self assert: [ #(RTLabel #RTCompositeShape) includes: shape class name ].
 	
 	shape class == RTLabel ifTrue: [ shape height: aValueOrASymbolOrABlock. ^ self ].
-	shape class == RTMultiCompositeShape ifTrue: [ (shape allShapes select: [ :s | s class == RTLabel ]) do: [ :s | s height: aValueOrASymbolOrABlock ] ]
+	shape class == RTCompositeShape ifTrue: [ (shape allShapes select: [ :s | s class == RTLabel ]) do: [ :s | s height: aValueOrASymbolOrABlock ] ]
 ]
 
 { #category : #'shape - edges' }
@@ -253,7 +253,7 @@ RTShapeBuilder >> labelledAs: aBlock [
 	| label oldShape |
 	label := RTLabel new text: aBlock.
 	oldShape := shape.
-	shape := RTMultiCompositeShape new.
+	shape := RTCompositeShape new.
 	shape add: oldShape.
 	shape add: label.
 	
@@ -400,7 +400,7 @@ RTShapeBuilder >> withTextAbove [
 { #category : #shapes }
 RTShapeBuilder >> withTextAbove: aSymbolOrABlock [
 	| newShape |
-	newShape := RTMultiCompositeShape new.
+	newShape := RTCompositeShape new.
 	newShape add: (RTLabel new text: aSymbolOrABlock).
 	newShape add: shape.
 	newShape vertical.

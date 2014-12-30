@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal2-Builder-Mondrian'
+	#category : #'Roassal2-Builder-MondrianOLD'
 }
 
 { #category : #basic }

@@ -10,7 +10,7 @@ Class {
 		'topLevelEdges',
 		'layout'
 	],
-	#category : #'Roassal2-Builder-Mondrian'
+	#category : #'Roassal2-Builder-MondrianOLD'
 }
 
 { #category : #layout }
@@ -277,7 +277,7 @@ RTMondrianViewBuilder >> nodes: objects forEach: aOneArgBlock [
 		addedEdges := view edges copyWithoutAll: allEdges.
 
 		self applyLayout.
-		n shape class == RTMultiCompositeShape
+		n shape class == RTCompositeShape
 			ifTrue: [ RTNest new on: n inShape: #second nest: addedElements ]
 			ifFalse: [ RTNest new on: n nest: addedElements ].
 
