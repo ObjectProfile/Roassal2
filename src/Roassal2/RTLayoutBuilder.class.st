@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'layout',
 		'actionOnEdges',
-		'partitions'
+		'partitions',
+		'dynamicForceBasedLayout'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -50,6 +51,19 @@ RTLayoutBuilder >> doActionsOnEdgesFor: elements [
 						ifTrue: [ act rtValue: e ] ] ]
 ]
 
+{ #category : #building }
+RTLayoutBuilder >> doDynamicForceBasedLayoutOn: elements [
+	| v |
+	v := elements anyOne view.
+	v addAnimation: (RTSpringLayoutStepping new view: v)
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> dynamicForce [
+	"This flag is used in setUpElements to add an animation to the view. This is a bit hackish, yes. We will see in the future"
+	dynamicForceBasedLayout := true
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> flow [
 	layout := RTFlowLayout new.
@@ -87,6 +101,13 @@ RTLayoutBuilder >> grid [
 	^ layout
 ]
 
+{ #category : #'public - layout' }
+RTLayoutBuilder >> gridWithPerRow: aNumber [
+	layout := RTGridLayout new.
+	layout lineItemsCount: aNumber.
+	^ layout
+]
+
 { #category : #'public - partition' }
 RTLayoutBuilder >> hasPartition [
 	^ partitions notEmpty
@@ -103,7 +124,8 @@ RTLayoutBuilder >> initialize [
 	super initialize.
 	layout := RTFlowLayout new.
 	actionOnEdges := OrderedCollection new.
-	partitions := OrderedCollection new
+	partitions := OrderedCollection new.
+	dynamicForceBasedLayout := false
 ]
 
 { #category : #accessing }
@@ -136,6 +158,8 @@ RTLayoutBuilder >> radialTree [
 RTLayoutBuilder >> setUpElements: elements [
 
 	self doActionsOnEdgesFor: elements.
+
+	dynamicForceBasedLayout ifTrue: [ ^ self doDynamicForceBasedLayoutOn: elements ].
 	
 	elements do: #updateEdgesOFF.
 	self hasPartition
