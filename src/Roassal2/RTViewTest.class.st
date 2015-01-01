@@ -303,6 +303,18 @@ RTViewTest >> testPushFrontEdges [
 	self assert: (view canvas shapes indexOf: lastEdge trachelShape) equals: 19.
 ]
 
+{ #category : #tests }
+RTViewTest >> testRemoveElements [
+
+	| es |
+	es := RTBox elementsOn: (1 to: 5).
+	self assert: view numberOfElements equals: 0.
+	view addAll: es.
+	self assert: view numberOfElements equals: 5.
+	view removeElements: es.
+	self assert: view numberOfElements equals: 0.
+]
+
 { #category : #camera }
 RTViewTest >> testRestoreCamera [
 	"

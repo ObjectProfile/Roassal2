@@ -128,7 +128,7 @@ RTMetricNormalizer new
 
 RTForceBasedLayout new charge: -300; on: es.
 
-v edgesDo: #remove.
+v edges do: #remove.
 
 eb := RTEdgeBuilder new.
 eb view: v.
