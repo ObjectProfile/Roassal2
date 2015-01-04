@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-GraphOLD'
 }
 
 { #category : #edges }

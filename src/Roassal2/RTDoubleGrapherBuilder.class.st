@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rightDataSets'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #'as yet unclassified' }
@@ -20,7 +20,9 @@ RTDoubleGrapherBuilder >> addRight: aDataSet [
 RTDoubleGrapherBuilder >> axisYRight [
 	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
-	self computeMinAndMax.
+	self computeMinAndMaxForY.
+	self homogenizeMinAndMaxForY.
+
 	centralPoint := self extent x @ self centralPoint y.
 	self axisConfiguration
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (40 @ 0) ];

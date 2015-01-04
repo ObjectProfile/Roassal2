@@ -12,7 +12,7 @@ b view canvas.'
 Class {
 	#name : #RTGraphBuilderExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-GraphOLD'
 }
 
 { #category : #sources }
@@ -4791,5 +4791,5 @@ W7o/WSFGZqxhxYNtLlOAt3731gVrQCAsmRGXcX/o6/8B2SxAtu3fJeEAAAAASUVORK5CYII='
 
 { #category : #accessing }
 RTGraphBuilderExample >> label [
-	^ 'Graph builder'
+	^ 'Obsolete Graph builder'
 ]

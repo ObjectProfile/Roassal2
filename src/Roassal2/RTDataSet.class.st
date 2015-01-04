@@ -1,5 +1,5 @@
 Class {
 	#name : #RTDataSet,
 	#superclass : #RTAbstractDataSet,
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }

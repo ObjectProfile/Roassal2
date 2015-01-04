@@ -50,7 +50,7 @@ Class {
 		'axisConfiguration',
 		'datasets'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-CharterOLD'
 }
 
 { #category : #accessing }

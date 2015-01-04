@@ -114,13 +114,6 @@ RTLayoutBuilder >> hasPartition [
 ]
 
 { #category : #'public - layout' }
-RTLayoutBuilder >> horizontalDominanceTree [
-	actionOnEdges add: [ :edge | edge shape withHorizontalAttachPoint ].
-	layout := RTHorizontalDominanceTreeLayout new.
-	^ layout
-]
-
-{ #category : #'public - layout' }
 RTLayoutBuilder >> horizontalLine [
 	layout := RTHorizontalLineLayout new.
 	^ layout

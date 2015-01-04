@@ -1,25 +1,16 @@
 Class {
 	#name : #RTVerticalLinePlugin,
-	#superclass : #RTAbstractGrapherPlugin,
-	#category : #'Roassal2-Builder-Charter'
+	#superclass : #RTAbstractLinePlugin,
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
 RTVerticalLinePlugin >> render [	
-	| axis xLine mm |
-
-	axis := builder getAxisX.
-	mm := RTMetricNormalizer new.
-	(axis minValue to: axis maxValue by: axis step) do: [ :x |
-		xLine := mm
-						getValue: x
-						min: axis fromPoint x
-						max: axis toPoint x
-						minValue: axis minValue 
-						maxValue: axis maxValue.
-		self lineFrom: xLine @ builder getAxisY fromPoint y to: xLine @ builder getAxisY toPoint y
-		].
-		
+	| from to |
+	values do: [ :aValue |
+		from := builder getPixelPositionOf: aValue @ builder minY.
+		to := builder getPixelPositionOf: aValue @ builder maxY.
+		self lineFrom: from to: to ]
 		
 	
 ]

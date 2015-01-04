@@ -21,7 +21,7 @@ Class {
 		'fromPoint',
 		'toPoint'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #testing }
@@ -100,7 +100,7 @@ RTAxisConfiguration >> getStringFromNumber: aNumber [
 { #category : #initialization }
 RTAxisConfiguration >> initialize [
 	super initialize.
-	labelConvertion := [ :number | number asFloat round: 2 ].
+	labelConvertion := [ :number | (number asFloat round: 2) asString ].
 	positionLabel := [ :aLabel :aTick | aLabel translateTo: aTick position ].
 	numberOfTicks := 4.
 	numberOfLabels := numberOfTicks.
@@ -159,6 +159,11 @@ RTAxisConfiguration >> maxValue: aMinValue [
 ]
 
 { #category : #accessing }
+RTAxisConfiguration >> maxValueIfNotSet: aMinValue [
+	self maxValue: (aMinValue max: maxValue)
+]
+
+{ #category : #accessing }
 RTAxisConfiguration >> minValue [
 	^ minValue
 ]
@@ -166,6 +171,11 @@ RTAxisConfiguration >> minValue [
 { #category : #accessing }
 RTAxisConfiguration >> minValue: aMinValue [
 	minValue := aMinValue
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> minValueIfNotSet: aMinValue [
+	self minValue: (aMinValue min: minValue)
 ]
 
 { #category : #configuration }
@@ -220,6 +230,11 @@ RTAxisConfiguration >> oneDecimal [
 ]
 
 { #category : #configuration }
+RTAxisConfiguration >> optimalTicksAndLabels [
+	self halt.
+]
+
+{ #category : #configuration }
 RTAxisConfiguration >> plain [
 	"Make the axis a plain line"
 	self noLabel; noTick
@@ -263,6 +278,12 @@ RTAxisConfiguration >> step [
 { #category : #accessing }
 RTAxisConfiguration >> tickIntervalForLabel [
 	^ numberOfTicks / numberOfLabels
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> tickLabelOffset: aPoint [
+	"Specify the offset between the tick and its label"
+	self positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + aPoint ].
 ]
 
 { #category : #accessing }

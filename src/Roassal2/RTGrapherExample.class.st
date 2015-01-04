@@ -33,7 +33,7 @@ b open.
 Class {
 	#name : #RTGrapherExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #sources }
@@ -126,6 +126,46 @@ LzxoBFU9j8MAscelWQqtxZWfn69ttBbX1q1bawe9DsjOxuPKDho0qN46Xmoy0Q7ZzLJVjkCo
 jaQ1uWiikO0BqArMnTu3zjpeamIRlaXzkDuxVpZGNWn4mSrOftkCWCUzm7Q6Ho2KUlk6B9V+
 a2XJPUXLpBo9I42eUtk9sreq7lmdy6H6IfzFwTqG/IU/EP5A+At/IPyB8Bf+QPgD4S/8gfAX
 /kD4A+Ev/IHwB8Jf+APhD4S/8AfCHwh/aWH5P44EonVhPMkKAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTGrapherExample >> exampleAverageAndStdev [
+
+| b |
+b := RTGrapherBuilder new.
+
+ds := RTStackedDataSet new.
+ds interaction popup.
+ds points: #(600 470 170 430 300).
+ds barShape width: 20; color: Color lightGreen.
+b add: ds.
+
+b axisX noLabel; noTick.
+b axisY noDecimals.
+
+b addPlugin: RTMeanDevVarPlugin new.
+b build.
+^ b view
+
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleAverageAndStdevIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACvElEQVR4XuXbX0vCYBTH8d6w
+b8ALBRUE30EgeCmEIAQD0QvF6qoEh0r+uUkowa5EcILaWXsGK7MpwjY39/3F4WFtOtqH7em4
+eWOa/EQpN/xDwAfhhw/CB+GHD8IH4YcPwgfhhw/CB+GHD8IPH4QPwg8fhA/CDx+ED8IPH4QP
+wg8fhB8+CB+EHz4IH4QfPggfhB8+CB+En3iAFAoF0TRN8vm85HI5qdfr4qzbbDZiGIaokX+o
+LwTSbrclkUjYGJlMxh6ddcvlUmazmajx2Os/zBfr5/an1DIfxEPUGaDG9Xotqg7Xi5VTr+eD
+XHgO4YNEDOT19Uvu7+VoNYfPsg+ilk9tH/UaDkX4IHwQPggfhA/CB+GD8EG8g1QqFanValIs
+Fl079W7XkGp16xnkWuBCB+l0OvbHI9ls1rVTf3iYy92dwQe59CVLnQ1unbpflyy/QWpP7/Z7
+OqWW+XNIiCBBnXF8ED4IH4QPwgfhg/BB+CB8kFiCjMdj0XVdms2mNBoNGQwGfzp1XV9HslOP
+LUi5XJZUKiXpdNq0yh73O/XHx89IdupB7Td0EPVxyXa7lVarZZ8lu91O4nTJujqQuM8hfBA+
+SLAZjb5E0+RotcZ//2C17GW7cyuo/Vr/4wjiMSC/HxcKa798ED4IH4QPwgf5TalUsrvz+Xzu
+2qmvVquTT7/7fWDC2i4yIOrrCL1eT5LJpLh16n49/c4HOTMKoN/v20+buHXql75k4UGiNofw
+QfggfBA+CB+ED8IH4YPwQfggAYE499QPf8/v1EMCOezQ9zv1yWRi3bQZynQ6da236du/usbt
+nFosFuHfD3HuqZv8RH8O4YcPwgfhhw/CB+GHD8IH4YcPwg8fhA/CDx+ED8IPH4QPwg8fhA/C
+Dx+EHz4IH4QfPggfhB8+CB+EHz4IH4QfPgg/fBA+CD9n5Rv6/4j1KSpjNgAAAABJRU5ErkJg
+gg=='
 ]
 
 { #category : #sources }
@@ -2211,6 +2251,55 @@ gg=='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleVerticalAndHorizontalBars [
+
+b := RTGrapherBuilder new.
+
+ds := RTDataSet new.
+ds points: #( 0 1 2 10).
+
+b add: ds.
+
+
+b minY: -3.33.
+
+p := RTHorizontalLinePlugin new.
+p add: 5; add: 7; add: 3.34.
+p shape line color: (Color red alpha: 0.3).
+b addPlugin: p.
+
+p := RTVerticalLinePlugin new.
+p add: 5.
+p shape line color: (Color blue alpha: 0.3).
+b addPlugin: p.
+
+b build.
+^ b view 
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleVerticalAndHorizontalBarsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAADiklEQVR4XuWby0ojQRSGfUd3
+voJ7t0o2bhQUdOdS9AHcKC6ihohGFO+aRRIVgzHEGPF+ycn0X0yJzQyazqjdzvdD0d2Qsqvr
+85yqc6qqq9XiK0nq4ncBHwhffCB8IHzxgfCB8MUHwgfCFx8IHwhffCB88YHwgfDFB8IHwhcf
+CB8IX3wgfCB88YHwxQfCB8IXHwgfCF/JAnJ+fm66lstl43dnjEAEYHR01MbHxx2I3d1dazQa
+r1Dq9Xrr8vIS1Zn39/euxAKkv7+/NTc3ZwMDA7aysmLDw8N2d3f3CuTo6MhoQB4fHy02IB8p
+sBC+C+MD4QPhA+ED4QPhA+ED4QPhA+ED4evTgCgAGhkZMUlB4cLCgvX09IQidQWG9ULB7OKC
+VV5e7NuBXF1dWW9vr21vb7vUSTqdttnZ2VBDiJF6rC5L1vH09GT+nu+y+GMIHwgfCB8IH8hn
+AsHNsOKaZfEthO+y+ED4QH4QEMUdPhC8CPzm6uqqLS8vhwCcnZ2FlnT5+mILmZmZsWazaep4
+Aenu7raTk5NXAPl83ipBCcJ1VoljUK9Wqy6HpU4/Pj62ra0tu729Nb7L4o8hfCBfBUTj0vPz
+s/GBJASIJgB8q+K7LD4QvhIGRKuKwcIVHxbfQv5zIIo7xsbGXKdnMhltMg4BqFQqHW88fgmC
+q7fr81H1L0vHNzc39vDw0NG7Y9/9rsb7e5W3KpVKOqLQUuAYtRQKBVtbW7NO6qoEmYNWp3UV
+5B4cHHRUd29vz2q1WjxAFKVrt8n+/r5tbGy4TuRbSIwW8p6GhoZcTLG+vv5H0vEjTU9PuwAx
+sDCbmJiIVFf/IHKfvg1R6ipJOjg46OpMTk46K2m37tLSUuid2Ww28nd/GRAdcZP1FItF070/
+8tauBGNnZ8eZv//QdnV4eGiyLt+GqLO5qakp9/uo787lcqF36qqSCCDKAOt4mxKQGvjluqLU
+V9LSp1Lm5+ctqqvzLkdt+Nv2pPck69LWJv2NdDrddr3T01Pz3636+nZlwfnTXn4cwgfCB8IH
+wgfyI4BcX18rCHKdro3VuvpnPpAYgGgWoSMJPnbQ1T//noK6aJ2vbwKyuLhofX19bm09lUrZ
+5uame+Z3aULHEL74QPhA+OID4QPhiw+ED4QvPhC++ED4QPjiA+ED4YsPhA+ELz4QPhC++ED4
+4gPhA+GLD4QPhC8+ED4QvvhA+ED4SoJ+AbqWxW0ZX8E0AAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleVerticalAndHorizontalLines [
 
 	| b ds |
@@ -2234,8 +2323,8 @@ RTGrapherExample >> exampleVerticalAndHorizontalLines [
 	ds connectColor: Color red.
 	b add: ds.
 
-	b addPlugin: RTHorizontalLinePlugin new.
-	b addPlugin: RTVerticalLinePlugin new.
+	b addPlugin: RTHorizontalTickLinePlugin new.
+	b addPlugin: RTVerticalTickLinePlugin new.
 
 	b build.
 	^ b view canvas
@@ -2540,9 +2629,6 @@ ds y: [ :v | v cos ].
 ds x: #yourself.
 ds connectColor: (Color blue alpha: 0.4).
 b add: ds.
-
-b axisX.
-b axisY.
 
 b build.
 ^ b view

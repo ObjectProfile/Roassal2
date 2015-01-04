@@ -17,7 +17,7 @@ Class {
 		'interaction',
 		'elementActions'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #utility }
@@ -52,8 +52,8 @@ RTAbstractDataSet >> computeMinAndMaxForX [
 	minX := computed min.
 	maxX := computed max.
 
-	(minX < 0 and: [maxX < 0]) ifTrue: [ maxX := 0 ].
-	(minX > 0 and: [maxX > 0]) ifTrue: [ minX := 0 ].
+	(minX < 0 and: [ maxX < 0 ]) ifTrue: [ maxX := 0 ].
+	(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ].
 	
 
 
@@ -66,8 +66,8 @@ RTAbstractDataSet >> computeMinAndMaxForY [
 	minY := computed min.
 	maxY := computed max.
 	
-	(minY < 0 and: [maxY < 0]) ifTrue: [ maxY := 0 ].
-	(minY > 0 and: [maxY > 0]) ifTrue: [ minY := 0 ].
+	(minY < 0 and: [ maxY < 0 ]) ifTrue: [ maxY := 0 ].
+	(minY > 0 and: [ maxY > 0 ]) ifTrue: [ minY := 0 ].
 	
 ]
 
@@ -124,6 +124,16 @@ RTAbstractDataSet >> getPixelPositionOf: aPoint [
 		getValue: aPoint y min: 0 max: builder extent y negated minValue: minY maxValue: maxY.
 			
 	^ anX @ anY
+]
+
+{ #category : #accessing }
+RTAbstractDataSet >> getValuesX [
+	^ points collect: x
+]
+
+{ #category : #accessing }
+RTAbstractDataSet >> getValuesY [
+	^ points collect: y
 ]
 
 { #category : #'public - effects' }

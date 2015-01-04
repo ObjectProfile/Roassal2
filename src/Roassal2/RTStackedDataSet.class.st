@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shouldHaveHistogramBars'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #public }

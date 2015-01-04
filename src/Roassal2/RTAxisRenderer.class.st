@@ -9,7 +9,7 @@ Class {
 		'config',
 		'builder'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #'rendering-utility' }
@@ -58,9 +58,9 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	| ticks labelShape labelValues labels tickIntervalForLabel labelledTicks |
 	"We add the labels"
 	self axisLineFrom: fromPosition to: toPosition width: lineThicknessInPixels.
+	self numberOfTicks = 0 ifTrue: [ ^ self ].
 	ticks := self addTicksFrom: toPosition to: fromPosition.
-	self numberOfLabels = 0
-		ifTrue: [ ^ self ].
+	self numberOfLabels = 0 ifTrue: [ ^ self ].
 	tickIntervalForLabel := self tickIntervalForLabel.
 	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i ].
 	labelValues := (0 to: self numberOfLabels)

@@ -6,7 +6,7 @@ Class {
 		'draggableNodes',
 		'withDraggable'
 	],
-	#category : #'Roassal2-Builder-Graph'
+	#category : #'Roassal2-Builder-GraphOLD'
 }
 
 { #category : #interaction }

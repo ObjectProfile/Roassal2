@@ -6,10 +6,10 @@ Class {
 		'axisConfiguration',
 		'datasets',
 		'plugins',
-		'axisX',
-		'axisY'
+		'axisConfigurationX',
+		'axisConfigurationY'
 	],
-	#category : #'Roassal2-Builder-Charter'
+	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #adding }
@@ -46,9 +46,13 @@ RTAbstractGrapherBuilder >> axisFrom: aPoint to: anotherPoint [
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisX [
 	| centralPoint |
+	"Create an axisConfiguration if necessary"
+"	self axisConfiguration."
+	
 	self checkIfDataSetHaveBeenAdded.
-	self computeMinAndMax.
-	centralPoint := self centralPoint.
+	self computeMinAndMax"ForX.
+	self homogenizeMinAndMaxForX".
+	
 	self axisConfiguration
 		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ];
 		minValue:
@@ -56,13 +60,16 @@ RTAbstractGrapherBuilder >> axisX [
 						ifTrue: [ 0 ]
 						ifFalse: [ self minX ]);
 		maxValue: self maxX.
+
+	self homogenizeMinAndMax.
+	centralPoint := self centralPoint.
 	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]
 
 { #category : #'private-axis' }
 RTAbstractGrapherBuilder >> axisXFrom: aPoint to: anotherPoint [
 	"Draw the axis from aPoint to anotherPoint"
-	axisX := axisConfiguration.
+	axisConfigurationX := axisConfiguration.
 	self axisFrom: aPoint to: anotherPoint.
 	
 
@@ -72,7 +79,8 @@ RTAbstractGrapherBuilder >> axisXFrom: aPoint to: anotherPoint [
 RTAbstractGrapherBuilder >> axisXNoLabel [
 	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
-	self computeMinAndMax.
+	self computeMinAndMaxForX.
+	self homogenizeMinAndMaxForX.
 	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: 0;
@@ -91,7 +99,8 @@ RTAbstractGrapherBuilder >> axisXTitled: aTitle [
 RTAbstractGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
-	self computeMinAndMax.
+	self computeMinAndMax"ForX.
+	self homogenizeMinAndMaxForX".
 	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: nbOfTicks;
@@ -106,24 +115,28 @@ RTAbstractGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 
 { #category : #'public-axis' }
 RTAbstractGrapherBuilder >> axisY [
-	| centralPoint |
+	| centralPoint |	
 	self checkIfDataSetHaveBeenAdded.
 	self computeMinAndMax.
-	centralPoint := self centralPoint.
+
 	self axisConfiguration
-		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ];
-		minValue:
+		positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position - (40 @ 0) ];		
+		minValueIfNotSet:
 				(self minY > 0
 						ifTrue: [ 0 ]
 						ifFalse: [ self minY ]);
-		maxValue: self maxY.
+		maxValueIfNotSet: self maxY.
+
+	self homogenizeMinAndMax.
+	centralPoint := self centralPoint.
+
 	self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated
 ]
 
 { #category : #'private-axis' }
 RTAbstractGrapherBuilder >> axisYFrom: aPoint to: anotherPoint [
 	"Draw the axis from aPoint to anotherPoint"
-	axisY := axisConfiguration.
+	axisConfigurationY := axisConfiguration.
 	self axisFrom: aPoint to: anotherPoint.
 	
 
@@ -139,7 +152,8 @@ RTAbstractGrapherBuilder >> axisYTitled: aTitle [
 RTAbstractGrapherBuilder >> axisYWithNumberOfTicks: nbOfTicks [
 	| centralPoint |
 	self checkIfDataSetHaveBeenAdded.
-	self computeMinAndMax.
+	self computeMinAndMax"ForY.
+	self homogenizeMinAndMaxForY".
 	axisConfiguration := RTAxisConfiguration new
 					builder: self;
 					numberOfTicks: nbOfTicks;
@@ -163,8 +177,9 @@ RTAbstractGrapherBuilder >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
 ]
 
-{ #category : #'min and max' }
+{ #category : #TODELETE }
 RTAbstractGrapherBuilder >> computeMinAndMax [
+	"Not sure this method is really used. "
 	self computeMinAndMaxForX.
 	self computeMinAndMaxForY.
 	self homogenizeMinAndMax
@@ -206,12 +221,14 @@ RTAbstractGrapherBuilder >> extent: aPoint [
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> getAxisX [
-	^ axisX
+	"Return the configuration for the X-Axis"
+	^ axisConfigurationX
 ]
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> getAxisY [
-	^ axisY
+	"Return the configuration for the Y-Axis"
+	^ axisConfigurationY
 ]
 
 { #category : #accessing }
@@ -226,7 +243,7 @@ RTAbstractGrapherBuilder >> getPixelPositionOf: aPoint [
 	^ datasets first getPixelPositionOf: aPoint
 ]
 
-{ #category : #'min and max' }
+{ #category : #TODELETE }
 RTAbstractGrapherBuilder >> homogenizeMinAndMax [
 	| minX maxX minY maxY |
 	minX := self minX.
@@ -237,6 +254,26 @@ RTAbstractGrapherBuilder >> homogenizeMinAndMax [
 		ds minX: minX.
 		ds minY: minY.
 		ds maxX: maxX.
+		ds maxY: maxY. ]
+]
+
+{ #category : #'min and max' }
+RTAbstractGrapherBuilder >> homogenizeMinAndMaxForX [
+	| minX maxX |
+	minX := self minX.
+	maxX := self maxX.
+	datasets do: [ :ds |
+		ds minX: minX.
+		ds maxX: maxX ]
+]
+
+{ #category : #'min and max' }
+RTAbstractGrapherBuilder >> homogenizeMinAndMaxForY [
+	| minY maxY |
+	minY := self minY.
+	maxY := self maxY.
+	datasets do: [ :ds |
+		ds minY: minY.
 		ds maxY: maxY. ]
 ]
 
@@ -256,13 +293,13 @@ RTAbstractGrapherBuilder >> initialize [
 { #category : #testing }
 RTAbstractGrapherBuilder >> isXAxisDefined [
 	"Return true is X axis has been defined"
-	^ axisX notNil
+	^ axisConfigurationX notNil
 ]
 
 { #category : #testing }
 RTAbstractGrapherBuilder >> isYAxisDefined [
 	"Return true is X axis has been defined"
-	^ axisY notNil
+	^ axisConfigurationY notNil
 ]
 
 { #category : #accessing }
@@ -272,7 +309,9 @@ RTAbstractGrapherBuilder >> maxX [
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> maxY [
-	^ (datasets collect: #maxY) max
+	^ (self getAxisY notNil and: [ self getAxisY maxValue notNil ])
+		ifTrue: [ (datasets collect: #maxY) max max: self getAxisY maxValue ]
+		ifFalse: [ (datasets collect: #maxY) max ]
 ]
 
 { #category : #accessing }
@@ -282,7 +321,10 @@ RTAbstractGrapherBuilder >> minX [
 
 { #category : #accessing }
 RTAbstractGrapherBuilder >> minY [
-	^ (datasets collect: #minY) min
+	^ (self getAxisY notNil and: [ self getAxisY minValue notNil ])
+		ifTrue: [ (datasets collect: #minY) min min: self getAxisY minValue ]
+		ifFalse: [ (datasets collect: #minY) min ]
+
 ]
 
 { #category : #'public-axis' }
@@ -305,6 +347,7 @@ RTAbstractGrapherBuilder >> renderAllPlugins [
 { #category : #hooks }
 RTAbstractGrapherBuilder >> renderIn: aView [
 	self defineAxesIfNecessary.
+	self homogenizeMinAndMax.
 	datasets do: [ :aDataset | aDataset renderIn: aView ].
 	self renderAllPlugins
 ]

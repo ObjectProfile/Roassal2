@@ -206,6 +206,7 @@ RTSimilarityMatrix >> viewMatrix [
 	"display the matrix view"
 	| view |
 	view := RTView new.
+	view @ RTDraggableView.
 	view addAll:
 		(pairs collect: [ : pair |
 			self
