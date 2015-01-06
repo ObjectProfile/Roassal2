@@ -204,7 +204,7 @@ RTAbstractSmartBrowser >> notSelectedElements [
 
 { #category : #opening }
 RTAbstractSmartBrowser >> open [
-	view open
+	^ view open
 ]
 
 { #category : #callbacks }
