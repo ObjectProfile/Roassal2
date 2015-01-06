@@ -25,10 +25,7 @@ RTDataSetTest >> testComputeMinAndMax [
 	ds y: #yourself.
 	b add: ds.
 
-	b newAxisConfiguration.
-	b axisX.
-	b newAxisConfiguration maxValue: 5.
-	b axisY.
+	b maxY: 5.
 	b build.
 	
 	self assert: b centralPoint equals: 0 @ 0.

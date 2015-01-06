@@ -65,33 +65,11 @@ RTAxisConfigurationTest >> testMaxValueInScript01 [
 	ds x: #yourself.
 	ds y: #yourself.
 	b add: ds.
-
-	axeConfig := b newAxisConfiguration.
-"	axeConfig maxValue: 5."
-	b axisX.
-
-	self assert: axeConfig maxValue equals: 3
-]
-
-{ #category : #tests }
-RTAxisConfigurationTest >> testMaxValueInScript02 [
-
-	| b ds axeConfig |
-	b := RTGrapherBuilder new.
-
-	ds := RTDataSet new.
-	ds points: #(1 2 3).
-	ds x: #yourself.
-	ds y: #yourself.
-	b add: ds.
-
-	axeConfig := b newAxisConfiguration.
-	axeConfig maxValue: 5.
-	b axisY.
+	axeConfig := b axisX.
 	b build.
 	
-	self assert: b maxY equals: 5.
-	self assert: axeConfig maxValue equals: 5
+
+	self assert: axeConfig maxValue equals: 3
 ]
 
 { #category : #tests }

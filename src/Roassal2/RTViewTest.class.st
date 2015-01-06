@@ -311,7 +311,7 @@ RTViewTest >> testRemoveElements [
 	self assert: view numberOfElements equals: 0.
 	view addAll: es.
 	self assert: view numberOfElements equals: 5.
-	view removeElements: es.
+	es remove.
 	self assert: view numberOfElements equals: 0.
 ]
 

@@ -49,10 +49,6 @@ RTGrapherBuilderTest >> testCentralPoint02 [
 	ds y: #yourself.
 	b add: ds.
 
-	b newAxisConfiguration.
-	b axisX.
-	b newAxisConfiguration.
-	b axisY.
 	b build.
 	
 	self assert: b centralPoint equals: 0 @ -80
@@ -117,8 +113,6 @@ RTGrapherBuilderTest >> testIsAxisDefined [
 	self assert: b isXAxisDefined.
 	self assert: b isYAxisDefined.
 
-
-	self assert: b getAxisX step equals: 3 / 2.
 	b build.
 	self assert: b getAxisX step equals: 3 / 2.
 ]
@@ -129,7 +123,6 @@ RTGrapherBuilderTest >> testStepOnXAxis [
 	b := RTGrapherBuilder new.
 	b add: (RTDataSet new points: #(1 2 3)).
 	b axisXWithNumberOfTicks: 2.
-	self assert: b getAxisX step equals: 3 / 2.
 	b build.
 	self assert: b getAxisX step equals: 3 / 2.
 ]
