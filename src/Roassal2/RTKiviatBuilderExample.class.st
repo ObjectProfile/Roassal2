@@ -38,7 +38,7 @@ RTKiviatBuilderExample >> exampleColored [
 
 { #category : #sources }
 RTKiviatBuilderExample >> exampleColored2 [
-| b |
+	| b |
 	b := RTKiviatBuilder new.
 	"shapes: takes in argument a collection of colors, at least of the size of the numbers of objects"
 	b shapes: ((ColorPalette qualitative colors: 12 scheme:'Paired') do: [:c | c alpha: 0.3]).
