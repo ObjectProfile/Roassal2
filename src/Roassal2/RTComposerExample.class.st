@@ -113,7 +113,7 @@ c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
-b2 := RTGrapherBuilder new.
+b2 := RTGrapher new.
 b2 view: c view.
 b2 extent: 200 @ 150.
 
@@ -145,7 +145,7 @@ c propagateHighlight.
 c group: #pie.
 
 "-------"
-b4 := RTGrapherBuilder new.
+b4 := RTGrapher new.
 
 b4 extent: 290 @ 200.
 ds := RTDataSet new.
@@ -200,7 +200,7 @@ c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
-b2 := RTGrapherBuilder new.
+b2 := RTGrapher new.
 b2 view: c view.
 b2 extent: 200 @ 150.
 
@@ -231,7 +231,7 @@ c propagateHighlight.
 c group: #pie.
 
 "-------"
-b4 := RTGrapherBuilder new.
+b4 := RTGrapher new.
 b4 view: c view.
 b4 extent: 290 @ 200.
 
@@ -362,7 +362,7 @@ b build.
 c group.
 
 "======"
-c2 := RTGrapherBuilder new.
+c2 := RTGrapher new.
 c2 view: c view.
 c2 extent: 300 @ 200.
 

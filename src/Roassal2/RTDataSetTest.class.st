@@ -8,7 +8,7 @@ Class {
 RTDataSetTest >> testBasic [
 
 	| charter |
-	charter := RTGrapherBuilder new.
+	charter := RTGrapher new.
 	charter add: (RTDataSet new points: #(#(1 2) #(3 4) #(2 5)); x: #first; y: #second).
 	charter build.
 ]
@@ -17,7 +17,7 @@ RTDataSetTest >> testBasic [
 RTDataSetTest >> testComputeMinAndMax [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds points: #(1 2 3).
@@ -41,7 +41,7 @@ RTDataSetTest >> testComputeMinAndMax [
 RTDataSetTest >> testConnectColor [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds connectColor: Color blue.
@@ -96,7 +96,7 @@ RTDataSetTest >> testInteraction [
 RTDataSetTest >> testNoDot [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds noDot.
@@ -118,7 +118,7 @@ RTDataSetTest >> testNoDot [
 RTDataSetTest >> testNonTrivialGraph [
 
 	| grapher dataSet |
-	grapher := RTGrapherBuilder new.
+	grapher := RTGrapher new.
 	grapher extent: 300 @ 200.
 	dataSet := RTDataSet new 
 		points: RTObject withAllSubclasses; 

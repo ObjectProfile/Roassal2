@@ -1,5 +1,5 @@
 Class {
-	#name : #RTAbstractGrapherPlugin,
+	#name : #RTAbstractGrapherDecorator,
 	#superclass : #RTObject,
 	#instVars : [
 		'builder',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #utility }
-RTAbstractGrapherPlugin >> boxFrom: fromPoint to: toPoint [
+RTAbstractGrapherDecorator >> boxFrom: fromPoint to: toPoint [
 	| l ext |
 	ext := fromPoint corner: toPoint.
 	l := (RTBox new width: ext width abs; height: ext height abs; color: (Color blue alpha: 0.3)) element.
@@ -20,17 +20,17 @@ RTAbstractGrapherPlugin >> boxFrom: fromPoint to: toPoint [
 ]
 
 { #category : #accessing }
-RTAbstractGrapherPlugin >> builder: aGraphBuilder [
+RTAbstractGrapherDecorator >> builder: aGraphBuilder [
 	builder := aGraphBuilder
 ]
 
 { #category : #accessing }
-RTAbstractGrapherPlugin >> datasetValues [
+RTAbstractGrapherDecorator >> datasetValues [
 	^ builder datasets flatCollect: #getValuesY
 ]
 
 { #category : #initialization }
-RTAbstractGrapherPlugin >> initialize [
+RTAbstractGrapherDecorator >> initialize [
 	super initialize.
 	shapeBuilder := RTShapeBuilder new. 
 	shapeBuilder line.
@@ -38,17 +38,17 @@ RTAbstractGrapherPlugin >> initialize [
 ]
 
 { #category : #configuration }
-RTAbstractGrapherPlugin >> isBehind [
+RTAbstractGrapherDecorator >> isBehind [
 	^ placedInFront = false
 ]
 
 { #category : #configuration }
-RTAbstractGrapherPlugin >> isInFront [
+RTAbstractGrapherDecorator >> isInFront [
 	^ placedInFront = true
 ]
 
 { #category : #utility }
-RTAbstractGrapherPlugin >> lineFrom: fromPoint to: toPoint [
+RTAbstractGrapherDecorator >> lineFrom: fromPoint to: toPoint [
 	| e1 e2 l |
 	e1 := (RTEllipse new size: 0) element.
 	e2 := (RTEllipse new size: 0) element.
@@ -60,16 +60,16 @@ RTAbstractGrapherPlugin >> lineFrom: fromPoint to: toPoint [
 ]
 
 { #category : #configuration }
-RTAbstractGrapherPlugin >> moveBehind [
+RTAbstractGrapherDecorator >> moveBehind [
 	placedInFront := false
 ]
 
 { #category : #configuration }
-RTAbstractGrapherPlugin >> moveInFront [
+RTAbstractGrapherDecorator >> moveInFront [
 	placedInFront := true
 ]
 
 { #category : #accessing }
-RTAbstractGrapherPlugin >> shape [
+RTAbstractGrapherDecorator >> shape [
 	^ shapeBuilder
 ]

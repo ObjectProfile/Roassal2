@@ -9,7 +9,7 @@ Class {
 
 { #category : #tests }
 RTGrapherTest >> testDefault [
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	self assert: b minX equals: 0.
 	self assert: b maxX equals: 0.
 	self assert: b minY equals: 0.
@@ -19,7 +19,7 @@ RTGrapherTest >> testDefault [
 
 { #category : #tests }
 RTGrapherTest >> testDefault02 [
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b maxX: 2.
 	b minX: -2.
 	b maxY: 5.
@@ -34,7 +34,7 @@ RTGrapherTest >> testDefault02 [
 { #category : #tests }
 RTGrapherTest >> testExtent [
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 50 @ 30.
 	self assert: b extent equals: 50 @ 30
 ]
@@ -43,7 +43,7 @@ RTGrapherTest >> testExtent [
 RTGrapherTest >> testSimple [
 
 	| ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds interaction popupText.
@@ -66,7 +66,7 @@ RTGrapherTest >> testSimple [
 RTGrapherTest >> testSimple02 [
 
 	| ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds points: (-100 to: 100 by: 0.1).
@@ -85,7 +85,7 @@ RTGrapherTest >> testSimple02 [
 RTGrapherTest >> testSimple03 [
 
 | ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds points: (-100 to: 100 by: 0.1).

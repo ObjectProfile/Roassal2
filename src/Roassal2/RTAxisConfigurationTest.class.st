@@ -58,7 +58,7 @@ RTAxisConfigurationTest >> testMaxValueIfNotSet02 [
 RTAxisConfigurationTest >> testMaxValueInScript01 [
 
 	| b ds axeConfig |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds points: #(1 2 3).

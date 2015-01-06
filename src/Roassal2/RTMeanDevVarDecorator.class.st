@@ -1,11 +1,11 @@
 Class {
-	#name : #RTMeanDevVarPlugin,
-	#superclass : #RTAbstractGrapherPlugin,
+	#name : #RTMeanDevVarDecorator,
+	#superclass : #RTAbstractGrapherDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #'as yet unclassified' }
-RTMeanDevVarPlugin >> render [
+RTMeanDevVarDecorator >> render [
 	| values average from to l stdev b |
 	values := self datasetValues.
 	average := values average.

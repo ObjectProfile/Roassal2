@@ -1,11 +1,11 @@
 Class {
-	#name : #RTVerticalLinePlugin,
-	#superclass : #RTAbstractLinePlugin,
+	#name : #RTVerticalLineDecorator,
+	#superclass : #RTAbstractLineDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
-RTVerticalLinePlugin >> render [	
+RTVerticalLineDecorator >> render [	
 	| from to |
 	values do: [ :aValue |
 		from := builder getPixelPositionOf: aValue @ builder minY.

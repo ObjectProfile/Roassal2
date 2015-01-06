@@ -1,11 +1,11 @@
 Class {
-	#name : #RTHorizontalLinePlugin,
-	#superclass : #RTAbstractLinePlugin,
+	#name : #RTHorizontalLineDecorator,
+	#superclass : #RTAbstractLineDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
-RTHorizontalLinePlugin >> render [	
+RTHorizontalLineDecorator >> render [	
 	| from to |
 	values do: [ :aValue |
 		from := builder getPixelPositionOf: builder minX @ aValue.

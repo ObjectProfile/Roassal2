@@ -1,5 +1,5 @@
 Class {
-	#name : #RTGrapherBuilder,
+	#name : #RTGrapher,
 	#superclass : #RTBuilder,
 	#instVars : [
 		'extent',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #adding }
-RTGrapherBuilder >> add: aDataSet [
+RTGrapher >> add: aDataSet [
 	"Essential method. Add a dataset into the grapher. Only non-empty set are considered"
 	aDataSet numberOfPoints = 0 ifTrue: [ ^ self ].
 	
@@ -26,13 +26,13 @@ RTGrapherBuilder >> add: aDataSet [
 ]
 
 { #category : #adding }
-RTGrapherBuilder >> addPlugin: aPlugin [
+RTGrapher >> addPlugin: aPlugin [
 	"Add a plugin"
 	plugins add: aPlugin
 ]
 
 { #category : #'public-axis' }
-RTGrapherBuilder >> axisX [
+RTGrapher >> axisX [
 	self checkIfDataSetHaveBeenAdded.
 	axisConfigurationX := self createAxisConfiguration.
 	axisConfigurationX
@@ -41,7 +41,7 @@ RTGrapherBuilder >> axisX [
 ]
 
 { #category : #'private-axis' }
-RTGrapherBuilder >> axisXFrom: aPoint to: anotherPoint [
+RTGrapher >> axisXFrom: aPoint to: anotherPoint [
 	"Draw the axis from aPoint to anotherPoint"
 	axisConfigurationX fromPoint: aPoint.
 	axisConfigurationX toPoint: anotherPoint.
@@ -52,13 +52,13 @@ RTGrapherBuilder >> axisXFrom: aPoint to: anotherPoint [
 ]
 
 { #category : #'public-axis' }
-RTGrapherBuilder >> axisXWithNumberOfTicks: aNumber [
+RTGrapher >> axisXWithNumberOfTicks: aNumber [
 	self axisX numberOfTicks: aNumber
 
 ]
 
 { #category : #'public-axis' }
-RTGrapherBuilder >> axisY [
+RTGrapher >> axisY [
 	self checkIfDataSetHaveBeenAdded.
 	axisConfigurationY := self createAxisConfiguration.
 	axisConfigurationY
@@ -67,7 +67,7 @@ RTGrapherBuilder >> axisY [
 ]
 
 { #category : #'private-axis' }
-RTGrapherBuilder >> axisYFrom: aPoint to: anotherPoint [
+RTGrapher >> axisYFrom: aPoint to: anotherPoint [
 	"Draw the axis from aPoint to anotherPoint"
 	axisConfigurationY fromPoint: aPoint.
 	axisConfigurationY toPoint: anotherPoint.
@@ -78,30 +78,30 @@ RTGrapherBuilder >> axisYFrom: aPoint to: anotherPoint [
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> axisYLabelled [
+RTGrapher >> axisYLabelled [
 	self axisY.
 	shouldUseOptimalTicksAndLabelsForY := true.
 ]
 
 { #category : #'public-axis' }
-RTGrapherBuilder >> axisYWithNumberOfTicks: aNumber [
+RTGrapher >> axisYWithNumberOfTicks: aNumber [
 	self axisY numberOfTicks: aNumber
 
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> centralPoint [
+RTGrapher >> centralPoint [
 	"Return the position in the view to have the 0 @ 0"
 	^ self getPixelPositionOf: 0 @ 0
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> checkIfDataSetHaveBeenAdded [
+RTGrapher >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> createAxisConfiguration [
+RTGrapher >> createAxisConfiguration [
 	| newAxis |
 	newAxis := RTAxisConfiguration new.
 	newAxis builder: self.
@@ -109,17 +109,17 @@ RTGrapherBuilder >> createAxisConfiguration [
 ]
 
 { #category : #hooks }
-RTGrapherBuilder >> createView [
+RTGrapher >> createView [
 	^ RTView new @ RTDraggableView
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> datasets [
+RTGrapher >> datasets [
 	^ datasets copy
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> defineAxesIfNecessary [
+RTGrapher >> defineAxesIfNecessary [
 	
 	self isXAxisDefined ifFalse: [ self axisX ].
 	self isYAxisDefined ifFalse: [ self axisY ].
@@ -127,46 +127,46 @@ RTGrapherBuilder >> defineAxesIfNecessary [
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> extent [
+RTGrapher >> extent [
 	^ extent
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> extent: aPoint [
+RTGrapher >> extent: aPoint [
 	"Set the size of the graph"
 	extent := aPoint
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> getAxisX [
+RTGrapher >> getAxisX [
 	^ axisConfigurationX
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> getAxisY [
+RTGrapher >> getAxisY [
 	^ axisConfigurationY 
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> getMaxNumberOfPoints [
+RTGrapher >> getMaxNumberOfPoints [
 	"Return the maximum number of points any of the dataset has."
 	^ datasets inject: 0 into: [ :max :ds | max max: ds numberOfPoints ]
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> getPixelPositionOf: aPoint [
+RTGrapher >> getPixelPositionOf: aPoint [
 	"Return the position in pixel in the View for a given data point"
 	"This method should be called only if all the dataset have been set the min and max values"
 	^ datasets first getPixelPositionOf: aPoint
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> hasDataSet [
+RTGrapher >> hasDataSet [
 	^ self numberOfDataSets > 0
 ]
 
 { #category : #'min and max' }
-RTGrapherBuilder >> homogenizeMinAndMax [
+RTGrapher >> homogenizeMinAndMax [
 	| tminX tmaxX tminY tmaxY |
 	tminX := self minX.
 	tmaxX := self maxX.
@@ -180,7 +180,7 @@ RTGrapherBuilder >> homogenizeMinAndMax [
 ]
 
 { #category : #initialization }
-RTGrapherBuilder >> initialize [
+RTGrapher >> initialize [
 	super initialize.
 	extent := 300 @ 200.
 	
@@ -199,92 +199,92 @@ RTGrapherBuilder >> initialize [
 ]
 
 { #category : #testing }
-RTGrapherBuilder >> isXAxisDefined [
+RTGrapher >> isXAxisDefined [
 	"Return true is X axis has been defined"
 	^ axisConfigurationX notNil
 ]
 
 { #category : #testing }
-RTGrapherBuilder >> isYAxisDefined [
+RTGrapher >> isYAxisDefined [
 	"Return true is X axis has been defined"
 	^ axisConfigurationY notNil
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> maxX [
+RTGrapher >> maxX [
 	^ self hasDataSet 
 		ifTrue: [ maxX max: self maxXFromDataSets ]
 		ifFalse: [ maxX ]
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> maxX: aValue [
+RTGrapher >> maxX: aValue [
 	maxX := aValue
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> maxXFromDataSets [
+RTGrapher >> maxXFromDataSets [
 	^ (datasets collect: #maxX) max
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> maxY [
+RTGrapher >> maxY [
 	^ self hasDataSet 
 		ifTrue: [ maxY max: self maxYFromDataSets ]
 		ifFalse: [ maxY ] 
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> maxY: aValue [
+RTGrapher >> maxY: aValue [
 	maxY := aValue
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> maxYFromDataSets [
+RTGrapher >> maxYFromDataSets [
 	^ (datasets collect: #maxY) max
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> minX [
+RTGrapher >> minX [
 	^ self hasDataSet 
 		ifTrue: [ minX min: self minXFromDataSets ]
 		ifFalse: [ minX ]
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> minX: aValue [
+RTGrapher >> minX: aValue [
 	minX := aValue
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> minXFromDataSets [
+RTGrapher >> minXFromDataSets [
 	^ (datasets collect: #minX) min
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> minY [
+RTGrapher >> minY [
 	^ self hasDataSet 
 		ifTrue: [ minY min: self minYFromDataSets ]
 		ifFalse: [ minY ] 
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> minY: aValue [
+RTGrapher >> minY: aValue [
 	minY := aValue
 ]
 
 { #category : #'data sets' }
-RTGrapherBuilder >> minYFromDataSets [
+RTGrapher >> minYFromDataSets [
 	^ (datasets collect: #minY) min
 ]
 
 { #category : #accessing }
-RTGrapherBuilder >> numberOfDataSets [
+RTGrapher >> numberOfDataSets [
 	^ datasets size
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfTicks [
+RTGrapher >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfTicks [
 "	((self maxY - self minY) \\ nbOfTicks) ~= 0
 			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
 "			
@@ -298,7 +298,7 @@ RTGrapherBuilder >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfT
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfTicks [
+RTGrapher >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfTicks [
 "	((self maxY - self minY) \\ nbOfTicks) ~= 0
 			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
 "			
@@ -308,22 +308,22 @@ RTGrapherBuilder >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> renderAllPlugins [
+RTGrapher >> renderAllPlugins [
 	plugins do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> renderAllPluginsBehind [
+RTGrapher >> renderAllPluginsBehind [
 	(plugins select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> renderAllPluginsInFront [
+RTGrapher >> renderAllPluginsInFront [
 	(plugins select: #isInFront) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
-RTGrapherBuilder >> renderAxis [
+RTGrapher >> renderAxis [
 	| centralPoint |
 	centralPoint := self centralPoint.
 	shouldUseOptimalTicksAndLabelsForY ifTrue: 
@@ -338,12 +338,12 @@ RTGrapherBuilder >> renderAxis [
 ]
 
 { #category : #hooks }
-RTGrapherBuilder >> renderDataSetsIn: aView [
+RTGrapher >> renderDataSetsIn: aView [
 	datasets do: [ :aDataset | aDataset renderIn: aView ]
 ]
 
 { #category : #hooks }
-RTGrapherBuilder >> renderIn: aView [
+RTGrapher >> renderIn: aView [
 	datasets do: #computeMinAndMax.
 	self homogenizeMinAndMax.
 	self defineAxesIfNecessary.

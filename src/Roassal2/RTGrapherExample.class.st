@@ -48,7 +48,7 @@ methodsTrachel := methodsTrachel select: [ :m | m numberOfLinesOfCode < 300 ].
 
 greatestAge := (methodsTrachel , methodsRoassal collect: [ :m | m date asUnixTime ]) min.
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 300.
 
 ds := RTDataSet new.
@@ -132,7 +132,7 @@ a2XJPUXLpBo9I42eUtk9sreq7lmdy6H6IfzFwTqG/IU/EP5A+At/IPyB8Bf+QPgD4S/8gfAX
 RTGrapherExample >> exampleAverageAndStdev [
 
 | b |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 
 ds := RTStackedDataSet new.
 ds interaction popup.
@@ -143,7 +143,7 @@ b add: ds.
 b axisX noLabel; noTick.
 b axisY noDecimals.
 
-b addPlugin: RTMeanDevVarPlugin new.
+b addPlugin: RTMeanDevVarDecorator new.
 b build.
 ^ b view
 
@@ -173,7 +173,7 @@ RTGrapherExample >> exampleBarAndCurve [
 
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 400 @ 400.
 
 ds := RTStackedDataSet new.
@@ -268,7 +268,7 @@ RTGrapherExample >> exampleBarsAndDots [
 | data b ds |
 data := (-5 to: 5 by: 0.1).
  
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 
 b extent: 300 @ 200.
 
@@ -407,7 +407,7 @@ RTGrapherExample >> exampleCrosses [
  
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 300.
 
 ds := RTDataSet new.
@@ -466,7 +466,7 @@ methods := RTObject withAllSubclasses flatCollect: #rtmethods.
 methods := methods reject: [ :m | m numberOfLinesOfCode > 150 ].
 oldestMethod := methods minFor: #date.
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 ds := RTDataSet new.
@@ -499,7 +499,7 @@ RTGrapherExample >> exampleDateOnXAxis2 [
 dates := Array with: Date today with: Date yesterday with: Date yesterday previous.
 minDate := dates min.
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 ds := RTDataSet new.
@@ -722,7 +722,7 @@ RTGrapherExample >> exampleEbola [
 	data := tab values reversed.
 
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 350 @ 150.
 
 	ds := RTStackedDataSet new.
@@ -798,7 +798,7 @@ RTGrapherExample >> exampleFunctions [
 
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 300 @ 300.
 	
 	(Array with: Color red with: Color blue with: Color green with: Color yellow) doWithIndex: [ :color :i |
@@ -851,7 +851,7 @@ RTGrapherExample >> exampleGroupViewOnHistogram [
 
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 ds := RTStackedDataSet new.
@@ -907,7 +907,7 @@ z+etDZDv7Pl5nHMIP3wQPgg/fBA+CD98ED4IP3wQfvggfBB++CB8EH74IHwQfvggfBB++CD8
 { #category : #sources }
 RTGrapherExample >> exampleHistogram2 [
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
@@ -962,7 +962,7 @@ RTGrapherExample >> exampleHistogramWithNegativeValues [
 	| data b ds |
 	data := (1 to: 20) collect: [ :v | 10 atRandom - 5 ].
 	 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	b extent: 300 @ 200.
 
@@ -1006,7 +1006,7 @@ RTGrapherExample >> exampleLabelledBars [
 
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 400 @ 200.
 
 ds := RTStackedDataSet new.
@@ -1082,7 +1082,7 @@ RTGrapherExample >> exampleMethodSize [
 
 
 	| b classes normalizer |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 400 @ 200.
 	
 	classes := RTShape withAllSubclasses.
@@ -1109,7 +1109,7 @@ RTGrapherExample >> exampleMethodSize [
 RTGrapherExample >> exampleMethodSize2 [
 
 	| b classes normalizer |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 400 @ 200.
 	
 	classes := RTShape withAllSubclasses.
@@ -1219,7 +1219,7 @@ RTGrapherExample >> exampleMethods [
 	methods := Collection withAllSubclasses flatCollect: #rtmethods.
 	trachelMethods := TRObject withAllSubclasses flatCollect: #rtmethods.
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 200 @ 200.
 
 	"Data set 1"
@@ -1285,7 +1285,7 @@ points2 := TRShape withAllSubclasses sortedAs: #numberOfMethods.
 minY := 0.
 maxY := (points1 maxValue: #numberOfVariables) max: (points2 maxValue: #numberOfMethods).
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 ds1 := RTStackedDataSet new.
@@ -1339,7 +1339,7 @@ wg+/EH4h/PAL4RfCD78QfiH88Avhh18IvxB+fsl3T+IO9OMHW7cAAAAASUVORK5CYII='
 RTGrapherExample >> exampleNegativeY [
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 200 @ 200.
 
 ds := RTDataSet new.
@@ -1386,7 +1386,7 @@ RTGrapherExample >> examplePointAspects [
 
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 200 @ 100.
 
 ds := RTStackedDataSet new.
@@ -1507,7 +1507,7 @@ XcWjA7UAAAAASUVORK5CYII='
 RTGrapherExample >> examplePopupOnCurves [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	b extent: 300 @ 200.
 
@@ -1572,7 +1572,7 @@ EHwg+IIPBF/wgeADwRd8IPhA8AUfCD4QfMEHgg8EX/CB4As+EHwg+IIPBB8IvuADwQeCL/hA
 RTGrapherExample >> exampleRandomCurves [
 
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 5 timesRepeat: [ 
@@ -1647,7 +1647,7 @@ L/YJsS/2CbFPiH2JSf4HVjX21VAloZUAAAAASUVORK5CYII='
 RTGrapherExample >> exampleScatterPlot2 [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 290 @ 200.
 	b interaction popup.
 	
@@ -1705,7 +1705,7 @@ RTGrapherExample >> exampleScatterplotWithHighlighting [
 
 	| b ds |
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 290 @ 200.
 	
 	ds := RTDataSet new.
@@ -1782,7 +1782,7 @@ aVNcnVzWd0yGTvyTf0D8A+Kf/APiHxD/5B8Q/4D4J/+A+Cf/gPgHxD/5B8Q/IP7JPyD+AfFP
 RTGrapherExample >> exampleSimpleCurve [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 300 @ 300.
 	
 	ds := RTDataSet new.
@@ -1802,7 +1802,7 @@ b build.
 RTGrapherExample >> exampleSimpleCurve2 [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 300 @ 300.
 	
 	ds := RTStackedDataSet new.
@@ -1875,7 +1875,7 @@ A8EXPhB8IPjCB4IPBF/4QPCB4AsfCD4QfOEDwZddfwAbTfhlYJ+zmQAAAABJRU5ErkJggg=='
 RTGrapherExample >> exampleSimpleValues [
 
 | b values ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 values := #(5 6 7 -1 -3).
 b extent: 400 @ 300.
 
@@ -1924,7 +1924,7 @@ s4kAAAAASUVORK5CYII='
 RTGrapherExample >> exampleStackingX [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 400 @ 300.
 	
 	ds := RTStackedDataSet new.
@@ -1950,7 +1950,7 @@ RTGrapherExample >> exampleStackingX [
 RTGrapherExample >> exampleStackingX3 [
 
 	| b nbOfCurves normalizer |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 400 @ 200.
 	
 	nbOfCurves := 3.
@@ -2079,7 +2079,7 @@ IPhA8IUPBB8IvvCB4APBFz4QfCD4wgeCL3wghugPLJi7puVmqhwAAAAASUVORK5CYII='
 RTGrapherExample >> exampleTwoInteractions [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 300 @ 200.
 
 	ds := RTDataSet new.
@@ -2132,7 +2132,7 @@ Pgg/fBA+CD98EH74IEHNf4EL0NxGzOIGAAAAAElFTkSuQmCC'
 RTGrapherExample >> exampleTwoStackedCurves [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b extent: 200 @ 200.
 	
 	ds := RTStackedDataSet new.
@@ -2181,7 +2181,7 @@ AAAAAElFTkSuQmCC'
 RTGrapherExample >> exampleUsingLegend [
 
 | clss b lb n ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 clss := Array with: RTElement with: RTEdge.
@@ -2253,7 +2253,7 @@ gg=='
 { #category : #sources }
 RTGrapherExample >> exampleVerticalAndHorizontalBars [
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 
 ds := RTDataSet new.
 ds points: #( 0 1 2 10).
@@ -2263,12 +2263,12 @@ b add: ds.
 
 b minY: -3.33.
 
-p := RTHorizontalLinePlugin new.
+p := RTHorizontalLineDecorator new.
 p add: 5; add: 7; add: 3.34.
 p shape line color: (Color red alpha: 0.3).
 b addPlugin: p.
 
-p := RTVerticalLinePlugin new.
+p := RTVerticalLineDecorator new.
 p add: 5.
 p shape line color: (Color blue alpha: 0.3).
 b addPlugin: p.
@@ -2303,7 +2303,7 @@ wgfyI4BcX18rCHKdro3VuvpnPpAYgGgWoSMJPnbQ1T//noK6aJ2vbwKyuLhofX19bm09lUrZ
 RTGrapherExample >> exampleVerticalAndHorizontalLines [
 
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	b extent: 300 @ 200.
 
@@ -2323,8 +2323,8 @@ RTGrapherExample >> exampleVerticalAndHorizontalLines [
 	ds connectColor: Color red.
 	b add: ds.
 
-	b addPlugin: RTHorizontalTickLinePlugin new.
-	b addPlugin: RTVerticalTickLinePlugin new.
+	b addPlugin: RTHorizontalTickLineDecorator new.
+	b addPlugin: RTVerticalTickLineDecorator new.
 
 	b build.
 	^ b view canvas
@@ -2412,7 +2412,7 @@ g := [ :x | x * x ].
 
 xValues := (0 to: 100 by: 0.1).
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 200.
 
 ds := RTDataSet new.
@@ -2466,7 +2466,7 @@ LAAAAABJRU5ErkJggg=='
 RTGrapherExample >> examplehistogram [
 
 	| grapher dataSet |
-	grapher := RTGrapherBuilder new.
+	grapher := RTGrapher new.
 	grapher extent: 300 @ 200.
 	
 	dataSet := RTStackedDataSet new 
@@ -2523,7 +2523,7 @@ methodsTrachel := methodsTrachel select: [ :m | m numberOfLinesOfCode < 300 ].
 
 greatestAge := (methodsTrachel , methodsRoassal collect: [ :m | m date asUnixTime ]) min.
 
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 300 @ 300.
 
 ds := RTDataSet new
@@ -2611,7 +2611,7 @@ IPyFPxD+wh+IbuX/VfQ6glP26KYAAAAASUVORK5CYII='
 { #category : #sources }
 RTGrapherExample >> examplesinAndCos [
 | b ds |
-b := RTGrapherBuilder new.
+b := RTGrapher new.
 b extent: 400 @ 400.
 
 ds := RTDataSet new.

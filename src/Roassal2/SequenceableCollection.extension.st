@@ -17,7 +17,7 @@ SequenceableCollection >> plot [
 	#(1 2 3 4 5) plot
 	"
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
@@ -47,7 +47,7 @@ SequenceableCollection >> plotFrequency: nbOfInterval [
 	"
 	
 	| b ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.

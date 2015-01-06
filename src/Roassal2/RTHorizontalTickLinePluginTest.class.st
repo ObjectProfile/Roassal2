@@ -8,8 +8,8 @@ Class {
 RTHorizontalTickLinePluginTest >> testDefault [
 
 	| b p |
-	b := RTGrapherBuilder new.
-	p := RTHorizontalTickLinePlugin new.
+	b := RTGrapher new.
+	p := RTHorizontalTickLineDecorator new.
 	p builder: b.
 	p lineFrom: 10 @ 10 to: 20 @ 20.
 ]

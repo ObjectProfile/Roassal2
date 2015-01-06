@@ -1,11 +1,11 @@
 Class {
-	#name : #RTVerticalTickLinePlugin,
-	#superclass : #RTAbstractTickLinePlugin,
+	#name : #RTVerticalTickLineDecorator,
+	#superclass : #RTAbstractTickLineDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
-RTVerticalTickLinePlugin >> render [	
+RTVerticalTickLineDecorator >> render [	
 	| axis xLine mm |
 
 	axis := builder getAxisX.

@@ -1,11 +1,11 @@
 Class {
-	#name : #RTHorizontalTickLinePlugin,
-	#superclass : #RTAbstractTickLinePlugin,
+	#name : #RTHorizontalTickLineDecorator,
+	#superclass : #RTAbstractTickLineDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
-RTHorizontalTickLinePlugin >> render [	
+RTHorizontalTickLineDecorator >> render [	
 	| axis yLine mm |
 	axis := builder getAxisY.
 	mm := RTMetricNormalizer new.

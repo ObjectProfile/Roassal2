@@ -1,11 +1,11 @@
 Class {
-	#name : #RTAveragePlugin,
-	#superclass : #RTAbstractGrapherPlugin,
+	#name : #RTAverageDecorator,
+	#superclass : #RTAbstractGrapherDecorator,
 	#category : #'Roassal2-Builder-Grapher'
 }
 
 { #category : #drawing }
-RTAveragePlugin >> render [
+RTAverageDecorator >> render [
 	| values average from to |
 	values := self datasetValues.
 	average := values average.

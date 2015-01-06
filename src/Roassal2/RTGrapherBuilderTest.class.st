@@ -10,14 +10,14 @@ Class {
 { #category : #running }
 RTGrapherBuilderTest >> setUp [
 	super setUp.
-	b := RTGrapherBuilder new
+	b := RTGrapher new
 ]
 
 { #category : #tests }
 RTGrapherBuilderTest >> testCentralPoint [
 
 	| ds  |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTDataSet new.
 	ds interaction popupText.
@@ -40,7 +40,7 @@ RTGrapherBuilderTest >> testCentralPoint [
 RTGrapherBuilderTest >> testCentralPoint02 [
 
 	| ds |
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 
 	ds := RTStackedDataSet new.
 	ds interaction popupText.
@@ -99,7 +99,7 @@ RTGrapherBuilderTest >> testIgnoringEmptyDataSets [
 { #category : #tests }
 RTGrapherBuilderTest >> testIsAxisDefined [
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b add: (RTDataSet new points: #(1 2 3)).
 	
 	self deny: b isXAxisDefined.
@@ -120,7 +120,7 @@ RTGrapherBuilderTest >> testIsAxisDefined [
 { #category : #tests }
 RTGrapherBuilderTest >> testStepOnXAxis [
 
-	b := RTGrapherBuilder new.
+	b := RTGrapher new.
 	b add: (RTDataSet new points: #(1 2 3)).
 	b axisXWithNumberOfTicks: 2.
 	b build.
@@ -131,7 +131,7 @@ RTGrapherBuilderTest >> testStepOnXAxis [
 RTGrapherBuilderTest >> testWithStrangeValues [
 
 	| graphBuilder ds |
-	graphBuilder := RTGrapherBuilder new.
+	graphBuilder := RTGrapher new.
 	graphBuilder extent: 300 @ 200.
 
 	ds := RTStackedDataSet new.

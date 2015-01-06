@@ -1,6 +1,6 @@
 Class {
-	#name : #RTAbstractLinePlugin,
-	#superclass : #RTAbstractGrapherPlugin,
+	#name : #RTAbstractLineDecorator,
+	#superclass : #RTAbstractGrapherDecorator,
 	#instVars : [
 		'values'
 	],
@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #adding }
-RTAbstractLinePlugin >> add: aValue [
+RTAbstractLineDecorator >> add: aValue [
 	values add: aValue
 ]
 
 { #category : #adding }
-RTAbstractLinePlugin >> addAll: someValues [
+RTAbstractLineDecorator >> addAll: someValues [
 	values addAll: someValues
 ]
 
 { #category : #initialization }
-RTAbstractLinePlugin >> initialize [
+RTAbstractLineDecorator >> initialize [
 	super initialize.
 	values := OrderedCollection new.
 ]
