@@ -712,35 +712,33 @@ TkSuQmCC'
 { #category : #sources }
 RTGrapherExample >> exampleEbola [
 
-	| tab data b ds |
 	"Preparing the data"
-	tab := RTTabTable new input: (ZnEasy get: 'http://mapstory.org/geoserver/wfs?typename=geonode%3AEbola2&outputFormat=csv&version=1.0.0&request=GetFeature&service=WFS') contents usingDelimiter: $,.
+	| tab data b ds |
+	tab := RTTabTable new input: (ZnEasy get: 'http://bit.ly/EbolaCSV') contents usingDelimiter: $,.
 	tab removeFirstRow.
 	tab replaceEmptyValuesWith: '0' inColumns: #(10 11).
 	tab convertColumnsAsInteger: #(10 11).
 	tab convertColumnsAsDateAndTime: #(3 4).
 	data := tab values reversed.
 
-
+	"Charting the data"
 	b := RTGrapher new.
-	b extent: 350 @ 150.
+	b extent: 400 @ 200.
 
 	ds := RTStackedDataSet new.
-	ds interaction popupText: [ :row | row at: 12 ].
+	ds interaction fixedPopupText: [ :row | row value at: 12 ]. 
 	ds dotShape ellipse 
 		color: (Color blue alpha: 0.3);
 		size: [ :row  | (row at: 11) / 5 ].
 	ds points: data.
-	ds highlightIf: [ :row | (row at: 10) > 100 ] using: [ :row | row third year ].
+	ds connectColor: Color blue.
 	ds y: [ :r | r at: 10 ].
-	ds interaction popup.
-	ds connectColor: Color black.
+	ds highlightIf: [ :row | (row at: 10) > 100 ] using: [ :row | row third year ].
+	b add: ds. 
 
-	b add: ds.
-	b axisX; axisY.
-
+	b axisX noLabel; numberOfTicks: tab values size.
+	b axisY noDecimals.
 	b build.
-
 	^ b view
 ]
 
