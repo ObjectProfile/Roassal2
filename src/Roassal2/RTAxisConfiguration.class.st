@@ -179,7 +179,7 @@ RTAxisConfiguration >> minValueIfNotSet: aMinValue [
 ]
 
 { #category : #configuration }
-RTAxisConfiguration >> noDecimals [
+RTAxisConfiguration >> noDecimal [
 	"Make the axis labels without decimal"
 	self labelConvertion: [ :number | number asInteger ]
 ]

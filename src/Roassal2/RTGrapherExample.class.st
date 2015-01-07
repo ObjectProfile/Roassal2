@@ -131,21 +131,21 @@ a2XJPUXLpBo9I42eUtk9sreq7lmdy6H6IfzFwTqG/IU/EP5A+At/IPyB8Bf+QPgD4S/8gfAX
 { #category : #sources }
 RTGrapherExample >> exampleAverageAndStdev [
 
-| b |
-b := RTGrapher new.
+	| b ds |
+	b := RTGrapher new.
 
-ds := RTStackedDataSet new.
-ds interaction popup.
-ds points: #(600 470 170 430 300).
-ds barShape width: 20; color: Color lightGreen.
-b add: ds.
+	ds := RTStackedDataSet new.
+	ds interaction popup.
+	ds points: #(600 470 170 430 300).
+	ds barShape width: 20; color: Color lightGreen.
+	b add: ds.
 
-b axisX noLabel; noTick.
-b axisY noDecimals.
+	b axisX noLabel; noTick.
+	b axisY noDecimal.
 
-b addPlugin: RTMeanDevVarDecorator new.
-b build.
-^ b view
+	b addPlugin: RTMeanDevVarDecorator new.
+	b build.
+	^ b view
 
 ]
 
@@ -458,37 +458,34 @@ hF/4gfAD4Rd+IPxA+IUfCD8QfuEHwg+EX/iB8Iuv/AW9/y7tOrRBIwAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTGrapherExample >> exampleDateOnXAxis [
- 
+ 	| methods oldestMethod b ds |
+	methods := RTObject withAllSubclasses flatCollect: #rtmethods.
+	methods := methods reject: [ :m | m numberOfLinesOfCode > 150 ].
+	oldestMethod := methods minFor: #date.
 
+	b := RTGrapher new.
+	b extent: 300 @ 200.
 
-| methods oldestMethod b ds |
-methods := RTObject withAllSubclasses flatCollect: #rtmethods.
-methods := methods reject: [ :m | m numberOfLinesOfCode > 150 ].
-oldestMethod := methods minFor: #date.
+	ds := RTDataSet new.
+	ds dotShape circle size: 5; color: (Color blue alpha: 0.1).
+	ds interaction popup.
+	ds points: methods.
+	ds y: #numberOfLinesOfCode.
+	ds x: [ :m | m date julianDayNumber - oldestMethod date julianDayNumber ].
+	b add: ds. 
 
-b := RTGrapher new.
-b extent: 300 @ 200.
+	b axisConfiguration 
+		noDecimal;
+		title: 'LOC'.
+	b axisY.
+	b axisConfiguration 
+		title: '';
+		labelRotation: -30;
+		labelConvertion: [ :v | (Date julianDayNumber: v + oldestMethod date julianDayNumber) ].
+	b axisX.
 
-ds := RTDataSet new.
-ds dotShape circle size: 5; color: (Color blue alpha: 0.1).
-ds interaction popup.
-ds points: methods.
-ds y: #numberOfLinesOfCode.
-ds x: [ :m | m date julianDayNumber - oldestMethod date julianDayNumber ].
-b add: ds. 
-
-b axisConfiguration 
-	noDecimals;
-	title: 'LOC'.
-b axisY.
-b axisConfiguration 
-	title: '';
-	labelRotation: -30;
-	labelConvertion: [ :v | (Date julianDayNumber: v + oldestMethod date julianDayNumber) ].
-b axisX.
-
-b build.
-^ b view
+	b build.
+	^ b view
 ]
 
 { #category : #sources }
@@ -737,7 +734,7 @@ RTGrapherExample >> exampleEbola [
 	b add: ds. 
 
 	b axisX noLabel; numberOfTicks: tab values size.
-	b axisY noDecimals.
+	b axisY noDecimal.
 	b build.
 	^ b view
 ]
@@ -1381,8 +1378,6 @@ AAAASUVORK5CYII='
 
 { #category : #sources }
 RTGrapherExample >> examplePointAspects [
-
-
 | b ds |
 b := RTGrapher new.
 b extent: 200 @ 100.
@@ -1399,7 +1394,7 @@ ds points: (TRShape withAllSubclasses sortedAs: #ageInDays).
 ds y: [ :c | c ageInDays ].
 b add: ds.
 
-b axisConfiguration noDecimals.
+b axisConfiguration noDecimal.
 b axisX.
 b axisY.
 
