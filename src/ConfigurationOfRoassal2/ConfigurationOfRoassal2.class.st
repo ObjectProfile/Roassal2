@@ -232,7 +232,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.6'.
+	spec for: #'common' version: '1.7'.
 
 ]
 
@@ -338,6 +338,21 @@ ConfigurationOfRoassal2 >> version16: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.252';
 			package: 'Roassal2' with: 'Roassal2-PierreChanson.686';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version17: spec [
+	<version: '1.7' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.7'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.253';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.704';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
