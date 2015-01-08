@@ -313,6 +313,21 @@ ConfigurationOfRoassal2 >> version14: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfRoassal2 >> version151: spec [
+	<version: '1.51' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.51: loads the version from 19th dec. because later changes seem to make Grapher unstable'.
+		spec author: 'UsmanBhatti'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.252';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.672';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version15: spec [
 	<version: '1.5' imports: #('1.1-baseline' )>
 
