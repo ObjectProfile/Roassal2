@@ -199,6 +199,45 @@ ConfigurationOfRoassal2 >> baseline11: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec')]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline12: spec [
+	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
+	Name the baseline after the first version it was introduced.
+	In this case 1.0-baseline was introduced the first time with the 1.0 version defined in the #version10 method.
+	Metacello only uses the following tag to figure out the name of this baseline:"
+	<version: '1.2-baseline'>
+
+	"Using #common makes this dependency declaration available for all Smalltalks.
+	If you need more fine-grained control you can add several #for:do: sections for other releases."
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		"specify the default repository for your project's packages"
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+	
+
+		"specify the dependencies between packages and projects"
+		spec
+			"a package without dependencies:"
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				"Specfiy dependencies using the #requires: directive, you can refer to any name here, in this case to an external project"
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2');
+				
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+					spec 
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main';
+						requires: 'GT-SpotterExtensions-CoreRoassal' ] 
+			
+			].
+			
+		spec 
+			"load the tests by default"
+			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec');
+			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec');
+			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec')]
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -211,7 +250,7 @@ ConfigurationOfRoassal2 >> customProjectAttributes [
 ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '1.1-baseline'.
+	spec for: #'common' version: '1.2-baseline'.
 
 ]
 
@@ -232,7 +271,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.7'.
+	spec for: #'common' version: '1.8'.
 
 ]
 
@@ -368,6 +407,21 @@ ConfigurationOfRoassal2 >> version17: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-akevalion.253';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.704';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version18: spec [
+	<version: '1.8' imports: #('1.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.8'.
+		spec author: 'Alexandre'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.253';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.705';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
