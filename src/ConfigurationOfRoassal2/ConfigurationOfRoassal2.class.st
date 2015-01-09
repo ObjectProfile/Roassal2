@@ -225,9 +225,8 @@ ConfigurationOfRoassal2 >> baseline12: spec [
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
 				
 			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
-					spec 
-						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main';
-						requires: 'GT-SpotterExtensions-CoreRoassal' ].
+				spec 
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ].
 			
 		spec 
 			"load the tests by default"
