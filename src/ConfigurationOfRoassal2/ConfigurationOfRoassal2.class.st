@@ -230,9 +230,9 @@ ConfigurationOfRoassal2 >> baseline12: spec [
 			
 		spec 
 			"load the tests by default"
-			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec');
-			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec');
-			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec') ]
+			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal');
+			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal');
+			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal') ]
 ]
 
 { #category : #accessing }
