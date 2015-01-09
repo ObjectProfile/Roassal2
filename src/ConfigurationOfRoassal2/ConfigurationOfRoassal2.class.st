@@ -222,20 +222,18 @@ ConfigurationOfRoassal2 >> baseline12: spec [
 			package: 'Roassal2' with: [ 
 				"Specfiy dependencies using the #requires: directive, you can refer to any name here, in this case to an external project"
 				spec requires: #('Trachel')];
-			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2');
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
 				
 			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
 					spec 
 						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main';
-						requires: 'GT-SpotterExtensions-CoreRoassal' ] 
-			
-			].
+						requires: 'GT-SpotterExtensions-CoreRoassal' ].
 			
 		spec 
 			"load the tests by default"
 			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec');
 			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec');
-			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec')]
+			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec') ]
 ]
 
 { #category : #accessing }
