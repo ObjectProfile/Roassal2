@@ -26,7 +26,8 @@ Class {
 RTMapLocationExample >> exampleSeismOnEarth [
 
 | b tab |
-tab := RTTabTable new input:  RTMapLocationBuilder new seismData2 usingDelimiter: $,.
+"tab := RTTabTable new input:  RTMapLocationBuilder new seismData2 usingDelimiter: $,."
+tab := RTTabTable new input:  'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv' asUrl retrieveContents  usingDelimiter: $,.
 tab removeFirstRow.
 tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).
 tab convertColumnsAsFloat: #(2 3 4 5).
