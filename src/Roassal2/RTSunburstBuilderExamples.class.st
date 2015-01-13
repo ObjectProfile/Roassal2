@@ -5,30 +5,6 @@ Class {
 }
 
 { #category : #examples }
-RTSunburstBuilderExamples >> basic0 [
-	"
-	self new basic0
-	"
-	| b n nc1 nc2 nc3 nc4 nc5|
-	b := RTSunburstBuilder new.
-	n:= RTNode new.
-	nc1:= RTNode new.
-	nc2:= RTNode new.
-	nc3:= RTNode new.
-	nc4:=RTNode new.
-	nc5:=RTNode new.
-	n addChild: nc1.
-	n addChild: nc2.
-	n addChild: nc3.
-	nc2 addChild: nc4.
-	nc2 addChild: nc5.
-	n accept: b visitor.
-	b view @ RTDraggableView.
-	b open.
-	
-]
-
-{ #category : #examples }
 RTSunburstBuilderExamples >> basic1 [
 	"
 	self new basic1
