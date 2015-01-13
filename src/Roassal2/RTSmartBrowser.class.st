@@ -38,7 +38,7 @@ T/ICmH3lCsP/7CQHoKlf/ieGRP/PCndCKNSRnAzE+1ACWk/GAyh28r+udAFC0EwvDBheYYRj
 ZsEC5v+nTjENwtQDAHm03ZBoT2X8AAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTSmartBrowser >> addVisitedClass: aClass [
 	| el |
 	visitedClasses addFirst: aClass.
@@ -51,7 +51,7 @@ RTSmartBrowser >> addVisitedClass: aClass [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTSmartBrowser >> addVisitedMethod: aCompiledMethod [
 	| el |
 	visitedMethods addFirst: aCompiledMethod.
@@ -75,7 +75,7 @@ RTSmartBrowser >> clickOnMethod: compiledMethod [
 	^ self makeNautilusPointTo: compiledMethod
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSmartBrowser >> initialize [
 	super initialize.
 	visitedMethods := OrderedCollection new.
@@ -90,14 +90,14 @@ RTSmartBrowser >> makeNautilusPointTo: aCompiledMethod [
 	^ instance ui window activate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #relevance }
 RTSmartBrowser >> relevanceOfClass: aClass [
 	"Return a value between 0.0 (not relevant) and 1.0 (highly relevant)"
 	(visitedClasses includes: aClass) ifFalse: [ ^ 0.0 ].
 	^ (visitedClasses size - (visitedClasses indexOf: visitedClasses) / visitedClasses size) asFloat
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #relevance }
 RTSmartBrowser >> relevanceOfMethod: aCompiledMethod [
 	"Return a value between 0.0 (not relevant) and 1.0 (highly relevant)"
 	(visitedMethods includes: aCompiledMethod) ifFalse: [ ^ 0.0 ].
