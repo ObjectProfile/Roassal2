@@ -15,8 +15,8 @@ Class {
 TRCompositeShapeTest >> setUp [
 	super setUp.
 	
-	emptyShape := TRMultiCompositeShape new.
-	multiShape := TRMultiCompositeShape new.
+	emptyShape := TRCompositeShape new.
+	multiShape := TRCompositeShape new.
 	box1 := TRBoxShape new size: 20. 
 	box2 := TRBoxShape new size: 30.
 	multiShape addShape: box1; addShape: box2.
@@ -249,7 +249,7 @@ TRCompositeShapeTest >> testOffsets2 [
 TRCompositeShapeTest >> testPositionWithOffset [
 
 	| s |
-	s := TRMultiCompositeShape new.
+	s := TRCompositeShape new.
 	s addShape: box1. 
 	s addShape: box2 translateBy: 5 @ 4.
 	canvas addShape: s.
@@ -270,7 +270,7 @@ TRCompositeShapeTest >> testPositionWithOffset [
 TRCompositeShapeTest >> testPositionWithOffsetTranslationBy [
 
 	| s |
-	s := TRMultiCompositeShape new.
+	s := TRCompositeShape new.
 	s addShape: box1. 
 	s addShape: box2 translateBy: 5 @ 4.
 	canvas addShape: s.
@@ -357,7 +357,7 @@ TRCompositeShapeTest >> testSignalUpdate [
 { #category : #tests }
 TRCompositeShapeTest >> testSignalUpdate2 [
 
-	TRMultiCompositeShape new signalUpdate
+	TRCompositeShape new signalUpdate
 ]
 
 { #category : #'testing translation' }
