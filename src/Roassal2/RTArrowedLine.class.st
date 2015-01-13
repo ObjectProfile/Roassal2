@@ -97,7 +97,7 @@ RTArrowedLine >> trachelShapeFor: anEdge [
 	| lineTrachelShape headTrachelShape |
 	lineTrachelShape := line trachelShapeFor: anEdge.
 	headTrachelShape := head trachelShapeFor: anEdge.
-	^ TRMultiCompositeShape new 
+	^ TRCompositeShape new 
 			addShape: lineTrachelShape; 
 			addShape: headTrachelShape; 
 			yourself

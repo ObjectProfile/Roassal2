@@ -69,7 +69,7 @@ RTMultiColoredLine >> trachelShapeFor: anEdge [
 	toPoint := attachPoint endingPointOf: anEdge.
 	p := path value: fromPoint value: toPoint.
 	
-	multiShape := TRMultiCompositeShape new.
+	multiShape := TRCompositeShape new.
 	2 to: p size do: [ :i |
 		shape := TRLineShape new.
 		shape width: width.

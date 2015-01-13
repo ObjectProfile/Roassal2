@@ -135,7 +135,7 @@ RTLabelTest >> testMultiline01 [
 	v add: lbl.
 	
 	lbl trachelShape setAsFixed.
-	self assert: lbl trachelShape class == TRMultiCompositeShape
+	self assert: lbl trachelShape class == TRCompositeShape
 ]
 
 { #category : #tests }

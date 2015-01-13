@@ -87,7 +87,7 @@ RTMultiLine >> trachelShapeFor: anEdge [
 	toPoint := attachPoint endingPointOf: anEdge.
 	path := blockProducingPath value: fromPoint value: toPoint.
 	
-	multiShape := TRMultiCompositeShape new.
+	multiShape := TRCompositeShape new.
 	2 to: path size do: [ :i |
 		shape := TRLineShape new.
 		shape width: width.

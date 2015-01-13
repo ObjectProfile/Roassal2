@@ -87,7 +87,7 @@ RTCompositeShape >> trachelShapeFor: anElement [
 "	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new"
 	
 	| ss trachelShape |
-	trachelShape := TRMultiCompositeShape new.
+	trachelShape := TRCompositeShape new.
 	ss := shapes
 		collectWithIndex: [ :tupple :shapeIndex | 
 			| s |

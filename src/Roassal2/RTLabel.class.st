@@ -104,7 +104,7 @@ RTLabel >> trachelShapeForMultiLine: anElement [
 	txt := txt copyReplaceAll: String tab with: '    '.
 	lines := txt lines.
 	 
-	s := TRMultiCompositeShape new.
+	s := TRCompositeShape new.
 	lines doWithIndex: [ :l :index | 
 		lbl := TRLabelShape new text: l.
 		lbl color: aColor.

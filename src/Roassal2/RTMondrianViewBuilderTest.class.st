@@ -34,7 +34,7 @@ RTMondrianViewBuilderTest >> testCheckCanvas [
 	b edgesFrom: [:x | x // 10].
 	b horizontalTreeLayout layered.
 	c := b view canvas.
-	self assert: (c shapes noneSatisfy: [ :s | s class == TRMultiCompositeShape ])
+	self assert: (c shapes noneSatisfy: [ :s | s class == TRCompositeShape ])
 ]
 
 { #category : #layout }
