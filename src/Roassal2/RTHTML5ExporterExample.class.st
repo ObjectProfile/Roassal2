@@ -18,6 +18,11 @@ RTHTML5ExporterExample >> createIndexFor: aCollection [
 <html>
 	<head>
 		<title>Roassal Examples</title>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="http://basic-slider.com/js/bjqs-1.3.min.js"></script>
+		<link type="text/css" rel="Stylesheet" href="https://raw.githubusercontent.com/jcobb/basic-jquery-slider/master/bjqs.css" />
+		<link type="text/css" rel="Stylesheet" href="http://basic-slider.com/css/main.css" />
+		
 		<style type="text/css">
 			body{
 				margin: 0 auto
@@ -26,24 +31,34 @@ RTHTML5ExporterExample >> createIndexFor: aCollection [
 				text-align: center
 			}
 			iframe{
-				left: 50%;
-				position: relative;
-				margin-left: -400px;
+				border: 1px solid lightblue
 			}
 		</style>
 	</head>
-	<body>
-	'.
+	<body><center>
+		<div id="my-slideshow">
+			<ul class="bjqs">'.
 	
 	(aCollection sorted: [ :a :b| a selector <= b selector ]) do: [ :met |
 		text := met methodClass name,'-', met selector asString.
 		stream nextPutAll: '
+	<li>
 	<h1>',text,'</h1>'.
 		stream nextPutAll: '
-	<iframe width="800" height="800" src="',met methodClass name, '-',met selector,'.html"></iframe>'.
+	<iframe width="800" height="800" src="',met methodClass name, '-',met selector,'.html"></iframe>
+	</li>'.
 		].
 	stream nextPutAll: 
-'	</body>
+'			</ul>
+		</div>
+	<script type="text/javascript">
+		$("#my-slideshow").bjqs({
+			height: 900,
+			width: 1000,
+			responsive: true
+		});
+	</script>
+	</center></body>
 </html>'. ] ensure: [ stream close ].
 	^ index.
 

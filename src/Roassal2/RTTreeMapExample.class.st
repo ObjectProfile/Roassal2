@@ -35,6 +35,7 @@ RTTreeMapExample >> example08 [
 	b from: (1 to: 5) using: [{}].
 	b weight: #yourself.
 	b build.
+	^ b view
 ]
 
 { #category : #sources }
@@ -50,9 +51,8 @@ RTTreeMapExample >> exampleNumber [
 		explore: 1
 		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
 		weight: [ :n | n ].
-	
-	b  open.
-b view canvas
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

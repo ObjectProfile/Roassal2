@@ -8,7 +8,8 @@ Class {
 		'view',
 		'stream',
 		'names',
-		'validInteractions'
+		'validInteractions',
+		'exportFixedShapes'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -71,13 +72,23 @@ RTSVGVisitor2 >> addStringWithFont: aLabel [
 		nextPutAll: '},'
 ]
 
+{ #category : #accessing }
+RTSVGVisitor2 >> exportFixedShapes [
+	^ exportFixedShapes
+]
+
+{ #category : #accessing }
+RTSVGVisitor2 >> exportFixedShapes: aBool [
+	exportFixedShapes := aBool
+]
+
 { #category : #initialization }
 RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
-	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel).
-	
+	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView).
+	exportFixedShapes := true.
 
 ]
 
@@ -269,7 +280,7 @@ RTSVGVisitor2 >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitCanvas: aCanvas [
-	
+	self exportFixedShapes ifFalse: [ ^ self ].
 	aCanvas fixedShapes ifEmpty: [ ^ self ].
 	stream nextPutAll:'	shapes = ['.
 	aCanvas fixedShapes do: [ :s | s accept: self ].

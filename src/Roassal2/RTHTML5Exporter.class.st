@@ -26,7 +26,8 @@ Class {
 		'stream',
 		'directory',
 		'fileName',
-		'title'
+		'title',
+		'exportFixedShapes'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -167,11 +168,22 @@ RTHTML5Exporter >> export: aView [
 	^ fn.
 ]
 
+{ #category : #accesing }
+RTHTML5Exporter >> exportFixedShapes [
+	^ exportFixedShapes
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> exportFixedShapes: aBool [
+	exportFixedShapes := aBool
+]
+
 { #category : #'exporting-html' }
 RTHTML5Exporter >> exportSVG: aView [
 	| visitor |
 
 	visitor := RTSVGVisitor2 new.
+	visitor exportFixedShapes: self exportFixedShapes.
 	visitor stream: stream.
 	visitor visitView: aView.
 ]
@@ -189,7 +201,7 @@ RTHTML5Exporter >> fileName: string [
 { #category : #'initialize-release' }
 RTHTML5Exporter >> initialize [
 	super initialize.
-	
+	self exportFixedShapes: true.
 ]
 
 { #category : #dependencies }
@@ -269,6 +281,9 @@ function plus(a, b){
 function product(a, b){
 	if(b.x != null)return {x: a.x*b.x, y: a.y*b.y};
 	return {x: a.x * b, y: a.y*b};
+}
+function negated(a){
+	return {x: -a.x, y: -a.y};
 }
 function normal(p){
 	var n = {x: -p.y, y: p.x};
@@ -423,6 +438,10 @@ var TRMouseEnter = TRShapeEvent.extend({});
 var TRMouseLeave = TRShapeEvent.extend({});
 var TRMouseMove = TRShapeEvent.extend({});
 
+var TRMouseWheelEvent = TRShapeEvent.extend({
+	direction: null
+});
+
 /*TODO Wheel event and Key events*/
 
 var TRInteraction = Class.extend({
@@ -463,6 +482,19 @@ var RTDraggableView = TRInteraction.extend({
 		canvas.whenDo(TRMouseDragging, function(e){
 			var s = canvas.camera.scale;
 			canvas.camera.translateBy({x: e.step.x/s, y: e.step.y/s});
+		});
+	}
+});
+
+var RTZoomableView = TRInteraction.extend({
+	initOn: function (canvas){
+		canvas.whenDo(TRMouseWheelEvent, function(e){
+			var s = canvas.camera.scale;
+			var dist = minus(e.position, negated(canvas.camera.position));
+			if(e.direction == "up"){s *= 1.25; dist = product(dist, -0.2);}
+			if(e.direction == "down"){s *=0.8; dist = product(dist, 0.25);}
+			canvas.camera.scale=s;
+			canvas.camera.translateBy(dist);
 		});
 	}
 });
@@ -872,7 +904,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 		$(this.svg).
 			mousedown(function (e){self.mousedown(e)}).
 			mouseup(function (e){self.mouseup(e)}).
-			mousemove(function (e){self.mousemove(e)});
+			mousemove(function (e){self.mousemove(e)}).
+			bind("mousewheel",function(e){self.mousewheel(e); return false;});
 		$(this.svg).attr("unselectable","on").bind("selectstart", function(){ return false; });
 		this.shapes = [];
 		this.fixedShapes = [];
@@ -934,7 +967,6 @@ var TRCanvas = TRAnnouceableObject.extend({
 			this.rtmouseDragEnd(e);
 	},
 	mousemove: function (e){
-		
 		if(this.isDragging()) this.rtmouseDragging(e);
 		else{
 			if(this.shapeBeingPointed == null){
@@ -1011,6 +1043,13 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.prepare(this.shapeBeingPointed, ee, e);
 		this.eventBeginingDragging = null;
 		this.shapeBeingPointed = null;
+	},
+	mousewheel: function(evt){
+		var e = new TRMouseWheelEvent();
+		e.position = this.camera.fromPixelToSpace(evt);
+		e.raw = evt;
+		e.direction = evt.originalEvent.wheelDelta /120 > 0?"up":"down";
+		this.announce(e);
 	}
 });
 
@@ -1721,7 +1760,7 @@ RTHTML5Exporter >> to: outputStream writeText: text [
 	outputStream nextPutAll: (text copyReplaceAll: String cr with: String crlf)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTHTML5Exporter >> writeText: text [
 	self to: stream writeText: text
 ]

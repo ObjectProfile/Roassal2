@@ -5211,6 +5211,7 @@ RTRoassalExample >> exampleScrollZoom [
 	| v |
 	v := RTView new.
 	v @ RTZoomableView.
+	v @ RTDraggableView.
 	v add: (RTLabel new elementOn:
 'Scroll your mouse wheel
 while hovering cursor
@@ -5244,6 +5245,7 @@ l := RTLegendBuilder new.
 l view: b view.
 l addText: 'Seisms of a magniture of 2.5 or more, over the last 30 days'.
 l build.
+b view @ RTZoomableView.
 ^ b view
 ]
 
