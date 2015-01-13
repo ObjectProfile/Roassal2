@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : #RoassalObsolete
+	#category : #'RoassalObsolete-EvalLoop'
 }
 
 { #category : #'as yet unclassified' }
