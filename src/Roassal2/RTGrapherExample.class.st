@@ -471,15 +471,14 @@ RTGrapherExample >> exampleDateOnXAxis [
 	ds x: [ :m | m date julianDayNumber - oldestMethod date julianDayNumber ].
 	b add: ds. 
 
-	b axisConfiguration 
+	b axisY 
 		noDecimal;
 		title: 'LOC'.
-	b axisY.
-	b axisConfiguration 
+	
+	b axisX 
 		title: '';
 		labelRotation: -30;
 		labelConvertion: [ :v | (Date julianDayNumber: v + oldestMethod date julianDayNumber) ].
-	b axisX.
 
 	b build.
 	^ b view
@@ -2601,12 +2600,9 @@ ds interaction popup.
 b add: ds.
 
 
-"b allX: [ :m | (m date asUnixTime - greatestAge) / 3600 ] .
-b allY: #numberOfLinesOfCode.
-"
-b axisXWithNumberOfTicks: 4.
-b axisYWithNumberOfTicks: 4.
-"b axisX; axisY."
+b axisX noDecimal; noLabel; title: 'Time'.
+b axisY noDecimal; title: 'Number of lines of code'.
+
 b build.
 ^ b view
 ]
