@@ -503,11 +503,9 @@ ds x: [ :aDate | aDate julianDayNumber - minDate julianDayNumber ].
 ds y: [ :d | d dayOfWeek \\ 7 ].
 b add: ds.
 
-b axisY.
-b axisConfiguration 
+b axisX 
 	labelRotation: -30;
 	labelConvertion: [ :v | (Date julianDayNumber: v + minDate julianDayNumber) ].  
-b axisX.
 b build.
 ^ b view
 ]
@@ -867,9 +865,7 @@ ds interaction popup
 	
 b add: ds.
 
-b axisY.
-b newAxisConfiguration plain.
-b axisX.
+b axisX noTick; noLabel.
 b build.
 
 ^ b view
@@ -998,7 +994,7 @@ RTGrapherExample >> exampleLabelledBars [
 
 | b ds |
 b := RTGrapher new.
-b extent: 400 @ 200.
+b extent: 500 @ 200.
 
 ds := RTStackedDataSet new.
 ds interaction highlight.
@@ -1009,8 +1005,7 @@ ds histogramWithBarTitle: #name.
 b add: ds.
 
 b axisY.
-b newAxisConfiguration plain.
-b axisX.
+b axisX noTick; noLabel.
 b build.
 ^ b view
 ]
@@ -1231,10 +1226,8 @@ RTGrapherExample >> exampleMethods [
 	ds y: [ :m | m getSource size ].
 	b add: ds.
 
-	b axisConfiguration withThousandsSeparator.
-	b axisXTitled: 'LOC'.
-	b axisYTitled: 'Size'.
-
+	b axisX withThousandsSeparator; title: 'LOC'.
+	b axisY noDecimal; title: 'Size'.
 	b build.
 
 	^ b view
@@ -1390,10 +1383,7 @@ ds points: (TRShape withAllSubclasses sortedAs: #ageInDays).
 ds y: [ :c | c ageInDays ].
 b add: ds.
 
-b axisConfiguration noDecimal.
-b axisX.
-b axisY.
-
+b axisX noDecimal.
 b build.
 
 ^ b view
@@ -1690,10 +1680,7 @@ VgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTGrapherExample >> exampleScatterplotWithHighlighting [
-
-
 	| b ds |
-
 	b := RTGrapher new.
 	b extent: 290 @ 200.
 	
@@ -1706,19 +1693,16 @@ RTGrapherExample >> exampleScatterplotWithHighlighting [
 	ds highlightIf: [ :c | (c numberOfLinesOfCode > 2000) or: [ c numberOfVariables > 10 ] ] using: #name.
 	b add: ds.
 	
-	b axisConfiguration 
+	b axisX 
 			numberOfTicks: 4;
 			title: 'LOC'.
-	b axisX.
 
-	b axisConfiguration 
+	b axisY 
 			numberOfTicks: 4;
 			title: 'NOM'.
-
-	b axisY.
 	
-b build.
-^ b view
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -2538,9 +2522,8 @@ RTGrapherExample >> examplehistogram [
 	dataSet dotShape color: (Color red alpha: 0.3).
 	grapher add: dataSet.
 
-	grapher resetAxisConfiguration.
 	grapher axisY.
-	grapher axisXNoLabel.
+	grapher axisX noLabel.
 	grapher build.
 
 	^ grapher view

@@ -14,7 +14,9 @@ RTGrapherTest >> testDefault [
 	self assert: b maxX equals: 0.
 	self assert: b minY equals: 0.
 	self assert: b maxY equals: 0.
-
+	
+	self assert: b datasets isEmpty.
+	self assert: b decorators isEmpty.
 ]
 
 { #category : #tests }
@@ -61,6 +63,18 @@ RTGrapherTest >> testNumberOfPlugins02 [
 	b := RTGrapher new.
 	b addDecorator: (RTVerticalLineDecorator new).
 	self assert: b numberOfDecorators equals: 1.
+]
+
+{ #category : #tests }
+RTGrapherTest >> testRender [
+	| v ds |
+	b := RTGrapher new.
+	ds := RTDataSet new.
+	ds points: #(1 2).
+	b add: ds.
+	
+	v := RTView new.
+	b renderIn: v
 ]
 
 { #category : #tests }

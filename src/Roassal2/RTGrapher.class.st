@@ -334,11 +334,6 @@ RTGrapher >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfT
 ]
 
 { #category : #utility }
-RTGrapher >> renderAllPlugins [
-	decorators do: [ :aPlugin | aPlugin builder: self; render ]
-]
-
-{ #category : #utility }
 RTGrapher >> renderAllPluginsBehind [
 	(decorators select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
