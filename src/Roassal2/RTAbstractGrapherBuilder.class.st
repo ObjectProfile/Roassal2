@@ -22,7 +22,7 @@ RTAbstractGrapherBuilder >> add: aDataSet [
 ]
 
 { #category : #adding }
-RTAbstractGrapherBuilder >> addPlugin: aPlugin [
+RTAbstractGrapherBuilder >> addDecorator: aPlugin [
 	"Add a plugin"
 	plugins add: aPlugin
 ]
@@ -109,6 +109,11 @@ RTAbstractGrapherBuilder >> axisXWithNumberOfTicks: nbOfTicks [
 					maxValue: self maxX;
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
+
+	axisConfiguration numberOfLabels = 0
+		ifTrue: [ axisConfiguration titlePosition: (0 @ 15) ]
+		ifFalse: [ axisConfiguration titlePosition: (0 @ 30) ].
+
 	centralPoint := self centralPoint.
 	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y
 ]

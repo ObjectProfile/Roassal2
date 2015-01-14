@@ -40,6 +40,30 @@ RTGrapherTest >> testExtent [
 ]
 
 { #category : #tests }
+RTGrapherTest >> testNumberOfPlugins [
+
+	self assert: RTGrapher new numberOfDecorators equals: 0.
+	b := RTGrapher new.
+	b addDecorator: (RTVerticalLineDecorator new).
+	self assert: RTGrapher new numberOfDecorators equals: 0.
+]
+
+{ #category : #tests }
+RTGrapherTest >> testNumberOfPlugins01 [
+
+	self assert: RTGrapher new numberOfDecorators equals: 0.
+
+]
+
+{ #category : #tests }
+RTGrapherTest >> testNumberOfPlugins02 [
+
+	b := RTGrapher new.
+	b addDecorator: (RTVerticalLineDecorator new).
+	self assert: b numberOfDecorators equals: 1.
+]
+
+{ #category : #tests }
 RTGrapherTest >> testSimple [
 
 	| ds |
@@ -111,4 +135,40 @@ b axisX
 	numberOfTicks: 5;
 	numberOfLabels: 2.
 b build.
+]
+
+{ #category : #'test labels' }
+RTGrapherTest >> testTitleOnAxes [
+
+	| ds labels |
+	b := RTGrapher new.
+	ds := RTDataSet new.
+	ds points: #(1 2).
+	b add: ds.
+
+	b axisX noTick; title: 'hello'.
+	b axisY noLabel; title: 'world'.
+	b build.
+	
+	labels := b view elements elements select: [ :el | el shape class == RTLabel ].
+	self assert: (labels anySatisfy: [ :e | e trachelShape text = 'hello' ]).
+	self assert: (labels anySatisfy: [ :e | e trachelShape text = 'world' ]).
+]
+
+{ #category : #'test labels' }
+RTGrapherTest >> testTitleOnAxes02 [
+
+	| ds labels |
+	b := RTGrapher new.
+	ds := RTDataSet new.
+	ds points: #(1 2).
+	b add: ds.
+
+	b axisX title: 'hello'.
+	b axisY title: 'world'.
+	b build.
+	
+	labels := b view elements elements select: [ :el | el shape class == RTLabel ].
+	self assert: (labels anySatisfy: [ :e | e trachelShape text = 'hello' ]).
+	self assert: (labels anySatisfy: [ :e | e trachelShape text = 'world' ]).
 ]

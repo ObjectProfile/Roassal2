@@ -140,7 +140,7 @@ RTGrapherExample >> exampleAverageAndStdev [
 	b axisX noLabel; noTick.
 	b axisY noDecimal.
 
-	b addPlugin: RTMeanDevVarDecorator new.
+	b addDecorator: RTMeanDevVarDecorator new.
 	b build.
 	^ b view
 
@@ -2323,12 +2323,12 @@ b minY: -3.33.
 p := RTHorizontalLineDecorator new.
 p add: 5; add: 7; add: 3.34.
 p shape line color: (Color red alpha: 0.3).
-b addPlugin: p.
+b addDecorator: p.
 
 p := RTVerticalLineDecorator new.
 p add: 5.
 p shape line color: (Color blue alpha: 0.3).
-b addPlugin: p.
+b addDecorator: p.
 
 b build.
 ^ b view 
@@ -2380,8 +2380,8 @@ RTGrapherExample >> exampleVerticalAndHorizontalLines [
 	ds connectColor: Color red.
 	b add: ds.
 
-	b addPlugin: RTHorizontalTickLineDecorator new.
-	b addPlugin: RTVerticalTickLineDecorator new.
+	b addDecorator: RTHorizontalTickLineDecorator new.
+	b addDecorator: RTVerticalTickLineDecorator new.
 
 	b build.
 	^ b view canvas

@@ -2,16 +2,16 @@ Class {
 	#name : #RTGrapher,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'extent',
-		'datasets',
-		'plugins',
 		'axisConfigurationX',
 		'axisConfigurationY',
-		'minX',
-		'minY',
+		'datasets',
+		'extent',
 		'maxX',
 		'maxY',
-		'shouldUseOptimalTicksAndLabelsForY'
+		'minX',
+		'minY',
+		'shouldUseOptimalTicksAndLabelsForY',
+		'decorators'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -26,9 +26,18 @@ RTGrapher >> add: aDataSet [
 ]
 
 { #category : #adding }
-RTGrapher >> addPlugin: aPlugin [
-	"Add a plugin"
-	plugins add: aPlugin
+RTGrapher >> addDecorator: aDecorator [
+	"Add a decorator"
+	decorators add: aDecorator
+]
+
+{ #category : #utility }
+RTGrapher >> adjustXAxisIfNecessary [
+	"Move the title below the X axis."
+	self getAxisX numberOfLabels = 0
+		ifTrue: [ self getAxisX titlePosition: (0 @ -15) ]
+		ifFalse: [ self getAxisX titlePosition: (0 @ -30) ].
+
 ]
 
 { #category : #'public-axis' }
@@ -77,8 +86,9 @@ RTGrapher >> axisYFrom: aPoint to: anotherPoint [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'work in progress' }
 RTGrapher >> axisYLabelled [
+	"Experimental for now. Does not work"
 	self axisY.
 	shouldUseOptimalTicksAndLabelsForY := true.
 ]
@@ -116,6 +126,16 @@ RTGrapher >> createView [
 { #category : #'data sets' }
 RTGrapher >> datasets [
 	^ datasets copy
+]
+
+{ #category : #accessing }
+RTGrapher >> decorators [
+	^ decorators
+]
+
+{ #category : #accessing }
+RTGrapher >> decorators: anObject [
+	decorators := anObject
 ]
 
 { #category : #utility }
@@ -187,8 +207,8 @@ RTGrapher >> initialize [
 	"Collection of data sets"
 	datasets := OrderedCollection new.
 	
-	"Collection of plugins"
-	plugins := OrderedCollection new.
+	"Collection of decorators"
+	decorators := OrderedCollection new.
 
 	minX := 0.
 	minY := 0.
@@ -283,7 +303,13 @@ RTGrapher >> numberOfDataSets [
 	^ datasets size
 ]
 
-{ #category : #utility }
+{ #category : #accessing }
+RTGrapher >> numberOfDecorators [
+	"Return the number of decorators that have been added"
+	^ decorators size
+]
+
+{ #category : #'work in progress' }
 RTGrapher >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfTicks [
 "	((self maxY - self minY) \\ nbOfTicks) ~= 0
 			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
@@ -297,7 +323,7 @@ RTGrapher >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfTicks [
 	^ diff
 ]
 
-{ #category : #utility }
+{ #category : #'work in progress' }
 RTGrapher >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfTicks [
 "	((self maxY - self minY) \\ nbOfTicks) ~= 0
 			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
@@ -309,17 +335,17 @@ RTGrapher >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfT
 
 { #category : #utility }
 RTGrapher >> renderAllPlugins [
-	plugins do: [ :aPlugin | aPlugin builder: self; render ]
+	decorators do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
 RTGrapher >> renderAllPluginsBehind [
-	(plugins select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
+	(decorators select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
 RTGrapher >> renderAllPluginsInFront [
-	(plugins select: #isInFront) do: [ :aPlugin | aPlugin builder: self; render ]
+	(decorators select: #isInFront) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }
@@ -332,6 +358,8 @@ RTGrapher >> renderAxis [
 		t := self optimalNumberOfTicksForMin: self minY max: self maxY wishedNumberOfTicks: self getAxisY numberOfTicks.
 		self getAxisY numberOfTicks: t; numberOfLabels: t
 	 ].
+
+	self adjustXAxisIfNecessary.
 
 	self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated.
 	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y.

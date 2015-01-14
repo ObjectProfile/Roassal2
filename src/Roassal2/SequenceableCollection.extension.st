@@ -36,7 +36,7 @@ SequenceableCollection >> plot [
 
 { #category : #'*roassal2-core' }
 SequenceableCollection >> plotFrequency [
-	self plotFrequency: 10
+	^ self plotFrequency: 10
 ]
 
 { #category : #'*roassal2-core' }
@@ -50,14 +50,14 @@ SequenceableCollection >> plotFrequency: nbOfInterval [
 	b := RTGrapher new.
 	
 	"We defien the size of the charting area"
-	b extent: 500 @ 100.
-	
+"	b extent: 500 @ 100.
+"	
 	ds := RTStackedDataSet new.
 	"When the mouse is above a bar, say which class we are point at"
 	ds interaction popupText: [ :set | set size printString, ' x ', set anyOne printString ].
 	ds points: ((RTDistribution on: self) frequencyWithAmountOfIntervals: nbOfInterval).
 	ds y: #size.
-	ds dotShape rectangle color: Color blue.
+	ds barShape rectangle color: Color blue.
 	b add: ds.
 
 	b build.

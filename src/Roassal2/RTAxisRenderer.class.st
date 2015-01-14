@@ -58,6 +58,11 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	| ticks labelShape labelValues labels tickIntervalForLabel labelledTicks |
 	"We add the labels"
 	self axisLineFrom: fromPosition to: toPosition width: lineThicknessInPixels.
+	
+	"We insert the title if necessary"
+	self insertTitleIfNecessaryTo: toPosition.
+
+	
 	self numberOfTicks = 0 ifTrue: [ ^ self ].
 	ticks := self addTicksFrom: toPosition to: fromPosition.
 	self numberOfLabels = 0 ifTrue: [ ^ self ].
@@ -73,8 +78,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 		self rotateLabelIfNecessary: label.
 		label model: nil ].
 	
-	self addAllToView: labels.	"We insert the label if necessary"
-	self insertLabelIfNecessaryTo: toPosition.
+	self addAllToView: labels.	
 	labels pushBack
 ]
 
@@ -123,7 +127,7 @@ RTAxisRenderer >> getStringFromNumber: aNumber [
 ]
 
 { #category : #'public-rendering' }
-RTAxisRenderer >> insertLabelIfNecessaryTo: toPosition [
+RTAxisRenderer >> insertTitleIfNecessaryTo: toPosition [
 	| lbl |
 	self title notEmpty
 		ifTrue: [ 

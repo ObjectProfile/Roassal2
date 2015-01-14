@@ -20,7 +20,7 @@ RTDistribution >> amountOfDifferentValues [
 { #category : #public }
 RTDistribution >> annotatedFrequency [
 	"Return a list of elements, each following the template:
-	{ amount of v . v} "
+	{numberOfV . v} "
 	| answer s amountOfK |
 	answer := OrderedCollection new.
 	s := numbers asSet asSortedCollection: [ :a :b | a < b ].
