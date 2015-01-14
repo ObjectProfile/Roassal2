@@ -48,6 +48,16 @@ RTAbstractGrapherDecorator >> isInFront [
 ]
 
 { #category : #utility }
+RTAbstractGrapherDecorator >> label: aString on: position [
+	"Add a label in the view"
+	| e |
+	e := RTLabel elementOn: aString.
+	e translateTo: position.
+	builder view add: e.
+	^ e
+]
+
+{ #category : #utility }
 RTAbstractGrapherDecorator >> lineFrom: fromPoint to: toPoint [
 	| e1 e2 l |
 	e1 := (RTEllipse new size: 0) element.

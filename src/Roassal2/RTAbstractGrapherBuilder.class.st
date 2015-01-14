@@ -18,7 +18,7 @@ RTAbstractGrapherBuilder >> add: aDataSet [
 	aDataSet numberOfPoints = 0 ifTrue: [ ^ self ].
 	
 	datasets add: aDataSet.
-	aDataSet builder: self
+	aDataSet addedInBuilder: self
 ]
 
 { #category : #adding }

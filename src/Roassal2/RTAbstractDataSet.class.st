@@ -20,6 +20,11 @@ Class {
 	#category : #'Roassal2-Builder-Grapher'
 }
 
+{ #category : #hooks }
+RTAbstractDataSet >> addedInBuilder: aBuilder [
+	self builder: aBuilder
+]
+
 { #category : #utility }
 RTAbstractDataSet >> adjustMinAndMaxValues [
 	"Values are adjusted to always have 0 @ 0 in the chart"
