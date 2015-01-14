@@ -35,7 +35,7 @@ RTGrapher >> addDecorator: aDecorator [
 RTGrapher >> adjustXAxisIfNecessary [
 	"Move the title below the X axis."
 	self getAxisX numberOfLabels = 0
-		ifTrue: [ self getAxisX titlePosition: (0 @ -15) ]
+		ifTrue: [ self getAxisX titlePosition: (0 @ -20) ]
 		ifFalse: [ self getAxisX titlePosition: (0 @ -30) ].
 
 ]
@@ -43,7 +43,8 @@ RTGrapher >> adjustXAxisIfNecessary [
 { #category : #'public-axis' }
 RTGrapher >> axisX [
 	self checkIfDataSetHaveBeenAdded.
-	axisConfigurationX := self createAxisConfiguration.
+	axisConfigurationX ifNil: [
+		axisConfigurationX := self createAxisConfiguration ].
 	axisConfigurationX
 		tickLabelOffset: 0 @ 15.
 	^ axisConfigurationX
@@ -69,7 +70,8 @@ RTGrapher >> axisXWithNumberOfTicks: aNumber [
 { #category : #'public-axis' }
 RTGrapher >> axisY [
 	self checkIfDataSetHaveBeenAdded.
-	axisConfigurationY := self createAxisConfiguration.
+	axisConfigurationY ifNil: [
+		axisConfigurationY := self createAxisConfiguration ].
 	axisConfigurationY
 		tickLabelOffset: -30 @ 0.
 	^ axisConfigurationY

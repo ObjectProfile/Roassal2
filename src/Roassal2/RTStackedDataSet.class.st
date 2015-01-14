@@ -13,34 +13,6 @@ RTStackedDataSet >> barShape [
 	^ histogramBuilder
 ]
 
-{ #category : #public }
-RTStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol [
-	"Draw an histogram with title"
-	self histogramWithBarTitle: aBlockOrSymbol rotation: -45
-]
-
-{ #category : #public }
-RTStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
-	"Draw an histogram with title"
-	self histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: Color lightGray
-]
-
-{ #category : #public }
-RTStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
-	"Draw an histogram with title"
-	self barShape.
-	elementActions add: [ :elements | 
-		| lbl |
-		elements do: [ :e |
-			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
-			lbl rotateByDegrees: rotationInDegree.
-			TRConstraint move: lbl below: e.
-			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
-			elements anyOne view add: lbl.
-		] ].
-	 
-]
-
 { #category : #initialization }
 RTStackedDataSet >> initialize [
 	"Subclasses should redefine this method to perform initializations on instance creation" 
@@ -85,9 +57,4 @@ RTStackedDataSet >> renderIn: aView [
 	shouldHaveHistogramBars 
 		ifTrue: [ self renderBarChartIn: aView ]
 		ifFalse: [ self renderDotAndLinesIn: aView ]
-]
-
-{ #category : #public }
-RTStackedDataSet >> stackX [
-	"DO NOTHING. TO REMOVE"
 ]
