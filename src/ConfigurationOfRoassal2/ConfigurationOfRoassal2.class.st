@@ -268,7 +268,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.8'.
+	spec for: #'common' version: '1.9'.
 
 ]
 
@@ -420,5 +420,21 @@ ConfigurationOfRoassal2 >> version18: spec [
 			package: 'Trachel' with: 'Trachel-akevalion.253';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.705';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version19: spec [
+	<version: '1.9' imports: #('1.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.9'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-akevalion.254';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.716';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AlexandreBergel.3' ].
 
 ]
