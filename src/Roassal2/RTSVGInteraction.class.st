@@ -89,6 +89,7 @@ RTSVGInteraction >> targetColorAttribute [
 	self target trachelShape class = TRLineShape ifTrue: [ ^'stroke' ].
 	self target trachelShape class = TRRotatedLabelShape ifTrue: [ ^'fill' ].
 	self target trachelShape class = TRSVGPath ifTrue: [ ^'fill' ].
+	self error: 'Should not be here'
 ]
 
 { #category : #adding }
