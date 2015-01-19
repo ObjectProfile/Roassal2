@@ -308,7 +308,7 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.8'.
+	spec for: #'common' version: '1.9'.
 
 ]
 
