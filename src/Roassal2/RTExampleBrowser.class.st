@@ -1,25 +1,25 @@
 Class {
-	#name : #RTExampleBrowserGT,
+	#name : #RTExampleBrowser,
 	#superclass : #RTObject,
 	#category : #'Roassal2-ExampleBrowser'
 }
 
 { #category : #menu }
-RTExampleBrowserGT class >> menuCommandOn: aBuilder [
+RTExampleBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	((aBuilder item: #Roassal) icon: RTIcon smallRoassal)
 	withSeparatorAfter;
 	with: [
-		(aBuilder item: #'Roassal Examples GT')
+		(aBuilder item: #'Roassal Examples')
 			order: 0.1; 
 			parent: #Roassal;
-			label: 'Roassal examples GT';
+			label: 'Roassal examples';
 			icon: RTIcon smallRoassal;
 			action: [ self new open ] ]
 ]
 
 { #category : #'instance creation' }
-RTExampleBrowserGT >> open [
+RTExampleBrowser >> open [
 	| pager |
 	pager := GLMPager new.
 	pager title: 'Roassal examples browser'.
