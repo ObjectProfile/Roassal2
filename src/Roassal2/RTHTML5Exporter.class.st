@@ -304,6 +304,12 @@ function dotProduct(a, b){
 function lessThan(a,b){
 	return a.x<b.x && a.y<b.y;
 }
+function interpolate(i, f, t){
+	
+	if(i.x != null)
+		return plus(i, product(minus(f, i), t) );
+	else return i + (f - i)*t; 
+}
 
 /*roassal/pharo classes*/	
 var Rectangle = Class.extend({
@@ -429,6 +435,7 @@ var TRShapeEvent = TREvent.extend({
 var TRMouseClick = TRShapeEvent.extend({});
 var TRMouseLeftClick = TRMouseClick.extend({});
 var TRMouseRightClick = TRMouseClick.extend({});
+var TRMouseDoubleClick = TRShapeEvent.extend({});
 
 var TRMouseDragging = TRShapeEvent.extend({step: null});
 var TRMouseDragStart = TRMouseDragging.extend({});
@@ -496,6 +503,52 @@ var RTZoomableView = TRInteraction.extend({
 			canvas.camera.scale=s;
 			canvas.camera.translateBy(dist);
 		});
+	}
+});
+
+var RTFocusElement = TRInteraction.extend({
+	initOn: function(s){
+		s.whenDo(TRMouseDoubleClick, function(e){
+			//TODO
+			var canvas = s.canvas;
+			var rec = s.encompassingRectangle();
+			var is = canvas.camera.scale;
+			var ip = canvas.camera.position;
+			var fp = negated(rec.center());
+			var sc = div(canvas.camera.extent(), product(rec.extent(), 1.1));
+			var fs = sc.x<sc.y?sc.x: sc.y;
+			new VITimer({
+				time: 1,
+				refresh: function (t){
+					var v = interpolate(is, fs, t);
+					canvas.camera.scale=v;
+					v = interpolate(ip, fp, t);
+					canvas.camera.translateTo(v);
+				}
+			});
+		});
+	}
+});
+
+var VITimer = Class.extend({
+	init: function(obj){
+		var t = new Date().getTime();
+		var tini = t;
+		var f = obj.time * 1000 + t;
+		var cycle = (f - t)/10;
+		
+		var fun = function(){
+			try{ obj.refresh((t-tini)/(f-tini));
+			}catch(ex){console.log(ex);}
+			t = new Date().getTime();
+			if(t < f)
+				setTimeout(fun, cycle);
+			else{
+				try{ obj.refresh(1);
+				}catch(ex){console.log(ex);}
+			}
+		};
+		fun();
 	}
 });
 
@@ -905,6 +958,7 @@ var TRCanvas = TRAnnouceableObject.extend({
 			mousedown(function (e){self.mousedown(e)}).
 			mouseup(function (e){self.mouseup(e)}).
 			mousemove(function (e){self.mousemove(e)}).
+			dblclick(function (e){self.mouseDouble(e)}).
 			bind("mousewheel",function(e){self.mousewheel(e); return false;});
 		$(this.svg).attr("unselectable","on").bind("selectstart", function(){ return false; });
 		this.shapes = [];
@@ -982,6 +1036,10 @@ var TRCanvas = TRAnnouceableObject.extend({
 			}
 			this.rtmouseMoving(e);
 		}
+	},
+	mouseDouble: function(e){
+		var shape = this.shapeWith(TRMouseDoubleClick, e);
+		this.prepare(shape, new TRMouseDoubleClick, e);
 	},
 	trmouseEnter: function(e){
 		var shape = this.shapeWith(TRMouseEnter, e);
@@ -1115,6 +1173,9 @@ var TRCamera = Class.extend({
 	setScale: function(s){
 		this.scale = s;
 		this.update();
+	},
+	extent: function(){
+		return {x: $(window).width(), y: $(window).height()};
 	},
 	update: function(){
 		var ww = $(window).width();
@@ -1260,7 +1321,6 @@ var TREllipseShape = TRAbstractBoxShape.extend({
 		this.color = obj.color;
 		this.path = createSVG("ellipse");
 		$(this.path).attr({cx: 0, cy: 0, id: obj.id});
-		this.strokeWidth = 1;
 		this.rectangle = new Rectangle({x: -obj.rx, y: -obj.ry}, {x: obj.rx, y: obj.ry});
 		this.matrix = new MatrixTransform(obj.matrix);
 		this.resetPath();
@@ -1269,7 +1329,10 @@ var TREllipseShape = TRAbstractBoxShape.extend({
 	resetPath: function (){
 		var r = this.rectangle;
 		$(this.path).attr({rx: r.width()/2, ry: r.height()/2});
-	}
+	},
+	setStrokeWidth: function(w){
+		this._super(w*this.rectangle.width());
+	},
 });
 
 var TRBoxShape = TRAbstractBoxShape.extend({
