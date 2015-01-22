@@ -87,8 +87,7 @@ RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
-	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView
-	#RTFocusElement).
+	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView).
 	exportFixedShapes := true.
 
 ]
