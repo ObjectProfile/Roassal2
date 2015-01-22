@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - adding' }
 RTDynamicGrapher >> add: anObject [
 	| positionInView el |
 	positionInView := self getPixelPositionOf: (x rtValue: anObject) @ (y rtValue: anObject).
@@ -19,7 +19,7 @@ RTDynamicGrapher >> add: anObject [
 	^ el
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - adding' }
 RTDynamicGrapher >> addAll: someObjects [
 	^ someObjects collect: [ :o | self add: o ]
 	
@@ -30,7 +30,7 @@ RTDynamicGrapher >> createView [
 	^ RTView new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTDynamicGrapher >> example01 [
 
 	"
@@ -49,7 +49,7 @@ RTDynamicGrapher >> example01 [
 	^ b  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTDynamicGrapher >> example02 [
 
 	"
@@ -69,14 +69,14 @@ RTDynamicGrapher >> example02 [
 	^ b  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTDynamicGrapher >> initialize [
 	super initialize.
 	x := #yourself.
 	y := #yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDynamicGrapher >> renderIn: aView [
 
 	self defineAxesIfNecessary.
