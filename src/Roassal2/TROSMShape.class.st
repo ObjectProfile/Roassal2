@@ -196,38 +196,19 @@ TROSMShape >> fromOurSpaceToTile: aPoint [
 TROSMShape >> getTile: aPoint [
 	"A point has to be xTile @ yTile, integers between 0 and 2^osmZoomLevel - 1"
 
+	| key |
+	key := Array with: aPoint x with: aPoint y with: osmZoomLevel.
 	self assert: (aPoint x isInteger and: [ aPoint y isInteger ]).	"clamp"
 	((aPoint x < 0 or: [ aPoint x >= (2 raisedTo: osmZoomLevel) ])
 		or: [ aPoint y < 0 or: [ aPoint y >= (2 raisedTo: osmZoomLevel) ] ])
 		ifTrue: [ ^ nil ].
-	tiles
-		at:
-			{(aPoint x).
-			(aPoint y).
-			osmZoomLevel}
-		put: self class emptyTile.
-	[ 
-	| aTile z |
-	z := osmZoomLevel.
-	Processor yield.
-	aTile := [ 
-	ZnEasy
-		getPng:
-			('https://a.tile.openstreetmap.org' asZnUrl
-				addPathSegment: z printString;
-				addPathSegment: aPoint x printString;
-				addPathSegment: aPoint y printString , '.png') ]
-		on: Error
-		do: [ :ex |  ].
-	semaphore
-		critical: [ 
-			tiles
-				at:
-					{(aPoint x).
-					(aPoint y).
-					z}
-				put: aTile ].
-	self signalUpdate ] fork.
+	tiles at: key put: self class emptyTile.
+	[ | tile |
+		"Processor yield."
+		"Either use: self tileNamed: or TROSMTileProvider tileNamed:"
+		tile := TROSMTileProvider tileNamed: ('{3}/{1}/{2}.png' format: key).
+		semaphore critical: [ tiles at: key put: tile ].
+		self signalUpdate ] fork"At: Processor userBackgroundPriority".
 	^ self class emptyTile
 ]
 
@@ -324,6 +305,15 @@ TROSMShape >> rotateByDegrees: angle [
 TROSMShape >> scaleBy: anInteger [
 	super scaleBy: anInteger.
 	copyright scaleBy: anInteger
+]
+
+{ #category : #private }
+TROSMShape >> tileNamed: uri [
+	"Straightforward non-caching, single-shot, simple PNG download"
+	
+	^ [ ZnEasy getPng: 'http://a.tile.openstreetmap.org/' , uri ]
+		on: Error
+		do: [ :ex | nil ]
 ]
 
 { #category : #private }
