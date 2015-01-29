@@ -287,7 +287,7 @@ ConfigurationOfRoassal2 >> customProjectAttributes [
 ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '1.2-baseline'.
+	spec for: #'common' version: '1.3-baseline'.
 
 ]
 
