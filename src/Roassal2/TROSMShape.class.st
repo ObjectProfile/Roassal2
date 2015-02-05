@@ -63,7 +63,9 @@ Class {
 		'emptyTile',
 		'semaphore',
 		'copyright',
-		'ratio'
+		'ratio',
+		'last',
+		'count'
 	],
 	#classVars : [
 		'EmptyTile'
@@ -196,19 +198,23 @@ TROSMShape >> fromOurSpaceToTile: aPoint [
 TROSMShape >> getTile: aPoint [
 	"A point has to be xTile @ yTile, integers between 0 and 2^osmZoomLevel - 1"
 
-	| key |
+	| key uri |
 	key := Array with: aPoint x with: aPoint y with: osmZoomLevel.
+	uri := '{3}/{1}/{2}.png' format: key.
 	self assert: (aPoint x isInteger and: [ aPoint y isInteger ]).	"clamp"
 	((aPoint x < 0 or: [ aPoint x >= (2 raisedTo: osmZoomLevel) ])
 		or: [ aPoint y < 0 or: [ aPoint y >= (2 raisedTo: osmZoomLevel) ] ])
 		ifTrue: [ ^ nil ].
+	"Do not fork if cached in memory or on file system"
+	(TROSMTileProvider cachedTileNamed: uri)
+		ifNotNil: [ :tile | ^ tiles at: key put: tile ].
+	"Download tile from network in forked process"
 	tiles at: key put: self class emptyTile.
 	[ | tile |
-		"Processor yield."
 		"Either use: self tileNamed: or TROSMTileProvider tileNamed:"
-		tile := TROSMTileProvider tileNamed: ('{3}/{1}/{2}.png' format: key).
+		tile := TROSMTileProvider tileNamed: uri.
 		semaphore critical: [ tiles at: key put: tile ].
-		self signalUpdate ] fork"At: Processor userBackgroundPriority".
+		self signalUpdate ] fork.
 	^ self class emptyTile
 ]
 

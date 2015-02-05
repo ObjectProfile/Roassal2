@@ -10,6 +10,10 @@ I cache tiles in a file system directory.
 I download tiles using a limited number of HTTP clients that are being reused.
 
 I am thread safe.
+
+The main API is #tileNamed:
+
+Alternatives are #cachedTileNamed: or #memoryCachedTileNamed:
 "
 Class {
 	#name : #TROSMTileProvider,
@@ -27,6 +31,11 @@ Class {
 	#category : #'Roassal2-OpenStreetMap'
 }
 
+{ #category : #accessing }
+TROSMTileProvider class >> cachedTileNamed: uri [
+	^ self uniqueInstance cachedTileNamed: uri
+]
+
 { #category : #development }
 TROSMTileProvider class >> exampleTileNames [
 	^ #('7/64/45.png' '7/65/41.png' '7/37/48.png' '7/65/65.png' '7/63/62.png' '7/63/41.png' '7/38/49.png' '7/64/42.png' '7/36/49.png' '7/65/62.png' '7/62/42.png' '7/62/63.png' '7/65/43.png' '7/63/43.png' '7/64/63.png' '7/64/44.png' '7/37/47.png' '7/65/64.png' '7/38/48.png' '7/63/64.png' '7/63/45.png' '7/64/41.png' '7/36/48.png' '7/64/65.png' '7/62/41.png' '7/37/49.png' '7/62/65.png' '7/65/45.png' '7/63/42.png' '7/64/62.png' '7/62/62.png' '7/65/63.png' '7/62/43.png' '7/65/42.png' '7/63/63.png' '7/36/47.png' '7/64/64.png' '7/64/43.png' '7/62/64.png' '7/65/44.png' '7/38/47.png' '7/63/65.png' '7/63/44.png')
@@ -35,6 +44,16 @@ TROSMTileProvider class >> exampleTileNames [
 { #category : #development }
 TROSMTileProvider class >> exampleTiles [
 	^ self exampleTileNames collect: [ :each | self tileNamed: each ]
+]
+
+{ #category : #development }
+TROSMTileProvider class >> parisLevel7TileNames [
+	^ #('7/64/44.png' '7/63/43.png' '7/64/45.png' '7/65/43.png' '7/63/44.png' '7/64/43.png' '7/63/45.png' '7/65/44.png' '7/65/45.png')
+]
+
+{ #category : #development }
+TROSMTileProvider class >> parisLevel7Tiles [
+	^ self parisLevel7TileNames collect: [ :each | self tileNamed: each ]
 ]
 
 { #category : #development }
@@ -69,6 +88,12 @@ TROSMTileProvider class >> testEmptyCacheThreaded [
 TROSMTileProvider class >> testEmptyMemoryCache [
 	self uniqueInstance cleanup.
 	[ self exampleTiles ] timeToRun
+]
+
+{ #category : #development }
+TROSMTileProvider class >> testEmptyMemoryCacheParisLevel7 [
+	self uniqueInstance cleanup.
+	[ self parisLevel7Tiles ] timeToRun
 ]
 
 { #category : #development }
@@ -140,6 +165,22 @@ TROSMTileProvider >> baseUrl: url [
 { #category : #accessing }
 TROSMTileProvider >> cacheDirectory [
 	^ 'osm-tiles' asFileReference
+]
+
+{ #category : #accessing }
+TROSMTileProvider >> cachedTileNamed: uri [
+	"Return the ColorForm of a tile named by uri z/x/y.png
+	Only Look into memory & file caches. Do not download.
+	Return nil on failure."
+
+	^ (self memoryCacheAt: uri) 
+			ifNil: [ 
+				(self fileCacheAt: uri) 
+					ifNotNil: [ :bytes | 
+						| tile |
+						tile := (PNGReadWriter on: bytes readStream) nextImage.
+						self memoryCacheAt: uri put: tile.
+						tile ] ]
 ]
 
 { #category : #'initialize - release' }
@@ -217,6 +258,29 @@ TROSMTileProvider >> initialize [
 ]
 
 { #category : #private }
+TROSMTileProvider >> memoryCacheAt: uri [
+	^ cacheMonitor critical: [ 
+		(cache includesKey: uri)
+			ifTrue: [ cache at: uri ifAbsentPut: [ self error ] ]
+			ifFalse: [ nil ] ]
+]
+
+{ #category : #private }
+TROSMTileProvider >> memoryCacheAt: uri put: tile [
+	cacheMonitor critical: [ 
+		cache at: uri ifAbsentPut: [ tile ] ]
+]
+
+{ #category : #accessing }
+TROSMTileProvider >> memoryCachedTileNamed: uri [
+	"Return the ColorForm of a tile named by uri z/x/y.png
+	Only Look into memory cache. Do not use file cache and do not download.
+	Return nil on failure."
+
+	^ self memoryCacheAt: uri
+]
+
+{ #category : #private }
 TROSMTileProvider >> releaseHttpClient: client [
 	httpClientsMonitor critical: [ | resource |
 		resource := httpClients detect: [ :each | each key = client ].
@@ -226,14 +290,17 @@ TROSMTileProvider >> releaseHttpClient: client [
 
 { #category : #accessing }
 TROSMTileProvider >> tileNamed: uri [
+	"Return the ColorForm of a tile named by uri z/x/y.png
+	Look into memory & file caches. Download if needed.
+	Return nil on failure."
+	
 	| tile |
-	cacheMonitor critical: [ 
-		(cache includesKey: uri)
-			ifTrue: [ ^ cache at: uri ifAbsentPut: [ self error ] ] ].
+	(self memoryCacheAt: uri) 
+		ifNotNil: [ :cachedTile | ^ cachedTile ]. 
 	"the download should not lock up access to the cache"
 	tile := self downloadTileNamed: uri.
-	^ cacheMonitor critical: [ 
-		cache at: uri ifAbsentPut: [ tile ] ]
+	self memoryCacheAt: uri put: tile.
+	^ tile
 	
 ]
 
