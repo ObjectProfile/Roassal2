@@ -66,7 +66,7 @@ TRMorph >> drawOn: aCanvas [
 	].
 	"aCanvas translucentImage: surface asForm at: self bounds origin."
 	"asForm creates a new Form, which is likely to be expensive. This can be cached"
-	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34
+	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
 ]
 
 { #category : #'as yet unclassified' }

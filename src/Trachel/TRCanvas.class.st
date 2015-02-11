@@ -71,7 +71,7 @@ TRCanvas >> addShape: shape [
 ]
 
 { #category : #'as yet unclassified' }
-TRCanvas >> addShape: shape atIndex: index. [
+TRCanvas >> addShape: shape atIndex: index [
 	shape addedIn: self atIndex: index
 ]
 

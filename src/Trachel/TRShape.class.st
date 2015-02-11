@@ -27,7 +27,7 @@ TRShape >> addedIn: aCanvas [
 ]
 
 { #category : #actions }
-TRShape >> addedIn: aCanvas atIndex: index. [
+TRShape >> addedIn: aCanvas atIndex: index [
 	aCanvas privateAdd: self atIndex: index.
 	self canvas: aCanvas
 ]
