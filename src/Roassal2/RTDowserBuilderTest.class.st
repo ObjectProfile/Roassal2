@@ -47,7 +47,7 @@ RTDowserBuilderTest >> testAssignMissing2 [
 
 { #category : #duoDowser }
 RTDowserBuilderTest >> testAssignMissing3 [
-	builder left: {'hola' . 'chao'}.
+	builder left: (Array with: 'hola' with: 'chao').
 	builder assignMissing: [:a | a asOrderedCollection] from: 1 to: 2.
 	
 	self assert: builder right size equals: 5. "without duplicated letters"
@@ -88,7 +88,7 @@ RTDowserBuilderTest >> testCheckFromTo [
 
 { #category : #duoDowser }
 RTDowserBuilderTest >> testConstruction [
-	builder models: { 'a' . 'b' . 'c' }.
+	builder models: (Array with: 'a' with: 'b' with: 'c' ).
 	builder edgesTo: #yourself.
 	
 	self assert: builder labelLeft equals: #asString. 

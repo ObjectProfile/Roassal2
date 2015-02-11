@@ -62,7 +62,7 @@ RTElement >> center [
 { #category : #accessing }
 RTElement >> connectedEdges [
 	"Return the list of connected egdes (i.e., incoming and outgoing edges)"
-	connectedEdges ifNil: [ connectedEdges := OrderedCollection new ].
+	connectedEdges ifNil: [ connectedEdges := RTGroup new ].
 	^ connectedEdges
 ]
 
@@ -92,6 +92,8 @@ RTElement >> getInteractionForClass: anInteractionClass [
 
 { #category : #testing }
 RTElement >> hasInteraction: anInteractionClass [
+	self announcer subscriptions ifNil: [ ^ false ].
+	
 	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
 ]
 
@@ -154,6 +156,14 @@ RTElement >> remove [
 RTElement >> removeConnectedEdge: anEdge [
 	[  anEdge class == RTEdge ] assert.
 	self connectedEdges remove: anEdge ifAbsent: [ "Some RTDowserBuilderTest tests failed." ]
+]
+
+{ #category : #'as yet unclassified' }
+RTElement >> removeWithItsConnectedEdges [
+	view ifNil: [ self error: 'cannot remove an element that is not part of a view' ].
+	self connectedEdges copy do: [ :anEdge | anEdge view ifNotNil: [ anEdge remove ] ].
+	view removeElement: self.
+	view := nil 
 ]
 
 { #category : #actions }

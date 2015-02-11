@@ -173,9 +173,11 @@ RTUMLClassBuilder >> example3 [
 	self new example3
 	"
 	| objects|
-	objects :=  {
-		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
-		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }.
+	objects := Array
+		with: (Array with: 'MyClass' with: (Array with: #iv1 with: #iv2) 
+			with: (Array with: #method1 with: #method2 with: #method3 ) )
+		with: (Array with: 'MyClass2' with: (Array with: #iv3 with: #iv4) 
+			with: (Array with: #method4 with: #method5 with: #method6 ) ).
 
 	RTUMLClassBuilder new
 		addObjects: objects;
@@ -212,9 +214,11 @@ RTUMLClassBuilder >> example5 [
 	self new example5
 	"
 	| objects b |
-	objects :=  {
-		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
-		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }.
+	objects := Array
+		with: (Array with: 'MyClass' with: (Array with: #iv1 with: #iv2) 
+			with: (Array with: #method1 with: #method2 with: #method3 ) )
+		with: (Array with: 'MyClass2' with: (Array with: #iv3 with: #iv4) 
+			with: (Array with: #method4 with: #method5 with: #method6 ) ).
 
 	b := RTUMLClassBuilder new.
 	b attributeShape label if: [ :a | a = #iv1 ] color: Color red.
@@ -244,7 +248,7 @@ RTUMLClassBuilder >> example6WithColoredProtocols [
 	b methodShape label
 		color: [ :m | n rtValue: m protocol ].
 
-	b methodsNames: [ :cls | (cls methods sortedAs: #protocol) ].
+	b methodsNames: [ :cls | (cls rtmethods sortedAs: #protocol) ].
 	b addObjects: someClasses.
 	b treeLayout.
 
@@ -276,7 +280,7 @@ RTUMLClassBuilder >> initialize [
 	
 	self classname: #name.
 	self instanceVariables: #instVarNames.
-	self methodsNames: #methods.
+	self methodsNames: #rtmethods.
 	self superclass: #superclass.
 	self methodselector: #selector.
 	self attributeselector: #yourself.

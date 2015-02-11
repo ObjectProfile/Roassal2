@@ -3,7 +3,7 @@ A RTDowserBuilder is Builder for Roassal2 that allows you to relate group of ele
 "
 Class {
 	#name : #RTDowserBuilder,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'columns',
 		'view',
@@ -85,7 +85,7 @@ RTDowserBuilder >> addLinesfrom: aNode toAll: aCollection from: anotherCollectio
 					ce3 := self controlElement: p3.
 					ed := self bezierLine: aNode to: l with: ce1 with: ce2 with: ce3 with: ce4 color: aColor 
 					].
-			lines add: {ed to . ed}.
+			lines add: (Array with: ed to with: ed).
 			view add: ed.
 			 ].
 	lines do: [ :l | l second trachelShape pushBack ].
@@ -125,9 +125,9 @@ RTDowserBuilder >> bezierLine: anElement to: anotherElement with: controlPoint1 
 	lineShape 
 		ifTrue: [ 
 			"Find the right way to do that :S" 
-			controls := {controlPoint1 . controlPoint2 . controlPoint3 . controlPoint4}]
+			controls := Array with: controlPoint1 with: controlPoint2 with: controlPoint3 with: controlPoint4]
 		ifFalse:[
-			controls := {controlPoint1 . controlPoint2 . controlPoint3 . controlPoint4}].	
+			controls := Array with: controlPoint1 with: controlPoint2 with: controlPoint3 with: controlPoint4].	
 	line := (RTBezierLine new controllingElements: controls; color: aColor) 
 						edgeFrom: anElement to: anotherElement.
 	^line	
@@ -517,8 +517,7 @@ RTDowserBuilder >> linksFrom: aNode with: aBlock to: otherCollection [
 	| links aux |
 	aux := otherCollection
 		collect: [ :e | 
-			{e.
-			aNode} ].
+			Array with: e with: aNode ].
 	links := aux
 		select: [ :e | 
 			| f s v |
@@ -535,8 +534,7 @@ RTDowserBuilder >> linksTo: aNode with: aBlock to: otherCollection [
 	| links aux |
 	aux := otherCollection
 		collect: [ :e | 
-			{e.
-			aNode} ].
+			Array with: e with: aNode ].
 	links := aux
 		select: [ :e | 
 			| f s v |

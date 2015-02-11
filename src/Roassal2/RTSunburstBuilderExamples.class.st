@@ -23,7 +23,9 @@ RTSunburstBuilderExamples >> basic10 [
 	self new basic10
 	"	
 	| b data |
-	data := { 'Chile' -> { 'Santiago' . 'Iquique' } . 'France' -> { 'Paris' . 'Nice' } }.
+	data := Array 
+		with: 'Chile' -> (Array with: 'Santiago' with: 'Iquique' )
+		with: 'France' -> (Array with: 'Paris' with: 'Nice').
 	b := RTSunburstBuilder new.
 
 	b 
@@ -44,7 +46,9 @@ RTSunburstBuilderExamples >> basic11 [
 	self new basic11
 	"	
 	| b data |
-	data := { 'Chile' -> { 'Santiago' . 'Iquique' } . 'France' -> { 'Paris' . 'Nice' } }.
+	data := Array 
+		with: 'Chile' -> (Array with: 'Santiago' with: 'Iquique' )
+		with: 'France' -> (Array with: 'Paris' with: 'Nice').
 	b := RTSunburstBuilder new.
 	b interactions add: RTSBFadeInteraction new.
 	b 

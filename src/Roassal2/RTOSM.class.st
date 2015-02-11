@@ -3145,8 +3145,8 @@ RTOSM class >> exampleRefugees [
 								height: (row third / Float pi) sqrt * 2;
 								color: (Color blue alpha: 0.3))
 								elementOn:
-									{(row second).
-									(row third)}) @ RTPopup translateTo: (map latLonToRoassal: lat @ lon)) ] ].
+									(Array with: (row second) with:
+									(row third))) @ RTPopup translateTo: (map latLonToRoassal: lat @ lon)) ] ].
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView @ RTZoomableView.

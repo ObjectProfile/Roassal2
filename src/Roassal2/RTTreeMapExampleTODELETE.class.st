@@ -63,7 +63,7 @@ RTTreeMapExampleTODELETE >> example04 [
 		if: [ :n | n odd ] fillColor: Color lightGray.
 		
 	b from: (1 to: 10)
-		using: [:n | n < 5 ifTrue: [ { n+1. n+2 } ] ifFalse: [ {  } ] ].
+		using: [:n | n < 5 ifTrue: [ Array with: n+1 with: n+2 ] ifFalse: [ #() ] ].
 	b open.
 ]
 

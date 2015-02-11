@@ -1,6 +1,6 @@
 Class {
 	#name : #InstanceSpy,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'classesToMonitor'
 	],

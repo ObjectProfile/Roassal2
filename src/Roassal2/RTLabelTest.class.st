@@ -5,6 +5,43 @@ Class {
 }
 
 { #category : #tests }
+RTLabelTest >> editableTextMultiLine [
+	"
+	self new editableTextMultiLine.
+	"
+	| v shape |
+	v := RTView new.
+	1 to: 20 do: [ :i |
+			shape := RTEditableLabel new.
+			shape text: 
+'Red 
+Yellow
+Green'.
+			v add: shape element@RTDraggable.
+	].
+	RTGridLayout on: v elements.
+	
+	v open
+]
+
+{ #category : #tests }
+RTLabelTest >> editableTextOneLine [
+	"
+	self new editableTextOneLine.
+	"
+	| v shape |
+	v := RTView new.
+	1 to: 20 do: [ :i |
+			shape := RTEditableLabel new.
+			shape text: 'Hello World'.
+			v add: shape element@RTDraggable.
+	].
+	RTGridLayout on: v elements.
+	
+	v open
+]
+
+{ #category : #tests }
 RTLabelTest >> rotated45gridLayout [
 	"
 	self new rotated45gridLayout.
@@ -41,6 +78,18 @@ RTLabelTest >> rotated90gridLayout [
 { #category : #tests }
 RTLabelTest >> testDefault [
 	self assert: (RTLabel new heightFor: RTElement new) = TRLabelShape new defaultFontSize.
+]
+
+{ #category : #'test editable' }
+RTLabelTest >> testEditableLabel [
+	| element label | 
+	element := RTElement on: 708.
+	label := RTEditableLabel new.
+	self assert: (label textFor: element) = '708'.
+	label updateTextFor: element with: '1005'.
+	
+	self assert: (label textFor: element) = '1005'.
+	self assert: element model = 708.
 ]
 
 { #category : #tests }

@@ -143,7 +143,7 @@ RTStackBarPlot >> example02 [
 | b |
 b := RTStackBarPlot new.
 b interaction popupText; draggable.
-b colorPalette colors: { Color blue . Color gray . Color red }.
+b colorPalette colors: (Array with: Color blue with: Color gray with: Color red ).
 b add: #(1 2 3 4 ).
 b add: #(4 3 2 1).
 b add: #(5 3 2 0).
@@ -159,7 +159,7 @@ RTStackBarPlot >> example03 [
 	| b |
 	b := RTStackBarPlot new.
 	b interaction popupText; draggable.
-	b colorPalette colors: { Color blue . Color lightBlue }.
+	b colorPalette colors: (Array with: Color blue with: Color lightBlue ).
 	b add: #(37	33	0	0 0) title: 'DN1'.
 	b add: #(24	26	17	3 0) title: 'DN2'.
 	b add: #(25	29	15	1 0) title: 'DN3'.
@@ -179,7 +179,7 @@ RTStackBarPlot >> example04 [
 	| b |
 	b := RTStackBarPlot new.
 	b interaction popupText; draggable.
-	b colorPalette colors: { Color blue . Color lightBlue }.
+	b colorPalette colors: (Array with: Color blue with: Color lightBlue ).
 	b add: #(37	33	0	0 0) title: 'DN1'.
 	b add: #(24	26	17	3 0) title: 'DN2'.
 	b add: #(25	29	15	1 0) title: 'DN3'.
@@ -199,7 +199,7 @@ RTStackBarPlot >> example05 [
 		
 	b := RTStackBarPlot new.
 	b interaction popupText.
-	b colorPalette colors: { Color blue . Color lightBlue }.
+	b colorPalette colors: (Array with: Color blue with: Color lightBlue ).
 	b add: #(37	33	0	0 0) title: 'DN1'.
 	b add: #(24	26	17	3 0) title: 'DN2'.
 	b add: #(25	29	15	1 0) title: 'DN3'.

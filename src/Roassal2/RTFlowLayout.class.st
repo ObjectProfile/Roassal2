@@ -67,10 +67,11 @@ RTFlowLayout >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-RTFlowLayout >> maxNextLineHeightFrom: anElement for: elements [
-	| nextLineX maxNextLineHeight |
+RTFlowLayout >> maxNextLineHeightFrom: ele for: elements [
+	| nextLineX maxNextLineHeight anElement |
 	maxNextLineHeight := 0.
 	nextLineX := self gapSize.
+	anElement := ele.
 	[ nextLineX < (self maxWidth rtValue: elements) ] whileTrue: [
 		nextLineX := nextLineX + (self gapSize) + (anElement width).
 		maxNextLineHeight := maxNextLineHeight max: (anElement height).	

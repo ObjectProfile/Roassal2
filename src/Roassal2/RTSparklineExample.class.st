@@ -14,7 +14,7 @@ RTSparklineExample >> example01 [
 	v := RTView new.
 	es := (RTSparkline new 
 				width: 50; height: 30;
-				values: [ :cls | cls rtmethods collect: #numberOfLinesOfCode ]) elementsOn:  { RTShape . RTBox }.
+				values: [ :cls | cls rtmethods collect: #numberOfLinesOfCode ]) elementsOn:  (Array with: RTShape with: RTBox ).
 	es @ RTDraggable @ RTPopup.
 	v addAll: es.
 	RTHorizontalLineLayout on: es.

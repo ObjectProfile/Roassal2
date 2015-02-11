@@ -1,6 +1,6 @@
 Class {
 	#name : #RTComposer,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'stack',
 		'view',

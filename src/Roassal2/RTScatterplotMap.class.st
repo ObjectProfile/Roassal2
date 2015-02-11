@@ -49,7 +49,8 @@ RTScatterplotMap >> run [
 	| tab allLonLat v shape es |
 	tab := RTTabTable new input: 'http://www.gaslampmedia.com/wp-content/uploads/2013/08/zip_codes_states.csv' asZnUrl retrieveContents usingDelimiter: $,.
 	tab removeFirstRow.
-	tab convertColumns: #(2 3) to: [ :str | 
+	tab convertColumns: #(2 3) to: [ :s | | str |
+		str := s.
 		(str = '') ifTrue: [ str := '0' ]. 
 		(str beginsWith: '"+' ) ifTrue: [ str := str allButFirst allButFirst allButLast ].
 		(str first = $") ifTrue: [ Float readFrom: str allButFirst allButLast ] ifFalse: [  Float readFrom: str ] ].

@@ -43,14 +43,15 @@ Class {
 	#name : #RTLabelled,
 	#superclass : #RTInteraction,
 	#instVars : [
+		'canvas',
+		'color',
+		'highlightable',
+		'lbl',
+		'lowColor',
+		'offsetOnEdge',
 		'position',
 		'text',
-		'color',
-		'lowColor',
-		'canvas',
-		'offsetOnEdge',
-		'highlightable',
-		'lbl'
+		'fontSize'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -80,6 +81,16 @@ RTLabelled >> color: aBlockOrColor [
 	color := aBlockOrColor
 ]
 
+{ #category : #accessing }
+RTLabelled >> fontSize [
+	^ fontSize
+]
+
+{ #category : #accessing }
+RTLabelled >> fontSize: anObject [
+	fontSize := anObject
+]
+
 { #category : #initialization }
 RTLabelled >> initialize [
 	super initialize.
@@ -90,6 +101,8 @@ RTLabelled >> initialize [
 	
 	highlightable := false. 
 	offsetOnEdge := 0.5.
+
+	fontSize := TRLabelShape defaultFontSize.
 
 	canvas := [ :el | 
 		el view ifNil: [ self error: 'You are trying to use RTLabelled on an element before adding the element to the view. Two solutions: (i) specify the view to the RTLabelled (using #view:) or (ii) use RTLabelled after having added the element' ].
@@ -105,6 +118,7 @@ RTLabelled >> initializeElement: element [
 	s := element trachelShape.
 	lbl := TRLabelShape new text: t asString.
 	lbl color: (color rtValue: element).
+	lbl fontSize: (fontSize rtValue: element model).
 	
 	"We first get a reference to the canvas, and then we add the shape in it"
 	"We are using the variable canvas to let the user specificy the canvas (or the view) before 
@@ -201,7 +215,7 @@ RTLabelled >> offsetOnEdge [
 
 { #category : #accessing }
 RTLabelled >> offsetOnEdge: aFloat [
-	"aFloat is between 0.0 and 1.0. With a value of 1.0, the label is close to the starting extremity"
+	"aFloat is between 0.0 and 1.0. With a value of 1.0, the label is close to the starting extremity, if RTLabelled is used on an edge"
 	offsetOnEdge := aFloat
 ]
 

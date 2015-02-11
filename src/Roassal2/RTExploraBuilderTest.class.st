@@ -124,7 +124,7 @@ RTExploraBuilderTest >> testTwoWayExpansion [
 	
 	node2 := builder node: n2.
 	builder onLeftClickExplore: [ :n | expandDown value: n ].
-	builder onRightClickExplore: [ :n | n parent isNil ifFalse: [ {n parent} ] ifTrue: [ #() ] ].
+	builder onRightClickExplore: [ :n | n parent isNil ifFalse: [ Array with: n parent ] ifTrue: [ #() ] ].
 	builder renderIn: builder view.
 	
 	node2 element announce: TRMouseRightClick.

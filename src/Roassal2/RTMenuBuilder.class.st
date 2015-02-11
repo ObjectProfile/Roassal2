@@ -346,8 +346,7 @@ RTMenuBuilder >> showSubmenuOf: lbl [
 
 		labels doWithIndex: [ :l :i | | p |
 			p := ((lbl position x) + (l width/2) - (lbl width/2) + 5)@(lbl position y + (l height*i) +3.5).
-			l translateTo: p."((lbl position x) + (l width/2) - (lbl width/2) )@(lbl position y + (l height*1))".
-			"view addAnimation: (RTLinearMove to: p during: 0.2 on: l)."
+			l translateTo: p.
 		].
 	menu update.
 	].

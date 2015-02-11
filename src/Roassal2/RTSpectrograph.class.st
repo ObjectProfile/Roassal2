@@ -80,7 +80,7 @@ RTSpectrograph >> renderIn: aView [
 	rowsOfElements := OrderedCollection new.
 	
 	objects do: [ :o | 	
-		es := shapeBuilder elementsOn: ((lineBlock rtValue: o) collect: [ :computedObject | { o . computedObject } ]).
+		es := shapeBuilder elementsOn: ((lineBlock rtValue: o) collect: [ :computedObject | (Array with: o with: computedObject ) ]).
 		
 		RTVerticalLineLayout new gapSize: 0; on: es.
 		rowsOfElements add: es.

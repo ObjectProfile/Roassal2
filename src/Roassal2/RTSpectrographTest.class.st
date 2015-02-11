@@ -49,7 +49,7 @@ RTSpectrographTest >> testGotMethodOnDay [
 { #category : #tests }
 RTSpectrographTest >> testHighlight [
 
-	b objects: { 10 }.
+	b objects: (Array with: 10).
 	b lineBlock: [ :v | 1 to: v ].
 	b highlight: [ :root :v | v = 2 ].
 	b build.

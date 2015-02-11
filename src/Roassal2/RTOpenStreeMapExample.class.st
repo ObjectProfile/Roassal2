@@ -652,8 +652,8 @@ RTOpenStreeMapExample >> exampleRefugies [
 								height: (row third / Float pi) sqrt * 2;
 								color: (Color blue alpha: 0.3))
 								elementOn:
-									{(row second).
-									(row third)}) @ RTPopup translateTo: (map latLonToRoassal: lat @ lon)) ] ].
+									(Array with: (row second) with:
+									(row third))) @ RTPopup translateTo: (map latLonToRoassal: lat @ lon)) ] ].
 
 	v @ RTDraggableView @ RTZoomableView.
 

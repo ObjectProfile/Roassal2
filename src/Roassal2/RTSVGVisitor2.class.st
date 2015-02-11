@@ -39,7 +39,7 @@ RTSVGVisitor2 >> addColor: c [
 ]
 
 { #category : #'as yet unclassified' }
-RTSVGVisitor2 >> addInteractions: aShape. [
+RTSVGVisitor2 >> addInteractions: aShape [
 	aShape isNil ifTrue: [ ^ self ].
 	(aShape isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
 	stream nextPutAll: 'ints: '.
@@ -87,7 +87,8 @@ RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
-	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView).
+	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView
+	#RTFocusElement).
 	exportFixedShapes := true.
 
 ]

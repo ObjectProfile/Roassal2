@@ -117,7 +117,7 @@ b interaction
 
 b global
 	normalizeSizeMin: 5 max: 20;
-	normalizeColorUsing: { Color green . Color red }.
+	normalizeColorUsing: (Array with: Color green with: Color red ).
 
 b addObject: RTPunchcard.
 b addObject: RTBox.

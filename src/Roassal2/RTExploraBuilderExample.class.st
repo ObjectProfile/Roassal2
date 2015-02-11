@@ -24,7 +24,7 @@ RTExploraBuilderExample >> exploreCircularList [
 	builder layout: RTCircleLayout new;
 		withPopup;
 		node: lst firstLink;
-		onClickExplore: [ :link | {link nextLink} ];
+		onClickExplore: [ :link | Array with: link nextLink ];
 		open.
 ]
 
@@ -41,7 +41,7 @@ RTExploraBuilderExample >> exploreClassHierarchy [
 		if: [ :cls | cls subclasses isEmpty ] fillColor: (Color red alpha: 0.5);
 		if: [ :cls | cls == ProtoObject ] fillColor: (Color green alpha: 0.5).
 	builder
-		onRightClickExplore: [ :cls | {cls superclass}] edges: #To;
+		onRightClickExplore: [ :cls | Array with: cls superclass] edges: #To;
 		onLeftClickExplore: [ :cls | cls subclasses ] edges: #From;
 		withPopup;
 		dragChildren;
@@ -106,7 +106,7 @@ RTExploraBuilderExample >> exploreFileSystem [
 	builder
 		layout: (RTTreeLayout new);
 		onLeftClickExplore: [ :elem | (elem isFile) ifTrue: [ #() ] ifFalse: [elem children] ];
-		onRightClickExplore: [ :elem | {elem parent} ];
+		onRightClickExplore: [ :elem | Array with: elem parent ];
 		withPopup: [ :file | file basename ];
 		dragChildren;
 		node: FileSystem disk workingDirectory;

@@ -15,9 +15,9 @@ RTDowserExample >> basic [
 	"
 	|a |
 	a := RTDowserBuilder new.
-	a addColumn: { 'a' . 'b' . 'c' }.
-	a addColumn: { 'a' . 'b' . 'c' }.
-	a addColumn: { 'a' . 'b' . 'c' }.
+	a addColumn: (Array with: 'a' with: 'b' with: 'c').
+	a addColumn: (Array with: 'a' with: 'b' with: 'c').
+	a addColumn: (Array with: 'a' with: 'b' with: 'c').
 	a edgesTo: #yourself.
 	a open.
 ]
@@ -74,7 +74,7 @@ RTDowserExample >> duoBasic [
 	"
 	|a |
 	a := RTDuoDowserBuilder new.
-	a left: { 'a' . 'b' . 'c' }.
+	a left: (Array with: 'a' with: 'b' with: 'c' ).
 	a body: 'a b c a b c'.
 	a edgesTo: #yourself.
 	a open.
@@ -100,44 +100,150 @@ RTDowserExample >> ironMaiden [
 	"
 	self new ironMaiden
 	"
-	|builder maiden1 maiden2 |
+	|builder maiden1 maiden2 arr |
 	
-	maiden1 := {{2013 . 46 . { 'United States' . 'Germany' . 'United Kingdom' . 'Brazil' . 'Spain' . 'Russia' . 'France' . 'Poland' . 'Sweden' . 'Austria' . 'Finland' . 'Argentina' . 'Switzerland' . 'Romania' . 'Paraguay' . 'Netherlands' . 'Turkey' . 'Chile' . 'Portugal' . 'Slovakia' . 'Czech Republic' . 'Belgium' . 'Croatia' . 'Italy' . 'Mexico' }}.
-{2012 . 34 . { 'United States' . 'Canada' }} .
-{2011 . 63 . { 'United Kingdom'	. 'Brazil' . 'Australia' . 'Germany' . 'France' . 'Russia' . 'Indonesia' . 'United States' . 'Mexico' . 'Colombia' . 'Netherlands' . 'Peru' . 'Poland' . 'Denmark' . 'Czech Republic' . 'Sweden' . 'Singapore' . 'Argentina' . 'Austria' . 'Belgium' . 'Chile' . 'Greece' . 'Norway' . 'Puerto Rico' . 'Turkey' . 'Finland' . 'South Korea'	. 'Switzerland' . 'Portugal' . 'Italy' . 'Spain' }} .
-{2010 . 36 . { 'United States' . 'Canada' . 'Italy' . 'Ireland' . 'Belgium' . 'United Kingdom' . 'Spain' . 'Sweden' . 'Germany' . 'Finland' . 'Norway' . 'Hungary' .  'Romania' }} .
-{2009 . 22 . { 'Brazil' . 'Mexico' . 'New Zealand' . 'Colombia' . 'Ecuador' . 'Serbia' . 'India' . 'Chile' . 'United Arab Emirates' . 'Peru' . 'Argentina' . 'United States' . 'Venezuela' . 'Costa Rica'}} .
-{2008 . 68 . { 'United States' . 'Canada' . 'Australia' . 'Mexico' . 'Brazil' . 'Japan' . 'Sweden' . 'Norway' . 'France' . 'Finland' . 'Argentina' . 'Puerto Rico' . 'Czech Republic' . 'Chile' . 'Poland' . 'Hungary' . 'Portugal' . 'Costa Rica' . 'Romania' . 'Colombia' . 'Greece' . 'United Kingdom' . 'Croatia' . 'Denmark' . 'Netherlands' . 'Russia' . 'India' . 'Switzerland' . 'Germany' . 'Italy' . 'Belgium' . 'Spain' }} .
-{2007 . 16 . { 'United Kingdom' . 'Germany' . 'Italy' . 'Slovenia' . 'Belgium' . 'India' . 'Greece' . 'United Arab Emirates' . 'Spain' . 'Serbia' . 'Netherlands' . 'Czech Republic' . 'Bulgaria' }} .
-{2006 . 45 . { 'United Kingdom'	. 'United States' . 'Japan' . 'Sweden' . 'Finland' . 'Canada' . 'Norway' . 'Italy' . 'Denmark' . 'Germany' . 'Switzerland' . 'Ireland' . 'France' . 'Spain' . 'Netherlands' }} .
-{2005 . 46 . { 'United States' . 'United Kingdom' . 'Germany' . 'Finland' . 'Norway' . 'Canada' . 'Portugal' . 'Belgium' . 'Czech Republic' . 'Switzerland' . 'Netherlands' . 'Greece' . 'Austria' . 'Sweden' . 'Poland' . 'Ireland' . 'Iceland' . 'Italy' . 'France' . 'Spain' }} .
-{2004 . 14 . { 'United States' . 'Japan' . 'Brazil' . 'Canada' . 'Argentina' . 'Chile' }} .
-{2003 . 90 . { 'United States' . 'Germany' . 'United Kingdom' . 'Spain' . 'France' . 'Sweden' . 'Italy' . 'Canada' . 'Belgium' . 'Czech Republic' . 'Denmark' . 'Switzerland' . 'Finland' . 'Hungary' . 'Netherlands' . 'Poland' . 'Norway' . 'Croatia' . 'Portugal' . 'Slovakia' . 'Austria' . 'Ireland'}} .
-{2002 . 4 . { 'United Kingdom' }} . 
-{2001 . 6 . { 'United Kingdom' . 'Argentina' . 'Brazil' . 'Mexico' . 'Chile' }} .
-{2000 . 79 . { 'United States' . 'Japan' . 'United Kingdom' . 'Germany' . 'Canada' . 'Spain' . 'France' . 'Poland' . 'Czech Republic' . 'Switzerland' . 'Sweden' . 'Slovenia' . 'Portugal' . 'Norway' . 'Greece' . 'Belgium' . 'Netherlands' . 'Hungary' . 'Denmark' . 'Slovakia' . 'Finland' . 'Italy' . 'Austria' . 'Estonia' }} .
-{1999 . 28 . { 'United States' . 'Canada' . 'Germany' . 'Spain' . 'Sweden' . 'Italy' . 'Netherlands' . 'Greece' . 'France' . 'Finland'}} .
-{1998 . 87 .  {'United States' . 'Germany' . 'United Kingdom' . 'France' . 'Spain' . 'Italy' . 'Japan' . 'Brazil' . 'Canada' . 'Mexico' . 'Turkey' . 'Greece' . 'Argentina' . 'Hungary' . 'Poland' . 'Finland' . 'Czech Republic' . 'Portugal' . 'Malta' . 'Belgium' . 'Denmark' . 'Sweden' . 'Switzerland' . 'Netherlands' }} .
-{1996 . 75 . {'United States' . 'France' . 'Japan' . 'Spain' . 'Italy' . 'Brazil' . 'Canada' . 'Argentina' . 'United Kingdom' . 'Greece' . 'Mexico' . 'Slovenia' . 'Denmark' . 'Netherlands' . 'Chile' . 'Ireland' . 'Colombia' . 'Finland' . 'Belgium' }} .
-{1995 . 55 . {'Germany' . 'Italy' . 'United Kingdom' . 'Spain' . 'Israel' . 'South Africa' . 'Sweden' . 'Switzerland' . 'Greece' . 'Denmark' . 'Norway' . 'Romania' . 'Belgium' . 'Finland' . 'France' . 'Portugal' . 'Bulgaria' . 'Austria' . 'Poland' . 'Slovakia' . 'Netherlands' . 'Hungary' . 'Czech Republic'}} .
-{1993  . 45 . {'Italy'  . 'United Kingdom' . 'Germany' . 'France' . 'Russia' . 'Spain' . 'Czech Republic' . 'Slovakia' . 'Sweden' . 'Netherlands' . 'Ireland' . 'Austria' . 'Switzerland' . 'Portugal' }} .
-{1992  . 65 . {'United States' . 'Japan' . 'Canada' . 'Spain' . 'France' . 'Mexico' . 'Brazil' . 'Australia' . 'United Kingdom' . 'Venezuela' . 'Sweden' . 'Italy' . 'Germany' . 'Belgium' . 'Argentina' . 'Puerto Rico' . 'Finland' . 'Norway' . 'Denmark' . 'Switzerland' . 'Uruguay' . 'Iceland' . 'Netherlands' . 'New Zealand' }} .
-{1991 . 50 . {'United States' . 'Canada' . 'Japan' . 'Switzerland' . 'Denmark' . 'France'}} .
-{1990 . 56 . {'United Kingdom' . 'Germany' . 'Italy' . 'Spain' . 'Netherlands' . 'Belgium' . 'France' . 'Sweden' . 'Finland' . 'Ireland' . 'Portugal' . 'Norway' . 'Denmark' }} .
-{1988 . 97 . {'United States' . 'United Kingdom' . 'Canada' . 'Germany' . 'Spain' . 'France' . 'Sweden' . 'Finland' . 'Portugal' . 'Italy' . 'Belgium' . 'Hungary' . 'Denmark' . 'Netherlands' . 'Austria'	. 'Switzerland' . 'Norway' . 'Greece' }} .
-{1987  . 85 .  {'United States' . 'Canada' . 'Japan'}} .
-{1986  . 66 .  {'United Kingdom' . 'Germany' . 'Poland' . 'France' . 'Italy' . 'Sweden' . 'Spain' . 'Austria' . 'Serbia' . 'Portugal' . 'Hungary' . 'Switzerland' . 'Croatia' . 'Slovenia' . 'Netherlands' . 'Norway' . 'Belgium' . 'Finland' }} .
-{1985 . 104 .  {'United States' . 'Japan' . 'Australia' . 'Brazil' . 'United Kingdom' }} .
-{1984 . 87 . {'United Kingdom' . 'Canada' . 'Germany' . 'United States' . 'France' . 'Poland' . 'Italy' . 'Spain' . 'Portugal' . 'Sweden' . 'Slovenia' . 'Switzerland' . 'Finland' . 'Hungary' . 'Belgium' . 'Netherlands' . 'Austria' . 'Denmark' . 'Serbia' }} .
-{1983 . 137 .  {'United States' . 'United Kingdom' . 'Germany' . 'Canada' . 'France' . 'Spain' . 'Sweden' . 'Netherlands' . 'Denmark' . 'Belgium' . 'Finland' . 'Switzerland' . 'Norway' }} .
-{1982  . 181 . {'United States' . 'United Kingdom' . 'France' . 'Canada' . 'Australia' . 'Japan' . 'Germany' . 'Spain' . 'Belgium' . 'Switzerland' . 'Netherlands' }} .
-{1981  . 137 .  {'United States' . 'United Kingdom' . 'France' . 'Germany' . 'Italy' . 'Sweden' . 'Netherlands' . 'Japan' . 'Canada' . 'Denmark' . 'Belgium' . 'Serbia' . 'Switzerland' }} .
-{1980  . 157 .	{'United Kingdom' . 'Germany' . 'Italy' . 'France' . 'Belgium' . 'Sweden' . 'Portugal' . 'Netherlands' . 'Finland' . 'Norway' . 'Switzerland' . 'Ireland' .	'Denmark' }} .
-{ 1979 . 89 . { 'United Kingdom' }} .
-{ 1978 . 4 . { 'United Kingdom' }} .
-{ 1977 . 38 . { 'United Kingdom' }} .
-{ 1976 . 34 . { 'United Kingdom' }}}.
-	maiden2 := {'United States' -> 686 . 'United Kingdom' -> 538 . 'Germany' -> 154 . 'Canada' -> 111 . 'France' -> 109 . 'Japan' -> 70 . 'Italy' -> 70 . 'Spain' -> 68 . 'Sweden'	-> 39 . 'Australia' -> 32 . 'Brazil' -> 32 . 'Netherlands' -> 28 . 'Finland' -> 24 . 'Belgium' -> 24 . 'Poland' -> 23 . 'Switzerland' -> 22 . 'Denmark' -> 19 . 'Norway' -> 18 . 'Mexico' -> 17 . 'Portugal' -> 16 . 'Greece' -> 13 . 'Czech Republic' -> 11 . 'Austria' -> 11 . 'Hungary' -> 10 . 'Argentina' -> 10 . 'Ireland' -> 8 . 'Russia' -> 8 . 'Chile' -> 7 . 'Serbia' -> 5 . 'Slovenia' -> 5 . 'Slovakia' -> 5 . 'Croatia' -> 4 . 'Romania' -> 4 .'Colombia' -> 4 . 'Turkey' -> 4 . 'New Zealand' -> 3 . 'Venezuela' -> 3 . 'India' -> 3 . 'Israel' -> 3 . 'South Africa' -> 3 . 'Puerto Rico' -> 3. 'United Arab Emirates' -> 2 . 'Indonesia' -> 2 . 'Bulgaria'	-> 2 . 'Peru' -> 2 . 'Iceland' -> 2 . 'Costa Rica' -> 2 . 'South Korea' -> 1 . 'Uruguay' -> 1 . 'Ecuador' -> 1 . 'Estonia' -> 1 . 'Malta' -> 1 . 'Singapore' -> 1 . 'Paraguay' -> 1}.
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Germany'; add: 'United Kingdom'; add: 'Brazil'; add: 'Spain'; add: 'Russia';
+		add: 'France'; add: 'Poland'; add: 'Sweden'; add: 'Austria'; add: 'Finland'; add: 'Argentina'; add: 'Switzerland';
+		add: 'Romania'; add: 'Paraguay'; add: 'Netherlands'; add: 'Turkey'; add: 'Chile'; add: 'Portugal'; add: 'Slovakia'; add: 'Czech Republic';
+		add: 'Belgium'; add: 'Croatia'; add: 'Italy'; add: 'Mexico'.
+	maiden1 := OrderedCollection new.
+	maiden1 add: (Array with: 2013 with: 46 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'.
+	maiden1 add: (Array with: 2012 with: 34 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Brazil'; add: 'Australia'; add: 'Germany'; add: 'France'; add: 'Russia'; add: 'Indonesia';
+		add: 'United States'; add: 'Mexico'; add: 'Colombia'; add: 'Netherlands'; add: 'Peru'; add: 'Poland'; add: 'Denmark'; add: 'Czech Republic';
+		add: 'Sweden'; add: 'Singapore'; add: 'Argentina'; add: 'Austria'; add: 'Belgium'; add: 'Chile'; add: 'Greece'; add: 'Norway'; add: 'Puerto Rico'; 
+		add: 'Turkey'; add: 'Finland'; add: 'South Korea'; add: 'Switzerland'; add: 'Portugal'; add: 'Italy'; add: 'Spain'.
+	maiden1 add: (Array with: 2011 with: 63 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'; add: 'Italy'; add: 'Ireland'; add: 'Belgium' ; add: 'United Kingdom'; add: 'Spain'; add: 'Sweden'; 
+		add: 'Germany'; add: 'Finland'; add: 'Norway'; add: 'Hungary'; add: 'Romania'.
+	maiden1 add: (Array with: 2010 with: 36 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'Brazil'; add: 'Mexico'; add: 'New Zealand'; add: 'Colombia'; add: 'Ecuador'; add: 'Serbia'; add: 'India'; add: 'Chile'; add: 'United Arab Emirates'; 
+		add: 'Peru'; add: 'Argentina'; add: 'United States'; add: 'Venezuela'; add: 'Costa Rica'.
+	maiden1 add: (Array with: 2009 with: 22 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'; add: 'Australia'; add: 'Mexico'; add: 'Brazil'; add: 'Japan'; add: 'Sweden'; add: 'Norway'; add: 'France'; 
+		add: 'Finland'; add: 'Argentina'; add: 'Puerto Rico'; add: 'Czech Republic'; add: 'Chile'; add: 'Poland'; add: 'Hungary'; add: 'Portugal'; 
+		add: 'Costa Rica'; add: 'Romania'; add: 'Colombia'; add: 'Greece'; add: 'United Kingdom'; add: 'Croatia'; add: 'Denmark'; add: 'Netherlands'; 
+		add: 'Russia'; add: 'India'; add: 'Switzerland'; add: 'Germany'; add: 'Italy'; add: 'Belgium'; add: 'Spain'.
+	maiden1 add: (Array with: 2008 with: 68 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Germany'; add: 'Italy'; add: 'Slovenia'; add: 'Belgium'; add: 'India'; add: 'Greece'; add: 'United Arab Emirates'; 
+		add: 'Spain'; add: 'Serbia'; add: 'Netherlands'; add: 'Czech Republic'; add: 'Bulgaria'.
+	maiden1 add: (Array with: 2007 with: 16 with: arr).
+	arr := OrderedCollection new.
+	arr add:	'United Kingdom'; add: 'United States'; add: 'Japan'; add: 'Sweden'; add: 'Finland'; add: 'Canada'; add: 'Norway' ; add: 'Italy'; 
+		add: 'Denmark'; add: 'Germany'; add: 'Switzerland'; add: 'Ireland'; add: 'France'; add: 'Spain'; add: 'Netherlands'.
+	maiden1 add: (Array with: 2006 with: 45 with: arr).
+	arr := OrderedCollection new.
+	arr add:	'United States'; add: 'United Kingdom'; add: 'Germany'; add: 'Finland'; add: 'Norway'; add: 'Canada'; add: 'Portugal'; add: 'Belgium'; 
+		add: 'Czech Republic'; add:	'Switzerland'; add: 'Netherlands'; add: 'Greece'; add: 'Austria'; add: 'Sweden'; add: 'Poland'; 		add: 'Ireland'; add: 'Iceland'; add: 'Italy'; add: 'France'; add: 'Spain'.
+	maiden1 add: (Array with: 2005 with: 46 with: arr).
+	arr := OrderedCollection new.
+	arr add:	'United States'; add: 'Japan'; add: 'Brazil'; add: 'Canada'; add: 'Argentina'; add: 'Chile'.
+	maiden1 add: (Array with: 2004 with: 14 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Germany'; add: 'United Kingdom'; add: 'Spain'; add: 'France'; add: 'Sweden'; add:	'Italy'; add: 'Canada'; add: 'Belgium'; 		add: 'Czech Republic'; add: 'Denmark'; add: 'Switzerland'; add: 'Finland'; add: 'Hungary'; add: 'Netherlands'; add:	'Poland'; add: 'Norway'; 
+		add: 'Croatia'; add:	'Portugal'; add: 'Slovakia'; add: 'Austria'; add: 'Ireland'.
+	maiden1 add: (Array with: 2003 with: 90 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'.
+	maiden1 add: (Array with: 2002 with: 4 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Argentina'; add: 'Brazil'; add: 'Mexico'; add: 'Chile'.
+	maiden1 add: (Array with: 2001 with: 6 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Japan'; add: 'United Kingdom'; add: 'Germany'; add: 'Canada'; add: 'Spain'; add: 'France'; add: 'Poland'; 
+		add: 'Czech Republic'; add: 'Switzerland'; add: 'Sweden'; add: 'Slovenia'; add: 'Portugal'; add: 'Norway'; add: 'Greece'; add: 'Belgium'; 
+		add: 'Netherlands'; add: 'Hungary'; add: 'Denmark'; add: 'Slovakia'; add: 'Finland'; add: 'Italy'; add: 'Austria'; add: 'Estonia'.
+	maiden1 add: (Array with: 2000 with: 79 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'; add: 'Germany'; add: 'Spain'; add: 'Sweden'; add: 'Italy'; add:	'Netherlands'; add: 'Greece'; 
+		add: 'France'; add: 'Finland'.
+	maiden1 add: (Array with: 1999 with: 28 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Germany'; add: 'United Kingdom'; add: 'France'; add: 'Spain'; add: 'Italy'; add: 'Japan'; add: 'Brazil'; add: 'Canada'; 
+		add: 'Mexico'; add: 'Turkey'; add: 'Greece'; add: 'Argentina'; add: 'Hungary'; add: 'Poland'; add: 'Finland'; add: 'Czech Republic'; add: 'Portugal'; 
+		add: 'Malta'; add: 'Belgium'; add: 'Denmark'; add: 'Sweden'; add: 'Switzerland'; add: 'Netherlands'.
+	maiden1 add: (Array with: 1998 with: 87 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'France'; add: 'Japan'; add: 'Spain'; add: 'Italy'; add: 'Brazil'; add: 'Canada'; add: 'Argentina'; add: 'United Kingdom'; 
+		add: 'Greece'; add: 'Mexico'; add: 'Slovenia'; add: 'Denmark'; add: 'Netherlands'; add: 'Chile'; add: 'Ireland'; add: 'Colombia'; add: 'Finland'; add: 'Belgium'.
+	maiden1 add: (Array with: 1996 with: 75 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'Germany'; add: 'Italy'; add: 'United Kingdom'; add: 'Spain'; add: 'Israel'; add: 'South Africa'; add: 'Sweden'; add: 'Switzerland'; add: 'Greece'; 
+		add: 'Denmark'; add: 'Norway'; add: 'Romania'; add: 'Belgium'; add: 'Finland'; add: 'France'; add: 'Portugal'; add: 'Bulgaria'; add: 'Austria'; 
+		add: 'Poland'; add: 'Slovakia'; add: 'Netherlands'; add: 'Hungary'; add: 'Czech Republic'.
+	maiden1 add: (Array with: 1995 with: 55 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'Italy'; add: 'United Kingdom'; add: 'Germany'; add: 'France'; add: 'Russia'; add: 'Spain'; add: 'Czech Republic'; add: 'Slovakia'; add: 'Sweden'; 
+		add: 'Netherlands'; add: 'Ireland'; add: 'Austria'; add: 'Switzerland'; add: 'Portugal'.
+	maiden1 add: (Array with: 1993 with: 45 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Japan'; add: 'Canada'; add: 'Spain'; add: 'France'; add: 'Mexico'; add: 'Brazil'; add: 'Australia'; add: 'United Kingdom'; 
+		add: 'Venezuela'; add: 'Sweden'; add: 'Italy'; add: 'Germany'; add: 'Belgium'; add: 'Argentina'; add: 'Puerto Rico'; add: 'Finland'; add: 'Norway'; 
+		add: 'Denmark'; add: 'Switzerland'; add: 'Uruguay'; add: 'Iceland'; add: 'Netherlands'; add: 'New Zealand'.
+	maiden1 add: (Array with: 1992 with: 65 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'; add: 'Japan'; add: 'Switzerland'; add: 'Denmark'; add: 'France'.
+	maiden1 add: (Array with: 1991 with: 50 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Germany'; add: 'Italy'; add: 'Spain'; add: 'Netherlands'; add: 'Belgium'; add: 'France'; add: 'Sweden'; add: 'Finland'; 
+		add: 'Ireland'; add: 'Portugal'; add: 'Norway'; add: 'Denmark'.
+	maiden1 add: (Array with: 1990 with: 56 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'United Kingdom'; add: 'Canada'; add: 'Germany'; add: 'Spain'; add: 'France'; add: 'Sweden'; add: 'Finland'; add: 'Portugal'; 
+		add: 'Italy'; add: 'Belgium'; add: 'Hungary'; add: 'Denmark'; add: 'Netherlands'; add: 'Austria'; add: 'Switzerland'; add: 'Norway'; add: 'Greece'.
+	maiden1 add: (Array with: 1988 with: 97 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Canada'; add: 'Japan'.
+	maiden1 add: (Array with: 1987 with: 85 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Germany'; add: 'Poland'; add: 'France'; add: 'Italy'; add: 'Sweden'; add: 'Spain'; add: 'Austria'; add: 'Serbia'; add: 'Portugal';
+		add: 'Hungary'; add: 'Switzerland'; add: 'Croatia'; add: 'Slovenia'; add: 'Netherlands'; add: 'Norway'; add: 'Belgium'; add: 'Finland'.
+	maiden1 add: (Array with: 1986 with: 66 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'Japan'; add: 'Australia'; add: 'Brazil'; add: 'United Kingdom'.
+	maiden1 add: (Array with: 1985 with: 104 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Canada'; add: 'Germany'; add: 'United States'; add: 'France'; add: 'Poland'; add: 'Italy'; add: 'Spain'; add: 'Portugal'; 
+		add: 'Sweden'; add: 'Slovenia'; add: 'Switzerland'; add: 'Finland'; add: 'Hungary'; add: 'Belgium'; add: 'Netherlands'; add: 'Austria'; add: 'Denmark'; add: 'Serbia'.
+	maiden1 add: (Array with: 1984 with: 87 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'United Kingdom'; add: 'Germany'; add: 'Canada'; add: 'France'; add: 'Sweden'; add: 'Netherlands'; add: 'Denmark'; add: 'Belgium'; 
+		add: 'Finland'; add: 'Switzerland'; add: 'Norway'.
+	maiden1 add: (Array with: 1983 with: 137 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'United Kingdom'; add: 'France'; add: 'Canada'; add: 'Australia'; add: 'Japan'; add: 'Germany'; 
+		add: 'Spain'; add: 'Belgium'; add: 'Switzerland'; add: 'Netherlands'.
+	maiden1 add: (Array with: 1982 with: 181 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United States'; add: 'United Kingdom'; add: 'France'; add: 'Germany'; add: 'Italy'; add: 'Sweden'; add: 'Netherlands'; add: 'Japan'; add: 'Canada'; 
+		add: 'Denmark'; add: 'Belgium'; add: 'Serbia'; add: 'Switzerland'.
+	maiden1 add: (Array with: 1981 with: 137 with: arr).
+	arr := OrderedCollection new.
+	arr add: 'United Kingdom'; add: 'Germany'; add: 'Italy'; add: 'France'; add: 'Belgium'; add: 'Sweden'; add: 'Portugal'; add: 'Netherlands'; add: 'Finland'; 
+		add: 'Norway'; add: 'Switzerland'; add: 'Ireland'; add: 'Denmark'.
+	maiden1 add: (Array with: 1980 with: 157 with: arr).
+	maiden1 add: (Array with: 1979 with: 89 with: (Array with: 'United Kingdom') ).
+	maiden1 add: (Array with: 1978 with: 4 with: (Array with: 'United Kingdom')).
+	maiden1 add: (Array with: 1977 with: 38 with: (Array with: 'United Kingdom')).
+	maiden1 add: (Array with: 1976 with: 34 with: (Array with: 'United Kingdom')).
+	
+	maiden2 := OrderedCollection new.
+	maiden2 add: 'United States' -> 686; add: 'United Kingdom' -> 538; add: 'Germany' -> 154; add: 'Canada' -> 111; add: 'France' -> 109; add: 'Japan' -> 70; 
+		add: 'Italy' -> 70; add: 'Spain' -> 68; add: 'Sweden' -> 39; add: 'Australia' -> 32; add: 'Brazil' -> 32; add: 'Netherlands' -> 28; add: 'Finland' -> 24; 
+		add: 'Belgium' -> 24; add: 'Poland' -> 23; add: 'Switzerland' -> 22; add: 'Denmark' -> 19; add: 'Norway' -> 18; add: 'Mexico' -> 17; add: 'Portugal' -> 16; 
+		add: 'Greece' -> 13; add: 'Czech Republic' -> 11; add: 'Austria' -> 11; add: 'Hungary' -> 10; add: 'Argentina' -> 10; add: 'Ireland' -> 8; add: 'Russia' -> 8; 
+		add: 'Chile' -> 7; add: 'Serbia' -> 5; add: 'Slovenia' -> 5; add: 'Slovakia' -> 5; add: 'Croatia' -> 4; add: 'Romania' -> 4; add: 'Colombia' -> 4; 
+		add: 'Turkey' -> 4; add: 'New Zealand' -> 3; add: 'Venezuela' -> 3; add: 'India' -> 3; add: 'Israel' -> 3; add: 'South Africa' -> 3; add: 'Puerto Rico' -> 3; 
+		add: 'United Arab Emirates' -> 2; add: 'Indonesia' -> 2; add: 'Bulgaria'	-> 2; add: 'Peru' -> 2; add: 'Iceland' -> 2; add: 'Costa Rica' -> 2; add: 'South Korea' -> 1;
+		add: 'Uruguay' -> 1; add: 'Ecuador' -> 1; add: 'Estonia' -> 1; add: 'Malta' -> 1; add: 'Singapore' -> 1; add: 'Paraguay' -> 1.
 	
 	builder := RTDuoDowserBuilder new.
 	builder title: 'Iron Maiden'.
@@ -200,7 +306,18 @@ RTDowserExample >> santas [
 	"
 	|builder hohoho|
 	
-	hohoho := {'Afghanistan' -> 'Baba Chaghaloo'.'Albania' -> 'Babadimri'. 'Argentina' -> 'Papá Noel'. 'Armenia' -> 'Gaghant Baba'. 'Belgium' -> 'Pere Noel'. 'Bosnia and Herzegovina' -> 'Deda Mraz'. 'Bolivia' -> 'Papá Noel'. 'Brazil' -> 'Papai Noel'. 'Bulgaria' -> 'Dyado Koleda'. 'Canada' -> 'Santa Claus'. 'Chile' -> 'Viejo Pascuero'. 'China' -> 'Dun Che Lao Ren'. 'Colombia' -> 'Papá Noel'. 'Denmark' -> 'Julemanden'. 'Ecuador' -> 'Papá Noel'. 'Egypt' -> 'Papa Noël'. 'France' -> 'Pere Noel'. 'French Canada' -> 'Père Noël'. 'Finland' -> 'Joulupukki'. 'Germany' -> 'Weihnachtsmann'. 'Hawaii' -> 'Kanakaloka'. 'Hungary' -> 'Mikulas'. 'Iran' -> 'Baba Noel'. 'Iraq' -> 'Vader Kersfees'. 'Ireland' -> 'Daidí na Nollaig'. 'Italy' -> 'Babbo Natale'. 'Jamaica' -> 'Santa Claus'. 'Japan' -> 'Hoteiosho'. 'Lithuania' -> 'Kaledu Senelis'. 'Malta' -> 'San Niklaw'. 'Netherlands' -> 'Kerstman'. 'Norway' -> 'Julenissen'. 'Perú' -> 'Papá Noel'. 'Poland' -> 'Swiety Mikolaj'. 'Portugal' -> 'Pai Natal'. 'Romania' -> 'Mos Craciun'. 'Russia' -> 'Ded Moroz'. 'Serbia' -> 'Deda Mraz'. 'Scottish Highlands' -> 'Daidaín na Nollaig'. 'South Africa' -> 'Vader Kersfees'. 'Spain' -> 'Papá Noel'. 'Sweden' -> 'Jultomten'. 'Turkey' -> 'Noel Baba'. 'United Kingdom' -> 'Father Christmas'. 'US' -> 'Santa Claus'}.
+	hohoho := OrderedCollection new.
+	hohoho add: 'Afghanistan' -> 'Baba Chaghaloo'; add: 'Albania' -> 'Babadimri'; add: 'Argentina' -> 'Papá Noel'; add: 'Armenia' -> 'Gaghant Baba'; 
+		add: 'Belgium' -> 'Pere Noel'; add: 'Bosnia and Herzegovina' -> 'Deda Mraz'; add: 'Bolivia' -> 'Papá Noel'; add: 'Brazil' -> 'Papai Noel'; 
+		add: 'Bulgaria' -> 'Dyado Koleda'; add: 'Canada' -> 'Santa Claus'; add: 'Chile' -> 'Viejo Pascuero'; add: 'China' -> 'Dun Che Lao Ren';
+		add: 'Colombia' -> 'Papá Noel'; add: 'Denmark' -> 'Julemanden'; add: 'Ecuador' -> 'Papá Noel'; add: 'Egypt' -> 'Papa Noël'; add: 'France' -> 'Pere Noel';
+		add: 'French Canada' -> 'Père Noël'; add: 'Finland' -> 'Joulupukki'; add: 'Germany' -> 'Weihnachtsmann'; add: 'Hawaii' -> 'Kanakaloka'; 
+		add: 'Hungary' -> 'Mikulas'; add: 'Iran' -> 'Baba Noel'; add: 'Iraq' -> 'Vader Kersfees'; add: 'Ireland' -> 'Daidí na Nollaig'; add: 'Italy' -> 'Babbo Natale';
+		add: 'Jamaica' -> 'Santa Claus'; add: 'Japan' -> 'Hoteiosho'; add: 'Lithuania' -> 'Kaledu Senelis'; add: 'Malta' -> 'San Niklaw';
+		add: 'Netherlands' -> 'Kerstman'; add: 'Norway' -> 'Julenissen'; add: 'Perú' -> 'Papá Noel'; add: 'Poland' -> 'Swiety Mikolaj'; add: 'Portugal' -> 'Pai Natal'; 
+		add: 'Romania' -> 'Mos Craciun'; add: 'Russia' -> 'Ded Moroz'; add: 'Serbia' -> 'Deda Mraz'; add: 'Scottish Highlands' -> 'Daidaín na Nollaig'; 
+		add: 'South Africa' -> 'Vader Kersfees'; add: 'Spain' -> 'Papá Noel'; add: 'Sweden' -> 'Jultomten'; add: 'Turkey' -> 'Noel Baba'; 
+		add: 'United Kingdom' -> 'Father Christmas'; add: 'US' -> 'Santa Claus'.
 	
 	builder := RTDuoDowserBuilder new.
 	builder title: 'Merry Christmas'.

@@ -668,6 +668,7 @@ SUVORK5CYII='
 
 { #category : #sources }
 RTMondrianExample >> exampleClassDependencies [
+| b |
 b := RTMondrian new.
 b shape circle size: 8.
 b nodes: RTObject withAllSubclasses.
@@ -679,7 +680,7 @@ b edges
 
 b normalizer
 	normalizeSize: #numberOfMethods using: #sqrt;
-	normalizeColor: [ :c | c withAllSuperclasses indexOf: RTObject ] using: { Color red . Color gray };
+	normalizeColor: [ :c | c withAllSuperclasses indexOf: RTObject ] using: (Array with: Color red with: Color gray);
 	alphaColor: 0.4.
 	
 b layout forceWithCharge: -400.
@@ -941,7 +942,7 @@ b edges connectFrom: #superclass.
 b normalizer
 	objects: RTObject withAllSubclasses;
 	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
-	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
+	normalizeColor: #numberOfMethods using: (Array with: Color gray with: Color blue with: Color red) using: [ :value | (value + 1) ln ].
 	
 b layout cluster.
 b build.
@@ -2048,7 +2049,7 @@ RTMondrianExample >> exampleForceAndNested [
 	b := RTMondrian new.
 	b nodes: RTShape withAllSubclasses forEach: [ :cls |
 		b shape rectangle color: Color blue.
-		b nodes: cls methods.
+		b nodes: cls rtmethods.
 		b shape line color: Color black.
 		b edges connectToAll: #dependentMethods.
 		b layout force.
@@ -2167,7 +2168,7 @@ RTMondrianExample >> exampleInnerAndPopup [
 	b shape rectangle withTextAbove.
 	b nodes: RTShape withAllSubclasses forEach: [:cls | 
 		b shape rectangle color: Color red; size: #numberOfLinesOfCode.
-		b nodes: cls methods. b layout grid ].
+		b nodes: cls rtmethods. b layout grid ].
 	b layout flow.
 	b build.
 	^ b view
@@ -2419,7 +2420,7 @@ RTMondrianExample >> exampleNestingAndTitle [
 	b shape rectangle withTextAbove.
 	b nodes: RTShape withAllSubclasses forEach: [:cls | 
 		b shape rectangle color: Color white; size: #numberOfLinesOfCode.
-		b nodes: cls methods. b gridLayout ].
+		b nodes: cls rtmethods. b gridLayout ].
 	b flowLayout.
 	^ b build
 ]
@@ -2518,7 +2519,7 @@ b nodes: RTObject withAllSubclasses.
 b normalizer
 	objects: RTObject withAllSubclasses;
 	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
-	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
+	normalizeColor: #numberOfMethods using: (Array with: Color gray with: Color blue with: Color red ) using: [ :value | (value + 1) ln ].
 	
 b layout flow.
 b build.
@@ -2618,7 +2619,7 @@ b edges connectFrom: #superclass.
 b normalizer
 	objects: classes;
 	normalizeSize: #numberOfMethods min: 5 max: 30;
-	normalizeColor: #numberOfLinesOfCode using: { Color green . Color red } using: #sqrt.
+	normalizeColor: #numberOfLinesOfCode using: (Array with: Color green with: Color red ) using: #sqrt.
 	
 
 b layout

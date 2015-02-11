@@ -10,7 +10,7 @@ wordSeparators
 "
 Class {
 	#name : #RTTextTokenizer,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'wordSeparators'
 	],

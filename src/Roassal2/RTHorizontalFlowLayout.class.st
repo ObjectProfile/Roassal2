@@ -65,8 +65,9 @@ RTHorizontalFlowLayout >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-RTHorizontalFlowLayout >> maxNextLineWidthFrom: anElement for: elements [
-	| nextLineY maxNextLineWidth |
+RTHorizontalFlowLayout >> maxNextLineWidthFrom: ele for: elements [
+	| nextLineY maxNextLineWidth anElement |
+	anElement := ele.
 	maxNextLineWidth := 0.
 	nextLineY := self gapSize.
 	[ nextLineY < (self maxWidth rtValue: elements) ] whileTrue: [

@@ -1,6 +1,6 @@
 Class {
 	#name : #RTRefreshShapes,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'view',
 		'refreshValue',

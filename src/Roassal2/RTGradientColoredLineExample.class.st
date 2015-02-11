@@ -123,7 +123,7 @@ eb objects: RTShape withAllSubclasses from: #yourself toAll: #dependentClasses.
 RTMetricNormalizer new
 	elements: es;
 	normalizeSize: #numberOfLinesOfCode min: 10  max: 30;
-	normalizeColor: #numberOfMethods using: {Color green . Color red} using: #sqrt;
+	normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red) using: #sqrt;
 	alphaColor: 0.5.
 
 RTForceBasedLayout new charge: -300; on: es.

@@ -108,7 +108,7 @@ RTSmartBrowser >> relevanceOfMethod: aCompiledMethod [
 RTSmartBrowser >> shapeForClass [
 
 	| n |
-	n := RTMultiLinearColor new colors: {Color lightGray . Color pink }.
+	n := RTMultiLinearColor new colors: (Array with: Color lightGray with: Color pink ).
 				
 	^ RTBox new
 		height: [ :c | c numberOfMethods max: 5 ];
@@ -119,7 +119,7 @@ RTSmartBrowser >> shapeForClass [
 { #category : #hooks }
 RTSmartBrowser >> shapeForMethod [
 	| n |
-	n := RTMultiLinearColor new colors: {Color gray . Color red }.
+	n := RTMultiLinearColor new colors: (Array with: Color gray with: Color red ).
 	^ RTBox new 
 		size: [ :m | m numberOfLinesOfCode max: 5 ];
 		color: [ :m | n level: (self relevanceOfMethod: m) ]

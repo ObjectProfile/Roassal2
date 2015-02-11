@@ -65,7 +65,7 @@ RTPieExample >> exampleLabelledChart [
 | b |
 b := RTPieBuilder new.
 b interaction popup.
-b objects: { Dictionary . Collection . Set . OrderedCollection }.
+b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection).
 b slice: #numberOfMethods.
 b globalRule distinctColor.	
 b labelled.
@@ -243,7 +243,7 @@ b interaction popup.
 b shape current
 	innerRadius: 70;
 	externalRadius: 100.
-b objects: { Dictionary . Collection . Set . OrderedCollection }.
+b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 b slice: #numberOfMethods.
 b globalRule distinctColor.	
 b build.
