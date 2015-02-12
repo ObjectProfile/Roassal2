@@ -122,12 +122,12 @@ RTHTML5Exporter >> createJS [
 
 { #category : #'initialize-release' }
 RTHTML5Exporter >> createStream [
-	| dir fn |
+	| dir  filename |
 	dir := self directory.
-	fn := stream := dir / self fileName.
-	stream exists ifTrue: [ stream delete ].
-	stream := stream writeStream.
-	^ fn
+	filename := dir / self fileName.
+	filename exists ifTrue: [ filename delete ].
+	stream := filename writeStream.
+	^ filename
 ]
 
 { #category : #defaults }
@@ -157,15 +157,22 @@ RTHTML5Exporter >> directory: aFile [
 
 { #category : #exporting }
 RTHTML5Exporter >> export: aView [
-	|fn |
+	fileName := self createStream.
+	self export: aView toStream: stream.
+	^ fileName
+]
+
+{ #category : #'as yet unclassified' }
+RTHTML5Exporter >> export: aView toStream: aStream [
+
+	self assert: (aStream isStream).
 	self createJS.
-	fn := self createStream.
+	stream := aStream.
 	[
 		self addStart: aView.
 		self exportSVG: aView.
 		self addEnd.
 	] ensure: [ stream close. ].
-	^ fn.
 ]
 
 { #category : #accesing }
