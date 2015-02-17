@@ -27,7 +27,8 @@ Class {
 		'directory',
 		'fileName',
 		'title',
-		'exportFixedShapes'
+		'exportFixedShapes',
+		'roassalJSfile'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -87,7 +88,7 @@ RTHTML5Exporter >> addStart: aView [
 			document.write(unescape("%3Cscript src=\""+ protocol + "://code.jquery.com/jquery-1.11.0.min.js\" type=\"text/javascript\"%3E%3C/script%3E"));
 			document.write(unescape("%3Cscript src=\""+ protocol + "://code.jquery.com/jquery-migrate-1.2.1.min.js\" type=\"text/javascript\"%3E%3C/script%3E"));
 		</script>
-		<script src="roassal.js"></script>
+		<script src="',self roassalJSfile,'"></script>
 		<style type="text/css">
 			body, svg { 
 				margin: 0;
@@ -138,6 +139,11 @@ RTHTML5Exporter >> defaultDirectory [
 { #category : #defaults }
 RTHTML5Exporter >> defaultFileName [
 	^ 'index.html'
+]
+
+{ #category : #defaults }
+RTHTML5Exporter >> defaultRoassalJSfile [
+	^ 'roassal.js'.
 ]
 
 { #category : #defaults }
@@ -1813,6 +1819,16 @@ $(document).ready( function(){
 
 
 '
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> roassalJSfile [
+	^ roassalJSfile ifNil: [ roassalJSfile := self defaultRoassalJSfile ]
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> roassalJSfile: string [
+	roassalJSfile := string
 ]
 
 { #category : #accesing }

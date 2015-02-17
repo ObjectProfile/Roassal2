@@ -1,6 +1,6 @@
 Class {
 	#name : #RTSunburstBuilderExamples,
-	#superclass : #RTObject,
+	#superclass : #RTAbstractExample,
 	#category : #'Roassal2-Builder-Sunburst'
 }
 
@@ -14,7 +14,8 @@ RTSunburstBuilderExamples >> basic1 [
 	b shape color: [ :e | Color random ].
 	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view 
 ]
 
 { #category : #examples }
@@ -37,7 +38,8 @@ RTSunburstBuilderExamples >> basic10 [
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -60,7 +62,8 @@ RTSunburstBuilderExamples >> basic11 [
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -119,7 +122,8 @@ RTSunburstBuilderExamples >> basic14 [
 	b shape color: [ :e | Color random ].
 	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -135,7 +139,8 @@ RTSunburstBuilderExamples >> basic15 [
 	b strategy hasCenter: false.
 	b radialSpacing: 0.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -150,7 +155,8 @@ RTSunburstBuilderExamples >> basic2 [
 	b strategy hasCenter: false.
 	b radialSpacing: 0.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -165,7 +171,8 @@ RTSunburstBuilderExamples >> basic3 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -179,7 +186,8 @@ RTSunburstBuilderExamples >> basic4 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -195,7 +203,8 @@ RTSunburstBuilderExamples >> basic5 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -211,7 +220,8 @@ RTSunburstBuilderExamples >> basic6 [
 
 	b explore: Object using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -228,7 +238,8 @@ RTSunburstBuilderExamples >> basic7 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -244,7 +255,8 @@ RTSunburstBuilderExamples >> basic8 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -262,5 +274,6 @@ RTSunburstBuilderExamples >> basic9 [
 	
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
