@@ -215,6 +215,17 @@ RTHTML5Exporter >> fileName: string [
 RTHTML5Exporter >> initialize [
 	super initialize.
 	self exportFixedShapes: true.
+	self jsreference: 'roassal.js'
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> jsreference [
+	^ jsrefenrece
+]
+
+{ #category : #accesing }
+RTHTML5Exporter >> jsreference: aString [
+	jsrefenrece := aString.
 ]
 
 { #category : #dependencies }
