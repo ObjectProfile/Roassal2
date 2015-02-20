@@ -39,6 +39,24 @@ Class {
 }
 
 { #category : #sources }
+RTGradientColoredLineExample >> edgePaletteColored [
+
+	| v elem1 elem2 edge|
+	v := RTView new.
+	elem1 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 1.
+	elem2 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 2.
+	elem2 translateBy: 200@0.
+	elem1 @ RTDraggable.
+	elem2 @ RTDraggable.
+	v add: elem1.
+	v add: elem2.
+	edge := RTEdge from:elem1 to:elem2.
+	v add: (edge + (RTMultiColoredLine new colors: (ColorPalette qualitative colors: 12 scheme:'Paired'); colorShape)).
+	^ v 
+
+]
+
+{ #category : #sources }
 RTGradientColoredLineExample >> exampleA [
 
 	| v elem1 elem2 edge |
@@ -233,7 +251,35 @@ yKo+N9R7SQOkfHlR630BiGnpQNzCrkbmrhjjuAR5c9OjHsvq6zizuj9XUQzCGRrnmkjOfmav
 bds3rYWUFCD5+g6aOqZiGN2vxqYAUeT/N3NbBL6mxdQAAAAASUVORK5CYII='
 ]
 
+{ #category : #sources }
+RTGradientColoredLineExample >> exampleedgePaletteColored [
+| v elem1 elem2 edge|
+	v := RTView new.
+	elem1 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 1.
+	elem2 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 2.
+	elem2 translateBy: 200@0.
+	elem1 @ RTDraggable.
+	elem2 @ RTDraggable.
+	v add: elem1.
+	v add: elem2.
+	edge := RTEdge from:elem1 to:elem2.
+	v add: (edge + (RTMultiColoredLine new colors: (ColorPalette qualitative colors: 12 scheme:'Paired'); colorShape)).
+	^ v 
+]
+
+{ #category : #icons }
+RTGradientColoredLineExample >> exampleedgePaletteColoredIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABbklEQVR4XuXUTQpBURjHYZu1
+AmNiCxbkDoyIMPORKOVSV4rE5L7I4MgK3Hp+9Z+eTuepU3s+/apUzX8CH8TPB/FB/HwQH8TP
+B/FB/HwQH8TPB/HzQXwQPx/EB/HzQXwQPx/EB/HzQfx8EB/EzwfxQfx8EB/EzwfxQfx8ED8f
+xAfx80F8ED8fxAfx80F8ED8fxM8H8UH8fBAfxM8H8UH8fBAfxM8H8fNBfJDfer2ITieiqo+S
+Zf+7319A2u2IRvMex+vjs8XxEsPNKa2479Imh3HaPl9Gme/THoNBWpzX3x2mEdt+2qW4pa1m
+edrpfUbEd8V89Fm3NYp6vQz/y/LzQXwQPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/E
+zwfxQfx8EB/Ezwfx80F8ED8fxAfx80F8ED8fxAfx80H8fBAfxM8H8UH8fBAfxM8H8UH8fBA/
+H8QH8fNBfBA/H8QH8fNBfBA/H8TPB6l0L/57mfhqM72IAAAAAElFTkSuQmCC'
+]
+
 { #category : #'as yet unclassified' }
 RTGradientColoredLineExample >> label [
-	^ 'Gradient colored lines'
+	^ 'Gradient and multi colored lines'
 ]
