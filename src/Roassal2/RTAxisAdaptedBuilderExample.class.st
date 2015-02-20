@@ -72,3 +72,72 @@ b build.
 b view inspect
 
 ]
+
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> label [
+	^ 'Axis adapted'
+]
+
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> withColorPalette [
+
+	"RTAxisAdaptedBuilderExample new withColorPalette"
+	| c b |
+	c := RTColorPaletteExample new exampleSequentialPalette.
+
+	b := RTAxisAdaptedBuilder new.
+	b view: c view.
+	b margin: 20.
+	b objects:  c view elements.
+	b build.
+	^ b view.
+
+]
+
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> withComposer [
+
+	"RTAxisAdaptedBuilderExample new withComposer"
+	| c b |
+	c := RTComposerExample new exampleClassAnalysis2.
+
+	b := RTAxisAdaptedBuilder new.
+	b view: c view.
+	b margin: 20.
+	b objects:  c view elements.
+	b build.
+	^ b view.
+
+]
+
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> withMondrian1 [
+
+	"RTAxisAdaptedBuilderExample new withMondrian1"
+	| c b |
+	c := RTMondrianExample new exampleNormalization .
+
+	b := RTAxisAdaptedBuilder new.
+	b view: c view.
+	b margin: 20.
+	b objects:  c view elements.
+	b build.
+	^ b view.
+
+]
+
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> withMondrian2 [
+
+	"RTAxisAdaptedBuilderExample new withMondrian2"
+	| c b |
+	c := RTMondrianExample new exampleBezier  .
+
+	b := RTAxisAdaptedBuilder new.
+	b view: c view.
+	b margin: 20.
+	b objects:  c view elements.
+	b build.
+	^ b view.
+
+]
