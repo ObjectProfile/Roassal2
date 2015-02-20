@@ -27,12 +27,12 @@ RTMultiColoredLine >> block: aTwoArgBlock [
 { #category : #'as yet unclassified' }
 RTMultiColoredLine >> colorShape [
 	self block: [ :fromPoint :toPoint | 
-		| edgeBound tab |
+		| tab |
 		
 		tab := Array with: fromPoint.
-		edgeBound := fromPoint corner: toPoint.
+
 		1 to: (colorArray size - 1) do: [ :i |
-			tab := tab copyWith: ( ((i * (edgeBound corner x - edgeBound origin x) / (colorArray size)) asInteger + edgeBound origin x) @ ( (i * (edgeBound corner y - edgeBound origin y) / (colorArray size)) asInteger + edgeBound origin y) ).
+			tab := tab copyWith: ( (i * (toPoint x - fromPoint x)/(colorArray size)) + (fromPoint x)) @ ( ((i* (fromPoint dist: toPoint)/(colorArray size)) / (fromPoint dist: toPoint) * (toPoint y - fromPoint y)) + (fromPoint y)).
 		].
 		tab := tab copyWith: toPoint.	
 	 ]
@@ -53,6 +53,11 @@ colorArray := anArray.
 RTMultiColoredLine >> initialize [
 	super initialize.
 	self straight
+]
+
+{ #category : #rendering }
+RTMultiColoredLine >> path [
+	^ path
 ]
 
 { #category : #accessing }
@@ -80,14 +85,14 @@ RTMultiColoredLine >> trachelShapeFor: anEdge [
 	^ multiShape
 ]
 
-{ #category : #rendering }
+{ #category : #public }
 RTMultiColoredLine >> updateFor: anEdge trachelShape: trachelShape [
-	| shape fromPoint toPoint p |
+| shape fromPoint toPoint p|
 	fromPoint := attachPoint startingPointOf: anEdge.
 	toPoint := attachPoint endingPointOf: anEdge.
 	p := path value: fromPoint value: toPoint.
 	
-	2 to: p size do: [ :i |
+	2 to: (p size) do: [ :i |
 		shape := trachelShape shapes at: i - 1.
 		shape width: width.
 		shape from: (p at: i - 1) to: (p at: i).
