@@ -6,8 +6,8 @@ Instance Variables
 	freeSpace:	<Set of Rectamgles>
 	bounds:	<Point>
 
-padding
-	- padding around each element
+gap
+	- gap between elements defined as ""percentage"" of average size. 0.2 means 20%
 
 freeSpace
 	- collection of spaces that can be used for next element insertion
@@ -21,6 +21,7 @@ Class {
 	#superclass : #RTLayout,
 	#instVars : [
 		'freeSpace',
+		'gap',
 		'padding',
 		'bounds'
 	],
@@ -55,13 +56,18 @@ RTRectanglePackLayout >> boundingBox [
 
 { #category : #hook }
 RTRectanglePackLayout >> doExecute: elements [
-	| sortedElements |
+	| sortedElements maxSpace |
 	bounds := 0@0.
+	
+	maxSpace := elements inject: 0@0 into: [ :sum :el |
+			sum + el extent ].
 		
+	padding := maxSpace / elements size * gap / 2.
+	
+	maxSpace := 1 + gap * maxSpace.
+	
 	freeSpace := Set new.
-	freeSpace add: (0@0 corner: 
-		(elements inject: 0@0 into: [ :sum :el |
-			sum + el extent + (padding * 2) ])).
+	freeSpace add: (0@0 corner: maxSpace).
 	
 	sortedElements := SortedCollection sortBlock:  [ :larger :smaller |
 		larger  encompassingRectangle halfPerimeter >
@@ -85,10 +91,21 @@ RTRectanglePackLayout >> extentByInserting: aRectangle into: aSpace [
 
 ]
 
+{ #category : #accessing }
+RTRectanglePackLayout >> gap [
+	"gap between elements defined as ''percentage'' of average size. 0.2 means 20%"
+	^ gap
+]
+
+{ #category : #accessing }
+RTRectanglePackLayout >> gap: anObject [
+	gap := anObject
+]
+
 { #category : #'initialize-release' }
 RTRectanglePackLayout >> initialize [
 	super initialize.
-	padding := 0
+	gap := 0.2
 ]
 
 { #category : #execution }
@@ -99,15 +116,16 @@ RTRectanglePackLayout >> packIn: anElement [
 	self recalculateFreeSpacesWith: anElement
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 RTRectanglePackLayout >> padding [
-	"padding around each element. Paddings do not overlap"
-	^ padding
+	self deprecated: 'Use gap instead'.
+	^ self gap
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 RTRectanglePackLayout >> padding: anObject [
-	padding := anObject
+	self deprecated: 'Use gap: instead'.
+	self gap: anObject
 ]
 
 { #category : #'space-calculation' }
