@@ -1284,7 +1284,7 @@ ds2 connectColor: Color green.
 ds2 y: #numberOfMethods" min: minY max: maxY".
 b add: ds2.
 
-b axisXNoLabel; axisY.
+b axisX noLabel.
 
 b build.
 ^ b view

@@ -65,7 +65,7 @@ RTHTML5Exporter class >> interactiveExport: view [
 	filename asUrl open.
 ]
 
-{ #category : #'exporting-html' }
+{ #category : #helpers }
 RTHTML5Exporter >> addEnd [
 	self writeText:
 '}
@@ -76,7 +76,7 @@ RTHTML5Exporter >> addEnd [
 </html>'.
 ]
 
-{ #category : #'exporting-html' }
+{ #category : #helpers }
 RTHTML5Exporter >> addStart: aView [
 	self writeText: 
 '<!DOCTYPE html>
@@ -110,7 +110,7 @@ function buildView() {
 	'. 
 ]
 
-{ #category : #public }
+{ #category : #helpers }
 RTHTML5Exporter >> createJS [
 	| dir s |
 	dir := self directory.
@@ -151,27 +151,28 @@ RTHTML5Exporter >> defaultTitle [
 	^ 'Roassal Page'.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> directory [
 	^ directory ifNil: [ directory := self defaultDirectory ].
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> directory: aFile [
 	directory := aFile.
 ]
 
-{ #category : #exporting }
+{ #category : #'public-exporting' }
 RTHTML5Exporter >> export: aView [
 	fileName := self createStream.
 	self export: aView toStream: stream.
 	^ fileName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-exporting' }
 RTHTML5Exporter >> export: aView toStream: aStream [
 
-	self assert: (aStream isStream).
+	self assert: [ aStream isStream ].
+	
 	self createJS.
 	stream := aStream.
 	[
@@ -181,17 +182,17 @@ RTHTML5Exporter >> export: aView toStream: aStream [
 	] ensure: [ stream close. ].
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> exportFixedShapes [
 	^ exportFixedShapes
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> exportFixedShapes: aBool [
 	exportFixedShapes := aBool
 ]
 
-{ #category : #'exporting-html' }
+{ #category : #helpers }
 RTHTML5Exporter >> exportSVG: aView [
 	| visitor |
 
@@ -201,14 +202,29 @@ RTHTML5Exporter >> exportSVG: aView [
 	visitor visitView: aView.
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> fileName [
 	^ fileName ifNil: [ fileName := self defaultFileName. ]
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> fileName: string [
 	fileName := string.
+]
+
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString [
+	"This method is useful when invoked from within Pillar"
+	
+	| htmlFileName writeStream |
+	htmlFileName := aLabelAsString, '.html'.
+	writeStream := htmlFileName asFileReference writeStream.
+	RTHTML5Exporter new export: aView toStream: writeStream.
+	^ '<iframe src="', aLabelAsString, '.html" 
+		name="', aLabelAsString, '" 
+		style="border:none" 
+		width="', aView canvas encompassingRectangle width printString,'" 
+		height="', aView canvas encompassingRectangle height printString,'"></iframe>' 
 ]
 
 { #category : #'initialize-release' }
@@ -218,12 +234,19 @@ RTHTML5Exporter >> initialize [
 	self jsreference: 'roassal.js'
 ]
 
-{ #category : #accesing }
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> insert: aView named: aName inPillarStream: aStream [
+	| s |
+	s := self getIFrameDefFromView: aView label: aName.
+	aStream nextPutAll: '{{{ <BR>', s, ' }}}'
+]
+
+{ #category : #accessing }
 RTHTML5Exporter >> jsreference [
 	^ jsrefenrece
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> jsreference: aString [
 	jsrefenrece := aString.
 ]
@@ -1832,27 +1855,27 @@ $(document).ready( function(){
 '
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> roassalJSfile [
 	^ roassalJSfile ifNil: [ roassalJSfile := self defaultRoassalJSfile ]
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> roassalJSfile: string [
 	roassalJSfile := string
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> title [
 	^ title ifNil: [ title := self defaultTitle ]
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTHTML5Exporter >> title: string [
 	title := string
 ]
 
-{ #category : #public }
+{ #category : #helpers }
 RTHTML5Exporter >> to: outputStream writeText: text [
 	outputStream nextPutAll: (text copyReplaceAll: String cr with: String crlf)
 ]
