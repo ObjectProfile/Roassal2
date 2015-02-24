@@ -275,6 +275,42 @@ ConfigurationOfRoassal2 >> baseline13: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal' 'Neo-JSON-Core') ]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline14: spec [
+	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
+	Name the baseline after the first version it was introduced.
+	In this case 1.0-baseline was introduced the first time with the 1.0 version defined in the #version10 method.
+	Metacello only uses the following tag to figure out the name of this baseline:"
+	<version: '1.4-baseline'>
+
+	"Using #common makes this dependency declaration available for all Smalltalks.
+	If you need more fine-grained control you can add several #for:do: sections for other releases."
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		"specify the default repository for your project's packages"
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+	
+
+		"specify the dependencies between packages and projects"
+		spec
+			"a package without dependencies:"
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				"Specfiy dependencies using the #requires: directive, you can refer to any name here, in this case to an external project"
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+
+			package: 'Neo-JSON-Core' with: [ 
+				spec 
+						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+			
+		spec 
+			"load the tests by default"
+			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
+			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
+			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core') ]
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -287,7 +323,7 @@ ConfigurationOfRoassal2 >> customProjectAttributes [
 ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '1.3-baseline'.
+	spec for: #'common' version: '1.4-baseline'.
 
 ]
 
