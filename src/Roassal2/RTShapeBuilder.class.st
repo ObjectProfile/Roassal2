@@ -54,6 +54,14 @@ RTShapeBuilder >> circle [
 	self shape: RTEllipse new
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> composite: aBlock [
+	| newShape |
+	newShape := RTCompositeShape new.
+	aBlock value: newShape.
+	shape := newShape.
+]
+
 { #category : #accessing }
 RTShapeBuilder >> createdElements [
 	^ createdElements
