@@ -23,11 +23,9 @@ Class {
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
-{ #category : #examples }
+{ #category : #sources }
 RTTreeMapExample >> example08 [
-	"
-	self new example08
-	"
+
 	| b |
 	b := RTTreeMapBuilder new.
 	b shape fillColor: Color random.
@@ -36,6 +34,17 @@ RTTreeMapExample >> example08 [
 	b weight: #yourself.
 	b build.
 	^ b view
+]
+
+{ #category : #icons }
+RTTreeMapExample >> example08Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAABP0lEQVR4XuXToQ2AMBRFUeZg
+BwxLdN5KBsCgqhCdgCn4TToCAkqOuP4lJ2+q1xzVr5e3dH+9wQfxQXwQH8QH8UF8EB/EB/FB
+fBAfxAfxQXwIH8QH8UF+A3KcS4yc/xD/IT6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+
+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4
+ID6ID/IcZC9rjJz/EP8hPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/i
+g/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6I
+D+KD+CA+iA/iQ/ggPogP4oP4ID6ID+KD+CA+iA/ybg2rSMm5jrJ+mgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
