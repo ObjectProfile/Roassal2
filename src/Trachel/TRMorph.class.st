@@ -409,14 +409,11 @@ TRMorph >> rtMouseMoving: evt [
 
 { #category : #'event-processed' }
 TRMorph >> rtMouseWheel: evt [
-
-	trachelCanvas announce: (
-		TRMouseWheelEvent new
-			position: (trachelCanvas camera fromPixelToSpace:
-				(self relativePositionFor: evt));
-			direction: evt direction;
-			yourself)
-		
+	trachelCanvas
+		announce:
+			(TRMouseWheelEvent
+				fromDirection: evt direction
+				position: (trachelCanvas camera fromPixelToSpace: (self relativePositionFor: evt)))
 ]
 
 { #category : #'event-processed' }
