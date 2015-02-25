@@ -1,28 +1,17 @@
 "
-RTGrapherExample new installTitle: 'SeismDepthAndMag' 
+RTGrapherExample new installTitle: 'MinAndMaxSetManually' 
 		code:
 		'
-|tab ds b |
-tab := RTTabTable new input:  ''http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv'' asUrl retrieveContents usingDelimiter: $,.
-tab removeFirstRow.
-tab replaceEmptyValuesWith: ''0'' inColumns: #(4 5).
-tab convertColumnsAsFloat: #(4 5).
-
-
+| b ds |
 b := RTGrapher new.
 ds := RTDataSet new.
-ds interaction popup.
-ds points: tab values.
-ds dotShape color: (Color blue alpha: 0.3).
-ds x: [ :row | row at: 4 ].
-ds y: [ :row | row at: 5 ].
+ds points: #(1 2 3).
 b add: ds.
 
-b maxY: 8.
-b maxX: 700.
+b maxX: 6.
+b minX: -2.
+b maxY: 5.
 
-b axisX title: ''depth''.
-b axisY title: ''magnitude''.
 b build.
 ^ b view'
 	
@@ -1257,6 +1246,43 @@ CahLS0vn1tUXCslmBaHOd5FFRPp2IPKgNNwPRg0jJFSXJni9XrULxEWGnzIi0t8JC8bprT+s
 /vzmvHp1dXXY3NxEbW0th5BQXZrQ659ckrxAXiPy9+dB6+oLhRITE4PWO731h8PhCLotlF5P
 WqW0uMLCQvA/OiGCXwi/EH74hfAL4YdfCL8QfviF8Avhh18IvxB++IXwwy+EXwg//EL4hfDD
 L4RfCD/8QviF8MMvhB9+IfxC+OEXwi+En8vlN9AkwQP3P1GfAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTGrapherExample >> exampleMinAndMaxSetManually [
+
+| b ds |
+b := RTGrapher new.
+ds := RTDataSet new.
+ds points: #(1 2 3).
+b add: ds.
+
+b maxX: 6.
+b minX: -2.
+b maxY: 5.
+
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleMinAndMaxSetManuallyIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAC/0lEQVR4XuXcS2vqQBiH8X45
+934aQRdeQDeu3EqXrkRFQURU6mUhuhNcKOJK8VaoileQ4pvTCXjw1Es9KY2pzx9ChPqSOr9O
+0pmJedI0fqyUJ34T8EH44YPwQfjhg/BB+OGD8EH44YPwQfjhg/DDB+GD8MMH4YPwwwfhg/DD
+B+GD8MMH4YcPwgfhhw/CB+GHD8IH4ecxQRaLhahNvR4Oh8Jv/juDRCIRKZfLMplM5PX19R+Q
++Xyudbtdfc8HMSkvLy+Sz+elVquJ2+0+6SGz2Uz4PcRC4YPwQfggfBA+CB+ED8IH4YPwQR4A
+5O3tTW/wwWAgm83mZHDIBzEZJBQK6Q2eTqclFovpg8TjkXqz2eSP1M06ULvdFofDIfV6XRqN
+hrRaLXG5XPwewr+G8EH4IHwQPggfhA9ye9Si2Hq9Fj4Iv4fwQfgg/5Hlcin7/f7vaJ0PYoEe
+Eg6H9UZ/fn4+WVPnj9RNBvF6vZJKpaRarYrf7+f3EP41hA/CB6GC9Pt94YPwewgfhA/CB+GD
+8EFMymq10hu81+vJbrfjr6nfGyQYDOoNrmZf+WvqdwZR6+g2m01fU7fb7fod8Mdr6vKR6XSq
+dsIH+QXXkN+0psG/qPNB+CB8ED4IH4QPwgfhgzw8yHa7vdio7+/vojb1+tz31MfjsfzEca1a
+awrIx4BPK5VKZ7d4PK6P0AuFgiQSCTn+WTablWg0qu8v1V/bksmkZqTuu7Xq81oaZDQaXfyL
+UVMll76nrkboqtboSP3aca1a++MgatLw86nplnx1KruW41uLjDyu4zuP+lBTPWr/eZLUMiCH
+D9fpdERtt9Yd3n/ukRu3RN1aZKS2UqmIx+PRjNTmcjlR9epOGp/PZ00QNWmoftHDqenWumun
+sq9yuLXISK1CcDqdhmrVM1symYwUi0UJBALykP/28sMH4YPwwwfhg/DDB+GD8MMH4YPwwwfh
+g/CbgA/CDx+ED8IPH4QPwg8fhA/CDx+ED8IPH4QfPggfhB8+CB+EHz4IH4QfM/MH1/IkxV9v
+yMYAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
