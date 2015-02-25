@@ -81,7 +81,7 @@ RTGrapher >> getMaxNumberOfPoints [
 	^ datasets inject: 0 into: [ :max :ds | max max: ds numberOfPoints ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTGrapher >> getPixelPositionOf: aPoint [
 	"Return the position in pixel in the View for a given data point"
 	"This method should be called only if all the dataset have been set the min and max values"

@@ -17,6 +17,35 @@ RTAxisConfigurationTest >> testDefault [
 	self deny: config areLabelRotated
 ]
 
+{ #category : #'min max' }
+RTAxisConfigurationTest >> testHasBeenManuallySet [
+
+	| axis |
+	axis := RTAxisConfiguration new.
+	self deny: axis hasMinValueBeenManuallySet.
+	self deny: axis hasMaxValueBeenManuallySet.
+]
+
+{ #category : #'min max' }
+RTAxisConfigurationTest >> testHasBeenManuallySet02 [
+
+	| axis |
+	axis := RTAxisConfiguration new.
+	axis minValue: -5.
+	self assert: axis hasMinValueBeenManuallySet.
+	self deny: axis hasMaxValueBeenManuallySet.
+]
+
+{ #category : #'min max' }
+RTAxisConfigurationTest >> testHasBeenManuallySet03 [
+
+	| axis |
+	axis := RTAxisConfiguration new.
+	axis maxValue: -5.
+	self deny: axis hasMinValueBeenManuallySet.
+	self assert: axis hasMaxValueBeenManuallySet.
+]
+
 { #category : #tests }
 RTAxisConfigurationTest >> testLabelConvertion [
 

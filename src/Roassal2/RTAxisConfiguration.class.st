@@ -19,7 +19,9 @@ Class {
 		'labelRotation',
 		'lineThickness',
 		'fromPoint',
-		'toPoint'
+		'toPoint',
+		'maxValueManuallySet',
+		'minValueManuallySet'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -97,6 +99,16 @@ RTAxisConfiguration >> getStringFromNumber: aNumber [
 	^ (self labelConvertion rtValue: aNumber) asString
 ]
 
+{ #category : #testing }
+RTAxisConfiguration >> hasMaxValueBeenManuallySet [
+	^ maxValueManuallySet 
+]
+
+{ #category : #testing }
+RTAxisConfiguration >> hasMinValueBeenManuallySet [
+	^ minValueManuallySet 
+]
+
 { #category : #initialization }
 RTAxisConfiguration >> initialize [
 	super initialize.
@@ -107,12 +119,14 @@ RTAxisConfiguration >> initialize [
 	lineThickness := 1.
 	minValue := 0.
 	maxValue := 0.
+	maxValueManuallySet := false.
+	minValueManuallySet := false.
 	self twoDecimals.
 	self noThousandsSeparator.
 	self noTitle.
 	color := self defaultColor.
 	titlePosition := self defaultTitlePosition.
-	self doNotRotateLabels
+	self doNotRotateLabels.
 ]
 
 { #category : #accessing }
@@ -154,8 +168,10 @@ RTAxisConfiguration >> maxValue [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> maxValue: aMinValue [
-	maxValue := aMinValue
+RTAxisConfiguration >> maxValue: aMaxValue [
+	"Do not use this to set the maximum. Instead, use RTGrapher>>maxX:, minX:, maxY:, minY:"
+	maxValueManuallySet := true.
+	self privateMaxValue: aMaxValue
 ]
 
 { #category : #accessing }
@@ -170,7 +186,9 @@ RTAxisConfiguration >> minValue [
 
 { #category : #accessing }
 RTAxisConfiguration >> minValue: aMinValue [
-	minValue := aMinValue
+	"Do not use this to set the maximum. Instead, use RTGrapher>>maxX:, minX:, maxY:, minY:"
+	minValueManuallySet := true.
+	self privateMinValue: aMinValue
 ]
 
 { #category : #accessing }
@@ -250,6 +268,16 @@ RTAxisConfiguration >> positionLabel: aTwoArgBlock [
 	"This method expect a two argblock to set where the label should be"
 	"eg. [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ]"
 	positionLabel := aTwoArgBlock
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> privateMaxValue: aMaxValue [
+	maxValue := aMaxValue
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> privateMinValue: aMinValue [
+	minValue := aMinValue
 ]
 
 { #category : #configuration }

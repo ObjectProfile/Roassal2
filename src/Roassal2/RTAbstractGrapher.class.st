@@ -7,8 +7,8 @@ Class {
 		'maxX',
 		'maxY',
 		'minX',
-		'extent',
-		'minY'
+		'minY',
+		'extent'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -36,8 +36,10 @@ RTAbstractGrapher >> axisXFrom: aPoint to: anotherPoint [
 	"Draw the axis from aPoint to anotherPoint"
 	axisConfigurationX fromPoint: aPoint.
 	axisConfigurationX toPoint: anotherPoint.
-	axisConfigurationX maxValue: self maxX.
-	axisConfigurationX minValue: self minX.
+	axisConfigurationX hasMaxValueBeenManuallySet
+		ifFalse: [ axisConfigurationX maxValue: self maxX ].
+	axisConfigurationX hasMinValueBeenManuallySet 
+		ifFalse: [ axisConfigurationX minValue: self minX ].
 	axisConfigurationX axisFrom: aPoint to: anotherPoint
 
 ]
