@@ -534,6 +534,7 @@ gYjf7BUfSEzeJGef4ffH9FlwOkG6H4D8H12QJYaJDuQLAAAAAElFTkSuQmCC'
 RTComposerExample >> exampleWorldPopulation [
 
 	
+	| composer v b countries cn grapher ds |
 	composer := RTComposer new.
 	v := composer view.
 	
@@ -574,7 +575,7 @@ RTComposerExample >> exampleWorldPopulation [
 	
 	composer nameGroup: #worldMap as: 'Human distribution across the globe'.
 	composer nameGroup: #graph as: 'Chart'.
-	v
+	^ v
 ]
 
 { #category : #icons }
