@@ -28,7 +28,8 @@ Class {
 		'fileName',
 		'title',
 		'exportFixedShapes',
-		'roassalJSfile'
+		'roassalJSfile',
+		'marginScale'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -141,6 +142,11 @@ RTHTML5Exporter >> defaultFileName [
 	^ 'index.html'
 ]
 
+{ #category : #'initialize-release' }
+RTHTML5Exporter >> defaultMarginScale [
+	self marginScale: 0.1.
+]
+
 { #category : #defaults }
 RTHTML5Exporter >> defaultRoassalJSfile [
 	^ 'roassal.js'.
@@ -223,15 +229,16 @@ RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString [
 	^ '<iframe src="', aLabelAsString, '.html" 
 		name="', aLabelAsString, '" 
 		style="border:none" 
-		width="', aView canvas encompassingRectangle width printString,'" 
-		height="', aView canvas encompassingRectangle height printString,'"></iframe>' 
+		width="', (aView canvas encompassingRectangle width * (aView canvas camera scale + self marginScale )) printString,'" 
+		height="', (aView canvas encompassingRectangle height * (aView canvas camera scale + self marginScale )) printString,'"></iframe>' 
 ]
 
 { #category : #'initialize-release' }
 RTHTML5Exporter >> initialize [
 	super initialize.
 	self exportFixedShapes: true.
-	self jsreference: 'roassal.js'
+	self jsreference: 'roassal.js'.
+	self defaultMarginScale.
 ]
 
 { #category : #'Pillar utility' }
@@ -276,6 +283,16 @@ RTHTML5Exporter >> jsreference [
 { #category : #accessing }
 RTHTML5Exporter >> jsreference: aString [
 	jsrefenrece := aString.
+]
+
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> marginScale [
+	^ marginScale
+]
+
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> marginScale: aScale [
+	marginScale := aScale
 ]
 
 { #category : #dependencies }
