@@ -12,7 +12,7 @@ b view canvas.'
 Class {
 	#name : #RTGraphBuilderExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-GraphOLD'
+	#category : #'Roassal2-Builder-GraphOBSOLETE'
 }
 
 { #category : #sources }

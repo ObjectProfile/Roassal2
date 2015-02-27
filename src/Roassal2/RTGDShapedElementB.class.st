@@ -5,7 +5,7 @@ Class {
 		'shape',
 		'seed'
 	],
-	#category : #'Roassal2-Builder-GraphOLD'
+	#category : #'Roassal2-Builder-GraphOBSOLETE'
 }
 
 { #category : #accessing }

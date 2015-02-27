@@ -1,7 +1,7 @@
 Class {
 	#name : #RTGraphBuilderExamples,
 	#superclass : #Object,
-	#category : #'Roassal2-Builder-GraphOLD'
+	#category : #'Roassal2-Builder-GraphOBSOLETE'
 }
 
 { #category : #'to do' }
