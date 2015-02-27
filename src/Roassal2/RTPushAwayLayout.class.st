@@ -6,7 +6,7 @@ Class {
 		'c',
 		'factor'
 	],
-	#category : #'Roassal2-Builder-GraphOBSOLETE'
+	#category : #'Roassal2-Builder-GraphOLD'
 }
 
 { #category : #accessing }

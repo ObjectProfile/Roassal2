@@ -28,7 +28,8 @@ Class {
 		'fileName',
 		'title',
 		'exportFixedShapes',
-		'roassalJSfile'
+		'roassalJSfile',
+		'marginScale'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -141,6 +142,11 @@ RTHTML5Exporter >> defaultFileName [
 	^ 'index.html'
 ]
 
+{ #category : #'initialize-release' }
+RTHTML5Exporter >> defaultMarginScale [
+	self marginScale: 0.1.
+]
+
 { #category : #defaults }
 RTHTML5Exporter >> defaultRoassalJSfile [
 	^ 'roassal.js'.
@@ -213,29 +219,35 @@ RTHTML5Exporter >> fileName: string [
 ]
 
 { #category : #'Pillar utility' }
-RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString [
+RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString directory: aDirectory [
 	"This method is useful when invoked from within Pillar"
 	
 	| htmlFileName writeStream |
 	htmlFileName := aLabelAsString, '.html'.
 	writeStream := htmlFileName asFileReference writeStream.
-	RTHTML5Exporter new export: aView toStream: writeStream.
+	RTHTML5Exporter new directory: aDirectory; export: aView toStream: writeStream.
 	^ '<iframe src="', aLabelAsString, '.html" 
 		name="', aLabelAsString, '" 
 		style="border:none" 
-		width="', aView canvas encompassingRectangle width printString,'" 
-		height="', aView canvas encompassingRectangle height printString,'"></iframe>' 
+		width="', (aView canvas encompassingRectangle width * (aView canvas camera scale + self marginScale )) printString,'" 
+		height="', (aView canvas encompassingRectangle height * (aView canvas camera scale + self marginScale )) printString,'"></iframe>' 
 ]
 
 { #category : #'initialize-release' }
 RTHTML5Exporter >> initialize [
 	super initialize.
 	self exportFixedShapes: true.
-	self jsreference: 'roassal.js'
+	self jsreference: 'roassal.js'.
+	self defaultMarginScale.
 ]
 
 { #category : #'Pillar utility' }
 RTHTML5Exporter >> insert: aView named: aName inPillarStream: aStream [
+	self insert: aView named: aName inPillarStream: aStream directory: self defaultDirectory 
+]
+
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> insert: aView named: aName inPillarStream: aStream directory: aDirectory [
 	"Here is an example on how to use this method
 	
 
@@ -264,7 +276,7 @@ v := b view.
 	"
 
 	| s |
-	s := self getIFrameDefFromView: aView label: aName.
+	s := self getIFrameDefFromView: aView label: aName directory: aDirectory.
 	aStream nextPutAll: '{{{ <BR>', s, ' }}}'
 ]
 
@@ -278,10 +290,19 @@ RTHTML5Exporter >> jsreference: aString [
 	jsrefenrece := aString.
 ]
 
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> marginScale [
+	^ marginScale
+]
+
+{ #category : #'Pillar utility' }
+RTHTML5Exporter >> marginScale: aScale [
+	marginScale := aScale
+]
+
 { #category : #dependencies }
 RTHTML5Exporter >> roassalJSContent [
 	^ '
-
 /* Simple JavaScript for handle Roassal2 in javascript
  * By milton mamani akevalion@gmail.com
 
@@ -607,9 +628,11 @@ var RTFocusElement = TRInteraction.extend({
 var VITimer = Class.extend({
 	init: function(obj){
 		var t = new Date().getTime();
+		var cycles = obj.cycles?obj.cycles: 10;
+		var callback = obj.callback?obj.callback: (function(){});
 		var tini = t;
 		var f = obj.time * 1000 + t;
-		var cycle = (f - t)/10;
+		var cycle = (f - t)/cycles;
 		
 		var fun = function(){
 			try{ obj.refresh((t-tini)/(f-tini));
@@ -618,7 +641,9 @@ var VITimer = Class.extend({
 			if(t < f)
 				setTimeout(fun, cycle);
 			else{
-				try{ obj.refresh(1);
+				try{ 
+					obj.refresh(1);
+					callback();
 				}catch(ex){console.log(ex);}
 			}
 		};
@@ -1033,7 +1058,7 @@ var TRCanvas = TRAnnouceableObject.extend({
 			mouseup(function (e){self.mouseup(e)}).
 			mousemove(function (e){self.mousemove(e)}).
 			dblclick(function (e){self.mouseDouble(e)}).
-			bind("mousewheel",function(e){self.mousewheel(e); return false;});
+			bind("wheel mousewheel",function(e){ self.mousewheel(e); return false;});
 		$(this.svg).attr("unselectable","on").bind("selectstart", function(){ return false; });
 		this.shapes = [];
 		this.fixedShapes = [];
@@ -1059,16 +1084,25 @@ var TRCanvas = TRAnnouceableObject.extend({
 		this.shapes[s.id] = shape;
 		return shape;
 	},
+	focusOnCenterScaled: function(){
+		this.camera.focusOnCenterScaled(product( this.camera.extent(), 0.9));
+	},
 	addFixedShape: function(s){
 		var shape = this.createShape(s);
 		shape.addInFixedCanvas();
 		this.fixedShapes[s.id] = shape;
 		return shape;
 	},
-	addShapes: function (objs){
+
+	addFastShapes: function(objs){
+		var arr = [];
 		for(var k = 0; k< objs.length; k++)
-			this.addShape(objs[k]);
+			arr[k] = this.addShape(objs[k]);
 		this.update();
+		return arr;
+	},
+	addShapes: function (objs){
+		this.addFastShapes(objs)
 		this.camera.focusOnCenter();
 	},
 	addFixedShapes: function (objs){
@@ -1178,8 +1212,11 @@ var TRCanvas = TRAnnouceableObject.extend({
 	},
 	mousewheel: function(evt){
 		var e = new TRMouseWheelEvent();
+		evt.pageX = evt.originalEvent.pageX;
+		evt.pageY = evt.originalEvent.pageY;
 		e.position = this.camera.fromPixelToSpace(evt);
 		e.raw = evt;
+		if(evt.originalEvent.deltaY) evt.originalEvent.wheelDelta = -evt.originalEvent.deltaY;//moz fix
 		e.direction = evt.originalEvent.wheelDelta /120 > 0?"up":"down";
 		this.announce(e);
 	}
@@ -1265,6 +1302,13 @@ var TRCamera = Class.extend({
 		if(this.canvas.shapes.length == 0) return;
 		var c = this.encompassingRectangle().center();
 		this.translateTo({x: -c.x, y: -c.y });
+	},
+	focusOnCenterScaled: function(factor){
+		var r = this.encompassingRectangle();
+		this.position = negated(r.center());
+		var sc = div(factor, r.extent());
+		sc = sc.x < sc.y ? sc.x:sc.y;
+		this.setScale(sc);
 	},
 	encompassingRectangle: function (){
 		return this.encompassingRectangleOf(this.canvas.shapes);

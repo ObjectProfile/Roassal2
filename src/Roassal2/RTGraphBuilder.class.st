@@ -1,6 +1,3 @@
-"
-This package is Obsolete. 
-"
 Class {
 	#name : #RTGraphBuilder,
 	#superclass : #RTBuilder,
@@ -11,7 +8,7 @@ Class {
 		'layouts',
 		'globals'
 	],
-	#category : #'Roassal2-Builder-GraphOBSOLETE'
+	#category : #'Roassal2-Builder-GraphOLD'
 }
 
 { #category : #adding }

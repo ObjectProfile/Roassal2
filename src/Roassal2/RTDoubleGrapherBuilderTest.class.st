@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RTDoubleGrapherBuilderTest >> testExample [
 	| b ds |
-	b := RTDoubleGrapherBuilder new.
+	b := RTDoubleGrapher new.
 	b extent: 300 @ 200.
 	
 	ds := RTStackedDataSet new.
@@ -21,9 +21,8 @@ RTDoubleGrapherBuilderTest >> testExample [
 	ds connectColor: Color red.
 	b addRight: ds.
 	
-	b axisXNoLabel; axisY.
-	b axisConfiguration color: Color red.
-	b axisYRight.
+	b axisX noLabel.
+	b axisYRight color: Color red.
 	b build.
 
 ]

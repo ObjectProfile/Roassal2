@@ -26,7 +26,7 @@ RTSVGVisitor2 >> addBorderColor: c [
 
 { #category : #'as yet unclassified' }
 RTSVGVisitor2 >> addBorderWidth: aShape [
-	(aShape strokePaint isNil or: [ aShape strokeWidth <= 0 ]) ifTrue: [ ^ self ].
+	(aShape strokePaint isNil or: [ aShape strokeWidth < 0 ]) ifTrue: [ ^ self ].
 	stream nextPutAll: 'sw: ', aShape strokeWidth asString, ','.
 	
 ]

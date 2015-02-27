@@ -28,14 +28,20 @@ Class {
 		'modelBlock',
 		'minValue',
 		'maxValue',
-		'named'
+		'named',
+		'block'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
 
 { #category : #accessing }
+RTKiviatMetric >> block [
+	^ block 
+]
+
+{ #category : #accessing }
 RTKiviatMetric >> block: aOneArgBlock [
-	modelBlock := aOneArgBlock 
+	block := aOneArgBlock 
 ]
 
 { #category : #private }
@@ -89,7 +95,12 @@ RTKiviatMetric >> minValue: aNumber [
 
 { #category : #accessing }
 RTKiviatMetric >> modelBlock [
-	^ modelBlock
+	^ modelBlock 
+]
+
+{ #category : #accessing }
+RTKiviatMetric >> modelBlock: aBlockOrSymbol [
+	modelBlock :=  aBlockOrSymbol
 ]
 
 { #category : #accessing }
@@ -98,6 +109,6 @@ RTKiviatMetric >> named [
 ]
 
 { #category : #accessing }
-RTKiviatMetric >> named: aBlockOrSymbol [
-	named := aBlockOrSymbol
+RTKiviatMetric >> named: aString [
+	named := aString
 ]
