@@ -302,20 +302,21 @@ RTSVGVisitor2 >> visitCompositeShape: aCompositeShape [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitDiamondShape: diamondShape [
-	| aid color bColor w s svgE|
+	"Looks like to be broken"
+	| aid color bColor w s |
 	aid := self getDecorationId: diamondShape.
 	color := diamondShape color.
 	bColor := diamondShape strokePaint.
 	w := diamondShape width.
 	s := diamondShape mySize.
-	(markers contains: aid)
+"	(markers contains: aid)
 		ifFalse: [  
 			svgE := RTSVGDiamondMarker new id: aid fillColor: color borderColor: bColor width: w size: s.
 			svgE addOn: stream using: self. 
 			markers add: aid. 
 			]
 		
-	
+	"
 ]
 
 { #category : #'visitor-interactions' }
