@@ -219,13 +219,13 @@ RTHTML5Exporter >> fileName: string [
 ]
 
 { #category : #'Pillar utility' }
-RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString directory: aDirectory [
+RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString [
 	"This method is useful when invoked from within Pillar"
 	
 	| htmlFileName writeStream |
 	htmlFileName := aLabelAsString, '.html'.
 	writeStream := htmlFileName asFileReference writeStream.
-	RTHTML5Exporter new directory: aDirectory; export: aView toStream: writeStream.
+	RTHTML5Exporter new export: aView toStream: writeStream.
 	^ '<iframe src="', aLabelAsString, '.html" 
 		name="', aLabelAsString, '" 
 		style="border:none" 
@@ -243,11 +243,6 @@ RTHTML5Exporter >> initialize [
 
 { #category : #'Pillar utility' }
 RTHTML5Exporter >> insert: aView named: aName inPillarStream: aStream [
-	self insert: aView named: aName inPillarStream: aStream directory: self defaultDirectory 
-]
-
-{ #category : #'Pillar utility' }
-RTHTML5Exporter >> insert: aView named: aName inPillarStream: aStream directory: aDirectory [
 	"Here is an example on how to use this method
 	
 
@@ -276,7 +271,7 @@ v := b view.
 	"
 
 	| s |
-	s := self getIFrameDefFromView: aView label: aName directory: aDirectory.
+	s := self getIFrameDefFromView: aView label: aName.
 	aStream nextPutAll: '{{{ <BR>', s, ' }}}'
 ]
 

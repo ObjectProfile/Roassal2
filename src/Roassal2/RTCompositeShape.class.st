@@ -32,6 +32,11 @@ RTCompositeShape >> alignRight [
 	layout := #alignRight
 ]
 
+{ #category : #'as yet unclassified' }
+RTCompositeShape >> allOfSameSize [
+	layout := #allOfSameSize
+]
+
 { #category : #accessing }
 RTCompositeShape >> allShapes [
 	"Return all the shapes contained in me."
