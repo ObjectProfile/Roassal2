@@ -3096,7 +3096,7 @@ RTOSM class >> exampleOpenStreetMap [
 	((response at: 'elements') select: [ :el | (el at: 'type') = 'way' ])
 		do: [ :way | 
 			| shape |
-			shape := RTOSMPolygon new.
+			shape := RTPolygon new.
 			shape
 				color:
 					(((way at: 'tags') at: 'building' ifAbsent: [  ]) = 'yes'
