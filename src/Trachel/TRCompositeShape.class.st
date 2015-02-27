@@ -53,6 +53,15 @@ TRCompositeShape >> alignRight [
 
 ]
 
+{ #category : #'public - layout' }
+TRCompositeShape >> allOfSameSize [
+	"All the same will have the same maximum size"
+
+	| maxSize |
+	maxSize := shapeAndOffsets inject: 0 @ 0 into: [ :max :tuple | tuple first extent max: max  ].
+	shapeAndOffsets do: [ :tuple | tuple first extent: maxSize ].
+]
+
 { #category : #events }
 TRCompositeShape >> announce: anEvent [
 	self shapes do: [ :s | s announce: anEvent ]
