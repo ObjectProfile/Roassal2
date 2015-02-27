@@ -88,9 +88,33 @@ RTPNGExporter >> fileName: aFilenameAsString [
 ]
 
 { #category : #initialization }
+RTPNGExporter >> getIFrameDefFromView: aView label: aLabelAsString directory: aDirectory [
+	"This method is useful when invoked from within Pillar"
+	
+	| pngFileName writeStream |
+	pngFileName := (aDirectory / aLabelAsString, 'png') pathString.
+	writeStream := pngFileName asFileReference writeStream.
+	RTPNGExporter new builder: aView; fileName: pngFileName; exportToFile.
+	^ '<img src="', pngFileName, '" 
+		name="', aLabelAsString, '" ></img>' 
+]
+
+{ #category : #initialization }
 RTPNGExporter >> initialize [
 	super initialize.
 	self setDefaultFileName
+]
+
+{ #category : #initialization }
+RTPNGExporter >> insert: aView named: aName inPillarStream: aStream [
+	self insert: aView named: aName inPillarStream: aStream directory: self defaultDirectory 
+]
+
+{ #category : #initialization }
+RTPNGExporter >> insert: aView named: aName inPillarStream: aStream directory: aDirectory [
+	| s |
+	s := self getIFrameDefFromView: aView label: aName directory: aDirectory.
+	aStream nextPutAll: '{{{ <BR>', s, ' }}}'
 ]
 
 { #category : #initialization }
