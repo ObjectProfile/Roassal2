@@ -73,12 +73,7 @@ RTKiviatBuilder >> activatePolygons [
 
 { #category : #adding }
 RTKiviatBuilder >> addMetric: blockOrSymbol [
-	self addMetric: blockOrSymbol title: (blockOrSymbol asString).
-]
-
-{ #category : #adding }
-RTKiviatBuilder >> addMetric: blockOrSymbol title: aString [
-	metrics add: (aString -> blockOrSymbol).
+	metrics add: blockOrSymbol.
 ]
 
 { #category : #adding }
@@ -101,7 +96,7 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 	| config centralPoint allValues |
 	kiviatMetrics add: aRTKiviatMetric.	
 	
-	allValues := (objects collect: [ :p | (aRTKiviatMetric block)  rtValue: p ]).	
+	allValues := (objects collect: [ :p | (aRTKiviatMetric named)  rtValue: p ]).	
 	aRTKiviatMetric maxValue: ( allValues max).
 	aRTKiviatMetric minValue: ( allValues min).
 		
@@ -113,7 +108,7 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 					maxValue: aRTKiviatMetric maxValue;					
 					labelConvertion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
-					(axisTitle = #activated) ifTrue: [ config title: (aRTKiviatMetric named)].
+					(axisTitle = #activated) ifTrue: [ config title: (aRTKiviatMetric named) asString].
 					
 					
 	centralPoint := (0@0).
@@ -145,7 +140,7 @@ RTKiviatBuilder >> buildAxis [
 	angle := 0.
 	
 	metrics doWithIndex: [ :m :i | 
-		self axis: (RTKiviatMetric new modelBlock: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize; block: m value; named: m key) ].
+		self axis: (RTKiviatMetric new block: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize; named: m) ].
 ]
 
 { #category : #view }
@@ -206,7 +201,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 	( axisTitle = #activated ) ifTrue: [ 
 		"for now this way to recover the axis Titles elements in the view is not really clean, but because of using RTAxisRenderer to create the axis and titles in the same time I did not found a way to get only the title element from it."
 		titles := OrderedCollection new.
-		self metrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m key) ] ])].
+		self metrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m asString) ] ])].
 		 ].
 
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
@@ -306,7 +301,7 @@ RTKiviatBuilder >> node: anRTKiviatNode [
 	shapeEdge := anRTKiviatNode shapeEdge. 
 	
 	kiviatMetrics do: [ :m |
-		nodeElems add: ((shapeNode) elementOn: ( RTKiviatElement new metric:(m block); position: (m modelBlock value: (self getNormalizedValue: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m)) min: 0  max: (m maxSize)  minValue: 0  maxValue:(m maxValue))); kiviatNode: anRTKiviatNode; value: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))) ).
+		nodeElems add: ((shapeNode) elementOn: ( RTKiviatElement new metric:(m named); position: (m modelBlock value: (self getNormalizedValue: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))  min: 0  max: (m maxSize)  minValue: 0  maxValue:(m maxValue))); kiviatNode: anRTKiviatNode; value: (anRTKiviatNode arrayValues at: (kiviatMetrics indexOf: m))) ).
 		].
 	
 	anRTKiviatNode addNodeElements: nodeElems.	
@@ -343,7 +338,7 @@ RTKiviatBuilder >> renderIn: aView [
 	self resetCreatedElements.
 	
 	"a chart node is represented by a set of elements according to the metrics values and connected by edges."
-	objects do: [ :p | self node: (RTKiviatNode new values:(metrics collect: [ :m | m value rtValue: p ]); named: p; shapeNode: self shape). ].
+	objects do: [ :p | self node: (RTKiviatNode new values:(metrics collect: [ :m | m rtValue: p ]); named: p; shapeNode: self shape). ].
 	
 	( polygons = #activated ) ifTrue: [ self executePolygons ].
 	
