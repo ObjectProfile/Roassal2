@@ -27,8 +27,9 @@ Class {
 	#name : #RTPopup,
 	#superclass : #RTAbstractPopup,
 	#instVars : [
+		'groupBlock',
 		'text',
-		'groupBlock'
+		'textColor'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -109,7 +110,8 @@ RTPopup >> group: aTwoArgBlock [
 { #category : #initialization }
 RTPopup >> initialize [
 	super initialize.
-	self text: #yourself
+	self text: #yourself.
+	textColor := Color black
 ]
 
 { #category : #public }
@@ -154,13 +156,23 @@ RTPopup >> text: aOneArgBlock [
 	self textElement: [ :el | aOneArgBlock rtValue: el model ]
 ]
 
+{ #category : #accessing }
+RTPopup >> textColor [
+	^ textColor
+]
+
+{ #category : #accessing }
+RTPopup >> textColor: aValueOrABlockOrASymbol [
+	textColor := aValueOrABlockOrASymbol
+]
+
 { #category : #public }
 RTPopup >> textElement: aOneArgBlock [
 	self group: [ :group :element | 
 		| backRectangle lbl |
 		backRectangle := (RTBox new color: (Color gray alpha: 0.8); borderColor: (Color gray alpha: 0.5)) element.
 		lbl := (RTLabel new 
-				color: Color black;
+				color: textColor;
 				height: [:x | 9];
 				text: (aOneArgBlock rtValue: element) asString) element.
 		RTNest new centerOn: backRectangle elements: (Array with: lbl).

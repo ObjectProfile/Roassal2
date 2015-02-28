@@ -35,3 +35,9 @@ RTInteractionBuilderTest >> testAddingTwoActions [
 RTInteractionBuilderTest >> testDefault [
 	self assert: builder numberOfMenuEntries equals: 0
 ]
+
+{ #category : #tests }
+RTInteractionBuilderTest >> testPopupTextColor [
+	builder popupText: [ :v | 'My number is ', v printString ] color: Color blue.
+	builder setUpElement: RTBox element.
+]
