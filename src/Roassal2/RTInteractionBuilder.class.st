@@ -133,7 +133,7 @@ RTInteractionBuilder >> popupText: aBlock [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> popupText: aBlock color: aColorBlock [
-	interactions add: [ :element | element @ (RTPopup new text: aBlock; color: aColorBlock) ]
+	interactions add: [ :element | element @ (RTPopup new text: aBlock; textColor: aColorBlock) ]
 ]
 
 { #category : #'events-registering' }

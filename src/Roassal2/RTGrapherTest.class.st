@@ -20,7 +20,7 @@ RTGrapherTest >> testAxis [
 	x2 := b axisX numberOfLabels: 5.
 	
 	self assert: x1 == x2.
-	self assert: x1 numberOfTicks equals: 4.
+	self assert: x1 numberOfTicks equals: 5.
 	self assert: x1 numberOfLabels equals: 5.
 ]
 
@@ -37,7 +37,7 @@ RTGrapherTest >> testAxis02 [
 	x2 := b axisY numberOfLabels: 5.
 	
 	self assert: x1 == x2.
-	self assert: x1 numberOfTicks equals: 4.
+	self assert: x1 numberOfTicks equals: 5.
 	self assert: x1 numberOfLabels equals: 5.
 ]
 
