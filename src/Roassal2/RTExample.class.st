@@ -1421,8 +1421,7 @@ RTExample >> rotatingLabelsAnimated [
 	| v shape timer |
 	v := RTView new.
 	timer := VITimer new cycleLength: 2.
-	
-	
+
 	shape := RTRotatedLabel new.
 	"shape angleInDegree: [ :cls | cls numberOfMethods negated / 1.5 ]."
 	shape angleInDegree: [ :cls | 
