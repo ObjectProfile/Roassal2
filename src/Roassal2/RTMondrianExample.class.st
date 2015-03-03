@@ -134,6 +134,7 @@ c5sY+gfEv/gHxL/4B8Q/IP7FPyD+AfEv/gHxD4h/aUb+Ac60UX9EAJ28AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTMondrianExample >> exampleBezier [
 
+| classes b |
 classes := RTObject withAllSubclasses, RTTest withAllSubclasses.
 
 b := RTMondrian new.
@@ -144,7 +145,7 @@ b edges connectFrom: #superclass.
 b shape bezierLineFollowing: #superclass;
 	color: (Color blue alpha: 0.2).
 b edges 
-	notUseInLayout; 
+	notUseInLayout;
 	connectToAll: #dependentClasses.
 b normalizer
 	normalizeSize: #numberOfMethods using: #sqrt;
@@ -444,6 +445,7 @@ AABJRU5ErkJggg=='
 { #category : #sources }
 RTMondrianExample >> exampleBezierLines [
 
+| b lb |
 b := RTMondrian new.
 
 b shape circle color: (Color red alpha: 0.4).
@@ -474,6 +476,7 @@ lb build.
 RTMondrianExample >> exampleBezierLinesAndLayout [
 
 
+| classes b |
 classes := RTShape withAllSubclasses, TRShape withAllSubclasses.
 
 b := RTMondrian new.
@@ -951,6 +954,7 @@ b build.
 
 { #category : #sources }
 RTMondrianExample >> exampleClusterLayout02 [
+| b |
 b := RTMondrian new.
 b shape circle
 	size: 8;
@@ -3005,6 +3009,7 @@ A9EXfSD6QPRFH4g+EH3RB9LR8g/dmWDi7HSqOwAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTMondrianExample >> exampleTreeAndBeziers [
+| b |
 b := RTMondrian new.
 b shape circle
 	size: 8;

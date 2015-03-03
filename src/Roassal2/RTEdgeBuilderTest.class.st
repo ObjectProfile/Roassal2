@@ -149,6 +149,42 @@ RTEdgeBuilderTest >> testObjectTo [
 ]
 
 { #category : #tests }
+RTEdgeBuilderTest >> testObjects [
+	b view: view.
+	b objects: (1 to: 5).
+	self assert: b elements equals: (elements copyFrom: 1 to: 5)
+
+"	view := RTView new.
+	elements := RTBox elementsOn: (1 to: 10).
+	view addAll: elements. 
+	b := RTEdgeBuilder new."
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testObjects02 [
+	b view: view.
+	b objects: #even.
+	self assert: (b elements collect: #model) asArray equals: #(2 4 6 8 10)
+
+"	view := RTView new.
+	elements := RTBox elementsOn: (1 to: 10).
+	view addAll: elements. 
+	b := RTEdgeBuilder new."
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testObjects03 [
+	b view: view.
+	b objects: #odd.
+	self assert: (b elements collect: #model) asArray equals: #(1 3 5 7 9)
+
+"	view := RTView new.
+	elements := RTBox elementsOn: (1 to: 10).
+	view addAll: elements. 
+	b := RTEdgeBuilder new."
+]
+
+{ #category : #tests }
 RTEdgeBuilderTest >> testSimple [
 
 	RTEdgeBuilder new

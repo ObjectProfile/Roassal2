@@ -158,10 +158,13 @@ RTEdgeBuilder >> object: object fromAll: fromBlock to: toBlock [
 ]
 
 { #category : #accessing }
-RTEdgeBuilder >> objects: someObjects [
+RTEdgeBuilder >> objects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
-	self elements: (view elementsFromModels: someObjects)
+	 
+	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
+		ifTrue: [ self elements: (view elementsFromModels: someObjectsOrABlock) ]
+		ifFalse: [ self elements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
 ]
 
 { #category : #public }
