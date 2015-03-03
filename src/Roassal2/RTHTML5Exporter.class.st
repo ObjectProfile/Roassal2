@@ -169,6 +169,7 @@ RTHTML5Exporter >> directory: aFile [
 
 { #category : #'public-exporting' }
 RTHTML5Exporter >> export: aView [
+	"This is a public method"
 	fileName := self createStream.
 	self export: aView toStream: stream.
 	^ fileName

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTIntrospectionTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Exporter-HTML'
+	#category : #'Roassal2-Exporter-HTML5'
 }
 
 { #category : #tests }
