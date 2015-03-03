@@ -12,7 +12,8 @@ Class {
 	#name : #RTAnnounceableObject,
 	#superclass : #RTObject,
 	#instVars : [
-		'announcer'
+		'announcer',
+		'attributes'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -47,6 +48,59 @@ RTAnnounceableObject >> announcer [
 { #category : #accessing }
 RTAnnounceableObject >> announcer: anAnnouncer [
 	announcer := anAnnouncer
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> attributeAt: aKey [
+	^ self attributes at: aKey
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> attributeAt: aKey ifAbsent: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsent: aBlockClosure 
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
+	
+	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> attributeAt: aKey put: value [
+	^ self attributes at: aKey put: value
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> attributes [
+	"Return the list of attributes associated to the element. Attributes are useful for caching values"
+
+	^ attributes ifNil: [ attributes := Dictionary new ]
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> hasAttribute: aKey [ 
+	"Return true if attributes includes aKey"
+	
+	^ attributes notNil and: [ attributes includesKey: aKey ]
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> hasAttributes [ 
+	"Return true if at least one attributes is present"
+	
+	^ attributes notNil and: [ attributes notEmpty ]
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> removeAttributeAt: aKey [
+	^ self attributes removeKey: aKey
+]
+
+{ #category : #attributes }
+RTAnnounceableObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
+	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
 ]
 
 { #category : #interaction }

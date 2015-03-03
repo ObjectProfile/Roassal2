@@ -32,12 +32,11 @@ Class {
 	#name : #RTShapedObject,
 	#superclass : #RTAnnounceableObject,
 	#instVars : [
+		'isFixed',
+		'model',
 		'shape',
 		'trachelShape',
-		'attributes',
-		'view',
-		'model',
-		'isFixed'
+		'view'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -68,35 +67,6 @@ RTShapedObject >> addedIn: aView [
 	self subclassReponsibility
 ]
 
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey [
-	^ self attributes at: aKey
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey ifAbsent: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsent: aBlockClosure 
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey ifAbsentPut: aBlockClosure [ 
-	
-	^ self attributes at: aKey ifAbsentPut: aBlockClosure 
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributeAt: aKey put: value [
-	^ self attributes at: aKey put: value
-]
-
-{ #category : #attributes }
-RTShapedObject >> attributes [
-	"Return the list of attributes associated to the element. Attributes are useful for caching values"
-
-	^ attributes ifNil: [ attributes := Dictionary new ]
-]
-
 { #category : #'accessing trachel' }
 RTShapedObject >> color [
 	^ trachelShape color
@@ -105,20 +75,6 @@ RTShapedObject >> color [
 { #category : #'accessing trachel' }
 RTShapedObject >> color: aColor [ 
 	^ trachelShape color: aColor
-]
-
-{ #category : #attributes }
-RTShapedObject >> hasAttribute: aKey [ 
-	"Return true if attributes includes aKey"
-	
-	^ attributes notNil and: [ attributes includesKey: aKey ]
-]
-
-{ #category : #attributes }
-RTShapedObject >> hasAttributes [ 
-	"Return true if at least one attributes is present"
-	
-	^ attributes notNil and: [ attributes notEmpty ]
 ]
 
 { #category : #initialization }
@@ -151,16 +107,6 @@ RTShapedObject >> model: anObject [
 RTShapedObject >> pushBack [
 	"Move the shaped object back"
 	self trachelShape pushBack
-]
-
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey [
-	^ self attributes removeKey: aKey
-]
-
-{ #category : #attributes }
-RTShapedObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
-	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
 ]
 
 { #category : #rendering }
