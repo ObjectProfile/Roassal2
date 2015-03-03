@@ -21,10 +21,13 @@ Class {
 
 { #category : #accessing }
 RTMultiColoredLine >> block: aTwoArgBlock [
+	"The argument is a two arg block. The two arguments are the two points one has to draw the line. The block has to return a collection of point.
+	
+	The arg follows [ :fromPoint :toPoint | Array with: ... with: ... with: ... ]"
 	path := aTwoArgBlock 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 RTMultiColoredLine >> colorShape [
 	self block: [ :fromPoint :toPoint | 
 		| tab |
@@ -40,19 +43,25 @@ RTMultiColoredLine >> colorShape [
 
 { #category : #accessing }
 RTMultiColoredLine >> colors [
- ^ colorArray 
+	"Return the colors used by the line"
+	^ colorArray 
 ]
 
 { #category : #accessing }
-RTMultiColoredLine >> colors: anArray [
+RTMultiColoredLine >> colors: someColors [
+	colorArray := someColors
+]
 
-colorArray := anArray.
+{ #category : #configuration }
+RTMultiColoredLine >> defaultColors [
+	^ Array with: Color blue with: Color red
 ]
 
 { #category : #initialization }
 RTMultiColoredLine >> initialize [
 	super initialize.
-	self straight
+	self straight.
+	self colors: self defaultColors
 ]
 
 { #category : #rendering }
@@ -60,7 +69,7 @@ RTMultiColoredLine >> path [
 	^ path
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 RTMultiColoredLine >> straight [
 	"A single color line"
 	self block: [ :fromPoint :toPoint | Array with: fromPoint with: toPoint ]
@@ -68,8 +77,7 @@ RTMultiColoredLine >> straight [
 
 { #category : #public }
 RTMultiColoredLine >> trachelShapeFor: anEdge [
-	| shape multiShape fromPoint toPoint p|
-	
+	| shape multiShape fromPoint toPoint p |
 	fromPoint := attachPoint startingPointOf: anEdge.
 	toPoint := attachPoint endingPointOf: anEdge.
 	p := path value: fromPoint value: toPoint.
@@ -87,7 +95,7 @@ RTMultiColoredLine >> trachelShapeFor: anEdge [
 
 { #category : #public }
 RTMultiColoredLine >> updateFor: anEdge trachelShape: trachelShape [
-| shape fromPoint toPoint p|
+	| shape fromPoint toPoint p|
 	fromPoint := attachPoint startingPointOf: anEdge.
 	toPoint := attachPoint endingPointOf: anEdge.
 	p := path value: fromPoint value: toPoint.
