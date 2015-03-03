@@ -1,0 +1,11 @@
+Class {
+	#name : #RTSVGStringConverterTest,
+	#superclass : #RTTest,
+	#category : #'Roassal2-Exporter-SVG'
+}
+
+{ #category : #'as yet unclassified' }
+RTSVGStringConverterTest >> testBasic [
+
+	self assert: (RTSVGStringConverter new convertString: 'Hello world') equals: 'Hello&nbsp;world' 
+]
