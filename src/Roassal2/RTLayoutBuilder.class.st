@@ -156,6 +156,13 @@ RTLayoutBuilder >> processPartitions: elements [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> radial [
+
+	layout := RTRadialTreeLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> radialTree [
 	layout := RTRadialTreeLayout new.
 	^ layout
