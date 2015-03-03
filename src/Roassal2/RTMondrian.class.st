@@ -26,10 +26,9 @@ Class {
 	#name : #RTMondrian,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'rootFrame',
 		'currentFrame',
 		'edgeBuilder',
-		'metricNormalizer'
+		'rootFrame'
 	],
 	#category : #'Roassal2-Builder-Mondrian'
 }
@@ -211,15 +210,6 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	self resetShapeBuilder.
 	self resetLayoutBuilder.
 	^ result
-]
-
-{ #category : #accessing }
-RTMondrian >> normalizer [
-	metricNormalizer ifNil: [ 
-		metricNormalizer := RTMetricNormalizer new. 
-		metricNormalizer view: self view.
-		metricNormalizer elements: self currentElements ].
-	^ metricNormalizer
 ]
 
 { #category : #stack }
