@@ -6,7 +6,8 @@ Class {
 		'interactionBuilder',
 		'shapeBuilder',
 		'layoutBuilder',
-		'title'
+		'title',
+		'metricNormalizer'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -100,11 +101,6 @@ RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
 	^ els
 ]
 
-{ #category : #accessing }
-RTBuilder >> globalRule [
-	^ RTGlobalRule new view: self view; yourself
-]
-
 { #category : #initialization }
 RTBuilder >> initialize [
 	super initialize.
@@ -128,6 +124,15 @@ RTBuilder >> interactionBuilder: anRTInteractionBuilder [
 { #category : #accessing }
 RTBuilder >> nestedElementsAttribute [
 	^ self class nestedElementsAttribute
+]
+
+{ #category : #accessing }
+RTBuilder >> normalizer [
+	metricNormalizer ifNil: [ 
+		metricNormalizer := RTMetricNormalizer new. 
+		metricNormalizer view: self view.
+		metricNormalizer elements: self view elements ].
+	^ metricNormalizer
 ]
 
 { #category : #'public-ui' }

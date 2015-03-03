@@ -19,7 +19,7 @@ b := RTPieBuilder new.
 b interaction popup.
 b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 b slice: #numberOfMethods.
-b globalRule distinctColor.	
+b normalizer distinctColor.	
 b labelled.
 b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
@@ -67,7 +67,7 @@ b := RTPieBuilder new.
 b interaction popup.
 b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection).
 b slice: #numberOfMethods.
-b globalRule distinctColor.	
+b normalizer distinctColor.	
 b labelled.
 b build.
 ^ b view
@@ -111,7 +111,7 @@ b := RTPieBuilder new.
 b interaction popup.
 b objects: RTShape withAllSubclasses.
 b slice: #numberOfMethods.
-b globalRule distinctColor.	
+b normalizer distinctColor.	
 b labelledIf: [ :c | c numberOfMethods > 18 ].
 b build.
 ^ b view
@@ -167,7 +167,7 @@ b := RTPieBuilder new.
 b interaction popup.
 b objects: myClasses.
 b slice: #numberOfMethods.
-b globalRule distinctColor.	
+b normalizer distinctColor.	
 b labelled.
 b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
@@ -245,7 +245,7 @@ b shape current
 	externalRadius: 100.
 b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 b slice: #numberOfMethods.
-b globalRule distinctColor.	
+b normalizer distinctColor.	
 b build.
 ^ b view
 ]
@@ -279,14 +279,13 @@ EHwQ/DQo/wGK0Xg+nbEqTgAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTPieExample >> exampleSimple [
 
-|b|
-
+| b |
 b := RTPieBuilder new.
 b interaction popup.
 
 b objects: #(10 4 1 2 5).
 b slice: [ :aNumber | aNumber ].
-b globalRule distinctColor.
+b normalizer distinctColor.
 b labelled.
 b build.
 ^ b view

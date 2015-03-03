@@ -136,7 +136,7 @@ b3 view: c view.
 b3 interaction popup.
 b3 objects: classesToAnalyze.
 es := b3 slice: #numberOfLinesOfCode.
-b3 globalRule 
+b3 normalizer 
 		elements: es;
 		distinctColor.
 b3 build.
@@ -221,7 +221,7 @@ b3 view: c view.
 b3 interaction popup.
 b3 objects: classesToAnalyze.
 es := b3 slice: #numberOfLinesOfCode.
-b3 globalRule 
+b3 normalizer 
 		elements: es;
 		distinctColor.
 b3 build.
