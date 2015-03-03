@@ -58,7 +58,8 @@ RTSelectable >> prepareViewBeenForDeselection: aView [
 		ifFalse: [
 			aView when: TRMouseClick do: [ :evt | 
 				aView elements do: [ :e | (self isSelected: e) ifTrue: [ self unselectNoCallback: e ] ].
-				self evaluateCallback: RTGroup new ] ]
+				self evaluateCallback: RTGroup new.
+				aView signalUpdate ] ]
 ]
 
 { #category : #'as yet unclassified' }
