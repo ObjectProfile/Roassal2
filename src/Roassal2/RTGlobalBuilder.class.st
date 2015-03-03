@@ -42,6 +42,14 @@ RTGlobalBuilder >> alphaColorEdge:  anAlphaColor [
 		]. 
 ]
 
+{ #category : #algorithm }
+RTGlobalBuilder >> colorCycles [
+
+	self addProperty: [
+		RTColorCycle new visitElements: self view elements
+		]. 
+]
+
 { #category : #accessing }
 RTGlobalBuilder >> elementsToConsider [
 	^ elementsToConsider
