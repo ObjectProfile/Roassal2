@@ -5630,6 +5630,54 @@ YII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleSelectableElements [
+
+|  b label labelShape |
+b := RTMondrian new.
+b nodes: Collection withAllSubclasses.
+b layout flow.
+b normalizer 
+	normalizeSize: #numberOfMethods.
+
+b build.
+
+"Adding a label"
+labelShape := RTLabel new text: 'Nothing selected'.
+label := labelShape element.
+b view add: label.
+TRConstraint move: label below: b view elements.
+
+"Changing the label according to the selection"
+b view elements @ (RTSelectable new selectionCallback: [ :es | label trachelShape text: es size asString, ' selected elements']).
+
+^ b view
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleSelectableElementsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD30lEQVR4XuWcW0tqQRTH+3B9
+oF76HkpPEb4E+VAQBXZ9SC1CUImIhKAo6EJQESjaBXJ5zhpYMmfO3rnNLjt/fxiWe/ZsH+bn
+zFprXDrR6/GVJk3wp4APhC8+ED4QvvhA+ED44gPhA+GLD4QPhC8+EL74QPhA+OID4QPhiw+E
+D4QvPhA+EL74QPjiA+ED4YsPhA/kC9VoNKRarcrFxYUsLS2J9qm1pvfDMf44s1HvYVaf5wNJ
+qJubm55O5P39vdTrddc3Ozvbb9qnY87Pz+Xk5ESsX+WP39nZ+ec9zG5tbcnZ2RkfyCgKgZhs
+wv0+/pb1g0D4PoQvHhBdAeYTfGtbk9/XbDZlYWGhv22p3zC/Ej4fjk3TSks1kE6nIw8PDxJC
+UkeubdBEPj8///c8f4WMGGWFkZFvfThxTSOwMMJ6eXmRo6MjSaMP+jVbVggkDH2j2unpqZv4
+6+tr2dzclHDLsvfmA/nEaOujn/LHx0e3cvhA+BqfKKtYLA6MnKLuJbF8IAmjLNtW1AeoP4ga
+p2Pe3t6kXC73fQV/hXyBdJ9P2u7u7qTVan3I8oEklEZJSZolghpNWVQ1jOUD4ev3OvWwRTl2
+c+j+cYn/Oo1HJGO1QvRIJMwh1I+oT/CBWEKo2xp/hfA1vnlI2KJOe+PyEn9seBLsWz6QEYH4
+OUrS9+H7kC8Ewt+y+ED4QPhA+ED4QPj6ZSvEMvPQRoWucUfzcZZf5PADGXycdJyGzvwVMoSs
+dtev332vTndY2263ZX193Vk+kATST7A2q/HVFaDnVX4Via2IQTYcb9UnegamX27xgSTQoBKf
+JM3KgKLKgXzLB/INQKwMyID4Tp8PhK/xCHvDFiaJFsLa6e4gG1f7ywfySZk7f4XwgfCB8IGk
+OOoKfQofyA8A+Ix8ZFDjAxlii/oOKHwgQ64Qfh6Sskz9vV9S2S+i4o5Lklg+kCGARP2Syqrc
+1eoBZKlU6tf6+sclfCB8MY5O/NxDvzXkA0lRQsgHwgfCB8IHwhcfSKjp6Wk5PDyUtbU1mZqa
+kpWVFdnf35e9vT1ZXV11q2JmZsb+AECurq7k+PhYlpeXJZfLye3trXvm74py15eXl5LNZvl/
+rfFR6SROTk66yc9kMm6it7e3JZ/P918XCgU3wfPz87KxsSEHBwcyNzcnu7u7UqlU3D39fxO9
+rtVqrqqED2REaVmOKux/fX2VxcVF168VKGq73a5LDPWeXmsFydPTU/+av2XxxQfCB8IXHwgf
+CF98IHzxgfCB8MUHwgfCFx8IHwhffCB8IHzxgfCB8KeAD4QvPhA+EL74QPhA+OID4QPhiw+E
+rT/v5CT+ky0riwAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleSelfCalls [
 
 " The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."		
