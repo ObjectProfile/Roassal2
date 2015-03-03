@@ -4,7 +4,7 @@ Class {
 	#category : #'Trachel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRExtensibleLabelShape >> extent: newExtent [
 	| oldExtent |
 	oldExtent := self extent.
