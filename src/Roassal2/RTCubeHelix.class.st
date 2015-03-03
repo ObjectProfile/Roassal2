@@ -33,6 +33,11 @@ RTCubeHelix class >> initialize [
 ]
 
 { #category : #accessing }
+RTCubeHelix >> gamma [
+	^ gamma 
+]
+
+{ #category : #accessing }
 RTCubeHelix >> gamma: aNumber [
 	"Defines the luminance bias of the gradient.
 	<1 : compressed dark tones
@@ -80,6 +85,11 @@ RTCubeHelix >> rotations: nbRotations [
 	"Defines the angular spread and direction of the gradient over the chromatic wheel.
 	From dark to light, positive values will follow the RGB order (and negative values in the other direction)"
 	rotations := nbRotations
+]
+
+{ #category : #accessing }
+RTCubeHelix >> saturation [
+	^ saturation
 ]
 
 { #category : #accessing }

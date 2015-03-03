@@ -919,28 +919,6 @@ lCmXqabGagZemEZTHH/Ikng8nLx9pn0xhSJzJ8ppQcoCTt0XJ+fyojSaMkH14h/vzEgCvV1z
 I0cIJuQfGHDDZ/fy/P8H4yAqPck3kO8AAAAASUVORK5CYII='
 ]
 
-{ #category : #sources }
-RTGraphBuilderExample >> exampleColoringCycle [
-| b |
-b := RTGraphBuilder new.
-b nodes 
-	size: 20; 
-	color: Color gray.
-b edges 
-	directed;
-	connectTo: #dependentClasses;
-	useInLayout.
-
-b layout forceCharge: -200.
-
-b global
-	colorCycles.
-b addAll: RTShape withAllSubclasses.
-
-b build.
-^ b view
-]
-
 { #category : #icons }
 RTGraphBuilderExample >> exampleColoringCycleIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAHKElEQVR4XuWdW29MXRzGJ+EL

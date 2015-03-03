@@ -152,7 +152,7 @@ RTSVGExporter >> defaultBackgroundColor [
 
 { #category : #exporting }
 RTSVGExporter >> exportOnStream: fileStream [
-	|bounds|
+	| bounds |
 	bounds := self fixedEncompassingRectangle.
 	self stream: fileStream.
 	self addStart: bounds.

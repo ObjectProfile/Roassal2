@@ -19,6 +19,12 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #initialization }
+RTPolygon >> initialize [
+	super initialize.
+	self vertices: #()
+]
+
 { #category : #hooks }
 RTPolygon >> trachelShapeClass [
 	^ TRPolygonShape
@@ -41,6 +47,6 @@ RTPolygon >> vertices [
 ]
 
 { #category : #accessing }
-RTPolygon >> vertices: anObject [
-	vertices := anObject
+RTPolygon >> vertices: arrayOfPoints [
+	vertices := arrayOfPoints
 ]

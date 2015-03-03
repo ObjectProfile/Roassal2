@@ -9,7 +9,8 @@ Class {
 		'nodes',
 		'edges',
 		'layouts',
-		'globals'
+		'globals',
+		'globalBuilder'
 	],
 	#category : #'Roassal2-Builder-GraphOBSOLETE'
 }
@@ -155,4 +156,9 @@ RTGraphBuilder >> nodes [
 	n graphBuilder: self.
 	nodes add: n.
 	^ n
+]
+
+{ #category : #accessing }
+RTGraphBuilder >> resetGlobal [
+	globalBuilder := self createGlobalBuilder
 ]
