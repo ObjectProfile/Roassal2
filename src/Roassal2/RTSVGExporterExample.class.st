@@ -12,18 +12,12 @@ RTSVGExporterExample >> exampleDependencyAnalyzerBuilder [
 	
 	"self new exampleDependencyAnalyzerBuilder"
 	| b |	
-	b := RTDependencyAnalyzerBuilder new. 
-	b shape circle
-				size: [ :cls | cls numberOfMethods max: 5 ];
-				fillColor: (Color red alpha: 0.3);
-				if: [ :cls | ('TR*' match: cls name)  ] fillColor: (Color purple alpha: 0.3).
-	b addClasses: RTObject withAllSubclasses.
-	b addClasses: TRObject withAllSubclasses.
-	b 
-		dependencyFromAllClassesMatching: [ :cls | ('RT*' match: cls name) ] 
-		toAllClassesMatching: [ :cls | ('TR*' match: cls name) ].
-
+	b := RTMondrian new.
+	b nodes: Collection withAllSubclasses.
+	b edges connectFrom: #superclass.
+	b layout tree.
 	b open.
+
 	"This line does the export"
 	RTSVGExporter exportBuilderAsSVG: b filename:'exampleDependencyAnalyzerBuilder'.
 ]

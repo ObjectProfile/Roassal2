@@ -23,6 +23,13 @@ RTMetricNormalizer >> checkNotEmpty [
 	elements ifEmpty: [ self error: 'Please specify what are the elements I should operate on using #elements:' ]
 ]
 
+{ #category : #'public normalize color' }
+RTMetricNormalizer >> distinctColor [
+	| normalizer |
+	normalizer := RTMultiLinearColorForIdentity new objects: elements.
+	elements do: [ :el | el trachelShape color: (normalizer rtValue: el) ]
+]
+
 { #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
 	elements := someElements
@@ -33,7 +40,8 @@ RTMetricNormalizer >> getNormalizedValues: metricBlock min: min max: max minValu
 	"aBlock is evaluated on each node model"
 
 	self checkNotEmpty.
-	(maxValue = minValue) ifTrue: [ self error: 'maxValue = minValue' ].
+	(maxValue = minValue) ifTrue: [ 
+		^ elements collect: [ :el | metricBlock rtValue: el model ] ].
 	
  	^ elements collect: [ :el | 
 			| tt t |

@@ -7,7 +7,7 @@ Class {
 		'properties',
 		'elementsToConsider'
 	],
-	#category : #'Roassal2-Builder-Common'
+	#category : #'Roassal2-Builder-GraphOBSOLETE'
 }
 
 { #category : #public }
@@ -39,14 +39,6 @@ RTGlobalBuilder >> alphaColorEdge:  anAlphaColor [
 		self view edges do: [ :edge | 
 				edge trachelShape color: (edge trachelShape color alpha: anAlphaColor)
 			] 
-		]. 
-]
-
-{ #category : #algorithm }
-RTGlobalBuilder >> colorCycles [
-
-	self addProperty: [
-		RTColorCycle new visitElements: self view elements
 		]. 
 ]
 

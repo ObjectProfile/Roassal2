@@ -32,8 +32,11 @@ RTFocusElement >> initialize [
 { #category : #hooks }
 RTFocusElement >> initializeElement: element [
 	element when: TRMouseDoubleClick do: [ :evt |
-		animation ifTrue: [ RTFocusAnimation on: element ]
-		ifFalse: [ 
-		evt canvas camera focusOnCenterScaled: evt canvas extent rec: element encompassingRectangle.
-		evt signalUpdate]  ]. 
+		| canvas |
+		canvas := element view canvas.
+		animation 
+			ifTrue: [ RTFocusAnimation on: element ]
+			ifFalse: [ 
+				canvas camera focusOnCenterScaled: canvas extent "rec: element encompassingRectangle".
+				evt signalUpdate ] ]. 
 ]

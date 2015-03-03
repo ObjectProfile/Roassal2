@@ -5,7 +5,6 @@ Class {
 		'view',
 		'interactionBuilder',
 		'shapeBuilder',
-		'globalBuilder',
 		'layoutBuilder',
 		'title'
 	],
@@ -23,12 +22,6 @@ RTBuilder >> addElementOn: anObject [
 	element := self elementOn: anObject.
 	view add: element.
 	^ element
-]
-
-{ #category : #protected }
-RTBuilder >> applyGlobalBuilder [
-	globalBuilder view: self view.
-	globalBuilder execute
 ]
 
 { #category : #public }
@@ -108,11 +101,6 @@ RTBuilder >> elementsWithInteractionOn: collectionOfObjects [
 ]
 
 { #category : #accessing }
-RTBuilder >> global [
-	^ globalBuilder 
-]
-
-{ #category : #accessing }
 RTBuilder >> globalRule [
 	^ RTGlobalRule new view: self view; yourself
 ]
@@ -124,7 +112,7 @@ RTBuilder >> initialize [
 	view := self createView.
 	self resetShape.
 	self resetInteraction.
-	self resetGlobal
+
 ]
 
 { #category : #accessing }
@@ -173,11 +161,6 @@ RTBuilder >> renderIn: aView [
 { #category : #protected }
 RTBuilder >> resetCreatedElements [
 	shapeBuilder resetCreatedElements
-]
-
-{ #category : #resetting }
-RTBuilder >> resetGlobal [
-	globalBuilder := self createGlobalBuilder
 ]
 
 { #category : #resetting }

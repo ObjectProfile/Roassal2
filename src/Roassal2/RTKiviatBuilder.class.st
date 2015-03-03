@@ -351,7 +351,7 @@ RTKiviatBuilder >> renderIn: aView [
 	
 	( highlight = #activated ) ifTrue: [ self executeHighlight ].
 		
-	globalBuilder executeOn: self createdElements.
+	"globalBuilder executeOn: self createdElements."
 
 
 ]
