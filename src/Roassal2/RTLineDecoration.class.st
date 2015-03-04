@@ -1,3 +1,6 @@
+"
+A RTLineDecoration is a shape decoration, intended to be combined with a line.
+"
 Class {
 	#name : #RTLineDecoration,
 	#superclass : #RTShape,
