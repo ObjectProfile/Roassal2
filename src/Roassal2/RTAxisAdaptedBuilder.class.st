@@ -63,7 +63,7 @@ RTAxisAdaptedBuilder >> axisOrigin [
 { #category : #'private-axis' }
 RTAxisAdaptedBuilder >> axisXFrom: anOriginPoint to: aPoint [
 	| config |
-	(self xAxisConfiguration fromPoint) ifNil: [ self xAxisDefaultConfigurationOrigin: anOriginPoint toPoint: aPoint].
+	(self xAxisConfiguration) ifNil: [ self xAxisDefaultConfigurationOrigin: anOriginPoint toPoint: aPoint].
 	
 	config := self xAxisConfiguration.
 	RTAxisRenderer new builder: self; config: config; axisFrom: anOriginPoint to: aPoint.
@@ -72,7 +72,7 @@ RTAxisAdaptedBuilder >> axisXFrom: anOriginPoint to: aPoint [
 { #category : #'private-axis' }
 RTAxisAdaptedBuilder >> axisYFrom: anOriginPoint to: aPoint [
 	| config |
-	(self yAxisConfiguration fromPoint) ifNil: [ self yAxisDefaultConfigurationOrigin: anOriginPoint toPoint: aPoint].
+	(self yAxisConfiguration) ifNil: [ self yAxisDefaultConfigurationOrigin: anOriginPoint toPoint: aPoint].
 	
 	config := self yAxisConfiguration.
 	RTAxisRenderer new builder: self; config: config; axisFrom: anOriginPoint to: aPoint.
@@ -118,12 +118,7 @@ RTAxisAdaptedBuilder >> initialize [
 	super initialize.
 	self configureView: view.
 	self defaultMargin.
-	xAxisConfiguration := self createAxisConfiguration.
-	xAxisConfiguration numberOfTicks: 4.
-	xAxisConfiguration tickLabelOffset: 0 @ -20.
-	yAxisConfiguration := self createAxisConfiguration.
-	yAxisConfiguration numberOfTicks: 4.
-	yAxisConfiguration tickLabelOffset: -30 @ 0.
+	
 	objects := OrderedCollection new.
 ]
 
@@ -145,14 +140,14 @@ RTAxisAdaptedBuilder >> objects [
 { #category : #accessing }
 RTAxisAdaptedBuilder >> objects: AnRTElementsCollection [
 	objects := AnRTElementsCollection.
-	self setObjectsLimits.
-
 ]
 
 { #category : #hooks }
 RTAxisAdaptedBuilder >> renderIn: aView [
 
 	self assert: (objects isNotNil).
+	
+	self setObjectsLimits.
 	
 	self createAxis.
 ]
@@ -181,10 +176,18 @@ RTAxisAdaptedBuilder >> xAxisConfiguration: anAxisConfiguration [
 
 { #category : #'as yet unclassified' }
 RTAxisAdaptedBuilder >> xAxisDefaultConfigurationOrigin: aPoint toPoint: anotherPoint [
-	xAxisConfiguration fromPoint: aPoint.
-	xAxisConfiguration toPoint: anotherPoint.
-	xAxisConfiguration maxValue: anotherPoint x.
-	xAxisConfiguration minValue: aPoint x.
+	| config |
+	config := self createAxisConfiguration.
+	config numberOfTicks: 4.
+	config tickLabelOffset: 0 @ -20.
+	config fromPoint: aPoint.
+	config toPoint: anotherPoint.
+	config maxValue: anotherPoint x.
+	config minValue: aPoint x.
+	
+
+
+	xAxisConfiguration := config.
 	
 ]
 
@@ -207,10 +210,18 @@ RTAxisAdaptedBuilder >> yAxisConfiguration: anAxisConfiguration [
 
 { #category : #'as yet unclassified' }
 RTAxisAdaptedBuilder >> yAxisDefaultConfigurationOrigin: aPoint toPoint: anotherPoint [
-	yAxisConfiguration fromPoint: aPoint.
-	yAxisConfiguration toPoint: anotherPoint.
-	yAxisConfiguration maxValue: anotherPoint y.
-	yAxisConfiguration minValue: aPoint y.
+	| config |
+	config := self createAxisConfiguration.
+	config numberOfTicks: 4.
+	config tickLabelOffset: -30 @ 0.
+	config fromPoint: aPoint.
+	config toPoint: anotherPoint.
+	config maxValue: anotherPoint y.
+	config minValue: aPoint y.
+	
+
+
+	yAxisConfiguration := config.
 	
 ]
 
