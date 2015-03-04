@@ -57,6 +57,9 @@ RTScrollBarBasic >> initialize [
 
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> renderIn: aView [
+
+(self objects isNil) ifTrue:[self defaultObjects].
+	self assert: (objects isNotEmpty).
 	
 	self addShapes: aView.
 
