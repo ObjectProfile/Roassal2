@@ -28,8 +28,6 @@ b := RTMondrian new.
 
 b2 := RTScrollBarBuilder new.
 b2 view: b view.
-"specify here the elements of the view you want to see moving, here is all the elements"
-b2 objects: b view elements.
 b2 build.
 
 
@@ -55,8 +53,6 @@ b := RTMondrian new.
 
 b2 := RTScrollBarBuilder new.
 b2 view: b view.
-"specify here the elements of the view you want to see moving, here is all the elements"
-b2 objects: b view elements.
 b2 scrollBarType: #isPad.
 b2 build.
 

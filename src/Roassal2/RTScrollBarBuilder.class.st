@@ -40,6 +40,11 @@ RTScrollBarBuilder >> configureView: aView [
 ]
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> defaultObjects [
+	self objects: self view elements.
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> defaultScrollBar [
 	self scrollBarType: #isBasic. 
 	self movable: #isMovable.	
@@ -48,7 +53,7 @@ RTScrollBarBuilder >> defaultScrollBar [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> defaultSizeAndPosition [
 
-	self fixedPosition:  (self view canvas extent x)@(self view canvas extent y).
+	self fixedPosition:  (self view canvas extent x*3/4)@(self view canvas extent y *3/4).
 	self size: 200.
 ]
 
@@ -78,6 +83,7 @@ RTScrollBarBuilder >> initialize [
 	self configureView: view.
 	self defaultScrollBar.
 	self defaultSizeAndPosition.
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -97,6 +103,7 @@ RTScrollBarBuilder >> objects [
 
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> objects: anRTGroup [
+	"can be specified if you don't want all the elements of the view to move"
 	objects := anRTGroup.
 	self setElementsBounds.
 	
@@ -106,7 +113,8 @@ RTScrollBarBuilder >> objects: anRTGroup [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> renderIn: aView [
 
-	self assert: (objects isNotNil).
+	(self objects isNil) ifTrue:[self defaultObjects].
+	self assert: (objects isNotEmpty).
 	
 	(self scrollBarType = #isBasic) ifTrue: [ 
 		self becomeForward: (RTScrollBarBasic fromBuilder: self).
@@ -134,11 +142,11 @@ RTScrollBarBuilder >> setElementsBounds [
 	| minX maxX minY maxY |
 	"set a Rectangle that will include the objects sizes and positions. This rectangle will be used by the scrollBar to scale and normalize"
 	
-	minX := (objects collect: [:o | (o position x) - (o width /2 )]) min.
-	maxX := (objects collect: [:o | (o position x) + (o width /2 )]) max.
+	minX := (self objects collect: [:o | (o position x) - (o width /2 )]) min.
+	maxX := (self objects collect: [:o | (o position x) + (o width /2 )]) max.
 	
-	minY := (objects collect: [:o | (o position y) - (o height /2 )]) min.
-	maxY := (objects collect: [:o | (o position y) + (o height /2 )]) max.
+	minY := (self objects collect: [:o | (o position y) - (o height /2 )]) min.
+	maxY := (self objects collect: [:o | (o position y) + (o height /2 )]) max.
 	
 	self elementsRectangleBounds: (Rectangle origin: minX@minY corner:maxX@maxY).
 ]
