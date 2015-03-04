@@ -16,23 +16,24 @@ RTNest >> behavior: aBehavior [
 	behavior := aBehavior 
 ]
 
-{ #category : #'to be removed' }
+{ #category : #public }
 RTNest >> centerOn: backElement elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
 
-	self centerOnTrachelShape: backElement trachelShape elements: elements
+	behavior centerOn: backElement elements: elements asGroup
+"	self centerOnTrachelShape: backElement trachelShape elements: elements
+	"
 ]
 
-{ #category : #'to be removed' }
+{ #category : #public }
 RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
-
 	behavior centerOnTrachelShape: trachelShape elements: elements asGroup.
 "	self doLayoutIfNecessaryOn: elements.
 	encompassingRectangle := self encompassingRectangleOf: elements.
@@ -125,17 +126,10 @@ RTNest >> layout: aLayout [
 	layout := aLayout
 ]
 
-{ #category : #'to be removed' }
+{ #category : #public }
 RTNest >> makeElements: elements draggableBy: backElement [
-	^ self makeElements: elements draggableByTrachelShape: backElement trachelShape
+	^ behavior makeElements: elements draggableByTrachelShape: backElement trachelShape
 	 
-]
-
-{ #category : #'to be removed' }
-RTNest >> makeElements: elements draggableByTrachelShape: trachelShape [
-	| callback |
-	callback := TRTranslationCallback block: [ :shape :step | elements do: [ :e | e translateBy: step ] ].
-	trachelShape addCallback: callback 
 ]
 
 { #category : #utility }
@@ -229,42 +223,6 @@ RTNest >> on: backElement nest: elements [
 	self mark: backElement with: elements
 ]
 
-{ #category : #'to be removed' }
-RTNest >> onResizable: backElement nest: elements [
-	"PROBABLY THIS METHOD HAS TO BE DELETED"
-
-	"public method"
-	"backElement is the elements on which elements are layout-ed"
-	"- position the elements above backElement. 
-	 - resize backElement to encapsulate the elements
-	 - perform a layout of the elements if a layout has been set
-	 - make the inner elements draggable"
-	
-	layout ifNotNil: [ layout on: elements ].
-	self centerOn: backElement elements: elements.
-	self makeElements: elements draggableBy: backElement.
-"	self makeElements: elements transformable: backElement."
-	self makeElements: elements resizableWithoutRecursion: backElement.
-
-]
-
-{ #category : #'to be removed' }
-RTNest >> onTrachelShape: trachelShape nest: elements [
-	"public method"
-	"backElement is the elements on which elements are layout-ed"
-	"- position the elements above backElement. 
-	 - resize backElement to encapsulate the elements
-	 - perform a layout of the elements if a layout has been set
-	 - make the inner elements draggable"
-
-	self doLayoutIfNecessaryOn: elements.
-	behavior on: trachelShape setNested: elements asGroup
-
-	"self centerOnTrachelShape: trachelShape elements: elements.
-	self makeElements: elements draggableByTrachelShape: trachelShape."
-
-]
-
 { #category : #accessing }
 RTNest >> padding [
 	^ padding
@@ -273,27 +231,6 @@ RTNest >> padding [
 { #category : #accessing }
 RTNest >> padding: aNumber [
 	padding := aNumber
-]
-
-{ #category : #'to be removed' }
-RTNest >> resize: backElement bounds: encompassingRectangle [
-	"it translates backElement, but does not trigger events."
-	| newRec |
-	newRec := (encompassingRectangle topLeft - (padding @ padding)) extent: 
-					((encompassingRectangle width + (padding * 2)) @ 
-					 (encompassingRectangle height + (padding * 2))).
-
-	backElement trachelShape
-		extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).	
-	backElement translateTo: encompassingRectangle center
-]
-
-{ #category : #'to be removed' }
-RTNest >> resize: backElement for: elements [
-	| encompassingRectangle |
-	encompassingRectangle := self encompassingRectangleOf: elements.
-	self resize: backElement bounds: encompassingRectangle.
-
 ]
 
 { #category : #utility }
