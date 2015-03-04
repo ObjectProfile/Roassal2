@@ -175,9 +175,9 @@ RTAbstractLineLayout >> horizontalGap [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> horizontalGap: anObject [
+RTAbstractLineLayout >> horizontalGap: anInteger [
 	
-	horizontalGap := anObject
+	horizontalGap := anInteger
 ]
 
 { #category : #testing }
@@ -234,9 +234,9 @@ RTAbstractLineLayout >> verticalGap [
 ]
 
 { #category : #accessing }
-RTAbstractLineLayout >> verticalGap: anObject [
+RTAbstractLineLayout >> verticalGap: anInteger [
 	
-	verticalGap := anObject
+	verticalGap := anInteger
 ]
 
 { #category : #testing }
