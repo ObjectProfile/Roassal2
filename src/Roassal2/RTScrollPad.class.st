@@ -31,7 +31,7 @@ RTScrollPad >> addShapes: aView [
 	bar when: TRMouseDragging do: [ :evt |
 		(margeRectangle includesPoint: (bar position + evt step)) & (surroundingRectangle includesPoint: evt position) ifTrue: [  
 			bar translateBy: evt step.
-			aView elements do:[ :e | e translateBy: (self translation: evt)].
+			aView canvas camera translateBy: (self translation: evt).
 		].
 		aView signalUpdate.
 		].
@@ -69,8 +69,8 @@ RTScrollPad >> renderIn: aView [
 RTScrollPad >> translation: evt [
 	| tx ty |
 	
-	tx := (evt step x negated) / self size * self elementsRectangleBounds width.
-	ty := (evt step y negated) / self size * self elementsRectangleBounds height.
+	tx := (evt step x) / self size * self elementsRectangleBounds width.
+	ty := (evt step y) / self size * self elementsRectangleBounds height.
 	
 	^ tx@ty
 ]

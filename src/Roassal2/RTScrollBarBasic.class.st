@@ -33,7 +33,7 @@ RTScrollBarBasic >> addShapes: aView [
 		(start position x < evt position x) & 
 		(stop position x > evt position x) ifTrue: [  
 			bar translateBy: (evt step x)@0.
-			aView elements do:[ :e | e translateBy: (self translation: evt)].
+			aView canvas camera translateBy: (self translation: evt).
 			].
 		aView signalUpdate.
 		].
@@ -72,8 +72,8 @@ RTScrollBarBasic >> renderIn: aView [
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> translation: evt [
 	| t |
-	
-	t := (evt step x negated) / self size * self elementsRectangleBounds width.
+
+	t := (evt step x ) / self size * self elementsRectangleBounds width.
 	
 	^ t@0
 ]
