@@ -1418,15 +1418,16 @@ RTExample >> rotatingLabelsAnimated [
 	self new rotatingLabelsAnimated
 	"
 
-	| v shape timer |
+	| v shape timer rotationRatio seconds |
 	v := RTView new.
-	timer := VITimer new cycleLength: 2.
+	seconds := 7.
+	timer := VITimer new cycleLength: seconds.
+	rotationRatio := 0.2.
 
 	shape := RTRotatedLabel new.
-	"shape angleInDegree: [ :cls | cls numberOfMethods negated / 1.5 ]."
 	shape angleInDegree: [ :cls | 
 		| valueEnd |
-		valueEnd := cls numberOfMethods negated / 1.5.
+		valueEnd := cls numberOfMethods negated / rotationRatio.
 		VIAnimatedValue new
 					evaluator: [ :t | 0 interpolateTo: valueEnd at: t ];
 					timer: timer;
