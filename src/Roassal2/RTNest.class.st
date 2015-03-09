@@ -39,7 +39,7 @@ RTNest >> behavior: aBehavior [
 	behavior := aBehavior 
 ]
 
-{ #category : #'to be removed' }
+{ #category : #public }
 RTNest >> centerOn: backElement elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
@@ -49,7 +49,7 @@ RTNest >> centerOn: backElement elements: elements [
 	self centerOnTrachelShape: backElement trachelShape elements: elements
 ]
 
-{ #category : #'to be removed' }
+{ #category : #public }
 RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 	"Public method. This method does the following actions:
 		- resize the backElement to encompasse all the elements
