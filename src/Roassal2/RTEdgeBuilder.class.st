@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'allowRepetition',
 		'elements',
+		'elementsToLookup',
 		'shouldMoveBehind',
 		'shouldNotBeUsedInLayout'
 	],
@@ -22,7 +23,7 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 	edges := RTGroup new.
 	self elements copy do: [ :e | 
 		aModel := aBlockOrASymbol rtValue: e model.
-		fromElement := self elements elementFromModel: aModel.
+		fromElement := self elementsToLookup elementFromModel: aModel.
 		fromElement ifNotNil: [ edges add: (self edgeFrom: fromElement to: e) ] ].
 	self moveBehindIfNecessary: edges.
 	^ edges
@@ -34,8 +35,8 @@ RTEdgeBuilder >> connectFrom: aFromBlock ToAll: aBlockOrASymbol [
 	| edges toElements fromElement |
 	edges := RTGroup new.
 	self elements copy do: [ :e | 
-		fromElement := self elements elementsFromModel: (aFromBlock rtValue: e model). 
-		toElements := self elements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		fromElement := self elements elementFromModel: (aFromBlock rtValue: e model). 
+		toElements := self elementsToLookup elementsFromModels: (aBlockOrASymbol rtValue: e model).
 		toElements ifNotNil: [ 
 			toElements do: [ :toE | 
 				edges add: (self edgeFrom: fromElement to: toE) ] ] ].
@@ -49,7 +50,7 @@ RTEdgeBuilder >> connectTo: aBlockOrASymbol [
 	| edges toElement |
 	edges := RTGroup new.
 	self elements copy do: [ :e | 
-		toElement := self elements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		toElement := self elementsToLookup elementFromModel: (aBlockOrASymbol rtValue: e model).
 		toElement ifNotNil: [ edges add: (self edgeFrom: e to: toElement) ] ].
 	self moveBehindIfNecessary: edges.
 	^ edges
@@ -61,7 +62,7 @@ RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
 	| edges toElements |
 	edges := RTGroup new.
 	self elements copy do: [ :e | 
-		toElements := self elements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		toElements := self elementsToLookup elementsFromModels: (aBlockOrASymbol rtValue: e model).
 		toElements ifNotNil: [ 
 			toElements do: [ :toE | 
 				edges add: (self edgeFrom: e to: toE) ] ] ].
@@ -87,6 +88,18 @@ RTEdgeBuilder >> elements [
 { #category : #accessing }
 RTEdgeBuilder >> elements: someElements [
 	elements := someElements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> elementsToLookup [
+	"Return the group of elements to look up the ending of edges"
+	^ elementsToLookup isNil ifTrue: [ self elements asGroup ] ifFalse: [ elementsToLookup asGroup ]
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> elementsToLookup: someElements [
+	"Set the group of elements to look up the ending of edges"
+	^ elementsToLookup := someElements
 ]
 
 { #category : #'public associations' }
@@ -117,7 +130,10 @@ RTEdgeBuilder >> initialize [
 	super initialize.
 	allowRepetition := false.
 	shouldMoveBehind := false.
-	shouldNotBeUsedInLayout := true
+	shouldNotBeUsedInLayout := true.
+	
+	"If nil, then elements will be used to lookup"
+	elementsToLookup := nil
 ]
 
 { #category : #accessing }
@@ -137,7 +153,7 @@ RTEdgeBuilder >> notUseInLayout [
 	shouldNotBeUsedInLayout := false
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> object: object fromAll: fromBlock to: toBlock [
 	"aGroup is a group of objects"
 
@@ -167,18 +183,18 @@ RTEdgeBuilder >> objects: someObjectsOrABlock [
 		ifFalse: [ self elements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects from: fromBlock [
 	^ self objects: objects from: fromBlock to: #yourself
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock [ 
 
 	^ self objects: objects from: fromBlock to: toBlock scope: self globalScope
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock scope: aGroup [
 
 	| edges fromElement toElement fromObject toObject |
@@ -198,7 +214,7 @@ RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock scope: aGroup [
 
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects from: fromBlock toAll: toAllBlock [
 	"aGroup is a group of objects"
 
@@ -220,7 +236,7 @@ RTEdgeBuilder >> objects: objects from: fromBlock toAll: toAllBlock [
 
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects fromAll: fromBlock to: toBlock [
 	"aGroup is a group of objects"
 
@@ -245,7 +261,7 @@ RTEdgeBuilder >> objects: objects fromAll: fromBlock to: toBlock [
 	^ edges
 ]
 
-{ #category : #public }
+{ #category : #deprecated }
 RTEdgeBuilder >> objects: objects to: toBlock [
 	^ self objects: objects from: toBlock to: #yourself
 ]
