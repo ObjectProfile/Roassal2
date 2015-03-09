@@ -118,7 +118,8 @@ TRLineShape >> to: aPoint [
 { #category : #actions }
 TRLineShape >> translateBy: aPoint [
 	from := from + aPoint.
-	to := to + aPoint
+	to := to + aPoint.
+	self resetPath.
 ]
 
 { #category : #accessing }
