@@ -1,5 +1,5 @@
 "
-A RTScrollBarBasic is the classic scrollBar for moving the view in the width, with scalability
+A RTScrollBarBasic is the classic scrollBar for moving the view in the width, with scalability. See comments in RTScrollBarBuilder
 
 "
 Class {
@@ -11,31 +11,39 @@ Class {
 { #category : #'as yet unclassified' }
 RTScrollBarBasic class >> fromBuilder: b [
 
-	 ^ self new view: b view; objects: b objects; size: b size; movable: b movable; fixedPosition: b fixedPosition; scrollBarType: b scrollBarType.
+	 ^ self new view: b view; objects: b objects; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape.
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBasic >> addShapes: aView [
-	| start stop bar surroundingRectangle |
-	
-	"bar is the shape to drag and drop"
-	bar := TREllipseShape new size: 20; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
-	start := TRBoxShape new color: Color lightGray; height:20; width:2; position: (self fixedPosition x - (self size / 2))@(self fixedPosition y); strokePaint: nil.
-	stop := TRBoxShape new color: Color lightGray; height:20; width:2; position: (self fixedPosition x + (self size / 2))@(self fixedPosition y); strokePaint: nil. 
+RTScrollBarBasic >> addAnimations [
+	"add animations on the bar, to make the scroll bar movable or not etc.."
+	| bar start stop surroundingRectangle margeRectangle |
 
-	surroundingRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (start encompassingRectangle origin) corner:(stop encompassingRectangle corner)); color: (Color gray alpha: 0.1); strokePaint: nil.
-	
-	aView canvas addFixedShape: surroundingRectangle; addFixedShape: start; addFixedShape: stop; addFixedShape: bar.
-	
-	bar when: TRMouseDragging do: [ :evt |
-		"conditions for a classic scrollbar"
-		(((bar position x) + (evt step x) + (bar width /2) < (stop position x)) & ((bar position x) + (evt step x) - (bar width /2) > (start position x))) & 
-		(start position x < evt position x) & 
-		(stop position x > evt position x) ifTrue: [  
-			bar translateBy: (evt step x)@0.
-			aView canvas camera translateBy: (self translation: evt).
-			].
-		aView signalUpdate.
+	bar := self shapes last.
+	start := self shapes first.
+	stop := self shapes second.
+	surroundingRectangle := self shapes third.
+	margeRectangle := self shapes fourth.
+
+
+	(self orientation = #horizontal) ifTrue: [ 
+		bar when: TRMouseDragging do: [ :evt |
+			(margeRectangle includesPoint: (bar position + ((evt step x)@0))) & (surroundingRectangle includesPoint: (evt position x)@(bar position y)) ifTrue: [  
+				bar translateBy: (evt step x)@0.
+				self view canvas camera translateBy: (self translationHorizontal: evt).
+				].
+			self view signalUpdate.
+			]
+		].
+
+	(self orientation = #vertical) ifTrue: [ 
+		bar when: TRMouseDragging do: [ :evt |
+			(margeRectangle includesPoint: (bar position + (0@(evt step y)))) & (surroundingRectangle includesPoint: (bar position x)@(evt position y)) ifTrue: [  
+				bar translateBy: 0@(evt step y).
+				self view canvas camera translateBy: (self translationVertical: evt).
+				].
+			self view signalUpdate.
+			]
 		].
 	
 	(self movable = #isMovable) ifTrue: [
@@ -44,25 +52,94 @@ RTScrollBarBasic >> addShapes: aView [
 			surroundingRectangle translateBy: (evt step).
 			start translateBy: (evt step).
 			stop translateBy: (evt step).
-			aView signalUpdate.
+			margeRectangle translateBy: (evt step).
+			self view signalUpdate.
 			]
 		].
+	
+	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 
+
+
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> addShapesToView [
+
+self shapes do: [ :s | self view canvas addFixedShape: s ].
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> addVisitor [
+	
+		self view accept: self.
+
+
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> defineShapes [
+"define shapes if scrollBar is horizontal vertical..."
+	| start stop bar surroundingRectangle margeRectangle |
+	
+	
+	"set bar shape"	
+	(self barShape = #aBox) ifTrue: [ bar := TRBoxShape new ] ifFalse: [ bar := TREllipseShape new ].
+	
+	"bar is the shape to drag and drop, start ad stop are made to show the border of scroll Bar"
+	(self orientation = #horizontal) ifTrue: [ 
+		
+		bar size: self width; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
+		start := TRBoxShape new color: Color lightGray; height:self width; width:2; position: (self fixedPosition x - (self size / 2) + 1)@(self fixedPosition y); strokePaint: nil.
+		stop := TRBoxShape new color: Color lightGray; height:self width; width:2; position: (self fixedPosition x + (self size / 2) - 1)@(self fixedPosition y); strokePaint: nil. 
+		
+		"This shape is the the fill of the scroll bar"
+		surroundingRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (start encompassingRectangle origin) corner:(stop encompassingRectangle corner)); color: (Color gray alpha: 0.1); strokePaint: nil.
+		"the margeRectangle handle the width/2 of the bar"
+		margeRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (surroundingRectangle encompassingRectangle origin + ((bar width /2)@0))corner: (surroundingRectangle encompassingRectangle corner - ((bar width /2)@0))); color: (Color gray alpha:0); strokePaint: nil .
+	
+	].
+
+(self orientation = #vertical) ifTrue: [ 
+		
+		bar size: self width; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
+		start := TRBoxShape new color: Color lightGray; width:self width; height:2; position: (self fixedPosition x )@(self fixedPosition y - (self size / 2) + 1); strokePaint: nil.
+		stop := TRBoxShape new color: Color lightGray; width:self width; height:2; position: (self fixedPosition x )@(self fixedPosition y + (self size / 2) - 1); strokePaint: nil.
+		
+		"This shape is the the fill of the scroll bar"
+		surroundingRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (start encompassingRectangle origin) corner:(stop encompassingRectangle corner)); color: (Color gray alpha: 0.1); strokePaint: nil.
+		"the margeRectangle handle the width/2 of the bar"
+		margeRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (surroundingRectangle encompassingRectangle origin + (0@(bar width /2)))corner: (surroundingRectangle encompassingRectangle corner - (0@(bar width /2)))); color: (Color gray alpha:0); strokePaint: nil.
+	].
+
+	
+	
+	self shapes add: start; add: stop; add: surroundingRectangle; add: margeRectangle; add: bar.
+	
+	
 ]
 
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> initialize [
 	super initialize.
+	self shapes: OrderedCollection new.
 ]
 
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> renderIn: aView [
 
-(self objects isNil) ifTrue:[self defaultObjects].
-	self assert: (objects isNotEmpty).
 	
-	self addShapes: aView.
-
+	(self objects isNil) ifTrue:[self defaultObjects].
+	self assert: (objects isNotEmpty).
+	self defineShapes.
+	self signalUpdate.
+	self addShapesToView.
+	self addAnimations.
 
 
 
@@ -70,10 +147,96 @@ RTScrollBarBasic >> renderIn: aView [
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBasic >> translation: evt [
+RTScrollBarBasic >> signalUpdate [
+	
+	"this method is used to increase the size of the shapes composing the scroll bar when the size is defined by a Block, for example to follow the size of the windows
+	Or if the position is fixed on the border on the widows, the scroll bar should follow the windows border at signal updates"
+
+	self assert: (self shapes isNotNil).
+	
+	(self shapes) ifNotEmpty: [ 
+	
+		(self fixedPositionBlock isBlock) ifTrue: [ 
+			self signalUpdatePosition.				
+			].
+	
+		(self sizeBlock isBlock) ifTrue: [  
+			self signalUpdateSize.
+			].
+		].
+	
+	self view signalUpdate. 
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> signalUpdatePosition [
+
+	| pr |
+	
+	(self orientation = #horizontal) ifTrue: [
+				
+				pr := ((self shapes last position x)-(self shapes third encompassingRectangle origin x)) / (self shapes third encompassingRectangle width) * self size.
+				
+				self shapes third position: self fixedPosition.
+				
+				self shapes first position: (self shapes third position x - (self size / 2) + 1)@(self shapes third position y).
+				self shapes second position: (self shapes third position x + (self size / 2) - 1)@(self shapes third position y).
+				
+				self shapes last position: (pr + self shapes first encompassingRectangle origin x)@(self fixedPosition y).
+				
+				].
+			
+			(self orientation = #vertical) ifTrue: [
+				
+				pr := ((self shapes last position y)-(self shapes third encompassingRectangle origin y)) / (self shapes third encompassingRectangle height) * self size.
+								
+				self shapes third position: self fixedPosition.
+				
+				self shapes first position: (self shapes third position x)@(self shapes third position y - (self size / 2) + 1).
+				self shapes second position: (self shapes third position x)@(self shapes third position y + (self size / 2) - 1).
+
+				self shapes last position:(self fixedPosition x)@(pr + self shapes first encompassingRectangle origin y).
+			 
+				].
+			
+	
+	self shapes fourth position: self fixedPosition.		
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> signalUpdateSize [
+
+	(self orientation = #horizontal) ifTrue: [
+				
+				self shapes third width: self size.
+				self shapes first position: (self shapes third position x - (self size / 2) + 1)@(self shapes third position y).
+				self shapes second position: (self shapes third position x + (self size / 2) - 1)@(self shapes third position y).
+				self shapes fourth width: (self size - (self shapes last width)).				
+				
+				].
+			(self orientation = #vertical) ifTrue: [
+				
+				self shapes third height: self size.
+				self shapes first position: (self shapes third position x)@(self shapes third position y - (self size / 2) + 1).
+				self shapes second position: (self shapes third position x)@(self shapes third position y + (self size / 2) - 1).
+				self shapes fourth height: (self size - (self shapes last width)).
+				].
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> translationHorizontal: evt [
 	| t |
 
-	t := (evt step x) / self size * (self view canvas camera encompassingRectangleOf: self objects) width * self view canvas camera scale.
+	t := (evt step x) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale.
 	
 	^ t@0
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> translationVertical: evt [
+	| t |
+
+	t := (evt step y) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height) / self view canvas camera scale.
+	
+	^ 0@t
 ]
