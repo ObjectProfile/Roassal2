@@ -1,11 +1,11 @@
 Class {
-	#name : #RTExample,
+	#name : #RTGeneralExample,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-ExampleBrowser'
 }
 
 { #category : #animations }
-RTExample >> animationTest [
+RTGeneralExample >> animationTest [
 	"
 	self new animationTest
 	"
@@ -20,7 +20,7 @@ RTExample >> animationTest [
 ]
 
 { #category : #edges }
-RTExample >> arrowedEdges01 [
+RTGeneralExample >> arrowedEdges01 [
 	"
 	self new arrowedEdges01
 	"
@@ -44,7 +44,7 @@ RTExample >> arrowedEdges01 [
 ]
 
 { #category : #attachpoints }
-RTExample >> attachPoint01 [
+RTGeneralExample >> attachPoint01 [
 
 | v e1 e2 l |
 v := RTView new.
@@ -63,7 +63,7 @@ v open
 ]
 
 { #category : #beziers }
-RTExample >> beziers01 [
+RTGeneralExample >> beziers01 [
 
 	| v shape  edge els |
 	v := RTView new.
@@ -79,7 +79,7 @@ RTExample >> beziers01 [
 ]
 
 { #category : #beziers }
-RTExample >> beziers02 [
+RTGeneralExample >> beziers02 [
 	"
 	self new beziers02
 	"
@@ -124,7 +124,7 @@ v openWithMenu
 ]
 
 { #category : #beziers }
-RTExample >> beziersWithArrow [
+RTGeneralExample >> beziersWithArrow [
 
 	"self new beziersWithArrow"
 	| v shape  edge els |
@@ -140,7 +140,7 @@ RTExample >> beziersWithArrow [
 ]
 
 { #category : #animations }
-RTExample >> blinking [
+RTGeneralExample >> blinking [
 	"
 	self new blinking
 	"
@@ -154,7 +154,7 @@ RTExample >> blinking [
 ]
 
 { #category : #layout }
-RTExample >> cellLayout [
+RTGeneralExample >> cellLayout [
 	"
 	self new cellLayout
 	"
@@ -169,7 +169,7 @@ RTExample >> cellLayout [
 ]
 
 { #category : #layout }
-RTExample >> cellLayout2 [
+RTGeneralExample >> cellLayout2 [
 	"
 	self new cellLayout2
 	"
@@ -184,7 +184,7 @@ RTExample >> cellLayout2 [
 ]
 
 { #category : #layout }
-RTExample >> cellLayout3 [
+RTGeneralExample >> cellLayout3 [
 	"
 	self new cellLayout3
 	"
@@ -199,7 +199,7 @@ RTExample >> cellLayout3 [
 ]
 
 { #category : #layout }
-RTExample >> circleLayout [
+RTGeneralExample >> circleLayout [
 	"
 	self new circleLayout
 	"
@@ -215,7 +215,7 @@ RTExample >> circleLayout [
 ]
 
 { #category : #shapes }
-RTExample >> circleWaves [
+RTGeneralExample >> circleWaves [
 	"
 	self new circleWaves
 	"
@@ -236,7 +236,7 @@ RTExample >> circleWaves [
 ]
 
 { #category : #shapes }
-RTExample >> circles [
+RTGeneralExample >> circles [
 	"
 	self new circles
 	"
@@ -254,7 +254,7 @@ RTExample >> circles [
 ]
 
 { #category : #layout }
-RTExample >> classHierarchy [
+RTGeneralExample >> classHierarchy [
 	"
 	self new classHierarchy
 	"
@@ -271,7 +271,7 @@ RTExample >> classHierarchy [
 ]
 
 { #category : #layout }
-RTExample >> clusterLayout [
+RTGeneralExample >> clusterLayout [
 	"
 	self new clusterLayout
 	"
@@ -286,7 +286,7 @@ RTExample >> clusterLayout [
 ]
 
 { #category : #shapes }
-RTExample >> colorWaves [
+RTGeneralExample >> colorWaves [
 	"
 	self new colorWaves
 	"
@@ -313,7 +313,7 @@ RTExample >> colorWaves [
 ]
 
 { #category : #edges }
-RTExample >> directedEdges01 [
+RTGeneralExample >> directedEdges01 [
 	"
 	self new directedEdges01
 	"
@@ -353,7 +353,7 @@ v open
 ]
 
 { #category : #edges }
-RTExample >> directedEdges02 [
+RTGeneralExample >> directedEdges02 [
 	"
 	self new directedEdges02
 	"
@@ -392,7 +392,7 @@ v open
 ]
 
 { #category : #fun }
-RTExample >> dragonCurve [
+RTGeneralExample >> dragonCurve [
 	"
 	self new dragonCurve
 	"
@@ -442,7 +442,7 @@ RTExample >> dragonCurve [
 ]
 
 { #category : #edges }
-RTExample >> dynamicEdges01 [
+RTGeneralExample >> dynamicEdges01 [
 	"
 	self new dynamicEdges01
 	"
@@ -459,7 +459,7 @@ v open
 ]
 
 { #category : #edges }
-RTExample >> dynamicEdges02 [
+RTGeneralExample >> dynamicEdges02 [
 	"
 	self new dynamicEdges02
 	"
@@ -479,7 +479,7 @@ v open
 ]
 
 { #category : #edges }
-RTExample >> dynamicLabels [
+RTGeneralExample >> dynamicLabels [
 	"
 	self new dynamicLabels
 	"
@@ -497,7 +497,7 @@ RTExample >> dynamicLabels [
 ]
 
 { #category : #shapes }
-RTExample >> edges [
+RTGeneralExample >> edges [
 	"
 	self new edges
 	"
@@ -519,7 +519,7 @@ RTExample >> edges [
 ]
 
 { #category : #shapes }
-RTExample >> edges2 [
+RTGeneralExample >> edges2 [
 	"
 	self new edges2
 	"
@@ -539,7 +539,7 @@ RTExample >> edges2 [
 ]
 
 { #category : #interaction }
-RTExample >> edition [
+RTGeneralExample >> edition [
 
 	"
 	self new edition
@@ -605,7 +605,7 @@ RTExample >> edition [
 ]
 
 { #category : #nesting }
-RTExample >> elementWithFontsZooming [
+RTGeneralExample >> elementWithFontsZooming [
 	"
 	self new elementWithFontsZooming
 	"
@@ -639,7 +639,7 @@ RTExample >> elementWithFontsZooming [
 ]
 
 { #category : #nesting }
-RTExample >> elementZooming [
+RTGeneralExample >> elementZooming [
 	"
 	self new elementZooming
 	"
@@ -673,7 +673,7 @@ RTExample >> elementZooming [
 ]
 
 { #category : #animations }
-RTExample >> escapingCircle [
+RTGeneralExample >> escapingCircle [
 
 	| v e |
 	v := RTView new.
@@ -690,7 +690,7 @@ RTExample >> escapingCircle [
 ]
 
 { #category : #animations }
-RTExample >> expandingArc [
+RTGeneralExample >> expandingArc [
 	"
 	self new expandingArc
 	"
@@ -718,7 +718,7 @@ RTExample >> expandingArc [
 ]
 
 { #category : #layout }
-RTExample >> forceBasedLayout [
+RTGeneralExample >> forceBasedLayout [
 	"
 	self new forceBasedLayout
 	"
@@ -744,7 +744,7 @@ RTExample >> forceBasedLayout [
 ]
 
 { #category : #groups }
-RTExample >> group1 [
+RTGeneralExample >> group1 [
 	"self new group1"
 
 	| view group1 group2 host1 host2 edgesGroup1 edgesGroup2 |
@@ -785,7 +785,7 @@ RTExample >> group1 [
 ]
 
 { #category : #animations }
-RTExample >> growingSquare [
+RTGeneralExample >> growingSquare [
 	" 
 	self new growingSquare
 	"
@@ -806,7 +806,7 @@ RTExample >> growingSquare [
 ]
 
 { #category : #shapes }
-RTExample >> growingSquares [
+RTGeneralExample >> growingSquares [
 	"
 	self new growingSquares
 	"
@@ -824,7 +824,7 @@ RTExample >> growingSquares [
 ]
 
 { #category : #interaction }
-RTExample >> highlight [
+RTGeneralExample >> highlight [
 	" self new highlight "
 		
 	| v es |
@@ -846,7 +846,7 @@ RTExample >> highlight [
 ]
 
 { #category : #shapes }
-RTExample >> highlightSquare [
+RTGeneralExample >> highlightSquare [
 	"
 	self new highlightSquare
 	"
@@ -869,7 +869,7 @@ RTExample >> highlightSquare [
 ]
 
 { #category : #interaction }
-RTExample >> hoverZoom [
+RTGeneralExample >> hoverZoom [
 	"
 	self new hoverZoom
 	"
@@ -894,7 +894,7 @@ RTExample >> hoverZoom [
 ]
 
 { #category : #labels }
-RTExample >> label [
+RTGeneralExample >> label [
 	"
 	self new label
 	"
@@ -908,7 +908,7 @@ RTExample >> label [
 ]
 
 { #category : #shapes }
-RTExample >> label2 [
+RTGeneralExample >> label2 [
 	"
 	self new label2
 	"
@@ -924,7 +924,7 @@ RTExample >> label2 [
 ]
 
 { #category : #shapes }
-RTExample >> label3 [
+RTGeneralExample >> label3 [
 	"
 	self new label3
 	"
@@ -940,7 +940,7 @@ RTExample >> label3 [
 ]
 
 { #category : #shapes }
-RTExample >> linkedSquares [
+RTGeneralExample >> linkedSquares [
 	"
 	self new linkedSquares
 	"
@@ -963,7 +963,7 @@ RTExample >> linkedSquares [
 ]
 
 { #category : #shapes }
-RTExample >> manySquares [
+RTGeneralExample >> manySquares [
 	"
 	self new manySquares
 	"
@@ -985,7 +985,7 @@ RTExample >> manySquares [
 ]
 
 { #category : #camera }
-RTExample >> movingCamera [
+RTGeneralExample >> movingCamera [
 	"
 	self new movingCamera
 	"
@@ -1004,7 +1004,7 @@ RTExample >> movingCamera [
 ]
 
 { #category : #nesting }
-RTExample >> multipleNesting [
+RTGeneralExample >> multipleNesting [
 	" 
 	self new multipleNesting
 	"
@@ -1052,7 +1052,7 @@ RTExample >> multipleNesting [
 ]
 
 { #category : #nesting }
-RTExample >> nestedHierarchy [
+RTGeneralExample >> nestedHierarchy [
 	" 
 	self new nestedHierarchy
 	"
@@ -1076,7 +1076,7 @@ RTExample >> nestedHierarchy [
 ]
 
 { #category : #nesting }
-RTExample >> nesting [
+RTGeneralExample >> nesting [
 	"
 	self new nesting
 	"
@@ -1104,7 +1104,7 @@ RTExample >> nesting [
 ]
 
 { #category : #nesting }
-RTExample >> nesting2 [
+RTGeneralExample >> nesting2 [
 	"
 	self new nesting2
 	"
@@ -1132,7 +1132,7 @@ RTExample >> nesting2 [
 ]
 
 { #category : #nesting }
-RTExample >> nesting3 [
+RTGeneralExample >> nesting3 [
 	"
 	self new nesting3
 	"
@@ -1158,7 +1158,7 @@ RTExample >> nesting3 [
 ]
 
 { #category : #nesting }
-RTExample >> nesting4 [
+RTGeneralExample >> nesting4 [
 	"
 	self new nesting4
 	"
@@ -1188,7 +1188,7 @@ RTExample >> nesting4 [
 ]
 
 { #category : #animations }
-RTExample >> newYear2014 [
+RTGeneralExample >> newYear2014 [
 
 	"
 	self new newYear2014
@@ -1226,7 +1226,7 @@ RTExample >> newYear2014 [
 ]
 
 { #category : #normalizers }
-RTExample >> normalizer01 [
+RTGeneralExample >> normalizer01 [
 	"
 	self new normalizer01
 	"
@@ -1249,7 +1249,7 @@ RTExample >> normalizer01 [
 ]
 
 { #category : #layout }
-RTExample >> numbers [
+RTGeneralExample >> numbers [
 	"self new numbers"
 	| view elements |
 	view := RTView new.	
@@ -1269,7 +1269,7 @@ RTExample >> numbers [
 ]
 
 { #category : #popup }
-RTExample >> popup1 [
+RTGeneralExample >> popup1 [
 	"
 	self new popup1
 	"
@@ -1287,7 +1287,7 @@ RTExample >> popup1 [
 ]
 
 { #category : #popup }
-RTExample >> popupView1 [
+RTGeneralExample >> popupView1 [
 	"
 	self new popupView1
 	"
@@ -1311,7 +1311,7 @@ RTExample >> popupView1 [
 ]
 
 { #category : #popup }
-RTExample >> popupView2 [
+RTGeneralExample >> popupView2 [
 	"
 	self new popupView2
 	"
@@ -1340,7 +1340,7 @@ RTExample >> popupView2 [
 ]
 
 { #category : #popup }
-RTExample >> popupWithLegend [
+RTGeneralExample >> popupWithLegend [
 	"
 	self new popupWithLegend
 	"
@@ -1395,7 +1395,7 @@ view open
 ]
 
 { #category : #labels }
-RTExample >> rotatingLabels [
+RTGeneralExample >> rotatingLabels [
 	"
 	self new rotatingLabels
 	"
@@ -1413,7 +1413,7 @@ RTExample >> rotatingLabels [
 ]
 
 { #category : #labels }
-RTExample >> rotatingLabelsAnimated [
+RTGeneralExample >> rotatingLabelsAnimated [
 	"
 	self new rotatingLabelsAnimated
 	"
@@ -1444,7 +1444,7 @@ RTExample >> rotatingLabelsAnimated [
 ]
 
 { #category : #animations }
-RTExample >> shrinking [
+RTGeneralExample >> shrinking [
 	"
 	self new shrinking
 	"
@@ -1468,7 +1468,7 @@ v open
 ]
 
 { #category : #layout }
-RTExample >> smoothLayout [
+RTGeneralExample >> smoothLayout [
 
 	"
 	self new smoothLayout
@@ -1499,7 +1499,7 @@ RTExample >> smoothLayout [
 ]
 
 { #category : #beziers }
-RTExample >> softviz01 [
+RTGeneralExample >> softviz01 [
 	"
 	self new softviz01
 	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
@@ -1543,7 +1543,7 @@ v open
 ]
 
 { #category : #'software visualization' }
-RTExample >> systemComplexity [
+RTGeneralExample >> systemComplexity [
 	"
 	self new systemComplexity
 	"
@@ -1574,7 +1574,7 @@ RTExample >> systemComplexity [
 ]
 
 { #category : #fun }
-RTExample >> worm [
+RTGeneralExample >> worm [
 	"
 	self new worm
 	"
@@ -1614,7 +1614,7 @@ v open
 ]
 
 { #category : #animations }
-RTExample >> zooming [
+RTGeneralExample >> zooming [
 
 	| v |
 	v := RTView new.
