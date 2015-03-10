@@ -906,6 +906,38 @@ fHx8fHx8fHx8fHx//QL7WkIkODawDAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleBitmap [
+
+	| v s |
+	v := RTView new.
+	s := RTBitmap new.
+	s form: RTIcon roassal.
+	v add: s element.
+	^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleBitmapIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADKUlEQVR4XuXZzSu0URyH8clL
+NvK2UFbKQrGwtreyEBtRdnb+DCmxICkriewoG1aUslI0ZjE0qxlqzDQLJU0z8jpf928O5vHM
+jCzmnh7PddUdc8+Z0vl03+eeIyDx+5cK8KeAD8KPD8IH4ccH4YPw44PwQfjxQfgg/Pgg/Pgg
+fBB+fBA+CD8+CB+EHx+ED8KPD8KPD8IH4ccH4YPw44PwQfjxQfgg/Pgg/PggfBB+fBA+CD8+
+CB+EHx+ED8KPD8LvvwB5eJBOT6WNDWlpSVpZkfb2pHSaD1K1cjlpe1vq6fH+6oA7Ghultjap
+vr5wbmzMjeWD+NjRkdTU5CZ8aEg6Ppaen7+OsXN1dW7M3Fz+VNq7YpLJpDf0mQ9SsdbW3CT3
+9krxuLS/L83Ofj92cDCPEQwGdXZ2plAo5F00OT5IRW5TNsHDw+713V3h1lSqnR333uRk/sow
+DDsMhg9SKZC+vsLrqys34XZrKtXIiHv/5EQvLy/5K8MwotEoH6RiPT4Wfp+edhM+Olo8bmHB
+vbe8/OV0IpHgL+q+NTHhJt3WkGzWPe6urkrd3VJXl3R+XvQRu3XxQfyqocGB2HeQjo7CenJw
+UPYjfBC/F3g77PeZGamz073e2uKDVL1YrPgJa3fXvW5v54NUvfl5N/nj41/Pt7a685ubfJCq
+NjXlJt6etP7M9rDsfG2tlMkU3eb4IH71sS3ifbcoqr/fvWdryu2t9PQkDQzwQaqyoJfKHoFb
+Wgpj7Fhf59+yfOvy0k1yTU35MXa7svXFrpbDQ/4a4muLiw6kufn9y/ujUqmU92+Rh28/duft
+ff2mbZPfA3J/L11fv9+9cp+7uPbT9qxKdXNz8znu4uKCv5flVxnv1vSxi2tHzPt+Eve25f8+
+IpEIf7e3Wp17e1Y2yeFwuOyYrLfQ2xg7rt+vLj6Ij72+vv7g4Sz3o3F8EH58ED4IPz4IH4Qf
+H4QPwo8Pwgfhxwfhxwfhg/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz4IH4QfH4QPwo8Pwgfh
+xwfhxwfhg/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz7Ib+0NJ43wr9GLX5MAAAAASUVORK5C
+YII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleBorderWidth [
 
 | v shape |
@@ -1536,6 +1568,37 @@ ibOz9O+uqlwU65RBm0smeLprw+Is5xM7VCzzsNEm8xwLZoNkxCmG/nck57DJu5ls2xuCTDw3
 bRaoDb4x+14kxGt2VNKpPwiee2EaXPV2rMIvqrhP8LyKX1xZHfQLoU+fPn369OnTp0+fPn36
 9OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn36
 JPwNXt+qEqTBc4UAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleCreatingBitmap [
+
+	| v  s trachelShape |
+	v := RTView new.
+
+	s := RTBitmap element.
+	v add: s.
+
+	trachelShape := s trachelShape.
+	trachelShape extent: 180 @ 100.
+	trachelShape fillColor: Color blue.
+
+	1 to: 80 do: [ :i |
+		trachelShape at: i @ i put: Color green ].
+
+	^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleCreatingBitmapIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABTElEQVR4XuXZQQqDMABE0blZ
+b2Z6sx4t1W0XBdHWkfch+zAPQUjm9Gsq/gQ+iJ8P4oP4+SA+iJ8P4oP4+SA+iJ8P4ueD+CB+
+PogP4ueD+CB+PogP4ueD+PkgPoifD+KD+PkgPoifD+KD+Pkgfj6ID+Lng/ggfj6ID+Lng/gg
+fj6Inw/ig3y/wOM1s96i5fgg2xDL0wepAilC8UHSheKDfI6yDB+kCmQ7Y/ggVSAXovgg6ULx
+QdKF4oOkC8UHSReKD7JnsD/8Evsge0f78Zfig6QLxQdJF4oPki4UH+ToiCe/p/ggmf4DlQ/i
+g/ggdwHx80F8ED8fxAfx80F8ED8fxAfx80H8fBAfxM8H8UH8fBAfxM8H8UH8fBA/H8QH8fNB
+fBA/H8QH8fNBfBA/H8TPB/FB/HwQH8TPB/FB/HwQH8TPB/HzQXwQPx/kVr0B+TcSGNGBj4kA
+AAAASUVORK5CYII='
 ]
 
 { #category : #sources }

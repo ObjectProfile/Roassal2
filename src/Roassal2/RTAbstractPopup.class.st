@@ -1,3 +1,7 @@
+"
+A RTAbstractPopup is an sbtract class that describes popup.
+
+"
 Class {
 	#name : #RTAbstractPopup,
 	#superclass : #RTInteraction,

@@ -1,3 +1,7 @@
+"
+A RTVisitor is a simple visitor.
+
+"
 Class {
 	#name : #RTVisitor,
 	#superclass : #RTObject,
