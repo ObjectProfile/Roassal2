@@ -37,6 +37,8 @@ RTView >> accept: aVisitor [
 
 { #category : #adding }
 RTView >> add: anElementOrAnEdge [
+	"An element or an edge may be provided here"
+	"The elements or edges variables grow respectively"
 	anElementOrAnEdge addedIn: self.
 	anElementOrAnEdge renderOn: trCanvas 
 
