@@ -1,5 +1,5 @@
 "
-A RTScrollPad is a scrollable pad to drag the view in 2D with scalability.
+A RTScrollPad is a scrollable pad to drag the view in 2D with scalability. See comments in RTScrollBarBuilder
 
 "
 Class {
@@ -69,8 +69,8 @@ RTScrollPad >> renderIn: aView [
 RTScrollPad >> translation: evt [
 	| tx ty |
 	
-	tx := (evt step x) / self size * (self view canvas camera encompassingRectangleOf: self objects) width * self view canvas camera scale.
-	ty := (evt step y) / self size * (self view canvas camera encompassingRectangleOf: self objects) height * self view canvas camera scale.
+	tx := (evt step x) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale.
+	ty := (evt step y) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height) / self view canvas camera scale.
 	
 	^ tx@ty
 ]
