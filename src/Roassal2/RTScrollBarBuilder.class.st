@@ -41,6 +41,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> addShapesToView [
+	
+	self shapes do: [ :s | self view canvas addFixedShape: s ].
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> barShape [
 	^ barShape
 ]
@@ -66,7 +72,7 @@ RTScrollBarBuilder >> defaultScrollBar [
 	self scrollBarType: #isBasic. 
 	self movable: #isMovable.
 	self barShape: #anEllipse.
-	self fixedPosition:  (self view canvas extent x*3/4)@(self view canvas extent y *3/4).
+	self fixedPosition:  [ :v | (v view canvas extent x /2)@(v view canvas extent y  * 3 / 4)].
 	self size: 200.
 	self width: 20.
 	self orientation: #horizontal	
@@ -81,7 +87,7 @@ ifFalse: [ ^ fixedPosition].
 
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> fixedPosition: aPositionOrABlock [
-"set the initial position of the scroll bar"
+"set the initial position of the scroll bar, if a block, the block will be evaluated with 'cull self'. For example a block [:v | v view canvas extent] will set the position to canvas extent, just as [<myBuilder> view canvas extent]"
 	fixedPosition:= aPositionOrABlock 
 ]
 
@@ -173,6 +179,28 @@ RTScrollBarBuilder >> shapes: aCollection [
 ]
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> signalUpdate [
+	
+	"this method is used to increase the size of the shapes composing the scroll bar when the size is defined by a Block, for example to follow the size of the windows
+	Or if the position is fixed on the border on the widows, the scroll bar should follow the windows border at signal updates"
+
+	self assert: (self shapes isNotNil).
+
+	(self shapes) ifNotEmpty: [ 
+	
+		(self fixedPositionBlock isBlock) ifTrue: [ 
+			self signalUpdatePosition.				
+			].
+	
+		(self sizeBlock isBlock) ifTrue: [  
+			self signalUpdateSize.
+			].
+		].
+	
+	self view signalUpdate. 
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> size [
 "get the value of the size, in case of block, evaluation of self"
 (self sizeBlock isBlock ) ifTrue: [ ^ size cull: self ]
@@ -181,7 +209,7 @@ ifFalse: [ ^ size].
 
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> size: aSizeOraBlock [
-"set the size of scroll bar, it's length"
+"set the size of scroll bar, it's length. If a block, the block will be evaluated with 'cull self'. For example a block [ :v | v view canvas extent x] will set the size to canvas width, just as [<myBuilder> view canvas extent x]"
 	size:= aSizeOraBlock.
 ]
 
