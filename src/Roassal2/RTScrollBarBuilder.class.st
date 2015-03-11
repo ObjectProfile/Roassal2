@@ -7,6 +7,10 @@ aving an orientation #vertical or #horizontal.
 the default configuration is #isBasic and #isStatic,
 
 the bar shape is defined by #barShape: <#aBox or default value #anEllipse>
+the bar can have a specificity like #scalable, so it give an idea of the size of the view
+
+Size or fixedPosition can be defined as blocks
+
 
 Instance Variables
 	objects:		<Object>
@@ -35,7 +39,8 @@ Class {
 		'orientation',
 		'width',
 		'shapes',
-		'barShape'
+		'barShape',
+		'barSpecific'
 	],
 	#category : #'Roassal2-Builder-ScrollBar'
 }
@@ -47,6 +52,24 @@ RTScrollBarBuilder >> addShapesToView [
 ]
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> barHeight [
+ "This method is used to get the height of the bar from a scroll bar builder only, depending on the specificity of the bar"
+	(self barSpecific = #scalable) ifTrue: [
+		| max min s |
+		
+		max := self size - 10.
+		min := 10.
+			
+		s := (self size * (self view canvas extent y) / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height) / self view canvas camera scale).
+		
+		(s > max) ifTrue: [ ^max ].
+		(s < min) ifTrue: [ ^min ].
+		^ s.
+		
+		] ifFalse: [ ^ self width]
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> barShape [
 	^ barShape
 ]
@@ -54,6 +77,33 @@ RTScrollBarBuilder >> barShape [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> barShape: aSymbol [
 	barShape := aSymbol
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> barSpecific [
+	^ barSpecific 
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> barSpecific: aSymbol [
+	barSpecific := aSymbol 
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> barWidth [
+ "This method is used to get the width of the bar from a scroll bar builder only, depending on the specificity of the bar"
+	(self barSpecific = #scalable) ifTrue: [
+		| max min s |
+		
+		max := self size -10.
+		min := 10.
+			
+		s := (self size * (self view canvas extent x) / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale).
+		
+		(s > max) ifTrue: [ ^max ].
+		(s < min) ifTrue: [ ^min ].
+		^ s.
+		] ifFalse: [ ^ self width]
 ]
 
 { #category : #'as yet unclassified' }
