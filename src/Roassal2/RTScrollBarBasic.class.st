@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 RTScrollBarBasic class >> fromBuilder: b [
 
-	 ^ self new view: b view; objects: b objects; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape.
+	 ^ self new view: b view; objects: b objects; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
 ]
 
 { #category : #'as yet unclassified' }
@@ -53,9 +53,9 @@ RTScrollBarBasic >> addAnimations [
 			]
 		].
 	
-	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
-
-
+	"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]."
+	"temporary solution, need TRZoomCanvasEvent"
+	self view when: TREvent do: [ :evt | self signalUpdate]
 
 
 	
@@ -73,7 +73,7 @@ RTScrollBarBasic >> defineShapes [
 	"bar is the shape to drag and drop, start ad stop are made to show the border of scroll Bar"
 	(self orientation = #horizontal) ifTrue: [ 
 		
-		bar size: self width; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
+		bar height: self width; width: self barWidth; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
 		start := TRBoxShape new color: Color lightGray; height:self width; width:2; position: (self fixedPosition x - (self size / 2) + 1)@(self fixedPosition y); strokePaint: nil.
 		stop := TRBoxShape new color: Color lightGray; height:self width; width:2; position: (self fixedPosition x + (self size / 2) - 1)@(self fixedPosition y); strokePaint: nil. 
 		
@@ -86,14 +86,15 @@ RTScrollBarBasic >> defineShapes [
 
 (self orientation = #vertical) ifTrue: [ 
 		
-		bar size: self width; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
+		bar height: self barHeight; width: self width; color: (Color lightGray);  position: self fixedPosition; strokePaint: nil.
 		start := TRBoxShape new color: Color lightGray; width:self width; height:2; position: (self fixedPosition x )@(self fixedPosition y - (self size / 2) + 1); strokePaint: nil.
 		stop := TRBoxShape new color: Color lightGray; width:self width; height:2; position: (self fixedPosition x )@(self fixedPosition y + (self size / 2) - 1); strokePaint: nil.
 		
 		"This shape is the the fill of the scroll bar"
 		surroundingRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (start encompassingRectangle origin) corner:(stop encompassingRectangle corner)); color: (Color gray alpha: 0.1); strokePaint: nil.
+
 		"the margeRectangle handle the width/2 of the bar"
-		margeRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (surroundingRectangle encompassingRectangle origin + (0@(bar width /2)))corner: (surroundingRectangle encompassingRectangle corner - (0@(bar width /2)))); color: (Color gray alpha:0); strokePaint: nil.
+		margeRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (surroundingRectangle encompassingRectangle origin + (0@(bar height /2)))corner: (surroundingRectangle encompassingRectangle corner - (0@(bar height /2)))); color: (Color gray alpha:0); strokePaint: nil.
 	].
 
 	
@@ -169,24 +170,16 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes first position: (self fixedPosition x - (self size / 2) +1)@(self shapes third position y).
 				self shapes second position: (self fixedPosition x + (self size / 2) -1)@(self shapes third position y).
 				self shapes fourth width: (self size - (self shapes last width)).		
-				
+				self shapes last width: self barWidth.
 				].
 			(self orientation = #vertical) ifTrue: [
 				
 				self shapes third height: self size.
 				self shapes first position: (self shapes third position x)@(self fixedPosition y - (self size / 2) +1).
 				self shapes second position: (self shapes third position x)@(self fixedPosition y + (self size / 2) -1).
-				self shapes fourth height: (self size - (self shapes last width)).
+				self shapes fourth height: (self size - (self shapes last height)).
+				self shapes last height: self barHeight.
 				].
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBasic >> translation: evt [
-	| t |
-
-	t := (evt step x) / self size * (self view canvas camera encompassingRectangleOf: self objects) width * self view canvas camera scale.
-	
-	^ t@0
 ]
 
 { #category : #'as yet unclassified' }
