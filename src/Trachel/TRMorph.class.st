@@ -53,7 +53,7 @@ TRMorph >> drawOn: aCanvas [
 		cs pathTransform
 			translateBy: (self extent / 2) asFloatPoint;
 			    scaleBy: trachelCanvas camera scale asFloat;
-			translateBy: trachelCanvas camera position negated.
+			translateBy: trachelCanvas camera position negated asFloatPoint.
 		trachelCanvas shapes do: [ :trachelShape |
 			trachelShape drawOn: cs.
 		].
