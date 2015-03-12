@@ -17,6 +17,11 @@ RTScrollPad class >> fromBuilder: b [
 { #category : #'as yet unclassified' }
 RTScrollPad >> addAnimations [
 
+	| bar surroundingRectangle margeRectangle |
+	bar := self shapes last.
+	surroundingRectangle := self shapes first.
+	margeRectangle:= self shapes second.
+
 	self shapes last when: TRMouseDragging do: [ :evt |
 		(self shapes second includesPoint: (self shapes last position + evt step)) & (self shapes first includesPoint: evt position) ifTrue: [  
 			self shapes last translateBy: evt step.
@@ -31,11 +36,23 @@ RTScrollPad >> addAnimations [
 			self view signalUpdate.
 			]
 		].
+	
 		
-		"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]."
-	"temporary solution, need TRZoomCanvasEvent"
-	self view when: TREvent do: [ :evt | self signalUpdate]
-
+	self view when: TRMouseDragging do: [ :evt | 
+		| translation |
+		translation := (self reverseTranslation: evt).
+		((margeRectangle includesPoint: (bar position + translation)) & ((self view canvas camera encompassingRectangleOf: self objects) containsPoint: (self view canvas camera position))) ifTrue: [ 
+			shapes last translateBy: translation.
+			self view signalUpdate
+			]. 
+		].
+	
+	"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]"
+	
+	"temporal solution because still problem at init"
+	self view when: TREvent do: [ :evt | self signalUpdate].
+	
+	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self signalUpdate. ]).
 
 	
 ]
@@ -82,6 +99,18 @@ RTScrollPad >> renderIn: aView [
 
 
 	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollPad >> reverseTranslation: evt [
+	| tx ty |
+
+
+	ty := ((evt step y)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height)) * self size.
+	
+	tx := ((evt step x)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width)) * self size.
+	
+	^ (tx negated)@(ty negated)
 ]
 
 { #category : #'as yet unclassified' }

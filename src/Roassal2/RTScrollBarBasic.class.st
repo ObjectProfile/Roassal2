@@ -53,9 +53,27 @@ RTScrollBarBasic >> addAnimations [
 			]
 		].
 	
-	"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]."
-	"temporary solution, need TRZoomCanvasEvent"
-	self view when: TREvent do: [ :evt | self signalUpdate]
+	self view when: TRMouseDragging do: [ :evt | 
+		| translation |
+		(self orientation = #horizontal) ifTrue: [
+			translation := (self reverseTranslationHorizontal: evt).
+			].
+		(self orientation = #vertical) ifTrue: [
+			translation := (self reverseTranslationVertical: evt).
+			].
+		((margeRectangle includesPoint: (bar position + translation)) & ((self view canvas camera encompassingRectangleOf: self objects) containsPoint: (self view canvas camera position))) ifTrue: [ 
+			shapes last translateBy: translation.
+			self view signalUpdate
+			]. 
+		].
+	
+	"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]"
+	
+	"temporal solution because still problem at init"
+	self view when: TREvent do: [ :evt | self signalUpdate].
+	
+	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self signalUpdate. ]).
+	
 
 
 	
@@ -118,10 +136,29 @@ RTScrollBarBasic >> renderIn: aView [
 	self defineShapes.
 	self addShapesToView.
 	self addAnimations.
+	self signalUpdate.
 
 
 
 	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> reverseTranslationHorizontal: evt [
+	| t |
+
+	t := ((evt step x)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width )) * self size.
+		
+	^ (t negated)@0
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> reverseTranslationVertical: evt [
+	| t |
+
+	t := ((evt step y)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height)) * self size.
+		
+	^ 0@(t negated)
 ]
 
 { #category : #'as yet unclassified' }
@@ -180,13 +217,14 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes fourth height: (self size - (self shapes last height)).
 				self shapes last height: self barHeight.
 				].
+			
 ]
 
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> translationHorizontal: evt [
 	| t |
 
-	t := (evt step x) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale.
+	t := ((evt step x) / self size) * (((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale).
 	
 	^ t@0
 ]
