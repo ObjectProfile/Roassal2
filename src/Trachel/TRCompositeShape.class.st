@@ -163,6 +163,11 @@ TRCompositeShape >> height [
 	^ self encompassingRectangle height
 ]
 
+{ #category : #accessing }
+TRCompositeShape >> height: aValue [
+	^ self extent: self width @ aValue
+]
+
 { #category : #'public - layout' }
 TRCompositeShape >> horizontal [
 	"Layout the shapes horizontally"
@@ -369,4 +374,9 @@ TRCompositeShape >> when: event do: aBlock [
 { #category : #accessing }
 TRCompositeShape >> width [
 	^ self encompassingRectangle width
+]
+
+{ #category : #accessing }
+TRCompositeShape >> width: aValue [
+	^ self extent: aValue @ self height
 ]
