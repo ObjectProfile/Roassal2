@@ -126,14 +126,6 @@ RTLayoutBuilder >> horizontalLine [
 	^ layout
 ]
 
-{ #category : #'public - layout' }
-RTLayoutBuilder >> horizontalTree [
-	actionOnEdges add: [ :edge | edge shape withHorizontalAttachPoint ].
-
-	layout := RTHorizontalTreeLayout new.
-	^ layout
-]
-
 { #category : #initialization }
 RTLayoutBuilder >> initialize [
 	super initialize.
