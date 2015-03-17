@@ -404,11 +404,30 @@ TRCanvas >> removeFixedShape: aShape [
 	fixedShapes := fixedShapes copyWithout: aShape
 ]
 
+{ #category : #actions }
+TRCanvas >> removeFixedShapes: someShapes [
+	fixedShapes := fixedShapes copyWithoutAll: someShapes
+]
+
 { #category : #building }
 TRCanvas >> removeShape: shape [
 	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
 	shape canvas: nil.
 	shape triggerRemoveCallbacks
+]
+
+{ #category : #building }
+TRCanvas >> removeShapes: someShapes [
+	shapes := shapes copyWithoutAll: someShapes.
+	self removeFixedShapes: someShapes.
+	someShapes do: [ :aShape | aShape canvas: nil; triggerRemoveCallbacks ].
+	
+]
+
+{ #category : #action }
+TRCanvas >> resetShapes [
+	"Remove all the shapes, no callback on the shapes is invoked!"
+	shapes := OrderedCollection new.
 ]
 
 { #category : #actions }
