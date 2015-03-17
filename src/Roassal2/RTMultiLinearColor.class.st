@@ -35,6 +35,11 @@ RTMultiLinearColor >> defaultColors [
 	^ Array with: Color red with: Color blue with: Color green
 ]
 
+{ #category : #initialization }
+RTMultiLinearColor >> defaultCommand [
+	^ #yourself
+]
+
 { #category : #accessing }
 RTMultiLinearColor >> indexesFor: f [
 	"f - float is between 0.0 and 1.0. Return an array of length two"
@@ -51,7 +56,8 @@ RTMultiLinearColor >> indexesFor: f [
 { #category : #initialization }
 RTMultiLinearColor >> initialize [
 	super initialize.
-	colors := self defaultColors
+	colors := self defaultColors.
+	command := self defaultCommand
 ]
 
 { #category : #accessing }
@@ -86,8 +92,8 @@ RTMultiLinearColor >> numberOfColors [
 
 { #category : #accessing }
 RTMultiLinearColor >> rtValue: anObject [
-	| intensity v |	
+	| v |	
 	v := command rtValue: anObject.
 	"v ranges from 0.0 to 1.0"
-	^ Color r: intensity g: intensity b: intensity
+	^ self level: v
 ]
