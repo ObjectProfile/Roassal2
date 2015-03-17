@@ -184,7 +184,7 @@ RTGroup >> pushBack [
 
 { #category : #public }
 RTGroup >> remove [
-	self do: #remove
+	self view removeElements: self
 ]
 
 { #category : #attributes }
