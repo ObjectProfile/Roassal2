@@ -114,7 +114,7 @@ RTGrapherBuilderTest >> testIsAxisDefined [
 	self assert: b isYAxisDefined.
 
 	b build.
-	self assert: b getAxisX step equals: 3 / 2.
+	self assert: b getAxisX step equals: 3.
 ]
 
 { #category : #tests }
@@ -124,7 +124,7 @@ RTGrapherBuilderTest >> testStepOnXAxis [
 	b add: (RTDataSet new points: #(1 2 3)).
 	b axisXWithNumberOfTicks: 2.
 	b build.
-	self assert: b getAxisX step equals: 3 / 2.
+	self assert: b getAxisX step equals: 3.
 ]
 
 { #category : #tests }
@@ -148,5 +148,5 @@ RTGrapherBuilderTest >> testWithStrangeValues [
 	graphBuilder axisY noLabel; noTick.
 	graphBuilder build.
 	
-	self assert: (graphBuilder view elements collect: #position) asArray equals: ((Array new: 9) at: 1 put: ((0@0)); at: 2 put: ((0@ -200)); at: 3 put: ((0@0)); at: 4 put: ((300@0)); at: 5 put: ((50@ -14.0)); at: 6 put: ((100@ -42.5)); at: 7 put: ((150@ -100.0)); at: 8 put: ((200@0.0)); at: 9 put: ((250@ -85.5)); yourself)
+	self assert: (graphBuilder view elements collect: #position) asArray equals: ((Array new: 9) at: 1 put: ((0@0)); at: 2 put: ((0@ -200)); at: 3 put: ((0@0)); at: 4 put: ((300@0)); at: 5 put: ((50@ -12.5)); at: 6 put: ((100@ -37.5)); at: 7 put: ((150@ -87.5)); at: 8 put: ((200@0.0)); at: 9 put: ((250@ -75.0)); yourself)
 ]
