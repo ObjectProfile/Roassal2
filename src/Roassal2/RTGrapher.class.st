@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'datasets',
 		'decorators',
-		'shouldUseOptimalTicksAndLabelsForY'
+		'shouldUseOptimalTicksAndLabelsForY',
+		'generator'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -95,11 +96,24 @@ RTGrapher >> hasDataSet [
 
 { #category : #'min and max' }
 RTGrapher >> homogenizeMinAndMax [
-	| tminX tmaxX tminY tmaxY |
-	tminX := self minX.
-	tmaxX := self maxX.
-	tminY := self minY.
-	tmaxY := self maxY.
+	| tminX tmaxX tminY tmaxY block r |
+	
+	generator setLooseFlag: true.
+	block := [ :axis :lmin :lmax | | result nticks|
+		nticks := axis numberOfTicks isZero ifTrue: [ 2 ] ifFalse: [ axis numberOfTicks ].
+		result := generator searchMin: lmin max: lmax desired: nticks.
+		axis numberOfTicks isZero ifFalse: [ axis numberOfTicks: result numberOfTicks ].
+		axis numberOfLabels isZero ifFalse: [ axis numberOfLabels: result numberOfTicks ].
+		result. ].
+
+	r := block value: self getAxisX value: self minX value: self maxX.
+	self minX: (tminX := r min).
+	self maxX: (tmaxX := r max).
+	
+	r := block value: self getAxisY value: self minY value: self maxY.
+	self minY: (tminY := r min).
+	self maxY: (tmaxY := r max).
+
 	datasets do: [ :ds |
 		ds minX: tminX.
 		ds minY: tminY.
@@ -118,6 +132,7 @@ RTGrapher >> initialize [
 	decorators := OrderedCollection new.
 		
 	shouldUseOptimalTicksAndLabelsForY := false.
+	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
 ]
 
 { #category : #accessing }
@@ -221,8 +236,8 @@ RTGrapher >> renderDataSetsIn: aView [
 { #category : #hooks }
 RTGrapher >> renderIn: aView [
 	datasets do: #computeMinAndMax.
-	self homogenizeMinAndMax.
 	self defineAxesIfNecessary.
+	self homogenizeMinAndMax.
 	self renderAxis.
 	self renderAllPluginsInFront.
 	self renderDataSetsIn: aView.
