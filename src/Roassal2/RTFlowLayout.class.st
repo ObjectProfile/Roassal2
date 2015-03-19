@@ -66,7 +66,7 @@ RTFlowLayout >> initialize [
 	self alignTop.
 ]
 
-{ #category : #util }
+{ #category : #'as yet unclassified' }
 RTFlowLayout >> maxNextLineHeightFrom: ele for: elements [
 	| nextLineX maxNextLineHeight anElement |
 	maxNextLineHeight := 0.

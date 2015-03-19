@@ -64,7 +64,7 @@ RTAbstractStackedDataSet >> renderBarChartIn: aView [
 			min: 0
 			max: builder extent x
 			minValue: 1
-			maxValue: elements size + 2.	
+			maxValue: maxX + 2.	
 
 	"We treat the element with a positive value"
 	positiveElements := elements select: [ :el | (y rtValue: el model) >= 0 ].
