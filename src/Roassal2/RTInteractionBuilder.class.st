@@ -1,6 +1,6 @@
 Class {
 	#name : #RTInteractionBuilder,
-	#superclass : #RTScopedBuilder,
+	#superclass : #RTAbstractBuilder,
 	#instVars : [
 		'interactions'
 	],
