@@ -23,6 +23,9 @@ RTScrollPad >> addAnimations [
 	margeRectangle:= self shapes second.
 
 	self shapes last when: TRMouseDragging do: [ :evt |
+		
+		(self view canvas camera encompassingRectangle containsPoint: (self view canvas camera position)) ifFalse: [ (self view canvas camera) translateTo:  ((self view canvas camera encompassingRectangle) pointNearestTo: (self view canvas camera position))  ].
+		
 		(self shapes second includesPoint: (self shapes last position + evt step)) & (self shapes first includesPoint: evt position) ifTrue: [  
 			self shapes last translateBy: evt step.
 			self view canvas camera translateBy: (self translation: evt).
@@ -47,12 +50,11 @@ RTScrollPad >> addAnimations [
 			]. 
 		].
 	
-	"self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate]"
-	
-	"temporary solution because still problem at init"
-	self view when: TREvent do: [ :evt | self signalUpdate].
-	
+	objects when: TRMouseDragging do: [ :evt |	self signalUpdate.].	
+	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self signalUpdate. ]).
+	self view canvas camera addCallback: (TRTranslationCallback new block: [ self signalUpdate. ]).
+
 
 	
 ]
@@ -106,9 +108,9 @@ RTScrollPad >> reverseTranslation: evt [
 	| tx ty |
 
 
-	ty := ((evt step y)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height)) * self size.
+	tx:= ((evt step x)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width )) * (self size - self shapes last width).
 	
-	tx := ((evt step x)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width)) * self size.
+	ty := ((evt step y)  / ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height)) * (self size - self shapes last height).
 	
 	^ (tx negated)@(ty negated)
 ]
@@ -117,16 +119,20 @@ RTScrollPad >> reverseTranslation: evt [
 RTScrollPad >> signalUpdatePosition [
 
 	| prx pry  org|
-		
-	prx := ((self shapes last position x)-(self shapes first encompassingRectangle origin x)) / (self shapes first encompassingRectangle width) * self size.
-	pry := ((self shapes last position y)-(self shapes first encompassingRectangle origin y)) / (self shapes first encompassingRectangle height) * self size.
+
+	(self movable = #isMovable) ifFalse: [ 		
+		prx := ((self shapes last position x)-(self shapes first encompassingRectangle origin x)) / (self shapes first encompassingRectangle width) * self size.
+		pry := ((self shapes last position y)-(self shapes first encompassingRectangle origin y)) / (self shapes first encompassingRectangle height) * self size.
 				
-	self shapes first position: self fixedPosition.
-	self shapes second position: self fixedPosition.
+		self shapes first position: self fixedPosition.
+		self shapes second position: self fixedPosition.
 	
-	org := (self fixedPosition x - (self size / 2) )@(self fixedPosition y - (self size / 2) ).
+		org := (self fixedPosition x - (self size / 2) )@(self fixedPosition y - (self size / 2) ).
 				
-	self shapes last position: (prx + org x)@((pry + org y)).
+		self shapes last position: (prx + org x)@((pry + org y)).
+		].
+	
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -137,7 +143,13 @@ RTScrollPad >> signalUpdateSize [
 			self shapes second width: (self size - (self shapes last width)).
 			self shapes second height: (self size - (self shapes last height)).
 			self shapes last width: self barWidth.
-			self shapes last height: self barHeight.				
+			self shapes last height: self barHeight.			
+						
+			((self shapes last position x - (self barWidth / 2)) < (self shapes first position x - (self size / 2))) ifTrue: [ self shapes last translateTo: (self shapes first position x - (self size / 2) + (self barWidth / 2))@(self shapes first position y)].
+				((self shapes last position x + (self barWidth / 2)) > (self shapes first position x + (self size / 2))) ifTrue: [ self shapes last translateTo: (self shapes first position x + (self size / 2) - (self barWidth / 2))@(self shapes first position y)].
+				
+			((self shapes last position y - (self barHeight / 2)) < (self shapes first position y - (self size / 2))) ifTrue: [ self shapes last translateTo: (self shapes first position x)@(self shapes first position y - (self size / 2) + (self barHeight / 2))].
+				((self shapes last position y + (self barHeight / 2)) > (self shapes first position y + (self size / 2))) ifTrue: [ self shapes last translateTo: (self shapes first position x)@(self shapes first position y + (self size / 2) - (self barHeight / 2))].	
 			
 	
 ]
@@ -146,8 +158,8 @@ RTScrollPad >> signalUpdateSize [
 RTScrollPad >> translation: evt [
 	| tx ty |
 	
-	tx := (evt step x) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale.
-	ty := (evt step y) / self size * ((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height) / self view canvas camera scale.
+		tx := ((evt step x) / (self size  - self shapes last width)) * (((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) width) / self view canvas camera scale).
+	ty := ((evt step y) / (self size  - self shapes last height)) * (((self view canvas camera fromSpaceToPixelForRectangle: (self view canvas camera encompassingRectangleOf: self objects)) height) / self view canvas camera scale).
 	
 	^ tx@ty
 ]

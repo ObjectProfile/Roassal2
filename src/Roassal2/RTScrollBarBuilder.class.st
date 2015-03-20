@@ -131,8 +131,7 @@ RTScrollBarBuilder >> defaultScrollBar [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> fixedPosition [
 "get the value of the initial fixed Position, in case of block, evaluation of self"
-(self fixedPositionBlock isBlock ) ifTrue: [^ fixedPosition cull: self ]
-ifFalse: [ ^ fixedPosition]. 
+	^ (fixedPosition rtValue: self)
 ]
 
 { #category : #'as yet unclassified' }
@@ -253,8 +252,7 @@ RTScrollBarBuilder >> signalUpdate [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> size [
 "get the value of the size, in case of block, evaluation of self"
-(self sizeBlock isBlock ) ifTrue: [ ^ size cull: self ]
-ifFalse: [ ^ size].  
+	^ size rtValue: self 
 ]
 
 { #category : #'as yet unclassified' }
