@@ -72,7 +72,8 @@ RTLayoutTest >> testCircleLayout [
 { #category : #tests }
 RTLayoutTest >> testCircleLayoutOnEmpty [
 
-	RTCircleLayout new doExecute: #()
+	RTCircleLayout new applyOn: #()
+	
 ]
 
 { #category : #tests }

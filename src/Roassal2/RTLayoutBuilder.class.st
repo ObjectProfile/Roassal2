@@ -1,3 +1,20 @@
+"
+RTLayoutBuilder is a higher abstract to manage layout. Most builder use it as it significantly shorten the use of layouts.
+
+Consider the following example:
+-=-=-=-=-=-=-=-=-=-=-=-=
+v := RTView new.
+
+es := (RTBox new size: 8) elementsOn: (1 to: 100).
+v addAll: es.
+
+lb := RTLayoutBuilder new.
+lb horizontalFlow.
+lb setUpElements: es.
+
+v
+-=-=-=-=-=-=-=-=-=-=-=-=
+"
 Class {
 	#name : #RTLayoutBuilder,
 	#superclass : #RTObject,
@@ -59,6 +76,13 @@ RTLayoutBuilder >> doDynamicForceBasedLayoutOn: elements [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> dominanceTree [
+	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
+	layout := RTDominanceTreeLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> dynamicForce [
 	"This flag is used in setUpElements to add an animation to the view. This is a bit hackish, yes. We will see in the future"
 	dynamicForceBasedLayout := true
@@ -117,6 +141,12 @@ RTLayoutBuilder >> hasPartition [
 RTLayoutBuilder >> horizontalDominanceTree [
 	actionOnEdges add: [ :edge | edge shape withHorizontalAttachPoint ].
 	layout := RTHorizontalDominanceTreeLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> horizontalFlow [
+	layout := RTHorizontalFlowLayout new.
 	^ layout
 ]
 
@@ -189,6 +219,13 @@ RTLayoutBuilder >> setUpElements: elements [
 	elements do: #updateEdgesON.
 	elements do: #updateConnectedEdges.
 
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> sugiyama [
+	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
+	layout := RTSugiyamaLayout new.
+	^ layout
 ]
 
 { #category : #'public - layout' }
