@@ -30,7 +30,7 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 ]
 
 { #category : #public }
-RTEdgeBuilder >> connectFrom: aFromBlock ToAll: aBlockOrASymbol [
+RTEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 
 	| edges toElements fromElement |
 	edges := RTGroup new.
