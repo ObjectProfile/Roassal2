@@ -11,7 +11,9 @@ Class {
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> doubleScrollBar [
 
-"RTScrollBarBuilderExamples new doubleScrollBar"
+"
+RTScrollBarBuilderExamples new doubleScrollBar
+"
 | b b2 b3 |
 
 b := RTMondrian new.
@@ -48,7 +50,9 @@ b3 build.
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> example1 [
 
-"RTScrollBarBuilderExamples new example1"
+"
+RTScrollBarBuilderExamples new example1
+"
 
 | b b2 |
 b := RTMondrian new.
@@ -74,7 +78,9 @@ b2 build.
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> example2 [
 
-"RTScrollBarBuilderExamples new example2"
+"
+RTScrollBarBuilderExamples new example2
+"
 
 | b b2 |
 b := RTMondrian new.
@@ -100,7 +106,9 @@ b2 build.
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> example3 [
 
-"RTScrollBarBuilderExamples new example3"
+"
+RTScrollBarBuilderExamples new example3
+"
 
 | b b2 |
 b := RTMondrian new.
@@ -134,7 +142,9 @@ RTScrollBarBuilderExamples >> initialize [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> padWithScalableBar [
 
-"RTScrollBarBuilderExamples new padWithScalableBar"
+"
+RTScrollBarBuilderExamples new padWithScalableBar
+"
 
 | b b2 |
 b := RTMondrian new.
@@ -163,7 +173,9 @@ b2 build.
 { #category : #'as yet unclassified' }
 RTScrollBarBuilderExamples >> scrollsWithInteraction [
 
-"RTScrollBarBuilderExamples new scrollsWithInteraction"
+"
+RTScrollBarBuilderExamples new scrollsWithInteraction
+"
 | b |
 
 b := RTMondrian new.
