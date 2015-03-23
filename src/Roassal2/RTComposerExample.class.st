@@ -416,7 +416,7 @@ RTComposerExample >> exampleWorldPopulation [
 	ds interaction popupText.
 	grapher add: ds.
 	grapher axisX noLabel; noTick; title: 'countries'.
-	grapher axisY noDecimal; labelConversion: [ :aValue | (aValue / 1000000) round: 2]; title: 'Millions'.
+	grapher axisY noDecimal; labelConvertion: [ :aValue | (aValue / 1000000) round: 2]; title: 'Millions'.
 	grapher build.
 	composer group: #graph.
 	

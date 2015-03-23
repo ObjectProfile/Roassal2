@@ -66,7 +66,7 @@ RTAxisConfiguration >> color: aColor [
 { #category : #configuration }
 RTAxisConfiguration >> decimal: anInteger [
 	"Set the number of decimals"
-	self labelConversion: [ :number | number asFloat round: anInteger ]
+	self labelConvertion: [ :number | number asFloat round: anInteger ]
 ]
 
 { #category : #configuration }
@@ -96,7 +96,7 @@ RTAxisConfiguration >> fromPoint: anObject [
 
 { #category : #action }
 RTAxisConfiguration >> getStringFromNumber: aNumber [
-	^ (self labelConversion rtValue: aNumber) asString
+	^ (self labelConvertion rtValue: aNumber) asString
 ]
 
 { #category : #testing }
@@ -130,12 +130,12 @@ RTAxisConfiguration >> initialize [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> labelConversion [
+RTAxisConfiguration >> labelConvertion [
 	^ labelConvertion
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> labelConversion: aOneArgBlock [
+RTAxisConfiguration >> labelConvertion: aOneArgBlock [
 	"The argument is a one arg block taking the numerical value and returning another numerical value or a string"
 	labelConvertion := aOneArgBlock
 ]
@@ -199,7 +199,7 @@ RTAxisConfiguration >> minValueIfNotSet: aMinValue [
 { #category : #configuration }
 RTAxisConfiguration >> noDecimal [
 	"Make the axis labels without decimal"
-	self labelConversion: [ :number | number asInteger ]
+	self labelConvertion: [ :number | number asInteger ]
 ]
 
 { #category : #configuration }
@@ -357,5 +357,5 @@ RTAxisConfiguration >> twoDecimals [
 
 { #category : #configuration }
 RTAxisConfiguration >> withThousandsSeparator [
-	self labelConversion: [ :number | number asInteger asStringWithCommas ] 
+	self labelConvertion: [ :number | number asInteger asStringWithCommas ] 
 ]

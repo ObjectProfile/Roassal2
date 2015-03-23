@@ -21,11 +21,6 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #public }
-RTLabel class >> text: aBlockOrValueOrSymbol [
-	^ self new text: aBlockOrValueOrSymbol
-]
-
 { #category : #configuration }
 RTLabel >> defaultColor [
 

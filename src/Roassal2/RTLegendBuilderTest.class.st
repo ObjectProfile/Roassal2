@@ -24,39 +24,6 @@ RTLegendBuilderTest >> setUp [
 ]
 
 { #category : #tests }
-RTLegendBuilderTest >> testAddObjectText [
-
-	| lb |
-	lb := RTLegendBuilder new.
-	lb addObject: 'hello world' text: [ :str | str substrings first ].
-	lb build.
-	
-	self assert: lb view numberOfElements equals: 2.
-	self assert: lb view elements second model equals: 'hello world'.
-	self assert: (lb view elements second shape textFor: lb view elements second) equals: 'hello'.
-]
-
-{ #category : #tests }
-RTLegendBuilderTest >> testBelow [
-
-	| view element lb |
-	view := RTView new.
-	element := (RTEllipse new size: 30) element.
-	view add: element.
-
-	lb := RTLegendBuilder new.
-	lb view: view.
-	lb below.
-	lb addText: 'Hello world'.
-	lb build.
-	
-	self assert: view numberOfElements equals: 3.
-	self assert: view elements first shape class == RTEllipse.
-	self assert: view elements third shape class == RTLabel.
-	self assert: view elements first position y < view elements third position y.
-]
-
-{ #category : #tests }
 RTLegendBuilderTest >> testLayout [
 	
 	| firstInnerElement secondInnerElement |
@@ -67,51 +34,7 @@ RTLegendBuilderTest >> testLayout [
 ]
 
 { #category : #tests }
-RTLegendBuilderTest >> testLegendElement [
-
-	| lb |
-	lb := RTLegendBuilder new.
-	lb addLineColor: Color red text: 'Meaning of this great red line'.
-	lb build.
-	
-	self assert: lb view elements first equals: lb legendElement
-
-]
-
-{ #category : #tests }
 RTLegendBuilderTest >> testNumberOfElements [
 
 	self assert: b view numberOfElements equals: 13
-]
-
-{ #category : #tests }
-RTLegendBuilderTest >> testRight [
-
-	| view element lb |
-	view := RTView new.
-	element := (RTEllipse new size: 30) element.
-	view add: element.
-
-	lb := RTLegendBuilder new.
-	lb view: view.
-	lb right.
-	lb addText: 'Hello world'.
-	lb build.
-	
-	self assert: view numberOfElements equals: 3.
-	self assert: view elements first shape class == RTEllipse.
-	self assert: view elements third shape class == RTLabel.
-	self assert: view elements first position x < view elements third position x.
-]
-
-{ #category : #tests }
-RTLegendBuilderTest >> testaddLineColortext [
-
-	| lb |
-	lb := RTLegendBuilder new.
-	lb addLineColor: Color red text: 'Meaning of this great red line'.
-	lb build.
-	
-	self assert: lb view numberOfElements equals: 3.
-
 ]

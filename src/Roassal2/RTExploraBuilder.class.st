@@ -82,8 +82,8 @@ RTExploraBuilder >> buildNode: object parent: parent [
 { #category : #layout }
 RTExploraBuilder >> circleLayout [
 	" Not working properly! needs fix somewhere. "
-	^ self layout: [ :elem | RTCircleLayout "(RTCenteredCircleLayout new;
-		center: elem position)" ]
+	^ self layout: [ :elem | (RTCenteredCircleLayout new;
+		center: elem position) ]
 ]
 
 { #category : #layout }

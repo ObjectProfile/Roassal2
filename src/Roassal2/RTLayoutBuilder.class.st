@@ -1,20 +1,3 @@
-"
-RTLayoutBuilder is a higher abstract to manage layout. Most builder use it as it significantly shorten the use of layouts.
-
-Consider the following example:
--=-=-=-=-=-=-=-=-=-=-=-=
-v := RTView new.
-
-es := (RTBox new size: 8) elementsOn: (1 to: 100).
-v addAll: es.
-
-lb := RTLayoutBuilder new.
-lb horizontalFlow.
-lb setUpElements: es.
-
-v
--=-=-=-=-=-=-=-=-=-=-=-=
-"
 Class {
 	#name : #RTLayoutBuilder,
 	#superclass : #RTObject,
@@ -73,13 +56,6 @@ RTLayoutBuilder >> doDynamicForceBasedLayoutOn: elements [
 	| v |
 	v := elements anyOne view.
 	v addAnimation: (RTSpringLayoutStepping new view: v)
-]
-
-{ #category : #'public - layout' }
-RTLayoutBuilder >> dominanceTree [
-	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
-	layout := RTDominanceTreeLayout new.
-	^ layout
 ]
 
 { #category : #'public - layout' }
@@ -145,21 +121,8 @@ RTLayoutBuilder >> horizontalDominanceTree [
 ]
 
 { #category : #'public - layout' }
-RTLayoutBuilder >> horizontalFlow [
-	layout := RTHorizontalFlowLayout new.
-	^ layout
-]
-
-{ #category : #'public - layout' }
 RTLayoutBuilder >> horizontalLine [
 	layout := RTHorizontalLineLayout new.
-	^ layout
-]
-
-{ #category : #'public - layout' }
-RTLayoutBuilder >> horizontalTree [
-	actionOnEdges add: [ :edge | edge shape withHorizontalAttachPoint ].
-	layout := RTHorizontalTreeLayout new.
 	^ layout
 ]
 
@@ -219,13 +182,6 @@ RTLayoutBuilder >> setUpElements: elements [
 	elements do: #updateEdgesON.
 	elements do: #updateConnectedEdges.
 
-]
-
-{ #category : #'public - layout' }
-RTLayoutBuilder >> sugiyama [
-	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
-	layout := RTSugiyamaLayout new.
-	^ layout
 ]
 
 { #category : #'public - layout' }

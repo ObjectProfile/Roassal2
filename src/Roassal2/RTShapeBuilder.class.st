@@ -1,6 +1,6 @@
 Class {
 	#name : #RTShapeBuilder,
-	#superclass : #RTAbstractBuilder,
+	#superclass : #RTScopedBuilder,
 	#instVars : [
 		'shape',
 		'createdElements',

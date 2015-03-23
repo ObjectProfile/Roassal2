@@ -47,9 +47,9 @@ RTAxisConfigurationTest >> testHasBeenManuallySet03 [
 ]
 
 { #category : #tests }
-RTAxisConfigurationTest >> testLabelConversion [
+RTAxisConfigurationTest >> testLabelConvertion [
 
-	self assert: (config labelConversion rtValue: 1000) equals: 1000.0
+	self assert: (config labelConvertion rtValue: 1000) equals: 1000.0
 ]
 
 { #category : #tests }
@@ -170,8 +170,8 @@ RTAxisConfigurationTest >> testnoDecimal [
 { #category : #tests }
 RTAxisConfigurationTest >> testoneDecimal [
 	config oneDecimal.
-	self assert: (config labelConversion rtValue: 1000) equals: 1000.0.
-	self assert: (config labelConversion rtValue: 1000000) equals: 1000000.0.
+	self assert: (config labelConvertion rtValue: 1000) equals: 1000.0.
+	self assert: (config labelConvertion rtValue: 1000000) equals: 1000000.0.
 ]
 
 { #category : #tests }
