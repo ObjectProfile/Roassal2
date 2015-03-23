@@ -30,22 +30,7 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 ]
 
 { #category : #public }
-RTEdgeBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
-
-	| edges toElement fromElement |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		fromElement := self elements elementFromModel: (aFromBlock rtValue: e model). 
-		toElement := self elementsToLookup elementFromModel: (aBlockOrASymbol rtValue: e model).
-		toElement ifNotNil: [ 
-			(self shouldCreateEdgeFrom: fromElement to: toElement) ifTrue: [ 
-				edges add: (self edgeFrom: fromElement to: toElement) ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-]
-
-{ #category : #public }
-RTEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
+RTEdgeBuilder >> connectFrom: aFromBlock ToAll: aBlockOrASymbol [
 
 	| edges toElements fromElement |
 	edges := RTGroup new.
@@ -143,9 +128,11 @@ RTEdgeBuilder >> globalScope [
 { #category : #initialization }
 RTEdgeBuilder >> initialize [
 	super initialize.
-	self noRepetition.
+	allowRepetition := false.
 	shouldMoveBehind := false.
-	shouldNotBeUsedInLayout := true.	"If nil, then elements will be used to lookup"
+	shouldNotBeUsedInLayout := true.
+	
+	"If nil, then elements will be used to lookup"
 	elementsToLookup := nil
 ]
 
@@ -159,11 +146,6 @@ RTEdgeBuilder >> moveBehind [
 RTEdgeBuilder >> moveBehindIfNecessary: someEdges [
 	shouldMoveBehind ifFalse: [ ^ self ].
 	someEdges pushBack
-]
-
-{ #category : #initialization }
-RTEdgeBuilder >> noRepetition [
-	allowRepetition := false
 ]
 
 { #category : #configuration }

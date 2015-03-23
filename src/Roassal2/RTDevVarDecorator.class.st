@@ -20,12 +20,12 @@ RTDevVarDecorator >> color: aColor [
 ]
 
 { #category : #accessing }
-RTDevVarDecorator >> deviation [
+RTDevVarDecorator >> desviation [
 	^ desviation
 ]
 
 { #category : #accessing }
-RTDevVarDecorator >> deviation: aNumber [
+RTDevVarDecorator >> desviation: aNumber [
 	desviation := aNumber
 ]
 
@@ -33,7 +33,7 @@ RTDevVarDecorator >> deviation: aNumber [
 RTDevVarDecorator >> initialize [
 	super initialize.
 	self color: (Color gray alpha: 0.5).
-	self deviation: 0.
+	self desviation: 0.
 ]
 
 { #category : #accessing }

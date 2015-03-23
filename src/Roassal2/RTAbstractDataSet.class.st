@@ -68,6 +68,7 @@ RTAbstractDataSet >> computeMinAndMaxForX [
 RTAbstractDataSet >> computeMinAndMaxForY [
 	| computed |
 	computed := points collect: y.
+	self assert: [ computed allSatisfy: [ :obj | obj isKindOf: Number ] ] description: 'You have provided objects that are not number. Please adjust what you provide to #points: #x: and #y:'.
 	minY := computed min.
 	maxY := computed max.
 	

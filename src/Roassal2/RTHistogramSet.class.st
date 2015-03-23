@@ -1,3 +1,6 @@
+"
+This class is under construction. It does not work yet!
+"
 Class {
 	#name : #RTHistogramSet,
 	#superclass : #RTAbstractStackedDataSet,

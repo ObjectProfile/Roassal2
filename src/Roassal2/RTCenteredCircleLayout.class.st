@@ -1,21 +1,36 @@
 "
-A ROCircleLayout is xxxxxxxxx.
+A ROCenteredCircleLayout is xxxxxxxxx.
+
+Instance Variables
+	center:		<Object>
+
+center
+	- xxxxx
 
 "
 Class {
-	#name : #RTCircleLayout,
+	#name : #RTCenteredCircleLayout,
 	#superclass : #RTAbstractCircleLayout,
+	#instVars : [
+		'center'
+	],
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'instance creation' }
-RTCircleLayout class >> scaleBy: aNumber [
-	
-	^self new scaleBy: aNumber
+{ #category : #accessing }
+RTCenteredCircleLayout >> center [
+	"Return the point around which the layout will place nodes"
+	^ center
+]
+
+{ #category : #accessing }
+RTCenteredCircleLayout >> center: aPoint [
+	"Set the point around which the layout will place nodes"
+	center := aPoint
 ]
 
 { #category : #hook }
-RTCircleLayout >> computeIncrementalAngleFor: elements [
+RTCenteredCircleLayout >> computeIncrementalAngleFor: elements [
 	"Return the value _in radian_ of the incremental angle"
 	
 	^ initialIncrementalAngle = 0
@@ -24,7 +39,7 @@ RTCircleLayout >> computeIncrementalAngleFor: elements [
 ]
 
 { #category : #hook }
-RTCircleLayout >> computeRadiusFor: elements [
+RTCenteredCircleLayout >> computeRadiusFor: elements [
 	"Return the radius of the circle. If none has been set (i.e., initialRadius = 0), then it is computed as the scale factor times the number of elements"
 	^ initialRadius = 0 
 		ifTrue: [ elements size * self scaleFactor ]
@@ -32,18 +47,23 @@ RTCircleLayout >> computeRadiusFor: elements [
 ]
 
 { #category : #hook }
-RTCircleLayout >> doExecute: elements [
-	| angleIncrement angle rad center |
-	elements isEmpty ifTrue: [ ^ self ].
+RTCenteredCircleLayout >> doExecute: elements [
+	| angleIncrement angle rad centerPoint |
 	rad := self computeRadiusFor: elements.
-	center := Point x: rad y: rad.
+	centerPoint := center.
 	angleIncrement := self computeIncrementalAngleFor: elements.
 	angle := self initialAngle.
 	elements
 		do: [ :each | 
 			| point |
-			point := center + (Point r: rad theta: angle).
+			point := centerPoint + (Point r: rad theta: angle).
 			angle := angle + angleIncrement.
 			translator translateTopLeftOf: each to: point.
 			self step ]
+]
+
+{ #category : #'initialize-release' }
+RTCenteredCircleLayout >> initialize [
+	super initialize.
+	center := 0 @ 0
 ]

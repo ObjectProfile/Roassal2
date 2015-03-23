@@ -1,3 +1,6 @@
+"
+A data set is a set of points intended to be charted. A data set has to be added to a RTGrapher.  Look at the class comment of my subclasses for detail.
+"
 Class {
 	#name : #RTAbstractStackedDataSet,
 	#superclass : #RTAbstractDataSet,
