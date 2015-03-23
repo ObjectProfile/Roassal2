@@ -154,7 +154,7 @@ RTTabTableTest >> testGathering [
 ]
 
 { #category : #tests }
-RTTabTableTest >> testMassiveConvertion [
+RTTabTableTest >> testMassiveConversion [
 
 	tab input: '
 	m1	m2	m3

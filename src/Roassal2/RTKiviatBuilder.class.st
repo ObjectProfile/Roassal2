@@ -111,7 +111,7 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 					numberOfLabels: 4;
 					minValue: 0;
 					maxValue: aRTKiviatMetric maxValue;					
-					labelConvertion: [ :number | number asFloat round: 2 ];
+					labelConversion: [ :number | number asFloat round: 2 ];
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 					(axisTitle = #activated) ifTrue: [ config title: (aRTKiviatMetric named)].
 					
