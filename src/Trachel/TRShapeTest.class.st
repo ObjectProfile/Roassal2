@@ -250,6 +250,15 @@ TRShapeTest >> testHasCallback [
 	self assert: s hasEventCallback.
 ]
 
+{ #category : #callback }
+TRShapeTest >> testNumberOfCallbacks [
+	| s |
+	s := TRBoxShape new.
+	self assert: s numberOfCallbacks equals: 0.
+	s addCallback: (TRExtentCallback new).
+	self assert: s numberOfCallbacks equals: 1
+]
+
 { #category : #position }
 TRShapeTest >> testPosition [
 

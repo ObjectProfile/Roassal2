@@ -12,6 +12,11 @@ TRCompositeShape >> accept: aVisitor [
 	aVisitor visitMultiCompositeShape: self.
 ]
 
+{ #category : #callbacks }
+TRCompositeShape >> addCallback: aCallback [
+	^ self shapes first addCallback: aCallback
+]
+
 { #category : #'public - adding' }
 TRCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0
@@ -75,6 +80,11 @@ TRCompositeShape >> announcer [
 { #category : #accessing }
 TRCompositeShape >> announcer: anAnnouncer [
 	self shapes do: [ :s | s announcer: anAnnouncer ]
+]
+
+{ #category : #callbacks }
+TRCompositeShape >> callbacks [
+	^ self shapes first callbacks
 ]
 
 { #category : #accessing }
@@ -156,6 +166,12 @@ TRCompositeShape >> extent [
 { #category : #actions }
 TRCompositeShape >> extent: anExtent [
 	self shapes do: [ :s | s extent: anExtent ]
+]
+
+{ #category : #callbacks }
+TRCompositeShape >> hasCallback [
+	"Return true if at least one callback has been added to the shape"
+	^ self shapes first hasCallback
 ]
 
 { #category : #accessing }
