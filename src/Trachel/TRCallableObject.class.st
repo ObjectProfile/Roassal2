@@ -14,6 +14,12 @@ TRCallableObject >> addCallback: aCallback [
 ]
 
 { #category : #callbacks }
+TRCallableObject >> callbacks [
+	callbacks ifNil: [ callbacks := OrderedCollection new ].
+	^ callbacks 
+]
+
+{ #category : #callbacks }
 TRCallableObject >> doWithoutCallbacks: aBlock [
 	"Simply evaluate aBlock"
 	| oldCallbacks |
@@ -24,15 +30,27 @@ TRCallableObject >> doWithoutCallbacks: aBlock [
 ]
 
 { #category : #callbacks }
+TRCallableObject >> hasCallback [
+	^ callbacks notNil
+]
+
+{ #category : #callbacks }
+TRCallableObject >> numberOfCallbacks [
+	"Return the number of callbacks registered"
+	self hasCallback ifNil: [ ^ 0 ].
+	^ self callbacks size
+]
+
+{ #category : #callbacks }
 TRCallableObject >> removeCallback: aCallback ifAbsent: anErrorBlock [
-	callbacks ifNil: [ ^ self ].
-	callbacks remove: aCallback ifAbsent: anErrorBlock
+	self hasCallback ifFalse: [ ^ self ].
+	self callbacks remove: aCallback ifAbsent: anErrorBlock
 ]
 
 { #category : #callbacks }
 TRCallableObject >> triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent [ 
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
+	self hasCallback ifFalse: [ ^ self ].
+	self callbacks do: [ :c | 
 		c isExtentCallback ifTrue: [ 
 			c shape: self newExtent: newExtent oldExtent: oldExtent ] ]
 ]
@@ -40,8 +58,8 @@ TRCallableObject >> triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent
 { #category : #callbacks }
 TRCallableObject >> triggerCallbacksForStep: aStep [
 	"aStep is a point that represents a translation step"
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
+	self hasCallback ifFalse: [ ^ self ].
+	self callbacks do: [ :c | 
 		c isTranslationCallback ifTrue: [ 
 			c shape: self step: aStep ] ]
 ]
@@ -49,8 +67,8 @@ TRCallableObject >> triggerCallbacksForStep: aStep [
 { #category : #callbacks }
 TRCallableObject >> triggerRemoveCallbacks [
 	"aStep is a point that represents a translation step"
-	callbacks ifNil: [ ^ self ].
-	callbacks do: [ :c | 
+	self hasCallback ifFalse: [ ^ self ].
+	self callbacks do: [ :c | 
 		c isRemoveCallback ifTrue: [ 
 			c removeShape: self ] ]
 ]
