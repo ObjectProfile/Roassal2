@@ -158,7 +158,7 @@ RTElement >> removeConnectedEdge: anEdge [
 	self connectedEdges remove: anEdge ifAbsent: [ "Some RTDowserBuilderTest tests failed." ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTElement >> removeWithItsConnectedEdges [
 	view ifNil: [ self error: 'cannot remove an element that is not part of a view' ].
 	self connectedEdges copy do: [ :anEdge | anEdge view ifNotNil: [ anEdge remove ] ].
