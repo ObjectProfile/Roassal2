@@ -427,6 +427,49 @@ Nc8+ICmSxi5JtEV9z9y5c2f37t074bcAC55MuTC0Cm0kqL5qnn1AIgCS6N1Ipi/+/XjxABQM
 qm8fkBxrSDrfVC/GD32lk/4F5QqhxVRNi8YAAAAASUVORK5CYII='
 ]
 
+{ #category : #sources }
+RTComposedShapeExample >> exampleRelayout [
+
+	| s b1 b2 b3 view e |
+	s := RTCompositeShape new.
+	b1 := RTBox new color: Color green.
+	b2 := RTBox new color: Color blue; size: 20.
+	b3 := RTLabel new.
+	s add: b1.
+	s add: b2.
+	s add: b3.
+	s horizontal.
+	s setAutomaticRelayout.
+	
+	e := s elementOn: 'click to expand'.
+	view := RTView new.
+	view add: e.
+	
+	e @ RTDraggable.
+	e @ RTPopup.
+	
+	e when: TRMouseClick do: [ :ev |
+		e trachelShape shapes second extent: 45 @ 45.
+		e trachelShape shapes third text: 'hello'.
+		view signalUpdate.
+	].
+	^ view 
+]
+
+{ #category : #icons }
+RTComposedShapeExample >> exampleRelayoutIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABs0lEQVR4XuXUP2rCUBzAccGD
+9BA5UC8ihGQQXCSDm4ObWXMEUSEiurjoJIQco/Cz9YGUQqfS0pbPF8L7wxvC+5AMbje/v9TA
+vwIfxM8H8UH8fBAfxM8H8UH8fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB
+/HwQH8TPB/FB/HwQPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/EzwfxQfx8EB/Ezwfx
++xcgef72coP35772QX6pa1zjOb/GZyDL5TIe55qmSfO2bcMH+cEWsYinfPEBZDgs4wGy3W7T
+PMuyNFZVFZfLJSaTSex2u6jrOu7n9vt9bDabOJ1OaT0ej8MH+aZf1mj0ki76eDzG+XyO9Xqd
+xq7rYjqdxnw+T5ddlmXcv5iiKNLearWKvu8TyuFwiNlsFj6Inw/ig/j5ID6Inw/ig/j5IH4+
+iA/i54P4IH4+iA/i54P4IH4+iJ8P4oP4+SA+iJ8P4oP4+SA+iJ8P4ueD+CB+PogP4ueD+CB+
+PogP4ueD+PkgPoifD+KD+PkgPoifD+KD+PkgPoifD+Lng/ggfl/rFeR5agGSyks/AAAAAElF
+TkSuQmCC'
+]
+
 { #category : #accessing }
 RTComposedShapeExample >> label [
 	^ 'Composite shapes'
