@@ -14,19 +14,32 @@ Class {
 }
 
 { #category : #adding }
-RTLegendBuilder >> addColor: aColor text: aText [
+RTLegendBuilder >> addColor: aColor object: anObject text: aBlockOrSelector [
 	"Associate a color with a text"
 	| g |
 	g := RTGroup new.
 	g add: (RTBox new size: 10; color: aColor) element.
-	g add: (RTLabel elementOn: aText).
+	g add: ((RTLabel text: aBlockOrSelector) elementOn: anObject).
 	RTHorizontalLineLayout new alignCenter; on: g.
 	group add: g.
 ]
 
 { #category : #adding }
+RTLegendBuilder >> addColor: aColor text: aText [
+	"Associate a color with a text"
+	^ self addColor: aColor object: aText text: #yourself
+]
+
+{ #category : #adding }
+RTLegendBuilder >> addColoredObject: anObject text: aTextOrSymbolOrBlock color: aColor [
+	group add: (RTGroup new add: 
+					((RTLabel new color: aColor; text: aTextOrSymbolOrBlock) elementOn: anObject); yourself)
+]
+
+{ #category : #adding }
 RTLegendBuilder >> addColoredText: aText color: aColor [
-	group add: (RTGroup new add: ((RTLabel new color: aColor) elementOn: aText); yourself)
+	^ self addColoredObject: nil text: aText color: aColor
+
 ]
 
 { #category : #adding }
@@ -38,6 +51,11 @@ RTLegendBuilder >> addLineColor: aColor text: aText [
 	g add: (RTLabel elementOn: aText).
 	RTHorizontalLineLayout new alignCenter; on: g.
 	group add: g.
+]
+
+{ #category : #adding }
+RTLegendBuilder >> addObject: anObject text: aTextOrASymbolOrBlock [
+	^ self addColoredObject: anObject text: aTextOrASymbolOrBlock color: Color lightGray
 ]
 
 { #category : #adding }
@@ -53,12 +71,6 @@ RTLegendBuilder >> below [
 { #category : #initialization }
 RTLegendBuilder >> defaultOffset [
 	^ 20
-]
-
-{ #category : #accessing }
-RTLegendBuilder >> group [
-	"Return all the elements added by the legend builder"
-	^ group
 ]
 
 { #category : #initialization }

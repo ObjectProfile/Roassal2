@@ -64,7 +64,7 @@ RTHorizontalFlowLayout >> initialize [
 	self alignTop.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTHorizontalFlowLayout >> maxNextLineWidthFrom: ele for: elements [
 	| nextLineY maxNextLineWidth anElement |
 	anElement := ele.

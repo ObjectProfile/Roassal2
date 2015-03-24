@@ -41,7 +41,7 @@ RTSugiyamaLayout >> addDummyNodes [
 					[span := span - 1.
 					layerNr := b + span.
 					layer := layers at: layerNr.
-					toNode := RODummyNode
+					toNode := RTDummyNode
 						on: edge
 						slot: a - span.
 					layer add: toNode.
