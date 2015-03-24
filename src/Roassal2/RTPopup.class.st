@@ -36,8 +36,8 @@ Class {
 
 { #category : #lastPopup }
 RTPopup class >> removeLastPopup [
-	lastPopup ifNil: [ ^ self ].
-	lastPopup remove.
+	self lastPopup ifNil: [ ^ self ].
+	self lastPopup do: #remove.
 	self resetLastPopup. 
 ]
 
