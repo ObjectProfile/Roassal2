@@ -95,7 +95,7 @@ RTCompositeShape >> alignRight [
 	layout := #alignRight
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - layout' }
 RTCompositeShape >> allOfSameSize [
 	layout := #allOfSameSize
 ]
