@@ -126,6 +126,12 @@ RTLayoutBuilder >> horizontalLine [
 	^ layout
 ]
 
+{ #category : #'public - layout' }
+RTLayoutBuilder >> horizontalTree [
+	layout := RTHorizontalTreeLayout new.
+	^ layout
+]
+
 { #category : #initialization }
 RTLayoutBuilder >> initialize [
 	super initialize.
