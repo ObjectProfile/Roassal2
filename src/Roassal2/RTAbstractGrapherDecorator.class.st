@@ -26,7 +26,14 @@ RTAbstractGrapherDecorator >> builder: aGraphBuilder [
 
 { #category : #accessing }
 RTAbstractGrapherDecorator >> datasetValues [
+	"Return the list of Y values for all the datasets"
 	^ builder datasets flatCollect: #getValuesY
+]
+
+{ #category : #accessing }
+RTAbstractGrapherDecorator >> datasetValuesX [
+	"Return the list of X values for all the datasets"
+	^ builder datasets flatCollect: #getValuesX
 ]
 
 { #category : #initialization }

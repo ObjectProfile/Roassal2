@@ -17,6 +17,12 @@ RTAbstractLineDecorator >> addAll: someValues [
 	values addAll: someValues
 ]
 
+{ #category : #adding }
+RTAbstractLineDecorator >> forAllPoints [
+
+	self addAll: self datasetValues
+]
+
 { #category : #initialization }
 RTAbstractLineDecorator >> initialize [
 	super initialize.
