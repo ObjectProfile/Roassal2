@@ -1,3 +1,6 @@
+"
+RTTabTable is made to work with CSV file contents.
+"
 Class {
 	#name : #RTTabTable,
 	#superclass : #Object,

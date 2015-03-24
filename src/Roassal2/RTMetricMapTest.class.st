@@ -14,7 +14,7 @@ RTMetricMapTest >> setUp [
 ]
 
 { #category : #tests }
-RTMetricMapTest >> testNameConvertion [
+RTMetricMapTest >> testNameConversion [
 
 	self assert: (b convertIntoSVGCountryName: 'France') = #France.
 	self assert: (b convertIntoSVGCountryName: 'Germany') = #Germany.

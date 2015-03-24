@@ -333,7 +333,7 @@ RTEdgeBuilderTest >> testconnectFromToAll [
 	edges := RTEdgeBuilder new
 					elements: es1;
 					elementsToLookup: es2;
-					connectFrom: #yourself ToAll: [ :obj | Array with: obj ].
+					connectFrom: #yourself toAll: [ :obj | Array with: obj ].
 	self assert: edges size equals: 3.
 	
 	self assert: edges first from equals: es1 first.
