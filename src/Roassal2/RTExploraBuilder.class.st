@@ -151,7 +151,6 @@ RTExploraBuilder >> horizontalTreeLayout [
 { #category : #initialization }
 RTExploraBuilder >> initialize [
 	super initialize.
-	view := RTView new.
 	nextId := 0.
 	popUp := false.
 	dragChildren := false.
