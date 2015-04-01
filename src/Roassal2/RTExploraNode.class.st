@@ -66,7 +66,7 @@ RTExploraNode >> addListenerFor: anEvent onDirection: aDirection withBlock: aBlo
 			ifFalse: [ self exploreOnDirection: aDirection ].
 		((builder layout rtValue: self)
 			translator: (RTSmoothLayoutTranslator new nbCycles: 0.25))
-			on: element view elements.
+			on: ((builder nodes collect: [ :n | n element ]) asGroup).
 		element view canvas signalUpdate].
 ]
 

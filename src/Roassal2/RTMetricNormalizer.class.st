@@ -64,7 +64,7 @@ RTMetricNormalizer >> getNormalizedValues: metricBlock min: min max: max minValu
 
 	self checkNotEmpty.
 	(maxValue = minValue) ifTrue: [ 
-		^ elements collect: [ :el | metricBlock rtValue: el model ] ].
+		^ elements collect: [ :el | min ] ].
 	
  	^ elements collect: [ :el | 
 			| tt t |
@@ -426,14 +426,7 @@ RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max using: trans
 		maxValue := maxValue max: t ].
 	
 	
-	(maxValue - minValue) ~= 0 ifTrue: [
-		elements do: [ :el | 
-			| tt t |
-			t := transformation rtValue: (metricBlock rtValue: el model).
-			"tt := minValue + (maxValue * (t - min) / max) asInteger."
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
-			el trachelShape width: tt ] ] 
-	
+	self normalizeWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation.
 	
 ]
 
