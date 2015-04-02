@@ -10,7 +10,7 @@ PCPPFunctionGroup >> mooseCallGraphIn: composite [
 	composite roassal2
 			title: 'Callgraph';
 			titleIcon: MooseIcons mooseSystemComplexity;
-			initializeView: [ RTMondrian new ];
+			initializeView: [ RTExploraBuilder new ];
 			painting: [ :view :each | 
 				each mooseInterestingEntity viewCallgraphOn: view ]
 
@@ -35,10 +35,42 @@ PCPPFunctionGroup >> numberOfFunctions [
 ]
 
 { #category : #visualizations }
+PCPPFunctionGroup >> updateAndNormalize: aBuilder [
+"Adding an animation to the view to execute the normalization on the actual elements of the explora builder, after it created the elements"
+	|anim elements listeners|
+		
+	anim := RTNopAnimation new
+				waitFor: 0.01 after: [  
+	
+	elements := (aBuilder nodes collect: [ :n | n element ]) asGroup.
+	listeners := (aBuilder nodes flatCollect: [ :n | {n iconOpen. n iconClose} ]) asGroup.
+	
+	aBuilder normalizer 
+		elements: elements;
+		normalizeWidth: #numberOfOutgoingCalls min: 20 max: 100;
+		normalizeHeight: #numberOfIncomingCalls min: 20 max: 100;
+		normalizeColor: #totalExecutionTime using: { Color lightGreen. Color green. Color red }.	
+		
+	(aBuilder layout rtValue: self)
+			on: elements.
+		aBuilder view canvas signalUpdate.
+		listeners when: TRMouseClick do: [ :evt | self updateAndNormalize: aBuilder ]
+	].
+	
+	aBuilder view addAnimation: anim.
+	
+	
+]
+
+{ #category : #visualizations }
 PCPPFunctionGroup >> viewCallgraph [
 	<menuItem: 'View callgraph' category: 'Visualize'> 
 	
 	| b |
+	
+	"Method DEPRECATED ?"
+	self halt.
+	
 	b := RTMondrian new.
 	self viewCallgraphOn: b.
 	b view inspect
@@ -48,20 +80,18 @@ PCPPFunctionGroup >> viewCallgraph [
 
 { #category : #visualizations }
 PCPPFunctionGroup >> viewCallgraphOn: b [
-	"b is an instance of RTMondrian"
+	"Building the view with b, an instance of RTExploraBuilder"
 
 	| lb |
+
 	b shape rectangle withBorder.
-	b nodes: (self).
+	b onClickExplore: [ :cls | cls outgoingOtherFunctions.];
+		withPopup;
+		dragChildren;
+		withIcons;
+		node: self last.
+	b build.
 
-	b normalizer 
-		normalizeWidth: #numberOfOutgoingCalls;
-		normalizeHeight: #numberOfIncomingCalls;
-		normalizeColor: #totalExecutionTime using: { Color lightGreen . Color green . Color r: 0.0 g: 0.5 b: 0.0 }.
-
-	b edges connectToAll: #outgoingOtherFunctions.
-	b layout tree.
-	b build.	
 
 	lb := RTLegendBuilder new.
 	lb view: b view.
@@ -70,6 +100,10 @@ PCPPFunctionGroup >> viewCallgraphOn: b [
 	lb addText: 'width = number of outgoing calls'.
 	lb addText: 'height = number of incoming calls'.
 	lb addColor: Color lightGreen text: 'little time share'.
-	lb addColor: Color lightGreen text: 'significant time share'.
+	lb addColor: Color red text: 'significant time share'.
 	lb build.
+
+	TRConstraint move: (lb legendElement asGroup) onTheLeftOf: ((b nodes collect: [ :n | n element ]) asGroup).
+	
+	self updateAndNormalize: b.
 ]
