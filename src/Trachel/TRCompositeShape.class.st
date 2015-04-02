@@ -17,6 +17,11 @@ TRCompositeShape >> addCallback: aCallback [
 	^ self shapes first addCallback: aCallback
 ]
 
+{ #category : #callbacks }
+TRCompositeShape >> addCallbackToAllShapes: aCallback [
+	^ self shapes do: [ :trShape | trShape addCallback: aCallback ]
+]
+
 { #category : #'public - adding' }
 TRCompositeShape >> addShape: aShape [
 	^ self addShape: aShape translateBy: 0 @ 0
