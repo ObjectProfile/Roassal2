@@ -47,7 +47,8 @@ Class {
 		'popUp',
 		'popupText',
 		'nextId',
-		'dragChildren'
+		'dragChildren',
+		'icons'
 	],
 	#category : #'Roassal2-Builder-Explora'
 }
@@ -60,22 +61,50 @@ RTExploraBuilder >> addListenerBlock: listenerBlock [
 
 { #category : #adding }
 RTExploraBuilder >> buildNode: object parent: parent [
-	| node element |
+	| node element elementIconOpen elementIconClose |
 	
 	node := RTExploraNode new.
 	node builder: self.
 	node id: self newNodeId.
 	node parentNode: parent.
-	element := RTElement new model: object.
+	element := RTElement new model: object.	
 	node element: element.
-	nodeListeners do: [ :block | block value: node ].
+	
 	element addShape: self shape shape.
-	"element := self shape elementOn: object."
 	
 	dragChildren ifTrue: [ element @ RTDraggableChildren ] ifFalse: [ element @ RTDraggable ].
 	popUp ifTrue: [ element @ (RTPopup new group: self explorePopUp) ].
 	
-	"node updateColor."
+	(icons) ifTrue: [ 
+		| p1 p2 |
+		p1 := 'M401.625,267.75H344.25v-57.375c0-21.114-17.136-38.25-38.25-38.25s-38.25,17.117-38.25,38.25v57.375h-57.375
+				c-21.114,0-38.25,17.117-38.25,38.25c0,21.114,17.136,38.25,38.25,38.25h57.375v57.375c0,21.114,17.136,38.25,38.25,38.25
+				s38.25-17.117,38.25-38.25V344.25h57.375c21.114,0,38.25-17.136,38.25-38.25S422.739,267.75,401.625,267.75z M306,0
+				C136.992,0,0,136.992,0,306s136.992,306,306,306s306-136.992,306-306S475.008,0,306,0z M306,554.625
+				C168.912,554.625,57.375,443.088,57.375,306S168.912,57.375,306,57.375S554.625,168.912,554.625,306S443.088,554.625,306,554.625z'.
+		p2 := 'M401.625,267.75h-191.25c-21.114,0-38.25,17.117-38.25,38.25c0,21.114,17.136,38.25,38.25,38.25h191.25
+				c21.114,0,38.25-17.136,38.25-38.25S422.758,267.75,401.625,267.75z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+				s306-136.992,306-306S475.008,0,306,0z M306,554.625C168.912,554.625,57.375,443.088,57.375,306S168.912,57.375,306,57.375
+				S554.625,168.912,554.625,306S443.088,554.625,306,554.625z'.
+
+		elementIconOpen := (RTSVGPath new path: p1; color: Color black"(self shape shape color rtValue: element)"; scale: 0.025) elementOn: p1.
+		elementIconClose := (RTSVGPath new path: p2; color: Color black"(self shape shape color rtValue: element)"; scale: 0.025) elementOn: p2.
+		
+		TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) below: element.
+		({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1.5). 
+
+		element addCallback: (TRTranslationCallback new block: [
+			TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) below: element. 		
+			({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1.5). 
+			self view signalUpdate
+			]).
+	
+		node iconOpen: elementIconOpen.
+		node iconClose: elementIconClose.
+		]. 
+
+	nodeListeners do: [ :block | block value: node ].
+	
 	^ node
 ]
 
@@ -148,12 +177,18 @@ RTExploraBuilder >> horizontalTreeLayout [
 	^ self layout: RTHorizontalTreeLayout new
 ]
 
+{ #category : #layout }
+RTExploraBuilder >> icons [
+	^ icons.
+]
+
 { #category : #initialization }
 RTExploraBuilder >> initialize [
 	super initialize.
 	nextId := 0.
 	popUp := false.
 	dragChildren := false.
+	icons := false.
 	nodes := OrderedCollection new.
 	nodeListeners := OrderedCollection new.
 	lineShape := self defaultLineShape.
@@ -262,12 +297,20 @@ RTExploraBuilder >> radialTreeLayout [
 
 { #category : #view }
 RTExploraBuilder >> renderIn: rView [
-	nodes do: [ :n | rView add: n element ]
+	nodes do: [ :n | rView add: n element ].
+	icons ifTrue:[
+		nodes do: [ :n | n iconOpen ifNotNil: [rView add: n iconOpen] ]
+		]
 ]
 
 { #category : #layout }
 RTExploraBuilder >> treeLayout [
 	^ self layout: RTTreeLayout new
+]
+
+{ #category : #layout }
+RTExploraBuilder >> withIcons [
+	icons := true.
 ]
 
 { #category : #view }

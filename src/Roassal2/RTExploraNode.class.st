@@ -43,7 +43,9 @@ Class {
 		'directions',
 		'expanded',
 		'expansion',
-		'expandedNodes'
+		'expandedNodes',
+		'iconOpen',
+		'iconClose'
 	],
 	#category : #'Roassal2-Builder-Explora'
 }
@@ -57,17 +59,25 @@ RTExploraNode >> addExpansionDirection: aDirection [
 
 { #category : #adding }
 RTExploraNode >> addListenerFor: anEvent onDirection: aDirection withBlock: aBlock [
+	| listener |
+	
+	listener := element.
+	iconOpen ifNotNil: [ listener := ({iconOpen. iconClose} asGroup) ].
+		
 	self addExpansionDirection: aDirection.
 	self expandWithBlock: aBlock onDirection: aDirection.
-	element when: anEvent do: [ :event |
+	
+	listener when: anEvent do: [ :event |
 		RTPopup removeLastPopup.
 		(self isExpandedOnDirection: aDirection)
 			ifTrue: [ self collapseOnDirection: aDirection ]
 			ifFalse: [ self exploreOnDirection: aDirection ].
-		((builder layout rtValue: self)
-			translator: (RTSmoothLayoutTranslator new nbCycles: 0.25))
-			on: ((builder nodes collect: [ :n | n element ]) asGroup).
+			((builder layout rtValue: self)
+				translator: (RTSmoothLayoutTranslator new nbCycles: 0.25))
+				on: ((builder nodes collect: [ :n | n element ]) asGroup).	
 		element view canvas signalUpdate].
+	
+
 ]
 
 { #category : #adding }
@@ -113,6 +123,11 @@ RTExploraNode >> collapseOnDirection: aDirection [
 					do: [ :elem | elem collapse ].
 			self setCollapsedOnDirection: aDirection ].
 		self removeEdgesOnDirection: aDirection.
+		(builder icons) ifTrue: [
+			iconClose remove.
+			builder view add: iconOpen.
+		].
+		
 ]
 
 { #category : #adding }
@@ -189,14 +204,41 @@ RTExploraNode >> exploreOnDirection: aDirection [
 	nodesAlreadyIn := (builder view elements select: [ :el | objsAlreadyIn includes: el model ])
 		collect: [ :elem | elem attributes at: #node ].
 	newNodes := objectsToAdd collect: [ :obj | builder node: obj parent: self ].
+	
 	newNodes do: [ :node |
 		builder view add: node element.
 		node element translateTo: self element position ].
+	(builder icons) ifTrue: [
+		(newNodes select: [ :n | n isExpandable]) do: [ :node |
+			builder view add: node iconOpen].
+		iconOpen remove.
+		builder view add: iconClose.
+		].
 	
 	(newNodes, nodesAlreadyIn) do: [ :el |
 		(aDirection value = #From)
 			ifTrue: [ self connectTo: el with: builder lineShape ]
 			ifFalse: [ el connectTo: self with: builder lineShape ] ].
+]
+
+{ #category : #accessing }
+RTExploraNode >> iconClose [
+	^ iconClose
+]
+
+{ #category : #accessing }
+RTExploraNode >> iconClose: anElementIcon [
+	iconClose := anElementIcon
+]
+
+{ #category : #accessing }
+RTExploraNode >> iconOpen [
+	^ iconOpen
+]
+
+{ #category : #accessing }
+RTExploraNode >> iconOpen: anElementIcon [
+	iconOpen := anElementIcon
 ]
 
 { #category : #accessing }
@@ -259,6 +301,7 @@ RTExploraNode >> remove [
 	element outgoingEdges do: [ :edge |
 		(edge to attributes at: #node) removeExpandedNode: self. edge remove ].
 	element remove.
+	(iconOpen isNotNil & self isExpandable) ifTrue: [ (self isExpanded) ifTrue: [iconClose remove] ifFalse: [iconOpen remove]].
 	builder nodes remove: self.
 ]
 
