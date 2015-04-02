@@ -1,26 +1,3 @@
-"
-A Metric normalizer is made to assign a color, or a particular shape computed from a group of elements. Consider the following example:
--=-=-=-=-=-=-=-=-=-=-=-=
-""Set here the classes you wish to visualize""
-classes := Collection withAllSubclasses.
-
-v := RTView new.
-v @ RTDraggableView.
-shape := RTBox new.
-es := shape elementsOn: classes.
-v addAll: es.
-
-RTMetricNormalizer new
-	elements: es;
-	normalizeWidth: #numberOfVariables;
-	normalizeHeight: #numberOfMethods;
-	normalizeColor: #numberOfLinesOfCode.
-
-RTFlowLayout on: es.
-
-v
--=-=-=-=-=-=-=-=-=-=-=-=
-"
 Class {
 	#name : #RTMetricNormalizer,
 	#superclass : #RTObject,
@@ -64,7 +41,7 @@ RTMetricNormalizer >> getNormalizedValues: metricBlock min: min max: max minValu
 
 	self checkNotEmpty.
 	(maxValue = minValue) ifTrue: [ 
-		^ elements collect: [ :el | min ] ].
+		^ elements collect: [ :el | metricBlock rtValue: el model ] ].
 	
  	^ elements collect: [ :el | 
 			| tt t |
@@ -120,11 +97,10 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 		t := transformation rtValue: (metricBlock rtValue: el model).
 		min := min min: t.
 		max := max max: t ].
-	max = 0 ifTrue: [ ^ self ].
-	
-	normalizer := RTMultiLinearColor new colors: colors.
-	elements do: [ :el |  
-		el trachelShape color: (normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) ]
+	max ~= 0 ifTrue: [ 
+		normalizer := RTMultiLinearColor new colors: colors.
+		elements do: [ :el |  
+			el trachelShape color: (normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) ] ] 
 ]
 
 { #category : #'public normalize color' }
@@ -171,12 +147,6 @@ RTMetricNormalizer >> normalizeElementX: metricBlock min: min max: max minValue:
 			t := transformation rtValue: (metricBlock rtValue: el).
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			el translateBy: tt @ 0 ] ] 
-]
-
-{ #category : #'public normalize size' }
-RTMetricNormalizer >> normalizeHeight: metricBlock [
-	"metricBlock is evaluated on each node model"
-	^ self normalizeHeight: metricBlock min: 5 max: 30
 ]
 
 { #category : #'public normalize size' }
@@ -345,12 +315,6 @@ RTMetricNormalizer >> normalizeSize: metricBlock using: transformation [
 ]
 
 { #category : #'public normalize size' }
-RTMetricNormalizer >> normalizeWidth: metricBlock [
-	"metricBlock is evaluated on each node model."
-	^ self normalizeWidth: metricBlock min: 5 max: 30
-]
-
-{ #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeWidth: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
@@ -426,7 +390,14 @@ RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max using: trans
 		maxValue := maxValue max: t ].
 	
 	
-	self normalizeWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation.
+	(maxValue - minValue) ~= 0 ifTrue: [
+		elements do: [ :el | 
+			| tt t |
+			t := transformation rtValue: (metricBlock rtValue: el model).
+			"tt := minValue + (maxValue * (t - min) / max) asInteger."
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
+			el trachelShape width: tt ] ] 
+	
 	
 ]
 

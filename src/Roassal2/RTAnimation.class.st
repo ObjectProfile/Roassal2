@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAnimation,
-	#superclass : #RTObject,
+	#superclass : #Object,
 	#instVars : [
 		'cycleLength',
 		'element'
