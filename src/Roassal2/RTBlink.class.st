@@ -1,58 +1,10 @@
 "
-RTBlink is an interaction to make element blink. You simply need to invoke  ""RTBlink on: aRoassalElement""
+A ROBlink is xxxxxxxxx.
 
-Here is an example:
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-v := RTView new.
-v @ RTDraggableView.
-shape := RTBox new width: [ :cls | cls numberOfVariables * 5  max: 5 ]; height: [ :cls | cls numberOfMethods sqrt * 2 ].
-es := shape elementsOn: Collection withAllSubclasses.
-v addAll: es.
-RTFlowLayout on: es.
-RTMetricNormalizer new
-	elements: es;
-	normalizeColor: #numberOfLinesOfCode.
-	
-es when: TRMouseClick do: [ :event | RTBlink new color: Color blue; on: event element ].
-v
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-And a larger example:
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-""Set here the classes you wish to visualize""
-classes := Collection withAllSubclasses.
-
-v := RTView new.
-v @ RTDraggableView.
-shape := RTBox new width: [ :cls | cls numberOfVariables * 5  max: 5 ]; height: [ :cls | cls numberOfMethods sqrt * 2 ].
-es := shape elementsOn: classes.
-v addAll: es.
-RTFlowLayout on: es.
-RTMetricNormalizer new
-	elements: es;
-	normalizeColor: #numberOfLinesOfCode.
-
-""Set here the classes you wish to visualize""
-labels := (RTLabel new height: 8) elementsOn: classes.
-RTFlowLayout new gapSize: 0; on: labels.
-v addAll: labels.
-TRConstraint move: labels onTheRightOf: es.
-labels translateBy: 20 @ 0.
-
-labels @ RTHighlightable.
-labels when: TRMouseClick do: [ :event | RTBlink new color: Color blue; on: (es elementFromModel: event element model) ].
-
-es @ RTHighlightable.
-es when: TRMouseClick do: [ :event | RTBlink new color: Color blue; on: (labels elementFromModel: event element model) ].
-v
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTBlink,
 	#superclass : #RTAction,
-	#instVars : [
-		'color'
-	],
 	#category : #'Roassal2-Core'
 }
 
@@ -162,17 +114,6 @@ RTBlink class >> unhighlightOutgoingEdgesOf: element [
 		do: [ :edg | (edg from == element) ifTrue: [ self unhighlight: edg ] ].
 ]
 
-{ #category : #accessing }
-RTBlink >> color [
-	"Return a color, a symbol or a block"
-	^ color
-]
-
-{ #category : #accessing }
-RTBlink >> color: aColorOrABlockOrASymbol [
-	color := aColorOrABlockOrASymbol
-]
-
 { #category : #configuration }
 RTBlink >> defaultColor [
 	^ self class defaultColor
@@ -188,12 +129,6 @@ RTBlink >> highlight: element color: aColor [
 	^ self class highlight: element color: aColor
 ]
 
-{ #category : #initialization }
-RTBlink >> initialize [
-	super initialize.
-	color := self defaultColor.
-]
-
 { #category : #testing }
 RTBlink >> isHighlighted: element [
 	^ self class isHighlighted: element
@@ -207,7 +142,7 @@ RTBlink >> nbOfSecondsLightOn [
 { #category : #public }
 RTBlink >> on: element [
 	| anim |
-	self highlight: element color: (color rtValue: element).
+	self highlight: element.
 	anim := RTNopAnimation new
 		waitFor: self nbOfSecondsLightOn after: [ self unhighlight: element ].
 	element view addAnimation: anim.

@@ -213,3 +213,55 @@ RTCompositeShapeTest >> testRemoving [
 	e remove.
 	self assert: v numberOfElements equals: 0.
 ]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testResizingWithCallback [
+
+	| e s view block wentInTheBlock |
+	s := RTCompositeShape new.
+	s add: (RTBox new color: Color blue; size: 50).
+	s add: (RTEllipse new color: Color green; size: 100).
+	s horizontal.
+	"s setAutomaticRelayout."
+	
+	e := s element.
+	view := RTView new.
+	view add: e.
+	self assert: e encompassingRectangle equals: ((-75.0@ -50.0) corner: (75.0@50.0)).
+	
+	wentInTheBlock := false.
+	block := [ wentInTheBlock := true ].
+	e addCallback: (TRExtentCallback block: block).
+	e trachelShape shapes first extent: 20@20.
+	
+	self assert: e trachelShape shapes first numberOfCallbacks equals: 1.
+	self assert: wentInTheBlock.
+	
+	
+]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testResizingWithCallback02 [
+
+	| e s view block wentInTheBlock |
+	s := RTCompositeShape new.
+	s add: (RTBox new color: Color blue; size: 50).
+	s add: (RTEllipse new color: Color green; size: 100).
+	s horizontal.
+	"s setAutomaticRelayout."
+	
+	e := s element.
+	view := RTView new.
+	view add: e.
+	self assert: e encompassingRectangle equals: ((-75.0@ -50.0) corner: (75.0@50.0)).
+	
+	wentInTheBlock := false.
+	block := [ wentInTheBlock := true ].
+	e trachelShape addCallbackToAllShapes: (TRExtentCallback block: block).
+	e trachelShape shapes second extent: 20@20.
+	
+	self assert: e trachelShape shapes second numberOfCallbacks equals: 1.
+	self assert: wentInTheBlock.
+	
+	
+]
