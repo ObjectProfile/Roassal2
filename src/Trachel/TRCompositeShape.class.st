@@ -63,6 +63,12 @@ TRCompositeShape >> alignRight [
 
 ]
 
+{ #category : #accessing }
+TRCompositeShape >> allColor: aColor [
+	"Simply set the first shape"
+	self shapes do: [ :aShape | aShape color: aColor ]
+]
+
 { #category : #'public - layout' }
 TRCompositeShape >> allOfSameSize [
 	"All the same will have the same maximum size"
