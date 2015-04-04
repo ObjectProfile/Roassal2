@@ -33,6 +33,11 @@ TRShape >> addedIn: aCanvas atIndex: index [
 ]
 
 { #category : #accessing }
+TRShape >> allColor: aColor [
+	self color: aColor
+]
+
+{ #category : #accessing }
 TRShape >> angleInDegrees [
 	^ rotationAngleDegrees
 ]
