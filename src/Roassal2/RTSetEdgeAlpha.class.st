@@ -22,14 +22,14 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSetEdgeAlpha >> initialize [
 	super initialize.
 	highAlpha := 1.0.
 	lowAlpha := 0.1.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTSetEdgeAlpha >> initializeElement: element [
 	self setLowAlphaFor: element.
 	element
@@ -44,17 +44,17 @@ RTSetEdgeAlpha >> initializeElement: element [
 			e signalUpdate ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTSetEdgeAlpha >> setAlpha: alpha for: element [
-	element connectedEdges do: [ :e | e trachelShape color: (e trachelShape color alpha: alpha) ]
+	element connectedEdges do: [ :e | e trachelShape allColor: (e trachelShape color alpha: alpha) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTSetEdgeAlpha >> setHighAlphaFor: element [
 	self setAlpha: highAlpha for: element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTSetEdgeAlpha >> setLowAlphaFor: element [
 	self setAlpha: lowAlpha for: element
 ]
