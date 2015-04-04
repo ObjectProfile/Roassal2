@@ -311,6 +311,21 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core') ]
 ]
 
+{ #category : #'as yet unclassified' }
+ConfigurationOfRoassal2 >> catalogContactInfo [
+	^ 'info@objectprofile.com'
+]
+
+{ #category : #'as yet unclassified' }
+ConfigurationOfRoassal2 >> catalogDescription [
+	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
+]
+
+{ #category : #'as yet unclassified' }
+ConfigurationOfRoassal2 >> catalogKeywords [
+	^ #('visualization' 'data' 'charting')
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
