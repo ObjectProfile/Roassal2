@@ -105,16 +105,19 @@ g+CD4AcfBB8EP/gg+CD4wQfBDz4IPgh+8EHwQfAjIf8CK2x8XCu31d4AAAAASUVORK5CYII='
 
 { #category : #sources }
 RTPieExample >> exampleLabelledIf [
-
-| b |
-b := RTPieBuilder new.
-b interaction popup.
-b objects: RTShape withAllSubclasses.
-b slice: #numberOfMethods.
-b normalizer distinctColor.	
-b labelledIf: [ :c | c numberOfMethods > 18 ].
-b build.
-^ b view
+	"
+	var b: RTPieBuilder
+	var c: Class
+	"
+	| b |
+	b := RTPieBuilder new.
+	b interaction popup.
+	b objects: RTShape withAllSubclasses.
+	b slice: #numberOfMethods.
+	b normalizer distinctColor.	
+	b labelledIf: [ :c | c numberOfMethods > 18 ].
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

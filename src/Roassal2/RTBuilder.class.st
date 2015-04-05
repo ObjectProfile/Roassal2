@@ -113,6 +113,9 @@ RTBuilder >> initialize [
 
 { #category : #accessing }
 RTBuilder >> interaction [
+	"
+	::Void -> RTInteractionBuilder
+	"
 	^ interactionBuilder
 ]
 
@@ -128,6 +131,9 @@ RTBuilder >> nestedElementsAttribute [
 
 { #category : #accessing }
 RTBuilder >> normalizer [
+	"
+	:: Void->RTMetricNormalizer
+	"
 	metricNormalizer ifNil: [ 
 		metricNormalizer := RTMetricNormalizer new. 
 		metricNormalizer view: self view.
