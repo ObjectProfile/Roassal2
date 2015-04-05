@@ -1,3 +1,6 @@
+"
+Example about layouts
+"
 Class {
 	#name : #RTLayoutExample,
 	#superclass : #RTAbstractExample,
