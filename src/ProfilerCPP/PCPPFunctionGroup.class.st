@@ -85,12 +85,14 @@ PCPPFunctionGroup >> viewCallgraphOn: b [
 	| lb |
 
 	b shape rectangle withBorder.
+	b layout: RTHorizontalTreeLayout new.	
+	b lineShape: (RTArrowedLine new color: Color green). 
 	b onClickExplore: [ :cls | cls outgoingOtherFunctions.];
 		withPopup;
 		dragChildren;
 		withIcons;
 		node: self last.
-	b build.
+	
 
 
 	lb := RTLegendBuilder new.
