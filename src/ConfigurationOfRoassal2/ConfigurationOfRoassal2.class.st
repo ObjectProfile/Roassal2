@@ -311,17 +311,17 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core') ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #catalog }
 ConfigurationOfRoassal2 >> catalogContactInfo [
 	^ 'info@objectprofile.com'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #catalog }
 ConfigurationOfRoassal2 >> catalogDescription [
 	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #catalog }
 ConfigurationOfRoassal2 >> catalogKeywords [
 	^ #('visualization' 'data' 'charting')
 ]
@@ -451,6 +451,21 @@ ConfigurationOfRoassal2 >> version151: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.252';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.672';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version152: spec [
+	<version: '1.52' imports: #('1.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.52'.
+		spec author: 'AlexandreBergel'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.265';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.782';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
 
 ]
