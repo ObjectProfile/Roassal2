@@ -90,12 +90,12 @@ RTExploraBuilder >> buildNode: object parent: parent [
 		elementIconOpen := (RTSVGPath new path: p1; color: Color black"(self shape shape color rtValue: element)"; scale: 0.025) elementOn: p1.
 		elementIconClose := (RTSVGPath new path: p2; color: Color black"(self shape shape color rtValue: element)"; scale: 0.025) elementOn: p2.
 		
-		TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) below: element.
-		({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1.5). 
+		TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) onTheRightOf: element.
+		({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1). 
 
 		element addCallback: (TRTranslationCallback new block: [
-			TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) below: element. 		
-			({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1.5). 
+			TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) onTheRightOf:element. 		
+			({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1). 
 			self view signalUpdate
 			]).
 	
