@@ -217,6 +217,8 @@ Gofer new
     load.
 ((Smalltalk at: #ConfigurationOfNBSQLite3) project stableVersion) load.
 
+For more informations about installation: http://smalltalkhub.com/#!/~PharoExtras/NBSQLite3
+
 	"
 ]
 
