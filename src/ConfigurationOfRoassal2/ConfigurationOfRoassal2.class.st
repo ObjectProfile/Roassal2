@@ -466,7 +466,7 @@ ConfigurationOfRoassal2 >> version152: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.265';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.782';
-			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6'. ].
 
 ]
 
