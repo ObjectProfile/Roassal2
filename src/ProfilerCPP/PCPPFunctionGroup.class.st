@@ -87,11 +87,11 @@ PCPPFunctionGroup >> viewCallgraphOn: b [
 	lineShape := RTArrowedLine new color: (Color r: 0.498 g: 0.737 b: 0.255 alpha: 1.0). 
 	lineShape withShorterDistanceAttachPoint. 
 
-	b shape shape: (RTBox new "+ (RTLabel new text: #signature)").
+	b shape shape: (RTBox new + (RTLabel new text: #signature)).
 	b layout: (RTHorizontalTreeLayout new horizontalGap: 80; verticalGap: 8).	
 	b lineShape: (lineShape). 
 	b onClickExplore: [ :cls | cls outgoingOtherFunctions ];
-		withPopup;
+		"withPopup;"
 		dragChildren;
 		withIconsColor: (Color r: 0.498 g: 0.737 b: 0.255 alpha: 1.0);
 		node: self last.
