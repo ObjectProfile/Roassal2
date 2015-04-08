@@ -26,7 +26,8 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'elements',
-		'view'
+		'view',
+		'translator'
 	],
 	#category : #'Roassal2-ColorNormalizer'
 }
@@ -46,6 +47,11 @@ RTMetricNormalizer >> checkNotEmpty [
 	elements ifEmpty: [ self error: 'Please specify what are the elements I should operate on using #elements:' ]
 ]
 
+{ #category : #'public translation' }
+RTMetricNormalizer >> directTranslation [
+	translator := RTDirectLayoutTranslator new
+]
+
 { #category : #'public normalize color' }
 RTMetricNormalizer >> distinctColor [
 	| normalizer |
@@ -56,6 +62,11 @@ RTMetricNormalizer >> distinctColor [
 { #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
 	elements := someElements
+]
+
+{ #category : #'public translation' }
+RTMetricNormalizer >> fastSmoothTranslation [
+	translator := RTSmoothLayoutTranslator new nbCycles: 0.5; yourself
 ]
 
 { #category : #utility }
@@ -81,7 +92,8 @@ RTMetricNormalizer >> getValue: t min: min max: max minValue: minValue maxValue:
 { #category : #initialization }
 RTMetricNormalizer >> initialize [
 	super initialize.
-	elements := OrderedCollection new
+	elements := OrderedCollection new.
+	self directTranslation
 ]
 
 { #category : #accessing }
@@ -170,7 +182,7 @@ RTMetricNormalizer >> normalizeElementX: metricBlock min: min max: max minValue:
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el).
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
-			el translateBy: tt @ 0 ] ] 
+			translator translate: el to: el position + (tt @ 0) ] ] 
 ]
 
 { #category : #'public normalize size' }
@@ -248,7 +260,7 @@ RTMetricNormalizer >> normalizePosition: metricBlock min: min max: max minValue:
 							min: min max: max 
 							minValue: minValue maxValue: maxValue 
 							using: transformation).
-	elements with: values do: [ :el :v | el translateBy: v asIntegerPoint ] 
+	elements with: values do: [ :el :v | translator translate: el to: el position + (v asIntegerPoint) ] 
 
 ]
 
@@ -272,7 +284,7 @@ RTMetricNormalizer >> normalizePosition: metricBlock min: min max: max using: tr
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			"tt := minValue + (maxValue * (t - min) / max) asInteger."
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asIntegerPoint.
-			el translateBy: tt ] ] 
+			translator translate: el to: el position + (tt) ] ] 
 
 ]
 
@@ -431,6 +443,12 @@ RTMetricNormalizer >> normalizeWidth: metricBlock min: min max: max using: trans
 ]
 
 { #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeX: metricBlock [
+	"metricBlock is evaluated on each node model"
+	^ self normalizeX: metricBlock min: 0 max: 200
+]
+
+{ #category : #'public normalize x' }
 RTMetricNormalizer >> normalizeX: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
@@ -484,7 +502,7 @@ RTMetricNormalizer >> normalizeX: metricBlock min: min max: max minValue: minVal
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
-			el translateBy: tt @ 0 ] ] 
+			translator translate: el to: el position + (tt @ 0) ] ] 
 ]
 
 { #category : #'public normalize x' }
@@ -579,7 +597,7 @@ RTMetricNormalizer >> normalizeY: metricBlock min: min max: max minValue: minVal
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
-			el translateBy: 0 @ tt ] ] 
+			el translateTo: el position + (0 @ tt) ] ] 
 ]
 
 { #category : #'public normalize y' }
@@ -626,6 +644,11 @@ RTMetricNormalizer >> objects: someObjects [
 	self assert: [ view notNil ] description: 'A view has to be set'.
 	
 	self elements: (self view elementsFromModels: someObjects)
+]
+
+{ #category : #'public translation' }
+RTMetricNormalizer >> smoothTranslation [
+	translator := RTSmoothLayoutTranslator new
 ]
 
 { #category : #accessing }
