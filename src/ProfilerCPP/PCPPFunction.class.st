@@ -8,7 +8,8 @@ Class {
 		'outgoingCalls',
 		'signature',
 		'startLineNo',
-		'type'
+		'type',
+		'referenceAccesses'
 	],
 	#category : #ProfilerCPP
 }
@@ -31,6 +32,11 @@ PCPPFunction >> addIncomingCall: aCall [
 PCPPFunction >> addOutgoingCall: aCall [
 	"Add an outgoing call to the function"
 	outgoingCalls add: aCall
+]
+
+{ #category : #initialization }
+PCPPFunction >> addReferenceAccess: anAccess [
+	referenceAccesses add: anAccess 
 ]
 
 { #category : #accessing }
@@ -107,6 +113,7 @@ PCPPFunction >> initialize [
 	super initialize.
 	incomingCalls := OrderedCollection new.
 	outgoingCalls := OrderedCollection new.
+	referenceAccesses := OrderedCollection new.
 
 ]
 
@@ -121,6 +128,11 @@ PCPPFunction >> mooseNameOn: aStream [
 	self signature isNil
 		ifTrue: [ aStream nextPutAll: 'unkown' ]
 		ifFalse: [ aStream nextPutAll: self signature ]
+]
+
+{ #category : #accessing }
+PCPPFunction >> name [
+	^ signature 
 ]
 
 { #category : #'as yet unclassified' }
@@ -168,6 +180,11 @@ PCPPFunction >> outgoingOtherFunctions [
 	"Return the list of outoing calls. Exclude self call."
 	^ (self outgoingCalls collect: #calledFunction) asSet asArray copyWithout: self
 
+]
+
+{ #category : #initialization }
+PCPPFunction >> referenceAccesses [
+	^ referenceAccesses 
 ]
 
 { #category : #accessing }
