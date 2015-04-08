@@ -123,7 +123,7 @@ RTExploraNode >> collapseOnDirection: aDirection [
 					do: [ :elem | elem collapse ].
 			self setCollapsedOnDirection: aDirection ].
 		self removeEdgesOnDirection: aDirection.
-		(builder icons) ifTrue: [
+		(builder icons) ifNotNil: [
 			iconClose remove.
 			builder view add: iconOpen.
 		].
@@ -196,7 +196,7 @@ RTExploraNode >> explorationStatus: aDirection [
 { #category : #action }
 RTExploraNode >> exploreOnDirection: aDirection [
 	| objs objectsToAdd newNodes nodesAlreadyIn objsAlreadyIn |
-	objs := builder view elements collect: [ :el | el model ].
+	objs := ((builder nodes collect: [ :n | n element ]) asGroup) collect: [ :el | el model ].
 	objectsToAdd := self expansionOnDirection: aDirection.
 	objsAlreadyIn := objectsToAdd select: [ :obj | objs includes: obj ].
 	objectsToAdd := objectsToAdd reject: [ :obj | objs includes: obj ].
@@ -205,10 +205,12 @@ RTExploraNode >> exploreOnDirection: aDirection [
 		collect: [ :elem | elem attributes at: #node ].
 	newNodes := objectsToAdd collect: [ :obj | builder node: obj parent: self ].
 	
+	builder lastAddedNodes: newNodes.
+	
 	newNodes do: [ :node |
 		builder view add: node element.
 		node element translateTo: self element position ].
-	(builder icons) ifTrue: [
+	(builder icons) ifNotNil: [
 		(newNodes select: [ :n | n isExpandable]) do: [ :node |
 			builder view add: node iconOpen].
 		iconOpen remove.
