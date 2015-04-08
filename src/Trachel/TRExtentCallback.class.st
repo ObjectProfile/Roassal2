@@ -11,9 +11,14 @@ TRExtentCallback >> isExtentCallback [
 
 { #category : #actions }
 TRExtentCallback >> shape: aTRShape newExtent: newExtent oldExtent: oldExtent [
-	^ self
-		shape: aTRShape
-		ratio: newExtent / oldExtent
+	^ (oldExtent x = 0 or: [ oldExtent y = 0 ]) 
+		ifTrue: [ self
+						shape: aTRShape
+						ratio: 0  ]
+		ifFalse: [ self
+						shape: aTRShape
+						ratio: newExtent / oldExtent ]
+					
 ]
 
 { #category : #actions }
