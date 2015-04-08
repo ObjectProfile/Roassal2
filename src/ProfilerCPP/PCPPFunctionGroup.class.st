@@ -48,9 +48,9 @@ PCPPFunctionGroup >> updateAndNormalize: aBuilder [
 	
 	aBuilder normalizer 
 		elements: elements;
-		normalizeWidth: #numberOfIncomingCalls min: 60 max: 150;
-		normalizeHeight: #numberOfOutgoingCalls min: 60 max: 100;
-		normalizeColor: #totalExecutionTime using: { Color lightGreen. Color green. Color red }.	
+		normalizeWidth: [:e | (e isKindOf: PCPPFunction) ifTrue: [ e numberOfIncomingCalls] ifFalse:[0]] min: 60 max: 150;
+		normalizeHeight: [:e | (e isKindOf: PCPPFunction) ifTrue: [ e numberOfOutgoingCalls] ifFalse:[0] ] min: 60 max: 100;
+		normalizeColor: [:e | (e isKindOf: PCPPFunction) ifTrue: [ e totalExecutionTime] ifFalse:[0] ] using: { Color lightGreen. Color green. Color red }.	
 		
 	(aBuilder layout rtValue: self)
 			on: elements.
@@ -87,11 +87,20 @@ PCPPFunctionGroup >> viewCallgraphOn: b [
 	lineShape := RTArrowedLine new color: (Color r: 0.498 g: 0.737 b: 0.255 alpha: 1.0). 
 	lineShape withShorterDistanceAttachPoint. 
 
-	b shape shape: (RTBox new + (RTLabel new text: #signature)).
+	b shape shape: (RTBox new + (RTLabel new text: #name)).
+	"if: [ :cls | (cls isKindOf: PCPPReference) ] size: (RTBox new + (RTLabel new text: #name))."
 	b layout: (RTHorizontalTreeLayout new horizontalGap: 80; verticalGap: 8).	
 	b lineShape: (lineShape). 
-	b onClickExplore: [ :cls | cls outgoingOtherFunctions ];
-		"withPopup;"
+	b onLeftClickExplore: [ :cls |
+		|c| 
+		(cls isKindOf: PCPPFunction) ifTrue: [  
+			c := cls outgoingOtherFunctions asOrderedCollection. 
+			cls referenceAccesses do: [ :r | c add: r reference ].
+			c asArray] ifFalse: [ 
+			#()
+			 ]
+		];
+		withPopup;
 		dragChildren;
 		withIconsColor: (Color r: 0.498 g: 0.737 b: 0.255 alpha: 1.0);
 		node: self last.

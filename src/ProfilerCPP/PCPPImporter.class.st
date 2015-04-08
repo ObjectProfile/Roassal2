@@ -111,7 +111,7 @@ PCPPImporter >> import: fileNameWithFullPath [
 	PCPPMain new browse
 	"
 
-	| db result row f functionsDictionary c calledFunction instructionsDictionary instruction segmentsDictionary segment  callingFunction callsDictionary |
+	| db result row f functionsDictionary c calledFunction instructionsDictionary instruction segmentsDictionary segment  callingFunction callsDictionary accessDictionary a referenceDictionary ref |
 	db := NBSQLite3Connection on: fileNameWithFullPath.
 	db open.
 	
@@ -157,9 +157,35 @@ PCPPImporter >> import: fileNameWithFullPath [
 "		self haltIf: [ c instructionId = -1 ]."
 		c startTime: (row at: 'START_TIME') asInteger.
 		c endTime: (row at: 'END_TIME') asInteger.
-		
+
 		callsDictionary at: c id put: c.
 	].
+
+	"Reifying access"
+	accessDictionary := Dictionary new.
+	result := db execute: 'SELECT * FROM ACCESS_TABLE;'.
+	[ (row := result next) isNotNil ] whileTrue: [
+		a := PCPPAccess new.
+		a id: (row at: 'ID').
+		a instructionId: (row at: 'INSTRUCTION_ID').
+		a referenceId: (row at: 'REFERENCE_ID').
+		a accessType: (row at: 'ACCESS_TYPE').
+		model add:a. 
+		accessDictionary at: a id put: a.
+	].	
+	
+	"Reifying references"
+	referenceDictionary := Dictionary new.
+	result := db execute: 'SELECT * FROM REFERENCE_TABLE;'.
+	[ (row := result next) isNotNil ] whileTrue: [
+		ref := PCPPReference new.
+		ref id: (row at: 'ID').
+		ref referenceId: (row at: 'REFERENCE_ID').
+		ref name: (row at: 'NAME').
+		model add: ref.
+		referenceDictionary at: ref id put: ref.
+	].	
+
 
 	"We process the call, so we read the table again. Note that this is not necessary, however easy."
 	result := db execute: 'SELECT * FROM CALL_TABLE;'.
@@ -185,10 +211,21 @@ PCPPImporter >> import: fileNameWithFullPath [
 		So the function_id of a call_table entity refers to the called function of this entity. If you want to get the caller  function you have to go this way:
 
 call_table::instruction_id -> instruction::segment_id -> segment::call_id -> call::function_id -> call
+	"
+	model add: c.
+	].
+	
+	"Process the accesses, link them with functions, associate them with reference"
+	accessDictionary values do: [ :ac | 
+		(callsDictionary at: 
+			((segmentsDictionary at: 
+				((instructionsDictionary at: 
+					(ac instructionId)) segmentId)) callId)) callingFunction addReferenceAccess: ac.
+					
+		ac reference: (referenceDictionary values detect: [:r | r referenceId = ac referenceId]). 
+		"model add:ac. "
+		].
 
-		"
-		model add: c.
-	].	
 	
 	db close.
 	^ model
