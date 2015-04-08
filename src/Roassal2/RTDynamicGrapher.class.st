@@ -22,7 +22,8 @@ Class {
 	#superclass : #RTAbstractGrapher,
 	#instVars : [
 		'x',
-		'y'
+		'y',
+		'allAddedElements'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -35,6 +36,7 @@ RTDynamicGrapher >> add: anObject [
 	el translateTo: positionInView.
 	view add: el.
 	view signalUpdate.
+	allAddedElements add: el.
 	^ el
 ]
 
@@ -42,6 +44,13 @@ RTDynamicGrapher >> add: anObject [
 RTDynamicGrapher >> addAll: someObjects [
 	^ someObjects collect: [ :o | self add: o ]
 	
+]
+
+{ #category : #'public - cleaning' }
+RTDynamicGrapher >> clean [
+	allAddedElements do: #remove.
+	self resetAddedElements.
+	self updateView
 ]
 
 { #category : #hooks }
@@ -85,6 +94,8 @@ RTDynamicGrapher >> example02 [
 	b shape circle color: (Color red alpha: 0.3).
 	b view addMenu: '+ 10' callback: [ 
 			b addAll: ((1 to: 10) collect: [ :i | (100 atRandom @ 100 atRandom) ]) ].
+	b view addMenu: 'Clean' callback: [ 
+			b clean ].
 	^ b  
 ]
 
@@ -92,7 +103,8 @@ RTDynamicGrapher >> example02 [
 RTDynamicGrapher >> initialize [
 	super initialize.
 	x := #yourself.
-	y := #yourself
+	y := #yourself.
+	self resetAddedElements
 ]
 
 { #category : #hooks }
@@ -101,6 +113,16 @@ RTDynamicGrapher >> renderIn: aView [
 	self defineAxesIfNecessary.
 	self renderAxis.
 
+]
+
+{ #category : #'public - cleaning' }
+RTDynamicGrapher >> resetAddedElements [
+	allAddedElements := OrderedCollection new
+]
+
+{ #category : #'public - cleaning' }
+RTDynamicGrapher >> updateView [
+	self view signalUpdate
 ]
 
 { #category : #accessing }
