@@ -284,7 +284,7 @@ RTMetricNormalizer >> normalizePosition: metricBlock min: min max: max using: tr
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			"tt := minValue + (maxValue * (t - min) / max) asInteger."
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asIntegerPoint.
-			translator translate: el to: el position + (tt) ] ] 
+			translator translate: el to: (tt) ] ] 
 
 ]
 
