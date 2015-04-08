@@ -171,12 +171,11 @@ RTForceBasedLayout >> defaultInitialLayout [
 { #category : #hook }
 RTForceBasedLayout >> doExecute: nodeElements [
 	self start: nodeElements.
-	nbIterations = 0 
-		ifTrue: [ [ alpha := alpha * 0.99. alpha > 0.005 ] whileTrue: [ self step ] ]
-		ifFalse: [ nbIterations timesRepeat: [ alpha := alpha * 0.99. self step ] ].
+	self isJobInstalled
+		ifTrue: [ self runLayoutInJob ]
+		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
-	nodes do: [ :e | translator translateTopLeftOf: e to: e position ].
-	
+	nodes do: [ :e | translator translateTopLeftOf: e to: e position ]
 ]
 
 { #category : #algorithm }
@@ -227,6 +226,12 @@ RTForceBasedLayout >> initialize [
 RTForceBasedLayout >> isFixed: aNode [
 
 	^ fixedNodes includesKey: aNode 
+]
+
+{ #category : #testing }
+RTForceBasedLayout >> isJobInstalled [
+	"Return true if the class Job exist. This is mainly useful to make a distinction between Pharo and VisualWorks"
+	^ Smalltalk includesKey: #Job
 ]
 
 { #category : #accessing }
@@ -314,6 +319,43 @@ RTForceBasedLayout >> repulse: aNode from: aQuad [
 																					  oldPositions at: aNode put: p x - (dx * k) @ (p y - (dy * k) ) ] ]. ].
 																			
 	(aQuad charge closeTo: 0) not ifTrue: [ aQuad nodes do: [ :e | e isNil ifFalse: [ self repulse: aNode from: e ] ] ]
+]
+
+{ #category : #hook }
+RTForceBasedLayout >> runLayoutInJob [
+	[ :job | 
+	job
+		title: 'Laying out elements';
+		min: 1 - alpha;
+		max: 1.
+	nbIterations = 0
+		ifTrue: [ 
+			[ 
+			alpha := alpha * 0.99.
+			alpha > 0.005 ]
+				whileTrue: [ 
+					self step.
+					job currentValue: 1 - alpha ] ]
+		ifFalse: [ 
+			nbIterations
+				timesRepeat: [ 
+					alpha := alpha * 0.99.
+					self step.
+					job currentValue: 1 - alpha ] ] ] asJob run
+]
+
+{ #category : #hook }
+RTForceBasedLayout >> runLayoutSimply [
+	nbIterations = 0
+		ifTrue: [ 
+			[ 
+			alpha := alpha * 0.99.
+			alpha > 0.005 ] whileTrue: [ self step ] ]
+		ifFalse: [ 
+			nbIterations
+				timesRepeat: [ 
+					alpha := alpha * 0.99.
+					self step ] ]
 ]
 
 { #category : #algorithm }
