@@ -597,7 +597,7 @@ RTMetricNormalizer >> normalizeY: metricBlock min: min max: max minValue: minVal
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
-			el translateTo: el position + (0 @ tt) ] ] 
+			translator translate: el to: el position + (0 @ tt) ] ] 
 ]
 
 { #category : #'public normalize y' }
