@@ -6412,6 +6412,74 @@ u5nePWZ+kW8AAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleUseOfMetrics [
+
+| metrics classes view mb xAxis yAxis |
+metrics := { 
+	{ 'LOC' . #numberOfLinesOfCode } . 
+	{ 'NOM' . #numberOfMethods } .
+	{ 'NOA' . #numberOfVariables } .
+}.
+
+classes := RTObject withAllSubclasses.
+
+view := RTView new.
+view @ RTDraggableView.
+xAxis := metrics first second.
+yAxis := metrics second second.
+
+"Preparing the menu according to the provided metrics"
+mb := RTMenuBuilder new.
+mb view: view.
+
+metrics do: [ :tupple |
+	mb menu: 'X-axis' submenu: tupple first background: Color green callback: [ xAxis := tupple second. refresh value].
+	mb menu: 'Y-axis' submenu: tupple first background: Color green callback: [ yAxis := tupple second. refresh value ].
+].
+
+elements := (RTEllipse new color: (Color red alpha: 0.3)) elementsOn: classes.
+
+elements @ RTPopup.
+
+view addAll: elements.
+
+refresh := [
+	RTMetricNormalizer new
+		elements: elements;
+		fastSmoothTranslation;
+		normalizePosition: [:cls | (xAxis rtValue: cls) @ (yAxis rtValue: cls) negated ] min: 0@0 max: 200 @ 200.
+	view signalUpdate.
+].
+refresh value. 
+
+view canvas addShape: (TRLineShape new from: 0 @ 200 to: 200 @ 200).
+
+view canvas addShape: (TRLineShape new from: 0 @ 0 to: 0 @ 200).
+
+^ view
+
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleUseOfMetricsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAC2klEQVR4XuXbvUojURjG8bkC
+G+/AexHBxivwAqKdtkLYQtgiWG1nq52wTRZZhZVdkrCVFq4oKqKLRYyO4gdR8/HoeyYjJtEY
+B42Z+H8OL4SYOYHzyznHSWa8uzt+4hTv4cGKtWTE1pyox7v35KcFiBsgL2J72lm09hwqH6Qe
+JNNi6BQB5I/Vv9f1wQdpB/LThumH1YrVrNU3q69W362+hMOYskq8AJIOa85q3Oq3VdZq0moh
+7KPf6j8fpD2IDZJXDAfNDeQvq5zVplXBqhz+LfsCyN+64x1sNexj0SrvPc4i/gzh7yE9BVJR
+RaWIrbmzqMe79+QTtADhhw/CDx+ED8IPH4QPwg8fhA/CDx+ED8IPH4QfPggfhB8+CB+EHz4I
+H4QfPggfhJ+H6PhYOj0VAkTlsrS9Hevf05XPy6FgZojOz/kXOPCXLD4IP3wQPgg/fBA+CD98
+ED4IP3wQfvggfBB++CB8EH74IHwQfvggfBB++CDvEG1sSGdn4oPwwwfhg/DDB+GD8MMH4YcP
+wgd507lFpSLlcm3PLbSzI21tiQ/y1gE/OZEymU9zQtf7IKWSND8vZbOf6hPe00uWLi8VzBT+
+LInBDDk4kGZmgkv+u3HZPx+kHsPdHzIxIU1NSdWqXvN6PkgnQVxGR6VEQs33iejoSLq6anxu
+d/fJc3yQ90YZHpbGxoJBrl+2gsc3N+IvWR+JcX0tDQzUliz75KtQ4O8jXQW5vZX6+qS1NQVL
+1Pq6tLzMB+kaSDoteZ40PV1D8f0ARMVi495hG77298UH6TRIKlUDGRyUlpaCQXdpeI3huNuS
+dXjIB+k4SDJZAxkZCU4K3X9aWl1tBHEYwH2layD+0JB8+2LQt+UqrsUBubiQ9vb4m3iczkP4
+4YPwQfjhg/BB+OGD8EH44YPwQfjhg/DDB+GD8MMH4YPwwwfhg/DDB+GD8MMH4YcPwgfhhw/C
+B+GHD8IH4ecjcg8nrAVd+NhQ9wAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleVectorEditing [
 	| view selected statusBar |
 	view := RTView new.
