@@ -135,6 +135,20 @@ RTComposer >> propagateHighlightToAll [
 	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
 ]
 
+{ #category : #'public title' }
+RTComposer >> setGeneralTitle: aTitleAsString [
+	self setGeneralTitle: aTitleAsString gap: 0 @ -50
+]
+
+{ #category : #'public title' }
+RTComposer >> setGeneralTitle: aTitleAsString gap: gapAsPoint [
+	| title |
+	title := (RTLabel new text: aTitleAsString; height: 20) element.
+	TRConstraint move: title above: self allGroupedElements asGroup.
+	title translateBy: gapAsPoint.
+	self view add: title
+]
+
 { #category : #accessing }
 RTComposer >> view [
 	^ view
