@@ -43,7 +43,7 @@ PCPPFunctionGroup >> updateAndNormalize: aBuilder [
 	anim := RTNopAnimation new
 				waitFor: 0.01 after: [  
 	
-	elements := (aBuilder nodes collect: [ :n | n element ]) asGroup.
+	elements := ((aBuilder nodes select: [:n | n element model isKindOf: PCPPFunction ]) collect: [ :n | n element ]) asGroup.
 	listeners := (aBuilder lastAddedNodes flatCollect: [ :n | {n iconOpen. n iconClose} ]) asGroup.
 	
 	aBuilder normalizer 
@@ -87,8 +87,7 @@ PCPPFunctionGroup >> viewCallgraphOn: b [
 	lineShape := RTArrowedLine new color: (Color r: 0.498 g: 0.737 b: 0.255 alpha: 1.0). 
 	lineShape withShorterDistanceAttachPoint. 
 
-	b shape shape: (RTBox new + (RTLabel new text: #name)).
-	"if: [ :cls | (cls isKindOf: PCPPReference) ] size: (RTBox new + (RTLabel new text: #name))."
+	b shape shape: ((RTBox new size:40; color: Color yellow )+ (RTLabel new text: #name)).
 	b layout: (RTHorizontalTreeLayout new horizontalGap: 80; verticalGap: 8).	
 	b lineShape: (lineShape). 
 	b onLeftClickExplore: [ :cls |
