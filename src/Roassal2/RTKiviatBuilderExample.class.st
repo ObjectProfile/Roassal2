@@ -733,5 +733,5 @@ QOgDoW+nsP8DRe4gRSmBD8QAAAAASUVORK5CYII='
 
 { #category : #accessing }
 RTKiviatBuilderExample >> label [
-	^ 'Radar'
+	^ 'Kiviat (Radar)'
 ]

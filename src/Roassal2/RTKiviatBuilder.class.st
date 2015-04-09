@@ -178,6 +178,11 @@ RTKiviatBuilder >> buildAxis [
 	axisBuilt := true.	
 ]
 
+{ #category : #actions }
+RTKiviatBuilder >> clean [
+	self removeDynamicObjects: objects copy
+]
+
 { #category : #view }
 RTKiviatBuilder >> configureView: aView [
 	aView @ RTDraggableView.
