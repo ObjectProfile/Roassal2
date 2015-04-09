@@ -220,7 +220,7 @@ call_table::instruction_id -> instruction::segment_id -> segment::call_id -> cal
 		(callsDictionary at: 
 			((segmentsDictionary at: 
 				((instructionsDictionary at: 
-					(ac instructionId)) segmentId)) callId)) callingFunction addReferenceAccess: ac.
+					(ac instructionId)) segmentId)) callId)) calledFunction addReferenceAccess: ac.
 					
 		ac reference: (referenceDictionary values detect: [:r | r referenceId = ac referenceId]). 
 		"model add:ac. "
