@@ -1,23 +1,32 @@
 "
-RTMondrianExample new installTitle: 'ClusterLayout' 
+RTMondrianExample new installTitle: 'RandomGraph' 
 		code:
 		'
-| b |
+| nbOfNodes nbOfRandomEdges nodes edges b |
+
+nbOfNodes := 40.
+nbOfRandomEdges := 40.
+
+nodes := 1 to: nbOfNodes.
+edges := (1 to: nbOfRandomEdges) 
+				collect: [ :notUsed | nodes atRandom -> nodes atRandom ].
+
+""
+In case you do not wish random data. You can set it manually. 
+nodes := #(1 2 3 4 5).
+edges := { 1 -> 2 . 1 -> 4 . 4 -> 3 }.
+""
+
 b := RTMondrian new.
 
-b shape circle.
-b nodes: RTObject withAllSubclasses.
+b shape circle color: (Color black alpha: 0.5).
+b nodes: nodes.
 
-b shape line color: (Color blue alpha: 0.4).
-b edges connectFrom: #superclass.
+b shape line color: (Color gray alpha: 0.3).
+b edges
+	objects: edges from: #key to: #value.
 
-b normalizer
-	objects: RTObject withAllSubclasses;
-	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
-	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
-	
-b layout cluster.
-b build.
+b layout force.
 ^ b'
 	
 "
@@ -2750,6 +2759,59 @@ JNR5lP6Hr0rAILgcyMl5WbmP6xsLQFjxMoEOEyJHcbVENc0miRHQZhcoBHxKIEN6/qFaSOXT
 +dO1O4vchdiDkBS69p/AzDi4DAuio9nFyE4xgNjiSgplWzV5jLC2On2V/3kHEHB7Q3BHYwGI
 T2S1YyF9/ocr5QNSmJQPSPmAlC/lA1I+IOVL+YCUD0j5Uj4g5QNSvpQPSPmAlC/lA1K+eOUf
 eVqoeUse4lsAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
+RTMondrianExample >> exampleRandomGraph [
+
+| nbOfNodes nbOfRandomEdges nodes edges b |
+
+nbOfNodes := 40.
+nbOfRandomEdges := 40.
+
+nodes := 1 to: nbOfNodes.
+edges := (1 to: nbOfRandomEdges) 
+				collect: [ :notUsed | nodes atRandom -> nodes atRandom ].
+
+"
+In case you do not wish random data. You can set it manually. 
+nodes := #(1 2 3 4 5).
+edges := { 1 -> 2 . 1 -> 4 . 4 -> 3 }.
+"
+
+b := RTMondrian new.
+
+b shape circle color: (Color black alpha: 0.5).
+b nodes: nodes.
+
+b shape line color: (Color gray alpha: 0.3).
+b edges
+	objects: edges from: #key to: #value.
+
+b layout force.
+^ b
+]
+
+{ #category : #icons }
+RTMondrianExample >> exampleRandomGraphIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAADjElEQVR4XuWbW0syURSG+//X
+RfgDIuhCobAuzIyKqDACLdJCJYTO5/Nx9fEKG8Zx7JsxzRmfBwRzxIv1zFp7rb2nse9vPnFi
+jB8CvhA+fCF8IXz4QvhC+PCF8IXw4QvhC+HDF8KHL4QvhA9fCF8IH74QvhA+fCF8IXz4Qvjw
+hfCF8OEL4QvhwxfCF8KHLyQqjUbD9OIL4QthC3l6ejJ+yYoJ9XrdisUiX8gokU6nbXl52fhC
+/piJiQnjZ0gfKBQKtrm5+etg3t/f84XEiefnZ76QJHZis7OzxhcyYLa3t0MHeXd3ly9k0Kyt
+rdnX1xe/ZMWFh4cH488hfWRnZ8fu7u56Curn56e9vb3xhfSTZrNp7+/vgUGdm5uzQba7arv5
+QkJ2SldXV/bx8WHX19dds+Do6OhXAd3a2uIL+d/drplCIrxl6eXlpa2s6frFxYWtrq6GCujS
+0pKtrKwYv2T5gnJwcNA1KK+vr5bP5wPLlyRJWLVaNc0Syhqh73Yrd27Bj/PQGPsu6+TkpGvw
+pqamTNlyenra9h1vNjlmZmbs/Pzc+Iv6gKZuzRkuS/wZ4V3Y9Z0knaEkVkipVLLDw0N7fHwM
+bJE1rd/e3kYWcXNzw1/Uow56Wiu0qLu/Ly8vO4K4sLDQU2AXFxfbfpsvJAD/Iqz213VbQdf9
+XVkU1EjwMyTCsOa9e50ILfw6BRQqcWp/da2XIa/XHQKUkOPj41Y3pSB7s8EdxXoXdUlxGRJV
+iH5H8IWEoFKpWLlcbgvWxsaG+e/q33RUOqlUdmGFqEsKu/ekO7dWq7XdweqwvHVfa8tPcwu/
+7Q0hJMpWuQKucqTtEc0hkqnPzs7OWiVNk38ul+Pv9v4FEqCJXFmRzWZbIvWZEyo53g5J4nRN
+svhC+sjk5GRLguugNOwJzQvKikwmY24OCSp/erBumHPFyGaIC7iyRNP0/v5+S4Teu4nczSe9
+MD4+bnwhEVBWpFKpjiZAMlSaJKeXrRJ+hgxgbXHvp6enLekPYydaiH+bw+0A84UMifn5+Y7g
+J7nlTbyQoONaZU2Yrmpvb8+G/UDDSK4hQWg45GdIjNC/tiVp9hh5IeKnBx34QobEsM82+EJ8
+rK+vx3Lhxgrhlyw+fCF8IXz4QvhC+PCF8OEL4QvhwxfCF8KHL4QvhA9fCF8IH74QPnwhfCF8
++EL4QvjwhfCF8OEL4QvhwxfChy+EL4TPT/wDMqwUZqPbYhgAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
