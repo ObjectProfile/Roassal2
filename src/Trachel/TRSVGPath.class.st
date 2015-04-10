@@ -71,7 +71,8 @@ TRSVGPath >> computeCurves [
 	answer := OrderedCollection new.
 	
 	pathWithSpaceBeforeMinus := pathString copyReplaceAll: '-' with: ' -' asTokens: false.
-	tokens := pathWithSpaceBeforeMinus findTokens: 'MmLlZzCcSsQqTtHhVv, ' keep: 'MmLlZzCcSsQqTtHhVv'.
+	tokens := pathWithSpaceBeforeMinus findTokens: 'AaMmLlZzCcSsQqTtHhVv, ' keep: 'AaMmLlZzCcSsQqTtHhVv'.
+	
 	stream := ReadStream on: tokens.
 	nextPoint := [ (Float readFrom: stream next) @ (Float readFrom: stream next) ].
 	
@@ -115,6 +116,18 @@ TRSVGPath >> computeCurves [
 		token = 'q' ifTrue: [ 
 			cp1 := p + (nextPoint value). t := p + (nextPoint value).
 			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
+		
+		token = 'A' ifTrue: [ self halt. ].
+		token = 'a' ifTrue: [ | r xAxisRot largeArcFlag sweepFlag angle flag |
+			r := nextPoint value.
+			xAxisRot := (Float readFrom: stream next).
+			largeArcFlag := (Float readFrom: stream next).
+			sweepFlag := (Float readFrom: stream next).
+			t := p + (nextPoint value).
+			angle := 10.
+			flag := false.
+			answer add: #a -> (Array with: t with: angle with: flag).
+			p := t. cp2 := nil. cp1 := nil. ].
 		
 		token = 'T' ifTrue: [
 			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := nextPoint value.
