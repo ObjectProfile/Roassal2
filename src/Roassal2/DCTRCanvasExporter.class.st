@@ -81,7 +81,7 @@ DCTRCanvasExporter >> example01 [
 		defaultScale;
 		oversizedBy: 20 @ 20;
 		format: #png;
-		fileName: ((UIManager default request: 'Please enter file name' initialAnswer: 'export.png') ifNil: [ ^ nil ]);
+		fileName: ((TRPlatform current dialogRequest: 'Please enter file name' initialAnswer: 'export.png') ifNil: [ ^ nil ]);
 		export
 ]
 

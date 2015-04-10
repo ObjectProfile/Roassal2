@@ -122,7 +122,7 @@ RTCircularTreeMapBuilder >> initialize [
 		fillColor: Color white;
 		borderColor: Color gray.
 	popup := RTPopup new.
-	baseRadius := self defaultBase.
+	baseradius := self defaultBase.
 	elements := OrderedCollection new.
 	rootNodes := OrderedCollection new.
 ]
@@ -145,7 +145,7 @@ RTCircularTreeMapBuilder >> layout: e [
 { #category : #layout }
 RTCircularTreeMapBuilder >> layoutElements [
 	| virtualRoot |
-	virtualRoot := RTElement new.
+	virtualRoot := RTEllipse elementOn: nil.
 	virtualRoot attributes at: #children put: rootNodes.
 	self layout: virtualRoot.
 	

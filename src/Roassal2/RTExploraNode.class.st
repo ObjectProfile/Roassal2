@@ -62,7 +62,7 @@ RTExploraNode >> addListenerFor: anEvent onDirection: aDirection withBlock: aBlo
 	| listener |
 	
 	listener := element.
-	iconOpen ifNotNil: [ listener := ({iconOpen. iconClose} asGroup) ].
+	iconOpen ifNotNil: [ listener := (Array with: iconOpen with: iconClose) asGroup ].
 		
 	self addExpansionDirection: aDirection.
 	self expandWithBlock: aBlock onDirection: aDirection.

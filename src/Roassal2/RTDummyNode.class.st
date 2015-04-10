@@ -65,7 +65,7 @@ RTDummyNode >> translateTo: aPoint [
 
 { #category : #accessing }
 RTDummyNode >> view [
-	^ ROView new
+	^ RTView new
 ]
 
 { #category : #accessing }

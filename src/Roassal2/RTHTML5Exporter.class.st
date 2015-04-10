@@ -29,7 +29,8 @@ Class {
 		'title',
 		'exportFixedShapes',
 		'roassalJSfile',
-		'marginScale'
+		'marginScale',
+		'jsrefenrece'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -54,8 +55,8 @@ RTHTML5Exporter class >> importRoassalJS: fileName [
 { #category : #public }
 RTHTML5Exporter class >> interactiveExport: view [
 	| filename |
-	filename := UITheme builder
-		fileSave: 'Export as html'
+	filename := TRPlatform current
+		dialogRequestSaveFilename: 'Export as html'
 		extensions: #('html')
 		path: nil.
 	filename ifNil: [ self inform: 'Saving cancelled'. ^ self ].
@@ -134,7 +135,7 @@ RTHTML5Exporter >> createStream [
 
 { #category : #defaults }
 RTHTML5Exporter >> defaultDirectory [
-	^ FileSystem disk workingDirectory
+	^ TRPlatform current workingDirectory
 ]
 
 { #category : #defaults }

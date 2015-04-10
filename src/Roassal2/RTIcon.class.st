@@ -6,7 +6,7 @@ Class {
 
 { #category : #icons }
 RTIcon class >> objectprofile [
-	^ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self objectprofileContents readStream)
+	^ TRPlatform current formFromStream: (self objectprofileContents readStream)
 ]
 
 { #category : #icons }
@@ -347,7 +347,7 @@ YII='
 
 { #category : #icons }
 RTIcon class >> roassal [
-	^ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self roassalContents readStream)
+	^ TRPlatform current roassalIcon
 ]
 
 { #category : #icons }
@@ -518,7 +518,7 @@ Facebook page: http://facebook.com/ObjectProfile
 { #category : #icons }
 RTIcon class >> smallRoassal [
 	"Private - Generated method"
-	^ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self smallRoassalContents readStream)
+	^ TRPlatform current formFromStream: (self smallRoassalContents readStream)
 ]
 
 { #category : #icons }

@@ -152,7 +152,7 @@ hD6anp7mQMjiIhAsF8JNW/JVnj17tq2B/B8fJ2RwXq/RVgAAAABJRU5ErkJggg=='
 RTKiviatBuilderExample >> exampleBudgetChart [
 | b n |
 	b := RTKiviatBuilder new.
-	b objects: { ('Allocated Budget' -> { 60. 15. 25. 8. 40. 20 }). ('Actual Spending' -> { 20. 20. 25. 20. 50. 145 } )}.
+	b objects: (Array with: ('Allocated Budget' -> #(60 15 25 8 40 20)) with: ('Actual Spending' -> #( 20 20 25 20 50 145) )).
 	n := RTMultiLinearColorForIdentity new objects: (b objects).
 	b shape circle color: [ :value | n rtValue: value kiviatNode named]; size: 10.
 
@@ -465,77 +465,12 @@ AAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTKiviatBuilderExample >> exampleDynamicChart [
-| b n |
-	b := RTKiviatBuilder new.
-
-	n := RTMultiLinearColorForIdentity new objects: (b objects).
-	b shape circle color: [ :value | n rtValue: value kiviatNode named]; size: 10.
-
-
-    b addMetric: [ :v | v first ] max: 100.
-    b addMetric: [ :v | v second ] max: 100.
-    b addMetric: [ :v | v third ] max: 100.
-    b addMetric: [ :v | v fourth ] max: 100.
-    b addMetric: [ :v | v fifth ] max: 100.
-
-    b activatePolygons.
-    b build.
-
-    b view addMenu: '+1' callback: [
-    b addDynamicObject: ((1 to: 5) collect: [ :i | 100 atRandom ]) ].
-    b view addMenu: 'clean' callback: [ b  clean ].
-	^ b view
-]
-
-{ #category : #icons }
-RTKiviatBuilderExample >> exampleDynamicChartIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAHZ0lEQVR4XuWdW08TXRSG+Xck
-/gRuSLjh0guMEQygEkFBgogSNBovCAFvCEE8AR5QQTxQPCsqGgERFOToCXD167PDNKVfC2Od
-dmbPepPJtHZonf3uvdda71p7T140qh9BQp7+JtBPiH7sRMjExITcuHFDkj+8ePGi6G8iHwi5
-efOmHD58eEvj19bWSmVlpZw/f176+/vl6NGjUl9fb/5tdHRUP1HZJGRlZcU0+q9fv+INPTw8
-LN3d3TI0NCR//vyRqakpiREXhYy3b99aRYjEsLy8LPptSEBARxsZGYl++vRJ9BMSEMzMzOgf
-IX7j+vXr8vv3b7l//750dnbK+vq6ef/gwQPRT4gPePXqlXFCmpqaopxjR/ysnxAf8PHjR3n8
-+LFEIhFsiHFGIOnp06f6R4ifePfuneiP1AOChYUFsS4OCTPGx8f1E6J/utJPyP/w8+fP6PT0
-dHRtbU0/IUEh5Pnz5/L161f9hOifrvQTEgdCKBE6scfS0pIh5PLly/rdXj+xsbEhjI6enh5Z
-XFw0ckmoCZmbm5PYHB3Ym8SQNzc3myh9cHBQTp48GV5C6HFjY2MCKUG9KTKgwMbRndEIQTWd
-nJw0Sasg3tTq6qq1Gc08twRcunRJZmdn5dGjR3Lu3Dlzw2QPW1tbA3fzuLuhJgSQcycN+uXL
-F3P+/v27zM/PmyMWgAnTRBBuyPn/hZoQvJS+vj6TW7937540NjYaGZvED++5hoyc36TEhEQz
-agkKQz9C3AK7wpTx48cPX8h5+fJloD3AnBOCy0mjMKXl6iYIADnoDN++fRPiEOydfkI2gcvJ
-CCEzxzSX7Zs4deoUJUqye/duOX78uPldW0dJnpe99Nq1ayYQ4zXeWG9vr+m12R4tnz9/NnJJ
-S0uL7Nmzx9SSJdaYqR0hZ86ckQsXLhhiEosJKMTLdk2UzdNU1gihV549e9ZIFnfu3JGBgYEt
-DUShgf7Ywwcbsh2oBME9Jl7w8nufPHmin5BM8eHDB3n9+rV46UREQwJfCEGK4YxQ+a8iJd8V
-ltGRc0K6urri3hfvSRxx/IvUgSGPeVjRXMY9oSHk9u3bUlZWFve+Nks7jcuMFJPp99qs7vpK
-CCOBhiefwvnFixdb1prgGrvVwyAXHa26utpcj1eXTS8u1DZkO+B94YmhIO90LRXtTHmoAdgi
-v/SzUBMCKN15//79trlwJ+6ACOIfpj2bRcVAE+K4scgu22UlbSzzsYoQvC9sikMC0xE5l3QN
-j4aln5AsAsmFaYeKkU0vLO6R0fjJ3pRtle3WEULjo9pCCKrxrVu3tsj3eGDkO8I6XQXWhuxk
-XxAtI5GIUXhdyDSuvhcnwo0EQ5qYYyfQcZzOE2pCAIs2WebsprJdPyFZBHaE3AqvSRPrn7J8
-BERQ2VJcXGyWOLe3t0tRUVFKUlAATp8+LXv37jXROwkztgpJdW1BQYH5nAN7xRYiaeybSRGf
-OHHCfM51ySMK9aGqqsp8x9WrV+O/mepaawnhRp49exb3sBz9i6OwsFDS/Q2b6ZC9bGtrk4MH
-D8qhQ4dSXnvgwAGjCnA4tWbpVAHIRYtzZKBUgej+/fuNWFpaWhr/zXTXWkcIEkpyrHHlyhUT
-wXODpIxT/R17skAY2UsMPz0fjy35Oj6jxoxaLiT87QqzUQOYJtkT5u7du/GRkvy7dAQ+c34z
-3bVWEYIcQhLLjVEMg1wSaEKYNog33BZFhC0eCRQhkEBV/d/8jX5CsgTUW4wwNVVHjhwxjcyZ
-OXsno6+fEA+BnXA0KZJMiTHGdt6RA7wi/SlcD1xZzuQwUk1RxBwUL7hJOOH9hKUmyzdC8KD+
-dd9GfHuAVI/7qr9yMUPgQb1580a82OGNmIFaXl6TX9efwv1LIC14ZYQx+ASJRNqovw8fPhQK
-H/QT4gKoskgT+fn5RjNy9KKamhqzMssr5yATdVUdIUTSTpDHvE/yCcmD0cK6DuQNL6dD/YSk
-AVoOC2cS53VnzQYk4UV5LXu4KR1SR4hTa+vHSljbV+BmhRAUWgjxK1AjF6J/0edmMOf3HI5R
-31xfqHuEkLPo6OiQffv2mSwdEgjeVF1dXc4JIvK3Wd/K8yLqdkp12H4DoEW50aG8Aitw6QQE
-h9gwPDlbC68zIoRGp/421Y6fThGCWy3KCxD50wmcwjp+11bj/teEoMxSMhOkJw2gZ/F4DUYF
-i4IQG21VfzMaIehQQdeNgryduO/SiR9wU9VoLSHYA7ZnwmhSoU7tEZUfvPZKi/IatqZ2XW/P
-VFFRYWqjSKk2NDSYzQEoc0n1MDH9pORoykq0G87S5qCC4JCoXf9m/AEBnSfmfVmXa9e/Gb9+
-QrI/Mnbt2mVsHdE7sk66Amr9hPgQi0BIugJq/YTkEIkSjv5HHgUMtjzDUA0hNjzhUxUhwOsN
-0/QTomTaUkEI0g8PeLFh5wcVhJBQY/c6/SPEZzgSPEXYiYXYQS7KDjUh1PoeO3bM7HadfNZP
-iA8oKSmR8vJyU3BBUTapAvZS4b1+QvRDPyH6CdEP/YToJ0Q/9BOiCf8B5okFsCERRjYAAAAA
-SUVORK5CYII='
-]
-
-{ #category : #sources }
 RTKiviatBuilderExample >> exampleRandomValues [
 	| b  |
 	b := RTKiviatBuilder new.
-	b objects: {('object1' -> ((1 to: 25) collect: [:i | i atRandom])). ('object2' -> ((1 to: 25) collect: [:i | i atRandom]))}.
+	b objects: (Array with: ('object1' -> ((1 to: 25) collect: [:i | i atRandom])) with: ('object2' -> ((1 to: 25) collect: [:i | i atRandom]))).
 	
-	b shapes: ({(Color blue). (Color red)} do: [:c | c alpha: 0.3]).
+	b shapes: ((Array with: Color blue with: Color red) do: [:c | c alpha: 0.3]).
 
 	(1 to: 25) doWithIndex: [ :ei :i |
 		b addMetric: [:e | e value atWrap: i]
@@ -798,5 +733,5 @@ QOgDoW+nsP8DRe4gRSmBD8QAAAAASUVORK5CYII='
 
 { #category : #accessing }
 RTKiviatBuilderExample >> label [
-	^ 'Kiviat (Radar)'
+	^ 'Radar'
 ]

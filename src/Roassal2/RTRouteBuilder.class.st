@@ -29,7 +29,7 @@ RTRouteBuilder >> buildRoutesUsingNames: cityNames [
 
 { #category : #'as yet unclassified' }
 RTRouteBuilder >> cityNotFoundError: cityName [
-	NotFound signal: cityName
+	self error: 'Not found: ',cityName.
 ]
 
 { #category : #'as yet unclassified' }
