@@ -10,7 +10,7 @@ TRMorphWidgetFactory class >> menuForAssociations: associations on: element [
 	The block contains in the association is evaluated with the model provided by the element."
 	
 		| v |
-		v := MenuMorph new.
+		v := TRPlatform current menuMorphClass new.
 		associations do: [ :assoc | 
 			v 
 				add: assoc key

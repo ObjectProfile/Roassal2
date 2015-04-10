@@ -57,10 +57,10 @@ TRMouseWheelEvent >> unifyDirection: anObject [
 	| mapping |
 	direction := anObject.
 	mapping := Dictionary
-		newFrom:
-			{(#up -> Character arrowUp).
-			(#down -> Character arrowDown).
-			(#left -> Character arrowLeft).
-			(#right -> Character arrowRight)}.
+		newFrom: (Array with:
+			(#up -> Character arrowUp) with:
+			(#down -> Character arrowDown) with:
+			(#left -> Character arrowLeft) with:
+			(#right -> Character arrowRight)).
 	direction := mapping at: anObject ifAbsent: [ anObject ]
 ]

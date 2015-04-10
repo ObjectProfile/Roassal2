@@ -8,8 +8,61 @@ Class {
 }
 
 { #category : #public }
+TRPharoPlatform >> browseClass: aClass [
+	^ Nautilus openOnClass: aClass
+	
+]
+
+{ #category : #public }
+TRPharoPlatform >> dateAndTime [
+	^ DateAndTime
+]
+
+{ #category : #public }
 TRPharoPlatform >> dateAndTimeFromString: aString [
 	^ DateAndTime fromString: aString.
+]
+
+{ #category : #public }
+TRPharoPlatform >> dialogChooseFrom: options values: values [
+	^ UIManager default chooseFrom: options values: values.
+]
+
+{ #category : #public }
+TRPharoPlatform >> dialogRequest: request initialAnswer: answer [
+	^ UIManager default request: request initialAnswer: answer.
+	
+]
+
+{ #category : #public }
+TRPharoPlatform >> dialogRequestSaveFilename: filename extensions: exts path: path [
+	
+	^ UITheme builder fileSave: filename extensions: exts path: path.
+]
+
+{ #category : #public }
+TRPharoPlatform >> download: aString [
+	^ ZnEasy get: aString.
+]
+
+{ #category : #public }
+TRPharoPlatform >> downloadPng: aUrl [
+	^ ZnEasy getPng: aUrl
+]
+
+{ #category : #public }
+TRPharoPlatform >> fontFamilyName: name size: number [
+	^ StrikeFont familyName: name size: number
+]
+
+{ #category : #public }
+TRPharoPlatform >> fontListStrings [
+	^ FontChooser new fontListStrings.
+]
+
+{ #category : #public }
+TRPharoPlatform >> formClass [
+	^ Form
 ]
 
 { #category : #public }
@@ -19,8 +72,53 @@ TRPharoPlatform >> getFontForSize: aNumber [
 ]
 
 { #category : #public }
+TRPharoPlatform >> httpClientRequestClass [
+	^ ZnClient
+]
+
+{ #category : #public }
 TRPharoPlatform >> inform: str [
 	UIManager default inform: str
+]
+
+{ #category : #public }
+TRPharoPlatform >> jsonReaderClass [
+	^ NeoJSONReader
+]
+
+{ #category : #public }
+TRPharoPlatform >> materializeFromByteArray: array [
+ 	^ FLMaterializer materializeFromByteArray: array.
+]
+
+{ #category : #public }
+TRPharoPlatform >> menuMorphClass [
+	^ MenuMorph
+]
+
+{ #category : #public }
+TRPharoPlatform >> mimeDecodeToBytes: stream [
+	^ Base64MimeConverter mimeDecodeToBytes: stream.
+]
+
+{ #category : #public }
+TRPharoPlatform >> mimeEncode: aStream [
+	^ Base64MimeConverter mimeEncode: aStream
+]
+
+{ #category : #public }
+TRPharoPlatform >> mimeEncode: aStream multiLine: aBool [
+	^ Base64MimeConverter mimeEncode: aStream multiLine: aBool.
+]
+
+{ #category : #public }
+TRPharoPlatform >> packageNamed: packageName [
+	^ RPackageOrganizer default packageNamed: packageName
+]
+
+{ #category : #public }
+TRPharoPlatform >> pngReadWriterClass [
+	^ PNGReadWriter
 ]
 
 { #category : #public }
@@ -185,4 +283,9 @@ TRPharoPlatform >> widthOfString: string font: font [
 { #category : #public }
 TRPharoPlatform >> widthOfString: string fontFamilyName: fontFamilyName fontSize: fontSize [
 	^ self widthOfString: string font: (StrikeFont familyName: fontFamilyName size: fontSize).
+]
+
+{ #category : #public }
+TRPharoPlatform >> workingDirectory [
+	^ FileSystem disk workingDirectory
 ]
