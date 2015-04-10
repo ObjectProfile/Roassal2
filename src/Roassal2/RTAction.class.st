@@ -1,6 +1,6 @@
 Class {
 	#name : #RTAction,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#category : #'Roassal2-Core'
 }
 

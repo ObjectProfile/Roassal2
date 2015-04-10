@@ -37,8 +37,7 @@ Class {
 		'nodeKiviatElements',
 		'edgeKiviatElements',
 		'shapeNode',
-		'shapeEdge',
-		'polygonElement'
+		'shapeEdge'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
@@ -111,16 +110,6 @@ RTKiviatNode >> named: aString [
 { #category : #accessing }
 RTKiviatNode >> nodeKiviatElements [
 	^ nodeKiviatElements
-]
-
-{ #category : #accessing }
-RTKiviatNode >> polygonElement [
-	^ polygonElement.
-]
-
-{ #category : #accessing }
-RTKiviatNode >> polygonElement: anRTElement [
-	polygonElement := anRTElement.
 ]
 
 { #category : #accessing }
