@@ -17,6 +17,11 @@ TRPolygonShape >> accept: aVisitor [
 	aVisitor visitPolygonShape: self
 ]
 
+{ #category : #accessing }
+TRPolygonShape >> center [
+	^ self encompassingRectangle center
+]
+
 { #category : #private }
 TRPolygonShape >> computePath [
 	canvas ifNil: [ ^ self ].
@@ -55,6 +60,11 @@ TRPolygonShape >> drawOn: athensCanvas [
 { #category : #accessing }
 TRPolygonShape >> encompassingRectangle [
 	^ vertices min corner: vertices max
+]
+
+{ #category : #'as yet unclassified' }
+TRPolygonShape >> extent [
+	^ self encompassingRectangle extent
 ]
 
 { #category : #accessing }
