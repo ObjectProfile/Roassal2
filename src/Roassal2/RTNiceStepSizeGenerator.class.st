@@ -116,7 +116,7 @@ RTNiceStepSizeGenerator >> reset [
 	j := 1.
 	q := self qat: i.
 	ss := self stepSize: j q: q.
-	ssOffMap := Dictionary new.
+	ssOffMap removeAll.
 	resetRequired := false.
 ]
 

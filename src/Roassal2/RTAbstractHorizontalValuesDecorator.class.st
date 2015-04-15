@@ -6,19 +6,15 @@ Class {
 
 { #category : #drawing }
 RTAbstractHorizontalValuesDecorator >> render [	
-	| position offset tickSize lb e |
+	| position offset tickSize |
 	offset := 0 @ 30.
 	tickSize := 5.
 
 	values do: [ :aValue |
 		position := builder getPixelPositionOf: aValue @ 0.
-		lb := self label: (labelConversion rtValue: aValue) asString on: position + offset.
-		lb rotateByDegrees: labelRotation.
+		self label: (labelConversion rtValue: aValue) asString on: position + offset.
 		
 		self shape line color: Color gray.
-		e := self lineFrom: position to: position + (0 @ tickSize).
-		TRConstraint move: lb below: e.
-		lb translateBy: (lb width / -2 @ 0) + (5 @ 0).
-		 ]
+		self lineFrom: position to: position + (0 @ tickSize) ]
 		
 ]

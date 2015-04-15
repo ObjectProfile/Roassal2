@@ -2792,7 +2792,6 @@ oIm2bj3jSkwvU7f6FLL+VlI9vaNL1D332PtQVDg5Lyf4PxBi8Pa80CmrAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTRoassalExample >> exampleExpandable [
 
-| v s es expand methods |
 v := RTView new.
 
 s := RTShapeBuilder new
@@ -2807,7 +2806,7 @@ es @ RTPopup @ (RTLabelled new setAsHighlightable).
 expand := (RTExpandable new
 				group: [ :group :element | 
 					methods := (RTBox new color: Color red) 
-										elementsOn: element model rtmethods.
+										elementsOn: element model methods.
 					RTGridLayout on: methods.
 					methods @ RTPopup.
 					group addAll: methods];
@@ -2849,7 +2848,7 @@ A/GLH4gfiF/+kbwDIevKLIeDipEAAAAASUVORK5CYII='
 { #category : #sources }
 RTRoassalExample >> exampleExtensibleLabels [
 
-| v e s |
+| v |
 v := RTView new.
 
 s := RTExtensibleLabel new.
@@ -3108,7 +3107,7 @@ Pnz48OHDhw8fPnwGhpNYGq32Nn6+JQAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleFontSizeWithRTLabelled [
 
-| v  vv es shape |
+| v  vv es |
 v := RTView new.
 vv := 10 to: 100 by: 10.
 
@@ -3176,7 +3175,7 @@ RTRoassalExample >> exampleFonts [
 	"
 | v fontNames shape es |
 v := RTView new.
-fontNames := TRPlatform current fontListStrings allButFirst.
+fontNames :=  FontChooser new fontListStrings  allButFirst.
 
 shape := RTLabel new fontName: #yourself; text: #yourself.
 

@@ -11,8 +11,7 @@ Class {
 		'namespaces',
 		'packagesInfo',
 		'classes',
-		'methods',
-		'stream'
+		'methods'
 	],
 	#category : #'Roassal2-ExporterVW'
 }
@@ -222,7 +221,7 @@ RoassalExporter >> getClassNamesUsedIn: aMethodReference [
 		ifTrue: ["Not an extension method"
 			^ #()].
 	^ (aMethodReference literals
-		select: [:lit | lit class == GlobalVariable
+		select: [:lit | lit class == Association
 				and: [lit value isBehavior
 						and: [lit key == lit value name
 								and: [self mustBeQualified: lit value]]]])
@@ -257,7 +256,6 @@ RoassalExporter >> methods [
 { #category : #export }
 RoassalExporter >> mustBeQualified: aClass [
 	"Answer true if namespace must be qualified with namespace"
-	aClass = Color ifTrue: [ ^ true ].
 	^(self classes includes: aClass)
 		or: [aClass name beginsWith: 'WA']
 ]
@@ -325,7 +323,7 @@ RoassalExporter >> packages [
 		packagesInfo ].
 ]
 
-{ #category : #export }
+{ #category : #'as yet unclassified' }
 RoassalExporter >> prettyPrint: aString [ 
 	"Replace _ with := unless it is preceded with $ or a single quote"
 	| previousChar withinQuotes withinComments |

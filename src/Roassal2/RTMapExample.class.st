@@ -271,7 +271,7 @@ AAAASUVORK5CYII='
 { #category : #sources }
 RTMapExample >> exampleColoredAfrica [
 
-	|b countries countriesName max cn|	
+		
 			b := RTMapBuilder new.	
 		
 	countries := RTMapBuilder africanPopulation.
@@ -292,7 +292,7 @@ RTMapExample >> exampleColoredAfrica [
 { #category : #sources }
 RTMapExample >> exampleColoredAfrica02 [
 
-	|b countries countriesName max cn|	
+		
 			b := RTMapBuilder new.	
 		
 	countries := RTMapBuilder africanPopulation.
@@ -397,7 +397,7 @@ B8J9INw37gPhPhDuG/eBcB8I9437QLgPhPvGfSDct6D2f5ytsauNCeQ3AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTMapExample >> exampleColoredAfrica03 [
 
-	|b countries countriesName max cn|	
+		
 			b := RTMapBuilder new.	
 		
 	countries := RTMapBuilder africanPopulation.

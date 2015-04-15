@@ -120,20 +120,20 @@ RTAnimatedScatterPlot >> getTableForClasses: classes [
 { #category : #utlity }
 RTAnimatedScatterPlot >> getTableForPackage: packageName [
 	"
-	self new getTableForPackage: 'Trachel'
+	self new getTableForPackage: 'GraphET2'
 	"
 	
 	| s classes |
-	classes := ((TRPlatform current packageNamed: packageName) classes collect: #baseClass) asSet.
+	classes := ((RPackageOrganizer default packageNamed: packageName) classes collect: #baseClass) asSet.
 	s := WriteStream on: String new.
 	classes do: [ :c |
 		s nextPutAll: c name.
 		s nextPut: Character tab.
-		s nextPutAll: c numberOfMethods printString.
+		s nextPutAll: (c numberOfMethods) printString.
 		s nextPut: Character tab.
-		s nextPutAll: c numberOfVariables printString.
+		s nextPutAll: (c numberOfVariables) printString.
 		s nextPut: Character tab.
-		s nextPutAll: c numberOfLinesOfCode printString.
+		s nextPutAll: (c numberOfLinesOfCode) printString.
 		s nextPut: Character tab.
 		s cr.
 		].

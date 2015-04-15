@@ -211,7 +211,8 @@ TROSMShape >> getTile: aPoint [
 	z := osmZoomLevel.
 	Processor yield.
 	aTile := [ 
-	TRPlatform current downloadPng: 
+	ZnEasy
+		getPng:
 			('https://a.tile.openstreetmap.org' asZnUrl
 				addPathSegment: z printString;
 				addPathSegment: aPoint x printString;

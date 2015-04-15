@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 RTHTML5ExporterExample >> createIndexFor: aCollection [
 	| index stream text |
-	index := TRPlatform current workingDirectory / 'index.html'.
+	index := FileSystem disk workingDirectory / 'index.html'.
 	index exists ifTrue: [ index delete ].
 	stream := index writeStream.
 	[ stream nextPutAll: 
@@ -150,7 +150,7 @@ RTHTML5ExporterExample >> exportExampleClusterLayout [
 RTHTML5ExporterExample >> exportExampleColoredAndInteractionLabel [
 	| e view|
 	e := RTHTML5Exporter new.
-	view := RTGrapherExample new perform: #exampleColoredAndInteractionLabel.
+	view := RTCharterExample new perform: #exampleColoredAndInteractionLabel.
 	
 	e export: view.
 ]
