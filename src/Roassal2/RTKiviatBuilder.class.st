@@ -116,7 +116,18 @@ RTKiviatBuilder >> addNodesAndEdgesToView [
 	kiviatNodes do: [ :kn |
 		view addAll: kn edgeKiviatElements. 
 		view addAll: kn nodeKiviatElements.
+		( polygons = #activated ) ifTrue: [ view add: kn polygonElement ].
 		]
+]
+
+{ #category : #adding }
+RTKiviatBuilder >> addNodesAndEdgesToView: aKiviatNode [
+"add to the view the chart nodes created"
+	( polygons = #activated ) ifTrue: [ view add: aKiviatNode polygonElement ].
+	view addAll: aKiviatNode edgeKiviatElements. 
+	view addAll: aKiviatNode nodeKiviatElements.
+		
+
 ]
 
 { #category : #adding }
@@ -250,6 +261,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 	
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup)  when: TRMouseEnter do: [  :evt | 
 		(kiviatNodes select: [ :kn | kn named = evt element model kiviatNode named ]) do: [ :kn |
+			
 			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
 			kn edgeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
 			].
@@ -272,6 +284,12 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 ]
 
 { #category : #'as yet unclassified' }
+RTKiviatBuilder >> executePolygonNode: aKiviatNode [
+
+	self executePolygonsColor: 0.2 node: aKiviatNode
+]
+
+{ #category : #'as yet unclassified' }
 RTKiviatBuilder >> executePolygons [
 
 	self executePolygonsColor: 0.2.
@@ -280,10 +298,16 @@ RTKiviatBuilder >> executePolygons [
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> executePolygonsColor: alpha [
 "define the alpha value and create polygons"
-	kiviatNodes do: [  :kn | 
-		view add: ((RTPolygon new borderColor: ((kn nodeKiviatElements first color) alpha: alpha);  color: ((kn nodeKiviatElements first color)alpha: alpha); vertices: ((kn nodeKiviatElements collect: [ :ne | ne position ]) asArray)) elementOn: kn).
+	kiviatNodes do: [  :kn |
+		kn polygonElement: ((RTPolygon new borderColor: ((kn nodeKiviatElements first color) alpha: alpha);  color: ((kn nodeKiviatElements first color)alpha: alpha); vertices: ((kn nodeKiviatElements collect: [ :ne | ne position ]) asArray)) elementOn: kn).
 		]
 
+]
+
+{ #category : #'as yet unclassified' }
+RTKiviatBuilder >> executePolygonsColor: alpha node: aKiviatNode [
+"define the alpha value and create polygon"
+		aKiviatNode polygonElement: ((RTPolygon new borderColor: ((aKiviatNode nodeKiviatElements first color) alpha: alpha);  color: ((aKiviatNode nodeKiviatElements first color)alpha: alpha); vertices: ((aKiviatNode nodeKiviatElements collect: [ :ne | ne position ]) asArray)) elementOn: aKiviatNode).
 ]
 
 { #category : #'as yet unclassified' }
@@ -374,23 +398,23 @@ RTKiviatBuilder >> recordElement: anElement [
 { #category : #adding }
 RTKiviatBuilder >> removeDynamicObject: anObject [
 
-	
 	(objects includes: anObject) ifTrue: [ 
 		| kn |
 		objects remove: anObject.
 		kn := (kiviatNodes detect: [ :k| k named = anObject ]). 	
 		view removeElements: kn edgeKiviatElements. 
 		view removeElements: kn nodeKiviatElements.
+		(kn polygonElement) ifNotNil:  [view removeElement: kn polygonElement].
 		kiviatNodes remove: kn.
-	
+		
 		self view signalUpdate.
 	]
 ]
 
 { #category : #adding }
 RTKiviatBuilder >> removeDynamicObjects: anObjectCollection [
-
-	anObjectCollection do: [ :o | self removeDynamicObject: o ]
+	anObjectCollection do: [ :o | 
+		self removeDynamicObject: o ]
 ]
 
 { #category : #hooks }
@@ -400,11 +424,14 @@ RTKiviatBuilder >> renderIn: aView [
 	self resetCreatedElements.
 	
 	"a chart node is represented by a set of elements according to the metrics values and connected by edges."
-	objects do: [ :p | kiviatNodes detect: [:k | k named = p] ifNone: [ self node: (RTKiviatNode new values:(kiviatMetrics collect: [ :m | m block rtValue: p ]); named: p; shapeNode: self shape)] ].
-	
-	( polygons = #activated ) ifTrue: [ self executePolygons ].
-	
-	self addNodesAndEdgesToView.
+	objects do: [ :p | kiviatNodes detect: [:k | k named = p] ifNone: [ 
+			| kn |
+			kn := (RTKiviatNode new values:(kiviatMetrics collect: [ :m | m block rtValue: p ]); named: p; shapeNode: self shape).
+			self node: kn.
+			( polygons = #activated ) ifTrue: [ self executePolygonNode: kn].
+			self addNodesAndEdgesToView: kn.
+			] 
+		].
 	
 	( highlight = #activated ) ifTrue: [ self executeHighlight ].
 		

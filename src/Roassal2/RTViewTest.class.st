@@ -304,6 +304,35 @@ RTViewTest >> testPushFrontEdges [
 ]
 
 { #category : #tests }
+RTViewTest >> testRemoveEdges [
+
+	| element1 element2 element3 edge1 edge2 |
+	element1 := RTBox new element.
+	element2 := RTEllipse new element.
+	element3 := RTBox new element.
+	edge1 := RTLine edgeFrom: element1 to: element2.
+	edge2 := RTLine edgeFrom: element2 to: element3.
+	self assert: view numberOfElements equals: 0.
+	self assert: view numberOfEdges equals: 0.
+	self assert: view canvas shapes size equals: 0.
+	view add: element1; add: element2; add: element3; add: edge1; add: edge2.
+	self assert: view numberOfElements equals: 3.
+	self assert: view numberOfEdges equals: 2.
+	self assert: view canvas shapes size equals: 5.
+
+	view removeEdges: (RTGroup with: edge1).
+	self assert: view numberOfElements equals: 3.
+	self assert: view numberOfEdges equals: 1.
+	self assert: view canvas shapes size equals: 4.
+
+	view removeEdges: (RTGroup with: edge2).
+	self assert: view numberOfElements equals: 3.
+	self assert: view numberOfEdges equals: 0.
+	self assert: view canvas shapes size equals: 3.
+
+]
+
+{ #category : #tests }
 RTViewTest >> testRemoveElements [
 
 	| es |
@@ -313,6 +342,62 @@ RTViewTest >> testRemoveElements [
 	self assert: view numberOfElements equals: 5.
 	es remove.
 	self assert: view numberOfElements equals: 0.
+]
+
+{ #category : #tests }
+RTViewTest >> testRemoveElementsWithCompositeShape [
+
+	| s1 s2 c el1 el2 |
+	s1 := RTBox new.
+	s2 := RTEllipse new.
+	c := RTCompositeShape new.
+	c add: s1; add: s2.
+	el1 := c element.
+	el2 := c element.
+	self assert: view numberOfElements equals: 0.
+	self assert: view canvas shapes size equals: 0.
+	view add: el1.
+	self assert: view numberOfElements equals: 1.
+	self assert: view canvas shapes size equals: 2.
+	view add: el2.
+	self assert: view numberOfElements equals: 2.
+	self assert: view canvas shapes size equals: 4.
+	view removeElements: (RTGroup with: el1).
+	self assert: view numberOfElements equals: 1.
+	self assert: view canvas shapes size equals: 2.
+	view removeElements: (RTGroup with: el2).
+	self assert: view numberOfElements equals: 0.
+	self assert: view canvas shapes size equals: 0.
+
+]
+
+{ #category : #tests }
+RTViewTest >> testRemoveElementsWithEdges [
+
+	| element1 element2 element3 edge1 edge2 |
+	element1 := RTBox new element.
+	element2 := RTEllipse new element.
+	element3 := RTBox new element.
+	edge1 := RTLine edgeFrom: element1 to: element2.
+	edge2 := RTLine edgeFrom: element2 to: element3.
+	self assert: view numberOfElements equals: 0.
+	self assert: view numberOfEdges equals: 0.
+	self assert: view canvas shapes size equals: 0.
+	view add: element1; add: element2; add: element3; add: edge1; add: edge2.
+	self assert: view numberOfElements equals: 3.
+	self assert: view numberOfEdges equals: 2.
+	self assert: view canvas shapes size equals: 5.
+
+	view removeElements: (RTGroup with: element1).
+	self assert: view numberOfElements equals: 2.
+	self assert: view numberOfEdges equals: 1.
+	self assert: view canvas shapes size equals: 3.
+
+	view removeEdges: (RTGroup with: element2 with: element3).
+	self assert: view numberOfElements equals: 0.
+	self assert: view numberOfEdges equals: 0.
+	self assert: view canvas shapes size equals: 0.
+
 ]
 
 { #category : #removing }
