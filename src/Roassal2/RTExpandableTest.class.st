@@ -10,7 +10,7 @@ RTExpandableTest >> testBasic [
 	| v s e es expand |
 	v := RTView new.
 	s := RTBox new width: [ :c | c numberOfVariables * 5 ]; height: #numberOfMethods.
-	e := s elementOn: RTView.
+	e := s elementOn: RTComposer.
 	
 	expand := (RTExpandable new
 					group: [ :group :element | 
@@ -26,7 +26,7 @@ RTExpandableTest >> testBasic [
 	expand clickOn: e.
 	self assert: (expand isSelected: e).
 	self assert: (expand hasElementBeenExpended: e).
-	self assert: v numberOfElements equals: 1 + RTView numberOfMethods.
+	self assert: v numberOfElements equals: 1 + RTComposer numberOfMethods.
 
 	expand clickOn: e.
 	self deny: (expand isSelected: e).
