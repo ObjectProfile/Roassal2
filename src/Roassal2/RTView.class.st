@@ -242,12 +242,11 @@ RTView >> removeEdges: someEdges [
 	"In case we are trying to remove everything, as it may happen with the cachetor"
 	(someEdges asArray = edges asArray) ifTrue: [ 
 		edges := OrderedCollection new. 
-		self canvas resetShapes. 
+		someEdges do: #remove.
 		^ self ].
 	
 	edges := edges copyWithoutAll: someEdges.
-	self canvas removeShapes: (someEdges collect: #trachelShape).
-
+	someEdges do: #remove.
 ]
 
 { #category : #adding }
@@ -261,12 +260,11 @@ RTView >> removeElements: someElements [
 	"In case we are trying to remove everything, as it may happen with the cachetor"
 	(someElements asArray = elements asArray) ifTrue: [ 
 		elements := OrderedCollection new.  
-		self canvas resetShapes. 
+		someElements do: #remove.
 		^ self ].
 	
 	elements := elements copyWithoutAll: someElements.
-	self canvas removeShapes: (someElements collect: #trachelShape).
-
+	someElements do: #remove.
 ]
 
 { #category : #actions }
