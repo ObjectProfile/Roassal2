@@ -19,7 +19,7 @@ Class {
 RTOSM class >> buildingsAndStreamKampungMelayu [
 	"self buildingsAndStreamKampungMelayu"
 
-	^ TRPlatform current
+	^ FLMaterializer
 		materializeFromByteArray:
 			'RlVFTADBAAAAXCkAAAAAAAAABxRGTEdsb2JhbENsYXNzQ2x1c3RlcgAAAAQKQnl0ZVN0cmlu
 ZwpEaWN0aW9uYXJ5BUFycmF5BUZsb2F0H0ZMUG9zaXRpdmUzMlNtYWxsSW50ZWdlckNsdXN0
@@ -2903,7 +2903,7 @@ NiceNgAAAAE8zSSASoM=' base64Decoded asByteArray
 RTOSM class >> downloadBuildingsAndStreamKampungMelayu [
 	"Retrieving some data from OpenStreetMap"
 
-	^ TRPlatform current httpClientRequestClass new
+	^ ZnClient new
 		url: 'http://overpass-api.de/api/interpreter';
 		queryAt: 'data'
 			put:
@@ -2917,7 +2917,7 @@ RTOSM class >> downloadBuildingsAndStreamKampungMelayu [
 out body;
  >;
 out skel qt;';
-		contentReader: [ :entity | TRPlatform current jsonReaderClass fromString: entity contents ];
+		contentReader: [ :entity | NeoJSONReader fromString: entity contents ];
 		get
 ]
 
@@ -2927,7 +2927,7 @@ RTOSM class >> downloadCityCoordinatesFor: aCityName [
 
 	"self downloadCityCoordinatesFor: 'Dili'"
 
-	^ (((TRPlatform current httpClientRequestClass new
+	^ (((ZnClient new
 		url: 'https://www.googleapis.com/freebase/v1/mqlread';
 		queryAt: 'query'
 			put:
@@ -2948,7 +2948,7 @@ RTOSM class >> downloadCityCoordinatesFor: aCityName [
 						copyWithoutAll:
 							' 	
 ');
-		contentReader: [ :entity | TRPlatform current jsonReaderClass fromString: entity contents ];
+		contentReader: [ :entity | NeoJSONReader fromString: entity contents ];
 		get) at: 'result') first at: '/location/country/capital') first
 		in: [ :cap | 
 			^ ((cap at: '/location/location/geolocation') first at: 'latitude')
@@ -2961,7 +2961,7 @@ RTOSM class >> downloadCountries [
 	
 	"self downloadCountries"
 
-	^ TRPlatform current httpClientRequestClass new
+	^ ZnClient new
 		url: 'https://www.googleapis.com/freebase/v1/mqlread';
 		queryAt: 'query'
 			put:
@@ -2983,7 +2983,7 @@ RTOSM class >> downloadCountries [
   }]
 }]' copyWithoutAll: ' 	
 ');
-		contentReader: [ :entity | TRPlatform current jsonReaderClass fromString: entity contents ];
+		contentReader: [ :entity | NeoJSONReader fromString: entity contents ];
 		get
 ]
 
@@ -2994,7 +2994,7 @@ RTOSM class >> downloadCountryCoordinates: aCountryName [
 	"self downloadCountryCoordinates: 'Brunei'"
 
 	| result |
-	result := TRPlatform current httpClientRequestClass new
+	result := ZnClient new
 		url: 'https://www.googleapis.com/freebase/v1/mqlread';
 		queryAt: 'query'
 			put:
@@ -3019,7 +3019,7 @@ RTOSM class >> downloadCountryCoordinates: aCountryName [
 						copyWithoutAll:
 							' 	
 ');
-		contentReader: [ :entity | TRPlatform current jsonReaderClass fromString: entity contents ];
+		contentReader: [ :entity | NeoJSONReader fromString: entity contents ];
 		get.
 	^ ((result at: 'result') first at: '/location/location/geolocation') first
 		in: [ :c | (c at: 'latitude') @ (c at: 'longitude') ]
@@ -3193,7 +3193,7 @@ RTOSM class >> exampleSeismOnEarthLive [
 
 	| v map e tab |
 	tab := RTTabTable new
-		input: (TRPlatform current download:  'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv') contents
+		input: (ZnEasy get: 'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv') contents
 		usingDelimiter: $,.
 	tab removeFirstRow.
 	tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).

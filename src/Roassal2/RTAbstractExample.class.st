@@ -18,8 +18,8 @@ RTAbstractExample >> gtOpenOn: v [
 
 	self gtExamples do: [ :anExample |
 		icon64Mime := self perform: (anExample selector, #Icon) asSymbol.
-		form := TRPlatform current formClass fromBinaryStream: 
-							(TRPlatform current mimeDecodeToBytes: icon64Mime readStream).
+		form := Form fromBinaryStream: 
+							(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
 		element := (RTBitmap new form: form) elementOn: anExample.
 		element @ (RTPopup new text: anExample selector asString).
 		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
@@ -63,10 +63,10 @@ RTAbstractExample >> installTitle: aTitle code: sourceCode [
 	self class compile: 'example', aTitle, String cr, sourceCode classified: 'sources'.
 	
 	stream := WriteStream on: ByteArray new.
-	TRPlatform current pngReadWriterClass
+	PNGReadWriter 
 				putForm: (canvas morph imageForm scaledToSize: 100 @ 100)
 				onStream: stream .
-	icon64Mime := (TRPlatform current mimeEncode: stream contents readStream) contents.
+	icon64Mime := (Base64MimeConverter mimeEncode: stream contents readStream) contents.
 	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, '''' classified: 'icons'.
 	window delete.
 ]
@@ -76,7 +76,7 @@ RTAbstractExample >> justToTry [
 
 
 	
-	RTGrapherExample new installTitle: 'ForceLayoutWithGreatCharge' 
+	RTGraphBuilderExample new installTitle: 'ForceLayoutWithGreatCharge' 
 		code:
 		'
 
@@ -130,8 +130,8 @@ RTAbstractExample >> openOn: v [
 															and: [ (symbol endsWith: 'Icon') not ] ].
 	exampleSymbols do: [ :k |
 		icon64Mime := self perform: (k, #Icon) asSymbol.
-		form := TRPlatform current formClass fromBinaryStream: 
-							(TRPlatform current mimeDecodeToBytes: icon64Mime readStream).
+		form := Form fromBinaryStream: 
+							(Base64MimeConverter mimeDecodeToBytes: icon64Mime readStream).
 		element := (RTBitmap new form: form) element.
 		element @ (RTPopup new text: k asString).
 		element when: TRMouseLeftClick do: [ :evt | self class new perform: k ].

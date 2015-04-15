@@ -301,11 +301,6 @@ RTEdge >> addedIn: aView [
 ]
 
 { #category : #accessing }
-RTEdge >> center [
-	^ self encompassingRectangle center.
-]
-
-{ #category : #accessing }
 RTEdge >> encompassingRectangle [
 	"Return the encompassing rectangle of the elements"
 	^ Rectangle merging: (Array with: self from encompassingRectangle with: self to encompassingRectangle)
@@ -328,11 +323,6 @@ RTEdge >> from: anElement [
 RTEdge >> from: fromElement to: toElement [
 	self from: fromElement.
 	self to: toElement
-]
-
-{ #category : #accessing }
-RTEdge >> height [
-	^ self encompassingRectangle height.
 ]
 
 { #category : #initialization }

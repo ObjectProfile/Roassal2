@@ -76,8 +76,8 @@ RTSimilarityMatrix class >> demo2 [
 			b := classB methods size.
 			((a min: b) / ((b max: a) max: 1)) asFloat ]
 		withAction: [:classA :classB |
-			TRPlatform current browseClass: classA.
-			TRPlatform current browseClass: classB. ] ;
+			SystemNavigation default browseClass: classA.
+			SystemNavigation default browseClass: classB ] ;
 		viewMatrix
 ]
 

@@ -36,7 +36,6 @@ Class {
 	#name : #RTKiviatBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'metrics',
 		'kiviatMetrics',
 		'kiviatNodes',
 		'objects',
@@ -45,7 +44,8 @@ Class {
 		'polygons',
 		'shapes',
 		'axisTitle',
-		'axisTitles'
+		'axisTitles',
+		'axisBuilt'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
@@ -72,13 +72,42 @@ RTKiviatBuilder >> activatePolygons [
 ]
 
 { #category : #adding }
+RTKiviatBuilder >> addDynamicObject: anObject [
+
+	(objects includes: anObject) ifFalse: [ 
+		objects add: anObject.
+		self build.
+		self view signalUpdate.
+		]
+]
+
+{ #category : #adding }
+RTKiviatBuilder >> addDynamicObjects: anObjectCollection [
+
+	anObjectCollection do: [ :o | 
+		self addDynamicObject: o
+	].
+
+]
+
+{ #category : #adding }
 RTKiviatBuilder >> addMetric: blockOrSymbol [
 	self addMetric: blockOrSymbol title: (blockOrSymbol asString).
 ]
 
 { #category : #adding }
+RTKiviatBuilder >> addMetric: blockOrSymbol max: kiviatMetricMaxValue [
+	self addMetric: blockOrSymbol max: kiviatMetricMaxValue title: (blockOrSymbol asString).
+]
+
+{ #category : #adding }
+RTKiviatBuilder >> addMetric: blockOrSymbol max: kiviatMetricMaxValue title: aString [
+	kiviatMetrics add: (RTKiviatMetric new block: blockOrSymbol; named: aString; maxValue:kiviatMetricMaxValue ).
+]
+
+{ #category : #adding }
 RTKiviatBuilder >> addMetric: blockOrSymbol title: aString [
-	metrics add: (aString -> blockOrSymbol).
+	self addMetric: blockOrSymbol max: nil  title: aString .
 ]
 
 { #category : #adding }
@@ -98,12 +127,11 @@ RTKiviatBuilder >> addObject: anObject [
 { #category : #'as yet unclassified' }
 RTKiviatBuilder >> axis: aRTKiviatMetric [
 "creation of a metric axis"
-	| config centralPoint allValues |
-	kiviatMetrics add: aRTKiviatMetric.	
+	| config centralPoint allValues |	
 	
 	allValues := (objects collect: [ :p | (aRTKiviatMetric block)  rtValue: p ]).	
-	aRTKiviatMetric maxValue: ( allValues max).
-	aRTKiviatMetric minValue: ( allValues min).
+	aRTKiviatMetric maxValue ifNil: [ aRTKiviatMetric maxValue: ( (allValues isEmpty) ifTrue: [ 0 ] ifFalse: [ allValues max ])].
+	aRTKiviatMetric minValue: ( (allValues isEmpty) ifTrue: [ 0 ] ifFalse: [ allValues min ]).
 		
 	config := RTAxisConfiguration new
 					builder: self;
@@ -143,9 +171,16 @@ RTKiviatBuilder >> buildAxis [
 "define the blocks of the metrics, divise 360° by the number of total metrics, and call the axis creation according to metrics"
 	| angle |
 	angle := 0.
+
+	kiviatMetrics doWithIndex: [ :m :i | 
+		self axis: (m modelBlock: [ :v | (v*(((i-1) * ((2 * Float pi) / (kiviatMetrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (kiviatMetrics size)))sin))]; maxSize: axisSize) ].
 	
-	metrics doWithIndex: [ :m :i | 
-		self axis: (RTKiviatMetric new modelBlock: [ :v | (v*(((i-1) * ((2 * Float pi) / (metrics size)))cos))@(v*(((i-1) * ((2 * Float pi) / (metrics size)))sin))]; maxSize: axisSize; block: m value; named: m key) ].
+	axisBuilt := true.	
+]
+
+{ #category : #actions }
+RTKiviatBuilder >> clean [
+	self removeDynamicObjects: objects copy
 ]
 
 { #category : #view }
@@ -206,7 +241,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 	( axisTitle = #activated ) ifTrue: [ 
 		"for now this way to recover the axis Titles elements in the view is not really clean, but because of using RTAxisRenderer to create the axis and titles in the same time I did not found a way to get only the title element from it."
 		titles := OrderedCollection new.
-		self metrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m key) ] ])].
+		self kiviatMetrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m named) ] ])].
 		 ].
 
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
@@ -271,9 +306,10 @@ RTKiviatBuilder >> initialize [
 	polygons := #desactivated.
 	axisTitle := #desactivated.
 	
-	axisTitles := OrderedCollection new.
+	axisBuilt := false.
 	
-	metrics := OrderedCollection new.
+	axisTitles := OrderedCollection new.
+
 	objects := OrderedCollection new.
 	
 	kiviatNodes := OrderedCollection new.
@@ -283,13 +319,13 @@ RTKiviatBuilder >> initialize [
 ]
 
 { #category : #accessing }
-RTKiviatBuilder >> kiviatNodes [
-	^ kiviatNodes
+RTKiviatBuilder >> kiviatMetrics [
+	^ kiviatMetrics
 ]
 
 { #category : #accessing }
-RTKiviatBuilder >> metrics [
-	^ metrics
+RTKiviatBuilder >> kiviatNodes [
+	^ kiviatNodes
 ]
 
 { #category : #accessing }
@@ -335,15 +371,36 @@ RTKiviatBuilder >> recordElement: anElement [
 	anElement attributes at: #originalColor put: (anElement trachelShape color)
 ]
 
+{ #category : #adding }
+RTKiviatBuilder >> removeDynamicObject: anObject [
+
+	
+	(objects includes: anObject) ifTrue: [ 
+		| kn |
+		objects remove: anObject.
+		kn := (kiviatNodes detect: [ :k| k named = anObject ]). 	
+		view removeElements: kn edgeKiviatElements. 
+		view removeElements: kn nodeKiviatElements.
+		kiviatNodes remove: kn.
+	
+		self view signalUpdate.
+	]
+]
+
+{ #category : #adding }
+RTKiviatBuilder >> removeDynamicObjects: anObjectCollection [
+
+	anObjectCollection do: [ :o | self removeDynamicObject: o ]
+]
+
 { #category : #hooks }
 RTKiviatBuilder >> renderIn: aView [
 	
-	(kiviatMetrics size ~= metrics size) ifTrue:[
-	(metrics size = 0) ifFalse: [ self buildAxis ]].
+	((kiviatMetrics size = 0) | (axisBuilt = true)) ifFalse: [ self buildAxis ].
 	self resetCreatedElements.
 	
 	"a chart node is represented by a set of elements according to the metrics values and connected by edges."
-	objects do: [ :p | self node: (RTKiviatNode new values:(metrics collect: [ :m | m value rtValue: p ]); named: p; shapeNode: self shape). ].
+	objects do: [ :p | kiviatNodes detect: [:k | k named = p] ifNone: [ self node: (RTKiviatNode new values:(kiviatMetrics collect: [ :m | m block rtValue: p ]); named: p; shapeNode: self shape)] ].
 	
 	( polygons = #activated ) ifTrue: [ self executePolygons ].
 	

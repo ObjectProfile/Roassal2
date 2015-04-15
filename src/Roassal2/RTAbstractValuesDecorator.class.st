@@ -24,8 +24,7 @@ Class {
 	#name : #RTAbstractValuesDecorator,
 	#superclass : #RTAbstractLineDecorator,
 	#instVars : [
-		'labelConversion',
-		'labelRotation'
+		'labelConversion'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -33,8 +32,7 @@ Class {
 { #category : #initialization }
 RTAbstractValuesDecorator >> initialize [
 	super initialize.
-	labelConversion := #yourself.
-	labelRotation := 0.
+	labelConversion := #yourself
 ]
 
 { #category : #accessing }
@@ -67,14 +65,4 @@ b
 -=-=-=-=-=-=-=-=	
 	"
 	labelConversion := aBlockOrASymbol
-]
-
-{ #category : #accessing }
-RTAbstractValuesDecorator >> rotation [
-	^ labelRotation
-]
-
-{ #category : #accessing }
-RTAbstractValuesDecorator >> rotation: aNumber [
-	labelRotation := aNumber
 ]

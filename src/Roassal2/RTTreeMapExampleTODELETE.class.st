@@ -3,7 +3,7 @@ Examples of RTTreeMap
 "
 Class {
 	#name : #RTTreeMapExampleTODELETE,
-	#superclass : #RTTreeMapExample,
+	#superclass : #Object,
 	#category : #'Roassal2-Builder-TreeMap'
 }
 
@@ -43,7 +43,7 @@ RTTreeMapExampleTODELETE >> example03 [
 		weight: [:m | m tally ].
 	b explore: (MessageTally new
 		spyEvery: 1
-		on: [Object browse]; yourself)
+		on: [Nautilus open]; yourself)
 		using: #children.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
 	b open.
@@ -80,7 +80,7 @@ RTTreeMapExampleTODELETE >> example05 [
 	
 	tally := (MessageTally new
 		spyEvery: 1
-		on: [Object browse]; yourself).
+		on: [Nautilus open]; yourself).
 	methods := tally withDeepCollect: #children.
 	
 	normalizer := RTNColorLinearNormalizer inContext: methods withCommand: #tally lowColor: Color gray highColor: Color red.
@@ -113,7 +113,7 @@ RTTreeMapExampleTODELETE >> example06 [
 		weight: [:m | m tally ].
 	b explore: (MessageTally new
 		spyEvery: 1
-		on: [Object browse]; yourself)
+		on: [Nautilus open]; yourself)
 		using: #children.
 	b withShadedFramesFromColor: Color gray toColor: Color red.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
@@ -133,7 +133,7 @@ RTTreeMapExampleTODELETE >> example07 [
 		weight: [:m | m tally ];
 		explore: (MessageTally new
 		spyEvery: 1
-		on: [Object browse]; yourself)
+		on: [Nautilus open]; yourself)
 		using: #children;
 		depthShadedBorder.
 	b open.

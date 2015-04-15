@@ -41,7 +41,7 @@ RTCircularTreeMapExample >> example01 [
 		weight: #tally.
 	b explore: (MessageTally new
 		spyEvery: 1
-		on: [ inst := Object browse]; yourself)
+		on: [ inst := Nautilus open]; yourself)
 		using: #children.
 	inst close.
 	

@@ -40,7 +40,7 @@ RTKiviatFruitExample >> name: aString [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 RTKiviatFruitExample >> printString [
 	^ name
 ]

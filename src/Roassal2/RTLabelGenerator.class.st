@@ -126,18 +126,18 @@ RTLabelGenerator >> searchMin: dmin max: dmax desired: m [
 					z := (nice logB: delta) ceiling.
 					[ :break3|
 						[ true ] whileTrue: [ 
-							[ :continue | | minStart maxStart step |
+							[ :continue| | min_start max_start step |
 								step := n j * (nice qat: n i) * (nice base raisedTo: z).
 								cm := self coverageMin: dmin max: dmax span: step * (k-1).
 								((self w: sm c: cm d: dm l: 1) < bestScore) 
 									ifTrue: [ break3 value ].
-								minStart := ((dmax / step) floor - (k-1)) * n j.
-								maxStart := (dmin / step) ceiling * n j.
-								(minStart > maxStart) ifTrue: [ 
+								min_start := ((dmax / step) floor - (k-1)) * n j.
+								max_start := (dmin / step) ceiling * n j.
+								(min_start > max_start) ifTrue: [ 
 									z := z +1.
 									continue value. ].
 						
-								(minStart to: maxStart) do: [ :start |
+								(min_start to: max_start) do: [ :start |
 									| lmin lmax lstep c s d l score |
 									lmin := start * step / n j. 
 									lmax := lmin + (step * (k -1)).

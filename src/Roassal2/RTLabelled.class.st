@@ -199,13 +199,13 @@ RTLabelled >> lowColor: aBlockOrColor [
 ]
 
 { #category : #utility }
-RTLabelled >> make: label highlightableIfNecessaryBy: element [
+RTLabelled >> make: lbl highlightableIfNecessaryBy: element [
 	"Do nothing if there is no need to"
 	highlightable ifFalse: [ ^ self ].
 	
-	label color: lowColor.
-	element when: TRMouseEnter do: [ :evt | label color: color. label pushFront. evt signalUpdate ].
-	element when: TRMouseLeave do: [ :evt | label color: lowColor. evt signalUpdate ].
+	lbl color: lowColor.
+	element when: TRMouseEnter do: [ :evt | lbl color: color. lbl pushFront. evt signalUpdate ].
+	element when: TRMouseLeave do: [ :evt | lbl color: lowColor. evt signalUpdate ].
 ]
 
 { #category : #accessing }

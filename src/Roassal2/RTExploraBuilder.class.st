@@ -81,12 +81,12 @@ RTExploraBuilder >> buildNode: object parent: parent [
 		elementIconOpen := (icons first) elementOn: #iconOpen.
 		elementIconClose := (icons second) elementOn: #iconClose.
 		
-		TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf: element.
-		((Array with: elementIconOpen with: elementIconClose) asGroup) translateBy: (-1)@(-1). 
+		TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) onTheRightOf: element.
+		({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1). 
 
 		element addCallback: (TRTranslationCallback new block: [
-			TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf:element. 		
-			((Array with: elementIconOpen with: elementIconClose) asGroup) translateBy: (-1)@(-1). 
+			TRConstraint move: ({elementIconOpen. elementIconClose} asGroup) onTheRightOf:element. 		
+			({elementIconOpen. elementIconClose} asGroup) translateBy: (-1)@(-1). 
 			self view signalUpdate
 			]).
 	
@@ -331,7 +331,7 @@ RTExploraBuilder >> withIconsColor: aColor [
 		iconOpen := (RTSVGPath new path: p1; color: aColor; scale: 0.025).
 		iconClose := (RTSVGPath new path: p2; color: aColor; scale: 0.025).
 		
-	self withIconsSVG: (Array with: iconOpen with: iconClose )
+	self withIconsSVG: { iconOpen. iconClose }
 ]
 
 { #category : #layout }

@@ -18,7 +18,7 @@ RTCacheTest >> testBasic [
 	self assert: v numberOfElements equals: 1.
 	self assert: v elements anyOne class equals: RTElement.
 	self assert: v elements anyOne shape class equals: RTBitmap.
-	self assert: v elements anyOne trachelShape form class equals: TRPlatform current formClass.
+	self assert: v elements anyOne trachelShape form class equals: Form.
 	
 	form :=  v elements anyOne trachelShape form.
 	self assert: form extent equals: es extent
