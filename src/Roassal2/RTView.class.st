@@ -35,7 +35,7 @@ RTView >> accept: aVisitor [
 	aVisitor visitView: self
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> add: anElementOrAnEdge [
 	"An element or an edge may be provided here"
 	"The elements or edges variables grow respectively"
@@ -44,22 +44,22 @@ RTView >> add: anElementOrAnEdge [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> addAll: someElements [
 	someElements do: [ :el | self add: el ]
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> addAnimation: animation [
 	trCanvas addAnimation: animation
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> addEdge: anEdge [
 	edges add: anEdge
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> addElement: anElement [
 	elements add: anElement
 ]
@@ -96,7 +96,7 @@ RTView >> addMenu: aTitle callback: aBlock [
 
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> animations [
 	^ trCanvas animations
 ]
@@ -169,9 +169,14 @@ RTView >> elementsFromModels: objects [
 { #category : #initialization }
 RTView >> initialize [
 	super initialize.
-	elements := OrderedCollection new.
-	edges := OrderedCollection new.
+	self initializeContent.
 	self setCanvas: TRCanvas new
+]
+
+{ #category : #initialization }
+RTView >> initializeContent [
+	elements := OrderedCollection new.
+	edges := OrderedCollection new
 ]
 
 { #category : #'accessing-computed' }
@@ -230,6 +235,21 @@ RTView >> pushFrontEdges [
 	self edges do: [ :e | e trachelShape pushFront ]
 ]
 
+{ #category : #'adding - removing' }
+RTView >> removeAllEdges [
+	"Remove all the edges"	 
+	edges := OrderedCollection new. 
+	self canvas resetLineShapes. 
+
+]
+
+{ #category : #'adding - removing' }
+RTView >> removeAllElements [
+	self initializeContent.
+	self canvas resetShapes. 
+
+]
+
 { #category : #actions }
 RTView >> removeEdge: anEdge [
 	"Remove an edge from the view"
@@ -237,34 +257,42 @@ RTView >> removeEdge: anEdge [
 	anEdge trachelShape remove.
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> removeEdges: someEdges [
+	someEdges do: #remove
+
 	"In case we are trying to remove everything, as it may happen with the cachetor"
-	(someEdges asArray = edges asArray) ifTrue: [ 
+"	(someEdges asArray = edges asArray) ifTrue: [ 
 		edges := OrderedCollection new. 
-		someEdges do: #remove.
+		self canvas resetLineShapes. 
 		^ self ].
-	
-	edges := edges copyWithoutAll: someEdges.
-	someEdges do: #remove.
+"	
+"	edges := edges copyWithoutAll: someEdges.
+	self canvas removeShapes: (someEdges collect: #trachelShape).
+"
+
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> removeElement: anElement [
 	elements remove: anElement ifAbsent: [ ].
 	anElement trachelShape remove.
 ]
 
-{ #category : #adding }
+{ #category : #'adding - removing' }
 RTView >> removeElements: someElements [
+	someElements do: #remove
+
 	"In case we are trying to remove everything, as it may happen with the cachetor"
-	(someElements asArray = elements asArray) ifTrue: [ 
-		elements := OrderedCollection new.  
-		someElements do: #remove.
+"	(someElements asArray = elements asArray) ifTrue: [ 
+		self initializeContent.
+		self canvas resetShapes. 
 		^ self ].
-	
-	elements := elements copyWithoutAll: someElements.
-	someElements do: #remove.
+"	
+"	elements := elements copyWithoutAll: someElements.
+	self canvas removeShapes: (someElements collect: #trachelShape).
+"
+
 ]
 
 { #category : #actions }
