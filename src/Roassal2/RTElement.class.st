@@ -149,7 +149,6 @@ RTElement >> position [
 RTElement >> remove [
 	view ifNil: [ self error: 'cannot remove an element that is not part of a view' ].
 	view removeElement: self.
-	self removeConnectedEdges.
 	view := nil 
 ]
 
@@ -157,11 +156,6 @@ RTElement >> remove [
 RTElement >> removeConnectedEdge: anEdge [
 	[  anEdge class == RTEdge ] assert.
 	self connectedEdges remove: anEdge ifAbsent: [ "Some RTDowserBuilderTest tests failed." ]
-]
-
-{ #category : #initialization }
-RTElement >> removeConnectedEdges [
-	self connectedEdges do: #remove
 ]
 
 { #category : #actions }
