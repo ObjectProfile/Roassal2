@@ -214,6 +214,11 @@ TRShape >> isInACanvas [
 ]
 
 { #category : #testing }
+TRShape >> isLineShape [
+	^ false
+]
+
+{ #category : #testing }
 TRShape >> isMovable [
 	"Return if the shape is not fixed, therefore movable."
 	^ self canvas isMovableShape: self
