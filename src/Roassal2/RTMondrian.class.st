@@ -96,6 +96,11 @@ RTMondrian >> build [
 	self applyLayout 
 ]
 
+{ #category : #'deprecated - compatibility layer' }
+RTMondrian >> circleLayout [
+	^ self layout circle
+]
+
 { #category : #hooks }
 RTMondrian >> createInteractionBuilder [
 	^ RTInteractionBuilder new popup; draggable; yourself
@@ -153,6 +158,18 @@ RTMondrian >> edges [
 		view: view;
 		shapeBuilder: shapeBuilder.
 	^ edgeBuilder
+]
+
+{ #category : #'deprecated - compatibility layer' }
+RTMondrian >> edges: objects from: fromBlock to: toBlock [
+	^ self edges
+			objects: objects from: fromBlock to: toBlock
+		
+]
+
+{ #category : #'deprecated - compatibility layer' }
+RTMondrian >> edgesFrom: aBlock [
+	^ self edges connectFrom: aBlock
 ]
 
 { #category : #initialization }
@@ -253,4 +270,9 @@ RTMondrian >> rootFrame [
 { #category : #stack }
 RTMondrian >> topElements [
 	^ rootFrame elements
+]
+
+{ #category : #'deprecated - compatibility layer' }
+RTMondrian >> treeLayout [
+	^ self layout tree
 ]

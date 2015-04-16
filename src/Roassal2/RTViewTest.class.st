@@ -362,9 +362,11 @@ RTViewTest >> testRemoveElementsWithCompositeShape [
 	view add: el2.
 	self assert: view numberOfElements equals: 2.
 	self assert: view canvas shapes size equals: 4.
+	
 	view removeElements: (RTGroup with: el1).
 	self assert: view numberOfElements equals: 1.
 	self assert: view canvas shapes size equals: 2.
+	
 	view removeElements: (RTGroup with: el2).
 	self assert: view numberOfElements equals: 0.
 	self assert: view canvas shapes size equals: 0.
