@@ -71,6 +71,19 @@ TRConstraint class >> move: aShape below: anotherShape using: translator [
 ]
 
 { #category : #'public - moving' }
+TRConstraint class >> move: aShape belowAlignFromLeft: anotherShape [
+	^ self move: aShape belowAlignFromLeft: anotherShape gap: 0
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape belowAlignFromLeft: anotherShape gap: anInteger [
+	^ aShape translateTo: anotherShape center 
+		+ (0 @ ((anotherShape height + aShape height) / 2))
+		- (((anotherShape width - aShape width) / 2) @ 0)
+		+ (0 @ anInteger)
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape between: s1 and: s2 [
 	^ aShape translateTo: (s1 position + s2 position) /2 
 ]
