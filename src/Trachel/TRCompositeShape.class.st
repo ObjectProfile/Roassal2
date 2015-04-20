@@ -14,12 +14,12 @@ TRCompositeShape >> accept: aVisitor [
 
 { #category : #callbacks }
 TRCompositeShape >> addCallback: aCallback [
-	^ self shapes first addCallback: aCallback
+	^ self firstShape addCallback: aCallback
 ]
 
 { #category : #callbacks }
 TRCompositeShape >> addCallbackToAllShapes: aCallback [
-	^ self shapes do: [ :trShape | trShape addCallback: aCallback ]
+	^ self shapesDo: [ :s | s addCallback: aCallback ]
 ]
 
 { #category : #'public - adding' }
@@ -35,19 +35,20 @@ TRCompositeShape >> addShape: aShape translateBy: aPoint [
 { #category : #actions }
 TRCompositeShape >> addedIn: aCanvas [
 	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
-	self propagateElement.
-	shapeAndOffsets do: [ :tupple | tupple first addedIn: aCanvas ].
-	self positionShapesAfterBeingAdded.
-	
+
+	self
+		propagateElement;
+		shapesDo: [ :s | s addedIn: aCanvas ];
+		positionShapesAfterBeingAdded
 ]
 
 { #category : #actions }
 TRCompositeShape >> addedIn: aCanvas atIndex: index [
 	self propagateElement.
 	shapeAndOffsets
-		do: [ :tupple | 
-			aCanvas addShape: tupple first atIndex: index.
-			tupple first translateBy: tupple second ].
+		do: [ :tuple | 
+			aCanvas addShape: tuple first atIndex: index.
+			tuple first translateBy: tuple second ].
 		
 	"Make sure we are in the center"
 	self translateBy: self position negated
@@ -57,16 +58,15 @@ TRCompositeShape >> addedIn: aCanvas atIndex: index [
 TRCompositeShape >> alignRight [
 	"Layout the shapes horizontally"
 
-	TRConstraint alignFromRight: (shapeAndOffsets collect: #first).
-	shapeAndOffsets do: [ :tuple | tuple at: 2 put: (tuple first position) ].
-	self resetInnerShapes.
-
+	TRConstraint alignFromRight: self shapes.
+	shapeAndOffsets do: [ :tuple | tuple at: 2 put: tuple first position ].
+	self resetInnerShapes
 ]
 
 { #category : #accessing }
 TRCompositeShape >> allColor: aColor [
-	"Simply set the first shape"
-	self shapes do: [ :aShape | aShape color: aColor ]
+	"Set color of all shapes"
+	self shapesDo: [ :s | s color: aColor ]
 ]
 
 { #category : #'public - layout' }
@@ -74,13 +74,13 @@ TRCompositeShape >> allOfSameSize [
 	"All the same will have the same maximum size"
 
 	| maxSize |
-	maxSize := shapeAndOffsets inject: 0 @ 0 into: [ :max :tuple | tuple first extent max: max  ].
-	shapeAndOffsets do: [ :tuple | tuple first extent: maxSize ].
+	maxSize := shapeAndOffsets inject: 0 @ 0 into: [ :max :tuple | tuple first extent max: max ].
+	self shapesDo: [ :s | s extent: maxSize ]
 ]
 
 { #category : #events }
 TRCompositeShape >> announce: anEvent [
-	self shapes do: [ :s | s announce: anEvent ]
+	self shapesDo: [ :s | s announce: anEvent ]
 ]
 
 { #category : #accessing }
@@ -90,24 +90,24 @@ TRCompositeShape >> announcer [
 
 { #category : #accessing }
 TRCompositeShape >> announcer: anAnnouncer [
-	self shapes do: [ :s | s announcer: anAnnouncer ]
+	self shapesDo: [ :s | s announcer: anAnnouncer ]
 ]
 
 { #category : #callbacks }
 TRCompositeShape >> callbacks [
-	^ self shapes first callbacks
+	^ self firstShape callbacks
 ]
 
 { #category : #accessing }
 TRCompositeShape >> canvas [
 	"Return the canvas of one of the shapes"
-	^ shapeAndOffsets anyOne first canvas	
+	^ self firstShape canvas	
 ]
 
 { #category : #accessing }
 TRCompositeShape >> canvas: aSurface [
 	"aCanvas is a AthensCairoSurface"
-	self shapes do: [ :s | s canvas: aSurface ]
+	self shapesDo: [ :s | s canvas: aSurface ]
 ]
 
 { #category : #accessing }
@@ -117,32 +117,32 @@ TRCompositeShape >> center [
 
 { #category : #accessing }
 TRCompositeShape >> color [
-	^ self shapes first color
+	^ self firstShape color
 	"shape2 color: aColor."
 ]
 
 { #category : #accessing }
 TRCompositeShape >> color: aColor [
 	"Simply set the first shape"
-	self shapes first color: aColor.
+	self firstShape color: aColor.
 
 ]
 
 { #category : #private }
 TRCompositeShape >> computePath [
-	self shapes do: [ :s | s computePath ]
+	self shapesDo: [ :s | s computePath ]
 ]
 
 { #category : #drawing }
 TRCompositeShape >> drawOn: athensCanvas [
-	self shapes do: [ :s | s drawOn: athensCanvas ]
+	self shapesDo: [ :s | s drawOn: athensCanvas ]
 ]
 
 { #category : #accessing }
 TRCompositeShape >> encompassingRectangle [
 	"Really ugly method."
 	| ans c |
-	(self shapes anySatisfy: [ :ss | ss canvas notNil ])
+	(self shapes anySatisfy: [ :s | s canvas notNil ])
 		ifTrue: [ ^ Rectangle merging: (self shapes collect: #encompassingRectangle). ]. 
 	
 	c := shapeAndOffsets collect: [ :s | s first position ].
@@ -155,34 +155,31 @@ TRCompositeShape >> encompassingRectangle [
 { #category : #accessing }
 TRCompositeShape >> extent [
 	| res |
-"	shapeAndOffsets
-		do: [ :tupple | 
-			tupple first translateTo: 0 @ 0 ].
-"
-	shapeAndOffsets
-		do: [ :tupple | 
-			tupple first translateBy: tupple second ].
- 
+"	self shapesDo: [ :s | s translateTo: 0 @ 0 ]."
+		
+	shapeAndOffsets do: [ :tuple | tuple first translateBy: tuple second ].
 	res := self encompassingRectangle extent.
-	shapeAndOffsets
-		do: [ :tupple | 
-			tupple first translateTo: 0 @ 0 ].
-	
-	^ res.
-	
+	self shapesDo: [ :s | s translateTo: 0 @ 0 ].
+	^ res
+
 	"We cannot do that, because we may need to get the extent, without having the elements added (and correctly positioned)"
 	"^ self encompassingRectangle extent"
 ]
 
 { #category : #actions }
 TRCompositeShape >> extent: anExtent [
-	self shapes do: [ :s | s extent: anExtent ]
+	self shapesDo: [ :s | s extent: anExtent ]
+]
+
+{ #category : #accessing }
+TRCompositeShape >> firstShape [
+	^ shapeAndOffsets first first
 ]
 
 { #category : #callbacks }
 TRCompositeShape >> hasCallback [
 	"Return true if at least one callback has been added to the shape"
-	^ self shapes first hasCallback
+	^ self firstShape hasCallback
 ]
 
 { #category : #accessing }
@@ -200,13 +197,13 @@ TRCompositeShape >> horizontal [
 	"Layout the shapes horizontally"
 
 	| previousShape newPosition |
-	previousShape := shapeAndOffsets first first.
+	previousShape := self firstShape.
 	shapeAndOffsets allButFirst
-		do: [ :tupple | 
-			newPosition := previousShape center + ((previousShape extent x / 2) @ 0) + ((tupple first extent x / 2) @ 0).
-			tupple first translateTo: newPosition.
-			tupple at: 2 put: newPosition.
-			previousShape := tupple first ].
+		do: [ :tuple | 
+			newPosition := previousShape center + ((previousShape extent x / 2) @ 0) + ((tuple first extent x / 2) @ 0).
+			tuple first translateTo: newPosition.
+			tuple at: 2 put: newPosition.
+			previousShape := tuple first ].
 	self resetInnerShapes
 ]
 
@@ -217,7 +214,7 @@ TRCompositeShape >> includesPoint: aPoint [
 
 { #category : #accessing }
 TRCompositeShape >> indexInCanvas [
-	^ canvas privateIndexInCanvasOf: self shapes first
+	^ canvas privateIndexInCanvasOf: self firstShape
 ]
 
 { #category : #initialization }
@@ -239,7 +236,7 @@ TRCompositeShape >> noLayout [
 { #category : #accessing }
 TRCompositeShape >> numberOfShapes [
 	"Return the number of shapes added into myself"
-	^ self shapes size
+	^ shapeAndOffsets size
 ]
 
 { #category : #accessing }
@@ -254,7 +251,7 @@ TRCompositeShape >> offsets [
 
 { #category : #accessing }
 TRCompositeShape >> position [
-	self shapes ifEmpty: [ ^ 0 @ 0 ].
+	shapeAndOffsets ifEmpty: [ ^ 0 @ 0 ].
 	^ (Rectangle merging: (self shapes collect: #encompassingRectangle)) center
 	"^ self encompassingRectangle center"
 ]
@@ -262,7 +259,7 @@ TRCompositeShape >> position [
 { #category : #actions }
 TRCompositeShape >> positionShapesAfterBeingAdded [
 	| p |
-	shapeAndOffsets do: [ :tupple | tupple first translateTo: tupple second ].	
+	shapeAndOffsets do: [ :tuple | tuple first translateTo: tuple second ].	
 		
 	"Make sure we are in the center. This is apparently necessary for element Shape. The following code is not nice at all :-("
 	p := self position negated.
@@ -273,24 +270,24 @@ TRCompositeShape >> positionShapesAfterBeingAdded [
 { #category : #actions }
 TRCompositeShape >> propagateElement [
 	"Make all the shape aware of the element"
-	self shapes do: [ :s | s element: self element ]
+	self shapesDo: [ :s | s element: self element ]
 ]
 
 { #category : #actions }
 TRCompositeShape >> pushBack [
-	self shapes do: #pushBack
+	self shapesDo: #pushBack
 ]
 
 { #category : #actions }
 TRCompositeShape >> pushFront [
-	self shapes do: #pushFront
+	self shapesDo: #pushFront
 ]
 
 { #category : #'public - layout' }
 TRCompositeShape >> relayout [
 	"This methods places the contained shapes according to the specified layout"
 	| first |
-	first := self shapes first.
+	first := self firstShape.
 	shapeAndOffsets do: [ :shapeAndOffset | 
 		shapeAndOffset first translateBy: first position + shapeAndOffset second ]
 
@@ -298,13 +295,12 @@ TRCompositeShape >> relayout [
 
 { #category : #actions }
 TRCompositeShape >> remove [
-	self triggerRemoveCallbacks.
-	self shapes do: #remove
+	self shapesDo: #remove
 ]
 
 { #category : #'public - layout' }
 TRCompositeShape >> resetInnerShapes [
-	self shapes do: [ :ss | ss translateTo: 0 @ 0 ]
+	self shapesDo: [ :s | s translateTo: 0 @ 0 ]
 ]
 
 { #category : #'public - layout' }
@@ -314,12 +310,12 @@ TRCompositeShape >> resetInnerShapesOffset [
 
 { #category : #private }
 TRCompositeShape >> resetPath [
-	self shapes do: #resetPath
+	self shapesDo: #resetPath
 ]
 
 { #category : #actions }
 TRCompositeShape >> setAsFixed [
-	self shapes do: #setAsFixed
+	self shapesDo: #setAsFixed
 ]
 
 { #category : #accessing }
@@ -332,18 +328,26 @@ TRCompositeShape >> shapes [
 	^ shapeAndOffsets collect: #first
 ]
 
+{ #category : #accessing }
+TRCompositeShape >> shapesDo: aBlock [
+	"collect:thenDo: does not create temporary collection > improves performance"
+
+	shapeAndOffsets collect: #first thenDo: aBlock
+]
+
 { #category : #actions }
 TRCompositeShape >> signalUpdate [
 	"Signal that the canvas should be refreshed"
 	"Do nothing if I have no shapes added"
-	self shapes ifEmpty: [ ^ self ].
-	self shapes first signalUpdate
+
+	shapeAndOffsets ifEmpty: [ ^ self ].
+	self firstShape signalUpdate
 ]
 
 { #category : #actions }
 TRCompositeShape >> translateBy: aPoint [
-	shapeAndOffsets do: [ :tupple | tupple first translateBy: aPoint ]
-	
+	self shapesDo: [ :s | s translateBy: aPoint ]
+
 "	shapeAndOffsets do: [ :tupple | 
 		tupple first class == TRMultiCompositeShape
 			ifTrue: [ tupple first translateBy: aPoint + (tupple first encompassingRectangle extent / 2) ]
@@ -352,22 +356,21 @@ TRCompositeShape >> translateBy: aPoint [
 
 { #category : #actions }
 TRCompositeShape >> translateTo: aPoint [
-	| diffPosition |
-	diffPosition := aPoint - self position.
-	self translateBy: diffPosition.
-	self triggerCallbacksForStep: diffPosition
+	self translateBy: aPoint - self position
 ]
 
 { #category : #'public - layout' }
 TRCompositeShape >> vertical [
 	"Layout the shapes vertically"
+
 	| previousShape newPosition |
-	previousShape := shapeAndOffsets first first.
-	shapeAndOffsets allButFirst do: [ :tupple |
-		newPosition := (previousShape center + (0 @ (previousShape extent y / 2)) + (0 @ (tupple first extent y / 2))).
-		tupple first translateTo: newPosition.
-		tupple at: 2 put: newPosition.
-		previousShape := tupple first ].
+	previousShape := self firstShape.
+	shapeAndOffsets allButFirst
+		do: [ :tupple | 
+			newPosition := previousShape center + (0 @ (previousShape extent y / 2)) + (0 @ (tupple first extent y / 2)).
+			tupple first translateTo: newPosition.
+			tupple at: 2 put: newPosition.
+			previousShape := tupple first ].
 	self resetInnerShapes
 ]
 
@@ -395,7 +398,7 @@ TRCompositeShape >> verticalAndLeft [
 
 { #category : #events }
 TRCompositeShape >> when: event do: aBlock [
-	self shapes do: [ :s | s announcer when: event do: aBlock ]
+	self shapesDo: [ :s | s announcer when: event do: aBlock ]
 ]
 
 { #category : #accessing }
