@@ -15,7 +15,7 @@ Class {
 TRMouseWheelEvent class >> fromDirection: aDirection position: aPoint [
 	^ self new
 		position: aPoint;
-		unifyDirection: aDirection;
+		direction: aDirection;
 		yourself
 ]
 
@@ -47,20 +47,4 @@ TRMouseWheelEvent >> isRight [
 { #category : #testing }
 TRMouseWheelEvent >> isUp [
 	^ direction = Character arrowUp
-]
-
-{ #category : #accessing }
-TRMouseWheelEvent >> unifyDirection: anObject [
-	"sets direction according to both Pharo 4 and Pharo 3 MouseWheelEvent direction implementation.
-	Pharo 3 uses #up, Pharo 4 uses Character arrowUp"
-
-	| mapping |
-	direction := anObject.
-	mapping := Dictionary
-		newFrom: (Array with:
-			(#up -> Character arrowUp) with:
-			(#down -> Character arrowDown) with:
-			(#left -> Character arrowLeft) with:
-			(#right -> Character arrowRight)).
-	direction := mapping at: anObject ifAbsent: [ anObject ]
 ]
