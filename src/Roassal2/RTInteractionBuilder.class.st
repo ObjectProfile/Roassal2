@@ -167,14 +167,6 @@ RTInteractionBuilder >> setUpElements: elements [
 	interactions do: [ :int | elements @ int ]
 ]
 
-{ #category : #public }
-RTInteractionBuilder >> showEdge [
-	| i |
-	i := RTShowEdge new.
-	interactions add: i. 
-	^ i
-]
-
 { #category : #'events-registering' }
 RTInteractionBuilder >> when: event do: block [
 	interactions add: [ :element | element when: event do: block ]

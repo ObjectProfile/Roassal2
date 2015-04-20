@@ -85,15 +85,6 @@ RTComposer >> move: name1 below: name2 [
 ]
 
 { #category : #'public-layout' }
-RTComposer >> move: name1 belowAlignFromLeft: name2 [
-	
-	| g1 g2 |
-	g1 := mapping at: name1. 
-	g2 := mapping at: name2.
-	TRConstraint move: g1 belowAlignFromLeft: g2 gap: gap.
-]
-
-{ #category : #'public-layout' }
 RTComposer >> move: name1 onTheLeftOf: name2 [
 	
 	| g1 g2 |
@@ -101,16 +92,6 @@ RTComposer >> move: name1 onTheLeftOf: name2 [
 	g2 := mapping at: name2.
 	TRConstraint move: g1 onTheLeftOf: g2.
 	g1 translateBy: gap negated @ 0
-]
-
-{ #category : #'public-layout' }
-RTComposer >> move: name1 onTheRightBelowOf: name2 [
-	
-	| g1 g2 |
-	g1 := mapping at: name1. 
-	g2 := mapping at: name2.
-	TRConstraint move: g1 onTheRightBelowOf: g2.
-	g1 translateBy: 0 @ gap
 ]
 
 { #category : #'public-layout' }
