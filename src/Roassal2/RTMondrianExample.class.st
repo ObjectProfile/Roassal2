@@ -1,32 +1,23 @@
 "
-RTMondrianExample new installTitle: 'RandomGraph' 
+RTMondrianExample new installTitle: 'ClusterLayout' 
 		code:
 		'
-| nbOfNodes nbOfRandomEdges nodes edges b |
-
-nbOfNodes := 40.
-nbOfRandomEdges := 40.
-
-nodes := 1 to: nbOfNodes.
-edges := (1 to: nbOfRandomEdges) 
-				collect: [ :notUsed | nodes atRandom -> nodes atRandom ].
-
-""
-In case you do not wish random data. You can set it manually. 
-nodes := #(1 2 3 4 5).
-edges := { 1 -> 2 . 1 -> 4 . 4 -> 3 }.
-""
-
+| b |
 b := RTMondrian new.
 
-b shape circle color: (Color black alpha: 0.5).
-b nodes: nodes.
+b shape circle.
+b nodes: RTObject withAllSubclasses.
 
-b shape line color: (Color gray alpha: 0.3).
-b edges
-	objects: edges from: #key to: #value.
+b shape line color: (Color blue alpha: 0.4).
+b edges connectFrom: #superclass.
 
-b layout force.
+b normalizer
+	objects: RTObject withAllSubclasses;
+	normalizeSize: #numberOfMethods min: 5 max: 30 using: [:value | (value + 1) ln ];
+	normalizeColor: #numberOfMethods using: {Color gray . Color blue. Color red } using: [ :value | (value + 1) ln ].
+	
+b layout cluster.
+b build.
 ^ b'
 	
 "
@@ -1312,6 +1303,7 @@ jR5UpCbnuExjR7be8EoEiDXh6dGl/3EsWSTyv+jJ9V7/Zm7NAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTMondrianExample >> exampleColorInGraph [
+| b |
 b := RTMondrian new.
 
 b shape circle.
@@ -1523,6 +1515,7 @@ kWvJ4/jRyf8PiGByCdcGkMEAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTMondrianExample >> exampleColorPalette [
+| b |
 b := RTMondrian new.
 b shape circle
 	size: 20.
@@ -2261,7 +2254,7 @@ AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTMondrianExample >> exampleLayoutPartition [
 | b classes |
-classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
+classes := (TRPlatform current packageNamed: 'Roassal2') definedClasses.
 
 b := RTMondrian new.
 b shape circle size: 5.
@@ -2957,6 +2950,7 @@ RTMondrianExample >> exampleSystemComplexity [
 
 { #category : #sources }
 RTMondrianExample >> exampleSystemComplexity02 [
+| b |
 b := RTMondrian new.
 
 b shape rectangle

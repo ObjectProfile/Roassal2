@@ -5,7 +5,8 @@ Class {
 		'stack',
 		'view',
 		'gap',
-		'mapping'
+		'mapping',
+		'groups'
 	],
 	#category : #'Roassal2-Builder-Composer'
 }
@@ -44,7 +45,10 @@ RTComposer >> group [
 { #category : #'public-layout' }
 RTComposer >> group: aName [
 	"Compute the group of added objects"
-	mapping at: aName put: self newElementsAsGroup 
+	| group |
+	group := self newElementsAsGroup.
+	groups add: group.
+	mapping at: aName put: group.
 ]
 
 { #category : #initialization }
@@ -52,7 +56,7 @@ RTComposer >> initialize [
 	super initialize.
 	view := RTView new.
 	view @ RTDraggableView.
-	
+	groups := OrderedCollection new.
 	mapping := Dictionary new.
 	gap := 20
 ]
@@ -60,7 +64,7 @@ RTComposer >> initialize [
 { #category : #'public-layout' }
 RTComposer >> layout: aLayout [
 	
-	aLayout on: mapping values
+	aLayout on: groups.
 
 ]
 

@@ -13,6 +13,14 @@ Class {
 	#category : #'Roassal2-Builder-Legend'
 }
 
+{ #category : #'instance creation' }
+RTLegendBuilder class >> on: aView [
+	| i |
+	i := self new.
+	i view: aView.
+	^ i.
+]
+
 { #category : #adding }
 RTLegendBuilder >> addColor: aColor object: anObject text: aBlockOrSelector [
 	"Associate a color with a text"
@@ -22,6 +30,7 @@ RTLegendBuilder >> addColor: aColor object: anObject text: aBlockOrSelector [
 	g add: ((RTLabel text: aBlockOrSelector) elementOn: anObject).
 	RTHorizontalLineLayout new alignCenter; on: g.
 	group add: g.
+	^ g
 ]
 
 { #category : #adding }

@@ -245,9 +245,9 @@ RTSVGVisitor2 >> visitBitMapShape: aBitmapShape [
 	| s icon64 |
 	s := WriteStream on: ByteArray new.
 	
-	PNGReadWriter putForm: (aBitmapShape form) onStream: s.
+	TRPlatform current pngReadWriterClass putForm: (aBitmapShape form) onStream: s.
 	
-	icon64 := (Base64MimeConverter mimeEncode: s contents readStream multiLine: false).
+	icon64 := (TRPlatform current mimeEncode: s contents readStream multiLine: false).
 	stream nextPutAll: '
 		{type: "bitmap", id: "';
 		nextPutAll: (self nameFor: aBitmapShape);
@@ -309,14 +309,7 @@ RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 	bColor := diamondShape strokePaint.
 	w := diamondShape width.
 	s := diamondShape mySize.
-"	(markers contains: aid)
-		ifFalse: [  
-			svgE := RTSVGDiamondMarker new id: aid fillColor: color borderColor: bColor width: w size: s.
-			svgE addOn: stream using: self. 
-			markers add: aid. 
-			]
-		
-	"
+
 ]
 
 { #category : #'visitor-interactions' }

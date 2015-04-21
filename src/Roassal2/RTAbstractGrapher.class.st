@@ -22,7 +22,7 @@ RTAbstractGrapher >> adjustXAxisIfNecessary [
 
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'as yet unclassified' }
 RTAbstractGrapher >> axisX [
 	axisConfigurationX ifNil: [
 		axisConfigurationX := self createAxisConfiguration ].
@@ -44,7 +44,7 @@ RTAbstractGrapher >> axisXFrom: aPoint to: anotherPoint [
 
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'as yet unclassified' }
 RTAbstractGrapher >> axisY [
 	axisConfigurationY ifNil: [
 		axisConfigurationY := self createAxisConfiguration ].
@@ -125,7 +125,7 @@ RTAbstractGrapher >> getPixelPositionOf: aPoint [
 	^ anX @ anY
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTAbstractGrapher >> initialize [
 	super initialize.
 	extent := 300 @ 200.

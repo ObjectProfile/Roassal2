@@ -69,7 +69,7 @@ RTEdgeBuilderTest >> testDefault [
 { #category : #tests }
 RTEdgeBuilderTest >> testElements [
 
-	| b es |
+	| es |
 	b := RTEdgeBuilder new.
 	b view: view.
 	self assert: b elements equals: view elements.

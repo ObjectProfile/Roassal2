@@ -152,7 +152,7 @@ hD6anp7mQMjiIhAsF8JNW/JVnj17tq2B/B8fJ2RwXq/RVgAAAABJRU5ErkJggg=='
 RTKiviatBuilderExample >> exampleBudgetChart [
 | b n |
 	b := RTKiviatBuilder new.
-	b objects: { ('Allocated Budget' -> { 60. 15. 25. 8. 40. 20 }). ('Actual Spending' -> { 20. 20. 25. 20. 50. 145 } )}.
+	b objects: (Array with: ('Allocated Budget' -> #(60 15 25 8 40 20)) with: ('Actual Spending' -> #( 20 20 25 20 50 145) )).
 	n := RTMultiLinearColorForIdentity new objects: (b objects).
 	b shape circle color: [ :value | n rtValue: value kiviatNode named]; size: 10.
 
@@ -533,9 +533,9 @@ SUVORK5CYII='
 RTKiviatBuilderExample >> exampleRandomValues [
 	| b  |
 	b := RTKiviatBuilder new.
-	b objects: {('object1' -> ((1 to: 25) collect: [:i | i atRandom])). ('object2' -> ((1 to: 25) collect: [:i | i atRandom]))}.
+	b objects: (Array with: ('object1' -> ((1 to: 25) collect: [:i | i atRandom])) with: ('object2' -> ((1 to: 25) collect: [:i | i atRandom]))).
 	
-	b shapes: ({(Color blue). (Color red)} do: [:c | c alpha: 0.3]).
+	b shapes: ((Array with: Color blue with: Color red) do: [:c | c alpha: 0.3]).
 
 	(1 to: 25) doWithIndex: [ :ei :i |
 		b addMetric: [:e | e value atWrap: i]

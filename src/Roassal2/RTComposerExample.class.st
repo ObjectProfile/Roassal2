@@ -384,8 +384,8 @@ gYjf7BUfSEzeJGef4ffH9FlwOkG6H4D8H12QJYaJDuQLAAAAAElFTkSuQmCC'
 RTComposerExample >> exampleTwoGraphs [
 
 | force torque composer b ds |
-force := { {'x' . 3 }. { 'y' . 4 } . { 'z' . 5 } }.
-torque := { {'x' . 5 }. { 'y' . -10 } . { 'z' . 8 } }.
+force := Array with: (Array with: 'x' with: 3) with: (Array with: 'y' with: 4 ) with: (Array with: 'z' with: 5 ) .
+torque := Array with: (Array with: 'x' with: 5) with: (Array with: 'y' with: -10) with: (Array with: 'z' with: 8) .
 
 composer := RTComposer new.
 "-------------"

@@ -60,7 +60,7 @@ Qfj5A7cfNxrUTXl/AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTSpectrographExample >> exampleRoassalVisualization [
 	| b now |
-	now := DateAndTime now.
+	now := TRPlatform current dateAndTime now.
 	b := RTSpectrograph new.
 	b objects: ((RTObject withAllSubclasses , TRObject withAllSubclasses) reverseSortedAs: #livingInDays).
 

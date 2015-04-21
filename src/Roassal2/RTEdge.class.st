@@ -1,31 +1,3 @@
-"
-RTEdge describes an edge between two RTElement. 
-
-Here is an example:
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-v := RTView new.
-
-ballShape := RTEllipse new size: 30; color: #yourself. 
-
-redBall :=  ballShape elementOn: Color red.
-blueBall :=  ballShape elementOn: Color blue.
-v add: redBall; add: blueBall.
-blueBall translateBy: 80 @ 50.
-
-blueBall @ RTDraggable.
-redBall @ RTDraggable.
-
-edge := RTLine edgeFrom: redBall to: blueBall.
-"" The line above is equivalent to the following two lines:
-edge := RTEdge from: redBall to: blueBall.
-edge + RTLine.
-""
-v add: edge.
-
-v
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-"
 Class {
 	#name : #RTEdge,
 	#superclass : #RTShapedObject,
@@ -37,7 +9,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inView: view [
 	"associations could be {2 -> 5 . 1 -> 5 }.
 	 Takes the model of element into account"
@@ -57,7 +29,7 @@ RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inVie
 
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operates on the model of the elements"
@@ -65,21 +37,21 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock [
 	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock in: view [
 	"Handy method to easily build edges. Return a list of edges"
 
 	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine in: view
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 
 	^ self buildEdgesFromElements: elements from: fromBlock to: toBlock using: RTLine inView: view
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock using: aLineShape [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -103,7 +75,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -111,7 +83,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 	view addAll: (self buildEdgesFromElements: elements from: fromBlock to: toBlock using: aLineShape)
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -120,7 +92,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	^ self buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: RTLine new inView: view
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -155,7 +127,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -167,7 +139,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	^ es
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -175,7 +147,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -183,7 +155,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view scope: aGroup
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -191,7 +163,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock scope
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine new scope: aGroup
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -199,7 +171,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -210,7 +182,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 	^ es
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
@@ -232,24 +204,24 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock inView: view [
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new inView: view scope: (RTGroup withAll: view elements)
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new scope: aGroup
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view [ 
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
@@ -273,7 +245,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 
 ]
 
-{ #category : #'DEPRECATED - edge construction' }
+{ #category : #'public - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
@@ -329,6 +301,11 @@ RTEdge >> addedIn: aView [
 ]
 
 { #category : #accessing }
+RTEdge >> center [
+	^ self encompassingRectangle center.
+]
+
+{ #category : #accessing }
 RTEdge >> encompassingRectangle [
 	"Return the encompassing rectangle of the elements"
 	^ Rectangle merging: (Array with: self from encompassingRectangle with: self to encompassingRectangle)
@@ -351,6 +328,11 @@ RTEdge >> from: anElement [
 RTEdge >> from: fromElement to: toElement [
 	self from: fromElement.
 	self to: toElement
+]
+
+{ #category : #accessing }
+RTEdge >> height [
+	^ self encompassingRectangle height.
 ]
 
 { #category : #initialization }

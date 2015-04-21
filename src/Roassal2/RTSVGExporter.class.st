@@ -235,8 +235,8 @@ RTSVGExporter >> interactiveExportToFile [
 
 	| fileStream fileRef |
 	
-	fileRef := UITheme builder 
-		fileSave: 'Export as SVG'
+	fileRef := TRPlatform current 
+		dialogRequestSaveFilename: 'Export as SVG'
 		extensions: #('svg')
 		path: nil.
 		

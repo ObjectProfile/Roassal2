@@ -592,7 +592,7 @@ RTGeneralExample >> edition [
 	view addMenu: '+ line' callback: [ selected := #line. statusBar text: 'line' ].
 	view addMenu: '+ circle' callback: [ selected := #circle. statusBar text: 'circle' ].
 	view addMenu: '+ rectangle' callback: [ selected := #rectangle. statusBar text: 'rectangle' ].
-	view addMenu: 'Info' callback: [ UIManager default inform: 'Vectorial editing is hyper cool' ].
+	view addMenu: 'Info' callback: [ TRPlatform current inform: 'Vectorial editing is hyper cool' ].
 
 	statusBar := TRLabelShape new.
 	statusBar text: 'Please, select an option'.
