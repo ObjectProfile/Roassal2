@@ -109,7 +109,7 @@ RTExploraBuilderExample >> exploreFileSystem [
 		onRightClickExplore: [ :elem | Array with: elem parent ];
 		withPopup: [ :file | file basename ];
 		dragChildren;
-		node: FileSystem disk workingDirectory;
+		node: TRPlatform current workingDirectory;
 		open.
 ]
 

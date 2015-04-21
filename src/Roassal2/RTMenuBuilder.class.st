@@ -21,14 +21,14 @@ Class {
 
 { #category : #public }
 RTMenuBuilder class >> setGraphMenuOn: view [
-	| builder element |
+	| builder |
 	builder := self new view: view.
 	builder
 		menu: 'Find'
 		background: Color blue
-		callback: [ 
-			element := UIManager default
-				chooseFrom: (view elements collect: #model)
+		callback: [ | element |
+			element := TRPlatform current 
+				dialogChooseFrom: (view elements collect: #model)
 				values: view elements.
 			element notNil
 				ifTrue: [

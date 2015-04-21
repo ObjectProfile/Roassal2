@@ -7,7 +7,7 @@ Class {
 		'updateMorphExtent',
 		'events'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-MorphSpecific'
 }
 
 { #category : #configuration }

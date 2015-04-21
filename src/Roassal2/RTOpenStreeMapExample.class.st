@@ -89,9 +89,9 @@ RTOpenStreeMapExample >> exampleGraphs [
 	
 	v @ RTDraggableView.
 	
-	data := { { paris . { 10 . 5 . 10 . 3 . 10 .6 . 8 } }.
-					{london . { 5 . 3 .3 . -5 } } .
-					{newyork . { 5 . -2 . 10 . 15 . -10 }}  }.
+	data := Array with: (Array with: paris with: #(10 5 10 3 10 6 8)) with:
+					(Array with: london with: #(5 3 3 -5 )) with:
+					(Array with: newyork with: #(5 -2 10 15 -10)).
 	
 	data do: [ :tupple |
 			| grapher dataSet |
@@ -1181,7 +1181,7 @@ RTOpenStreeMapExample >> exampleSeisms [
 
 	| v map e tab |
 	tab := RTTabTable new
-		input: (ZnEasy get: 'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv') contents
+		input: (TRPlatform current download: 'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv') contents
 		usingDelimiter: $,.
 	tab removeFirstRow.
 	tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).
