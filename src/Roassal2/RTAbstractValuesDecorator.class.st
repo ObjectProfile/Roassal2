@@ -27,7 +27,7 @@ Class {
 		'labelConversion',
 		'labelRotation'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
 { #category : #initialization }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'values'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
 { #category : #adding }

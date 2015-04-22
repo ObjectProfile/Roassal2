@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'Roassal2-Builder-Map'
+	#category : #'Roassal2-Builder-Map-Tests'
 }
 
 { #category : #running }

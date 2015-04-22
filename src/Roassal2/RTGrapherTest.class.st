@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Tests'
 }
 
 { #category : #tests }
