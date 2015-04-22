@@ -1,7 +1,7 @@
 Class {
 	#name : #RTHorizontalLineDecorator,
 	#superclass : #RTAbstractLineDecorator,
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
 { #category : #drawing }

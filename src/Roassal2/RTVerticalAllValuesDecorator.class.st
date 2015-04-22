@@ -1,7 +1,7 @@
 Class {
 	#name : #RTVerticalAllValuesDecorator,
 	#superclass : #RTAbstractVerticalValuesDecorator,
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
 { #category : #drawing }

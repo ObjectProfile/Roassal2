@@ -11,7 +11,7 @@ Class {
 		'verticalGap',
 		'width'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Obsolete'
 }
 
 { #category : #configuration }

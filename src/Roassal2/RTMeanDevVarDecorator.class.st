@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMeanDevVarDecorator,
 	#superclass : #RTAbstractGrapherDecorator,
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
 { #category : #'as yet unclassified' }

@@ -20,16 +20,23 @@ RTAxisRenderer >> addAllToView: roassalElements [
 { #category : #rendering }
 RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	"Add ticks on the lines. Return the list of ticks"
-	| tickShape ticks |
-	tickShape := RTBox new height: 10; width: 5.
+	| tickShape ticks tickLength angle |
+	tickLength := 5.
+	angle := (toPosition - fromPosition) angle.
+	tickShape := RTBox new 
+						color: config color; 
+						height: tickLength; width: config lineThickness.
 	ticks := tickShape elementsOn: (0 to: self numberOfTicks).
-	ticks rotateByDegrees: (toPosition - fromPosition) angle radiansToDegrees.
+	
+	"ticks do: [ :t | t translateBy: (angle cos @ angle sin) * tickLength / 2 ]."
 	
 	self addAllToView: ticks.
 	ticks pushBack.
 	RTMetricNormalizer new
 		elements: ticks;
-		normalizePosition: [ :v | v @ v ] min: fromPosition max: toPosition.
+		normalizePosition: [ :v | v @ v ] min: (fromPosition + ((angle sin @ angle cos) * tickLength / 2) )max: (toPosition  + ((angle sin @ angle cos) * tickLength / 2)).
+
+	ticks rotateByDegrees: angle radiansToDegrees.
 
 	"Ticks should not have any model"
 	ticks do: [ :el | el model: nil ].

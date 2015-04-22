@@ -252,11 +252,6 @@ RTAxisConfiguration >> oneDecimal [
 ]
 
 { #category : #configuration }
-RTAxisConfiguration >> optimalTicksAndLabels [
-	self halt.
-]
-
-{ #category : #configuration }
 RTAxisConfiguration >> plain [
 	"Make the axis a plain line"
 	self noLabel; noTick
