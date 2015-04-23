@@ -300,6 +300,86 @@ hA/CDx+ED8IPH4QPwg8fhA/CDx+EHz4IH4QfPggfhJ+28g/i0bNGZk1ymwAAAABJRU5ErkJg
 gg=='
 ]
 
+{ #category : #sources }
+RTBoxPlotExample >> exampleTitle [
+
+| b classes deco |
+b := RTGrapher new.
+b extent: 700 @ 200.
+classes := RTShape withAllSubclasses.
+classes do: [ :cls | | ds |
+	ds := RTBoxPlotDataSet new.
+	ds points: cls methods.
+	ds model: cls.
+	ds y: [ :method | method numberOfLinesOfCode ].
+	b add: ds.
+].
+
+b axisX noTick; noLabel.
+
+deco := RTHorizontalAllValuesDecorator new.
+deco labelRotation: -45;
+	labelConversion: [ :index | classes at: index ].
+b addDecorator: deco.
+
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTBoxPlotExample >> exampleTitleIcon [
+	^ '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'
+]
+
 { #category : #accessing }
 RTBoxPlotExample >> label [
 	^ 'Box Plot'.
