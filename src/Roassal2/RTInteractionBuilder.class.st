@@ -13,6 +13,18 @@ RTInteractionBuilder >> action: aBlockOrSymbol [
 	^ self item: aBlockOrSymbol action: aBlockOrSymbol
 ]
 
+{ #category : #'private - adding' }
+RTInteractionBuilder >> addExclusiveInteraction: anInteraction [
+	"We only keep all the interaction that have a different class"
+	interactions := interactions select: [ :i | i class ~~ anInteraction class ].
+	self addInteraction: anInteraction
+]
+
+{ #category : #'private - adding' }
+RTInteractionBuilder >> addInteraction: anInteraction [
+	interactions add: anInteraction
+]
+
 { #category : #public }
 RTInteractionBuilder >> decoration [
 	| i |
@@ -31,7 +43,7 @@ RTInteractionBuilder >> draggable [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> fixedPopupText: aBlock [
-	interactions add: [ :element | element @ (RTFixedPopup new text: aBlock) ]
+	self addExclusiveInteraction: (RTFixedPopup new text: aBlock)
 ]
 
 { #category : #public }
@@ -128,12 +140,15 @@ RTInteractionBuilder >> popupText [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> popupText: aBlock [
-	interactions add: [ :element | element @ (RTPopup new text: aBlock) ]
+	| i |
+	i := RTPopup new text: aBlock.
+	self addExclusiveInteraction: i. 
+	^ i
 ]
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> popupText: aBlock color: aColorBlock [
-	interactions add: [ :element | element @ (RTPopup new text: aBlock; textColor: aColorBlock) ]
+	self addExclusiveInteraction: (RTPopup new text: aBlock; textColor: aColorBlock)
 ]
 
 { #category : #'events-registering' }
@@ -145,7 +160,7 @@ RTInteractionBuilder >> popupTextColor: aColorBlock [
 RTInteractionBuilder >> popupView: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
 	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
-	interactions add: [ :element | element @ (RTPopup new background: (Color blue alpha: 0.6) group: aTwoArgBlock) ]
+	self addExclusiveInteraction: (RTPopup new background: (Color blue alpha: 0.6) group: aTwoArgBlock)
 ]
 
 { #category : #copying }
@@ -177,5 +192,5 @@ RTInteractionBuilder >> showEdge [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> when: event do: block [
-	interactions add: [ :element | element when: event do: block ]
+	self addInteraction: [ :element | element when: event do: block ]
 ]
