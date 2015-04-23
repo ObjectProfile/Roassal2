@@ -6415,12 +6415,12 @@ u5nePWZ+kW8AAAAASUVORK5CYII='
 { #category : #sources }
 RTRoassalExample >> exampleUseOfMetrics [
 
-| metrics classes view mb xAxis yAxis |
-metrics := { 
-	{ 'LOC' . #numberOfLinesOfCode } . 
-	{ 'NOM' . #numberOfMethods } .
-	{ 'NOA' . #numberOfVariables } .
-}.
+| metrics classes view mb xAxis yAxis refresh elements |
+refresh := nil.
+metrics := Array with: 
+	(Array with: 'LOC' with: #numberOfLinesOfCode) with: 
+	(Array with: 'NOM' with: #numberOfMethods ) with:
+	(Array with: 'NOA' with: #numberOfVariables).
 
 classes := RTObject withAllSubclasses.
 

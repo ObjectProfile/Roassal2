@@ -46,12 +46,13 @@ RTBoxPlotItem >> calculateMedian [
 RTBoxPlotItem >> calculateMedianStart: start end: end [
 	|result size |
 	result := Float nan.
-	size := end - start + 1.
+	size := (end asInteger - start asInteger + 1).
 	size > 0 ifTrue: [ 
+		size = 1 ifTrue: [ ^ values at: start ].
 		(size % 2) = 1 ifTrue: [ 
 			result := values at: (start + (size /2) )
 			 ] ifFalse: [ | v1 v2 |
-			v1 := values at: (start + (size / 2)-1).
+			v1 := values at: start + (size / 2)-1.
 			v2 := values at: (start + (size / 2)).
 			result := (v1 + v2) / 2.0 ] ].
 	^ result
@@ -63,10 +64,7 @@ RTBoxPlotItem >> calculateQ1 [
 	result := Float nan.
 	size := values size.
 	size > 0 ifTrue: [ 
-		(size %2) = 1 ifTrue: [ 
-			result := self calculateMedianStart: 1 end: (size /2 +1). ]
-		ifFalse: [ result := self calculateMedianStart: 1 end: (size /2). ]
-		 ].
+		result := self calculateMedianStart: 1 end: (size /2). ].
 	^ result
 	
 ]
@@ -76,9 +74,18 @@ RTBoxPlotItem >> calculateQ3 [
 	| result size |
 	result := Float nan.
 	size := values size.
-	size > 0 ifTrue: [ result := self calculateMedianStart: (size/2+1) end: size. ].
+	size > 0 ifTrue: [ 
+		size % 2 = 1 ifTrue: [ result := self calculateMedianStart: (size / 2)+2 end: size ]
+		ifFalse: [ result := self calculateMedianStart: (size/2)+1 end: size. ]
+		 ].
 	^ result
 	
+]
+
+{ #category : #computing }
+RTBoxPlotItem >> emptyValues [
+	mean := median := q1 := q3 := maxOutlier := minOutlier := interQuartileRange := minRegularValue := maxRegularValue := 0 .
+	outliers := #().
 ]
 
 { #category : #testing }
@@ -97,7 +104,7 @@ RTBoxPlotItem >> maxOutlier [
 ]
 
 { #category : #accessing }
-RTBoxPlotItem >> maxValue [
+RTBoxPlotItem >> maxRegularValue [
 	^ maxRegularValue
 ]
 
@@ -117,7 +124,7 @@ RTBoxPlotItem >> minOutlier [
 ]
 
 { #category : #accessing }
-RTBoxPlotItem >> minValue [
+RTBoxPlotItem >> minRegularValue [
 	^ minRegularValue
 ]
 
@@ -156,6 +163,9 @@ RTBoxPlotItem >> values: anArray [
 
 	| upperOutlierThreshold lowerOutlierThreshold upperFaroutThreshold lowerFaroutThreshold |
 	values := anArray sort.
+	values size < 3 ifTrue: [ 
+		self emptyValues.
+		^ self ].
 	mean := self calculateMean.
 	median := self calculateMedian.
 	q1 := self calculateQ1.
