@@ -146,6 +146,7 @@ Roassal2VW >> packages [
 		'Trachel'->{'Core'. 'Viva'}.
 		'Roassal2'->{
 			'Builder-AnimatedScatterPlot'. 'Builder-AxisAdapted'.
+			'Builder-BoxPlot'.
 			'Builder-CircularMap'. 'Builder-Common'.
 			'Builder-Composer'. 'Builder-Explora'.
 			'Builder-Grapher'. 'Builder-Kiviat'.
