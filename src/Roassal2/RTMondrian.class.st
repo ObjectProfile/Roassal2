@@ -210,6 +210,7 @@ RTMondrian >> nodes: objects [
 	view addAll: els.
 	self resetShapeBuilder.
 	self resetLayoutBuilder.
+	self resetInteraction.
 	^ els
 ]
 
@@ -222,6 +223,7 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 		self pushNewFrame.
 		self resetShapeBuilder.
 		self resetLayoutBuilder.
+		self resetInteraction.
 			
 		aOneArgBlock rtValue: element model.
 		RTNest new
@@ -231,6 +233,7 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 	].
 	self resetShapeBuilder.
 	self resetLayoutBuilder.
+	self resetInteraction.
 	^ result
 ]
 
