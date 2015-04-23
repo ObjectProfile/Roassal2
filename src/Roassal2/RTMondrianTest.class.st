@@ -311,6 +311,16 @@ RTMondrianTest >> testFramesWithNestingNesting2 [
 
 ]
 
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testInteraction [
+
+	| i |
+	i := b interaction.
+	b nodes: #(1 2) forEach: [ :each |
+		self assert: b interaction ~~ i
+	]
+]
+
 { #category : #'tests - edges' }
 RTMondrianTest >> testNoLineShape [
 
