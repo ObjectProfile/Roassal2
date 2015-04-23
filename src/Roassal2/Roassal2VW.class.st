@@ -149,8 +149,10 @@ Roassal2VW >> packages [
 			'Builder-BoxPlot'.
 			'Builder-CircularMap'. 'Builder-Common'.
 			'Builder-Composer'. 'Builder-Explora'.
-			'Builder-Grapher'. 'Builder-Kiviat'.
-			'Builder-Legend'. 'Builder-Map'. 'Builder-Menu'.
+			'Builder-Grapher'. 'Builder-Grapher-Decorators'.
+			'Builder-Grapher-Obsolete'. 'Builder-Grapher-Tests'.
+			'Builder-Kiviat'. 'Builder-Legend'. 
+			'Builder-Map'. 'Builder-Map-Tests'. 'Builder-Menu'.
 			'Builder-Mondrian'. 'Builder-MondrianOLD'. 'Builder-NameCloud'.
 			'Builder-PieChart'. 'Builder-ScatterplotMap'. 
 			'Builder-ScrollBar'. 'Builder-SimilarityMatrix'.
