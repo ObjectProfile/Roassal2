@@ -28,6 +28,16 @@ RTBoxPlotDataSet >> boxShape [
 	^ boxShape
 ]
 
+{ #category : #accessing }
+RTBoxPlotDataSet >> boxWidth [
+	^ boxWidth
+]
+
+{ #category : #accessing }
+RTBoxPlotDataSet >> boxWidth: anObject [
+	boxWidth := anObject
+]
+
 { #category : #'min and max' }
 RTBoxPlotDataSet >> computeMinAndMaxForX [
 
@@ -47,15 +57,15 @@ RTBoxPlotDataSet >> initialize [
 	self noDot.
 	self showMean: false.
 	self x: [ :m | m isNumber ifTrue: [ m ] ifFalse: [ builder datasets indexOf: self ] ].
-	boxWidth := 10.
+	boxWidth := [ builder extent x / (builder datasets size * 1.2) ].
 	boxShape := RTShapeBuilder new.
 	boxShape rectangle.
 	boxLineShape := RTShapeBuilder new.
 	boxLineShape rectangle color: Color black.
 	meanShape := RTShapeBuilder new.
-	meanShape circle size: 5; color: Color black.
+	meanShape circle size: [:e | (boxWidth rtValue: e)* 0.5]; color: Color black.
 	outlierShape := RTShapeBuilder new.
-	outlierShape circle; color: (Color black alpha: 0.5)
+	outlierShape circle; color: (Color black alpha: 0.5); size: [ :e | (boxWidth rtValue: e) * 0.5 ].
 ]
 
 { #category : #accessing }
@@ -122,9 +132,9 @@ RTBoxPlotDataSet >> renderBoxPlotLines: view item: item [
 	b := boxLineShape.
 	b height: 0.5; width: boxWidth.
 	mx := x rtValue: model.
-	e1 := b elementOn: item maxOutlier.
+	e1 := b elementOn: item maxRegularValue.
 	e2 := b elementOn: item median.
-	e3 := b elementOn: item minOutlier.
+	e3 := b elementOn: item minRegularValue.
 	view add: e1; add: e2; add: e3.
 	b width: 0.5.
 	e4 := b elementOn: item.
@@ -148,24 +158,24 @@ RTBoxPlotDataSet >> renderBoxPlotLines: view item: item [
 		
 	
 	normalizer elements: (Array with: e4);
-		normalizeY: [ :i | i maxOutlier - ((i maxOutlier - i q3)/2) ]
+		normalizeY: [ :i | i maxRegularValue - ((i maxRegularValue - i q3)/2) ]
 		min: 0
 		max: builder extent y negated
 		minValue: minY
 		maxValue: maxY;
-		normalizeHeight: [ :i | (i maxOutlier - i q3) negated ]
+		normalizeHeight: [ :i | (i maxRegularValue - i q3) negated ]
 		min: 0
 		max: builder extent y negated
 		minValue: minY
 		maxValue: maxY.
 		
 	normalizer elements: (Array with: e5);
-		normalizeY: [ :i | i q1 - ((i q1 - i minOutlier )/2) ]
+		normalizeY: [ :i | i q1 - ((i q1 - i minRegularValue )/2) ]
 		min: 0
 		max: builder extent y negated
 		minValue: minY
 		maxValue: maxY;
-		normalizeHeight: [ :i | i minOutlier - i q1 ]
+		normalizeHeight: [ :i | i minRegularValue - i q1 ]
 		min: 0
 		max: builder extent y negated
 		minValue: minY
