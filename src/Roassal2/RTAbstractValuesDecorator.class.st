@@ -70,11 +70,11 @@ b
 ]
 
 { #category : #accessing }
-RTAbstractValuesDecorator >> labelRotation [
+RTAbstractValuesDecorator >> rotation [
 	^ labelRotation
 ]
 
 { #category : #accessing }
-RTAbstractValuesDecorator >> labelRotation: aNumber [
+RTAbstractValuesDecorator >> rotation: aNumber [
 	labelRotation := aNumber
 ]
