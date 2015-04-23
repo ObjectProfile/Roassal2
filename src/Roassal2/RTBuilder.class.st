@@ -39,6 +39,11 @@ RTBuilder >> cleanView [
 ]
 
 { #category : #hooks }
+RTBuilder >> createGlobalBuilder [
+	^ RTGlobalBuilder new
+]
+
+{ #category : #hooks }
 RTBuilder >> createInteractionBuilder [
 	^ RTInteractionBuilder new
 ]
