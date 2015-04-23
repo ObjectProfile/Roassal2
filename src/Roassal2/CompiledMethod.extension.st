@@ -78,3 +78,11 @@ CompiledMethod >> livingInDays [
 
 	^ (DateAndTime now - self date) asDays
 ]
+
+{ #category : #'*roassal2' }
+CompiledMethod >> numberOfLinesOfCode [
+	(self propertyValueAt: #numberOfLinesOfCode)
+			ifNil: [ self propertyValueAt: #numberOfLinesOfCode put: self getSource lineCount ].
+
+	^ self propertyValueAt: #numberOfLinesOfCode 
+]

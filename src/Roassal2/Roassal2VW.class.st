@@ -69,7 +69,7 @@ currentB := nil.
 classes do:[:cls | 
 	cat := cls myClass category asString.
 	(m1 includes: cat) ifTrue: [
-		('Roassal2-*' match: cat) ifTrue: [ cat := cat copyFrom: 10 to: cat size. ].
+		
 		currentB := b.
 		('*Test' match: cls myClass name) ifTrue: [ currentB := btests.
 			cat := cat , '-Tests'. ].
@@ -92,7 +92,6 @@ classes do:[:cls |
 { #category : #importing }
 Roassal2VW >> codeToDeletePackages [
 	"
-
 | b arr list |
 list := OrderedCollection new.
 list add: 'extentions'; add: 'frompharo'; add: 'fromvw'; add: 'tests-extentions';
@@ -104,6 +103,7 @@ arr do: [ :ar |
 		(list includes: pkg name) ifFalse: [
 			pkg doUnloadFromImage.
 		]. ]. ].
+
 
 
 	"
