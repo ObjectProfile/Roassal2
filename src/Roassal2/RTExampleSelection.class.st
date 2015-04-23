@@ -11,3 +11,11 @@ RTExampleSelection >> iconForm [
 	^ TRPlatform current formClass fromBinaryStream: 
 		(TRPlatform current  mimeDecodeToBytes: icon64Mime readStream) 
 ]
+
+{ #category : #accessing }
+RTExampleSelection >> title [
+
+	^ title 
+		ifNil: [ self selector ]
+		ifNotNil: [ title ]
+]
