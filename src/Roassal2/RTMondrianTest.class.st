@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Mondrian'
 }
 
-{ #category : #'tests - nodes' }
+{ #category : #running }
 RTMondrianTest >> setUp [
 	super setUp.
 	b := RTMondrian new.
@@ -457,6 +457,16 @@ RTMondrianTest >> testShape3 [
 	
 	self assert: n1 shape class == RTEllipse.
 	self assert: n2 shape class == RTBox.
+]
+
+{ #category : #'tests - nodes' }
+RTMondrianTest >> testShapeAndForEach [
+
+	| i |
+	i := b shape.
+	b nodes: #(1 2) forEach: [ :each |
+		self assert: b shape ~~ i
+	]
 ]
 
 { #category : #'tests - nodes' }
