@@ -172,11 +172,6 @@ RTMondrian >> edgesFrom: aBlock [
 	^ self edges connectFrom: aBlock
 ]
 
-{ #category : #'deprecated - compatibility layer' }
-RTMondrian >> flowLayout [
-	^ self layout flow
-]
-
 { #category : #initialization }
 RTMondrian >> initialize [
 	rootFrame := self createNewFrame.
