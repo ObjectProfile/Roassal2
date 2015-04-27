@@ -279,6 +279,12 @@ TRSVGPath >> separateSubPaths [
 ]
 
 { #category : #accessing }
+TRSVGPath >> setExtent: anExtent [
+
+	rectangle := rectangle topLeft extent: anExtent
+]
+
+{ #category : #accessing }
 TRSVGPath >> strokeWidth [
 	^ borderWidth
 ]
