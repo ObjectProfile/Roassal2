@@ -311,6 +311,40 @@ RTMondrianTest >> testFramesWithNestingNesting2 [
 
 ]
 
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testInteraction [
+
+	| i nodes |
+	i := b interaction.
+	nodes :=
+	b nodes: #(1 2) forEach: [ :each |
+		self assert: b interaction ~~ i
+	].
+	"Maybe this is what we should have"
+	"self assert: nodes first announcer == nodes second announcer"
+]
+
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testInteractionNoOverride [
+
+	"popup and draggable"	
+	self assert: b interaction numberOfMenuEntries equals: 2.
+
+	b interaction when: TRMouseClick do: [ :evt | ].
+	self assert: b interaction numberOfMenuEntries equals: 3
+]
+
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testInteractionOverridePopup [
+
+	"popup and draggable"	
+	self assert: b interaction numberOfMenuEntries equals: 2.
+
+	"Since there is a popup in the interaction, we cannot have two popup"
+	b interaction popupText: 'hello'.
+	self assert: b interaction numberOfMenuEntries equals: 2
+]
+
 { #category : #'tests - edges' }
 RTMondrianTest >> testNoLineShape [
 
@@ -447,6 +481,18 @@ RTMondrianTest >> testShape3 [
 	
 	self assert: n1 shape class == RTEllipse.
 	self assert: n2 shape class == RTBox.
+]
+
+{ #category : #'tests - nodes' }
+RTMondrianTest >> testShapeAndForEach [
+
+	| i nodes |
+	i := b shape.
+	nodes := 
+	b nodes: #(1 2) forEach: [ :each |
+		self assert: b shape ~~ i
+	].
+	self assert: nodes first shape == nodes second shape
 ]
 
 { #category : #'tests - nodes' }
