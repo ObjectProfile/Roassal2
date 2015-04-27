@@ -1,7 +1,7 @@
 Class {
 	#name : #RTExampleSelection,
 	#superclass : #GTExample,
-	#category : #'Roassal2-ExampleBrowser'
+	#category : #'Roassal2-MorphSpecific'
 }
 
 { #category : #accessing }
