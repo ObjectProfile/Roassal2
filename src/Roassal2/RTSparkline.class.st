@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Sparkline'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTSparkline >> initialize [
 	super initialize.
 	borderWidth := 1.
@@ -15,7 +15,7 @@ RTSparkline >> initialize [
 	self color: Color white
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTSparkline >> trachelShapeFor: anElement [
 	| shape |
 	shape := TRSVGPath new.
@@ -26,7 +26,7 @@ RTSparkline >> trachelShapeFor: anElement [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTSparkline >> updateFor: element trachelShape: trachelShape [
 
 	| vs p path x y stepHorizontal stepVertical w h min max ny |
@@ -36,7 +36,7 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	stepHorizontal := w / vs size.
 	min := vs min.
 	max := vs max.
-	stepVertical := h / (max - min).
+	stepVertical := h / (max - min + 1).
 	
 	p := (element position - ((w / 2) @ (h negated / 2))).
 	x := p x.
@@ -44,23 +44,32 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	ny := vs first - min * stepVertical.
 	path := 'M', x asInteger asString, ',', (y - ny) asInteger asString.
 	
-	vs allButFirstDo: [ :v |
-		x := x + stepHorizontal.
-		ny := (v - min * stepVertical).
-		path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString.
-	].
+	vs size = 1
+		ifTrue: [ 
+			x := x + stepHorizontal.
+			path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString ]
+	
+		ifFalse: [
+			vs allButFirstDo: [ :v |
+				x := x + stepHorizontal.
+				ny := (v - min * stepVertical).
+				path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString.
+			] ].
 	trachelShape resetPath.
 	trachelShape path: path.
+	
+	"We manually specify the extent of the shape. If we do not do it, then the path will be used to determine the encompassing rectangle"
+	trachelShape setExtent: w @ h
 	
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSparkline >> values: aBlockOrASymbol [
 	valueBlock := aBlockOrASymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #querying }
 RTSparkline >> valuesFor: anElement [
 	^ valueBlock rtValue: anElement model
 ]

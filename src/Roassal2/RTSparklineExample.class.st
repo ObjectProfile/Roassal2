@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Sparkline'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSparklineExample >> example01 [
 	"
 	self new example01
@@ -19,11 +19,10 @@ RTSparklineExample >> example01 [
 	v addAll: es.
 	RTHorizontalLineLayout on: es.
 	v setDefaultMenu.
-	v open.
-	v
+	^ v
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSparklineExample >> example03 [
 	"
 	self new example03

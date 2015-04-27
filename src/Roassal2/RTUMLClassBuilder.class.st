@@ -15,8 +15,7 @@ Class {
 		'methodShapeBuilder',
 		'layout',
 		'attributeselector',
-		'attributeShapeBuilder',
-		'lineShape'
+		'attributeShapeBuilder'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
@@ -35,7 +34,7 @@ RTUMLClassBuilder >> addObjects: objects [
 
 { #category : #public }
 RTUMLClassBuilder >> applyLayout [
-	self layout layout on: classesGroup elements.
+	self layout on: classesGroup elements.
 ]
 
 { #category : #shapes }
@@ -65,9 +64,8 @@ RTUMLClassBuilder >> attributeselector: aSelector [
 
 { #category : #public }
 RTUMLClassBuilder >> buildEdges [
-	lineShape verticalAttachPoint.
 	RTEdge buildEdgesFromObjects: 
-		classes from: (self superclass) to: #yourself using: lineShape shape inView: view
+		classes from: (self superclass) to: #yourself using: (RTMultiLine new orthoVertical attachPoint: RTVerticalAttachPoint instance) inView: view
 ]
 
 { #category : #public }
@@ -271,7 +269,7 @@ RTUMLClassBuilder >> fontSizeOfMembers [
 
 { #category : #layouts }
 RTUMLClassBuilder >> gridLayout [
-	^ self layout grid
+	^ self layout: RTGridLayout new.
 ]
 
 { #category : #initialization }
@@ -287,8 +285,6 @@ RTUMLClassBuilder >> initialize [
 	self methodselector: #selector.
 	self attributeselector: #yourself.
 
-	self layout: RTLayoutBuilder new.
-	(self lineShape: RTShapeBuilder new) orthoVerticalLine.
 	self methodShape: RTShapeBuilder new.
 	self attributeShape: RTShapeBuilder new.
 ]
@@ -312,16 +308,6 @@ RTUMLClassBuilder >> layout [
 { #category : #accessing }
 RTUMLClassBuilder >> layout: aRTLayout [
 	^ layout := aRTLayout
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> lineShape [
-	^ lineShape
-]
-
-{ #category : #accessing }
-RTUMLClassBuilder >> lineShape: aShapeBuilder [
-	^ lineShape := aShapeBuilder
 ]
 
 { #category : #shapes }
@@ -386,5 +372,5 @@ RTUMLClassBuilder >> superclass: aSelector [
 
 { #category : #layouts }
 RTUMLClassBuilder >> treeLayout [
-	^ self layout tree
+	^ self layout: RTTreeLayout new
 ]

@@ -483,7 +483,7 @@ RTMondrianTest >> testShape3 [
 	self assert: n2 shape class == RTBox.
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testShapeAndForEach [
 
 	| i nodes |
