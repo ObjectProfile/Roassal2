@@ -5,7 +5,7 @@ Class {
 		'view',
 		'ui'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Core-Tests'
 }
 
 { #category : #running }
