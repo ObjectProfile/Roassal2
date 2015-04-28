@@ -1,5 +1,8 @@
+"
+Describe a cubic Bezier spline
+"
 Class {
-	#name : #TRBezierShape,
+	#name : #TRBezier3Shape,
 	#superclass : #TRAbstractLineShape,
 	#instVars : [
 		'listOfPoints'
@@ -8,34 +11,31 @@ Class {
 }
 
 { #category : #visitor }
-TRBezierShape >> accept: aVisitor [
+TRBezier3Shape >> accept: aVisitor [
 	aVisitor visitBezierShape: self
 ]
 
 { #category : #visitor }
-TRBezierShape >> accept: aVisitor with: decoration [
+TRBezier3Shape >> accept: aVisitor with: decoration [
 	aVisitor visitBezierShape: self with: decoration
 ]
 
 { #category : #hooks }
-TRBezierShape >> computePath [
+TRBezier3Shape >> computePath [
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
 				moveTo: listOfPoints first.
-			
-			(2 to: (listOfPoints size -1)) do: [ :index |
-				builder 
-					curveVia: (listOfPoints at: index) 
-					to: (((listOfPoints at: index) + (listOfPoints at: (index + 1))) / 2) asFloatPoint.
-			].
-			builder lineTo: listOfPoints last.
+			builder 
+				curveViaX: listOfPoints first x asFloat Y: listOfPoints first y asFloat
+				viaX: listOfPoints second x asFloat Y: listOfPoints second y asFloat 
+				toX: listOfPoints third x asFloat Y: listOfPoints third y asFloat.
 		]
 ]
 
 { #category : #drawing }
-TRBezierShape >> drawOn: athensCanvas [
+TRBezier3Shape >> drawOn: athensCanvas [
 
 	athensCanvas pathTransform restoreAfter: [
 		
@@ -45,52 +45,48 @@ TRBezierShape >> drawOn: athensCanvas [
 ]
 
 { #category : #accessing }
-TRBezierShape >> encompassingRectangle [
+TRBezier3Shape >> encompassingRectangle [
 	^ Rectangle encompassing: listOfPoints
 ]
 
 { #category : #initialization }
-TRBezierShape >> initialize [
+TRBezier3Shape >> initialize [
 	super initialize.
-	listOfPoints := Array with: 0 @ 0 with: 0 @ 0
+	listOfPoints := Array with: 0 @ 0 with: 0 @ 0 with: 0 @ 0
 ]
 
 { #category : #accessing }
-TRBezierShape >> numberOfPoints [
+TRBezier3Shape >> numberOfPoints [
 	^ self points size
 ]
 
 { #category : #accessing }
-TRBezierShape >> points [
+TRBezier3Shape >> points [
 	^ listOfPoints copy
 ]
 
 { #category : #public }
-TRBezierShape >> points: points [
+TRBezier3Shape >> points: points [
+	self assert: [ points size = 3 ] description: 'Only 3 points may be provided'.
 	listOfPoints := points
 ]
 
 { #category : #public }
-TRBezierShape >> points: aListOfPoints color: aColor [
-
+TRBezier3Shape >> points: aListOfPoints color: aColor [
+	self assert: [ aListOfPoints size = 3 ] description: 'Only 3 points may be provided'.
+	
 	self points: aListOfPoints.
 	self strokePaint: aColor.
 	self color: aColor
 ]
 
 { #category : #accessing }
-TRBezierShape >> position [
+TRBezier3Shape >> position [
 	^ self encompassingRectangle center
 ]
 
-{ #category : #accessing }
-TRBezierShape >> strokePaint: aColor [
-	"set the color of the border line"
-	self color: aColor
-]
-
 { #category : #actions }
-TRBezierShape >> translateBy: aPoint [
+TRBezier3Shape >> translateBy: aPoint [
 	listOfPoints := listOfPoints collect: [ :p | p + aPoint ]
 
 ]
