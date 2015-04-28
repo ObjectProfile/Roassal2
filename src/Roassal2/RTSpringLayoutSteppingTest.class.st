@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSpringLayoutSteppingTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Core-Tests'
 }
 
 { #category : #tests }

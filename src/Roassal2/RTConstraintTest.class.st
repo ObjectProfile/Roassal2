@@ -1,7 +1,7 @@
 Class {
 	#name : #RTConstraintTest,
 	#superclass : #TRConstraintTest,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Core-Tests'
 }
 
 { #category : #running }
