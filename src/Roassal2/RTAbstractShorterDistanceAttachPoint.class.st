@@ -32,7 +32,11 @@ RTAbstractShorterDistanceAttachPoint >> destinationAttachPointsFor: anEdge [
 
 { #category : #'public - hooks' }
 RTAbstractShorterDistanceAttachPoint >> endingPointOf: anEdge [
-	^ self attachPointFor: anEdge on: (anEdge from) with: (self destinationAttachPointsFor: anEdge).
+	
+	^ inverted
+		ifTrue: [ self attachPointFor: anEdge on: (anEdge to) with: (self startingAttachPointsFor: anEdge) ]
+		ifFalse: [ self attachPointFor: anEdge on: (anEdge from) with: (self destinationAttachPointsFor: anEdge). ].
+	
 ]
 
 { #category : #util }
@@ -43,5 +47,8 @@ RTAbstractShorterDistanceAttachPoint >> startingAttachPointsFor: anEdge [
 
 { #category : #'public - hooks' }
 RTAbstractShorterDistanceAttachPoint >> startingPointOf: anEdge [
-	^ self attachPointFor: anEdge on: (anEdge to) with: (self startingAttachPointsFor: anEdge).
+	
+	^ inverted 
+		ifTrue: [ self attachPointFor: anEdge on: anEdge from with: (self destinationAttachPointsFor: anEdge) ]
+		ifFalse: [self attachPointFor: anEdge on: (anEdge to) with: (self startingAttachPointsFor: anEdge).]
 ]

@@ -63,11 +63,14 @@ RTUMLClassBuilder >> attributeselector: aSelector [
 	attributeselector := aSelector.
 ]
 
-{ #category : #public }
+{ #category : #edges }
 RTUMLClassBuilder >> buildEdges [
+	| bool |
+	bool := lineShape shape attachPoint isInverted.
 	lineShape verticalAttachPoint.
+	lineShape shape attachPoint inverted: bool.
 	RTEdge buildEdgesFromObjects: 
-		classes from: (self superclass) to: #yourself using: lineShape shape inView: view
+		classes from: self superclass to: #yourself using: lineShape shape inView: view
 ]
 
 { #category : #public }
@@ -286,7 +289,7 @@ RTUMLClassBuilder >> initialize [
 	self superclass: #superclass.
 	self methodselector: #selector.
 	self attributeselector: #yourself.
-
+	
 	self layout: RTLayoutBuilder new.
 	(self lineShape: RTShapeBuilder new) orthoVerticalLine.
 	self methodShape: RTShapeBuilder new.
@@ -314,12 +317,12 @@ RTUMLClassBuilder >> layout: aRTLayout [
 	^ layout := aRTLayout
 ]
 
-{ #category : #accessing }
+{ #category : #edges }
 RTUMLClassBuilder >> lineShape [
 	^ lineShape
 ]
 
-{ #category : #accessing }
+{ #category : #edges }
 RTUMLClassBuilder >> lineShape: aShapeBuilder [
 	^ lineShape := aShapeBuilder
 ]
