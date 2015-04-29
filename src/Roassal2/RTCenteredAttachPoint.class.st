@@ -6,10 +6,10 @@ Class {
 
 { #category : #'public - hooks' }
 RTCenteredAttachPoint >> endingPointOf: anEdge [
-	^ anEdge to position
+	^ (inverted ifTrue: [anEdge from] ifFalse: [anEdge to]) position
 ]
 
 { #category : #'public - hooks' }
 RTCenteredAttachPoint >> startingPointOf: anEdge [
-	^ anEdge from position
+	^ (inverted ifTrue:[anEdge to] ifFalse:[anEdge from]) position
 ]

@@ -6,11 +6,15 @@ Class {
 
 { #category : #'public - hooks' }
 RTVerticalAttachPoint >> endingPointOf: aRTEdge [
-	^ aRTEdge to encompassingRectangle topCenter
+	^ inverted 
+		ifTrue: [ aRTEdge from encompassingRectangle bottomCenter ]
+		ifFalse: [ aRTEdge to encompassingRectangle topCenter ].
 ]
 
 { #category : #'public - hooks' }
 RTVerticalAttachPoint >> startingPointOf: aRTEdge [
-	^ aRTEdge from encompassingRectangle bottomCenter
+	^ inverted 
+		ifTrue: [ aRTEdge to encompassingRectangle topCenter ]
+		ifFalse: [ aRTEdge from encompassingRectangle bottomCenter ].
 
 ]

@@ -49,6 +49,7 @@ RTArrowedLine >> directed [
 { #category : #public }
 RTArrowedLine >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
+	
 ]
 
 { #category : #public }
@@ -69,7 +70,12 @@ RTArrowedLine >> head: aLineDecorationShape [
 { #category : #initialization }
 RTArrowedLine >> initialize [
 	super initialize.
-	self simple; straight
+	self simple; straight.
+]
+
+{ #category : #public }
+RTArrowedLine >> inverted [
+	attachPoint inverted
 ]
 
 { #category : #accessing }
@@ -102,11 +108,6 @@ RTArrowedLine >> trachelShapeFor: anEdge [
 			addShape: headTrachelShape; 
 			yourself
 	
-	
-"	| lineTrachelShape headTrachelShape |
-	lineTrachelShape := line trachelShapeFor: anEdge.
-	headTrachelShape := head trachelShapeFor: anEdge.
-	^ TRCompositeShape new shape1: lineTrachelShape; shape2: headTrachelShape"
 ]
 
 { #category : #hooks }
