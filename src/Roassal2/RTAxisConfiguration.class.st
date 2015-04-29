@@ -21,7 +21,8 @@ Class {
 		'fromPoint',
 		'toPoint',
 		'maxValueManuallySet',
-		'minValueManuallySet'
+		'minValueManuallySet',
+		'ticksCentered'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
@@ -127,6 +128,7 @@ RTAxisConfiguration >> initialize [
 	color := self defaultColor.
 	titlePosition := self defaultTitlePosition.
 	self doNotRotateLabels.
+	ticksCentered := false.
 ]
 
 { #category : #accessing }
@@ -311,6 +313,16 @@ RTAxisConfiguration >> tickIntervalForLabel [
 RTAxisConfiguration >> tickLabelOffset: aPoint [
 	"Specify the offset between the tick and its label"
 	self positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + aPoint ].
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> ticksCentered [
+	^ ticksCentered.
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> ticksCentered: aBoolean [
+	ticksCentered := aBoolean.
 ]
 
 { #category : #accessing }
