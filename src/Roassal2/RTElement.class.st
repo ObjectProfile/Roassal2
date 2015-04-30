@@ -161,7 +161,7 @@ RTElement >> removeConnectedEdge: anEdge [
 
 { #category : #initialization }
 RTElement >> removeConnectedEdges [
-	self connectedEdges do: #remove
+	self connectedEdges copy do: [ :edge | edge remove ]
 ]
 
 { #category : #actions }

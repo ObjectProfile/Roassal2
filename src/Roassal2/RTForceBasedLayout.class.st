@@ -90,7 +90,8 @@ Class {
 		'fixedNodes',
 		'center',
 		'initialLayout',
-		'nbIterations'
+		'nbIterations',
+		'shouldUseProgressBar'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -171,11 +172,16 @@ RTForceBasedLayout >> defaultInitialLayout [
 { #category : #hook }
 RTForceBasedLayout >> doExecute: nodeElements [
 	self start: nodeElements.
-	self isJobInstalled
+	self shouldRunLayoutWithProgressBar
 		ifTrue: [ self runLayoutInJob ]
 		ifFalse: [ self runLayoutSimply ].
 	alpha := 0.
 	nodes do: [ :e | translator translateTopLeftOf: e to: e position ]
+]
+
+{ #category : #configuration }
+RTForceBasedLayout >> doNotUseProgressBar [
+	shouldUseProgressBar := false	
 ]
 
 { #category : #algorithm }
@@ -219,7 +225,8 @@ RTForceBasedLayout >> initialize [
 	friction := 0.9.
 	theta := 0.8.
 	center := 200 @ 200.
-	alpha := 0.1
+	alpha := 0.1.
+	self useProgressBar
 ]
 
 { #category : #testing }
@@ -383,6 +390,16 @@ RTForceBasedLayout >> set: anEdge strength: aFloat [
 	strengths at: anEdge put: aFloat
 ]
 
+{ #category : #updating }
+RTForceBasedLayout >> shouldRunLayoutWithProgressBar [
+	^ self isJobInstalled and: [ self shouldUseProgressBar ]
+]
+
+{ #category : #accessing }
+RTForceBasedLayout >> shouldUseProgressBar [
+	^ shouldUseProgressBar
+]
+
 { #category : #accessing }
 RTForceBasedLayout >> start: nodeElements [
 	self initialPositionOfNodes: nodeElements.
@@ -448,6 +465,11 @@ RTForceBasedLayout >> strength: aFloat [
 RTForceBasedLayout >> strengthOf: anEdge [
 
 	^ strengths at: anEdge ifAbsent: [ ^ strength ] 
+]
+
+{ #category : #configuration }
+RTForceBasedLayout >> useProgressBar [
+	shouldUseProgressBar := true	
 ]
 
 { #category : #public }

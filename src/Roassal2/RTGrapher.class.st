@@ -103,30 +103,39 @@ RTGrapher >> hasDataSet [
 RTGrapher >> homogenizeMinAndMax [
 	| tminX tmaxX tminY tmaxY block r |
 	generator setLooseFlag: true.
-	block := [ :axis :lmin :lmax | | result nticks|
-		nticks := axis numberOfTicks isZero ifTrue: [ 2 ] ifFalse: [ axis numberOfTicks ].
+	block := [ :axis :lmin :lmax | 
+		| result nticks |
+		nticks := axis numberOfTicks isZero
+			ifTrue: [ 2 ]
+			ifFalse: [ axis numberOfTicks ].
 		result := generator searchMin: lmin max: lmax desired: nticks.
-		axis numberOfTicks isZero ifFalse: [ axis numberOfTicks: result numberOfTicks ].
-		axis numberOfLabels isZero ifFalse: [ axis numberOfLabels: result numberOfTicks ].
-		result. ].
-	shouldUseNiceLabelsForX ifTrue: [ 
-		r := block value: self getAxisX value: self minX value: self maxX.
-		self minX: (tminX := r min).
-		self maxX: (tmaxX := r max).] ifFalse: [ 
-		tminX := self minX.
-		tmaxX := self maxX ].
-	shouldUseNiceLabelsForY ifTrue: [ 
-		r := block value: self getAxisY value: self minY value: self maxY.
-		self minY: (tminY := r min).
-		self maxY: (tmaxY := r max). ] ifFalse: [ 
-		tminY := self minY.
-		tmaxY := self maxY. ].
-
-	datasets do: [ :ds |
-		ds minX: tminX.
-		ds minY: tminY.
-		ds maxX: tmaxX.
-		ds maxY: tmaxY. ]
+		axis numberOfTicks isZero
+			ifFalse: [ axis numberOfTicks: result numberOfTicks ].
+		axis numberOfLabels isZero
+			ifFalse: [ axis numberOfLabels: result numberOfTicks ].
+		result ].
+	shouldUseNiceLabelsForX
+		ifTrue: [ 
+			r := block value: self getAxisX value: self minX value: self maxX.
+			self minX: (tminX := r min).
+			self maxX: (tmaxX := r max) ]
+		ifFalse: [ 
+			tminX := self minX.
+			tmaxX := self maxX ].
+	shouldUseNiceLabelsForY
+		ifTrue: [ 
+			r := block value: self getAxisY value: self minY value: self maxY.
+			self minY: (tminY := r min).
+			self maxY: (tmaxY := r max) ]
+		ifFalse: [ 
+			tminY := self minY.
+			tmaxY := self maxY ].
+	datasets
+		do: [ :ds | 
+			ds minX: tminX.
+			ds minY: tminY.
+			ds maxX: tmaxX.
+			ds maxY: tmaxY ]
 ]
 
 { #category : #initialization }
@@ -200,30 +209,6 @@ RTGrapher >> numberOfDataSets [
 RTGrapher >> numberOfDecorators [
 	"Return the number of decorators that have been added"
 	^ decorators size
-]
-
-{ #category : #'work in progress' }
-RTGrapher >> optimalNumberOfTicksForDiff: diff wishedNumberOfTicks: nbOfTicks [
-"	((self maxY - self minY) \\ nbOfTicks) ~= 0
-			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
-"			
-			(diff \\ 4) = 0 ifTrue: [ ^ 4 ].
-			(diff \\ 5) = 0 ifTrue: [ ^ 5 ]. 
-			(diff \\ 6) = 0 ifTrue: [ ^ 6 ]. 
-			(diff \\ 7) = 0 ifTrue: [ ^ 7 ].
-			(diff \\ 8) = 0 ifTrue: [ ^ 8 ].
-			(diff \\ 9) = 0 ifTrue: [ ^ 9 ].
-	^ diff
-]
-
-{ #category : #'work in progress' }
-RTGrapher >> optimalNumberOfTicksForMin: min max: max wishedNumberOfTicks: nbOfTicks [
-"	((self maxY - self minY) \\ nbOfTicks) ~= 0
-			ifTrue: [ ^ (self maxY - self minY); numberOfLabels: (self maxY - self minY) ]
-"			
-
-	(min = 0 or: [ max = 0 ]) ifTrue: [ ^ nbOfTicks ].	
-	^ nbOfTicks
 ]
 
 { #category : #utility }
