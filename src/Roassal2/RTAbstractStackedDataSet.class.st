@@ -7,6 +7,56 @@ Class {
 	#category : #'Roassal2-Builder-Grapher'
 }
 
+{ #category : #public }
+RTAbstractStackedDataSet >> barChartWithBarCenteredTitle: aBlockOrSymbol [
+	"Add bar charts with centered title, the default color is used. This is a public method"
+	^ self barChartWithBarCenteredTitle: aBlockOrSymbol color: self defaultLabelColor
+]
+
+{ #category : #public }
+RTAbstractStackedDataSet >> barChartWithBarCenteredTitle: aBlockOrSymbol color: aColor [
+	"Draw a bar chart with title"
+	self barShape.
+	elementActions add: [ :elements | 
+		| lbl |
+		elements do: [ :e |
+			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
+			TRConstraint move: lbl below: e.
+			"lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0)."
+			elements anyOne view add: lbl.
+		] ].
+	 
+]
+
+{ #category : #public }
+RTAbstractStackedDataSet >> barChartWithBarTitle: aBlockOrSymbol [
+	"Draw a barChart with title"
+	self barChartWithBarTitle: aBlockOrSymbol rotation: -45
+]
+
+{ #category : #public }
+RTAbstractStackedDataSet >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
+	"Draw an histogram with title"
+
+	self barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: self defaultLabelColor
+]
+
+{ #category : #public }
+RTAbstractStackedDataSet >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
+	"Draw an histogram with title"
+	self barShape.
+	elementActions add: [ :elements | 
+		| lbl |
+		elements do: [ :e |
+			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
+			lbl rotateByDegrees: rotationInDegree.
+			TRConstraint move: lbl below: e.
+			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
+			elements anyOne view add: lbl.
+		] ].
+	 
+]
+
 { #category : #hooks }
 RTAbstractStackedDataSet >> centralDot [
 	^ (RTEllipse new
@@ -14,7 +64,7 @@ RTAbstractStackedDataSet >> centralDot [
 		color: Color red) element translateTo: (builder getPixelPositionOf: 0 @ 0)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'min and max' }
 RTAbstractStackedDataSet >> computeMinAndMaxForX [
 	minX := 1.
 	maxX := builder getMaxNumberOfPoints.
@@ -26,18 +76,23 @@ RTAbstractStackedDataSet >> computeMinAndMaxForX [
 ]
 
 { #category : #public }
+RTAbstractStackedDataSet >> defaultLabelColor [
+	^ Color lightGray
+]
+
+{ #category : #obsolete }
 RTAbstractStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol [
 	"Draw an histogram with title"
 	self histogramWithBarTitle: aBlockOrSymbol rotation: -45
 ]
 
-{ #category : #public }
+{ #category : #obsolete }
 RTAbstractStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
 	"Draw an histogram with title"
 	self histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: Color lightGray
 ]
 
-{ #category : #public }
+{ #category : #obsolete }
 RTAbstractStackedDataSet >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
 	"Draw an histogram with title"
 	self barShape.

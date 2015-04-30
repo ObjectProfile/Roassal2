@@ -396,7 +396,7 @@ ds := RTStackedDataSet new.
 ds points: force.
 ds y: #second.
 ds barShape width: 30.
-ds histogramWithBarTitle: #first rotation: 0.
+ds barChartWithBarTitle: #first rotation: 0.
 b add: ds.
 b axisX noLabel; noTick.
 b build.
