@@ -24,7 +24,7 @@ SequenceableCollection >> histogram [
 	ds := RTHistogramSet new.
 	ds points: self.
 	ds barShape width: 10.
-	ds histogramWithBarTitle: #second rotation: 0 color: Color black.
+	ds barChartWithBarTitle: #second rotation: 0 color: Color black.
 	b add: ds. 
 	b axisX title: 'Values'.
 	b axisY title: 'Occurences'.
@@ -39,7 +39,7 @@ SequenceableCollection >> histogram [
 	ds y: #first.
 	ds interaction popupText: [ :tupple | tupple first asString, ' occurences of ', tupple second asString ].
 	ds barShape width: 10.
-	ds histogramWithBarTitle: #second rotation: 0 color: Color black.
+	ds barChart #second rotation: 0 color: Color black.
 	b add: ds.
 	b axisX noLabel; noTick; title: 'Values'.
 	b axisY title: 'Occurences'; noTick; noLabel.
