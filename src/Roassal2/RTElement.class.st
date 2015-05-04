@@ -120,9 +120,15 @@ RTElement >> initialize [
 ]
 
 { #category : #testing }
-RTElement >> isConnectedTo: anEdge [
+RTElement >> isConnectedTo: anElement [
 	connectedEdges ifNil: [ ^ false ].
-	^ connectedEdges anySatisfy: [ :edge | edge == anEdge ]
+	^ connectedEdges anySatisfy: [ :edge | (edge from == anElement) or: [ edge to == anElement ] ]
+]
+
+{ #category : #testing }
+RTElement >> isDirectlyConnectedTo: anElement [
+	connectedEdges ifNil: [ ^ false ].
+	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
 ]
 
 { #category : #accessing }

@@ -953,12 +953,6 @@ RTSVGPath >> borderWidth: aValueOrBlock [
 	borderWidth := aValueOrBlock
 ]
 
-{ #category : #'public-configuration' }
-RTSVGPath >> borderWidthConstant [
-	"Make that the width is constant, independent of its scale"
-	self borderWidth: [ :e | (1 / (self scaleFor: e)) asFloat ]
-]
-
 { #category : #accessing }
 RTSVGPath >> centeredPath: aString [ 
 	self path: aString.
@@ -993,11 +987,6 @@ RTSVGPath >> scale: aNumberOrBlock [
 ]
 
 { #category : #hooks }
-RTSVGPath >> scaleFor: anElement [
-	^ scale rtValue: anElement
-]
-
-{ #category : #hooks }
 RTSVGPath >> trachelShapeFor: anElement [
 	| shape |
 	shape := TRSVGPath new.
@@ -1006,10 +995,9 @@ RTSVGPath >> trachelShapeFor: anElement [
 	shape fillColor: (self fillColor rtValue: anElement).
 	keepInOriginalPosition
 		ifTrue: [ shape path: path ]
-		ifFalse: [ shape centeredPath: path ].
-	shape scaleBy: (self scaleFor: anElement).
-	rotation isNil
-		ifFalse: [ shape rotateByDegrees: rotation ].
+		ifFalse: [ shape centeredPath: path. ].
+	shape scaleBy: (scale rtValue: anElement).
+	rotation isNil ifFalse: [shape rotateByDegrees: rotation].
 	^ shape
 ]
 

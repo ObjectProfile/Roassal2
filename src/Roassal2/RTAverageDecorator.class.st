@@ -15,39 +15,11 @@ b build.
 "
 Class {
 	#name : #RTAverageDecorator,
-	#superclass : #RTAbstractGrapherDecorator,
-	#instVars : [
-		'shouldHaveLabel',
-		'labelConvertion'
-	],
+	#superclass : #RTAbstractAverageDecorator,
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
-{ #category : #initialization }
-RTAverageDecorator >> initialize [
-	super initialize.
-	self noLabel.
-	labelConvertion := #yourself
-]
-
-{ #category : #accessing }
-RTAverageDecorator >> labelConvertion [
-	^ labelConvertion
-]
-
-{ #category : #accessing }
-RTAverageDecorator >> labelConvertion: aBlockOrSymbol [
-	"This method is used to set how to convert the average value"
-	"Take as argument the average value, as a number and the block has to return a value or a string"
-	labelConvertion := aBlockOrSymbol
-]
-
-{ #category : #initialization }
-RTAverageDecorator >> noLabel [
-	shouldHaveLabel := false
-]
-
-{ #category : #drawing }
+{ #category : #'drawing-hooks' }
 RTAverageDecorator >> render [
 	| values average from to |
 	values := self datasetValues.
@@ -59,9 +31,4 @@ RTAverageDecorator >> render [
 	shouldHaveLabel ifTrue: [ 
 		self label: ((labelConvertion rtValue: average) asString) above: to.
 	]
-]
-
-{ #category : #configuration }
-RTAverageDecorator >> withLabel [
-	shouldHaveLabel := true
 ]
