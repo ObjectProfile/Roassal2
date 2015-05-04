@@ -225,8 +225,42 @@ call_table::instruction_id -> instruction::segment_id -> segment::call_id -> cal
 		ac reference: (referenceDictionary values detect: [:r | r referenceId = ac referenceId]). 
 		"model add:ac. "
 		].
-
 	
+	"List function calls of each call"
+		callsDictionary valuesDo: [ :ca | 
+		| ar |
+		result := db execute: 'SELECT C2.*
+FROM call_table as C1
+INNER JOIN segment_table ON segment_table.call_id = C1.id
+INNER JOIN instruction_table ON instruction_table.segment_id = segment_table.id
+INNER JOIN call_table AS C2 ON C2.instruction_id = instruction_table.id
+WHERE instruction_table.instruction_type = ''CALL''
+AND C1.id = ''',ca id,''';'.
+		ar := Set new.
+		[ (row := result next) isNotNil ] whileTrue: [
+			ar add: (callsDictionary at: (row at: 'ID'))
+			].
+		ca functionCalls: ar.
+	].
+
+
+ "Process de accesses, link accesses to calls"
+	callsDictionary valuesDo: [ :ca | 
+		| ar |
+		result := db execute: 'SELECT C2.*
+FROM call_table as C1
+INNER JOIN segment_table ON segment_table.call_id = C1.id
+INNER JOIN instruction_table ON instruction_table.segment_id = segment_table.id
+INNER JOIN access_table AS C2 ON C2.instruction_id = instruction_table.id
+WHERE instruction_table.instruction_type = ''ACCESS''
+AND C1.id = ''',ca id,''';'.
+ar := OrderedCollection new.
+		[ (row := result next) isNotNil ] whileTrue: [
+			ar add: (referenceDictionary values detect: [:r | r referenceId = (row at: 'REFERENCE_ID')])
+			].
+		ca referenceAccesses: ar.
+	].
+
 	db close.
 	^ model
 ]

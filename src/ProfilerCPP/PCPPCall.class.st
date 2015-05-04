@@ -8,7 +8,10 @@ Class {
 		'functionId',
 		'id',
 		'instructionId',
-		'startTime'
+		'startTime',
+		'functionCalls',
+		'referenceAccesses',
+		'totalExecutionTime'
 	],
 	#category : #ProfilerCPP
 }
@@ -66,6 +69,16 @@ PCPPCall >> function: anObject [
 ]
 
 { #category : #accessing }
+PCPPCall >> functionCalls [
+	^ functionCalls
+]
+
+{ #category : #accessing }
+PCPPCall >> functionCalls: aFunctionCallsCollection [
+	functionCalls := aFunctionCallsCollection 
+]
+
+{ #category : #accessing }
 PCPPCall >> functionId [
 	^ functionId
 ]
@@ -86,6 +99,12 @@ PCPPCall >> id: anObject [
 ]
 
 { #category : #accessing }
+PCPPCall >> initialize [
+	super initialize.
+	self totalExecutionTime: 0
+]
+
+{ #category : #accessing }
 PCPPCall >> instructionId [
 	^ instructionId
 ]
@@ -99,6 +118,22 @@ PCPPCall >> instructionId: anObject [
 PCPPCall >> mooseNameOn: aStream [ 
 
 	aStream nextPutAll: '<call ', self id asString, '>'
+]
+
+{ #category : #accessing }
+PCPPCall >> otherFunctionCalls [
+
+	^ self functionCalls select: [:c | c ~= self ]
+]
+
+{ #category : #accessing }
+PCPPCall >> referenceAccesses [
+	^ referenceAccesses
+]
+
+{ #category : #accessing }
+PCPPCall >> referenceAccesses: aReferenceAccessesCollection [
+	referenceAccesses := aReferenceAccessesCollection
 ]
 
 { #category : #accessing }
@@ -117,4 +152,14 @@ PCPPCall >> timeToExecute [
 	<derived>
 	<MSEComment: 'Time I took to execute'>
 	^ endTime - startTime
+]
+
+{ #category : #accessing }
+PCPPCall >> totalExecutionTime [
+ ^ totalExecutionTime 
+]
+
+{ #category : #accessing }
+PCPPCall >> totalExecutionTime: aNumber [
+ totalExecutionTime := aNumber 
 ]
