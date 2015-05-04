@@ -17,10 +17,10 @@ RTBezierLineTest >> testBasic [
 	edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
 	v add: edge.
 	
-	self assert: (els first connectedEdges includes: edge).
-	self assert: (els second connectedEdges includes: edge).
-	self assert: (els third connectedEdges includes: edge).
-	self assert: (els fourth connectedEdges includes: edge).
+	self assert: (els first isConnectedTo: edge).
+	self assert: (els second isConnectedTo: edge).
+	self assert: (els third isConnectedTo: edge).
+	self assert: (els fourth isConnectedTo: edge).
 ]
 
 { #category : #tests }

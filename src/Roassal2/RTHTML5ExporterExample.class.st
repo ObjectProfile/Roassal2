@@ -159,7 +159,7 @@ RTHTML5ExporterExample >> exportExampleColoredAndInteractionLabel [
 RTHTML5ExporterExample >> exportExampleHappyNewYear [
 	| e view|
 	e := RTHTML5Exporter new.
-	view := RTRoassalExample new perform: #exampleHappyNewYear.
+	view := RTAnimationExample new perform: #exampleHappy2014.
 	
 	e export: view.
 ]
