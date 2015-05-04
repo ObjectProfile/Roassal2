@@ -61,7 +61,7 @@ PCPPFunctionGroup >> updateAndNormalize: aBuilder [
 	aBuilder normalizer 
 		elements: elementsToNormalize;
 		normalizeColor: [:e | 
-			(e totalExecutionTime = 0) ifTrue: [0] ifFalse: [e totalExecutionTime ln].	
+			(e totalExecutionTime + 5) ln.	
 			] using: { Color lightGreen. Color green. Color orange. Color red }.	
 		
 	aBuilder view canvas signalUpdate.
