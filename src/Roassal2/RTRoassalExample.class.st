@@ -1731,52 +1731,6 @@ N/lA5AORb/KByDf5QBbC/gdzJXoZ+XSG6AAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTRoassalExample >> exampleCoolAnimation [
-| v shape elements |
-v := RTView new.
-shape := RTEllipse new color: (Color purple alpha: 0.1); size: #yourself.
-elements := shape elementsOn: (1 to: 100 by: 10).
-v addAll: elements.
-
-v canvas addMenu: 'Right!' callback: [  elements do: [ :e | RTLinearMove new to: e model @ 0 during: 1 on: e in: v ] ].
-
-v canvas addMenu: 'Left!' callback: [  elements do: [ :e | RTLinearMove new to: e model negated @ 0 during: 1 on: e in: v ] ].
-
-v canvas addMenu: 'Up!' callback: [  elements do: [ :e | RTLinearMove new to: 0 @ e model negated during: 1 on: e in: v ] ].
-
-v canvas addMenu: 'Down!' callback: [  elements do: [ :e | RTLinearMove new to: 0 @ e model during: 1 on: e in: v ] ].
-
-^ v
-]
-
-{ #category : #icons }
-RTRoassalExample >> exampleCoolAnimationIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAAEgklEQVR4XuXZ/U+bZRQG4Ht8
-0xbKN6UUOqAtpR9QCi1tocJa2CYbQzLYYEFUMDObY3O4GZeoqOhi4rKZaOIW/1nPHV6SSch+
-alFzX8kJtG8LyTk9z/Oep9CnT5++/5c1izsWaefxpvNzxuLuO9735xmvKbz1fpy6xv+z8Y6/
-N6xfimP3LI6cRD52fvK5hxY7Z7y+ZJG0eHDGa5YtDpy/kTt1bdd5b9Ziz/kQ7FusW8xbdOuX
-4tikRdEiYfGtxX2nW6YtFk+99tAi5Lyeif3CSSbe6ipee2EROXVt3rnO52edx4yo0x1J/VLo
-06dPnz59+vTp06dPnz59+vTp06dPnz59+vTp06dPnz59+vTp06dPnz59+vTp06dPnz59+vTp
-06dPn77/tAs1dWhwWbhrUNugn49/ST0aPc1o6XGhzd+CrqFWdI940D7ggrevHk2tNahr1M/S
-Oai1RDej1deKnlA7/IlODEz2YCjXg+F8F4JT9jjFa260BawwLfoZq24xmtgRbeiLdeNi1odw
-sR9jiwNIXBtE8noAsct+REu9GCmwMC3ovNgId4d+5qqA+wOXI3YFE87kBzFxYxjTt0KY2Q4j
-tzOCzOYQ0jetOMt9iMyzezzoCDbC1a6fwQprgqeLnWHL00wA8atDmNoII78zhvc+i2PhQRyX
-9vn7KAq7VpitQYyvOEVJsausoPX6Waxgd7jRHuAnnkuUFWN9FLO7MSx8Po7LT1J4/9kklr+Z
-wJWvEig9iqJ4l93CwnFv8cIX1V+6KqgBzV4vesNcqmw5uhZC9k4M8/dZgDSuH2bwwc9ZrP0y
-hRtHLE4S5cdWsD1bvtatgOXjLvH26WeyQuyuqrcDgXE/RkvcI0Yxt5fE4oEV47sM1p7ncfu3
-AjZ/z2H9xTRWj1goLl/cX9hRTkH8HFr0s1kB/HQzqUwuk8xkM+lMfh63XhWx/aaID/8qWGGs
-W35K4erX1kH3rJO2BhC/0o3gNGcU/X2kigWxveOpLVE/sCtmsfXHHLZfszj/7JDM7X7Elrow
-mOZccgE1tfrZrMgdlrvT7rDGfAgV7VZ3NYL8R3GUHnK/YAFmcPPXHDZeWnc8T2PlkMU6Y8nS
-30Mqpc6OSex4ZNiGwQznj5MuSWLpwJanZ1NY+d665ceTOy1u+GGbTYJIrfLWtwP9SU73+pms
-wrJlG/sCu2TE7rSOZ5BL++NY+pJdkUD5EZ+LoPAJ5xR2B5crj03sPHzUz2IF8VyKU7ezl5RP
-pnQOh1HMfcrZwwrx8cm0zmLYEJnlMKnfHVWc1nmyy6JwKeKGzYmc8wY7gp1j51rLLAaXNztm
-ibOz9O+uqlwU65RBm0smeLprw+Is5xM7VCzzsNEm8xwLZoNkxCmG/nck57DJu5ls2xuCTDw3
-bRaoDb4x+14kxGt2VNKpPwiee2EaXPV2rMIvqrhP8LyKX1xZHfQLoU+fPn369OnTp0+fPn36
-9OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn369OnTp0+fPn36
-JPwNXt+qEqTBc4UAAAAASUVORK5CYII='
-]
-
-{ #category : #sources }
 RTRoassalExample >> exampleCreatingBitmap [
 
 	| v  s trachelShape |
@@ -3641,40 +3595,6 @@ L7sde5bO7Ym7ylKwEG74ovfzWUHu+IRwvy2g93WhO7sQQoQukuSSTAjR+Bwv+YSw+2H3RD0r
 Xz/xQjL1Txa3tpRe8YXgCzmcENI03yCrlHTmJV48R0iy2lJ6VZIQlUw2ufVTSG344IMPPvjg
 gw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OBzYvkP
 DO2Li2xss+0AAAAASUVORK5CYII='
-]
-
-{ #category : #sources }
-RTRoassalExample >> exampleHappyNewYear [
-| view txt x y el shape size offset |
-	txt := 
-	'
-	xxxxx  xxxxx     xxx      x
-	x   x  x   x    x  x     x
-	   x   x   x   x   x    x x 
-	  x    x   x       x    xxxxx
-	 x     x   x       x      x
-	xxxxx  xxxxx       x      x
-	'.
-	view := RTView new.
-	x := 0.
-	y := 0.
-	size := 20.
-	offset := 100 @ 100.
-	txt linesDo: [ :line |
-		y := y + 1.
-		line do: [ :c |
-			x := x + 1.
-			c = $x ifTrue: [ 
-				shape := (RTEllipse new size: size; color: (Color purple alpha: 0.2)).
-				el := shape element.
-				el translateTo: (800 atRandom @ 450 atRandom).
-				view add: el.
-				view addAnimation: (RTLinearMove new to: ((x * size) @ (y * size) + offset) during: 0.5 on: el).
-			]
-		].
-	   x := 0.
-	].
-	^ view
 ]
 
 { #category : #icons }
