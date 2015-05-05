@@ -79,6 +79,11 @@ RTAnnounceableObject >> attributes [
 	^ attributes ifNil: [ attributes := Dictionary new ]
 ]
 
+{ #category : #testing }
+RTAnnounceableObject >> getInteractionForClass: anInteractionClass [
+	^ self announcer subscriptions getInteractionForClass: anInteractionClass
+]
+
 { #category : #attributes }
 RTAnnounceableObject >> hasAttribute: aKey [ 
 	"Return true if attributes includes aKey"
@@ -91,6 +96,13 @@ RTAnnounceableObject >> hasAttributes [
 	"Return true if at least one attributes is present"
 	
 	^ attributes notNil and: [ attributes notEmpty ]
+]
+
+{ #category : #testing }
+RTAnnounceableObject >> hasInteraction: anInteractionClass [
+	self announcer subscriptions ifNil: [ ^ false ].
+	
+	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
 ]
 
 { #category : #attributes }
