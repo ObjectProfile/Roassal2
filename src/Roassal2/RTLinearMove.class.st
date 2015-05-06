@@ -20,6 +20,19 @@ RTLinearMove >> after: aBlock [
 	animatedValue finishCallback: aBlock
 ]
 
+{ #category : #public }
+RTLinearMove >> by: aDeltaPoint during: seconds on: anElement [
+
+	^ self to: anElement position + aDeltaPoint during: seconds on: anElement
+
+]
+
+{ #category : #public }
+RTLinearMove >> by: aDeltaPoint during: seconds on: anElement in: aView [
+
+	^ self to: anElement position + aDeltaPoint during: seconds on: anElement in: aView
+]
+
 { #category : #testing }
 RTLinearMove >> hasCompleted [
 	^ animatedValue hasCompleted
