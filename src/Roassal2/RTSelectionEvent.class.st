@@ -1,3 +1,6 @@
+"
+I am an event for RTSelectableView
+"
 Class {
 	#name : #RTSelectionEvent,
 	#superclass : #Announcement,
