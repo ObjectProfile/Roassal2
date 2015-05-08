@@ -8,10 +8,17 @@ Class {
 		'maxY',
 		'minX',
 		'minY',
-		'extent'
+		'extent',
+		'decorators'
 	],
 	#category : #'Roassal2-Builder-Grapher'
 }
+
+{ #category : #adding }
+RTAbstractGrapher >> addDecorator: aDecorator [
+	"Add a decorator"
+	decorators add: aDecorator
+]
 
 { #category : #utility }
 RTAbstractGrapher >> adjustXAxisIfNecessary [
@@ -83,6 +90,11 @@ RTAbstractGrapher >> createView [
 	^ RTView new @ RTDraggableView
 ]
 
+{ #category : #accessing }
+RTAbstractGrapher >> decorators [
+	^ decorators
+]
+
 { #category : #utility }
 RTAbstractGrapher >> defineAxesIfNecessary [
 	
@@ -134,6 +146,9 @@ RTAbstractGrapher >> initialize [
 	maxX := 0.
 	maxY := 0.
 	
+	"Collection of decorators"
+	decorators := OrderedCollection new.
+
 ]
 
 { #category : #testing }
@@ -186,6 +201,16 @@ RTAbstractGrapher >> minY [
 { #category : #accessing }
 RTAbstractGrapher >> minY: aValue [
 	minY := aValue
+]
+
+{ #category : #utility }
+RTAbstractGrapher >> renderAllDecoratorsBehind [
+	(decorators select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
+]
+
+{ #category : #utility }
+RTAbstractGrapher >> renderAllDecoratorsInFront [
+	(decorators select: #isInFront) do: [ :aPlugin | aPlugin builder: self; render ]
 ]
 
 { #category : #utility }

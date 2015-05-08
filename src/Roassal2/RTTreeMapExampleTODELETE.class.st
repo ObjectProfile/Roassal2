@@ -3,7 +3,7 @@ Examples of RTTreeMap
 "
 Class {
 	#name : #RTTreeMapExampleTODELETE,
-	#superclass : #RTTreeMapExample,
+	#superclass : #Object,
 	#category : #'Roassal2-Builder-TreeMap'
 }
 

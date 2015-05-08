@@ -14,7 +14,6 @@ Class {
 	#superclass : #RTAbstractGrapher,
 	#instVars : [
 		'datasets',
-		'decorators',
 		'generator',
 		'shouldUseNiceLabelsForX',
 		'shouldUseNiceLabelsForY'
@@ -29,12 +28,6 @@ RTGrapher >> add: aDataSet [
 	
 	datasets add: aDataSet.
 	aDataSet addedInBuilder: self
-]
-
-{ #category : #adding }
-RTGrapher >> addDecorator: aDecorator [
-	"Add a decorator"
-	decorators add: aDecorator
 ]
 
 { #category : #'public-axis' }
@@ -69,16 +62,6 @@ RTGrapher >> checkIfDataSetHaveBeenAdded [
 { #category : #'data sets' }
 RTGrapher >> datasets [
 	^ datasets copy
-]
-
-{ #category : #accessing }
-RTGrapher >> decorators [
-	^ decorators
-]
-
-{ #category : #accessing }
-RTGrapher >> decorators: anObject [
-	decorators := anObject
 ]
 
 { #category : #accessing }
@@ -145,9 +128,6 @@ RTGrapher >> initialize [
 	"Collection of data sets"
 	datasets := OrderedCollection new.
 	
-	"Collection of decorators"
-	decorators := OrderedCollection new.
-	
 	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
 	self shouldUseNiceLabels: true.
 ]
@@ -211,16 +191,6 @@ RTGrapher >> numberOfDecorators [
 	^ decorators size
 ]
 
-{ #category : #utility }
-RTGrapher >> renderAllPluginsBehind [
-	(decorators select: #isBehind) do: [ :aPlugin | aPlugin builder: self; render ]
-]
-
-{ #category : #utility }
-RTGrapher >> renderAllPluginsInFront [
-	(decorators select: #isInFront) do: [ :aPlugin | aPlugin builder: self; render ]
-]
-
 { #category : #hooks }
 RTGrapher >> renderDataSetsIn: aView [
 	datasets do: [ :aDataset | aDataset renderIn: aView ]
@@ -232,9 +202,9 @@ RTGrapher >> renderIn: aView [
 	self defineAxesIfNecessary.
 	self homogenizeMinAndMax.
 	self renderAxis.
-	self renderAllPluginsInFront.
+	self renderAllDecoratorsInFront.
 	self renderDataSetsIn: aView.
-	self renderAllPluginsBehind
+	self renderAllDecoratorsBehind
 ]
 
 { #category : #accessing }
