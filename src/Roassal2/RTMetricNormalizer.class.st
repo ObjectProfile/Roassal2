@@ -356,6 +356,77 @@ RTMetricNormalizer >> normalizeSize: metricBlock using: transformation [
 	self normalizeSize: metricBlock min: 5 max: 30 using: transformation
 ]
 
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock [
+	"metricBlock is evaluated on each node model"
+	^ self normalizeTopLeftOfX: metricBlock min: 0 max: 200
+]
+
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: minValue max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeTopLeftOfX: metricBlock min: minValue max: maxValue using: #yourself
+]
+
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: min max: max minValue: minValue maxValue: maxValue [ 
+	"
+	metricBlock is evaluated on each node model. 	
+
+	min represent the X value of the minimum value.
+	max represent the X value of the maximum value.
+	
+	minValue is the minimum value of the dataset.
+	maxValue is the maximum value of the dataset.
+	
+	[ minValue ; maxValue ] is mapped to [ min ; max ]
+	"
+		
+	self normalizeTopLeftOfX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: #yourself
+]
+
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	"
+	metricBlock is evaluated on each node model. 	
+
+	min represent the X value of the minimum value.
+	max represent the X value of the maximum value.
+	
+	minValue is the minimum value of the dataset.
+	maxValue is the maximum value of the dataset.
+	
+	[ minValue ; maxValue ] is mapped to [ min ; max ]
+
+	transformation is used to transform the metric value"
+		
+	(maxValue - minValue) ~= 0 ifTrue: [
+		elements do: [ :el | 
+			| tt t |
+			t := transformation rtValue: (metricBlock rtValue: el model).
+			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
+			translator translateTopLeftOf: el to: el encompassingRectangle topLeft + (tt @ 0) ] ] 
+]
+
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: min max: max minValue: minValue using: transformation [
+	"metricBlock is evaluated on each node model. 	
+	 min represent the X value of the minimum value.
+	 max represent the X value of the maximum value.
+	 transformation is used to transform the metric value"
+	
+	| maxValue |
+	"We get the min and the max of the metric for all the elements"
+	maxValue := transformation rtValue: (metricBlock rtValue: elements anyOne model).
+	elements do: [ :el | 
+		| t |  
+		t := transformation rtValue: (metricBlock rtValue: el model).
+		maxValue := maxValue max: t ].
+	
+	self normalizeTopLeftOfX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
+]
+
 { #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeWidth: metricBlock [
 	"metricBlock is evaluated on each node model."

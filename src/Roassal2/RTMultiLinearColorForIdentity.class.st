@@ -26,5 +26,5 @@ RTMultiLinearColorForIdentity >> objects: someObjects [
 
 { #category : #accessing }
 RTMultiLinearColorForIdentity >> rtValue: anObject [
-	^ self level: (objects indexOf: anObject) - 1 / objects size
+	^ self level: (objects indexOf: (command rtValue: anObject)) - 1 / objects size
 ]

@@ -9,7 +9,7 @@ RTDirectLayoutTranslator class >> isDefault [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hook }
 RTDirectLayoutTranslator >> translate: element to: newPosition [
 	element translateTo: newPosition
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTDoubleScrollBar >> addScrollsToview: aView [
 	
 	"add two scroll bars to the view"
@@ -31,7 +31,7 @@ RTDoubleScrollBar >> addScrollsToview: aView [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDoubleScrollBar >> initializeElement: aView [
 	self addScrollsToview: aView
 ]

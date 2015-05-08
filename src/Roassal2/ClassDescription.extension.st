@@ -49,9 +49,19 @@ ClassDescription >> computeOldestMethod [
 	| d m |
 	d := DateAndTime now.
 	m := nil.
+	self methods, self class methods do: [ :cm | cm date < d ifTrue: [ m := cm. d := cm date ] ].
+	^ m
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> computeYoungestMethod [
+	| d m ms aMethod |
+	ms := self methods, self class methods.
+	aMethod := ms anyOne.
+	d := aMethod date.
+	m := aMethod.
 	
-	self methods do: [ :cm | cm date < d ifTrue: [ m := cm. d := cm date ] ].
-	self class methods do: [ :cm | cm date < d ifTrue: [ m := cm. d := cm date ] ].
+	ms do: [ :cm | cm date > d ifTrue: [ m := cm. d := cm date ] ].
 	^ m
 ]
 
@@ -119,4 +129,17 @@ ClassDescription >> referencedByClasses: aCollectionOfClasses [
 ClassDescription >> rtmethods [
 	"This method is useful to have examples working on VisualWorks"
 	^ self methods
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> youngestMethod [
+	"We pick a method, and put the cache in it"
+	| aMethod |
+	aMethod := (self methods, self class methods) first.
+	^ (aMethod properties includesKey: #youngestMethod)
+		ifTrue: [ aMethod properties at: #youngestMethod ]
+		ifFalse: [ | m |
+			m := self computeYoungestMethod.
+			aMethod properties at: #youngestMethod put: m ]
+
 ]
