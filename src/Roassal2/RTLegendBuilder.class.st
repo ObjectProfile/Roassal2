@@ -115,6 +115,16 @@ RTLegendBuilder >> legendElement [
 	^ legendElement
 ]
 
+{ #category : #initialization }
+RTLegendBuilder >> offset [
+	^ offset
+]
+
+{ #category : #initialization }
+RTLegendBuilder >> offset: aDistanceInPixel [
+	offset := aDistanceInPixel 
+]
+
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
 	super renderIn: aView.
