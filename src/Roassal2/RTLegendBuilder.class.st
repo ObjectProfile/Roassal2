@@ -96,8 +96,18 @@ RTLegendBuilder >> isBelow [
 ]
 
 { #category : #'public - positioning' }
+RTLegendBuilder >> isLeft [
+	^ position = #left
+]
+
+{ #category : #'public - positioning' }
 RTLegendBuilder >> isRight [
 	^ position = #right
+]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> left [
+	position := #left
 ]
 
 { #category : #accessing }
@@ -120,6 +130,10 @@ RTLegendBuilder >> renderIn: aView [
 
 	self isRight ifTrue: [ 
 		TRConstraint move: legendElement onTheRightOf: (RTGroup withAll: aView elements).
+		legendElement translateBy: offset @ 0. ].
+
+	self isLeft ifTrue: [ 
+		TRConstraint move: legendElement onTheLeftOf: (RTGroup withAll: aView elements).
 		legendElement translateBy: offset @ 0. ].
 	
 	aView add: legendElement.
