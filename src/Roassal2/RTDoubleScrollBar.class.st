@@ -1,3 +1,6 @@
+"
+add an horizontal and vertical scrollbar to the view, on the border of the view
+"
 Class {
 	#name : #RTDoubleScrollBar,
 	#superclass : #RTInteraction,

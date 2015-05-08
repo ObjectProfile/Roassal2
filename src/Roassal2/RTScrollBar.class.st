@@ -1,24 +1,23 @@
 "
-add a scroll pad to the view
+add a simple scroll bar to the view
 "
 Class {
-	#name : #RTScrollpad,
+	#name : #RTScrollBar,
 	#superclass : #RTInteraction,
 	#category : #'Roassal2-Core'
 }
 
 { #category : #'as yet unclassified' }
-RTScrollpad >> addPadToview: aView [
+RTScrollBar >> addScrollToview: aView [
 	
-	"add a scroll pad to the view"
+	"add a scroll bar to the view"
 	| b|
 	b := RTScrollBarBuilder new.
 	b view: aView.
-	b scrollBarType: #isPad.
 	b build.
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollpad >> initializeElement: aView [
-	self addPadToview: aView
+RTScrollBar >> initializeElement: aView [
+	self addScrollToview: aView
 ]
