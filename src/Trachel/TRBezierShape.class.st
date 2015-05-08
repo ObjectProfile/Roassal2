@@ -26,7 +26,6 @@ TRBezierShape >> computePath [
 				moveTo: listOfPoints first.
 			
 			(2 to: (listOfPoints size -2)) do: [ :index |
-				self haltOnce.
 				builder 
 					curveVia: (listOfPoints at: index) 
 					to: (((listOfPoints at: index) + (listOfPoints at: (index + 1))) / 2) asFloatPoint.
