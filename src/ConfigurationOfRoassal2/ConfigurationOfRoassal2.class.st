@@ -299,7 +299,9 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 				"Specfiy dependencies using the #requires: directive, you can refer to any name here, in this case to an external project"
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec 
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
 			package: 'Neo-JSON-Core' with: [ 
 				spec 
 						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
@@ -532,7 +534,7 @@ ConfigurationOfRoassal2 >> version18: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version19: spec [
-	<version: '1.9' imports: #('1.3-baseline' )>
+	<version: '1.9' imports: #('1.4-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
