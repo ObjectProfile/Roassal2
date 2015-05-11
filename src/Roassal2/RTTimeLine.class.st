@@ -46,15 +46,6 @@ RTTimeLine >> addEntry: anEntry [
 	entries add: anEntry
 ]
 
-{ #category : #'public-axis' }
-RTTimeLine >> axisX [
-	axisConfigurationX ifNil: [
-		axisConfigurationX := self createAxisConfiguration ].
-	axisConfigurationX
-		tickLabelOffset: 0 @ 15.
-	^ axisConfigurationX
-]
-
 { #category : #hooks }
 RTTimeLine >> createShapeBuilder [
 	^ super createShapeBuilder
@@ -62,11 +53,6 @@ RTTimeLine >> createShapeBuilder [
 		height: [ :obj | self extent y / self numberOfTimeLines - self gapBetweenTimeLines ];
 		color: (Color blue alpha: 0.4);
 		yourself
-]
-
-{ #category : #hooks }
-RTTimeLine >> createView [
-	^ super createView @ RTDraggableView.
 ]
 
 { #category : #accessing }
