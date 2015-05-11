@@ -19,11 +19,11 @@ Class {
 { #category : #sources }
 RTTimeLineExample >> exampleClassAges [
 
-	| b |
+	| b e |
 	b := RTTimeLine new.
 	b extent: 500 @ 500.
 	((RTShape withAllSubclasses sortedAs: #ageInDaysRounded) select: #hasMethods)
-		do: [ :cls | | e |
+		do: [ :cls | 
 			e := RTTimeLineEntry new.
 			e identifier: cls.
 			e start: cls computeYoungestMethod ageInDays.
@@ -253,16 +253,16 @@ HwhffCB8IHzxgfCB8MUHAtEfxTYBJq0poOcAAAAASUVORK5CYII='
 { #category : #sources }
 RTTimeLineExample >> exampleSimpleGantt [
 
-| b |
-	
-b := RTTimeLine new.
+	| b |
+		
+	b := RTTimeLine new.
 
-b addEntry: (RTTimeLineEntry new identifier: #WP1; start: 0; end: 5).
-b addEntry: (RTTimeLineEntry new identifier: #WP2; start: 5; end: 8).
-b addEntry: (RTTimeLineEntry new identifier: #WP3; start: 7; end: 10).
+	b addEntry: (RTTimeLineEntry new identifier: #WP1; start: 0; end: 5).
+	b addEntry: (RTTimeLineEntry new identifier: #WP2; start: 5; end: 8).
+	b addEntry: (RTTimeLineEntry new identifier: #WP3; start: 7; end: 10).
 
-b axisX numberOfLabels: 5.
-^ b
+	b axisX numberOfLabels: 5.
+	^ b
 ]
 
 { #category : #icons }
