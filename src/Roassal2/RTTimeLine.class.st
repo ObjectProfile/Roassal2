@@ -36,7 +36,8 @@ Class {
 		'entries',
 		'maxWidth',
 		'timeLineLabel',
-		'timeLineElements'
+		'timeLineElements',
+		'smalestEntryWidth'
 	],
 	#category : #'Roassal2-Builder-TimeLine'
 }
@@ -46,6 +47,15 @@ RTTimeLine >> addEntry: anEntry [
 	entries add: anEntry
 ]
 
+{ #category : #'public-axis' }
+RTTimeLine >> axisX [
+	axisConfigurationX ifNil: [
+		axisConfigurationX := self createAxisConfiguration ].
+	axisConfigurationX
+		tickLabelOffset: 0 @ 15.
+	^ axisConfigurationX
+]
+
 { #category : #hooks }
 RTTimeLine >> createShapeBuilder [
 	^ super createShapeBuilder
@@ -53,6 +63,11 @@ RTTimeLine >> createShapeBuilder [
 		height: [ :obj | self extent y / self numberOfTimeLines - self gapBetweenTimeLines ];
 		color: (Color blue alpha: 0.4);
 		yourself
+]
+
+{ #category : #hooks }
+RTTimeLine >> createView [
+	^ super createView @ RTDraggableView.
 ]
 
 { #category : #accessing }
@@ -119,7 +134,8 @@ RTTimeLine >> initialize [
 	super initialize.
 	entries := OrderedCollection new.
 	self axisY noTick; noLabel.
-	self timeLineLabel: #asString
+	self timeLineLabel: #asString.
+	self smalestEntryWidth: 1.
 ]
 
 { #category : #utility }
@@ -161,7 +177,7 @@ RTTimeLine >> renderIn: aView [
 			RTMetricNormalizer new
 				elements: elements;
 				normalizeWidth: #duration
-					min: 0
+					min: self smalestEntryWidth
 					max: self extent x
 					minValue: 0
 					maxValue: self maxEnd.
@@ -267,6 +283,16 @@ RTTimeLine >> renderTimeLineLabels [
 		verticalOffset := 0 @ (((timeLineElements at: index) max: #height) / 2).
 		self label: (timeLineLabel rtValue: anIdentifier) asString on: position + offset + verticalOffset ]
 		
+]
+
+{ #category : #'accessing-computed' }
+RTTimeLine >> smalestEntryWidth [
+	^ smalestEntryWidth
+]
+
+{ #category : #'accessing-computed' }
+RTTimeLine >> smalestEntryWidth: aNumber [
+	smalestEntryWidth := aNumber
 ]
 
 { #category : #accessing }
