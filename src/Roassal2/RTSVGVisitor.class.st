@@ -13,7 +13,6 @@ Class {
 		'interactions',
 		'markers',
 		'center',
-		'names',
 		'count'
 	],
 	#category : #'Roassal2-Exporter-SVG'
@@ -272,7 +271,7 @@ RTSVGVisitor >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
 RTSVGVisitor >> visitArcShape: aShape [
 	|sCenter svgE|
 	sCenter := self alignPoint: (aShape center).
-	svgE := RTSVGArc new element: (aShape element) center: sCenter r1: (aShape innerRadius) r2: (aShape externalRadius) aAngle: (aShape alphaAngle) bAngle: (aShape betaAngle) color: (aShape color).
+	svgE := RTSVGArc new element: (aShape) center: sCenter r1: (aShape innerRadius) r2: (aShape externalRadius) aAngle: (aShape alphaAngle) bAngle: (aShape betaAngle) color: (aShape color).
 	svgE addOn: stream using: self. 
 ]
 
@@ -316,7 +315,7 @@ RTSVGVisitor >> visitBezierShape: aBezierShape [
 	|points svgE|
 	points:= aBezierShape points copy.
 	points := points collect: [ :p | self alignPoint: p].
-	svgE := RTSVGBezierLine new element: (aBezierShape element) points: points width: (aBezierShape width) color: (aBezierShape strokePaint).
+	svgE := RTSVGBezierLine new element: (aBezierShape) points: points width: (aBezierShape width) color: (aBezierShape strokePaint).
 	svgE addOn: stream using: self. 
 ]
 
@@ -325,7 +324,7 @@ RTSVGVisitor >> visitBezierShape: aBezierShape with: aLineDecoration [
 	|points svgE|
 	points:= aBezierShape points copy.
 	points := points collect: [ :p | self alignPoint: p].
-	svgE := RTSVGBezierLine new element: (aBezierShape element) points: points width: (aBezierShape width) color: (aBezierShape strokePaint) decoration: aLineDecoration.
+	svgE := RTSVGBezierLine new element: (aBezierShape) points: points width: (aBezierShape width) color: (aBezierShape strokePaint) decoration: aLineDecoration.
 	svgE addOn: stream using: self. 
 ]
 
@@ -349,7 +348,7 @@ RTSVGVisitor >> visitBoxShape: aBox [
 	((aBox strokePaint) isNil)
 		ifFalse: [ borderColor := aBox strokePaint].
 	box := self alignRectangle: (aBox encompassingRectangle).
-	svgE := RTSVGRectangle new element: aBox element box: box fillColor: fillColor borderWidth: 1 borderColor: borderColor.
+	svgE := RTSVGRectangle new element: aBox box: box fillColor: fillColor borderWidth: 1 borderColor: borderColor.
 	svgE addOn: stream using: self. 
 ]
 
@@ -369,7 +368,6 @@ RTSVGVisitor >> visitCanvas: aCanvas [
 	decorationShapes do: [:s | s accept: self ].
 	stream 
 		nextPutAll: '</defs>'.
-	elementShapes do: [ :s | self names at: s element put: s element identityHash asString ].
 	nonDecorationShapes do:[:s | s accept: self].
 	decoratedEdgeShapes do:[:p | p first accept: self with: p second].
 ]
@@ -407,7 +405,7 @@ RTSVGVisitor >> visitEllipseShape: anEllipse [
 	((anEllipse strokePaint) isNil)
 		ifFalse: [ borderColor := anEllipse strokePaint].
 	box := self alignRectangle: (anEllipse encompassingRectangle).
-	svgE := RTSVGOval new element: anEllipse element box: box color: fillColor borderWidth: 1 borderColor: borderColor.
+	svgE := RTSVGOval new element: anEllipse box: box color: fillColor borderWidth: 1 borderColor: borderColor.
 	svgE addOn: stream using: self.
 ]
 
@@ -423,7 +421,7 @@ RTSVGVisitor >> visitLabelShape: aLabel [
 	rectangle := aLabel encompassingRectangle.
 	position := self alignPoint: ((rectangle topLeft x + (rectangle width/4)) @ rectangle center y).
 	text := aLabel text.
-	svgE := RTSVGText new element: aLabel element text: text at: position color: color.
+	svgE := RTSVGText new element: aLabel text: text at: position color: color.
 	svgE addOn: stream using: self.
 ]
 
@@ -432,7 +430,7 @@ RTSVGVisitor >> visitLineShape: aLine [
 	|startingPoint endingPoint svgE|
 	startingPoint := self alignPoint: (aLine from).
 	endingPoint := self alignPoint: (aLine to).
-	svgE := RTSVGLine new element: (aLine element) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint).
+	svgE := RTSVGLine new element: (aLine) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint).
 	svgE addOn: stream using: self. 
 ]
 
@@ -441,7 +439,7 @@ RTSVGVisitor >> visitLineShape: aLine with: aLineDecoration [
 	|startingPoint endingPoint svgE|
 	startingPoint := self alignPoint: (aLine from).
 	endingPoint := self alignPoint: (aLine to).
-	svgE := RTSVGLine new element: (aLine element) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint) decoration: aLineDecoration.
+	svgE := RTSVGLine new element: (aLine) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint) decoration: aLineDecoration.
 	svgE addOn: stream using: self. 
 ]
 
@@ -463,7 +461,7 @@ RTSVGVisitor >> visitRotatedLabelShape: aRotatedLabel [
 	position := self alignPoint: ((rectangle topLeft x + (rectangle width/4)) @ rectangle center y).
 	text := aRotatedLabel text.
 	angle := aRotatedLabel angle.
-	svgE := RTSVGText new element: aRotatedLabel element text: text at: position color: color angle: angle.
+	svgE := RTSVGText new element: aRotatedLabel text: text at: position color: color angle: angle.
 	svgE addOn: stream using: self.
 ]
 
@@ -476,7 +474,7 @@ RTSVGVisitor >> visitSVGPath: aSVGPath [
 	((aSVGPath strokePaint) isNil)
 		ifTrue: [ borderColor := fillColor]
 		ifFalse: [ borderColor := aSVGPath strokePaint].
-	svgE := RTSVGPathEntity new element: (aSVGPath element) path: (aSVGPath pathString) center: (self center) scale: (aSVGPath scale) fillColor: fillColor borderColor: borderColor width: 1.
+	svgE := RTSVGPathEntity new element: (aSVGPath) path: (aSVGPath pathString) center: (self center) scale: (aSVGPath scale) fillColor: fillColor borderColor: borderColor width: 1.
 	svgE addOn: stream using: self. 
 ]
 
