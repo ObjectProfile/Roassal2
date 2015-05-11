@@ -166,64 +166,66 @@ RTScrollBarBasic >> reverseTranslationVertical: evt [
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> signalUpdatePosition [
 
-	| pr pos|
+	| pr pos sizeNow |
 	
 	pos := self fixedPosition.
-	
+	sizeNow := self size.
 	(self movable = #isMovable) ifFalse: [ 
 		
 			(self orientation = #horizontal) ifTrue: [
 		
-				pr := ((self shapes bar position x)-(self shapes surroundingRectangle position x - (self shapes surroundingRectangle width/2))) / (self shapes surroundingRectangle width) * self size.		
+				pr := ((self shapes bar position x)-(self shapes surroundingRectangle position x - (self shapes surroundingRectangle width/2))) / (self shapes surroundingRectangle width) * sizeNow.		
 				
-				self shapes surroundingRectangle position: self fixedPosition.
+				self shapes surroundingRectangle position: pos.
 				
-				self shapes start position: (self fixedPosition x - (self size / 2) +1)@(self shapes surroundingRectangle position y).
-				self shapes stop position: (self fixedPosition x + (self size / 2) -1)@(self shapes surroundingRectangle position y).
+				self shapes start position: (pos x - (sizeNow / 2) +1)@(self shapes surroundingRectangle position y).
+				self shapes stop position: (pos x + (sizeNow / 2) -1)@(self shapes surroundingRectangle position y).
 				
-				self shapes bar position: (pr + (self shapes start position x - 1))@(self fixedPosition y).	
+				self shapes bar position: (pr + (self shapes start position x - 1))@(pos y).	
 				
 				
 				].
 			
 			(self orientation = #vertical) ifTrue: [
 				
-				pr := ((self shapes bar position y)-(self shapes surroundingRectangle position y - (self shapes surroundingRectangle height/2))) / (self shapes surroundingRectangle height) * self size.
+				pr := ((self shapes bar position y)-(self shapes surroundingRectangle position y - (self shapes surroundingRectangle height/2))) / (self shapes surroundingRectangle height) * sizeNow.
 								
-				self shapes surroundingRectangle position: self fixedPosition.
+				self shapes surroundingRectangle position: pos.
 				
-				self shapes start position: (self shapes surroundingRectangle position x)@(self fixedPosition y - (self size / 2) +1).
-				self shapes stop position: (self shapes surroundingRectangle position x)@(self fixedPosition y + (self size / 2) -1).
+				self shapes start position: (self shapes surroundingRectangle position x)@(pos y - (sizeNow / 2) +1).
+				self shapes stop position: (self shapes surroundingRectangle position x)@(pos y + (sizeNow / 2) -1).
 				
-				self shapes bar position: (self fixedPosition x)@(pr + (self shapes start position y - 1)).
+				self shapes bar position: (pos x)@(pr + (self shapes start position y - 1)).
 
 			].
 			
-		self shapes margeRectangle position: self fixedPosition.	
+		self shapes margeRectangle position: pos.	
 		].
 ]
 
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> signalUpdateSize [
+	| sizeNow |
 
+	sizeNow := self size.
 	(self orientation = #horizontal) ifTrue: [
 
-				self shapes surroundingRectangle width: self size.
-				self shapes start position: (self shapes surroundingRectangle position x - (self size /2) +1)@(self shapes surroundingRectangle position y).
-				self shapes stop position: (self shapes surroundingRectangle position x + (self size /2) -1)@(self shapes surroundingRectangle position y).
-				self shapes margeRectangle width: (self size - self barWidth).		
+				self shapes surroundingRectangle width: sizeNow.
+				self shapes start position: (self shapes surroundingRectangle position x - (sizeNow /2) +1)@(self shapes surroundingRectangle position y).
+				self shapes stop position: (self shapes surroundingRectangle position x + (sizeNow /2) -1)@(self shapes surroundingRectangle position y).
+				self shapes margeRectangle width: (sizeNow - self barWidth).		
 				self shapes bar width: self barWidth.
 				
 				((self shapes bar position x - (self barWidth / 2)) < (self shapes start position x)) ifTrue: [ self shapes bar translateTo: (self shapes start position x + (self barWidth / 2))@(self shapes start position y)].
 				((self shapes bar position x + (self barWidth / 2)) > (self shapes stop position x)) ifTrue: [ self shapes bar translateTo: (self shapes stop position x - (self barWidth / 2))@(self shapes start position  y)].
 				
 				].
-			(self orientation = #vertical) ifTrue: [
+	(self orientation = #vertical) ifTrue: [
 				
-				self shapes surroundingRectangle height: self size.
-				self shapes start position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y - (self size / 2) +1).
-				self shapes stop position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y + (self size / 2) -1).
-				self shapes margeRectangle height: (self size - (self barHeight)).
+				self shapes surroundingRectangle height: sizeNow.
+				self shapes start position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y - (sizeNow / 2) +1).
+				self shapes stop position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y + (sizeNow / 2) -1).
+				self shapes margeRectangle height: (sizeNow - (self barHeight)).
 				self shapes bar height: self barHeight.
 				
 				((self shapes bar position y - (self barHeight / 2)) < (self shapes start position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes start position y + (self barHeight / 2))].
