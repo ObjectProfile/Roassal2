@@ -23,7 +23,7 @@ RTTimeLineExample >> exampleClassAges [
 	b := RTTimeLine new.
 	b extent: 500 @ 500.
 	((RTShape withAllSubclasses sortedAs: #ageInDaysRounded) select: #hasMethods)
-		do: [ :cls | 
+		do: [ :cls | | e |
 			e := RTTimeLineEntry new.
 			e identifier: cls.
 			e start: cls computeYoungestMethod ageInDays.
@@ -89,7 +89,7 @@ YII='
 { #category : #sources }
 RTTimeLineExample >> exampleColorPerEntry [
 
-	| b |
+	| b d |
 	b := RTTimeLine new.
 	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
 	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
@@ -203,7 +203,7 @@ QA7lAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTTimeLineExample >> exampleGantt01 [
 
-	| t |
+	| b |
 	b := RTTimeLine new.
 	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
 	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
