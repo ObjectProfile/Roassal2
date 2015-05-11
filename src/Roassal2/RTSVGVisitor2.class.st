@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'view',
 		'stream',
-		'names',
 		'validInteractions',
 		'exportFixedShapes'
 	],
@@ -91,18 +90,6 @@ RTSVGVisitor2 >> initialize [
 	#RTFocusElement).
 	exportFixedShapes := true.
 
-]
-
-{ #category : #utils }
-RTSVGVisitor2 >> nameFor: anElement [
-
-	(names includesKey: anElement) ifTrue: [ 
-		^ names at: anElement ] ifFalse: [ 
-		| n |
-		n := names size printStringHex.
-		names at: anElement put: n.
-		^ n.
-	 ]
 ]
 
 { #category : #accessing }
