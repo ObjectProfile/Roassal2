@@ -120,8 +120,6 @@ RTScrollBarBasic >> defineShapes [
 		margeRectangle := TRBoxShape new fromRectangle: (Rectangle origin: (surroundingRectangle encompassingRectangle origin + (0@(bar height /2)))corner: (surroundingRectangle encompassingRectangle corner - (0@(bar height /2)))); color: (Color gray alpha:0); strokePaint: nil.
 	].
 
-	
-	
 	self shapes start: start; stop: stop; surroundingRectangle: surroundingRectangle; margeRectangle: margeRectangle; bar: bar.
 	
 	
@@ -213,7 +211,7 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes surroundingRectangle width: self size.
 				self shapes start position: (self shapes surroundingRectangle position x - (self size /2) +1)@(self shapes surroundingRectangle position y).
 				self shapes stop position: (self shapes surroundingRectangle position x + (self size /2) -1)@(self shapes surroundingRectangle position y).
-				self shapes margeRectangle width: (self size - (self shapes bar width)).		
+				self shapes margeRectangle width: (self size - self barWidth).		
 				self shapes bar width: self barWidth.
 				
 				((self shapes bar position x - (self barWidth / 2)) < (self shapes start position x)) ifTrue: [ self shapes bar translateTo: (self shapes start position x + (self barWidth / 2))@(self shapes start position y)].
@@ -225,7 +223,7 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes surroundingRectangle height: self size.
 				self shapes start position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y - (self size / 2) +1).
 				self shapes stop position: (self shapes surroundingRectangle position x)@(self shapes surroundingRectangle position y + (self size / 2) -1).
-				self shapes margeRectangle height: (self size - (self shapes bar height)).
+				self shapes margeRectangle height: (self size - (self barHeight)).
 				self shapes bar height: self barHeight.
 				
 				((self shapes bar position y - (self barHeight / 2)) < (self shapes start position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes start position y + (self barHeight / 2))].
