@@ -48,13 +48,6 @@ RTTimeLine >> addEntry: anEntry [
 ]
 
 { #category : #hooks }
-RTTimeLine >> createInteractionBuilder [
-	^ super createInteractionBuilder
-			popupText: #identifier;
-			yourself
-]
-
-{ #category : #hooks }
 RTTimeLine >> createShapeBuilder [
 	^ super createShapeBuilder
 		rectangle;
@@ -144,12 +137,6 @@ RTTimeLine >> label: aString on: position [
 { #category : #'accessing-computed' }
 RTTimeLine >> maxEnd [
 	^ entries max: #end
-]
-
-{ #category : #configuration }
-RTTimeLine >> noTimeLineLabel [
-
-	self timeLineLabel: ''
 ]
 
 { #category : #accessing }
@@ -281,16 +268,6 @@ RTTimeLine >> renderTimeLineLabels [
 		verticalOffset := 0 @ (((timeLineElements at: index) max: #height) / 2).
 		self label: (timeLineLabel rtValue: anIdentifier) asString on: position + offset + verticalOffset ]
 		
-]
-
-{ #category : #'accessing-computed' }
-RTTimeLine >> smalestEntryWidth [
-	^ smalestEntryWidth
-]
-
-{ #category : #'accessing-computed' }
-RTTimeLine >> smalestEntryWidth: aNumber [
-	smalestEntryWidth := aNumber
 ]
 
 { #category : #accessing }
