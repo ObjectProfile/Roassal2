@@ -46,5 +46,5 @@ b build.
 Class {
 	#name : #RTDataSet,
 	#superclass : #RTAbstractDataSet,
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Core'
 }

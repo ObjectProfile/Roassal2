@@ -4,7 +4,7 @@ A data set is a set of points intended to be charted. A data set has to be added
 Class {
 	#name : #RTAbstractStackedDataSet,
 	#superclass : #RTAbstractDataSet,
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #public }

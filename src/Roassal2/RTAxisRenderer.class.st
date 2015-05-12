@@ -9,7 +9,7 @@ Class {
 		'config',
 		'builder'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #'rendering-utility' }

@@ -48,6 +48,13 @@ RTTimeLine >> addEntry: anEntry [
 ]
 
 { #category : #hooks }
+RTTimeLine >> createInteractionBuilder [
+	^ super createInteractionBuilder
+			popupText: #identifier;
+			yourself
+]
+
+{ #category : #hooks }
 RTTimeLine >> createShapeBuilder [
 	^ super createShapeBuilder
 		rectangle;
@@ -170,8 +177,7 @@ RTTimeLine >> renderIn: aView [
 			t := RTDirectLayoutTranslator new.
 			elements do: [ :e | t translateTopLeftOf: e to: (e model start / self maxEnd * self extent x) asFloat @ 0 ].
 			timeLineElements add: elements.
-			view addAll: elements.
-			elements @ RTPopup ].
+			view addAll: elements ].
 	timeLineElements doWithIndex: [ :g :index | g translateBy: (self getPixelPositionOf: 0 @ index) ].	
 	self homogenizeMinAndMax.
 	self renderAxis.
