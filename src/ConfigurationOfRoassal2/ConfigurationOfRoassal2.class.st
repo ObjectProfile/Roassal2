@@ -305,12 +305,7 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			package: 'Neo-JSON-Core' with: [ 
 				spec 
 						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
-			
-		spec 
-			"load the tests by default"
-			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
-			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
-			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core') ]
+			]
 ]
 
 { #category : #catalog }
