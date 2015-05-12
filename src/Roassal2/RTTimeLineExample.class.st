@@ -88,6 +88,63 @@ YII='
 
 { #category : #sources }
 RTTimeLineExample >> exampleColorPerEntry [
+	| b d |
+	b := RTTimeLine new.
+	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
+	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
+
+	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 0; end: 5).
+	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 8; end: 10).
+
+	b addEntry: (RTTimeLineEntry new identifier: #c3; start: 0; end: 10).
+
+	b addEntry: (RTTimeLineEntry new identifier: #c4; start: 5; end: 10).
+
+	b addEntry: (RTTimeLineEntry new identifier: #c5; start: 5; end: 8).
+
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	b axisX 
+		numberOfLabels: 5;
+		labelRotation: -45;
+		labelConversion: [ :v | Date year: 2015 day: v ]. 
+
+	b shape color: (RTMultiLinearColorForIdentity new objects: b entries).
+	^ b 
+]
+
+{ #category : #icons }
+RTTimeLineExample >> exampleColorPerEntryIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE5klEQVR4XuWca0sjSRSG/YOC
+CP4Nv/lFBUWRBXEVQbwi3vGGQVcNIuMlKl4yLIpRNzPRmE0wxjhJJ9lcZzKn19OQLzMVqJ5N
+YtW+Lxwaijehup/uqnOqL3WmiS+VVId/CPCB4AsfCD4QfOEDwQeCL3wg+EDwhQ8EHwi+8IHg
+Cx8IPhB84QPBB4IvfCD4QPCFDwQfSG2Uy+XIjp/eVAl/JpWhp4ennyL2HBO2l4vkl0RV+19z
+IMlk8l2APD+G6djhMn+MTx//MkXt5cLvecAHgg+kArq9vaWXlxfCB6IAEIbh8XiotbUVH4gK
+QMbHx+nu7o52d3fxgeDPIfhA8IHgA7HvL+QLlIwbP0UmnRa2lwu7/lwmiw9E1J4yEuT3+swf
+IxqOmKL2cmHXH4u+4gPBB1JGe3t7hA/kVY06ZGpqitrb2/GBqACE6xDexuNxfCD4cwg+EHwg
+OgNJJAyKGJfSYaQDtvwJm/5q/38q+6Q2ECMRo/NPfaZs+MLbph3//bNdv7Oq/r+jLnwg+EAE
+CgQCdHR0RPhAXGrUIbzt6urCB6ICEK5DvF4vOZ1OfCD4cwg+EHwgOgNJGgZl/3RLR95/b8//
++CBsLwT8VInCs/itQMbjR+nIxkKKF4axGEV/6zRlI/nHmmnP7xC3b61XBMi3XIo+b3aZsvF6
+9wEfCD6QMqmv2+0mfCAf1KlDtre38YGoAITrkIODA7OjowN/yMKfQ/CB4APRGkgyQVdfItIR
+SNn1G8L24D/i9zq+fy+SEX+Rjmwm9f96UC72doPqd8+ZKRvOkM+shH8ndC88MF+/Fuiz123K
+xms0iA8EH0gFlM/naWdnh/CBkDp1SG9vLz4QVd4Puby8JFEdgg8Efw7BB4IPRCMg/PDDzc2N
+dFxdXWnt51f7lAYSCtm7YWPXHwwGtfbXHAi+NAbCtYzO/ouLC1IaCKfDg4OD0p3s7++ns7Mz
+bf1ra2vU2dmp5pD1VpNYTzKKblqJ1NfXZ/kODw+19HMd9nZPiGT9NQUyMjJC19fXVF9fL9U5
+3hGGNzY2pqWfv2CxuLhI+/v7ag1ZnPL19PRYl+3GxoZU56anp60vQAwMDGjpZ2hDQ0PU1tZG
+yk3q/DhpJBKhiYkJqc6VLu+TkxMt/cfHx5avsbGRlMuyOMNoaGgg2UqV642FhQXpQko1P8Pb
+2toSPs/8rkB8Pp811k5OTtL6+rpU5/gM5J3nl0S5utXNz5nX8PAwuVwuKq10KwOEx0/umGy6
+d3p6ai1HbG5uaun3+/3Ey0EzMzOkXGHIwxSnh/yOumwqyWfj6uqqln7+MAInLd3d3aRcpX5+
+fk7z8/PW1SHjj0ajllf2TFTNz0MzF4oOh4OUWzrhHJ0nNZk8nbMu3vLO87irm58VDoetVFj0
+gbZ3B8LLA01NTdI7U6raSymijn4uFCsxeVcUSDqdppWVFWpubibRR2bKFVmls1HG39LSYsvP
+/SkNPXaWQ2T9pQqcJ/FfufFU9StkaWnJmjfs/Ea2yGLxutfy8rK0n69UzvJk/XyAZYvWubk5
+a1j+LxV4VYAUi0UqLZyZYBodHa3JPtfZXQ6ZnZ395YUzfFVhyOIqHP+wKQQEX/hA8IHgCx8I
+vvCB4APBFz4QfCD4wgeCDwRf+EDwgeALHwi+8IHgA8EXPhB8IPjCB4IPBF/4QED0L6DGXb+3
+QA7lAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTTimeLineExample >> exampleColorPerTimeLine [
 
 	| b d |
 	b := RTTimeLine new.
@@ -116,7 +173,7 @@ RTTimeLineExample >> exampleColorPerEntry [
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleColorPerEntryIcon [
+RTTimeLineExample >> exampleColorPerTimeLineIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE1UlEQVR4XuWc20sjSRTG/QcF
 Efw3fPNFBUXxRVzFRbwi3tcbut4RwVt0jbrrxNUkuJPdRJMxMZntJO1lNDvh9Hoa8jLTgaqZ
 Tqya74NDoPmU6vzSVeerdLrCsvClkirw3wJ8IPjCB4IPBF/4QPCB4AsfCD4QfOEDwQeCL3wg
@@ -141,63 +198,6 @@ RB39HBTdWLxdBfL4+Ehzc3NUW1tLTg+ZKRayCp9GEX9dXZ2Un8dTmHpktkNE/YUEzov4t3zx
 VPIrZGZmxl43ZP5GNGSxeN9rdnZW2M9XKnd5on5+g0VD68TEhD0tf08CLwmQfD5PhY0zC0z9
 /f1lOecK2e2Q8fHxb944w1cJpixO4fhvm0JA8IUPBB8IvvCB4AsfCD4QfOEDwQeCL3wg+EDw
 hQ8EHwi+8IHgCx8IPhB84QPBB4IvfCD4QPCFDwRE/wNQxCWw1JBh9QAAAABJRU5ErkJggg=='
-]
-
-{ #category : #sources }
-RTTimeLineExample >> exampleColorPerTimeLine [
-	| b d |
-	b := RTTimeLine new.
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 8; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c3; start: 0; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c4; start: 5; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c5; start: 5; end: 8).
-
-	d := RTVerticalTickLineDecorator new.
-	d shape line color: Color white.
-	b addDecorator: d.
-	b axisX 
-		numberOfLabels: 5;
-		labelRotation: -45;
-		labelConversion: [ :v | Date year: 2015 day: v ]. 
-
-	b shape color: (RTMultiLinearColorForIdentity new objects: b entries).
-	^ b 
-]
-
-{ #category : #icons }
-RTTimeLineExample >> exampleColorPerTimeLineIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE5klEQVR4XuWca0sjSRSG/YOC
-CP4Nv/lFBUWRBXEVQbwi3vGGQVcNIuMlKl4yLIpRNzPRmE0wxjhJJ9lcZzKn19OQLzMVqJ5N
-YtW+Lxwaijehup/uqnOqL3WmiS+VVId/CPCB4AsfCD4QfOEDwQeCL3wg+EDwhQ8EHwi+8IHg
-Cx8IPhB84QPBB4IvfCD4QPCFDwQfSG2Uy+XIjp/eVAl/JpWhp4ennyL2HBO2l4vkl0RV+19z
-IMlk8l2APD+G6djhMn+MTx//MkXt5cLvecAHgg+kArq9vaWXlxfCB6IAEIbh8XiotbUVH4gK
-QMbHx+nu7o52d3fxgeDPIfhA8IHgA7HvL+QLlIwbP0UmnRa2lwu7/lwmiw9E1J4yEuT3+swf
-IxqOmKL2cmHXH4u+4gPBB1JGe3t7hA/kVY06ZGpqitrb2/GBqACE6xDexuNxfCD4cwg+EHwg
-OgNJJAyKGJfSYaQDtvwJm/5q/38q+6Q2ECMRo/NPfaZs+MLbph3//bNdv7Oq/r+jLnwg+EAE
-CgQCdHR0RPhAXGrUIbzt6urCB6ICEK5DvF4vOZ1OfCD4cwg+EHwgOgNJGgZl/3RLR95/b8//
-+CBsLwT8VInCs/itQMbjR+nIxkKKF4axGEV/6zRlI/nHmmnP7xC3b61XBMi3XIo+b3aZsvF6
-9wEfCD6QMqmv2+0mfCAf1KlDtre38YGoAITrkIODA7OjowN/yMKfQ/CB4APRGkgyQVdfItIR
-SNn1G8L24D/i9zq+fy+SEX+Rjmwm9f96UC72doPqd8+ZKRvOkM+shH8ndC88MF+/Fuiz123K
-xms0iA8EH0gFlM/naWdnh/CBkDp1SG9vLz4QVd4Puby8JFEdgg8Efw7BB4IPRCMg/PDDzc2N
-dFxdXWnt51f7lAYSCtm7YWPXHwwGtfbXHAi+NAbCtYzO/ouLC1IaCKfDg4OD0p3s7++ns7Mz
-bf1ra2vU2dmp5pD1VpNYTzKKblqJ1NfXZ/kODw+19HMd9nZPiGT9NQUyMjJC19fXVF9fL9U5
-3hGGNzY2pqWfv2CxuLhI+/v7ag1ZnPL19PRYl+3GxoZU56anp60vQAwMDGjpZ2hDQ0PU1tZG
-yk3q/DhpJBKhiYkJqc6VLu+TkxMt/cfHx5avsbGRlMuyOMNoaGgg2UqV642FhQXpQko1P8Pb
-2toSPs/8rkB8Pp811k5OTtL6+rpU5/gM5J3nl0S5utXNz5nX8PAwuVwuKq10KwOEx0/umGy6
-d3p6ai1HbG5uaun3+/3Ey0EzMzOkXGHIwxSnh/yOumwqyWfj6uqqln7+MAInLd3d3aRcpX5+
-fk7z8/PW1SHjj0ajllf2TFTNz0MzF4oOh4OUWzrhHJ0nNZk8nbMu3vLO87irm58VDoetVFj0
-gbZ3B8LLA01NTdI7U6raSymijn4uFCsxeVcUSDqdppWVFWpubibRR2bKFVmls1HG39LSYsvP
-/SkNPXaWQ2T9pQqcJ/FfufFU9StkaWnJmjfs/Ea2yGLxutfy8rK0n69UzvJk/XyAZYvWubk5
-a1j+LxV4VYAUi0UqLZyZYBodHa3JPtfZXQ6ZnZ395YUzfFVhyOIqHP+wKQQEX/hA8IHgCx8I
-vvCB4APBFz4QfCD4wgeCDwRf+EDwgeALHwi+8IHgA8EXPhB8IPjCB4IPBF/4QED0L6DGXb+3
-QA7lAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
