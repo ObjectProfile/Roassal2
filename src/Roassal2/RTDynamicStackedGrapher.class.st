@@ -22,7 +22,7 @@ Class {
 		'y',
 		'allAddedElements'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #adding }

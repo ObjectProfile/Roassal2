@@ -3,9 +3,10 @@ Class {
 	#superclass : #RTAbstractGrapher,
 	#instVars : [
 		'metrics',
-		'lastObject'
+		'lastObject',
+		'barElements'
 	],
-	#category : #'Roassal2-Builder-Grapher'
+	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #'public - metrics' }
@@ -13,7 +14,7 @@ RTDynamicEqualizerGrapher >> addName: aString metric: aBlockClosureOrSymbol [
 	metrics add: (Array with: aString with: aBlockClosureOrSymbol)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTDynamicEqualizerGrapher >> example01 [
 	"
 	self new example01
@@ -21,7 +22,7 @@ RTDynamicEqualizerGrapher >> example01 [
 	| b |
 	b := RTDynamicEqualizerGrapher new. 
 	b maxY: 20.
-	b minY: 20.
+	b minY: -20.
 	b addName: 'X1' metric: [ :anArray | anArray first ].
 	b addName: 'Y1' metric: [ :anArray | anArray second ].
 	b addName: 'Z1' metric: [ :anArray | anArray third ].
@@ -33,20 +34,41 @@ RTDynamicEqualizerGrapher >> example01 [
 	^ b
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTDynamicEqualizerGrapher >> initialize [
 	super initialize.
-	metrics := OrderedCollection new
+	metrics := OrderedCollection new.
+	
+	self axisX noLabel; noTick
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - computed' }
 RTDynamicEqualizerGrapher >> numberOfMetrics [
 	^ metrics size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public - generation' }
+RTDynamicEqualizerGrapher >> object: anObject [
+	| values |
+	self halt.
+	values := metrics collect: [ :tupple | tupple second rtValue: anObject ].
+	barElements ifNil: [ 
+		barElements := self elementsOn: values.
+		RTHorizontalLineLayout on: barElements.
+		view addAll: barElements.
+		].
+	
+	RTMetricNormalizer new
+		elements: barElements;
+		normalizeHeight: #yourself min: self minY max: self maxX.
+		
+	view signalUpdate
+]
+
+{ #category : #hooks }
 RTDynamicEqualizerGrapher >> renderIn: aView [
 
-	^ super renderIn: aView
-	
+	self defineAxesIfNecessary.
+	self renderAxis.
+
 ]

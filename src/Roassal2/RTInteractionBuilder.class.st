@@ -127,9 +127,10 @@ RTInteractionBuilder >> numberOfMenuEntries [
 
 { #category : #public }
 RTInteractionBuilder >> popup [
+	"Return a new popup, which is set in the builder"
 	| i |
 	i := RTPopup new.
-	interactions add: i. 
+	self addExclusiveInteraction: i. 
 	^ i
 ]
 
@@ -140,10 +141,11 @@ RTInteractionBuilder >> popupText [
 
 { #category : #'events-registering' }
 RTInteractionBuilder >> popupText: aBlock [
-	| i |
+	^ self popup text: aBlock
+	"| i |
 	i := RTPopup new text: aBlock.
 	self addExclusiveInteraction: i. 
-	^ i
+	^ i"
 ]
 
 { #category : #'events-registering' }
@@ -165,6 +167,7 @@ RTInteractionBuilder >> popupView: aTwoArgBlock [
 
 { #category : #copying }
 RTInteractionBuilder >> postCopy [
+	"Do we really need this method?"
 	super postCopy.
 	interactions := interactions copy.
 ]
