@@ -96,7 +96,7 @@ t8ikZv69CObLev7v8xf4CZ+Dg4PRguCXeAo+CD4IfsEHwQfBL/gg+CD4BR8EHwS/xF3+A8ir
 +VLeOJwSAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTTreeMapExample >> label [
 	^ 'Tree map'
 ]
