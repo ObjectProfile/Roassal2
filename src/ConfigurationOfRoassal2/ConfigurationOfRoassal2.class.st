@@ -289,7 +289,13 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 		spec blessing: #baseline.
 		"specify the default repository for your project's packages"
 		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
-	
+
+		spec project: 'Glamour' with: [ 
+			spec
+				versionString: #bleedingEdge;
+				className: 'ConfigurationOfGlamour'; 
+				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
+			].	
 
 		"specify the dependencies between packages and projects"
 		spec
@@ -301,6 +307,7 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
 			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
 				spec 
+						requires: 'Glamour';
 						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
 			package: 'Neo-JSON-Core' with: [ 
 				spec 
