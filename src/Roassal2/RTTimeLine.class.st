@@ -271,6 +271,16 @@ RTTimeLine >> renderTimeLineLabels [
 ]
 
 { #category : #accessing }
+RTTimeLine >> smalestEntryWidth [
+	^ smalestEntryWidth
+]
+
+{ #category : #accessing }
+RTTimeLine >> smalestEntryWidth: anInteger [ 
+	smalestEntryWidth := anInteger
+]
+
+{ #category : #accessing }
 RTTimeLine >> timeLineLabel: aSymbolOrABlock [
 	"If a symbol, it is executed against the time line entry. If it is a block, the time line entry is provided as argument"
 
