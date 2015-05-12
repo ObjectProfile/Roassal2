@@ -149,7 +149,7 @@ Roassal2VW >> packages [
 			'Builder-BoxPlot'.
 			'Builder-CircularMap'. 'Builder-Common'.
 			'Builder-Composer'. 'Builder-Explora'.
-			'Builder-Grapher-Core'. 'Builder-Grapher-Decorators'.
+			'Builder-Grapher'. 'Builder-Grapher-Decorators'.
 			'Builder-Grapher-Obsolete'. 'Builder-Grapher-Tests'.
 			'Builder-Kiviat'. 'Builder-Legend'. 
 			'Builder-Map'. 'Builder-Map-Tests'. 'Builder-Menu'.
@@ -158,12 +158,11 @@ Roassal2VW >> packages [
 			'Builder-ScrollBar'. 'Builder-SimilarityMatrix'.
 			'Builder-Simon'. 'Builder-Spectrograph'. 
 			'Builder-StackBarPlot'. 'Builder-StructureMatrix'.
-			'Builder-Sunburst'. 'Builder-TextBuilder'.
-			'Builder-TimeLine'. 'Builder-TimeLine-Tests'. 'Builder-TreeMap'.
+			'Builder-Sunburst'. 'Builder-TextBuilder'. 'Builder-TimeLine'. 'Builder-TreeMap'.
 			'Builder-UI-Slider'. 'Builder-UML'. 
 			'Cachetor'. 'ColorNormalizer'.
-			'Core'. 'Core-Tests'. 'ExampleBrowser'.
+			'Core'. 'ExampleBrowser'.
 			'Exporter-HTML5'. 'Exporter-PNG'. 'Exporter-SVG'. 'Layouts'. 'OpenStreetMap'.
-			'Selection'. 'Sparkline'. 'Table'. 'Tests'. 'Utility'}
+			'Sparkline'. 'Table'. 'Tests'. 'Utility'}
 		}
 ]
