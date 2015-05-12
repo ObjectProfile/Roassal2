@@ -146,6 +146,12 @@ RTTimeLine >> maxEnd [
 	^ entries max: #end
 ]
 
+{ #category : #configuration }
+RTTimeLine >> noTimeLineLabel [
+
+	self timeLineLabel: ''
+]
+
 { #category : #accessing }
 RTTimeLine >> numberOfEntries [
 	^ entries size
