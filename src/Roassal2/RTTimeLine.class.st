@@ -208,7 +208,7 @@ RTTimeLine >> renderInOLD: aView [
 		elements do: [ :e | t translateTopLeftOf: e to: ((e model start / maxEnd * self extent x) asFloat  @ 0) ].
 
 
-		elements := elements, { RTBox element . (RTBox element translateTo: self extent  @ 0)}.
+		elements := elements, (Array with: RTBox element with: (RTBox element translateTo: self extent  @ 0)).
 		elements := elements asGroup.
 
 		allGroups add: elements.
