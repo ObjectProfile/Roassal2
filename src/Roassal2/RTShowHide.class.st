@@ -12,7 +12,7 @@ RTShowHide class >> highlightedColor [
 	^ Color transparent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTShowHide >> doHighlight: element [
 	| elements |
 	"self unhighlightRecordedElements."
