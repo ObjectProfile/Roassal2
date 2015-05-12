@@ -50,7 +50,6 @@ RTDynamicEqualizerGrapher >> numberOfMetrics [
 { #category : #'public - generation' }
 RTDynamicEqualizerGrapher >> object: anObject [
 	| values |
-	self halt.
 	values := metrics collect: [ :tupple | tupple second rtValue: anObject ].
 	barElements ifNil: [ 
 		barElements := self elementsOn: values.
