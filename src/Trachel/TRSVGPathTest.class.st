@@ -1,7 +1,7 @@
 Class {
 	#name : #TRSVGPathTest,
 	#superclass : #TRTest,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #tests }

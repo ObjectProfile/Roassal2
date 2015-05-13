@@ -6,7 +6,7 @@ Class {
 		'controlKeyPressed',
 		'shiftKeyPressed'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #accessing }

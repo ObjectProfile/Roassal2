@@ -5,7 +5,7 @@ Class {
 		'camera',
 		'canvas'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #running }

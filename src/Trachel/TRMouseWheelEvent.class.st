@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'direction'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #'instance creation' }

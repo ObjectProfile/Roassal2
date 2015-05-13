@@ -8,7 +8,7 @@ Class {
 		'box2',
 		'canvas'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #running }

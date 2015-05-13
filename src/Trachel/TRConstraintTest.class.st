@@ -27,7 +27,7 @@ Class {
 		'shape1',
 		'shape2'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #running }

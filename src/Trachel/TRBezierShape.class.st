@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'listOfPoints'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Shapes'
 }
 
 { #category : #visitor }

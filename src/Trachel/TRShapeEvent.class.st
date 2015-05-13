@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shape'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #'instance creation' }

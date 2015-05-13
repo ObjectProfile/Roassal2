@@ -19,5 +19,5 @@ shiftKeyPressed
 Class {
 	#name : #TRMouseClick,
 	#superclass : #TRAbstractMouseClick,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }

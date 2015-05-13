@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Callbacks'
 }
 
 { #category : #public }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shapeAndOffsets'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Shapes'
 }
 
 { #category : #visitor }

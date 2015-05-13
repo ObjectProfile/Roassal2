@@ -1,7 +1,7 @@
 Class {
 	#name : #TRAbstractMouseEvent,
 	#superclass : #TRShapeEvent,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #testing }
