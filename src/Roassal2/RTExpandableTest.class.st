@@ -26,7 +26,7 @@ RTExpandableTest >> testBasic [
 	expand clickOn: e.
 	self assert: (expand isSelected: e).
 	self assert: (expand hasElementBeenExpended: e).
-	self assert: v numberOfElements equals: 1 + RTComposer numberOfMethods.
+	self assert: v numberOfElements equals: 1 + RTComposer methods size.
 
 	expand clickOn: e.
 	self deny: (expand isSelected: e).

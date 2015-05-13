@@ -20,23 +20,26 @@ Class {
 	#instVars : [
 		'numberOfBars',
 		'y',
-		'allAddedElements'
+		'allAddedElements',
+		'centerElement'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #adding }
 RTDynamicStackedGrapher >> add: anObject [
-	| positionInView el center barHeight yValue |
+	| positionInView el center barHeight yValue graphCenter |
+	self defineCenterElement.
 	self removeExceedingBar.
 	yValue := self yValueFor: anObject.
 	positionInView := self getPixelPositionOf: 0 @ yValue.
+	graphCenter := centerElement position.
 	center := self getPixelPositionOf: 0 @ 0.
 	barHeight := (positionInView y - center y) abs.
 	el := self createElementFor: anObject height: barHeight.
 	yValue > 0
-		ifTrue: [ el translateTo: self barXPosition @ (positionInView y + (barHeight / 2)) ]
-		ifFalse: [ el translateTo: self barXPosition @ (positionInView y - (barHeight / 2)) ].
+		ifTrue: [ el translateTo: self barXPosition @ (positionInView y + (barHeight / 2)) + graphCenter ]
+		ifFalse: [ el translateTo: self barXPosition @ (positionInView y - (barHeight / 2)) + graphCenter ].
 	view add: el.
 	view signalUpdate.
 	allAddedElements add: el.
@@ -70,6 +73,12 @@ RTDynamicStackedGrapher >> barXPosition [
 	^ (allAddedElements size + 1) * self barWidthWithGap
 ]
 
+{ #category : #accessing }
+RTDynamicStackedGrapher >> centerElement [
+	"Return the center of the element, the position 0 @ 0"
+	^ centerElement 
+]
+
 { #category : #'private - bar management' }
 RTDynamicStackedGrapher >> createElementFor: anObject height: barHeight [
 	| el |
@@ -78,6 +87,28 @@ RTDynamicStackedGrapher >> createElementFor: anObject height: barHeight [
 	el := shapeBuilder elementOn: anObject.
 	el @ RTPopup.
 	^ el
+]
+
+{ #category : #hooks }
+RTDynamicStackedGrapher >> createShapeBuilder [
+	| s |
+	s := super createShapeBuilder.
+	s rectangle color: (Color blue alpha: 0.3).
+	^ s
+]
+
+{ #category : #initialization }
+RTDynamicStackedGrapher >> defaultNumberOfBars [
+	^ 3
+]
+
+{ #category : #hooks }
+RTDynamicStackedGrapher >> defineCenterElement [
+	"We keep an element to 0 @ 0 because this is useful when the dynamic stacked grapher has to be composed with other"
+	centerElement ifNotNil: [ ^ self ].
+	centerElement := (RTBox new size: 1) elementOn: 'center'.
+	centerElement translateTo: 0 @ 0.
+	view add: centerElement
 ]
 
 { #category : #examples }
@@ -105,7 +136,10 @@ RTDynamicStackedGrapher >> initialize [
 	super initialize.
 	y := #yourself.
 	self resetAddedElements.
-	self axisX noTick; noLabel.
+	self axisX
+		noTick;
+		noLabel.
+	numberOfBars := self defaultNumberOfBars
 ]
 
 { #category : #accessing }
@@ -114,8 +148,9 @@ RTDynamicStackedGrapher >> numberOfBars [
 ]
 
 { #category : #accessing }
-RTDynamicStackedGrapher >> numberOfBars: anObject [
-	numberOfBars := anObject
+RTDynamicStackedGrapher >> numberOfBars: anInteger [
+	"Set the number of bars defining the grapher"
+	numberOfBars := anInteger
 ]
 
 { #category : #'private - bar management' }
@@ -133,10 +168,9 @@ RTDynamicStackedGrapher >> removeExceedingBar [
 
 { #category : #hooks }
 RTDynamicStackedGrapher >> renderIn: aView [
-
 	self defineAxesIfNecessary.
 	self renderAxis.
-
+	
 ]
 
 { #category : #'public - cleaning' }
@@ -147,6 +181,12 @@ RTDynamicStackedGrapher >> resetAddedElements [
 { #category : #userinterface }
 RTDynamicStackedGrapher >> updateView [
 	self view signalUpdate
+]
+
+{ #category : #accessing }
+RTDynamicStackedGrapher >> view: aView [
+	super view: aView.
+	self defineCenterElement.
 ]
 
 { #category : #accessing }
