@@ -1,7 +1,7 @@
 Class {
 	#name : #TRRemoveCallback,
 	#superclass : #TRCallback,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Callbacks'
 }
 
 { #category : #testing }

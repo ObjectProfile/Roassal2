@@ -1,7 +1,7 @@
 Class {
 	#name : #TRShapeTest,
 	#superclass : #TRTest,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #position }

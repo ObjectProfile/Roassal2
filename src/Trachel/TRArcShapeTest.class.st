@@ -39,7 +39,7 @@ Class {
 		'pQ3',
 		'pQ4'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #'basic tests' }

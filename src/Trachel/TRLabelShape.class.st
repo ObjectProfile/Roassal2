@@ -7,7 +7,7 @@ Class {
 		'fontSize',
 		'fontName'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Shapes'
 }
 
 { #category : #configuration }

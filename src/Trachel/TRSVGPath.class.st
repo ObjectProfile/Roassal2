@@ -9,7 +9,7 @@ Class {
 		'polygons',
 		'rectangle'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Shapes'
 }
 
 { #category : #visitor }

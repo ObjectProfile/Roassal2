@@ -1,7 +1,7 @@
 Class {
 	#name : #TRTest,
 	#superclass : #TestCase,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #'as yet unclassified' }

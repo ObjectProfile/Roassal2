@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Tests'
 }
 
 { #category : #running }

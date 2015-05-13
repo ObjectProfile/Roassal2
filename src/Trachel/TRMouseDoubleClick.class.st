@@ -1,7 +1,7 @@
 Class {
 	#name : #TRMouseDoubleClick,
 	#superclass : #TRAbstractMouseClick,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #initialization }

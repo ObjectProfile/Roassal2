@@ -6,7 +6,7 @@ Class {
 		'position',
 		'morph'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #accessing }

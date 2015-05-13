@@ -37,7 +37,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Shapes'
 }
 
 { #category : #visitor }

@@ -17,7 +17,7 @@ It opens an inspector because the block is triggered.
 Class {
 	#name : #TRTranslationCallback,
 	#superclass : #TRCallback,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Callbacks'
 }
 
 { #category : #testing }

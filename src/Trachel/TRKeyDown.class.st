@@ -5,7 +5,7 @@ Class {
 		'keyValue',
 		'keyCombination'
 	],
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Events'
 }
 
 { #category : #comparing }
