@@ -173,6 +173,10 @@ RTTimeLine >> renderIn: aView [
 			timeLineElements add: elements.
 			view addAll: elements ].
 	timeLineElements doWithIndex: [ :g :index | g translateBy: (self getPixelPositionOf: 0 @ index) ].	
+		
+	"The following line makes the entries transparent"
+	elements do: [ :e | e model: e model model ].
+
 	self homogenizeMinAndMax.
 	self renderAxis.
 	self renderAllDecoratorsBehind.

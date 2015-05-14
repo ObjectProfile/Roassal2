@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'identifier',
 		'start',
-		'end'
+		'end',
+		'model'
 	],
 	#category : #'Roassal2-Builder-TimeLine'
 }
@@ -45,6 +46,16 @@ RTTimeLineEntry >> initialize [
 { #category : #'accessing-computed' }
 RTTimeLineEntry >> middlePeriod [
 	^ start + end / 2
+]
+
+{ #category : #accessing }
+RTTimeLineEntry >> model [
+	^ model
+]
+
+{ #category : #accessing }
+RTTimeLineEntry >> model: anObject [
+	model := anObject
 ]
 
 { #category : #accessing }
