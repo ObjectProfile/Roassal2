@@ -762,7 +762,7 @@ v add: edge.
 
 { #category : #sources }
 RTRoassalExample >> exampleBezier3 [
-
+| v e1 e2 e3 lineShape s edge|
 v := RTView new.
 
 s := RTEllipse new color: (Color red alpha: 0.4); size: 30.
@@ -4984,7 +4984,7 @@ fPGB8MUHwgfCFx8IHwhffCC/qD8BcE4ipo/6xQAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleParallelCoordinate [
-| maxValue spaceBetweenLine lineHeight numberOfColumns numberOfLines values setOfElements v e |
+| maxValue spaceBetweenLine lineHeight numberOfColumns numberOfLines values setOfElements v e t line|
  
 "Configuration"
 maxValue := 40.

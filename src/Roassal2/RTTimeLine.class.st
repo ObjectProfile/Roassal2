@@ -48,13 +48,6 @@ RTTimeLine >> addEntry: anEntry [
 ]
 
 { #category : #hooks }
-RTTimeLine >> createInteractionBuilder [
-	^ super createInteractionBuilder
-			popupText: #identifier;
-			yourself
-]
-
-{ #category : #hooks }
 RTTimeLine >> createShapeBuilder [
 	^ super createShapeBuilder
 		rectangle;
@@ -146,12 +139,6 @@ RTTimeLine >> maxEnd [
 	^ entries max: #end
 ]
 
-{ #category : #configuration }
-RTTimeLine >> noTimeLineLabel [
-
-	self timeLineLabel: ''
-]
-
 { #category : #accessing }
 RTTimeLine >> numberOfEntries [
 	^ entries size
@@ -221,7 +208,7 @@ RTTimeLine >> renderInOLD: aView [
 		elements do: [ :e | t translateTopLeftOf: e to: ((e model start / maxEnd * self extent x) asFloat  @ 0) ].
 
 
-		elements := elements, { RTBox element . (RTBox element translateTo: self extent  @ 0)}.
+		elements := elements, (Array with: RTBox element with: (RTBox element translateTo: self extent  @ 0)).
 		elements := elements asGroup.
 
 		allGroups add: elements.
@@ -283,14 +270,14 @@ RTTimeLine >> renderTimeLineLabels [
 		
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #accessing }
 RTTimeLine >> smalestEntryWidth [
 	^ smalestEntryWidth
 ]
 
-{ #category : #'accessing-computed' }
-RTTimeLine >> smalestEntryWidth: aNumber [
-	smalestEntryWidth := aNumber
+{ #category : #accessing }
+RTTimeLine >> smalestEntryWidth: anInteger [ 
+	smalestEntryWidth := anInteger
 ]
 
 { #category : #accessing }
