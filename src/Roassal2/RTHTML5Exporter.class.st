@@ -168,6 +168,36 @@ RTHTML5Exporter >> directory: aFile [
 	directory := aFile.
 ]
 
+{ #category : #'Pillar example' }
+RTHTML5Exporter >> exampleWithPillar01 [
+
+"
+
+PRHTMLWriter defaultConfigurations anyOne
+    inputString: '
+!Hello
+Some text with *a link to Pharo>http://www.pharo.org*.
+
+!!World
+Here is a small Roassal visualization
+
+[[[eval=true
+
+b := RTMondrian new.
+b nodes: Collection withAllSubclasses.
+b edges connectFrom: #superclass.
+b layout tree.
+b build.
+v := b view.
+			RTHTML5Exporter new insert: v named: ''Example Roassal'' inPillarStream: stream
+]]]
+';
+    outputFile: 'myFirstPillarExport.html' asFileReference;
+    export
+
+"
+]
+
 { #category : #'public-exporting' }
 RTHTML5Exporter >> export: aView [
 	"This is a public method"
@@ -290,6 +320,20 @@ RTHTML5Exporter >> jsreference [
 { #category : #accessing }
 RTHTML5Exporter >> jsreference: aString [
 	jsrefenrece := aString.
+]
+
+{ #category : #'Pillar example' }
+RTHTML5Exporter >> loadingPillar [
+
+"
+
+Gofer new 
+    smalltalkhubUser: 'Pier' project: 'Pillar';
+    configuration;
+    load.
+(Smalltalk globals at: #ConfigurationOfPillar) load
+
+"
 ]
 
 { #category : #'Pillar utility' }
