@@ -21,7 +21,8 @@ Class {
 		'numberOfBars',
 		'y',
 		'allAddedElements',
-		'centerElement'
+		'centerElement',
+		'layoutTranslator'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -111,6 +112,12 @@ RTDynamicStackedGrapher >> defineCenterElement [
 	view add: centerElement
 ]
 
+{ #category : #'public - configuring - animation' }
+RTDynamicStackedGrapher >> doNotUseAnimation [
+	"When bar have to be removed, there is no animation to translate the bars"
+	layoutTranslator := RTDirectLayoutTranslator new
+]
+
 { #category : #examples }
 RTDynamicStackedGrapher >> example01 [
 
@@ -139,7 +146,8 @@ RTDynamicStackedGrapher >> initialize [
 	self axisX
 		noTick;
 		noLabel.
-	numberOfBars := self defaultNumberOfBars
+	numberOfBars := self defaultNumberOfBars.
+	self useAnimation.
 ]
 
 { #category : #accessing }
@@ -154,14 +162,15 @@ RTDynamicStackedGrapher >> numberOfBars: anInteger [
 ]
 
 { #category : #'private - bar management' }
-RTDynamicStackedGrapher >> removeExceedingBar [
+RTDynamicStackedGrapher >> removeExceedingBar [	
 	allAddedElements size = numberOfBars
 		ifTrue: [ 
 			allAddedElements first remove.
 			allAddedElements do: [ :e | 
 				
 				"e translateBy: self barWidthWithGap negated @ 0"
-				view addAnimation: (RTLinearMove new by: (self barWidthWithGap negated @ 0) during: 0.1 on: e).
+				layoutTranslator translate: e by: (self barWidthWithGap negated @ 0).
+				"view addAnimation: (RTLinearMove new by: (self barWidthWithGap negated @ 0) during: 0.1 on: e)."
 				 ].
 			allAddedElements removeFirst ]
 ]
@@ -181,6 +190,14 @@ RTDynamicStackedGrapher >> resetAddedElements [
 { #category : #userinterface }
 RTDynamicStackedGrapher >> updateView [
 	self view signalUpdate
+]
+
+{ #category : #'public - configuring - animation' }
+RTDynamicStackedGrapher >> useAnimation [
+	"When bar have to be removed, there is an animation to translate the bars"
+	layoutTranslator := RTSmoothLayoutTranslator new.
+	layoutTranslator nbCycles: 0.2.
+	layoutTranslator view: self view
 ]
 
 { #category : #accessing }

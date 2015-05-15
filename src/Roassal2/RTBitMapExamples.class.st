@@ -1,11 +1,11 @@
 Class {
-	#name : #RTBitMapExamples,
+	#name : #RTBitmapExamples,
 	#superclass : #Object,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-ExampleBrowser'
 }
 
 { #category : #examples }
-RTBitMapExamples >> image01 [
+RTBitmapExamples >> image01 [
 
 	"
 	self new image01
@@ -22,7 +22,7 @@ RTBitMapExamples >> image01 [
 ]
 
 { #category : #examples }
-RTBitMapExamples >> image02 [
+RTBitmapExamples >> image02 [
 
 	"
 	self new image02

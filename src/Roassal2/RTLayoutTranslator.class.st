@@ -34,6 +34,12 @@ RTLayoutTranslator >> nbCycles: anInteger [
 ]
 
 { #category : #hook }
+RTLayoutTranslator >> translate: element by: deltaPosition [
+	"Translate of the center of the element by a step"
+	self translate: element to: element position + deltaPosition
+]
+
+{ #category : #hook }
 RTLayoutTranslator >> translate: element to: newPosition [
 	"Translate of the center of the element"
 	self subclassResponsibility 
