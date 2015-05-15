@@ -10,38 +10,42 @@ Class {
 
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromBottom: shapes [
-	| highestElement |
-	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+	| bottomMostElement |
+	shapes ifEmpty: [ ^ self ].
+	bottomMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle bottomLeft y >= s encompassingRectangle bottomLeft y
 										ifTrue: [ s ] ifFalse: [ maxS ] ].
-	self use: highestElement alignFromBottom: shapes
+	self use: bottomMostElement alignFromBottom: shapes
 ]
 
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromLeft: shapes [
-	| highestElement |
-	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+	| leftMostElement |
+	shapes ifEmpty: [ ^ self ].
+	leftMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft x <= s encompassingRectangle topLeft x
 										ifTrue: [ s ] ifFalse: [ maxS ] ].
-	self use: highestElement alignFromLeft: shapes
+	self use: leftMostElement alignFromLeft: shapes
 ]
 
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromRight: shapes [
-	| highestElement |
-	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+	| rightMostElement |
+	shapes ifEmpty: [ ^ self ].
+	rightMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft x >= s encompassingRectangle topLeft x
 										ifTrue: [ s ] ifFalse: [ maxS ] ].
-	self use: highestElement alignFromRight: shapes
+	self use: rightMostElement alignFromRight: shapes
 ]
 
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromTop: shapes [
-	| highestElement |
-	highestElement := shapes inject: shapes anyOne into: [ :maxS :s | 
+	| topMostElement |
+	shapes ifEmpty: [ ^ self ].
+	topMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft y <= s encompassingRectangle topLeft y
 										ifTrue: [ s ] ifFalse: [ maxS ] ].
-	self use: highestElement alignFromTop: shapes
+	self use: topMostElement alignFromTop: shapes
 ]
 
 { #category : #'public - sticking' }
