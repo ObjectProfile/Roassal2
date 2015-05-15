@@ -1,49 +1,57 @@
-"
-A RTTimeLine4SpotterTest is a test class for testing the behavior of RTTimeLine4Spotter
-"
 Class {
-	#name : #RTTimeLineTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'timeline'
-	],
-	#category : #'Roassal2-Builder-TimeLine-Tests'
+	#name : #RTTimelineTest,
+	#superclass : #RTTest,
+	#category : #'Roassal2-Builder-Timeline-Tests'
 }
 
-{ #category : #running }
-RTTimeLineTest >> setUp [
-	super setUp.
-	timeline := RTTimeLine new
-]
-
 { #category : #tests }
-RTTimeLineTest >> testDoublePopup [
+RTTimelineTest >> testBasic [
 
-	| b entry view e announcer |
-	b := RTTimeLine new.
-
-	entry := RTTimeLineEntry new start: 0; end: 5; identifier: 1.
-	b addEntry: entry.
-	b addEntry: (RTTimeLineEntry new start: 5; end: 10; identifier: 2).
-
-	self assert: b interaction numberOfMenuEntries equals: 1.
-	b interaction popupText: #identifier.
-	self assert: b interaction numberOfMenuEntries equals: 1.
+	| b s |
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: #(1 2 3 4).
+	s end: [ :v | v + 1 ].
+	b add: s.
+	
+	self assert: b numberOfSets equals: 1.
+	self assert: b numberOfEvents equals: 4.
+	self assert: b numberOfLines equals: 4.
+	
 	b build.
-	view := b view.
 	
-	e := view elementFromModel: entry.
-	self assert: e notNil.
-	
-	self assert: (e hasInteraction: RTPopup).
-	
-	announcer := e announcer.
-	self assert: announcer numberOfSubscriptions equals: 3
+	self assert: b numberOfSets equals: 1.
+	self assert: b numberOfEvents equals: 4.
+	self assert: b numberOfLines equals: 4.
 ]
 
 { #category : #tests }
-RTTimeLineTest >> testEmptyTimeline [
+RTTimelineTest >> testBasicWithDifferentIdentifier02 [
 
-	self assert: timeline numberOfEntries equals: 0.
-	self assert: timeline numberOfTimeLines equals: 0.
+	| b s |
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: #(1 2 3 4).
+	s end: [ :v | v + 1 ].
+	b add: s.
+	
+	s := RTTimelineSet new.
+	s objects: #(1 2 3 4 5).
+	s end: [ :v | v + 2 ].
+	b add: s.
+	
+	b build.
+	
+	self assert: b numberOfSets equals: 2.
+	self assert: b numberOfEvents equals: 9.
+	self assert: b numberOfLines equals: 5.
+]
+
+{ #category : #tests }
+RTTimelineTest >> testDefault [
+	
+	self assert: RTTimeline new numberOfSets equals: 0.
+	self assert: (RTTimeline new build; numberOfSets) equals: 0
 ]
