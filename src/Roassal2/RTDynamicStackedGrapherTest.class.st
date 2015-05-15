@@ -8,6 +8,21 @@ Class {
 }
 
 { #category : #tests }
+RTDynamicStackedGrapherTest >> testBarPosition [
+
+	| b e5 e4 |
+	b := RTDynamicStackedGrapher new.
+	b maxY: 10.
+	b add: 5.
+	b add: 4.
+	b build.
+	
+	e5 := b view elementFromModel: 5.
+	e4 := b view elementFromModel: 4.
+	self assert: e5 position equals: 0 @ 0.
+]
+
+{ #category : #tests }
 RTDynamicStackedGrapherTest >> testEmbeddedInComposer [
 
 	| a1 a2 composer a b |

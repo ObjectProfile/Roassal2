@@ -59,6 +59,11 @@ RTGrapher >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
 ]
 
+{ #category : #hooks }
+RTGrapher >> datasetComputeMinAndMax [
+	datasets do: #computeMinAndMax
+]
+
 { #category : #'data sets' }
 RTGrapher >> datasets [
 	^ datasets copy
@@ -198,7 +203,7 @@ RTGrapher >> renderDataSetsIn: aView [
 
 { #category : #hooks }
 RTGrapher >> renderIn: aView [
-	datasets do: #computeMinAndMax.
+	self datasetComputeMinAndMax.
 	self defineAxesIfNecessary.
 	self homogenizeMinAndMax.
 	self renderAxis.

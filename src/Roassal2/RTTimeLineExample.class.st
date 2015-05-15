@@ -1,228 +1,273 @@
 "
-RTTimeLineExample 
+RTTimeLineExample new installTitle: 'ColorPerTimeLine' 
+		code:
+		'
+		data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+	normalizer := RTMultiLinearColorForIdentity new objects: #(c1 c2 c3 c4 c5); command: #first.
 
-b := RTTimeLine new.
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s shape color: normalizer.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
+	b axisX 
+		numberOfLabels: 5;
+		labelRotation: -45;
+		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
-b addEntry: (RTTimeLineEntry new identifier: #WP1; start: 0; end: 5).
-b addEntry: (RTTimeLineEntry new identifier: #WP2; start: 5; end: 8).
-b addEntry: (RTTimeLineEntry new identifier: #WP3; start: 7; end: 10).
-
-b axisX numberOfLabels: 5.
-b
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	
+b build.
+^ b view'
 "
 Class {
 	#name : #RTTimeLineExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-TimeLine'
+	#category : #'Roassal2-Builder-Timeline'
 }
 
 { #category : #sources }
 RTTimeLineExample >> exampleClassAges [
 
-	| b e |
-	b := RTTimeLine new.
-	b extent: 500 @ 500.
-	((RTShape withAllSubclasses sortedAs: #ageInDaysRounded) select: #hasMethods)
-		do: [ :cls | 
-			e := RTTimeLineEntry new.
-			e identifier: cls.
-			e start: cls computeYoungestMethod ageInDays.
-			e end: cls computeOldestMethod ageInDays.
-			b addEntry: e ].
-	^ b 
+	| data b s |
+	data := (RTShape withAllSubclasses sortedAs: #ageInDaysRounded) select: #hasMethods.
+
+	b := RTTimeline new.
+	b extent: 400 @ 600.
+	s := RTTimelineSet new.
+	s objects: data.
+	s start: [ :cls | cls computeYoungestMethod ageInDays ].
+	s end: [ :cls | cls computeOldestMethod ageInDays ].
+	b add: s.
+	
+b build.
+^ b view
 ]
 
 { #category : #icons }
 RTTimeLineExample >> exampleClassAgesIcon [
-	^ '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
-YII='
+	^ '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'
 ]
 
 { #category : #sources }
 RTTimeLineExample >> exampleColorPerEntry [
-	| b d |
-	b := RTTimeLine new.
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
 
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 8; end: 10).
+	| data normalizer b s d |
+	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+	normalizer := RTMultiLinearColorForIdentity new objects: data.
 
-	b addEntry: (RTTimeLineEntry new identifier: #c3; start: 0; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c4; start: 5; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c5; start: 5; end: 8).
-
-	d := RTVerticalTickLineDecorator new.
-	d shape line color: Color white.
-	b addDecorator: d.
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s shape color: normalizer.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
 	b axisX 
 		numberOfLabels: 5;
 		labelRotation: -45;
 		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
-	b shape color: (RTMultiLinearColorForIdentity new objects: b entries).
-	^ b 
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	
+b build.
+^ b view
 ]
 
 { #category : #icons }
 RTTimeLineExample >> exampleColorPerEntryIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE5klEQVR4XuWca0sjSRSG/YOC
-CP4Nv/lFBUWRBXEVQbwi3vGGQVcNIuMlKl4yLIpRNzPRmE0wxjhJJ9lcZzKn19OQLzMVqJ5N
-YtW+Lxwaijehup/uqnOqL3WmiS+VVId/CPCB4AsfCD4QfOEDwQeCL3wg+EDwhQ8EHwi+8IHg
-Cx8IPhB84QPBB4IvfCD4QPCFDwQfSG2Uy+XIjp/eVAl/JpWhp4ennyL2HBO2l4vkl0RV+19z
-IMlk8l2APD+G6djhMn+MTx//MkXt5cLvecAHgg+kArq9vaWXlxfCB6IAEIbh8XiotbUVH4gK
-QMbHx+nu7o52d3fxgeDPIfhA8IHgA7HvL+QLlIwbP0UmnRa2lwu7/lwmiw9E1J4yEuT3+swf
-IxqOmKL2cmHXH4u+4gPBB1JGe3t7hA/kVY06ZGpqitrb2/GBqACE6xDexuNxfCD4cwg+EHwg
-OgNJJAyKGJfSYaQDtvwJm/5q/38q+6Q2ECMRo/NPfaZs+MLbph3//bNdv7Oq/r+jLnwg+EAE
-CgQCdHR0RPhAXGrUIbzt6urCB6ICEK5DvF4vOZ1OfCD4cwg+EHwgOgNJGgZl/3RLR95/b8//
-+CBsLwT8VInCs/itQMbjR+nIxkKKF4axGEV/6zRlI/nHmmnP7xC3b61XBMi3XIo+b3aZsvF6
-9wEfCD6QMqmv2+0mfCAf1KlDtre38YGoAITrkIODA7OjowN/yMKfQ/CB4APRGkgyQVdfItIR
-SNn1G8L24D/i9zq+fy+SEX+Rjmwm9f96UC72doPqd8+ZKRvOkM+shH8ndC88MF+/Fuiz123K
-xms0iA8EH0gFlM/naWdnh/CBkDp1SG9vLz4QVd4Puby8JFEdgg8Efw7BB4IPRCMg/PDDzc2N
-dFxdXWnt51f7lAYSCtm7YWPXHwwGtfbXHAi+NAbCtYzO/ouLC1IaCKfDg4OD0p3s7++ns7Mz
-bf1ra2vU2dmp5pD1VpNYTzKKblqJ1NfXZ/kODw+19HMd9nZPiGT9NQUyMjJC19fXVF9fL9U5
-3hGGNzY2pqWfv2CxuLhI+/v7ag1ZnPL19PRYl+3GxoZU56anp60vQAwMDGjpZ2hDQ0PU1tZG
-yk3q/DhpJBKhiYkJqc6VLu+TkxMt/cfHx5avsbGRlMuyOMNoaGgg2UqV642FhQXpQko1P8Pb
-2toSPs/8rkB8Pp811k5OTtL6+rpU5/gM5J3nl0S5utXNz5nX8PAwuVwuKq10KwOEx0/umGy6
-d3p6ai1HbG5uaun3+/3Ey0EzMzOkXGHIwxSnh/yOumwqyWfj6uqqln7+MAInLd3d3aRcpX5+
-fk7z8/PW1SHjj0ajllf2TFTNz0MzF4oOh4OUWzrhHJ0nNZk8nbMu3vLO87irm58VDoetVFj0
-gbZ3B8LLA01NTdI7U6raSymijn4uFCsxeVcUSDqdppWVFWpubibRR2bKFVmls1HG39LSYsvP
-/SkNPXaWQ2T9pQqcJ/FfufFU9StkaWnJmjfs/Ea2yGLxutfy8rK0n69UzvJk/XyAZYvWubk5
-a1j+LxV4VYAUi0UqLZyZYBodHa3JPtfZXQ6ZnZ395YUzfFVhyOIqHP+wKQQEX/hA8IHgCx8I
-vvCB4APBFz4QfCD4wgeCDwRf+EDwgeALHwi+8IHgA8EXPhB8IPjCB4IPBF/4QED0L6DGXb+3
-QA7lAAAAAElFTkSuQmCC'
+	^ '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'
 ]
 
 { #category : #sources }
 RTTimeLineExample >> exampleColorPerTimeLine [
 
-	| b d |
-	b := RTTimeLine new.
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
+		| data normalizer b s d |
+	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+	normalizer := RTMultiLinearColorForIdentity new objects: #(c1 c2 c3 c4 c5); command: #first.
 
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 8; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c3; start: 0; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c4; start: 5; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c5; start: 5; end: 8).
-
-	d := RTVerticalTickLineDecorator new.
-	d shape line color: Color white.
-	b addDecorator: d.
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s shape color: normalizer.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
 	b axisX 
 		numberOfLabels: 5;
 		labelRotation: -45;
 		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
-	b shape color: (RTMultiLinearColorForIdentity new command: #identifier; objects: #(c1 c2 c3 c4 c5)).
-	^ b 
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	
+b build.
+^ b view
 ]
 
 { #category : #icons }
 RTTimeLineExample >> exampleColorPerTimeLineIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE1UlEQVR4XuWc20sjSRTG/QcF
-Efw3fPNFBUXxRVzFRbwi3tcbut4RwVt0jbrrxNUkuJPdRJMxMZntJO1lNDvh9Hoa8jLTgaqZ
-Tqya74NDoPmU6vzSVeerdLrCsvClkirw3wJ8IPjCB4IPBF/4QPCB4AsfCD4QfOEDwQeCL3wg
-+MIHgg8EX/hA8IHgCx8IPhB84QPBB1IePT8/k4yfXuWG/8l4ots/b78qI2I4Hi9WZtws6fjL
-DsQ0zTcBkvAnyPPzgfVlXW39ZTkdL1bhwzA+EHwgLigQCFAymSR8IAoAYRiXl5dUX1+PD0QF
-IIODgxQMBmlrawsfCP4agg8EHwg+EHl/7uWBTCPyVX16SDkeL1ay/ucnAx+I0/H79A1F/GvW
-l5WK+Syn48Xq4wc5v5EI4gPBB1JE29vbhA8kqEYOGRkZocbGRnwgKgDhHMKv6XQaHwj+GoIP
-BB+IzkCy2SxFIu+FK5WKS/oTSvkN46PaQHhdWVn5xRKts7MjS8b/7l2p/V4pfyDgwweCD8RB
-19fX5PF4CB+IT40cwq8tLS34QFQAwjnk6uqKNjY28IHgryH4QPCB6AyEc0gynBCubDLjit9M
-ZcmN4Jn/nJcaz71hqg0kk87Q6a+/WaL1z+/vLSn/H87+8FnIFSC5Tzmp8Uf9EXwg+ECKtL6n
-p6eEDySiTg5ZX1/HB6ICEM4hu7u7VlNTE/6Uhb+G4APBB6IzkKyZpfN/74Tr+l7Wn3E8Hn1w
-ziG5fF7q/98+3v9YN8oZ2Qz9dOm1RGsjFrLc8G/G/nb+JvG/nNR4PIkbfCD4QFzQy8sLbW5u
-Ej4QUieHtLe34wNR5fchPp+PnHIIPhD8NQQfCD4QjYDwzQ9+v1+4zs/PtfbzT/uUBhKLxaiU
-/mg0qrW/7EDwpTEQzjI6+09OTkhpINwOd3d3Cw+ys7OTvF6vtv6FhQVqbm5Wc8p6zST2nYxO
-X1o5qaOjw/bt7e1p6ecc9vqdEIn6ywqkr6+PLi4uqLKyUmhwfCIMb2BgQEs/P8FienqadnZ2
-1JqyuOVra2uzL9vl5WWhwY2OjtpPgOjq6tLSz9B6enqooaGBlFvU+XbSu7s7GhoaEhpc4fI+
-PDzU0n9wcGD7qqurSbkuizuMqqoqEk2qnDempqaEg5Rqfoa3trbmeD/zmwIJhUL2XDs8PExL
-S0tCg+NPIJ8832bK6VY3P3devb29tL+/T4WdbmWA8PzJAxNt946OjuztiNXVVS394XCYeDto
-bGyMlAuGPE1xe8i/URdtJfnTOD8/r6WfH4zATUtrayspl9SPj49pcnLSvjpE/KlUyvaKfhJV
-8/PUzEFxcXGRlNs64R6dFzWRPp27Ln7lk+d5Vzc/Kx6P262w0wPa3hwIbw/U1NQIn0whtRda
-RB39HBTdWLxdBfL4+Ehzc3NUW1tLTg+ZKRayCp9GEX9dXZ2Un8dTmHpktkNE/YUEzov4t3zx
-VPIrZGZmxl43ZP5GNGSxeN9rdnZW2M9XKnd5on5+g0VD68TEhD0tf08CLwmQfD5PhY0zC0z9
-/f1lOecK2e2Q8fHxb944w1cJpixO4fhvm0JA8IUPBB8IvvCB4AsfCD4QfOEDwQeCL3wg+EDw
-hQ8EHwi+8IHgCx8IPhB84QPBB4IvfCD4QPCFDwRE/wNQxCWw1JBh9QAAAABJRU5ErkJggg=='
+	^ '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'
 ]
 
 { #category : #sources }
 RTTimeLineExample >> exampleGantt01 [
 
-	| b |
-	b := RTTimeLine new.
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c1; start: 6; end: 8).
+	| data b s |
+	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
 
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #c2; start: 8; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c3; start: 0; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c4; start: 5; end: 10).
-
-	b addEntry: (RTTimeLineEntry new identifier: #c5; start: 5; end: 8).
-
-"	b addDecorator: RTVerticalTickLineDecorator new."
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
 	b axisX 
 		numberOfLabels: 5;
 		labelRotation: -45;
 		labelConversion: [ :v | Date year: 2015 day: v ]. 
-	^ b
+	
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -253,35 +298,63 @@ HwhffCB8IHzxgfCB8MUHAtEfxTYBJq0poOcAAAAASUVORK5CYII='
 { #category : #sources }
 RTTimeLineExample >> exampleSimpleGantt [
 
-	| b |
-		
-	b := RTTimeLine new.
+	| data b s d |
+	data := #(#(WP1 0 5) #(WP2 5 8) #(WP3 7 10)).
 
-	b addEntry: (RTTimeLineEntry new identifier: #WP1; start: 0; end: 5).
-	b addEntry: (RTTimeLineEntry new identifier: #WP2; start: 5; end: 8).
-	b addEntry: (RTTimeLineEntry new identifier: #WP3; start: 7; end: 10).
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
+	b axisX 
+		numberOfLabels: 5;
+		labelRotation: -45;
+		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
-	b axisX numberOfLabels: 5.
-	^ b
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	
+b build.
+^ b view
 ]
 
 { #category : #icons }
 RTTimeLineExample >> exampleSimpleGanttIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACvUlEQVR4XuXbO2vCUBiH8X5q
-v4Au2kUHRUURnVwUWhG831GoiyJqwdvS4GLBgopmeK0n0C4dmmLVxOcPhyxv4JhfOJE3Jw/H
-Iz9WygP/EvBB+OGD8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DDB+GD8MMH4YPwwwfhg/DD
-B+GHD8IH4YcPwgfhhw/CB+HnPkBms5nY4SK8voq8vJw/Pj5ELA1SrVZtAfL8LBIMnj/e3vgg
-fBA+CB+ED2ImmqbJYrGQ+XwurVbLmMhqtRI+yI1AIpGIDAYD6ff7MhqNZDKZiNfr5YPcCiQW
-i50mEfyewHg8FofDwQfhP0P4IHwQPggfhA/CB+GD3C2IavK9v58/dF2uPv+7BHl6ss4dzwfh
-g/BB+CB8ED6I5UFcLpckEgmJRqOSSqUkk8lIIBAQPsiNQDqdjiSTSVEJhULG8asNzwfhL1l8
-ED4IH4QPwgfhg/BB7hFE7UTsds8f/7ET0VIgj4/Vf7lT/zo0TWzR9ueD8EH4IHwQPggfxBIg
-zWZTTv+ijvV63Wgu7na7H70sPsgVQbLZrLGVdLlcGs1FtdfX4/HwQW4F0m63pdFofP9wXdel
-UqnwQfjPED4IH4QPwgfhg/BB+CAXB0mn0zKdTk2PUqlk63r1JZmlQdQ3iBeuP164/qLzvzoI
-PxYB8fl84vf75ev4W/1wOJRCoWC6Xr34Wq/XputVV+FwOJiuj8fjUi6XTdXv93ujQ9Hr9WSz
-2YhqKdVqNbEUiNowpzbQqZZKOBz+dXKqZrvdmq53u91GV8BsfS6XO70B7JquV18Wqy6EmXrV
-oXA6nQaEOq9YLEo+nxf+ksVfsvjhg/BB+OGD8EH44YPwwwfhg/DDB+GD8MMH4YPwwwfhg/DD
-B+GHD8IH4YcPwgfhhw/CB+GHD8IH4YcPwg8fhA/CDx/E3vkEm1504ZwBcTkAAAAASUVORK5C
-YII='
+	^ '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'
 ]
 
 { #category : #accessing }
