@@ -289,13 +289,7 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 		spec blessing: #baseline.
 		"specify the default repository for your project's packages"
 		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
-
-		spec project: 'Glamour' with: [ 
-			spec
-				versionString: #bleedingEdge;
-				className: 'ConfigurationOfGlamour'; 
-				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
-			].	
+	
 
 		"specify the dependencies between packages and projects"
 		spec
@@ -307,7 +301,6 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
 			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
 				spec 
-						requires: 'Glamour';
 						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
 			package: 'Neo-JSON-Core' with: [ 
 				spec 
@@ -343,6 +336,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
 	spec for: #'common' version: '1.4-baseline'.
+	spec for: #'pharo4.x' version: '1.4-baseline'.
 
 ]
 
@@ -363,7 +357,8 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.9'.
+	spec for: #'common' version: '1.10'.
+	spec for: #'pharo4.x' version: '1.10'.
 	spec for: #'pharo3.x' version: '1.6'.
 
 ]
@@ -381,6 +376,23 @@ ConfigurationOfRoassal2 >> version10: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.161';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.375';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-BenjaminVanRyseghem.4'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version110: spec [
+	<version: '1.10' imports: #('1.4-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.10'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.285';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.898';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15';
+			package: 'Neo-JSON-Core' with: 'Neo-JSON-Core-SvenVanCaekenberghe.29'. ].
 
 ]
 
