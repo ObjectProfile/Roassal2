@@ -28,13 +28,13 @@ b build.
 ^ b view'
 "
 Class {
-	#name : #RTTimeLineExample,
+	#name : #RTTimelineExample,
 	#superclass : #RTAbstractExample,
 	#category : #'Roassal2-Builder-Timeline'
 }
 
 { #category : #sources }
-RTTimeLineExample >> exampleClassAges [
+RTTimelineExample >> exampleClassAges [
 
 	| data b s |
 	data := (RTShape withAllSubclasses sortedAs: #ageInDaysRounded) select: #hasMethods.
@@ -52,7 +52,7 @@ b build.
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleClassAgesIcon [
+RTTimelineExample >> exampleClassAgesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAALU0lEQVR4XuWdV28USxCF/Xv4
 I8AD4g0khEgPiCwBIgpEzjnnHE3O2eSck8mYHE2yDSa6fPtr39o7zLW9M7sz493tlppNswvM
 ma5Tp6q6pqi2Nvi4cuWKPH36VI4ePSqXL1+2j3fu3JGbN2/K1atXpdb9Ue/YuVNk4cJgsyjM
@@ -111,7 +111,7 @@ qTgkH0Rg3uVDKGg2TpudtY6MfwAqnKrwgv1tpgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTTimeLineExample >> exampleColorPerEntry [
+RTTimelineExample >> exampleColorPerEntry [
 
 	| data normalizer b s d |
 	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
@@ -141,7 +141,7 @@ b build.
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleColorPerEntryIcon [
+RTTimelineExample >> exampleColorPerEntryIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAG8klEQVR4XuWc+U9aWxDH+4f2
 b/CXmvhLE6y2ebHRptW6tGqj0W4udbd9tXWpdS/igsqigCsqiwqCFJ9zn9/7Sp5PAef0iVwy
 k0wgMNxzOJ9zZs7MXe5omnwxktyRPwTygcgX+UDkA5Ev8oHIByJf5AORD0S+yAciH4h8kQ9E
@@ -179,7 +179,7 @@ EPlA5It8IPKByBf5QOQDkS/ygcgHIl/kA5Ev8oEYUP4G+IvNvnF7y3cAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTTimeLineExample >> exampleColorPerTimeLine [
+RTTimelineExample >> exampleColorPerTimeLine [
 
 		| data normalizer b s d |
 	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
@@ -209,7 +209,7 @@ b build.
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleColorPerTimeLineIcon [
+RTTimelineExample >> exampleColorPerTimeLineIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAG3ElEQVR4XuWcW09TSxTH/aB8
 Bl8k4cUEFX2QAAFUQAGD4apC0IpIkDtCsUC5S1vaAm25SVuKSqFF1z7855ydcKAtaziUbs5a
 yaSkXcxM5zezbnt33zIM+WIluSV/CeQDkS/ygcgHIl/kA5EPRL7IByIfiHyRD0Q+EPkiH4h8
@@ -247,7 +247,7 @@ XvliAZOlU/iTLxYoncgX+UDkA5Ev8oHIByJf5AORL/KByAciX+QDkQ9EvsgHIh+IfJEPRD4Q
 ]
 
 { #category : #sources }
-RTTimeLineExample >> exampleGantt01 [
+RTTimelineExample >> exampleGantt01 [
 
 	| data b s |
 	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
@@ -271,7 +271,7 @@ RTTimeLineExample >> exampleGantt01 [
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleGantt01Icon [
+RTTimelineExample >> exampleGantt01Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEJUlEQVR4XuWcSUsrQRSF/YOC
 CP6N7NyooETciCiCOCLOOKEoDgRBY5wVp2gcQBBxwgF048KF3LzcfvQuPqqfSXeV34EimyNW
 5+uquqe6UyXZLF82qYT/FfCB8MUHwgfCFx8IHwhffCB8IHzxgfCB8MUHwhcfCB8IX3wgfCB8
@@ -296,7 +296,7 @@ HwhffCB8IHzxgfCB8MUHAtEfxTYBJq0poOcAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTTimeLineExample >> exampleSimpleGantt [
+RTTimelineExample >> exampleSimpleGantt [
 
 	| data b s d |
 	data := #(#(WP1 0 5) #(WP2 5 8) #(WP3 7 10)).
@@ -324,7 +324,7 @@ b build.
 ]
 
 { #category : #icons }
-RTTimeLineExample >> exampleSimpleGanttIcon [
+RTTimelineExample >> exampleSimpleGanttIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAGG0lEQVR4XuWcV0tkTRCG9z/q
 pb9BBAXBG/OFomJ2FRXFnDAHFHPOOeeMOa2uIpbfvIdv9sKdcap3Hee4b0Hj7lie06ef6qrq
 6j7z7fWVX+wk3/iHgB8Iv/AD4QfCL/xA+IHwCz8QfiD8wg+EHwi/8APhF34g/ED4hR8IPxB+
@@ -358,6 +358,6 @@ FGr7KFv/TWngqwqMybRQ6FUgmNpYM0RFRfHv+tnFZZkU/vjFBqUTfuEHwg+EX/iB8APhF34g
 ]
 
 { #category : #accessing }
-RTTimeLineExample >> label [
+RTTimelineExample >> label [
 	^ 'Time line'
 ]
