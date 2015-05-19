@@ -31,8 +31,7 @@ Class {
 	#superclass : #RTAbstractGrapher,
 	#instVars : [
 		'sets',
-		'timelineLabel',
-		'elements'
+		'timelineLabel'
 	],
 	#category : #'Roassal2-Builder-Timeline'
 }
@@ -40,11 +39,6 @@ Class {
 { #category : #adding }
 RTTimeline >> add: aTimeLineSet [
 	sets add: aTimeLineSet
-]
-
-{ #category : #accessing }
-RTTimeline >> elements [
-	^ elements
 ]
 
 { #category : #'accessing - computed' }
@@ -56,7 +50,6 @@ RTTimeline >> indexOfLineIdentifier: anIdentifier [
 RTTimeline >> initialize [
 	super initialize.
 	sets := OrderedCollection new.
-	elements := OrderedCollection new.
 	timelineLabel := #yourself.
 	self axisY noTick; noLabel.
 ]
@@ -97,13 +90,10 @@ RTTimeline >> renderIn: aView [
 	self defineAxesIfNecessary.
 	
 	self renderAllDecoratorsBehind.
-	elements := OrderedCollection new.
-	sets do: [ :aSet | 
-			aSet renderIn: aView using: self.
-			elements addAll: aSet elements ].
+	sets do: [ :aSet | aSet renderIn: aView using: self ].
 	self renderAxis.	
 	self renderAllDecoratorsInFront.
-	self renderTimeLineLabels.
+	self renderTimeLineLabels
 ]
 
 { #category : #'private - utility' }

@@ -4,18 +4,23 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
+{ #category : #hooks }
+RTHorizontalTickLineDecorator >> axis [
+	^ builder getAxisY
+]
+
 { #category : #drawing }
 RTHorizontalTickLineDecorator >> render [	
 	| axis yLine mm |
 	axis := builder getAxisY.
 	mm := RTMetricNormalizer new.
-	(axis minValue to: axis maxValue by: axis step) do: [ :y |
+	(self minValue to: self maxValue by: self step) do: [ :y |
 		yLine := mm
 						getValue: y
-						min: axis fromPoint y 
-						max: axis toPoint y
-						minValue: axis minValue 
-						maxValue: axis maxValue.
+						min: self fromPoint y 
+						max: self toPoint y
+						minValue: self minValue 
+						maxValue: self maxValue.
 		self lineFrom: 	builder getAxisX fromPoint x @ yLine to: builder getAxisX toPoint x @ yLine.
 		]
 ]
