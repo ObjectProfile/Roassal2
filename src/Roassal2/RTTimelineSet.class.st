@@ -9,7 +9,8 @@ Class {
 		'lineIdentifier',
 		'objects',
 		'globalMin',
-		'globalMax'
+		'globalMax',
+		'elements'
 	],
 	#category : #'Roassal2-Builder-Timeline'
 }
@@ -17,6 +18,11 @@ Class {
 { #category : #configuration }
 RTTimelineSet >> defaultBarColor [
 	^ Color blue alpha: 0.4
+]
+
+{ #category : #accessing }
+RTTimelineSet >> elements [
+	^ elements
 ]
 
 { #category : #accessing }
@@ -75,6 +81,11 @@ RTTimelineSet >> initializeInteractionBuilder [
 RTTimelineSet >> initializeShapeBuilder [
 	shapeBuilder := RTShapeBuilder new.
 	shapeBuilder rectangle color: self defaultBarColor
+]
+
+{ #category : #accessing }
+RTTimelineSet >> interaction [
+	^ interactionBuilder 
 ]
 
 { #category : #accessing }
@@ -137,7 +148,7 @@ RTTimelineSet >> objects: anObject [
 { #category : #rendering }
 RTTimelineSet >> renderIn: view using: timelineBuilder [
 
-	| elements t |
+	| translator |
 	shapeBuilder 
 		height: [ :obj | timelineBuilder extent y / timelineBuilder numberOfLines - self gapBetweenTimeLines ].
 		
@@ -155,13 +166,13 @@ RTTimelineSet >> renderIn: view using: timelineBuilder [
 			maxValue: globalMax.
 
 	"For the location"
-	t := RTDirectLayoutTranslator new.
+	translator := RTDirectLayoutTranslator new.
 	elements do: [ :e | 
 		| nx ny indexY |
 		nx := ((start rtValue: e model) / globalMax * timelineBuilder extent x).
 		indexY := timelineBuilder indexOfLineIdentifier: (lineIdentifier rtValue: e model).
 		ny := (timelineBuilder getPixelPositionOf: 0 @ indexY) y.
-		t translateTopLeftOf: e to: nx @ ny ].
+		translator translateTopLeftOf: e to: nx @ ny ].
 
 ]
 
