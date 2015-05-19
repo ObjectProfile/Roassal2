@@ -53,12 +53,6 @@ RTLayoutBuilder >> cluster [
 	^ layout
 ]
 
-{ #category : #'public - layout' }
-RTLayoutBuilder >> date [
-	layout := RTDateLayout new.
-	^ layout
-]
-
 { #category : #building }
 RTLayoutBuilder >> doActionsOnEdgesFor: elements [
 	| allEdges asSet |
