@@ -82,6 +82,13 @@ RTGrapher >> getPixelPositionOf: aPoint [
 	^ datasets first getPixelPositionOf: aPoint
 ]
 
+{ #category : #utility }
+RTGrapher >> getPositionFromPixelPosition: aPoint [
+	"Return the position in pixel in the View for a given data point"
+	"This method should be called only if all the dataset have been set the min and max values"
+	^ datasets first getPositionFromPixelPosition: aPoint
+]
+
 { #category : #'data sets' }
 RTGrapher >> hasDataSet [
 	^ self numberOfDataSets > 0
