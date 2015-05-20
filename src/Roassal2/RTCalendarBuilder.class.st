@@ -6,21 +6,54 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'dates',
-		'dayShape',
-		'daySelector',
+		'dateShape',
+		'dateSelector',
 		'monthShape',
 		'yearShape',
-		'dayLayout',
+		'dateLayout',
 		'monthLayout',
 		'yearLayout',
-		'dayLabelShape'
+		'dayLabelShape',
+		'dateInteraction',
+		'monthInteraction',
+		'yearInteraction'
 	],
-	#category : #'Roassal2-Calendar'
+	#category : #'Roassal2-Builder-Calendar'
 }
 
 { #category : #hooks }
 RTCalendarBuilder >> createView [
 	^ super createView @ RTDraggableView.
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateInteraction [
+	^ dateInteraction
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateLayout [
+	^ dateLayout
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateSelector [
+	^ dateSelector
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateSelector: anObject [
+	dateSelector := anObject
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateShape [
+	^ dateShape
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> dateShape: aShapeBuilder [
+	dateShape := aShapeBuilder
 ]
 
 { #category : #accessing }
@@ -36,31 +69,6 @@ RTCalendarBuilder >> dates: anObject [
 { #category : #accessing }
 RTCalendarBuilder >> dayLabelShape [
 	^ dayLabelShape
-]
-
-{ #category : #accessing }
-RTCalendarBuilder >> dayLayout [
-	^ dayLayout
-]
-
-{ #category : #accessing }
-RTCalendarBuilder >> daySelector [
-	^ daySelector
-]
-
-{ #category : #accessing }
-RTCalendarBuilder >> daySelector: anObject [
-	daySelector := anObject
-]
-
-{ #category : #accessing }
-RTCalendarBuilder >> dayShape [
-	^ dayShape
-]
-
-{ #category : #accessing }
-RTCalendarBuilder >> dayShape: aShapeBuilder [
-	dayShape := aShapeBuilder
 ]
 
 { #category : #'accessing - computed' }
@@ -107,7 +115,7 @@ RTCalendarBuilder >> getDateStructure [
 { #category : #'accessing - computed' }
 RTCalendarBuilder >> getDays [
 	| timespan days current limit |
-	timespan := self daySelector rtValue: self dates.
+	timespan := self dateSelector rtValue: self dates.
 	
 	(timespan isKindOf: OrderedCollection) ifTrue: [ ^ timespan asSortedCollection ].
 	
@@ -125,35 +133,70 @@ RTCalendarBuilder >> getDays [
 { #category : #initialization }
 RTCalendarBuilder >> initialize [
 	super initialize.
-	dayShape := RTShapeBuilder new.
-	dayShape label text: [:date | date dayOfMonth ].
+	dateShape := RTShapeBuilder new.
+	dateShape label text: [:date | date dayOfMonth ].
 	
 	dayLabelShape := RTShapeBuilder new.
 	dayLabelShape rectangle size: 0.
 	
-	self daySelector: #yourself.
+	self dateSelector: #yourself.
 	
 	monthShape := RTShapeBuilder new.
 	monthShape composite: [ :s | 
 		s add: (RTLabel new text: [ :d | d name ]).
-		s add: (RTBox new color: Color transparent; borderColor: Color gray) ].
+		s add: (RTBox new color: Color transparent; borderColor: Color lightGray) ].
 	
 	yearShape := RTShapeBuilder new.
 	yearShape rectangle color: Color transparent.
 	
-	dayLayout := RTLayoutBuilder new.
-	dayLayout date.
+	dateLayout := RTLayoutBuilder new.
+	dateLayout date.
 	monthLayout := RTLayoutBuilder new.
 	monthLayout grid gapSize: 10.
 	yearLayout := RTLayoutBuilder new.
 	yearLayout grid gapSize: 10.
 	
+	dateInteraction := RTInteractionBuilder new.
+	monthInteraction := RTInteractionBuilder new.
+	yearInteraction := RTInteractionBuilder new.
+	
 
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> monthInteraction [
+	^ monthInteraction
 ]
 
 { #category : #accessing }
 RTCalendarBuilder >> monthLayout [
 	^ monthLayout 
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> monthShape [
+	^ monthShape
+]
+
+{ #category : #public }
+RTCalendarBuilder >> monthShapePath: cellSize [
+	^ RTSVGPath new 
+		borderColor: Color black;
+		path: [ :e | | month d w0 d0 d1 w1 csize t1 t2 |
+			csize := cellSize asPoint.
+			month := e model."an instance of Month".
+			t1 := month asDate.
+			t2 := Date newDay: month daysInMonth month: month name year: month year.
+			d0 := t1 weekdayIndex - 1.
+			d1 := t2 weekdayIndex - 1.
+			w0 := 0.
+			w1 := month weeks size-1.
+			d := 'M', (d0 * cellSize) asString , ',' , ((w0 + 1) * cellSize) asString
+     			, 'V' , (w0 * cellSize) asString , 'H' , (7 * cellSize) asString 
+				, 'V' , (w1 * cellSize) asString , 'H' , ((d1 + 1) * cellSize) asString
+				, 'V' , ((w1 + 1) * cellSize) asString , 'H 0'
+     			, 'V' , ((w0 + 1) * cellSize) asString , 'Z'.
+			d. ].
 ]
 
 { #category : #hooks }
@@ -175,16 +218,23 @@ RTCalendarBuilder >> renderIn: aView [
 			view add: month.
 			months add: month.
 			dayLabels := dayLabelShape elementsOn: (self daysIndex: asso2 value).
-			view addAll: dayLabels.
-			
-			days := dayShape elementsOn: asso2 value.
+			days := dateShape elementsOn: asso2 value.
 			view addAll: days.
-			dayLayout layout on: dayLabels, days.
-			RTNest new on: month nest: dayLabels,days.
+			
+			(dayLabels first extent = (0.0@0.0)) ifTrue: [ 
+				dateLayout layout on: days.
+				RTNest new on: month nest: days.
+			] ifFalse: [ 
+				view addAll: dayLabels.
+				dateLayout layout on: dayLabels, days.
+				RTNest new on: month nest: dayLabels,days. ].
+			dateInteraction setUpElements: days.
 			 ]. 
 		monthLayout layout on: months.
-		RTNest new on: year nest: months. ].
+		RTNest new on: year nest: months.
+		monthInteraction setUpElements: months. ].
 	yearLayout layout on: years.
+	yearInteraction setUpElements: years.
 
 	
 	
@@ -196,6 +246,11 @@ RTCalendarBuilder >> showDayNames [
 		| name |
 		name := Week nameOfDay: index.
 		name first asString, name second asString ].
+]
+
+{ #category : #accessing }
+RTCalendarBuilder >> yearInteraction [
+	^ yearInteraction
 ]
 
 { #category : #accessing }

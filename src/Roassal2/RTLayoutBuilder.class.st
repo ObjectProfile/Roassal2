@@ -55,6 +55,7 @@ RTLayoutBuilder >> cluster [
 
 { #category : #'public - layout' }
 RTLayoutBuilder >> date [
+	"Used by RTCalendarBuilder"
 	layout := RTDateLayout new.
 	^ layout
 ]
@@ -180,6 +181,13 @@ RTLayoutBuilder >> initialize [
 
 { #category : #accessing }
 RTLayoutBuilder >> layout [
+	^ layout
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> month [
+	"Used by RTCalendarBuilder"
+	layout := RTMonthLayout new.
 	^ layout
 ]
 

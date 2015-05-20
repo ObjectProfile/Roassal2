@@ -1,26 +1,43 @@
 "
-RTCalendarExample new installTitle: 'YearWithDayNames' 
+RTCalendarExample new installTitle: 'VisualizationCSV' 
 		code:
 '
-| b |
-b := RTCalendarBuilder new.
-b dayShape composite: [ :com | 
-	com add: (RTEllipse new color: [ :d | 
-		d = Date today
-			ifTrue: [ Color blue alpha: 0.2 ]
-			ifFalse: [Color transparent] ]; size: 18).
-	com add: (RTLabel new text: [:d| d dayOfMonth];
-		color: [:d | (d weekdayIndex = 1) 
-			ifTrue: [Color red] 
-			ifFalse: [ Color black ] ]) ].
+| b tab colors dictionary |
+tab := RTTabTable new input: 'http://bl.ocks.org/mbostock/raw/4063318/dji.csv' asUrl retrieveContents usingDelimiter: $,.
+tab removeFirstRow.
 
-b showDayNames.
+dictionary := Dictionary new.
+tab values do: [ :ar | | value |
+	value := (ar fifth asNumber - ar second asNumber)/ ar second asNumber.
+	dictionary at: ar first asDate put: value ].
+
+colors := #(#(165 0 38) #(215 48 38) #(244 109 67)
+	#(253 174 97) #(254 224 139) #(255 255 191) #(217 239 139)
+	 #(166 217 106) #(102 189 99) #(26 152 80) #(0 104 55)
+  ) collect: [ :ar| Color r: ar first g: ar second b: ar third range: 255 ].
+
+b := RTCalendarBuilder new.
+b dateShape rectangle size: 15; color: Color white; borderColor: Color lightGray.
+b monthShape shape: (b monthShapePath: 15.0).
 b yearShape composite: [ :comp | 
 	comp add: (RTLabel new text: [ :d | d year ]; height: 20 ).
-	comp add: (RTBox new color: [ Color blue alpha: 0.1 ]). ] .
-b dates: Year current.
+	comp add: (RTBox new color: Color transparent). ] .
+b dates: ((Year year: 1990) to: (Year year: 2010) ).
+b dateLayout gapSize: 0.
+b monthLayout month.
+b yearLayout horizontalLine.
+b dateShape if: [ :d | dictionary includesKey: d ] color: 
+	[ :d | | value index |
+	value := (dictionary at: d)+0.05.
+	index := (value * 11/ 0.1)+1.
+	index < 1 ifTrue: [ index := 1 ].
+	index > 11 ifTrue: [ index := 11 ].
+	colors at: index. ].
+b dateInteraction popup.
 b build.
+(b view elements select: [:e | e model isKindOf: Month]) pushFront.
 ^ b view
+
 
 '
 	
@@ -28,7 +45,7 @@ b build.
 Class {
 	#name : #RTCalendarExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Calendar'
+	#category : #'Roassal2-Builder-Calendar'
 }
 
 { #category : #sources }
@@ -99,11 +116,152 @@ gfAD4Rc/EH4g/OIHwg+EX/xA+IHwyy/6DSC1D9R8yJyVAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTCalendarExample >> exampleVisualizationCSV [
+
+| b tab colors dictionary |
+tab := RTTabTable new input: 'http://bl.ocks.org/mbostock/raw/4063318/dji.csv' asUrl retrieveContents usingDelimiter: $,.
+tab removeFirstRow.
+
+dictionary := Dictionary new.
+tab values do: [ :ar | | value |
+	value := (ar fifth asNumber - ar second asNumber)/ ar second asNumber.
+	dictionary at: ar first asDate put: value ].
+
+colors := #(#(165 0 38) #(215 48 38) #(244 109 67)
+	#(253 174 97) #(254 224 139) #(255 255 191) #(217 239 139)
+	 #(166 217 106) #(102 189 99) #(26 152 80) #(0 104 55)
+  ) collect: [ :ar| Color r: ar first g: ar second b: ar third range: 255 ].
+
+b := RTCalendarBuilder new.
+b dateShape rectangle size: 15; color: Color white; borderColor: Color lightGray.
+b monthShape shape: (b monthShapePath: 15.0).
+b yearShape composite: [ :comp | 
+	comp add: (RTLabel new text: [ :d | d year ]; height: 20 ).
+	comp add: (RTBox new color: Color transparent). ] .
+b dates: ((Year year: 1990) to: (Year year: 2010) ).
+b dateLayout gapSize: 0.
+b monthLayout month.
+b yearLayout horizontalLine.
+b dateShape if: [ :d | dictionary includesKey: d ] color: 
+	[ :d | | value index |
+	value := (dictionary at: d)+0.05.
+	index := (value * 11/ 0.1)+1.
+	index < 1 ifTrue: [ index := 1 ].
+	index > 11 ifTrue: [ index := 11 ].
+	colors at: index. ].
+b dateInteraction popup.
+b build.
+(b view elements select: [:e | e model isKindOf: Month]) pushFront.
+^ b view
+
+
+
+]
+
+{ #category : #icons }
+RTCalendarExample >> exampleVisualizationCSVIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTCalendarExample >> exampleYear [
 
 | b |
 b := RTCalendarBuilder new.
-b dayShape if: [ :date | date weekdayIndex = 1 ] color: Color red.
+b dateShape if: [ :date | date weekdayIndex = 1 ] color: Color red.
 b dates: Year current.
 b build.
 ^ b view
@@ -209,7 +367,7 @@ RTCalendarExample >> exampleYearShape [
 
 | b |
 b := RTCalendarBuilder new.
-b dayShape if: [ :date | date weekdayIndex = 1 ] color: Color red.
+b dateShape if: [ :date | date weekdayIndex = 1 ] color: Color red.
 b yearShape composite: [ :comp | 
 	comp add: (RTLabel new text: [ :d | d year ]; height: 20 ).
 	comp add: (RTBox new color: [:d | 
@@ -342,7 +500,7 @@ RTCalendarExample >> exampleYearWithDayNames [
 
 | b |
 b := RTCalendarBuilder new.
-b dayShape composite: [ :com | 
+b dateShape composite: [ :com | 
 	com add: (RTEllipse new color: [ :d | 
 		d = Date today
 			ifTrue: [ Color blue alpha: 0.2 ]
