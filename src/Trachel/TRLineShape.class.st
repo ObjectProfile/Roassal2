@@ -88,13 +88,15 @@ TRLineShape >> from [
 
 { #category : #accessing }
 TRLineShape >> from: aPoint [
-	from := aPoint
+	from := aPoint.
+	self resetPath
 ]
 
 { #category : #public }
 TRLineShape >> from: aPoint to: anotherPoint [
 	from := aPoint.
 	to := anotherPoint.
+	self resetPath
 
 ]
 
