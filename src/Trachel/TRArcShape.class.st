@@ -9,7 +9,6 @@ Class {
 		'betaAngle',
 		'innerRadius',
 		'externalRadius',
-		'center',
 		'origin',
 		'height',
 		'width',
@@ -50,12 +49,7 @@ TRArcShape >> bottomRight [
 
 { #category : #accessing }
 TRArcShape >> center [
-	^center
-]
-
-{ #category : #accessing }
-TRArcShape >> center: aPoint [
-	center:=aPoint
+	^ self encompassingRectangle center
 ]
 
 { #category : #hooks }
@@ -163,8 +157,9 @@ TRArcShape >> includesPoint: aPoint [
 	(betaAngle value % 360 = 0 )
 		ifFalse: [ bAngle := betaAngle value \\  360 ]
 		ifTrue: [ bAngle := betaAngle value ].
-	pointAngle:= ((aPoint x @ aPoint y) angleWith: self center) radiansToDegrees \\  360.
-	pDistanceOrigin := (aPoint squaredDistanceTo: self center) sqrt.
+		self flag: 'reivew this'.
+	pointAngle:= ((aPoint x @ aPoint y) angleWith: 0@0"<-") radiansToDegrees \\  360.
+	pDistanceOrigin := (aPoint squaredDistanceTo: 0@0"<-") sqrt.
 	((pDistanceOrigin < innerRadius value) or: (pDistanceOrigin > externalRadius value))
 		ifTrue: [ ^ false ].
 	(pointAngle % 360 = 0 )
@@ -185,7 +180,6 @@ TRArcShape >> includesPoint: aPoint [
 { #category : #initialization }
 TRArcShape >> initialize [
 	super initialize.
-	center := 0 @ 0.
 	height := 0.
 	width := 0.
 	externalRadius := 0.

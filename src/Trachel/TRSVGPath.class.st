@@ -217,6 +217,11 @@ TRSVGPath >> encompassingRectangle [
 ]
 
 { #category : #accessing }
+TRSVGPath >> extent [
+	^ rectangle extent.
+]
+
+{ #category : #accessing }
 TRSVGPath >> fillColor: aColor [
 	fillColor := aColor
 ]
