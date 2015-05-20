@@ -8,7 +8,7 @@ Class {
 		'selector',
 		'gapSize'
 	],
-	#category : #'Roassal2-Layouts'
+	#category : #'Roassal2-Builder-Calendar'
 }
 
 { #category : #hook }
@@ -22,7 +22,7 @@ RTDateLayout >> doExecute: elements [
 		date := self selector rtValue: e model.
 		(date isKindOf: Date) ifTrue: [ 
 			week := date asWeek.
-			currentWeek ifNil: [ currentWeek := week. index := 1. ].
+			currentWeek ifNil: [ currentWeek := week. index := index + 1. ].
 			currentWeek = week ifFalse: [ currentWeek := week. index := index +1 ].
 			position := date weekdayIndex @ index.
 		] ifFalse: [ 
