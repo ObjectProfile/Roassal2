@@ -98,6 +98,11 @@ TRConstraint class >> move: aShape between: s1 and: s2 offset: aFloat [
 ]
 
 { #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheBottomLeftOf: anotherShape [
+	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ ((anotherShape height/ -2) rounded))
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
 	^ aShape translateTo: anotherShape center
 
@@ -125,7 +130,7 @@ TRConstraint class >> move: aShape onTheRightOf: anotherShape using: translator 
 
 { #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape [
-	^ self move: aShape onTheTopLeftOf: anotherShape withPadding: 5
+	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ ((anotherShape height/ 2) rounded))
 ]
 
 { #category : #'public - moving' }
@@ -218,6 +223,16 @@ TRConstraint class >> stick: aShape between: s1 and: s2 offset: aFloat [
 	s1 addCallback: callback.
 	s2 addCallback: callback
 
+]
+
+{ #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheBottomLeftOf: anotherShape [
+	| b |
+	self move: aShape onTheBottomLeftOf: anotherShape. 
+	
+	b := [ :shape :step | self move: aShape onTheBottomLeftOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b) 
 ]
 
 { #category : #'public - sticking' }
