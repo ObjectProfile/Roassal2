@@ -211,7 +211,7 @@ RTCalendarBuilder >> renderIn: aView [
 		view add: year.
 		years add: year.
 		
-		months := OrderedCollection new.
+		months := RTGroup new.
 		asso1 value do: [ :asso2 | 
 			| month days dayLabels | 
 			month := monthShape elementOn: asso2 key.
