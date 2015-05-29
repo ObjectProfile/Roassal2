@@ -32,7 +32,8 @@ Class {
 	#instVars : [
 		'sets',
 		'timelineLabel',
-		'elements'
+		'elements',
+		'timelineLabelBuilder'
 	],
 	#category : #'Roassal2-Builder-Timeline'
 }
@@ -57,6 +58,8 @@ RTTimeline >> initialize [
 	super initialize.
 	sets := OrderedCollection new.
 	elements := OrderedCollection new.
+	timelineLabelBuilder := RTBuilder new.
+	timelineLabelBuilder shape label.
 	timelineLabel := #yourself.
 	self axisY noTick; noLabel.
 ]
@@ -65,7 +68,7 @@ RTTimeline >> initialize [
 RTTimeline >> label: aString on: position [
 	"Add a label in the view"
 	| e |
-	e := RTLabel elementOn: aString.
+	e := timelineLabelBuilder elementOn: aString.
 	e translateTo: position.
 	self view add: e.
 	^ e
@@ -147,4 +150,9 @@ RTTimeline >> timelineLabel [
 { #category : #accessing }
 RTTimeline >> timelineLabel: symbolOrBlock [
 	timelineLabel := symbolOrBlock
+]
+
+{ #category : #accessing }
+RTTimeline >> timelineLabelBuilder [
+	^ timelineLabelBuilder
 ]
