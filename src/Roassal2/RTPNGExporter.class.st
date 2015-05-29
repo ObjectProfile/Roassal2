@@ -24,7 +24,7 @@ RTPNGExporter >> builder: aViewOrABuilder [
 
 { #category : #util }
 RTPNGExporter >> cameraPositionNegated [
-	^ self encompassingRectangle center negated
+	^ self trachelCanvas camera position negated
 ]
 
 { #category : #util }
@@ -53,8 +53,10 @@ RTPNGExporter >> encompassingRectangle [
 
 { #category : #public }
 RTPNGExporter >> exportToFile [
-	| trachelCanvas surface  |
+	| trachelCanvas form surface viewExtent |
 	trachelCanvas := self trachelCanvas.
+	viewExtent := self viewExtent.
+	form := self createFormCanvas.
 	surface := self createSurface.
 	surface
 		drawDuring: [ :cs | 
@@ -67,6 +69,11 @@ RTPNGExporter >> exportToFile [
 			trachelCanvas shapes do: [ :trachelShape | trachelShape drawOn: cs ].
 			cs pathTransform loadIdentity scaleBy: 1.001.
 			"trachelCanvas fixedShapes do: [ :trachelShape | trachelShape drawOn: cs ]" ].
+	form
+		image: surface asForm
+		at: 0 @ 0
+		sourceRect: (0 @ 0 extent: surface extent)
+		rule: 34.
 	surface writeToPng: self fileName
 ]
 

@@ -22,7 +22,8 @@ Class {
 		'toPoint',
 		'maxValueManuallySet',
 		'minValueManuallySet',
-		'ticksCentered'
+		'ticksCentered',
+		'labelFontHeight'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -115,6 +116,7 @@ RTAxisConfiguration >> initialize [
 	super initialize.
 	labelConvertion := [ :number | (number asFloat round: 2) asString ].
 	positionLabel := [ :aLabel :aTick | aLabel translateTo: aTick position ].
+	labelFontHeight := 12.
 	numberOfTicks := 4.
 	numberOfLabels := numberOfTicks.
 	lineThickness := 1.
@@ -140,6 +142,16 @@ RTAxisConfiguration >> labelConversion [
 RTAxisConfiguration >> labelConversion: aOneArgBlock [
 	"The argument is a one arg block taking the numerical value and returning another numerical value or a string"
 	labelConvertion := aOneArgBlock
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> labelFontHeight [
+	^ labelFontHeight
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> labelFontHeight: anObject [
+	labelFontHeight := anObject
 ]
 
 { #category : #accessing }
