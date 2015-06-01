@@ -63,9 +63,9 @@ RTPNGExporter >> exportToFile [
 			"Probably not necessary since we have just created a surface"
 			surface clear.
 			cs pathTransform
-				translateBy: self viewHalfExtent;
-				scaleBy: self cameraScale;
-				translateBy: self cameraPositionNegated.
+				translateBy: self viewHalfExtent asFloatPoint;
+				scaleBy: self cameraScale asFloat;
+				translateBy: self cameraPositionNegated asFloatPoint.
 			trachelCanvas shapes do: [ :trachelShape | trachelShape drawOn: cs ].
 			cs pathTransform loadIdentity scaleBy: 1.001.
 			"trachelCanvas fixedShapes do: [ :trachelShape | trachelShape drawOn: cs ]" ].
