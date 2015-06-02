@@ -299,16 +299,55 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 				"Specfiy dependencies using the #requires: directive, you can refer to any name here, in this case to an external project"
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec 
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
 			package: 'Neo-JSON-Core' with: [ 
 				spec 
 						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
-			
-		spec 
-			"load the tests by default"
-			group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
-			group: 'test'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core');
-			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Neo-JSON-Core') ]
+			]
+]
+
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline15: spec [
+	<version: '1.5-baseline'>
+
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+
+		spec project: 'GlamourCore' with: [ 
+			spec
+				className: 'ConfigurationOfGlamourCore'; 
+				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
+			].	
+
+		spec
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Glamour-Tools' with: [ 
+				spec 
+					 	requires: 'GlamourCore';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+			package: 'Glamour-Roassal2-Presentations' with: [ 
+				spec 
+						requires: 'Glamour-Tools';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+					
+			package: 'GT-InspectorExtensions-CoreRoassal' with: [ 
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ];
+			package: 'Neo-JSON-Core' with: [ 
+				spec 
+						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+			]
 ]
 
 { #category : #catalog }
@@ -339,6 +378,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
 	spec for: #'common' version: '1.4-baseline'.
+	spec for: #'pharo4.x' version: '1.4-baseline'.
 
 ]
 
@@ -359,7 +399,8 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.9.1'.
+	spec for: #'common' version: '1.10'.
+	spec for: #'pharo4.x' version: '1.10'.
 	spec for: #'pharo3.x' version: '1.6'.
 
 ]
@@ -377,6 +418,43 @@ ConfigurationOfRoassal2 >> version10: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.161';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.375';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-BenjaminVanRyseghem.4'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version110: spec [
+	<version: '1.10' imports: #('1.4-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.10'.
+		spec author: 'AndreiChis'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.285';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.898';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15';
+			package: 'Neo-JSON-Core' with: 'Neo-JSON-Core-SvenVanCaekenberghe.29'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version111: spec [
+	<version: '1.11' imports: #('1.5-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.11'.
+		spec author: 'AlejandroInfante'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.285';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.898';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
+			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
+			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
+			package: 'GT-InspectorExtensions-CoreRoassal' with: '';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15';
+			package: 'Neo-JSON-Core' with: 'Neo-JSON-Core-SvenVanCaekenberghe.29'. ].
 
 ]
 
@@ -531,23 +609,8 @@ ConfigurationOfRoassal2 >> version18: spec [
 ]
 
 { #category : #versions }
-ConfigurationOfRoassal2 >> version191: spec [
-	<version: '1.9.1' imports: #('1.3-baseline' )>
-
-	spec for: #'common' do: [
-		spec blessing: #'stable'.
-		spec description: 'version 1.9.1'.
-		spec author: 'Alexandre'.
-		spec 
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.285';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.903';
-			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6'. ].
-
-]
-
-{ #category : #versions }
 ConfigurationOfRoassal2 >> version19: spec [
-	<version: '1.9' imports: #('1.3-baseline' )>
+	<version: '1.9' imports: #('1.4-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
