@@ -446,6 +446,7 @@ ConfigurationOfRoassal2 >> version111: spec [
 		spec blessing: #'stable'.
 		spec description: 'version 1.11'.
 		spec author: 'AlejandroInfante'.
+		spec project: 'GlamourCore' with: '3.1.1'.
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.285';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.898';
