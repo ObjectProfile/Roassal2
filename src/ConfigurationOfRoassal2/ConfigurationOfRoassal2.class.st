@@ -378,7 +378,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	<symbolicVersion: #'development'>
 
 	spec for: #'common' version: '1.4-baseline'.
-	spec for: #'pharo4.x' version: '1.4-baseline'.
+	spec for: #'pharo4.x' version: '1.5-baseline'.
 
 ]
 
@@ -399,8 +399,8 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.10'.
-	spec for: #'pharo4.x' version: '1.10'.
+	spec for: #'common' version: '1.11'.
+	spec for: #'pharo4.x' version: '1.11'.
 	spec for: #'pharo3.x' version: '1.6'.
 
 ]
