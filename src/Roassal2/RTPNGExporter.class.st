@@ -24,7 +24,7 @@ RTPNGExporter >> builder: aViewOrABuilder [
 
 { #category : #util }
 RTPNGExporter >> cameraPositionNegated [
-	^ self trachelCanvas camera position negated
+	^ self encompassingRectangle center negated
 ]
 
 { #category : #util }
