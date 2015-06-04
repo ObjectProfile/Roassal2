@@ -46,7 +46,7 @@ RTAreaBuilder >> initialize [
 	defined := true.
 	tension := 0.7.
 	lvar := 'L'.
-	self interpolator: RTLinearInterpolator new.
+	self interpolator: RTLinearPathBuilder new.
 	self shape shape: RTSVGPath new.
 	self shape path: [ :e | self pathFor: e ].
 	dataBlock := #yourself
@@ -55,7 +55,7 @@ RTAreaBuilder >> initialize [
 { #category : #public }
 RTAreaBuilder >> interpolator: anObject [
 	interpolate := anObject.
-	interpolateReverse := (anObject isKindOf: RTInterpolator ) 
+	interpolateReverse := (anObject isKindOf: RTLinePathBuilder ) 
 		ifTrue: [ lvar := interpolate closed ifTrue: [ 'M' ] ifFalse: 'L'.
 			 interpolate reverse. ]
 		ifFalse: [ interpolate ].
@@ -106,6 +106,7 @@ RTAreaBuilder >> renderIn: aView [
 	| elements |
 	elements := self shape elementsOn: data.
 	aView addAll: elements.
+	self interaction setUpElements: elements
 ]
 
 { #category : #public }

@@ -1,7 +1,7 @@
-Extension { #name : #RTInterpolator }
+Extension { #name : #RTLinePathBuilder }
 
 { #category : #'*Roassal2' }
-RTInterpolator >> rtValue: anArgument [
+RTLinePathBuilder >> rtValue: anArgument [
 	| value |
 	value := anArgument.
 	(anArgument isKindOf: Association)

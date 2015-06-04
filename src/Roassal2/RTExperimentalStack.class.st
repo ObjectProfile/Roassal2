@@ -57,7 +57,7 @@ RTExperimentalStack >> initialize [
 	stackOffsets := Dictionary new.
 	stackOffsets 
 		at: #wiggle put: [ :data| self wiggle: data ];
-		at: #silhoutte put: [ :data| self silhoutte: data ];
+		at: #silhouette put: [ :data| self silhouette: data ];
 		at: #expand put: [ :data| self expand: data ];
 		at: #zero put: zero.
 ]
