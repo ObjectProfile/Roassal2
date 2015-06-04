@@ -24,6 +24,11 @@ TREllipseShape >> computePath [
 	
 ]
 
+{ #category : #hooks }
+TREllipseShape >> defaultStrokeWidth [
+	^ 0.005
+]
+
 { #category : #testing }
 TREllipseShape >> includesPoint: aPoint [
 	"Implementation is taken over from EllipseMorph>>containsPoint:"
@@ -39,13 +44,20 @@ TREllipseShape >> includesPoint: aPoint [
 	^ (t1 < t2)  or: [ t1 closeTo: t2 ].
 ]
 
+{ #category : #initialization }
+TREllipseShape >> initialize [
+	super initialize.
+	self strokeWidth: self defaultStrokeWidth
+]
+
 { #category : #drawing }
 TREllipseShape >> preDrawOn: athensCanvas [
 	athensCanvas pathTransform
 		scaleBy: rectangle extent asFloatPoint
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
 TREllipseShape >> strokeWidth [
-	^ 0.005
+	^ super strokeWidth
+	"^ self defaultStrokeWidth "
 ]
