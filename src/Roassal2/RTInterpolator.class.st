@@ -1,43 +1,51 @@
-"
-An interpolator a way to create lines in SVG
-"
 Class {
 	#name : #RTInterpolator,
 	#superclass : #RTObject,
 	#instVars : [
-		'tension'
+		'start',
+		'stop'
 	],
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #testing }
-RTInterpolator >> closed [
-	^ false.
-]
-
-{ #category : #public }
-RTInterpolator >> interpolate: points [
+{ #category : #'as yet unclassified' }
+RTInterpolator class >> interpolate: a and: b [
+	| clazz |
+	clazz := self interpolatorFor: b.
 	
+	^ clazz new start: a; stop: b .
+		
 ]
 
-{ #category : #converting }
-RTInterpolator >> reverse [
-	^ self.
-]
-
-{ #category : #'*Roassal2' }
-RTInterpolator >> rtValue: anArgument [
-	| value |
-	value := anArgument.
-	(anArgument isKindOf: Association)
+{ #category : #'as yet unclassified' }
+RTInterpolator class >> interpolatorFor: b [
+	b isString
 		ifTrue: [ 
-			self tension: anArgument value.
-			value := anArgument key. ].
-	
-	^ self interpolate: value.
+			('#*' match: b) ifTrue: [ ^ RTColorInterpolator ].
+			^ nil. "RTStringInterpolator" ]. "TODO"
+	b isColor
+		ifTrue: [ ^ RTColorInterpolator ].
+	"b isArray
+		ifTrue: [ ^ RTArrayInterpolator ].
+	b isNumber
+		ifFalse: [^ RTObjectInterpolator]" "TODO"
+	^ RTNumberInterpolator
+
+
+		
 ]
 
-{ #category : #public }
-RTInterpolator >> tension: aNumber [
-	tension := aNumber
+{ #category : #'as yet unclassified' }
+RTInterpolator >> interpolate: anObject [
+	self subclassResponsibility 
+]
+
+{ #category : #'as yet unclassified' }
+RTInterpolator >> start: anObject [
+	start := anObject
+]
+
+{ #category : #'as yet unclassified' }
+RTInterpolator >> stop: anObject [
+	stop := anObject
 ]
