@@ -22,8 +22,10 @@ RTDraggableChildren >> initializeElement: element [
 		].
 	
 	element when: TRMouseDragging do: [ :e |
+		| d |
 		recursiveDrag value: e element value: e element. e signalUpdate.
-		set do: [ :e1 | e1 translateBy: e step ].
+		d := element view canvas camera distanceFromPixelToSpace: e step.
+		set do: [ :e1 | e1 translateBy: d ].
 		 ]
 	
 ]
