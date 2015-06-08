@@ -198,6 +198,13 @@ TRSVGPath >> curves [
 	^ curves
 ]
 
+{ #category : #accessing }
+TRSVGPath >> curves: anArray [
+	curves := anArray.
+	self computePolygons.
+	
+]
+
 { #category : #drawing }
 TRSVGPath >> drawOn: aCanvas [
 	| pt |
