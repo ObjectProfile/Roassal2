@@ -36,7 +36,7 @@ RTExperimentalStack >> expand: data [
 					v y: v y / o. ] ]
 			ifFalse: [ 
 				1 to: n do: [ :i |
-					((data at: i) at: j) y: i ] ]
+					((data at: i) at: j) y: k ] ]
 		].
 	1 to: m do: [ :j | y0 at: j put: 0 ].
 	
