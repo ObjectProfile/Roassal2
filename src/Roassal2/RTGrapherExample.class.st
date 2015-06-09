@@ -2440,7 +2440,7 @@ aVNcnVzWd0yGTvyTf0D8A+Kf/APiHxD/5B8Q/4D4J/+A+Cf/gPgHxD/5B8Q/IP7JPyD+AfFP
 RTGrapherExample >> exampleSeismDepthAndMag [
 
 |tab ds b |
-tab := RTTabTable new input:  'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv' asUrl retrieveContents usingDelimiter: $,.
+tab := RTTabTable new input:  'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv' asUrl retrieveContents usingDelimiter: $,.
 tab removeFirstRow.
 tab replaceEmptyValuesWith: '0' inColumns: #(4 5).
 tab convertColumnsAsFloat: #(4 5).

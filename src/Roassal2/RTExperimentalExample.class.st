@@ -33,6 +33,31 @@ RTExperimentalExample class >> bumpLayer: n [
 	^ arr collectWithIndex: [ :d :i | i@(0 max: d)].
 ]
 
+{ #category : #'as yet unclassified' }
+RTExperimentalExample >> createExampleButton [
+	| shape base |
+	base := Color r: 0 g: 84 b: 85 range: 256.
+	shape := RTCompositeShape new
+		add: (RTEllipse new width: 103; height: 50; 
+			color: Color gray);
+		add: (RTEllipse new width: 97; height: 47; 
+			color: base );
+		add: (RTEllipse new width: 71; height: 21;
+			color: (LinearGradientPaint new start: 0@0; stop: 0@0.7;
+colorRamp: {0.0 -> (Color white alpha: 0.4). 
+1.0 -> Color transparent})) translateBy: 0@ -10;
+		add: (RTLabel new text: 'Swap Data'; color: Color white).
+		
+	^ shape element.
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTExperimentalExample >> dataFor: dim stack: s. [
+	^ s stack: ( (1 to: dim y) collect: [:n | self class bumpLayer: dim x ] )
+]
+
 { #category : #sources }
 RTExperimentalExample >> exampleStackExpand [
  
@@ -487,22 +512,20 @@ x0aTt5dqDF9FuTKHXnMVjUaW0HjmC2P9H5zbfXvW5tQ1AAAAAElFTkSuQmCC'
 { #category : #'as yet unclassified' }
 RTExperimentalExample >> helper: method colorA: colorA colorB: colorB [
 
-| num m layers0 layers1 example s width height x y color area |
+| num m layers0 layers1 s width height x y color area button elements |
 num := 20."Number of layers"
 m := 200."Number of samples per layer"
 width := 960.
 height := 500.
 
-example := RTExperimentalExample.
-s := RTExperimentalStack new offset: method; yourself.
+s := RTExperimentalStack new 
+	offset: method; yourself.
 
-layers0 := s stack: ( (1 to: num) collect: [:n | example bumpLayer: m ] ).
-layers1 := s stack: ( (1 to: num) collect: [:n | example bumpLayer: m ] ).
+layers0 := self dataFor: m@num stack: s.
+layers1 := self dataFor: m@num stack: s.
 
 x := RTScale linear domain: { 1. m } ; range: { 0. width }.
-y := RTScale linear domain: {0. ((layers0, layers1) inject: Float fmin 
-	into: [ :max :arr | arr inject: max into: [:a :each | a max: (each y0 + each y) ] ])}; range: {height. 0}.
-	
+y := RTScale linear domain: {0. self maxYValueFor: layers0 and: layers1 }; range: {height. 0}.
 color := RTScale linear range: { colorA. colorB }.
 
 area := RTAreaBuilder new 
@@ -514,6 +537,20 @@ area shape color: [ :e | color scale: Random new next ].
 area interaction highlightColored: Color red.
 area build.
 
+button := self createExampleButton.
+elements := area view elements.
+area view add: button.
+TRConstraint move: button below: elements.
+button when: TRMouseClick do: [ | temp |
+	temp := layers0.
+	layers0 := layers1.
+	layers1 := temp.
+	elements doWithIndex: [ :e :i | e model: (layers0 at: i) ].
+	area view addAnimation: (RTXPSVGAnimation new 
+		on: elements
+		during: 2.5
+		path: area). ].
+
 ^ area view @ RTDraggableView.
 
 ]
@@ -521,4 +558,11 @@ area build.
 { #category : #accessing }
 RTExperimentalExample >> label [
 	^ 'Experimental'
+]
+
+{ #category : #'as yet unclassified' }
+RTExperimentalExample >> maxYValueFor: layers0 and: layers1 [ 
+
+	^ ((layers0, layers1) inject: Float fmin 
+	into: [ :max :arr | arr inject: max into: [:a :each | a max: (each y0 + each y) ] ])
 ]
