@@ -2808,6 +2808,57 @@ rK+vx3Lhxgrhlyw+fCF8IXz4QvhC+PCF8OEL4QvhwxfCF8KHL4QvhA9fCF8IH74QPnwhfCF8
 ]
 
 { #category : #sources }
+RTMondrianExample >> exampleRenderingCSVContent [
+
+| csvContent b values |
+csvContent := 
+'Santiago,5.1,Chile
+Valparaiso,0.5,Chile
+Paris,2.2,France
+Nice,0.7,France,
+Chile,16,
+France,66,'.
+values := (NeoCSVReader on: csvContent readStream) upToEnd.
+
+b := RTMondrian new.
+b shape circle 
+	size: [ :aName |  
+		(Float readFrom: (values detect: [ :a | a first = aName]) second) log * 30 ];
+	withTextAbove.
+
+b nodes: (values collect: #first).
+b edges connectFrom: [ :aName | (values detect: [ :a | a first = aName]) third ] .
+b layout tree.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTMondrianExample >> exampleRenderingCSVContentIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAELklEQVR4XuWaR0ssQRRG/Wn+
+HVe6cyGoC3GhCCKIOUcUFTEh5oQLAyoGDCjmuDBnr+99zethnDc9To/v4eA50LTOTNXIPV1V
+t26Z8P7OJ55I4IeAL4QPXwhfCB++EL4QPnwhfCF8+EL4QvjwhfDhC+EL4cMXwhfChy+EL4QP
+XwhfCB++ED58IXwhfPhC+EL48IXwhfDhC+EL4cMXwocvhC+ED18IXwgfvhC+ED58IXwhfPhC
+PmV2dtaWlpZMP8/Pz9tX+rq4uLDh4WHjC4mRoaEhJ3h5eXlWV1dnfX19Nj4+bpmZmTEFtbe3
+12pqaiw/P99GRkZscHDQsrKyrL6+3rq7uy03N9d5jS/Eg4GBASsqKrLGxkYrLS219vZ2a25u
+toqKipiF6K7+kpKSLCMj4119pqamWlNTk6Wnp9va2hpfSDScn5/bw8PDPw3Wy8uL3d/fG3/K
+8sHy8rKVlJS8u1dlZaXd3Nx8KYiTk5Mf+tTV0tJi19fXxhcSgf39/b8Cp6usrCzmwLW1tYXt
+071OTk74U5YXmt+9Are3t+c7cFNTUxFl/Ln4QrxQcLwCNzc3ZzH0F9W1urpqfCFhUIrrFbS7
+uztfQXt+frZohUxPT/OF+AliV1eX74ApEYhWyOjoKF+IF0p1e3p63GCadu5fmAKjun5/B38N
+icTu7q49Pj7a9va2vb6+xiyktbU1qlHy9PTEHyHhODw8tNPT0w/B0dqh12Pp7+rqyuJ5uopb
+IQr4Z0E/OjoyFQv99q19hlf2NjY2xt8Yhj7B2gz6abO5uRlTEFdWVkz7EhUstWb867LMj69l
+/Q92dnZMIyae6lnfIqSwsNA0V1dVVdnW1pZT/k5JSTHl/yqLawGvrq629fV1J8NSm4KCAmto
+aHDaqFp7fHxsExMTgc+rPqX39JoysbOzs0DbcCwuLlrwNIYeIW7AVRqpra11Sus6o9DvCqrK
+4ioi6tyjs7PTCVR/f7+zwLttdM/Ozg583i216D2tBYmJiYG2oYQmCq4U/V1YIboHp5f2GzeL
+0l2B1tN/e3v7IUhum46ODtPGMXjH7r7n3kPbhn5nKBp1/DXkD5pqVALXnsNv20hTk9D+5eDg
+4NN+3YcCL0RHtcHpp7ItP+3f3t4ifr64uNjS0tICx7aqkWmEzczMOO2Sk5MtJyfHObuXXGVf
+33VyGBdCQvcFsVRyI1FeXu705x7bioWFBWdE6mcd7WrNUbIgYTpv2djY4ArRkxks5LMn/ieT
+EE/1Km3QtFD/r++4vLx0xLv/zRJuk/mdhUXcxlCylWJrl84fIXz4QvhC+PCF8IXw4QvhC+HD
+F8KHL4QvhA9fCF8IH74QvhA+fCF8IXz4QvjwhfCF8OEL4QvhwxfCF8KHL4QvhA9fCB++EL4Q
+PnwhfCF8+EL4QvjwhfCF8OEL4QvhwxfCx5NfCTN7rZ7JLqUAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTMondrianExample >> exampleSimpleNesting [
 
 	| b |

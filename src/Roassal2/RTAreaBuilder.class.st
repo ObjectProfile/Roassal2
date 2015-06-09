@@ -109,11 +109,6 @@ RTAreaBuilder >> renderIn: aView [
 	self interaction setUpElements: elements
 ]
 
-{ #category : #'as yet unclassified' }
-RTAreaBuilder >> rtValue: e [
-	^ self pathFor: e
-]
-
 { #category : #public }
 RTAreaBuilder >> x0: aBlock [
 	x0 := aBlock
