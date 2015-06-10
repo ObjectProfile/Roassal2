@@ -9,7 +9,8 @@ Class {
 		'x',
 		'y',
 		'angle',
-		'content'
+		'content',
+		'fontSize'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
@@ -31,7 +32,7 @@ RTSVGText >> addOn: stream using: aSVGVisitor [
 	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
 	self closeDefWithContent: stream.
-	self addStringWithFont: self content  into: stream.
+	self addStringWithFont: self content fontSize: self fontSize into: stream.
 	self closeFullDef: stream.
 	closings do: [ :c | stream nextPutAll: c ].
 	self addExternalInteractions: aSVGVisitor
@@ -81,7 +82,18 @@ RTSVGText >> element: anElement text: aString at: aPoint color: aColor angle: an
 	self content: aString.
 	self x: aPoint x; y: aPoint y.
 	self fillColor: aColor.
-	self angle: anAngle
+	self angle: anAngle.
+	self fontSize: anElement fontSize.
+]
+
+{ #category : #accessing }
+RTSVGText >> fontSize [
+	^ fontSize
+]
+
+{ #category : #accessing }
+RTSVGText >> fontSize: anObject [
+	fontSize := anObject
 ]
 
 { #category : #initialization }
