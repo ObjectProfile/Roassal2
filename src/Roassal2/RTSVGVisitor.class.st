@@ -354,13 +354,16 @@ RTSVGVisitor >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor >> visitCanvas: aCanvas [
-	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses|
+	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses canvasShapes|
+	
+	
+	canvasShapes := aCanvas shapes sort: [ :a :b | a name < b name ].
 	lineClasses := Array with: TRLineShape with: TRBezierShape.
 	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
-	elementShapes := aCanvas shapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
-	edgeShapes := (aCanvas shapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.
-	nonDecorationShapes := (aCanvas shapes reject: [ :e | lineDecorationClasses includes: e class ]) asOrderedCollection.
-	decorationShapes := aCanvas shapes select: [ :e |  lineDecorationClasses includes: e class].
+	elementShapes := canvasShapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
+	edgeShapes := (canvasShapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.
+	nonDecorationShapes := (canvasShapes reject: [ :e | lineDecorationClasses includes: e class ]) asOrderedCollection.
+	decorationShapes := canvasShapes select: [ :e |  lineDecorationClasses includes: e class].
 	decoratedEdgeShapes := self separateDecorated: edgeShapes decorations: decorationShapes.
 	
 	stream 
@@ -451,6 +454,19 @@ RTSVGVisitor >> visitMondrianViewBuilder: aView [
 { #category : #visitor }
 RTSVGVisitor >> visitNoShape: aNoShape [
 	"Do nothing"
+]
+
+{ #category : #visitor }
+RTSVGVisitor >> visitPolygonShape: aPolygon [	
+	|borderColor fillColor box svgE|
+	((aPolygon color) isNil)
+		ifTrue: [ fillColor := Color r: 0 g: 0 b: 0]
+		ifFalse: [ fillColor := aPolygon color].
+	((aPolygon strokePaint) isNil)
+		ifFalse: [ borderColor := aPolygon strokePaint].
+	box := self alignRectangle: (aPolygon encompassingRectangle).
+	svgE := RTSVGPolygon new element: aPolygon box: box color: fillColor borderWidth: 1 borderColor: borderColor.
+	svgE addOn: stream using: self.
 ]
 
 { #category : #visitor }
