@@ -65,16 +65,6 @@ RTSVGEntity >> addOn: aStream using: aSVGVisitor [
 ]
 
 { #category : #adding }
-RTSVGEntity >> addPoints: anArrayOfPoints into: stream [
-	| s |
-	s := ((anArrayOfPoints asString copyReplaceAll: '@' with: ',') copyReplaceAll: '.' with: ' ') replaceAllRegex: '[(){}]' with: '' .
-	
-	stream
-		nextPutAll:
-				('points="', s,'" ').
-]
-
-{ #category : #adding }
 RTSVGEntity >> addPosition: stream [
 	self subclassResponsibility
 ]
@@ -90,16 +80,6 @@ RTSVGEntity >> addRotation: angle point: point into: stream [
 { #category : #transform }
 RTSVGEntity >> addScale: anInteger into: stream [
 	stream nextPutAll: ('scale(<1p>) ' expandMacrosWith: anInteger)
-]
-
-{ #category : #adding }
-RTSVGEntity >> addStringWithFont: aByteString fontSize: aSyze into: stream [
-	| converter |
-	converter := RTSVGStringConverter new.
-	stream
-		nextPutAll: '<tspan font-family = "Arial, Helvetica, sans-serif" font-size="', aSyze asString, 'px">';
-		nextPutAll: (converter convertString: aByteString);
-		nextPutAll: '</tspan>'
 ]
 
 { #category : #adding }

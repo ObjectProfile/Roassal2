@@ -14,8 +14,8 @@ RTAbstractLine class >> edgeFrom: el1 to: el2 [
 ]
 
 { #category : #public }
-RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
+RTAbstractLine class >> edgesFrom: element toAll: someElements [
+	^ (RTEdge from: element toAll: someElements) addShape: self
 ]
 
 { #category : #public }
@@ -57,8 +57,8 @@ RTAbstractLine >> edgeFrom: el1 to: el2 [
 ]
 
 { #category : #public }
-RTAbstractLine >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
+RTAbstractLine >> edgesFrom: element toAll: someElements [
+	^ (RTEdge from: element toAll: someElements) addShape: self
 ]
 
 { #category : #'attach point' }
