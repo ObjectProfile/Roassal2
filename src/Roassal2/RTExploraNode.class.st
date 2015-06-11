@@ -133,7 +133,7 @@ RTExploraNode >> collapseOnDirection: aDirection [
 { #category : #adding }
 RTExploraNode >> connectTo: aNode with: lineShape [
 	| edge |
-	self assert: aNode class == RTExploraNode.
+	self assert: (aNode isKindOf: RTExploraNode).
 	(self isConnectedWith: aNode)
 		ifFalse: [
 			edge := RTEdge from: self element to: aNode element.
@@ -323,7 +323,7 @@ RTExploraNode >> removeEdgesOnDirection: aDirection [
 
 { #category : #removing }
 RTExploraNode >> removeExpandedNode: aNode [
-	self assert: aNode class == RTExploraNode.
+	self assert: (aNode isKindOf: RTExploraNode).
 	directions keys do: [ :direction | 
 		(expandedNodes at: direction) remove: aNode ifAbsent: [] ]
 ]
