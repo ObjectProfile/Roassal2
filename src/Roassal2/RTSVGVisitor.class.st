@@ -376,12 +376,6 @@ RTSVGVisitor >> visitCanvas: aCanvas [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitCompositeShape: aCompositeShape [
-	aCompositeShape shape1 accept: self.
-	aCompositeShape shape2 accept: self.
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitDiamondShape: diamondShape [
 	| aid color bColor w s svgE|
 	aid := self getDecorationId: diamondShape.
