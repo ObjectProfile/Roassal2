@@ -21,7 +21,8 @@ RTEllipse >> accept: aVisitor [
 { #category : #initialization }
 RTEllipse >> initialize [
 	super initialize.
-	color := self defaultColor
+	color := self defaultColor.
+	self borderWidth: self trachelShapeClass defaultStrokeWidth
 ]
 
 { #category : #hooks }
