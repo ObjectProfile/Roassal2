@@ -8,6 +8,17 @@ Class {
 }
 
 { #category : #tests }
+TREllipseShapeTest >> testStrokeWidth [
+	self assert: TREllipseShape new strokeWidth equals: TREllipseShape new defaultStrokeWidth.
+]
+
+{ #category : #tests }
+TREllipseShapeTest >> testStrokeWidth02 [
+	self assert: TREllipseShape new defaultStrokeWidth equals: 0.005.
+
+]
+
+{ #category : #tests }
 TREllipseShapeTest >> testWidth [
 
 	| s |
