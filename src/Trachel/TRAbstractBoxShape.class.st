@@ -50,12 +50,9 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 
 { #category : #drawing }
 TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
-	| scale ratio |
+	| ratio |
 	self canvas ifNil: [ ^ self ].
-	scale := self canvas camera scale.
-	scale < 1 
-		ifTrue: [ ratio := self strokeWidth ] 
-		ifFalse: [ ratio := self strokeWidth / (scale ) ].
+	ratio := self scaledStrokeWidth.
 	^ strokePaint
 		ifNotNil: [ 
 			(athensCanvas setStrokePaint: strokePaint) width: ratio asFloat.
@@ -157,6 +154,15 @@ TRAbstractBoxShape >> rectangle: aRectangle [
 	"(oldExtent = (0 @ 0)) ifFalse: [ 
 		self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ].
 "
+]
+
+{ #category : #drawing }
+TRAbstractBoxShape >> scaledStrokeWidth [
+	| scale |
+	scale := self canvas camera scale.
+	^ scale < 1
+		ifTrue: [ self strokeWidth ]
+		ifFalse: [ self strokeWidth / scale ]
 ]
 
 { #category : #testing }

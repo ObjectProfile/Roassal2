@@ -4,6 +4,11 @@ Class {
 	#category : #'Trachel-Shapes'
 }
 
+{ #category : #hooks }
+TREllipseShape class >> defaultStrokeWidth [
+	^ 0.005
+]
+
 { #category : #visitor }
 TREllipseShape >> accept: aVisitor [
 	aVisitor visitEllipseShape: self
@@ -26,7 +31,7 @@ TREllipseShape >> computePath [
 
 { #category : #hooks }
 TREllipseShape >> defaultStrokeWidth [
-	^ 0.005
+	^ self class defaultStrokeWidth
 ]
 
 { #category : #testing }
@@ -56,8 +61,7 @@ TREllipseShape >> preDrawOn: athensCanvas [
 		scaleBy: rectangle extent asFloatPoint
 ]
 
-{ #category : #accessing }
-TREllipseShape >> strokeWidth [
-	^ super strokeWidth
-	"^ self defaultStrokeWidth "
+{ #category : #drawing }
+TREllipseShape >> scaledStrokeWidth [
+	^ self strokeWidth 
 ]
