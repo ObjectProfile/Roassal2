@@ -59,7 +59,7 @@ RTScrollBarBuilder >> barHeight [
 	(self barSpecific = #scalable) ifTrue: [
 		| max min s |
 		
-		max := self size - 10.
+		max := self size -50.
 		min := 10.
 			
 		s := (self size * (self view canvas extent y) / (self objectsFromSpaceToPixelForRectangle height) / self view canvas camera scale).
@@ -97,7 +97,7 @@ RTScrollBarBuilder >> barWidth [
 	(self barSpecific = #scalable) ifTrue: [
 		| max min s |
 		
-		max := self size -10.
+		max := self size -50.
 		min := 10.
 			
 		s := (self size * (self view canvas extent x) / (self objectsFromSpaceToPixelForRectangle width) / self view canvas camera scale).
