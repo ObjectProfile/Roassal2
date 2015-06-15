@@ -75,6 +75,7 @@ RTScrollBarBasic >> addAnimations [
 		].
 	
 	objects when: TRMouseDragging do: [ :evt |	self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.].
+	
 	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 	
 	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate. ]).
