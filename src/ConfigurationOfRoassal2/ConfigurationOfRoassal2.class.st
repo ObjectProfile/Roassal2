@@ -57,6 +57,21 @@ ConfigurationOfRoassal2 class >> baseConfigurationClassIfAbsent: aBlock [
 
 ]
 
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogContactInfo [
+	^ 'info@objectprofile.com'
+]
+
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogDescription [
+	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
+]
+
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogKeywords [
+	^ #('visualization' 'data' 'charting')
+]
+
 { #category : #private }
 ConfigurationOfRoassal2 class >> ensureMetacello [
 
@@ -348,21 +363,6 @@ ConfigurationOfRoassal2 >> baseline15: spec [
 				spec 
 						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 			]
-]
-
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogContactInfo [
-	^ 'info@objectprofile.com'
-]
-
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogDescription [
-	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
-]
-
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogKeywords [
-	^ #('visualization' 'data' 'charting')
 ]
 
 { #category : #accessing }
