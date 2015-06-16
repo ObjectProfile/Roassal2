@@ -74,7 +74,7 @@ RTScrollBarBasic >> addAnimations [
 			]. 
 		].
 	
-	objects when: TRMouseDragging do: [ :evt |	self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.].
+	objects do: [:e | e addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])].
 	
 	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 	
@@ -183,7 +183,6 @@ RTScrollBarBasic >> signalUpdatePosition [
 				self shapes stop position: (pos x + (sizeNow / 2) -1)@(self shapes surroundingRectangle position y).
 				
 				self shapes bar position: (pr + (self shapes start position x - 1))@(pos y).	
-				
 				
 				].
 			

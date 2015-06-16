@@ -48,6 +48,26 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> addObject: anElement [
+	"Add a new element to react with the scrollBar, for example in RTExploraBuilder"
+	self objects add: anElement.
+	anElement addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.]).
+	
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> addObjects: anRTGroup [
+	"Add new elements to react with the scrollBar"
+	self objects addAll: anRTGroup.
+	anRTGroup do: [:e | e addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])].
+	
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> addShapesToView [
 	
 	self shapes collection do: [ :s | self view canvas addFixedShape: s ].
