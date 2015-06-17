@@ -298,15 +298,21 @@ RTScrollBarBuilder >> signalUpdate [
 	self assert: (self shapes isNotNil).
 
 	(self shapes collection) ifNotEmpty: [ 
-	
+
 		(self fixedPositionBlock isBlock) ifTrue: [ 
 			self signalUpdatePosition.				
 			].
 	
 		(self sizeBlock isBlock) ifTrue: [  
 			self signalUpdateSize.
-			].
-		].
+			] ifFalse: [ 
+				(self orientation = #horizontal) ifTrue: [
+						self positionOnBorderHorizontal.
+					] ifFalse: [ 
+						self positionOnBorderVertical.
+					 ]
+				]
+			 ].
 	self view signalUpdate. 
 	
 ]
