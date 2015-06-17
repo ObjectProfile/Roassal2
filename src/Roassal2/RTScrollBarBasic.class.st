@@ -68,13 +68,15 @@ RTScrollBarBasic >> addAnimations [
 			(self orientation = #vertical) ifTrue: [
 				translation := (self reverseTranslationVertical: evt).
 				].
-			((margeRectangle includesPoint: (bar position + translation)) & (self objectsRectangle containsPoint: (self view canvas camera position))) ifTrue: [ 
+			((margeRectangle includesPoint: (bar position + translation))) ifTrue: [ 
 				shapes bar translateBy: translation.
 				self view signalUpdate
 			]. 
 		].
 	
-	objects do: [:e | e addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])].
+	objects do: [:e | e addCallback: (TRTranslationCallback new block: [
+			self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])
+		].
 	
 	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 	
@@ -133,6 +135,19 @@ RTScrollBarBasic >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+RTScrollBarBasic >> positionOnBorderHorizontal [
+	((self shapes bar position x - (self barWidth / 2)) < (self shapes start position x)) ifTrue: [ self shapes bar translateTo: (self shapes start position x + (self barWidth / 2))@(self shapes start position y)].
+	((self shapes bar position x + (self barWidth / 2)) > (self shapes stop position x)) ifTrue: [ self shapes bar translateTo: (self shapes stop position x - (self barWidth / 2))@(self shapes start position  y)].
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBasic >> positionOnBorderVertical [
+	((self shapes bar position y - (self barHeight / 2)) < (self shapes start position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes start position y + (self barHeight / 2))].
+	((self shapes bar position y + (self barHeight / 2)) > (self shapes stop position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes stop position y - (self barHeight / 2))].
+
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBasic >> renderIn: aView [
 
 	(self objects isNil) ifTrue:[self defaultObjects].
@@ -171,12 +186,11 @@ RTScrollBarBasic >> signalUpdatePosition [
 	
 	pos := self fixedPosition.
 	sizeNow := self size.
-	(self movable = #isMovable) ifFalse: [ 
 		
 			(self orientation = #horizontal) ifTrue: [
-		
-				pr := ((self shapes bar position x)-(self shapes surroundingRectangle position x - (self shapes surroundingRectangle width/2))) / (self shapes surroundingRectangle width) * sizeNow.		
 				
+				pr := (((self view canvas camera position x) - (self objectsRectangle origin x)) / (self objectsRectangle width)) * sizeNow.
+	
 				self shapes surroundingRectangle position: pos.
 				
 				self shapes start position: (pos x - (sizeNow / 2) +1)@(self shapes surroundingRectangle position y).
@@ -187,8 +201,8 @@ RTScrollBarBasic >> signalUpdatePosition [
 				].
 			
 			(self orientation = #vertical) ifTrue: [
-				
-				pr := ((self shapes bar position y)-(self shapes surroundingRectangle position y - (self shapes surroundingRectangle height/2))) / (self shapes surroundingRectangle height) * sizeNow.
+					
+				pr := (((0@(self view canvas camera position y)) dist: (0@(self objectsRectangle origin y))) / (self objectsRectangle height)) * (self shapes surroundingRectangle height).
 								
 				self shapes surroundingRectangle position: pos.
 				
@@ -200,7 +214,6 @@ RTScrollBarBasic >> signalUpdatePosition [
 			].
 			
 		self shapes margeRectangle position: pos.	
-		].
 ]
 
 { #category : #'as yet unclassified' }
@@ -216,8 +229,7 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes margeRectangle width: (sizeNow - self barWidth).		
 				self shapes bar width: self barWidth.
 				
-				((self shapes bar position x - (self barWidth / 2)) < (self shapes start position x)) ifTrue: [ self shapes bar translateTo: (self shapes start position x + (self barWidth / 2))@(self shapes start position y)].
-				((self shapes bar position x + (self barWidth / 2)) > (self shapes stop position x)) ifTrue: [ self shapes bar translateTo: (self shapes stop position x - (self barWidth / 2))@(self shapes start position  y)].
+				self positionOnBorderHorizontal.
 				
 				].
 	(self orientation = #vertical) ifTrue: [
@@ -228,9 +240,11 @@ RTScrollBarBasic >> signalUpdateSize [
 				self shapes margeRectangle height: (sizeNow - (self barHeight)).
 				self shapes bar height: self barHeight.
 				
-				((self shapes bar position y - (self barHeight / 2)) < (self shapes start position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes start position y + (self barHeight / 2))].
-				((self shapes bar position y + (self barHeight / 2)) > (self shapes stop position y)) ifTrue: [ self shapes bar translateTo: (self shapes start position  x)@(self shapes stop position y - (self barHeight / 2))].
+				self positionOnBorderVertical.
+				
 				].
+				
+				
 ]
 
 { #category : #'as yet unclassified' }
