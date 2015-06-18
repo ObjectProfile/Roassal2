@@ -119,7 +119,7 @@ RTScrollBarBuilder >> barWidth [
 		
 		max := self size -50.
 		min := 10.
-			
+		
 		s := (self size * (self view canvas extent x) / (self objectsFromSpaceToPixelForRectangle width) / self view canvas camera scale).
 		
 		(s > max) ifTrue: [ ^max ].
@@ -136,6 +136,10 @@ RTScrollBarBuilder >> configureView: aView [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> defaultObjects [
 	self objects: self view elements.
+	(self objects isEmpty) ifTrue: [ 
+		self objectsRectangle: (Rectangle origin: 0@0 corner:10@10). 
+		self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
+		]
 ]
 
 { #category : #'as yet unclassified' }
@@ -196,8 +200,8 @@ RTScrollBarBuilder >> objects [
 RTScrollBarBuilder >> objects: anRTGroup [
 	"can be specified if you don't want all the elements of the view to move"
 	objects := anRTGroup.
-	objectsRectangle := (self view canvas camera encompassingRectangleOf: self objects).
-	objectsFromSpaceToPixelForRectangle := (self view canvas camera fromSpaceToPixelForRectangle: (objectsRectangle))
+	self objectsRectangle: (self view canvas camera encompassingRectangleOf: self objects).
+	self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
 	
 	
 ]
@@ -209,9 +213,17 @@ RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangle [
 ]
 
 { #category : #'as yet unclassified' }
+RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangle: aRectangle [
+	"encompassing rectangles of objects in the view, taking care of scale"
+	objectsFromSpaceToPixelForRectangle := aRectangle
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
 RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangleUpdate [
 	"used by the full signalUpdate"
-	objectsFromSpaceToPixelForRectangle := (self view canvas camera fromSpaceToPixelForRectangle: (objectsRectangle))
+	self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
 	
 ]
 
@@ -233,7 +245,7 @@ RTScrollBarBuilder >> objectsRectangle: aRectangle [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> objectsRectangleUpdate [
 	"used by the full signalUpdate"
-	objectsRectangle := (self view canvas camera encompassingRectangleOf: self objects).
+	self objectsRectangle: (self view canvas camera encompassingRectangleOf: self objects).
 ]
 
 { #category : #'as yet unclassified' }
@@ -251,12 +263,10 @@ RTScrollBarBuilder >> orientation: aSymbol [
 RTScrollBarBuilder >> renderIn: aView [
 
 	(self objects isNil) ifTrue:[self defaultObjects].
-	self assert: (objects isNotEmpty).
 	
 	(self scrollBarType = #isBasic) ifTrue: [ 
 		self becomeForward: (RTScrollBarBasic fromBuilder: self).
 		self build.
-		self signalUpdate.
 		 ].
 	
 	(self scrollBarType = #isPad) ifTrue: [ 
