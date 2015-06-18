@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 RTScrollBarBasic class >> fromBuilder: b [
 
-	 ^ self new view: b view; objects: b objects; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
+	 ^ self new view: b view; objects: b objects; objectsRectangle: b objectsRectangle; objectsFromSpaceToPixelForRectangle: b objectsFromSpaceToPixelForRectangle; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
 ]
 
 { #category : #'as yet unclassified' }
@@ -151,7 +151,7 @@ RTScrollBarBasic >> positionOnBorderVertical [
 RTScrollBarBasic >> renderIn: aView [
 
 	(self objects isNil) ifTrue:[self defaultObjects].
-	self assert: (objects isNotEmpty).
+
 	self defineShapes.
 	self addShapesToView.
 	self addAnimations.
