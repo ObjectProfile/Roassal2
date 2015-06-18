@@ -31,7 +31,6 @@ Class {
 	#name : #RTScrollBarBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
-		'objects',
 		'fixedPosition',
 		'size',
 		'scrollBarType',
@@ -41,31 +40,11 @@ Class {
 		'shapes',
 		'barShape',
 		'barSpecific',
-		'objectsRectangle',
-		'objectsFromSpaceToPixelForRectangle'
+		'encompassingRectangleFromSpaceToPixel',
+		'encompassingRectangle'
 	],
 	#category : #'Roassal2-Builder-ScrollBar'
 }
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> addObject: anElement [
-	"Add a new element to react with the scrollBar, for example in RTExploraBuilder"
-	self objects add: anElement.
-	anElement addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.]).
-	
-	
-	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> addObjects: anRTGroup [
-	"Add new elements to react with the scrollBar"
-	self objects addAll: anRTGroup.
-	anRTGroup do: [:e | e addCallback: (TRTranslationCallback new block: [ self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])].
-	
-	
-	
-]
 
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> addShapesToView [
@@ -82,7 +61,7 @@ RTScrollBarBuilder >> barHeight [
 		max := self size -50.
 		min := 10.
 			
-		s := (self size * (self view canvas extent y) / (self objectsFromSpaceToPixelForRectangle height) / self view canvas camera scale).
+		s := (self size * (self view canvas extent y) / (self encompassingRectangleFromSpaceToPixel height) / self view canvas camera scale).
 		
 		(s > max) ifTrue: [ ^max ].
 		(s < min) ifTrue: [ ^min ].
@@ -120,7 +99,7 @@ RTScrollBarBuilder >> barWidth [
 		max := self size -50.
 		min := 10.
 		
-		s := (self size * (self view canvas extent x) / (self objectsFromSpaceToPixelForRectangle width) / self view canvas camera scale).
+		s := (self size * (self view canvas extent x) / (self encompassingRectangleFromSpaceToPixel width) / self view canvas camera scale).
 		
 		(s > max) ifTrue: [ ^max ].
 		(s < min) ifTrue: [ ^min ].
@@ -134,12 +113,10 @@ RTScrollBarBuilder >> configureView: aView [
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> defaultObjects [
-	self objects: self view elements.
-	(self objects isEmpty) ifTrue: [ 
-		self objectsRectangle: (Rectangle origin: 0@0 corner:10@10). 
-		self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
-		]
+RTScrollBarBuilder >> defaultEncompassingRectangle [
+	
+	self encompassingRectangle: (Rectangle origin: 0@0 corner: 10@10)
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -152,6 +129,44 @@ RTScrollBarBuilder >> defaultScrollBar [
 	self size: 200.
 	self width: 20.
 	self orientation: #horizontal	
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangle [
+	^ encompassingRectangle
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangle: aRectangle [
+	encompassingRectangle := aRectangle
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel [
+	^ encompassingRectangleFromSpaceToPixel
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel: aRectangle [
+	encompassingRectangleFromSpaceToPixel := aRectangle
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixelUpdate [
+	
+	self encompassingRectangleFromSpaceToPixel: (self view canvas camera fromSpaceToPixelForRectangle: (self encompassingRectangle))
+
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> encompassingRectangleUpdate [
+	
+	self encompassingRectangle: (self view canvas camera encompassingRectangleOf: self view elements )
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -192,60 +207,23 @@ RTScrollBarBuilder >> movable: aSymbol [
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objects [
-	^ objects
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objects: anRTGroup [
-	"can be specified if you don't want all the elements of the view to move"
-	objects := anRTGroup.
-	self objectsRectangle: (self view canvas camera encompassingRectangleOf: self objects).
-	self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
+RTScrollBarBuilder >> notify [
+	"Update the scroll bar"
+	self encompassingRectangleUpdate.
+	self encompassingRectangleFromSpaceToPixelUpdate.
+	
 	
 	
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangle [
-	^ objectsFromSpaceToPixelForRectangle 
-	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangle: aRectangle [
-	"encompassing rectangles of objects in the view, taking care of scale"
-	objectsFromSpaceToPixelForRectangle := aRectangle
+RTScrollBarBuilder >> notifyWith: anElement [
+	"Update the scroll bar and add the callback"
+	self notify.
+	anElement addCallback: (TRTranslationCallback new block: [ self encompassingRectangleUpdate. self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate.]).
 	
 	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsFromSpaceToPixelForRectangleUpdate [
-	"used by the full signalUpdate"
-	self objectsFromSpaceToPixelForRectangle: (self view canvas camera fromSpaceToPixelForRectangle: (self objectsRectangle))
 	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsRectangle [
-	"encompassing rectangles of objects in the view"
-	^ objectsRectangle
-	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsRectangle: aRectangle [
-	"encompassing rectangles of objects in the view"
-	objectsRectangle := aRectangle
-	
-	
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> objectsRectangleUpdate [
-	"used by the full signalUpdate"
-	self objectsRectangle: (self view canvas camera encompassingRectangleOf: self objects).
 ]
 
 { #category : #'as yet unclassified' }
@@ -262,8 +240,6 @@ RTScrollBarBuilder >> orientation: aSymbol [
 { #category : #'as yet unclassified' }
 RTScrollBarBuilder >> renderIn: aView [
 
-	(self objects isNil) ifTrue:[self defaultObjects].
-	
 	(self scrollBarType = #isBasic) ifTrue: [ 
 		self becomeForward: (RTScrollBarBasic fromBuilder: self).
 		self build.

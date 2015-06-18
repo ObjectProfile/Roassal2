@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 RTScrollBarBasic class >> fromBuilder: b [
 
-	 ^ self new view: b view; objects: b objects; objectsRectangle: b objectsRectangle; objectsFromSpaceToPixelForRectangle: b objectsFromSpaceToPixelForRectangle; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
+	 ^ self new view: b view; encompassingRectangle: b encompassingRectangle; encompassingRectangleFromSpaceToPixel: b encompassingRectangleFromSpaceToPixel; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
 ]
 
 { #category : #'as yet unclassified' }
@@ -29,7 +29,7 @@ RTScrollBarBasic >> addAnimations [
 	(self orientation = #horizontal) ifTrue: [ 
 		bar when: TRMouseDragging do: [ :evt |
 			
-			(self objectsRectangle containsPoint: (self view canvas camera position)) ifFalse: [ (self view canvas camera) translateTo:  ((self objectsRectangle) pointNearestTo: (self view canvas camera position))  ].
+			(self encompassingRectangle containsPoint: (self view canvas camera position)) ifFalse: [ (self view canvas camera) translateTo:  ((self encompassingRectangle) pointNearestTo: (self view canvas camera position))  ].
 			
 			(margeRectangle includesPoint: (bar position + ((evt step x)@0))) & (surroundingRectangle includesPoint: (evt position x)@(bar position y)) ifTrue: [  
 				bar translateBy: (evt step x)@0.
@@ -42,7 +42,7 @@ RTScrollBarBasic >> addAnimations [
 	(self orientation = #vertical) ifTrue: [ 
 		bar when: TRMouseDragging do: [ :evt |
 			
-			(self objectsRectangle containsPoint: (self view canvas camera position)) ifFalse: [ (self view canvas camera) translateTo:  ((self objectsRectangle) pointNearestTo: (self view canvas camera position))  ].
+			(self encompassingRectangle containsPoint: (self view canvas camera position)) ifFalse: [ (self view canvas camera) translateTo:  ((self encompassingRectangle) pointNearestTo: (self view canvas camera position))  ].
 			
 			(margeRectangle includesPoint: (bar position + (0@(evt step y)))) & (surroundingRectangle includesPoint: (bar position x)@(evt position y)) ifTrue: [  
 				bar translateBy: 0@(evt step y).
@@ -74,13 +74,13 @@ RTScrollBarBasic >> addAnimations [
 			]. 
 		].
 	
-	objects do: [:e | e addCallback: (TRTranslationCallback new block: [
-			self objectsRectangleUpdate. self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate.])
+	self view elements do: [:e | e addCallback: (TRTranslationCallback new block: [
+			self encompassingRectangleUpdate. self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate.])
 		].
 	
 	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
 	
-	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self objectsFromSpaceToPixelForRectangleUpdate. self signalUpdate. ]).
+	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate. ]).
 
 
 
@@ -150,7 +150,8 @@ RTScrollBarBasic >> positionOnBorderVertical [
 { #category : #'as yet unclassified' }
 RTScrollBarBasic >> renderIn: aView [
 
-	(self objects isNil) ifTrue:[self defaultObjects].
+	(self view elements isEmpty) ifTrue: [self defaultEncompassingRectangle] ifFalse: [ self encompassingRectangleUpdate ].
+	self encompassingRectangleFromSpaceToPixelUpdate.
 
 	self defineShapes.
 	self addShapesToView.
@@ -165,7 +166,7 @@ RTScrollBarBasic >> renderIn: aView [
 RTScrollBarBasic >> reverseTranslationHorizontal: evt [
 	| t |
 
-	t := ((evt step x)  / (self objectsFromSpaceToPixelForRectangle width )) * (self size - self shapes bar width).
+	t := ((evt step x)  / (self encompassingRectangleFromSpaceToPixel width )) * (self size - self shapes bar width).
 		
 	^ (t negated)@0
 ]
@@ -174,7 +175,7 @@ RTScrollBarBasic >> reverseTranslationHorizontal: evt [
 RTScrollBarBasic >> reverseTranslationVertical: evt [
 	| t |
 
-	t := ((evt step y)  / (self objectsFromSpaceToPixelForRectangle height)) * (self size - self shapes bar height).
+	t := ((evt step y)  / (self encompassingRectangleFromSpaceToPixel height)) * (self size - self shapes bar height).
 		
 	^ 0@(t negated)
 ]
@@ -189,7 +190,7 @@ RTScrollBarBasic >> signalUpdatePosition [
 		
 			(self orientation = #horizontal) ifTrue: [
 				
-				pr := (((self view canvas camera position x) - (self objectsRectangle origin x)) / (self objectsRectangle width)) * sizeNow.
+				pr := (((self view canvas camera position x) - (self encompassingRectangle origin x)) / (self encompassingRectangle width)) * sizeNow.
 	
 				self shapes surroundingRectangle position: pos.
 				
@@ -202,7 +203,7 @@ RTScrollBarBasic >> signalUpdatePosition [
 			
 			(self orientation = #vertical) ifTrue: [
 					
-				pr := (((0@(self view canvas camera position y)) dist: (0@(self objectsRectangle origin y))) / (self objectsRectangle height)) * (self shapes surroundingRectangle height).
+				pr := (((0@(self view canvas camera position y)) dist: (0@(self encompassingRectangle origin y))) / (self encompassingRectangle height)) * (self shapes surroundingRectangle height).
 								
 				self shapes surroundingRectangle position: pos.
 				
@@ -251,7 +252,7 @@ RTScrollBarBasic >> signalUpdateSize [
 RTScrollBarBasic >> translationHorizontal: evt [
 	| t |
 
-	t := ((evt step x) / (self size  - self shapes bar width)) * ((self objectsFromSpaceToPixelForRectangle width) / self view canvas camera scale).
+	t := ((evt step x) / (self size  - self shapes bar width)) * ((self encompassingRectangleFromSpaceToPixel width) / self view canvas camera scale).
 	
 	^ t@0
 ]
@@ -260,7 +261,7 @@ RTScrollBarBasic >> translationHorizontal: evt [
 RTScrollBarBasic >> translationVertical: evt [
 	| t |
 
-	t := ((evt step y) / (self size  - self shapes bar height)) * ((self objectsFromSpaceToPixelForRectangle height) / self view canvas camera scale).
+	t := ((evt step y) / (self size  - self shapes bar height)) * ((self encompassingRectangleFromSpaceToPixel height) / self view canvas camera scale).
 	
 	^ 0@t
 ]
