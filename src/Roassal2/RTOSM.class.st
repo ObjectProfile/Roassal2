@@ -3193,7 +3193,7 @@ RTOSM class >> exampleSeismOnEarthLive [
 
 	| v map e tab |
 	tab := RTTabTable new
-		input: (TRPlatform current download:  'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv') contents
+		input: (TRPlatform current download:  'http://earthquake.usgs.gov/earthquakes/feed/v0.1/summary/2.5_month.csv') contents
 		usingDelimiter: $,.
 	tab removeFirstRow.
 	tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).

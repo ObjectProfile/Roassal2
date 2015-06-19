@@ -1,14 +1,15 @@
 "
-RTTimelineExample new installTitle: 'ThresholdLines' 
+RTTimeLineExample new installTitle: 'ColorPerTimeLine' 
 		code:
 		'
-	| data b s |
-	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+		data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+	normalizer := RTMultiLinearColorForIdentity new objects: #(c1 c2 c3 c4 c5); command: #first.
 
 	b := RTTimeline new.
 	
 	s := RTTimelineSet new.
 	s objects: data.
+	s shape color: normalizer.
 	s lineIdentifier: #first.
 	s start: #second.
 	s end: #third.
@@ -19,14 +20,12 @@ RTTimelineExample new installTitle: 'ThresholdLines'
 		labelRotation: -45;
 		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
-	p := RTHorizontalTimelineDecorator new.
-	p addLineAboveIdentifier: ''c3''.
-	p addLineAboveIdentifier: ''c2''.
-	p shape line width: 1; color: (Color red).
-	b addDecorator: p.
-
-	b build.
-	^ b view'
+	d := RTVerticalTickLineDecorator new.
+	d shape line color: Color white.
+	b addDecorator: d.
+	
+b build.
+^ b view'
 "
 Class {
 	#name : #RTTimelineExample,
@@ -356,61 +355,6 @@ A5CRIKDE7/zCNU/9QTnEOQO9tX77IyBICQECKajWqhAzTCqrAQEB6hW+c/GmTbUh2NfAbMXL
 qho31dfX96sc4s3qhhEQdMrZIQRMU/dmUtfBAstk+xODZbJ5hCwPrkfrEeCaEcf+pBziFSDo
 FGr7KFv/TWngqwqMybRQ6FUgmNpYM0RFRfHv+tnFZZkU/vjFBqUTfuEHwg+EX/iB8APhF34g
 /MIPhB8Iv/AD4QfCL/xA+IHwCz8QfiD8wg+EX/iB2FD+A13Weoj1dv91AAAAAElFTkSuQmCC'
-]
-
-{ #category : #sources }
-RTTimelineExample >> exampleThresholdLines [
-
-	| data b s |
-	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
-
-	b := RTTimeline new.
-	
-	s := RTTimelineSet new.
-	s objects: data.
-	s lineIdentifier: #first.
-	s start: #second.
-	s end: #third.
-	b add: s.
-	
-	b axisX 
-		numberOfLabels: 5;
-		labelRotation: -45;
-		labelConversion: [ :v | Date year: 2015 day: v ]. 
-
-	p := RTHorizontalTimelineDecorator new.
-	p addLineAboveIdentifier: 'c3'.
-	p addLineAboveIdentifier: 'c2'.
-	p shape line width: 1; color: (Color red).
-	b addDecorator: p.
-
-	b build.
-	^ b view
-]
-
-{ #category : #icons }
-RTTimelineExample >> exampleThresholdLinesIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEJElEQVR4XuWcWy9rQRzFfTWP
-PoBvwCfAi3hweyEuER7QuFekCA4ROQ51bSh1qVRIvbg2LolUjgcVluO/cyQkJzXb6W7/Y61k
-0pfVdu/9m/nPrJmmeS8v/NKkPP5HwA+EX/xA+IHwix8IPxB+8QPhB8IvfiD8QPjFD4Rf/ED4
-gfCLHwg/EH7xA+EHwi9+IPxAsqObmxvk4iZvb4FYLDPtWwGJRqM5AXJwALS3Z6bxA+EHklmd
-n5+DH4gCII2NjUgmk/D5fPxANACpqKjA8fExamtr+YHwzyH8QPiB8APJTQ7xOrfwjxCPGz8Q
-fiDpdXd3B34ginJIfn4+PxAtOeTo6AglJSX8QPjnEH4g/EBsBBL/+QtJX4Cm/Q6GdQMJhaI5
-66m5aMEg+IHwA3FxHsIPREEOqamp4QeiJYecnJygqqqKHwj/HMIPhB+IjUBymUMQ+P+W8rv7
-zsQP/hzi6UnfVxI/PxB+IOmVSCTAD0RRDuno6OAHoiWHbG9vo6CggB8I/xzCD4QfiI1AIpEo
-9veRk/av65Hfa2XiczIp6hGSjR7PD4QfSHo9Pj6CH4iiHLKxscEPREsOkdPC4uJifiD8cwg/
-EH4gNgKRrZRYLGbc3Pq3trZU+aWpBnJ2dgYv/aenp1b7sw6EX8qAFBUVGfeYcDiM9xnGNv/D
-wwNUAxkYGEBpaSmWl5eNLnRpaQmRSARTU1PW+eVQrqmpCWtrazpL1sLCggOi/XWZ8pk3lUo5
-Ny3vkXBpm1/C8MrKCkZHRzE0NKQPSG9vL2ZnZ9Hc3PzpxQk06VWLi4vw+/3W+UXj4+O4v79H
-T0+PvpIlvUVeV1dXjS5OemNdXZ3Tw2z0i0+ATExM4Pn5WReQ6+trZ5i7ec/f0mCt/22uUbnK
-OniNwaYXJ2VB/CY1Wqt/eHgYlZWVULfslV+7y7Dt7u42GrayGywTYF9fHy4uLqzzSzmem5tz
-Op/ctyog8/Pzzs20tbW5Wt+//8cgm/wCb3d313jpnFUge3t7WF9fx+bmJkzhtbS0YHBw0Eq/
-aGZmBp2dnVCX1OPxOOrr6xEKhYwvToLT2NiYlX68Ss56BKK6rZO39bkMdRO/pFipt8Fg0Dq/
-eN9KmmQTdXtZUqImJychQ9dNajd9WBr9Mor6+/s9Oxf5EpDLy0undlZXV3/47e5niV1e5W//
-RJ/5y8rKXPll2SnZx9Tf0NBg/PlXV1fo6upyVo2tra2eHlJ9eYSMjIwYT+Dvl4im3unpaQQC
-AWN/YWGhq9VdeXn5hz/oTCfZGJXSLK9ebzW5AvL09ISdnR3XCfw7yGRjNOtADg8Pnfrppuby
-y+OSJbWU/7EpnEP4xQ+EHwi/+IHwA+F/BPxA+MUPhB8Iv/iB8APhFz8QfiD84gfCD4Rf/ED4
-xQ+EHwi/+IHwA+EXP5Bvrj8Ikrxg3UeEpgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #accessing }

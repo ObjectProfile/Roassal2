@@ -10,7 +10,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
 	super addedInBuilder: aBuilder.
@@ -23,24 +23,24 @@ RTHistogramSet >> addedInBuilder: aBuilder [
 	builder axisX noLabel; noTick
 ]
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> barShape [
 	^ histogramBuilder
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> initialize [
 	super initialize.
 	self metric: #yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> metric: aMetricAsBlockOrSymbol [
 
 	metric := aMetricAsBlockOrSymbol.
 ]
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> renderIn: aView [
 	self adjustMinAndMaxValues.
 	self renderBarChartIn: aView
