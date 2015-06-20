@@ -57,6 +57,21 @@ ConfigurationOfRoassal2 class >> baseConfigurationClassIfAbsent: aBlock [
 
 ]
 
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogContactInfo [
+	^ 'info@objectprofile.com'
+]
+
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogDescription [
+	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
+]
+
+{ #category : #catalog }
+ConfigurationOfRoassal2 class >> catalogKeywords [
+	^ #('visualization' 'data' 'charting')
+]
+
 { #category : #private }
 ConfigurationOfRoassal2 class >> ensureMetacello [
 
@@ -350,21 +365,6 @@ ConfigurationOfRoassal2 >> baseline15: spec [
 			]
 ]
 
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogContactInfo [
-	^ 'info@objectprofile.com'
-]
-
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogDescription [
-	^ 'Roassal is an agile visualization engine. Roassal graphically renders objects using short and expressive Smalltalk expressions. A large set of interaction facilities are provided for a better user experience. Painting, brushing, interconnecting, zooming, drag and dropping will just make you more intimate with any arbitrary object model.'
-]
-
-{ #category : #catalog }
-ConfigurationOfRoassal2 >> catalogKeywords [
-	^ #('visualization' 'data' 'charting')
-]
-
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -399,8 +399,8 @@ ConfigurationOfRoassal2 >> project [
 ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '1.13'.
-	spec for: #'pharo4.x' version: '1.12.1'.
+	spec for: #'common' version: '1.11'.
+	spec for: #'pharo4.x' version: '1.11'.
 	spec for: #'pharo3.x' version: '1.6'.
 
 ]
@@ -460,32 +460,11 @@ ConfigurationOfRoassal2 >> version111: spec [
 ]
 
 { #category : #versions }
-ConfigurationOfRoassal2 >> version1121: spec [
-	<version: '1.12.1' imports: #('1.5-baseline' )>
-
-	spec for: #'common' do: [
-		spec blessing: #'stable'.
-		spec description: 'version 1.12 - For Pharo4/Moose5.1'.
-		spec author: 'AndreiChis'.
-		spec project: 'GlamourCore' with: '3.1.4'.
-		spec 
-			package: 'Trachel' with: 'Trachel-akevalion.287';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.915';
-			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
-			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
-			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
-			package: 'GT-InspectorExtensions-CoreRoassal' with: 'GT-InspectorExtensions-CoreRoassal-TudorGirba.44';
-			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15';
-			package: 'Neo-JSON-Core' with: 'Neo-JSON-Core-SvenVanCaekenberghe.29'. ].
-
-]
-
-{ #category : #versions }
 ConfigurationOfRoassal2 >> version112: spec [
 	<version: '1.12' imports: #('1.5-baseline' )>
 
 	spec for: #'common' do: [
-		spec blessing: #'stable'.
+		spec blessing: #'broken'.
 		spec description: 'version 1.12 - For Pharo4/Moose5.1'.
 		spec author: 'AndreiChis'.
 		spec project: 'GlamourCore' with: '3.1.4'.
@@ -506,7 +485,7 @@ ConfigurationOfRoassal2 >> version113: spec [
 	<version: '1.13' imports: #('1.5-baseline' )>
 
 	spec for: #'common' do: [
-		spec blessing: #'stable'.
+		spec blessing: #'broken'.
 		spec description: 'version 1.13'.
 		spec author: 'AndreiChis'.
 		spec project: 'GlamourCore' with: '3.1.4'.
