@@ -14,12 +14,13 @@ RTAbstractLine class >> edgeFrom: el1 to: el2 [
 ]
 
 { #category : #public }
-RTAbstractLine class >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
+RTAbstractLine class >> edgesFrom: element toAll: someElements [
+	^ (RTEdge from: element toAll: someElements) addShape: self
 ]
 
 { #category : #public }
 RTAbstractLine >> + anotherShape [
+	"Compose this shape with another shape"
 	anotherShape line: self.
 	^ RTCompositeShape with: self with: anotherShape instance
 ]
@@ -53,12 +54,14 @@ RTAbstractLine >> copyWithSimpleArrow [
 
 { #category : #public }
 RTAbstractLine >> edgeFrom: el1 to: el2 [
+	"Return a new edge, starting from el1 and ending with el2."
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
 { #category : #public }
-RTAbstractLine >> edgesFrom: el1 toAll: el2 [
-	^ (RTEdge from: el1 toAll: el2) addShape: self
+RTAbstractLine >> edgesFrom: element toAll: someElements [
+	"Return a set of edges, with myself as shape. The parameter 'element' is an instance of RTElement, and someElements is simply an ordered collection of RTElement"
+	^ (RTEdge from: element toAll: someElements) addShape: self
 ]
 
 { #category : #'attach point' }
@@ -89,11 +92,13 @@ RTAbstractLine >> updateFor: edge trachelShape: trachelShape [
 
 { #category : #public }
 RTAbstractLine >> width: aBlockOrValue [
+	"Set the width of the shape"
 	width := aBlockOrValue
 ]
 
 { #category : #public }
 RTAbstractLine >> widthFor: anElement [
+	"Return the width for the provided element"
 	^ width rtValue: anElement
 ]
 
@@ -115,6 +120,7 @@ RTAbstractLine >> withHorizontalAttachPoint [
 
 { #category : #public }
 RTAbstractLine >> withOffsetIfMultiple [
+	"Make the edge to shift in case several edges are starting from tne same element and ending to the same element. (I.e., multile edges)"
 	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new
 ]
 
