@@ -3,7 +3,9 @@ Class {
 	#superclass : #RTAnimation,
 	#instVars : [
 		'blockToExecute',
-		'view'
+		'view',
+		'intervalInMilliseconds',
+		'lastRefresh'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -32,12 +34,26 @@ RTActiveAnimation >> inView: aView [
 { #category : #initialization }
 RTActiveAnimation >> initialize [
 	super initialize.
-	blockToExecute := [  ]
+	blockToExecute := [  ].
+	intervalInMilliseconds := 5.
+	lastRefresh := Time now
+]
+
+{ #category : #accessing }
+RTActiveAnimation >> intervalInMilliseconds [
+	^ intervalInMilliseconds
+]
+
+{ #category : #accessing }
+RTActiveAnimation >> intervalInMilliseconds: numberOfMillisecondsToWaitBeforeRefresh [
+	"Set the number of milliseconds to wait for a refresh"
+	intervalInMilliseconds := numberOfMillisecondsToWaitBeforeRefresh
 ]
 
 { #category : #refreshing }
-RTActiveAnimation >> refresh [
-	blockToExecute value.
+RTActiveAnimation >> refresh [ 
+	(Time now asMilliSeconds - lastRefresh asMilliSeconds) > intervalInMilliseconds
+		ifTrue: [ blockToExecute value. lastRefresh := Time now. ].
 	view ifNotNil: [ view canvas signalUpdate ].
 ]
 

@@ -24,7 +24,7 @@ RTPNGExporter >> builder: aViewOrABuilder [
 
 { #category : #util }
 RTPNGExporter >> cameraPositionNegated [
-	^ self trachelCanvas camera position negated
+	^ self encompassingRectangle center negated
 ]
 
 { #category : #util }
@@ -58,6 +58,8 @@ RTPNGExporter >> exportToFile [
 	viewExtent := self viewExtent.
 	form := self createFormCanvas.
 	surface := self createSurface.
+	
+
 	surface
 		drawDuring: [ :cs | 
 			"Probably not necessary since we have just created a surface"
