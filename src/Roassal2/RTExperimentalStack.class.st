@@ -120,6 +120,11 @@ RTExperimentalStack >> stack: data [
 ]
 
 { #category : #'as yet unclassified' }
+RTExperimentalStack >> values: anObject [
+	values := anObject
+]
+
+{ #category : #'as yet unclassified' }
 RTExperimentalStack >> wiggle: data [
 	| n x m s1 s2 s3 dx o o0 y0 |
 	n := data size.
@@ -146,4 +151,14 @@ RTExperimentalStack >> wiggle: data [
 	
 	1 to: m do: [ :j | y0 at: j put: ((y0 at: j)- o0)].
 	^ y0.
+]
+
+{ #category : #'as yet unclassified' }
+RTExperimentalStack >> x: anObject [
+	xblock := anObject
+]
+
+{ #category : #'as yet unclassified' }
+RTExperimentalStack >> y: anObject [
+	yblock := anObject
 ]

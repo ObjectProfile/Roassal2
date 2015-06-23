@@ -117,11 +117,11 @@ RTBezierLineTest >> testFollow [
 					follow: #superclass.
 	
 	startNode := v elementFromModel: OrderedCollection.
-	self assert: (bezier getFollowersOf: startNode using: #superclass) size = 2.
+	self assert: (bezier getFollowersOf: startNode using: #superclass) size = 3.
 	
 	endNode := v elementFromModel: Dictionary.
 	edge := bezier edgeFrom: startNode to: endNode.
-	self assert: ((bezier getControllingElementsFromFollowFor: edge using: #superclass) collect: #model) = (Array with: SequenceableCollection with: Collection with: HashedCollection ).
+	self assert: ((bezier getControllingElementsFromFollowFor: edge using: #superclass) collect: #model) asArray = (Array with: SequenceableCollection with: Collection with: HashedCollection ).
 ]
 
 { #category : #tests }
