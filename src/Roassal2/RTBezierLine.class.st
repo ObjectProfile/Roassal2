@@ -129,14 +129,16 @@ RTBezierLine >> getControllingElementsFromFollowFor: anEdge using: followBlock [
 
 { #category : #'control points' }
 RTBezierLine >> getFollowersOf: aNode using: followBlock [
-	| answer view t |
+	| answer view t model |
 	answer := OrderedCollection new.
 	view := aNode view.
 	t := aNode.
 	[ t notNil ]
 		whileTrue: [ 
 			answer add: t.
-			t := view elementFromModel: (followBlock rtValue: t model) ].
+			model := followBlock rtValue: t model.
+			model ifNil: [ ^ answer ].
+			t := view elementFromModel: model ].
 	^ answer
 ]
 

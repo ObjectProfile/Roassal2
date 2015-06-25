@@ -497,7 +497,7 @@ gg=='
 { #category : #sources }
 RTRoassalExample >> exampleArc [
 
-| view shape label |
+| view shape label elems |
 view := RTView new.
 view @ RTDraggableView.
 

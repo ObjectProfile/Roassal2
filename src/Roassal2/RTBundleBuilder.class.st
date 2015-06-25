@@ -14,19 +14,20 @@ Class {
 		'childrenBlock',
 		'connectBezierBlock',
 		'bezier',
-		'sliderShape'
+		'sliderShape',
+		'center'
 	],
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBundleBuilder >> bezier [
 	^ bezier
 ]
 
 { #category : #'as yet unclassified' }
 RTBundleBuilder >> createBezierIfNecessary: aView [
-	| ebuilder slider bedges |
+	| ebuilder   |
 	connectBezierBlock ifNil: [ ^ self ].
 	
 	bezier
@@ -36,20 +37,12 @@ RTBundleBuilder >> createBezierIfNecessary: aView [
 		view: aView;
 		elements: elements.
 	ebuilder shape shape: bezier.
-	bedges := ebuilder connectToAll: connectBezierBlock.
+	ebuilder connectToAll: connectBezierBlock.
 	
-	slider := RTSlider new.
-	slider shape shape: sliderShape. 
-	slider moveBelow; view: aView; callback: [:v| 
-		bezier tension: v.
-		bedges do: [ :e | e trachelShape points: (bezier getListOfPointsForTrachel: e); resetPath.].
-	].
-
-	slider build.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RTBundleBuilder >> createElements: obj using: ablock depth: depth [
 	| children e |
 	e := self shape elementOn: obj.
@@ -66,6 +59,67 @@ RTBundleBuilder >> createElements: obj using: ablock depth: depth [
 ]
 
 { #category : #'as yet unclassified' }
+RTBundleBuilder >> createLabelFor: e view: aView [
+	| lbl |
+	lbl := label elementOn: e model.
+	self interaction setUpElement: lbl.
+	aView add: lbl.
+	e addCallback: (TRTranslationCallback new block: [
+		| angle |
+		angle := (e position - center ) theta.
+		lbl translateTo: e position+((lbl trachelShape notRotatedWidth/2) * (angle cos @ angle sin)).
+		angle := angle radiansToDegrees.
+		angle := angle + ((angle between: 90 and: 270)  ifTrue: [ 180 ] ifFalse: [ 0 ]).
+		lbl trachelShape angleInDegree: angle ] ).
+	e translateTo: e position.
+
+]
+
+{ #category : #'as yet unclassified' }
+RTBundleBuilder >> createSliderIfNecessary: aView [
+	| bedges slider |
+	sliderShape ifNil: [ ^ self ].
+	bedges := aView edges select: [ :e | e shape = bezier ].
+	slider := RTSlider new.
+	slider shape shape: sliderShape. 
+	slider moveBelow; view: aView; callback: [:v| 
+		bezier tension: v.
+		bedges do: [ :e | e trachelShape points: (bezier getListOfPointsForTrachel: e); resetPath.].
+	].
+
+	slider build.
+]
+
+{ #category : #hooks }
+RTBundleBuilder >> createView [
+	^ super createView @ (RTRotableView new 
+		elements: [ elements ];
+		center: [ center ];
+		yourself ).
+]
+
+{ #category : #default }
+RTBundleBuilder >> defaultInteractions [
+	self interaction popup;
+		addInteraction: (RTHighlightable new 
+			highlightedColor: (Color r: 0 g: 120 b: 0 range: 255);
+			highlightElements: [ :el |
+				edges := el view edges select: [:e | e model key = el model ].
+				edges, (edges flatCollect: [:ed |
+					el view elements select: [ :elem | elem model = ed to model ] ] ).
+			 ]);
+		addInteraction: (RTHighlightable new
+			highlightedColor: Color red;
+			highlightElements: [:el | 
+				edges := el view edges select: [:e | e model value = el model].
+				edges, (edges flatCollect: [:ed |
+					el view elements select: [ :elem | elem model = ed from model ] ] ).
+				]);
+		addInteraction: RTHighlightable allSibblings.
+	
+]
+
+{ #category : #default }
 RTBundleBuilder >> defaultSliderShape [
 	sliderShape := RTCompositeShape new 
 		add: (RTEllipse new size: 30; color: Color blue; borderWidth: 0.01; borderColor: Color black);
@@ -79,35 +133,35 @@ RTBundleBuilder >> defaultSliderShape [
 				colorRamp: { 0.0-> Color transparent. 1.0 -> (Color white alpha: 0.6) } )).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBundleBuilder >> edges [
 	^ edges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBundleBuilder >> elements [
 	^ elements.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> explore: atree using: ablock [
 	^ (self from: (Array with: atree) using: ablock) first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> from: aCollection using: ablock [
 	childrenBlock := ablock.
 	^ rootNodes := aCollection collect: [ :obj | self createElements: obj using: ablock depth: 1 ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTBundleBuilder >> initialize [
 	super initialize.
 	self shape circle.
-	self interaction popup.
+	self defaultInteractions.
 	self defaultSliderShape.
 	elements := RTGroup new.
-	label := RTShapeBuilder new.
+	label := RTRotatedLabel new.
 	edges := RTEdgeBuilder new.
 	layout := RTLayoutBuilder new.
 	layout cluster.
@@ -123,9 +177,8 @@ RTBundleBuilder >> parentOf: model view: aView [
 	^ (element attributes at: #parent ifAbsent: [ nil ]) ifNotNil: [:parent | parent model ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTBundleBuilder >> renderIn: aView [
-	
 	aView addAll: elements.
 	edges
 		view: aView;
@@ -134,15 +187,20 @@ RTBundleBuilder >> renderIn: aView [
 	layout setUpElements: elements.
 	self createBezierIfNecessary: aView.
 	
+	center := elements encompassingRectangle center.
+	(elements select: [ :e | (childrenBlock rtValue: e model) isEmpty ]) 
+		do: [ :e | self createLabelFor: e view: aView ].
+	
+	self createSliderIfNecessary: aView.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBundleBuilder >> sliderShape [
 	^ sliderShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTBundleBuilder >> sliderShape: aShape [
 	sliderShape := aShape
 ]
