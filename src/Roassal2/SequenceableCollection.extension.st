@@ -18,34 +18,20 @@ SequenceableCollection >> histogram [
 	#(5 6 5 6 4 2 10) histogram
 	#(5 6 5 6 4 2 10 10 10 10 10) histogram
 	"
-	
 	| b ds |
 	b := RTGrapher new.
+	
 	ds := RTHistogramSet new.
 	ds points: self.
-	ds barShape width: 10.
-	ds barChartWithBarTitle: #second rotation: 0 color: Color black.
+	ds barShape width: 20.
+	ds barChartWithBarTitle: [:ar | '[', ar second first floor asString,':', ar second last ceiling asString,']'].
+		
 	b add: ds. 
 	b axisX title: 'Values'.
-	b axisY title: 'Occurences'.
-	^ b
+	b axisY title: 'Frequency'.
 	
-	
-"	| b ds values |
-	values := (RTDistribution on: self) annotatedFrequency.
-	b := RTGrapher new.
-	ds := RTStackedDataSet new.
-	ds points: values.
-	ds y: #first.
-	ds interaction popupText: [ :tupple | tupple first asString, ' occurences of ', tupple second asString ].
-	ds barShape width: 10.
-	ds barChart #second rotation: 0 color: Color black.
-	b add: ds.
-	b axisX noLabel; noTick; title: 'Values'.
-	b axisY title: 'Occurences'; noTick; noLabel.
-	
-	b addDecorator: (RTVerticalValuesDecorator new addAll: (0 to: (values collect: #first) max)).
-	^ b "
+	^ b.
+
 ]
 
 { #category : #'*roassal2-core' }
