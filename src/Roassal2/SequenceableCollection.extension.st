@@ -24,7 +24,7 @@ SequenceableCollection >> histogram [
 	ds := RTHistogramSet new.
 	ds points: self.
 	ds barShape width: 20.
-	ds barChartWithBarTitle: [:ar | '[', ar second first floor asString,':', ar second last ceiling asString,']'].
+	ds barChartWithBarTitle: [:ar | '[', (ar second isEmpty ifTrue: [0] ifFalse: [ar second first]) floor asString,':', (ar second isEmpty ifTrue: [0] ifFalse: [ar second last]) ceiling asString,']'].
 		
 	b add: ds. 
 	b axisX title: 'Values'.

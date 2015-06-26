@@ -31,9 +31,7 @@ RTHistogramSet >> barShape [
 
 { #category : #initialization }
 RTHistogramSet >> defaultNbOfIntervals [ 
-	self nbOfIntervals: [ :vls | 
-		(vls size <= 5) ifTrue: [ vls asSet size ] ifFalse:[
-			(vls size) log * 3.3 + 1 ]].
+	self nbOfIntervals: [ :vls | (vls size) log * 3.3 + 1 ].
 ]
 
 { #category : #initialization }
