@@ -1,11 +1,12 @@
 "
-This class is under construction. It does not work yet!
+The histogram gives you a distribution frequency over the points given. Frequency on y and a collection of values per bars on x.  
 "
 Class {
 	#name : #RTHistogramSet,
 	#superclass : #RTAbstractStackedDataSet,
 	#instVars : [
-		'metric'
+		'metric',
+		'nbOfIntervals'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -15,12 +16,12 @@ RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
 	super addedInBuilder: aBuilder.
 
-	self points: ((RTDistribution on: (points collect: y)) annotatedFrequency).
+	self points: ((RTDistribution on: points) annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points)).	
 	self y: #first.
 	
-	builder addDecorator: (RTVerticalValuesDecorator new addAll: (0 to: (points collect: #first) max)).
-	builder axisY noTick; noLabel.
-	builder axisX noLabel; noTick
+	builder axisX noTick; noLabel.
+
+	
 ]
 
 { #category : #public }
@@ -29,15 +30,34 @@ RTHistogramSet >> barShape [
 ]
 
 { #category : #initialization }
+RTHistogramSet >> defaultNbOfIntervals [ 
+	self nbOfIntervals: [ :vls | 
+		(vls size <= 5) ifTrue: [ vls asSet size ] ifFalse:[
+			(vls size) log * 3.3 + 1 ]].
+]
+
+{ #category : #initialization }
 RTHistogramSet >> initialize [
 	super initialize.
-	self metric: #yourself
+	self metric: #yourself.
+	self defaultNbOfIntervals 
 ]
 
 { #category : #accessing }
 RTHistogramSet >> metric: aMetricAsBlockOrSymbol [
 
 	metric := aMetricAsBlockOrSymbol.
+]
+
+{ #category : #hooks }
+RTHistogramSet >> nbOfIntervals [
+	^ nbOfIntervals
+]
+
+{ #category : #hooks }
+RTHistogramSet >> nbOfIntervals: aNumberOfBlock [
+	nbOfIntervals := aNumberOfBlock 
+	 
 ]
 
 { #category : #hooks }
