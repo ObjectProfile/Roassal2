@@ -357,7 +357,7 @@ RTSVGVisitor >> visitCanvas: aCanvas [
 	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses canvasShapes|
 	
 	
-	canvasShapes := aCanvas shapes sort: [ :a :b | a name < b name ].
+	canvasShapes := aCanvas shapes.
 	lineClasses := Array with: TRLineShape with: TRBezierShape.
 	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
 	elementShapes := canvasShapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
