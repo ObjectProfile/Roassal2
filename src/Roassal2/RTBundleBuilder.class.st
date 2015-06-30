@@ -169,6 +169,11 @@ RTBundleBuilder >> initialize [
 	connectBezierBlock := nil.
 ]
 
+{ #category : #accessing }
+RTBundleBuilder >> labelShape [
+	^ label
+]
+
 { #category : #'as yet unclassified' }
 RTBundleBuilder >> parentOf: model view: aView [
 	| element |
