@@ -443,6 +443,123 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
+RTExperimentalExample >> exampleSimpleBundleBuilder [
+| tree searchTree relationsBlock relations b |
+tree := 'president'->{
+	'assistant1'->{}.
+	'director1'->{
+		'employee1'->{}.
+		'employee2'->{}.
+		'employee3'->{} }.
+	'director2'->{
+		'employee4'->{}.
+		'employee5'->{} }.
+	'guard1'->{}.
+	'guard2'->{}.
+	'chef'->{
+		'subchef'->{}.
+		'employee6'->{} }.
+	'vicepresident'->{
+		'assistant2'->{}.
+		'guard3'->{} } }.
+searchTree := nil.
+searchTree := [ :s :t| t key = s ifTrue: [ t ]
+	ifFalse: [ | r |
+		r := nil.
+		t value do: [ :child | 
+			r ifNil: [ r := searchTree value: s value: child.] ].
+		r ] ].
+relationsBlock := [ :str| | res strings |
+	res := Dictionary new.
+	(str subStrings: '
+') do: [:s| 
+		strings := s subStrings:' '.
+		res at: strings first put: 
+			(strings allButFirst collect: [:st |
+				searchTree value: st value: tree] )].
+	res	 ].
+relations := relationsBlock value: 'president director1 director2 vicepresident
+assistant1 assistant2
+director1 employe1 chef
+employee1 director1 employee2 employee3 assistant2
+employee2 employee3 guard1 subchef
+employee3 guard2
+director2 director1 vicepresident assistant2
+employee4 employee2 employee5
+employee5 assistan1 chef guard2
+guard1 president
+guard2 employee6 vicepresident
+chef president vicepresident subchef
+subchef employee6 employee1 assistant1
+employee6 employee5 employee4
+vicepresident president director1 director2 chef
+assistant2 assistant1 guard3
+guard3 vicepresident president'.
+b := RTBundleBuilder new.
+b explore: tree using: [ :asso| asso value ].
+b labelShape text: #key.
+b bezier color: (Color purple alpha: 0.5).
+b useBezierlineWith: [ :asso | relations at: asso key ].
+b build.
+
+^ b view.
+
+
+
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleSimpleBundleBuilderIcon [
+	^ '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
+mAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTExperimentalExample >> exampleStackExpand [
  
 	^ RTExperimentalExample new helper: #expand colorA: Color yellow colorB: Color orange
