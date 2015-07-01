@@ -15,8 +15,10 @@ Class {
 RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
 	super addedInBuilder: aBuilder.
-
-	self points: ((RTDistribution on: points) annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points)).	
+	
+	(self points first isNumber) ifTrue: [ 
+		self points: ((RTDistribution on: self points) annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points))] ifFalse: [ 
+		self points: ((RTDistribution on: self points) annotatedFrequencyOfDifferentObjects)].	
 	self y: #first.
 	
 	builder axisX noTick; noLabel.

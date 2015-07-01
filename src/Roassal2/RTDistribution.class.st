@@ -56,6 +56,27 @@ RTDistribution >> annotatedFrequencyMin: numMin max: numMax amountOfIntervals: a
 ]
 
 { #category : #public }
+RTDistribution >> annotatedFrequencyOfDifferentObjects [
+	"Return an Array of Arrays, each following the template:
+	#(NumberOfV V).
+	
+	Usefull for different kind Of objects, example: {'yes'. 'yes'. 'no'. 'maybe'. 'no'. 'maybe'. 'maybe'. 'yes'. 'no'. 'maybe'. 'yes'. 'maybe'.} "
+	|result dict|
+	result := OrderedCollection new.
+	dict := OrderedDictionary new.
+	numbers do: [ :p |
+		dict at: p ifPresent: [ :v |
+			| count |
+			count := 1 + v.
+			dict at: p put: count ] ifAbsent: [ dict add: ( p -> 1) ]
+		 ].
+	dict keysAndValuesDo: [ :k :v | result add: {v. k} ].
+	^ result asArray
+
+	
+]
+
+{ #category : #public }
 RTDistribution >> annotatedFrequencyWithAmountOfIntervals: aSmallInteger [ 
 	^ self annotatedFrequencyMin: numbers min max: numbers max amountOfIntervals: aSmallInteger
 ]
@@ -89,6 +110,7 @@ RTDistribution >> deprecatedAnnotatedFrequencyMin: numMin max: numMax amountOfIn
 	N = nbOfIntervals
 	 "
 	| running tmp result |
+	numbers := numbers sort.
 	self numberMax: numMax.
 	self numberMin: numMin.
 	self nbOfIntervals: aNbOfIntervals.
@@ -116,6 +138,8 @@ RTDistribution >> frequency [
 { #category : #public }
 RTDistribution >> frequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals [
 	| tmp result bucketFor |
+	
+	numbers := numbers sort.
 	self numberMax: numMax.
 	self numberMin: numMin.
 	self nbOfIntervals: aNbOfIntervals.
@@ -167,7 +191,7 @@ RTDistribution >> numberMin: aNumber [
 { #category : #public }
 RTDistribution >> on: collectionOfNumbers [
 	self assert: (collectionOfNumbers isNotEmpty).
-	numbers := collectionOfNumbers sort.
+	numbers := collectionOfNumbers.
 ]
 
 { #category : #public }
