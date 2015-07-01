@@ -14,7 +14,7 @@ A DCTRCanvasExporter is exporter of canvas into image
 		export
 "
 Class {
-	#name : #RTCanvasExporter,
+	#name : #DCTRCanvasExporter,
 	#superclass : #RTObject,
 	#instVars : [
 		'canvas',
@@ -28,24 +28,24 @@ Class {
 }
 
 { #category : #initialization }
-RTCanvasExporter class >> canvas: aCanvas [
+DCTRCanvasExporter class >> canvas: aCanvas [
 	^ self new
 		canvas: aCanvas;
 		yourself
 ]
 
 { #category : #private }
-RTCanvasExporter >> cameraScale [
+DCTRCanvasExporter >> cameraScale [
 	^ canvas camera scale
 ]
 
 { #category : #private }
-RTCanvasExporter >> cameraScale: aScale [
+DCTRCanvasExporter >> cameraScale: aScale [
 	canvas camera doWithoutCallbacks: [ canvas camera scale: aScale ]
 ]
 
 { #category : #settings }
-RTCanvasExporter >> canvas: aCanvas [
+DCTRCanvasExporter >> canvas: aCanvas [
 	"sets canvas for export, resets all settings"
 
 	canvas := aCanvas veryDeepCopy.
@@ -56,17 +56,17 @@ RTCanvasExporter >> canvas: aCanvas [
 ]
 
 { #category : #settings }
-RTCanvasExporter >> centered [
+DCTRCanvasExporter >> centered [
 	canvas camera doWithoutCallbacks: [ canvas camera focusOnCenter ]
 ]
 
 { #category : #settings }
-RTCanvasExporter >> defaultScale [
+DCTRCanvasExporter >> defaultScale [
 	self scale: 1.0001
 ]
 
 { #category : #example }
-RTCanvasExporter >> example01 [
+DCTRCanvasExporter >> example01 [
 	| b view |
 	b := RTMondrian new.
 	b nodes: RTShape withAllSubclasses.
@@ -75,7 +75,7 @@ RTCanvasExporter >> example01 [
 	b build.
 	
 	view := b view.
-	(RTCanvasExporter canvas: view canvas)
+	(DCTRCanvasExporter canvas: view canvas)
 		withoutFixedShapes;
 		whole;
 		defaultScale;
@@ -86,7 +86,7 @@ RTCanvasExporter >> example01 [
 ]
 
 { #category : #export }
-RTCanvasExporter >> export [
+DCTRCanvasExporter >> export [
 	canvas ifNil: [ self error: 'No canvas selected' ].
 	fileName ifNil: [ self error: 'File name not set' ].
 	self extent: self extent + (self cameraScale * oversize).
@@ -95,22 +95,22 @@ RTCanvasExporter >> export [
 ]
 
 { #category : #private }
-RTCanvasExporter >> extent [
+DCTRCanvasExporter >> extent [
 	^ canvas morph extent
 ]
 
 { #category : #private }
-RTCanvasExporter >> extent: anExtent [
+DCTRCanvasExporter >> extent: anExtent [
 	canvas morph extent: anExtent
 ]
 
 { #category : #settings }
-RTCanvasExporter >> fileName: aFileName [
+DCTRCanvasExporter >> fileName: aFileName [
 	fileName := aFileName
 ]
 
 { #category : #settings }
-RTCanvasExporter >> format: imageFormat [
+DCTRCanvasExporter >> format: imageFormat [
 	"supported formats: png, jpg, jpeg, bmp, gif	
 	usage examples:
 		format: 'png'
@@ -125,7 +125,7 @@ RTCanvasExporter >> format: imageFormat [
 ]
 
 { #category : #initialization }
-RTCanvasExporter >> initialize [
+DCTRCanvasExporter >> initialize [
 	self
 		format: #png;
 		fileName: [ ('export.' , format) asSymbol ];
@@ -133,12 +133,12 @@ RTCanvasExporter >> initialize [
 ]
 
 { #category : #settings }
-RTCanvasExporter >> oversizedBy: anExtent [
+DCTRCanvasExporter >> oversizedBy: anExtent [
 	oversize := anExtent
 ]
 
 { #category : #settings }
-RTCanvasExporter >> scale: aScale [
+DCTRCanvasExporter >> scale: aScale [
 	"1 = defaultScale"
 
 	self
@@ -147,7 +147,7 @@ RTCanvasExporter >> scale: aScale [
 ]
 
 { #category : #private }
-RTCanvasExporter >> scaleToMorphLimits [
+DCTRCanvasExporter >> scaleToMorphLimits [
 	"scale down to estimated morph (maxWidthAndHeight) and exporter (maxArea) size limits"
 
 	| maxArea maxWidthAndHeight |
@@ -162,7 +162,7 @@ RTCanvasExporter >> scaleToMorphLimits [
 ]
 
 { #category : #settings }
-RTCanvasExporter >> whole [
+DCTRCanvasExporter >> whole [
 	"image includes whole canvas, otherwise it is cropped to original camera"
 
 	self
@@ -171,6 +171,6 @@ RTCanvasExporter >> whole [
 ]
 
 { #category : #settings }
-RTCanvasExporter >> withoutFixedShapes [
+DCTRCanvasExporter >> withoutFixedShapes [
 	canvas camera doWithoutCallbacks: [ canvas fixedShapes do: [ :shape | shape doWithoutCallbacks: [ shape remove ] ] ]
 ]

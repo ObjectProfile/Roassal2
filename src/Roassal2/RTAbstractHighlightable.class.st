@@ -46,15 +46,7 @@ RTAbstractHighlightable class >> lastHighlightedElements [
 
 { #category : #'reset shape' }
 RTAbstractHighlightable class >> lastHighlightedElements: elements [
-	lastHighlightedElements 
-		ifNil: [ lastHighlightedElements := elements ]
-		ifNotNil: [ lastHighlightedElements := lastHighlightedElements, elements ].
-	
-]
-
-{ #category : #'reset shape' }
-RTAbstractHighlightable class >> resetHighlightedElements [
-	lastHighlightedElements := nil.
+	lastHighlightedElements := elements
 ]
 
 { #category : #private }
@@ -65,7 +57,7 @@ RTAbstractHighlightable >> attributeIdentificator [
 { #category : #actions }
 RTAbstractHighlightable >> doHighlight: element [
 	| elements |
-	"self unhighlightRecordedElements."
+	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
 	elements := elements copyWithout: nil.
 	elements do: [ :eachElement | self doHighlightElement: eachElement ].
@@ -80,13 +72,11 @@ RTAbstractHighlightable >> doHighlightElement: anElement [
 
 { #category : #actions }
 RTAbstractHighlightable >> doUnhighlight: element [
-	self unhighlightRecordedElements.
 	(element hasAttribute: self attributeIdentificator)
 		ifFalse: [ ^ self ].
 	(element attributeAt: self attributeIdentificator) 
 		do: [ :el | self doUnhighlightElement: el ].
 	element removeAttributeAt: self attributeIdentificator.
-	
 ]
 
 { #category : #actions }
@@ -134,5 +124,5 @@ RTAbstractHighlightable >> initializeElement: element [
 RTAbstractHighlightable >> unhighlightRecordedElements [
 	self class lastHighlightedElements ifNil: [ ^ self ].
 	self class lastHighlightedElements do: [ :el | self doUnhighlightElement: el ].
-	self class resetHighlightedElements.
+	self class lastHighlightedElements: nil
 ]

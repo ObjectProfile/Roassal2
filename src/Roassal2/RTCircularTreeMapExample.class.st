@@ -33,7 +33,8 @@ RTCircularTreeMapExample >> example01 [
 | b inst |
 	b := RTCircularTreeMapBuilder new.
 	b shape
-		color: Color transparent.
+		color: Color transparent;
+		borderWidth: 1.
 	inst := nil.
 	b
 		baseradius: 200;
@@ -126,7 +127,8 @@ RTCircularTreeMapExample >> example02 [
 | b |
 	b := RTCircularTreeMapBuilder new.
 	b shape
-		color: Color transparent.
+		color: Color transparent;
+		borderWidth: 1.
 	b
 		baseradius: 400;
 		weight: [:n | n].
@@ -184,6 +186,7 @@ RTCircularTreeMapExample >> example03 [
 	
 	b shape
 		color: Color transparent;
+		borderWidth: 1;
 		borderColor: Color black;
 		if: [ :cls | cls subclasses isEmpty ] fillColor: [ :cls| 
 			(Smalltalk includesKey: (cls name, 'Test') asSymbol) ifTrue: [ Color green ]

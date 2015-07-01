@@ -56,16 +56,16 @@ RTPieBuilder >> innerAngleOf: object [
 ]
 
 { #category : #'private - utility' }
-RTPieBuilder >> label: aBlock withObject: anObject [
+RTPieBuilder >> label: object [
 	"Private method"
 	| element trachelShape labelPosition lbl |
-	element := view elementFromModel: anObject.
+	element := view elementFromModel: object.
 	trachelShape := element trachelShape.
 	labelPosition := (trachelShape position + ((trachelShape externalRadius + 30)@ 0)) 
 						rotateBy: ((trachelShape betaAngle - trachelShape alphaAngle) / 2 + trachelShape alphaAngle) * 3.1415 / 180
 						about: trachelShape position.
 
-	lbl := RTLabel elementOn: (aBlock rtValue: anObject) asString.
+	lbl := RTLabel elementOn: object asString.
 	view add: lbl.
 	"view canvas addShape: lbl."
 	lbl trachelShape translateTo: labelPosition
@@ -78,20 +78,9 @@ RTPieBuilder >> labelled [
 ]
 
 { #category : #'public - shapes' }
-RTPieBuilder >> labelled: aBlockLabel [
-	"Make each pie having a label that respect the aBlockLabel"
-	self labelledIf: true withBlock: aBlockLabel
-]
-
-{ #category : #'public - shapes' }
 RTPieBuilder >> labelledIf: aBlock [
-	self labelledIf: aBlock withBlock: [ :o | o ]
-]
-
-{ #category : #'public - shapes' }
-RTPieBuilder >> labelledIf: aBlock withBlock: aBlockLabel [
 	objects do: [ :object |
-		(aBlock rtValue: object) ifTrue: [ self label: aBlockLabel withObject: object ] ]
+		(aBlock rtValue: object) ifTrue: [ self label: object ] ]
 ]
 
 { #category : #'public - pies' }

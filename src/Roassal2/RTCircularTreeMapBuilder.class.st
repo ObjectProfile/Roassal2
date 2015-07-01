@@ -145,7 +145,7 @@ RTCircularTreeMapBuilder >> layout: e [
 { #category : #layout }
 RTCircularTreeMapBuilder >> layoutElements [
 	| virtualRoot |
-	virtualRoot := (RTEllipse new borderWidth: 0.005) element.
+	virtualRoot := RTEllipse elementOn: nil.
 	virtualRoot attributes at: #children put: rootNodes.
 	self layout: virtualRoot.
 	
