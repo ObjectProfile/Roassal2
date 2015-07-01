@@ -182,11 +182,6 @@ RTGroup >> pushBack [
 	self do: #pushBack
 ]
 
-{ #category : #actions }
-RTGroup >> pushFront [
-	self do: #pushFront
-]
-
 { #category : #public }
 RTGroup >> remove [
 	self view removeElements: self

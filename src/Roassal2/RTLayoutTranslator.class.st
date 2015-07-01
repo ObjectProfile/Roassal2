@@ -69,6 +69,6 @@ RTLayoutTranslator >> view [
 ]
 
 { #category : #accessing }
-RTLayoutTranslator >> view: aView [
-	view := aView
+RTLayoutTranslator >> view: anObject [
+	view := anObject
 ]

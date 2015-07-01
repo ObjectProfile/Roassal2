@@ -95,11 +95,6 @@ RTAbstractGrapherDecorator >> moveInFront [
 	placedInFront := true
 ]
 
-{ #category : #hooks }
-RTAbstractGrapherDecorator >> render [
-	self subclassResponsibility 
-]
-
 { #category : #accessing }
 RTAbstractGrapherDecorator >> shape [
 	^ shapeBuilder

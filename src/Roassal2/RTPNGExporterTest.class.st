@@ -38,7 +38,7 @@ RTPNGExporterTest >> testCameraPosition [
 RTPNGExporterTest >> testCameraPosition2 [
 
 	view canvas camera translateTo: 6 @ 4.
-	self assert: exporter cameraPositionNegated equals: (0 @ 0).
+	self assert: exporter cameraPositionNegated equals: (-6 @ -4).
 ]
 
 { #category : #tests }

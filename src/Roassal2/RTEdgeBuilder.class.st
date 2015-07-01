@@ -149,17 +149,6 @@ RTEdgeBuilder >> initialize [
 	elementsToLookup := nil
 ]
 
-{ #category : #public }
-RTEdgeBuilder >> linkElements: someElements [
-	"Link the first element to the second, the second to the third and so on"
-	| head |
-	head := someElements first.
-	someElements allButFirst do: [ :e |
-		self edgeFrom: head to: e.
-		head := e.
-		]
-]
-
 { #category : #accessing }
 RTEdgeBuilder >> moveBehind [
 	"Set the builder as such that edge that are built and added in the view _behind_ the extremities of each edges"

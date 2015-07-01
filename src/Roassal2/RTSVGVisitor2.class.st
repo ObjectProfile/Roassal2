@@ -282,6 +282,12 @@ RTSVGVisitor2 >> visitCanvas: aCanvas [
 ]
 
 { #category : #visitor }
+RTSVGVisitor2 >> visitCompositeShape: aCompositeShape [
+	aCompositeShape shape1 accept: self.
+	aCompositeShape shape2 accept: self.
+]
+
+{ #category : #visitor }
 RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 	"Looks like to be broken"
 	| aid color bColor w s |

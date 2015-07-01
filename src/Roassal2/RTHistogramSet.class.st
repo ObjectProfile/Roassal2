@@ -1,66 +1,46 @@
 "
-The histogram gives you a distribution frequency over the points given. Frequency on y and a collection of values per bars on x.  
+This class is under construction. It does not work yet!
 "
 Class {
 	#name : #RTHistogramSet,
 	#superclass : #RTAbstractStackedDataSet,
 	#instVars : [
-		'metric',
-		'nbOfIntervals'
+		'metric'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
 	super addedInBuilder: aBuilder.
-	
-	(self points first isNumber) ifTrue: [ 
-		self points: ((RTDistribution on: self points) annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points))] ifFalse: [ 
-		self points: ((RTDistribution on: self points) annotatedFrequencyOfDifferentObjects)].	
+
+	self points: ((RTDistribution on: (points collect: y)) annotatedFrequency).
 	self y: #first.
 	
-	builder axisX noTick; noLabel.
-
-	
+	builder addDecorator: (RTVerticalValuesDecorator new addAll: (0 to: (points collect: #first) max)).
+	builder axisY noTick; noLabel.
+	builder axisX noLabel; noTick
 ]
 
-{ #category : #public }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> barShape [
 	^ histogramBuilder
 ]
 
-{ #category : #initialization }
-RTHistogramSet >> defaultNbOfIntervals [ 
-	self nbOfIntervals: [ :vls | (vls size) log * 3.3 + 1 ].
-]
-
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> initialize [
 	super initialize.
-	self metric: #yourself.
-	self defaultNbOfIntervals 
+	self metric: #yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> metric: aMetricAsBlockOrSymbol [
 
 	metric := aMetricAsBlockOrSymbol.
 ]
 
-{ #category : #hooks }
-RTHistogramSet >> nbOfIntervals [
-	^ nbOfIntervals
-]
-
-{ #category : #hooks }
-RTHistogramSet >> nbOfIntervals: aNumberOfBlock [
-	nbOfIntervals := aNumberOfBlock 
-	 
-]
-
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTHistogramSet >> renderIn: aView [
 	self adjustMinAndMaxValues.
 	self renderBarChartIn: aView

@@ -82,23 +82,7 @@ RTDynamicStackedGrapherTest >> testEmbeddedInComposer [
 ]
 
 { #category : #tests }
-RTDynamicStackedGrapherTest >> testGetY [
-
-	| b |
-	b := RTDynamicStackedGrapher new.
-	self assert: b y equals: #yourself
-]
-
-{ #category : #tests }
 RTDynamicStackedGrapherTest >> testNumberOfBars [
 
 	self assert: RTDynamicStackedGrapher new numberOfBars equals: RTDynamicStackedGrapher new defaultNumberOfBars 
-]
-
-{ #category : #tests }
-RTDynamicStackedGrapherTest >> testUpdateView [
-
-	| b |
-	b := RTDynamicStackedGrapher new.
-	b updateView
 ]

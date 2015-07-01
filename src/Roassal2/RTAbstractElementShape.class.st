@@ -100,11 +100,6 @@ RTAbstractElementShape >> initialize [
 	
 ]
 
-{ #category : #configuration }
-RTAbstractElementShape >> noBorder [
-	self borderWidth: 0
-]
-
 { #category : #accessing }
 RTAbstractElementShape >> size: aValueOrASymbolOrAOneArgBlock [
 	self height: aValueOrASymbolOrAOneArgBlock.

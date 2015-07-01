@@ -22,8 +22,7 @@ Class {
 		'y',
 		'allAddedElements',
 		'centerElement',
-		'layoutTranslator',
-		'textBelow'
+		'layoutTranslator'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -43,13 +42,6 @@ RTDynamicStackedGrapher >> add: anObject [
 		ifTrue: [ el translateTo: self barXPosition @ (positionInView y + (barHeight / 2)) + graphCenter ]
 		ifFalse: [ el translateTo: self barXPosition @ (positionInView y - (barHeight / 2)) + graphCenter ].
 	view add: el.
-	
-	textBelow ifNotNil: [ 
-		| l |
-		l := RTLabelled new text: textBelow.
-		yValue > 0 ifTrue: [ l below ].
-		el @ l ].
-	
 	view signalUpdate.
 	allAddedElements add: el.
 	^ el
@@ -193,12 +185,6 @@ RTDynamicStackedGrapher >> renderIn: aView [
 { #category : #'public - cleaning' }
 RTDynamicStackedGrapher >> resetAddedElements [
 	allAddedElements := OrderedCollection new
-]
-
-{ #category : #accessing }
-RTDynamicStackedGrapher >> textBelow: valueOrBlockOrSymbol [
-	"Make each bar chart to have a label below"
-	textBelow := valueOrBlockOrSymbol
 ]
 
 { #category : #userinterface }

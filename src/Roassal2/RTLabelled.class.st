@@ -61,17 +61,12 @@ RTLabelled >> accept: aVisitor with: args [
 	aVisitor visitLabelledInteraction: self with: args
 ]
 
-{ #category : #'public - layout' }
+{ #category : #accessing }
 RTLabelled >> below [
 	position := #below
 ]
 
-{ #category : #'public - layout' }
-RTLabelled >> bottomLeft [
-	position := #bottomLeft
-]
-
-{ #category : #'public - layout' }
+{ #category : #accessing }
 RTLabelled >> center [
 	position := #center		
 ]
@@ -155,18 +150,12 @@ RTLabelled >> initializeElement: element [
 	self isLeft ifTrue: [ TRConstraint stick: lbl onTheLeftOf: s ].
 	self isRight ifTrue: [ TRConstraint stick: lbl onTheRightOf: s ].
 	self isCenter ifTrue: [ TRConstraint stick: lbl onTheCenterOf: s ].
-	self isBottomLeft ifTrue: [ TRConstraint stick: lbl onTheBottomLeftOf: s ].
 	^ lbl.
 ]
 
 { #category : #testing }
 RTLabelled >> isBelow [
 	^ position = #below
-]
-
-{ #category : #testing }
-RTLabelled >> isBottomLeft [
-	^ position = #bottomLeft
 ]
 
 { #category : #testing }
@@ -242,7 +231,7 @@ RTLabelled >> removeLabelFrom: aRTElement [
 		removeAttributeAt: #RTLabelledLabel.
 ]
 
-{ #category : #'public - layout' }
+{ #category : #accessing }
 RTLabelled >> right [
 	position := #right
 ]
@@ -264,7 +253,7 @@ RTLabelled >> textElement: aTextOrBlock [
 	text := aTextOrBlock
 ]
 
-{ #category : #'public - layout' }
+{ #category : #accessing }
 RTLabelled >> top [
 	position := #top
 ]
