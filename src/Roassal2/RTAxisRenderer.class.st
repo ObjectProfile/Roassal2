@@ -82,7 +82,9 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	labelValues := (0 to: self numberOfLabels)
 		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
 
-	labelShape := RTLabel new text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ].
+	labelShape := RTLabel new 
+		text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ];
+		height: self labelFontHeight.
 	labels := labelShape elementsOn: (0 to: self numberOfLabels).
 	labels withIndexDo: [ :label :i | 
 		self moveLabel: label againstTick: (labelledTicks at: i).
@@ -145,6 +147,11 @@ RTAxisRenderer >> insertTitleIfNecessaryTo: toPosition [
 			lbl := (RTLabel new text: self title) element.
 			self addToView: lbl.
 			lbl translateTo: toPosition - config titlePosition ]
+]
+
+{ #category : #'as yet unclassified' }
+RTAxisRenderer >> labelFontHeight [
+	^ config labelFontHeight 
 ]
 
 { #category : #'accessing-computed' }

@@ -21,10 +21,25 @@ Class {
 	#superclass : #RTAbstractLine,
 	#instVars : [
 		'controllingElements',
-		'follow'
+		'follow',
+		'tension'
 	],
 	#category : #'Roassal2-Core'
 }
+
+{ #category : #private }
+RTBezierLine >> applyTension: points [
+	| n p1 dp p t |
+	n := points size - 1.
+	p1 := points first.
+	dp := points last - p1.
+	2 to: n do: [ :i| 
+		p := points at: i.
+		t := (i-1) / n.
+		points at: i put: ((tension * p) + ((1-tension) *(p1+(t * dp) )) ) ].
+	
+	^ points
+]
 
 { #category : #'control points' }
 RTBezierLine >> centerOfElements: aOneArgBlockOrValues [
@@ -81,25 +96,50 @@ RTBezierLine >> getControllingElementsFromFollowFor: anEdge [
 
 { #category : #'control points' }
 RTBezierLine >> getControllingElementsFromFollowFor: anEdge using: followBlock [
-	| l1 l2 |
-	l1 := self getFollowersOf: anEdge from using: followBlock.
-	l2 := self getFollowersOf: anEdge to using: followBlock.
-	l2 ifEmpty: [ ^ l1 ].
-	l1 ifEmpty: [ ^ l2 ].
-	^ l1 , l2 reversed allButFirst
+	| start end lca elements block k clean |
+	start := anEdge from.
+	end := anEdge to.
+	lca := self leastCommonAncestor: anEdge using: followBlock.
+	elements := OrderedCollection new.
+	clean := [ elements ifNotEmpty: [ elements removeFirst ].
+		elements ifNotEmpty: [ elements removeLast ]. ].
+	lca ifNil: [ 
+		elements := (self getFollowersOf: start using: followBlock), 
+			(self getFollowersOf: end using: followBlock) reverse allButFirst.
+		clean value.
+		^ elements.
+		 ].
+	
+	elements add: start.
+	block := [ :m | start view elementFromModel: (followBlock rtValue: m)  ].
+	
+	[ start == lca ] whileFalse: [ 
+		start := block value: start model.
+		elements add: start.
+	 ].
+	k := elements size.
+	[ end == lca ] whileFalse: [ 
+		elements add: end afterIndex: k.
+		end := block value: end model.
+	 ].
+	clean value.
+	^ elements.
+	
 ]
 
 { #category : #'control points' }
 RTBezierLine >> getFollowersOf: aNode using: followBlock [
-	| answer view t |
+	| answer view t model |
 	answer := OrderedCollection new.
 	view := aNode view.
-	t := view elementFromModel: (followBlock rtValue: aNode model).
+	t := aNode.
 	[ t notNil ]
 		whileTrue: [ 
 			answer add: t.
-			t := view elementFromModel: (followBlock rtValue: t model) ].
-	^ answer asArray
+			model := followBlock rtValue: t model.
+			model ifNil: [ ^ answer ].
+			t := view elementFromModel: model ].
+	^ answer
 ]
 
 { #category : #'control points' }
@@ -128,13 +168,34 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 		
 	"We add the last point of the edge"
 	listOfPoints add: (attachPoint endingPointOf: anEdge).
-	^ listOfPoints
+	^ self applyTension: listOfPoints
 ]
 
 { #category : #initialization }
 RTBezierLine >> initialize [
 	super initialize.
+	tension := 0.7.
 	controllingElements := #()
+]
+
+{ #category : #'control points' }
+RTBezierLine >> leastCommonAncestor: anEdge using: followBlock [
+	| a b aNodes bNodes sharedNode |
+	a := anEdge from.
+	b := anEdge to.
+	a = b ifTrue: [ ^ a ].
+	aNodes := self getFollowersOf: a using: followBlock.
+	bNodes := self getFollowersOf: b using: followBlock.
+	sharedNode := nil.
+	a := aNodes removeLast.
+	b := bNodes removeLast.
+	
+	[ a == b ] whileTrue: [ 
+		sharedNode := a.
+		sharedNode ifNil: [ ^ nil ].
+		a := aNodes ifEmpty: [ nil ] ifNotEmpty: [aNodes removeLast].
+		b := bNodes ifEmpty: [ nil ] ifNotEmpty: [bNodes removeLast]. ].
+	^ sharedNode.
 ]
 
 { #category : #'control points' }
@@ -168,12 +229,17 @@ RTBezierLine >> midPointInCenterOfObjects: aOneArgBlockOrValues inView: view [
 { #category : #'control points' }
 RTBezierLine >> setControllingElementsFromFollowFor: anEdge [
 	controllingElements := self getControllingElementsFromFollowFor: anEdge
-	
-"	(anEdge hasAttribute: #controllingElements)
-		ifTrue: [ controllingElements := anEdge attributeAt: #controllingElements ]
-		ifFalse: [ controllingElements := self getControllingElementsFromFollowFor: anEdge.
-			anEdge attributeAt: #controllingElements put: controllingElements ] 
-"	
+]
+
+{ #category : #accessing }
+RTBezierLine >> tension [
+	^ tension
+]
+
+{ #category : #accessing }
+RTBezierLine >> tension: aNumber [
+	"this is a number between 0 and 1"
+	tension := aNumber
 ]
 
 { #category : #public }

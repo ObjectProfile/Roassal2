@@ -114,8 +114,8 @@ RTKiviatBuilder >> addMetric: blockOrSymbol title: aString [
 RTKiviatBuilder >> addNodesAndEdgesToView [
 "add to the view the chart nodes created"
 	kiviatNodes do: [ :kn |
-		view addAll: kn edgeKiviatElements. 
 		view addAll: kn nodeKiviatElements.
+		view addAll: kn edgeKiviatElements. 
 		( polygons = #activated ) ifTrue: [ view add: kn polygonElement ].
 		]
 ]

@@ -48,6 +48,7 @@ RTView >> add: anElementOrAnEdge [
 
 { #category : #'adding - removing' }
 RTView >> addAll: someElements [
+	"Add a number of of elements to the view"
 	someElements do: [ :el | self add: el ]
 ]
 
@@ -58,6 +59,7 @@ RTView >> addAnimation: animation [
 
 { #category : #'adding - removing' }
 RTView >> addEdge: anEdge [
+	"Add an edge to the view. Extremity elements may or may not be in the view"
 	edges add: anEdge
 ]
 
@@ -183,6 +185,7 @@ RTView >> initializeContent [
 
 { #category : #'accessing-computed' }
 RTView >> numberOfEdges [
+	"Return the number of edges containde in the view"
 	^ edges size
 ]
 
@@ -247,6 +250,8 @@ RTView >> removeAllEdges [
 
 { #category : #'adding - removing' }
 RTView >> removeAllElements [
+	"Remove all the elements found in the view. 
+	CAUTION: this does not trigger a remove event per elements"
 	self initializeContent.
 	self canvas resetShapes. 
 
@@ -341,6 +346,7 @@ RTView >> setUpCanvas [
 
 { #category : #convenient }
 RTView >> signalUpdate [
+	"Force the view to be refreshed. Useful in case some elements have changed"
 	^ self canvas signalUpdate
 ]
 
