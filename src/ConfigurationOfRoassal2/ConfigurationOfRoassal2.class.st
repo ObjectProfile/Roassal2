@@ -444,7 +444,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	<symbolicVersion: #'stable'>
 
 	spec for: #'common' version: '1.11'.
-	spec for: #'pharo4.x' version: '1.11'.
+	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
 
 ]
@@ -529,13 +529,13 @@ ConfigurationOfRoassal2 >> version113: spec [
 	<version: '1.13' imports: #('1.5-baseline' )>
 
 	spec for: #'common' do: [
-		spec blessing: #'broken'.
+		spec blessing: #'stable'.
 		spec description: 'version 1.13'.
 		spec author: 'AndreiChis'.
 		spec project: 'GlamourCore' with: '3.1.4'.
 		spec 
 			package: 'Trachel' with: 'Trachel-akevalion.290';
-			package: 'Roassal2' with: 'Roassal2-akevalion.921';
+			package: 'Roassal2' with: 'Roassal2-AndreiChis.923';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
 			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
 			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
