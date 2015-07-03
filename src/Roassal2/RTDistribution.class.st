@@ -1,8 +1,19 @@
+"
+frequency distrubution of a collection.
+
+number of classes defined by default in #defaultNumberOfIntervals, a common calcul to have an optimized number of classes.
+
+"
 Class {
 	#name : #RTDistribution,
 	#superclass : #Object,
 	#instVars : [
-		'numbers'
+		'numbers',
+		'numberMax',
+		'nbOfIntervals',
+		'numberMin',
+		'interval',
+		'strategyBlock'
 	],
 	#category : #'Roassal2-Utility'
 }
@@ -21,17 +32,73 @@ RTDistribution >> amountOfDifferentValues [
 RTDistribution >> annotatedFrequency [
 	"Return a list of elements, each following the template:
 	{numberOfV . v} "
-	| answer s amountOfK |
-	answer := OrderedCollection new.
-	s := numbers asSet asSortedCollection: [ :a :b | a < b ].
-	s do: [ :k |
-		amountOfK := (numbers select: [ :vv | vv = k ]) size.
-		answer add: (Array with: amountOfK with: k) ].
-	^ answer asArray
+	| fr result |
+ 
+	fr := self frequencyMin: numbers min max: numbers max amountOfIntervals: self defaultNumberOfIntervals.
+	
+	result := fr collect: [ :f | { f size. f } ].
+	
+	^ result asArray
 ]
 
 { #category : #public }
-RTDistribution >> annotatedFrequencyMin: numberMin max: numberMax amountOfIntervals: nbOfIntervals [
+RTDistribution >> annotatedFrequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals [
+	"	Return a list of elements, each following the template:
+	{numberOfElementOfV . V} "
+	| fr result |
+	 
+	fr := self frequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals.
+	
+	result := fr collect: [ :f | { f size. f } ].
+	
+	^ result asArray
+	
+]
+
+{ #category : #public }
+RTDistribution >> annotatedFrequencyOfDifferentObjects [
+	"Return an Array of Arrays, each following the template:
+	#(NumberOfV V).
+	
+	Usefull for different kind Of objects, example: {'yes'. 'yes'. 'no'. 'maybe'. 'no'. 'maybe'. 'maybe'. 'yes'. 'no'. 'maybe'. 'yes'. 'maybe'.} "
+	|result dict|
+	result := OrderedCollection new.
+	dict := OrderedDictionary new.
+	numbers do: [ :p |
+		dict at: p ifPresent: [ :v |
+			| count |
+			count := 1 + v.
+			dict at: p put: count ] ifAbsent: [ dict add: ( p -> 1) ]
+		 ].
+	dict keysAndValuesDo: [ :k :v | result add: {v. k} ].
+	^ result asArray
+
+	
+]
+
+{ #category : #public }
+RTDistribution >> annotatedFrequencyWithAmountOfIntervals: aSmallInteger [ 
+	^ self annotatedFrequencyMin: numbers min max: numbers max amountOfIntervals: aSmallInteger
+]
+
+{ #category : #computing }
+RTDistribution >> defaultNumberOfIntervals [
+	^ (numbers size) log * 3.3 + 1 
+]
+
+{ #category : #public }
+RTDistribution >> defaultStrategyBlock [
+	"This block define which bucket to store in, a given number"
+	self strategyBlock: 
+		[ :number |
+			number = numberMax
+				ifTrue: nbOfIntervals
+				ifFalse: [ ((number - numberMin) / interval) floor + 1] 
+			]
+]
+
+{ #category : #public }
+RTDistribution >> deprecatedAnnotatedFrequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals [
 	"Return a list of elements, each following the template:
 	{ c1 . c2 . elements that are between c1 and c2 }
 	{ c2 . c3 . elements that are between c2 and c3 }
@@ -42,14 +109,17 @@ RTDistribution >> annotatedFrequencyMin: numberMin max: numberMax amountOfInterv
 	cN = numberMax
 	N = nbOfIntervals
 	 "
-
-	| interval running tmp result |
+	| running tmp result |
+	numbers := numbers sort.
+	self numberMax: numMax.
+	self numberMin: numMin.
+	self nbOfIntervals: aNbOfIntervals.
 	interval := ((numberMax + 1 - numberMin) / nbOfIntervals).
 	running := numberMin.
 	
 	tmp := numbers copy.
 	result := OrderedCollection new.
-	[ running asFloat < numberMax ] whileTrue: [ 
+	[ running asFloat <= numberMax ] whileTrue: [ 
 		| c |
 		c := tmp select: [ :v | v >= running and: [ v < (running + interval) ]].
 		result add: (Array with: running with: interval + running with: c asArray).
@@ -61,33 +131,30 @@ RTDistribution >> annotatedFrequencyMin: numberMin max: numberMax amountOfInterv
 ]
 
 { #category : #public }
-RTDistribution >> annotatedFrequencyWithAmountOfIntervals: aSmallInteger [ 
-	^ self annotatedFrequencyMin: numbers min max: numbers max amountOfIntervals: aSmallInteger
-]
-
-{ #category : #public }
 RTDistribution >> frequency [
-	^ self frequencyWithAmountOfIntervals: self amountOfDifferentValues
+	^ self frequencyWithAmountOfIntervals: self defaultNumberOfIntervals.
 ]
 
 { #category : #public }
-RTDistribution >> frequencyMin: numberMin max: numberMax amountOfIntervals: nbOfIntervals [
-
-	| interval running tmp result |
-	interval := ((numberMax + 1 - numberMin) / nbOfIntervals).
-	running := numberMin.
+RTDistribution >> frequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals [
+	| tmp result bucketFor |
 	
+	numbers := numbers sort.
+	self numberMax: numMax.
+	self numberMin: numMin.
+	self nbOfIntervals: aNbOfIntervals.
+	
+	self interval: (numberMax - numberMin) / (nbOfIntervals floor).
+	
+	bucketFor := [ :number |
+		number = numberMax
+			ifTrue: nbOfIntervals
+			ifFalse: [ ((number - numberMin) / interval) floor + 1] 
+			].
 	tmp := numbers copy.
-	result := OrderedCollection new.
-	[ running asFloat < numberMax ] whileTrue: [ 
-		| c |
-		c := tmp select: [ :v | v >= running and: [ v < (running + interval) ]].
-		result add: c asArray.
-		tmp := tmp copyWithoutAll: c.
-		running := running + interval ].
-	
+	result := (1 to: nbOfIntervals) collect: [ :i | OrderedCollection new ].
+	tmp do: [ :num | (result at: (bucketFor value: num)) add: num ].
 	^ result asArray
-	
 ]
 
 { #category : #public }
@@ -96,6 +163,44 @@ RTDistribution >> frequencyWithAmountOfIntervals: aSmallInteger [
 ]
 
 { #category : #public }
+RTDistribution >> initialize [
+	super initialize.
+	self defaultStrategyBlock.
+]
+
+{ #category : #public }
+RTDistribution >> interval: aSize [
+	interval := aSize
+]
+
+{ #category : #public }
+RTDistribution >> nbOfIntervals: aNumber [
+	nbOfIntervals := aNumber 
+]
+
+{ #category : #public }
+RTDistribution >> numberMax: aNumber [
+	numberMax := aNumber 
+]
+
+{ #category : #public }
+RTDistribution >> numberMin: aNumber [
+	numberMin := aNumber 
+]
+
+{ #category : #public }
 RTDistribution >> on: collectionOfNumbers [
-	numbers := collectionOfNumbers
+	self assert: (collectionOfNumbers isNotEmpty).
+	numbers := collectionOfNumbers.
+]
+
+{ #category : #public }
+RTDistribution >> strategyBlock [
+	^ strategyBlock
+]
+
+{ #category : #public }
+RTDistribution >> strategyBlock: aBlock [
+"This block define which bucket to store in, a given number"
+	strategyBlock := aBlock 
 ]

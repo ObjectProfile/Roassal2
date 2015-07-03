@@ -109,6 +109,12 @@ RTShapedObject >> pushBack [
 	self trachelShape pushBack
 ]
 
+{ #category : #actions }
+RTShapedObject >> pushFront [
+	"Move the shaped object front"
+	self trachelShape pushFront
+]
+
 { #category : #rendering }
 RTShapedObject >> renderOn: trachelCanvas [
 	trachelShape isNil ifTrue: [ self error: 'Cannot add an element without a shape. Add a shape to myself, using + or addShape:' . ^ self ].

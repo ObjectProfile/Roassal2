@@ -31,7 +31,9 @@ Class {
 	#superclass : #RTAbstractGrapher,
 	#instVars : [
 		'sets',
-		'timelineLabel'
+		'timelineLabel',
+		'elements',
+		'timelineLabelBuilder'
 	],
 	#category : #'Roassal2-Builder-Timeline'
 }
@@ -39,6 +41,11 @@ Class {
 { #category : #adding }
 RTTimeline >> add: aTimeLineSet [
 	sets add: aTimeLineSet
+]
+
+{ #category : #accessing }
+RTTimeline >> elements [
+	^ elements
 ]
 
 { #category : #'accessing - computed' }
@@ -50,6 +57,9 @@ RTTimeline >> indexOfLineIdentifier: anIdentifier [
 RTTimeline >> initialize [
 	super initialize.
 	sets := OrderedCollection new.
+	elements := OrderedCollection new.
+	timelineLabelBuilder := RTBuilder new.
+	timelineLabelBuilder shape label.
 	timelineLabel := #yourself.
 	self axisY noTick; noLabel.
 ]
@@ -58,10 +68,15 @@ RTTimeline >> initialize [
 RTTimeline >> label: aString on: position [
 	"Add a label in the view"
 	| e |
-	e := RTLabel elementOn: aString.
+	e := timelineLabelBuilder elementOn: aString.
 	e translateTo: position.
 	self view add: e.
 	^ e
+]
+
+{ #category : #'private - utility' }
+RTTimeline >> lineIdentifierLabels [
+	^ self lineIdentifiers collect: [ :i | (timelineLabel rtValue: i) asString ]
 ]
 
 { #category : #'accessing - computed' }
@@ -90,26 +105,28 @@ RTTimeline >> renderIn: aView [
 	self defineAxesIfNecessary.
 	
 	self renderAllDecoratorsBehind.
-	sets do: [ :aSet | aSet renderIn: aView using: self ].
+	elements := OrderedCollection new.
+	sets do: [ :aSet | 
+			aSet renderIn: aView using: self.
+			elements addAll: aSet elements ].
 	self renderAxis.	
 	self renderAllDecoratorsInFront.
-	self renderTimeLineLabels
+	self renderTimeLineLabels.
 ]
 
 { #category : #'private - utility' }
 RTTimeline >> renderTimeLineLabels [
 	| labels position labelElements offset halfVerticalStep |
-	labels := self lineIdentifiers collect: [ :i | (timelineLabel rtValue: i) asString ].
+	labels := self lineIdentifierLabels.
 	labelElements := RTGroup new.
-	labels doWithIndex: [ :aLabel :index |
-		position := self getPixelPositionOf: 0 @ index.
-		labelElements add: (self label: aLabel on: position) ].
-
+	labels
+		doWithIndex: [ :aLabel :index | 
+			position := self getPixelPositionOf: 0 @ index.
+			labelElements add: (self label: aLabel on: position) ].
 	offset := 10.
 	halfVerticalStep := (self getPixelPositionOf: 0 @ 1) y / -2.
-
 	TRConstraint alignFromRight: labelElements.
-	labelElements translateBy: (labelElements extent x / 2 + offset) negated @ halfVerticalStep. 
+	labelElements translateBy: (labelElements extent x / 2 + offset) negated @ halfVerticalStep
 ]
 
 { #category : #'private - utility' }
@@ -137,4 +154,9 @@ RTTimeline >> timelineLabel [
 { #category : #accessing }
 RTTimeline >> timelineLabel: symbolOrBlock [
 	timelineLabel := symbolOrBlock
+]
+
+{ #category : #accessing }
+RTTimeline >> timelineLabelBuilder [
+	^ timelineLabelBuilder
 ]
