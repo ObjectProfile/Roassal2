@@ -14,11 +14,17 @@ Class {
 { #category : #hooks }
 RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
+	| distribution |
 	super addedInBuilder: aBuilder.
 	
-	(self points first isNumber) ifTrue: [ 
-		self points: ((RTDistribution on: self points) annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points))] ifFalse: [ 
-		self points: ((RTDistribution on: self points) annotatedFrequencyOfDifferentObjects)].	
+	distribution := RTDistribution new on: self points; metric: x.
+	
+	((self points first isKindOf: Number) not & (x = #yourself )) ifTrue: [ 
+		distribution metric: nil.
+		 ].
+	 
+	self points: (distribution annotatedFrequencyWithAmountOfIntervals: (self nbOfIntervals rtValue: points)).
+	
 	self y: #first.
 	
 	builder axisX noTick; noLabel.
