@@ -66,9 +66,9 @@ RTDistributionTest >> testFrequencyOfObjects [
 	
 	self assert: d amountOfDifferentValues = set asSet size.
 	
-	f := d annotatedFrequencyOfDifferentObjects.
+	f := d annotatedFrequencyWithAmountOfIntervals: d amountOfDifferentValues.
 	self assert: f size = 3.
-	self assert: f = (Array with: {4. 'yes'} with: {3. 'no'} with: {5. 'maybe'})
+	self assert: f = (Array with: {4. (OrderedCollection with:'yes' with:'yes' with:'yes' with:'yes')} with: {3. (OrderedCollection with:'no' with:'no' with:'no')} with: {5. (OrderedCollection with:'maybe' with:'maybe' with:'maybe' with:'maybe' with:'maybe')})
 ]
 
 { #category : #tests }
