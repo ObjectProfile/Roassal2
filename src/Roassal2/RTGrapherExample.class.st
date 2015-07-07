@@ -1915,6 +1915,43 @@ yMYAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleMinAndMaxValues [
+
+| b ds |
+b := RTGrapher new.
+
+ds := RTStackedDataSet new.
+ds points: RTShape withAllSubclasses.
+ds y: #numberOfMethods.
+b add: ds.
+
+b addDecorator:  RTVerticalMinValueDecorator new red.
+b addDecorator:  RTVerticalMaxValueDecorator new blue.
+
+b axisY noLabel.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleMinAndMaxValuesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACrElEQVR4XuXbvWvqYBjGYf/z
+UhEKnTo41M1NMupUXFrEKQ6lgyB0EEEQFT9BrV93Tp+UlFSO57T1TdX+bgg1mD4m7/V+JNKm
+goCfU0qK3wR8EH74IHwQfvggfBB++CB8EH74IHwQfvgg/PBB+CD88EH4IPzwQfgg/PBB+CD8
+8EH44YPwQfjhg/BB+OGD8EH4OX+Q0WgkfvP+IMjLi3R3J3me9PwsPT2JD3DsEXJ9LT08SJeX
+ku9/BLm9PQyo1WqJD/KFPD5KFxdBkMu9Nby95oe/qPNB+OGD8EH44YPwwwfhP6nzwx8hfBB+
++CB8EH74IHwQfvgg/PBB+CD8HA1kOBzyn9T5I4QPwg8fhA/CDx+ED8IPH4QfPggfhB/+kzof
+hB8+CB/ktLJardTr9cQH4ef8QWazmbbb7XtvXi6Xv6pnLxYL2XY2IPP5XBabYtbrtabTqTab
+zfsFdDodJdU4g8Eg/Mwkr886mMtOdrQpK/qXtWj0uPjT093GiY9M/pT1xUwmk8Qbr9lsKj4q
+o/1fBaJaTUk0WnzferqtRTb92DQUvWejKr59dqraN3L+BRSdQ/RZ1oGS6ESHg/j+X09qcHUV
+rhcuNrvwbrcbvh6Px/89fveYdrst++Zg3/EGsbtvx0e/Zz/j57BvOw2QmxsF9/f8+1X+cwgf
+5NNJp9PhvF8sFlUqlQ4ayvl8PlwPrKbtZzIZlcvlb9csFAqvy17NWT3P81SpVJzVSwSk3++H
+83ij0VC9Xj8IxH9do6yezeMRtl30d+tVq1Wn9ewGIpvNOquXSurp1b5vSqKmq6diV/Xszstl
+Pf4awl/U+eGD8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DDB+GD8MMH4YPwwwfhg/DDB+GH
+D8IH4YcPwgfhhw/CB+GHD4LNHyhras4H+gdeAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleMultipleCurvesStacking [
 
 | b points1 points2 minY maxY ds1 ds2 |

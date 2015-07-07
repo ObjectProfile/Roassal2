@@ -21,6 +21,12 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #configuration }
+RTLabel class >> defaultColor [
+
+	^ Color black
+]
+
 { #category : #public }
 RTLabel class >> text: aBlockOrValueOrSymbol [
 	^ self new text: aBlockOrValueOrSymbol
@@ -29,7 +35,7 @@ RTLabel class >> text: aBlockOrValueOrSymbol [
 { #category : #configuration }
 RTLabel >> defaultColor [
 
-	^ Color black
+	^ self class defaultColor
 ]
 
 { #category : #'instance creation' }
