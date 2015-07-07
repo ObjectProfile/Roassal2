@@ -66,8 +66,14 @@ RTAbstractGrapherDecorator >> label: aString above: position [
 { #category : #utility }
 RTAbstractGrapherDecorator >> label: aString on: position [
 	"Add a label in the view"
+	^ self label: aString on: position color: RTLabel defaultColor
+]
+
+{ #category : #utility }
+RTAbstractGrapherDecorator >> label: aString on: position color: aColor [
+	"Add a label in the view"
 	| e |
-	e := RTLabel elementOn: aString.
+	e := (RTLabel new color: aColor) elementOn: aString.
 	e translateTo: position.
 	builder view add: e.
 	^ e
