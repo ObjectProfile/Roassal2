@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 RTVerticalMaxValueDecorator >> render [	
 	self add: self datasetValues max. 
 	super render.
