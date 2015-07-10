@@ -110,6 +110,15 @@ RTLabelGenerator >> searchMin: dmin max: dmax desired: m [
 	best := RTGrapherLabel new.
 	bestScore := -2.
 	
+	"In case of a particular situation"
+	(dmin = 0 and: [ dmax = 0 ]) ifTrue: [ 
+		best
+			min: 0;
+			max: 1;
+			step: 1;
+			score: bestScore.
+		^ best ].
+	
 	[ :break |
 		[ true ] whileTrue: [ 
 			n := nice next.
