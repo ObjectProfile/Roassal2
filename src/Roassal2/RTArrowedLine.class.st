@@ -1,5 +1,5 @@
 "
-A RTArrow is an arrowed line between its extremities
+A RTArrowedLine is an arrowed line between its extremities
 
 Instance Variables
 	head:		<Object>
@@ -14,9 +14,8 @@ line
 "
 Class {
 	#name : #RTArrowedLine,
-	#superclass : #RTAbstractLine,
+	#superclass : #RTAbstractArrowedLine,
 	#instVars : [
-		'line',
 		'head'
 	],
 	#category : #'Roassal2-Core'
@@ -31,25 +30,19 @@ RTArrowedLine class >> edgeFrom: el1 to: el2 [
 RTArrowedLine >> attachPoint: anAttachPoint [
 	super attachPoint: anAttachPoint.
 	head attachPoint: anAttachPoint.
-	line attachPoint: anAttachPoint
 ]
 
 { #category : #accessing }
 RTArrowedLine >> color: aColor [
+	super color: aColor.
 	head color: aColor.
-	line color: aColor
+	
 ]
 
 { #category : #public }
 RTArrowedLine >> directed [
 
 	self line: RTDirectedLine new
-]
-
-{ #category : #public }
-RTArrowedLine >> edgeFrom: el1 to: el2 [
-	^ (RTEdge from: el1 to: el2) addShape: self
-	
 ]
 
 { #category : #public }
@@ -70,7 +63,7 @@ RTArrowedLine >> head: aLineDecorationShape [
 { #category : #initialization }
 RTArrowedLine >> initialize [
 	super initialize.
-	self simple; straight.
+	self simple
 ]
 
 { #category : #public }
@@ -78,24 +71,9 @@ RTArrowedLine >> inverted [
 	attachPoint inverted
 ]
 
-{ #category : #accessing }
-RTArrowedLine >> line [
-	^ line
-]
-
-{ #category : #accessing }
-RTArrowedLine >> line: aLineShape [
-	line := aLineShape
-]
-
 { #category : #public }
 RTArrowedLine >> simple [
 	self head: RTSimpleArrowHead new
-]
-
-{ #category : #accessing }
-RTArrowedLine >> straight [
-	self line: RTLine new
 ]
 
 { #category : #public }
@@ -114,14 +92,4 @@ RTArrowedLine >> trachelShapeFor: anEdge [
 RTArrowedLine >> updateFor: edge trachelShape: trachelShape [
 	line updateFor: edge trachelShape: edge trachelShape shapes first.
 	head updateFor: edge trachelShape: edge trachelShape shapes second
-]
-
-{ #category : #public }
-RTArrowedLine >> width: aValue [
-	line width: aValue
-]
-
-{ #category : #public }
-RTArrowedLine >> withOffsetIfMultiple [
-	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new.
 ]
