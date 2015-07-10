@@ -2174,6 +2174,52 @@ OgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDoubleArrow [
+
+| v edges es |
+v := RTView new.
+edges := OrderedCollection new.
+
+es := RTBox elementsOn: (1 to: 300).
+RTGridLayout new gapSize: 30; on: es.
+
+es do: [ :e |
+	| te |
+	te := RTBox element.
+	te translateTo: e position + (0 @ 10).
+	edges add: ((RTDoubleArrowedLine new color: Color black) edgeFrom: e to: te).
+].
+
+v addAll: edges.
+
+v when: TRMouseMove do: [ :evt |  
+	edges do: [ :edge |
+		edge to translateTo: (evt positionFromCamera - edge from position) / 5 + edge from position.
+	].
+	v signalUpdate.
+].
+
+	^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDoubleArrowIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACb0lEQVR4XuXcS27CMBhF4a6P
+92IA8doHsCneQ9iKW7kSkyaOwA0pzXcnSFwUyxxF/xlY/vj89PNO+fD/Ah+In0eB7Ha7cLvd
+wuFwCD9/+Ipuv99/d/Hz2e56vWZ1ueuluriv2MV91tEV3pB+vx82m00oo1fV9Xq9sF6vS7tu
+t5vVdTqdf989u/cCkNlsFlKvU1U3n89b3S0Wi2S3XC6zutVqFfwZ4g91Pz4QH4gfX3t97fW1
+19deX3v9+EPdjw/EB+LH115fe33t9bXX114//lD3gfjxgfjxtdfXXl97fe31tdePP9R9IH58
+IC6Qu4qdTqekppV1x+Ox8S6qbfx8povPis9suitT/lRXeENGo1HYbrelZjAcDpPdYDBIdlGX
+c7qo0nV3UTWbXO/Zvfva+6Da+trrzxA/PhA/PhBfe33t9bXX115fe33t9Ye6Hx+ID8RPO7T3
+L5Q4R3vvz/xX2lultq/Q3qbVNrdrSolr0942KHGu9uYqsa+9/lD34wPxgfjxtdfXXl97fe31
+tdePP9T9+EB8IH6a117/kIN/yME/5NAWtfUPOfjxh7oPxI8PxNdeX3t97fW119deX3v9+EB8
+IH58IO0Aclexy+WS1LRXdOfzudDF76q6qLY5Xe56KQWP+6qzK9Xe1CVlUXtTXdTenIvPYpe6
+4KvqUrTcrupCsd+sl7v3n10ByHg8TmradDpNdpPJpPauar136uo8GOLPEH+o+/GB+ED8+Nrr
+a6+vvb72+trrxx/qPhA/PhA/vvb62utrr6+9vvb68Ye6D8SPD8QH4mtvZfenb4ivvev3AuJr
+rz9D/PhAfCB+HswXjenj9eANteIAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleDoubleClick [
 
 | v es |
