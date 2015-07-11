@@ -250,6 +250,37 @@ TRShapeTest >> testHasCallback [
 	self assert: s hasEventCallback.
 ]
 
+{ #category : #fixed }
+TRShapeTest >> testIsFixed [
+
+	| c s |
+	c := TRCanvas new.
+	
+	s := TRBoxShape new size: 30.
+	c addShape: s.
+	s setAsFixed.
+
+	self assert: s isFixed.
+	self assert: (c fixedShapes includes: s).
+	s remove.
+	self deny: (c fixedShapes includes: s).
+	
+	
+]
+
+{ #category : #fixed }
+TRShapeTest >> testIsFixed02 [
+
+	| c s |
+	c := TRCanvas new.
+	
+	s := TRBoxShape new size: 30.
+	c addShape: s.
+	s setAsFixed.
+
+	s pushFront
+]
+
 { #category : #callback }
 TRShapeTest >> testNumberOfCallbacks [
 	| s |
