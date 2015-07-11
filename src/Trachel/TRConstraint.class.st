@@ -154,6 +154,15 @@ TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
 	trachelShape translateTo: ((trachelShape width / 2) @ (windowSize y - (trachelShape height / 2)))
 ]
 
+{ #category : #'public - moving' }
+TRConstraint class >> moveAtTheBottomRightOfTheWindow: trachelShape [
+
+	| windowSize |
+	trachelShape canvas ifNil: [ ^ self ].
+	windowSize := trachelShape canvas extent.
+	trachelShape translateTo: ((windowSize x - (trachelShape width / 2)) @ (windowSize y negated - (trachelShape height / 2)))
+]
+
 { #category : #'public - camera' }
 TRConstraint class >> moveCameraToTheRightIn: trachelCanvas [
 	^ trachelCanvas camera translateTo: (trachelCanvas extent x / -2) @ trachelCanvas camera position y
@@ -300,11 +309,27 @@ TRConstraint class >> stick: aShape onTheTopLeftOf: anotherShape withWidthPaddin
 ]
 
 { #category : #'public - sticking' }
+TRConstraint class >> stickAtTheBottomLeftOfTheWindow: trachelShape [
+	self moveAtTheBottomLeftOfTheWindow: trachelShape.
+	trachelShape canvas
+		when: TRResizeCanvasEvent
+		do: [ :event | self moveAtTheBottomLeftOfTheWindow: trachelShape ]
+]
+
+{ #category : #'public - sticking' }
 TRConstraint class >> stickAtTheBottomOfTheWindow: trachelShape [
 	self moveAtTheBottomOfTheWindow: trachelShape.
 	trachelShape canvas
 		when: TRResizeCanvasEvent
 		do: [ :event | self moveAtTheBottomOfTheWindow: trachelShape ]
+]
+
+{ #category : #'public - sticking' }
+TRConstraint class >> stickAtTheBottomRightOfTheWindow: trachelShape [
+	self moveAtTheBottomRightOfTheWindow: trachelShape.
+	trachelShape canvas
+		when: TRResizeCanvasEvent
+		do: [ :event | self moveAtTheBottomRightOfTheWindow: trachelShape ]
 ]
 
 { #category : #'public - camera' }

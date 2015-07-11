@@ -390,8 +390,15 @@ TRCanvas >> pushBack: aShape [
 
 { #category : #actions }
 TRCanvas >> pushFront: aShape [
-	shapes remove: aShape.
-	shapes addLast: aShape
+	| tColl |
+	tColl := aShape isFixed 
+				ifTrue:  
+					[ fixedShapes ]	
+				ifFalse: 
+					[ shapes ].
+				
+	tColl remove: aShape.
+	tColl addLast: aShape 
 ]
 
 { #category : #animations }
