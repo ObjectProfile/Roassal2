@@ -26,18 +26,19 @@ RoassalModel >> initialize [
 
 	script := [ :v :canvas | ] asValueHolder.
 	script whenChangedDo: [ :s | self refresh ].
+	self flag: 'Remove lastEvent'.
 	lastEvent := nil asValueHolder.
 ]
 
 { #category : #accessing }
 RoassalModel >> lastEvent [
-
+	self deprecated: 'This feature is no longer supported.'.
 	^ lastEvent value
 ]
 
 { #category : #accessing }
 RoassalModel >> lastEvent: aBlock [
-
+	self deprecated: 'This feature is no longer supported.'.
 	lastEvent value: aBlock
 ]
 

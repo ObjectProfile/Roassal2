@@ -13,7 +13,7 @@ Class {
 
 { #category : #specs }
 MorphicRoassalAdapter class >> defaultSpec [
-
+	self flag: 'Remove whenLastEventChangedDo:'.
 	^ #(RTViewForSpec
 		whenLastEventChangedDo: #(model whenLastEventChangedBlock))
 ]
@@ -63,7 +63,8 @@ MorphicRoassalAdapter >> buildWidget [
 
 { #category : #private }
 MorphicRoassalAdapter >> freeCanvas [
-	
+
+	self flag: 'Remove whenLastEventChangedDo:'.
 	view := RTViewForSpec new
 		whenLastEventChangedDo: self whenLastEventChangedBlock;
 		yourself.
@@ -81,6 +82,6 @@ MorphicRoassalAdapter >> view [
 
 { #category : #protocol }
 MorphicRoassalAdapter >> whenLastEventChangedBlock [
-
+	self flag: 'Remove me'.
 	^ [ :evt | self model lastEvent: evt ]
 ]
