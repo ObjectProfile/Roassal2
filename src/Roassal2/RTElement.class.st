@@ -44,8 +44,9 @@ RTElement >> addCallback: aCallback [
 
 { #category : #initialization }
 RTElement >> addConnectedEdge: anEdge [
-	[  anEdge class == RTEdge ] assert.
-	self connectedEdges add: anEdge
+	[ anEdge class == RTEdge ] assert.
+	(self connectedEdges includes: anEdge) 
+		ifFalse: [ self connectedEdges add: anEdge ]
 ]
 
 { #category : #adding }
