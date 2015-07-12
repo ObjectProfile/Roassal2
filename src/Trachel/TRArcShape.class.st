@@ -65,15 +65,15 @@ TRArcShape >> computePath [
 	bCos := bAngle cos.
 	bSin := bAngle sin negated.
 	path := 
-self athensCanvas
-	createPath: [ :builder | 
-		builder
-			absolute;
-			moveTo: ((i * (bCos)) @ (i * (bSin)));
-			arcTo:  ((i * (aCos)) @ (i * (aSin))) angle: bAngle - aAngle cw: true;
-			ccwArcTo: ((e * (aCos)) @ (e * (aSin))) angle: 0;
-			ccwArcTo: ((e * (bCos)) @ (e * (bSin))) angle: bAngle  - aAngle;
-			ccwArcTo: ((i * (bCos)) @ (i * (bSin))) angle: 0 ]
+		self athensCanvas
+			createPath: [ :builder | 
+				builder
+					absolute;
+					moveTo: ((i * (bCos)) @ (i * (bSin)));
+					arcTo:  ((i * (aCos)) @ (i * (aSin))) angle: bAngle - aAngle cw: true;
+					ccwArcTo: ((e * (aCos)) @ (e * (aSin))) angle: 0;
+					ccwArcTo: ((e * (bCos)) @ (e * (bSin))) angle: bAngle  - aAngle;
+					ccwArcTo: ((i * (bCos)) @ (i * (bSin))) angle: 0 ]
 ]
 
 { #category : #computing }
