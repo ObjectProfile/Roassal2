@@ -471,9 +471,9 @@ searchTree := [ :s :t| t key = s ifTrue: [ t ]
 		r ] ].
 relationsBlock := [ :str| | res strings |
 	res := Dictionary new.
-	(str subStrings: '
+	(str substrings: '
 ') do: [:s| 
-		strings := s subStrings:' '.
+		strings := s substrings:' '.
 		res at: strings first put: 
 			(strings allButFirst collect: [:st |
 				searchTree value: st value: tree] )].
