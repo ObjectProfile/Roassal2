@@ -16,14 +16,14 @@ RTInteractionBuilderTest >> setUp [
 { #category : #tests }
 RTInteractionBuilderTest >> testAddingOneAction [
 	builder action: #inspect.
-	self assert: builder numberOfMenuEntries equals: 1
+	self assert: builder numberOfInteractions equals: 1
 ]
 
 { #category : #tests }
 RTInteractionBuilderTest >> testAddingTwoActions [
 	| e |
 	builder action: #inspect; action: #browse.
-	self assert: builder numberOfMenuEntries equals: 2.
+	self assert: builder numberOfInteractions equals: 2.
 	
 	e := RTElement new.
 	builder setUpElements: (Array with: e) asGroup.
@@ -33,7 +33,27 @@ RTInteractionBuilderTest >> testAddingTwoActions [
 
 { #category : #tests }
 RTInteractionBuilderTest >> testDefault [
-	self assert: builder numberOfMenuEntries equals: 0
+	self assert: builder numberOfInteractions equals: 0
+]
+
+{ #category : #tests }
+RTInteractionBuilderTest >> testDraggableAndSnapToGrid [
+	builder snapToGrid.
+	self assert: builder numberOfInteractions equals: 1
+]
+
+{ #category : #tests }
+RTInteractionBuilderTest >> testDraggableAndSnapToGrid02 [
+	builder draggable.
+	builder snapToGrid.
+	self assert: builder numberOfInteractions equals: 1
+]
+
+{ #category : #tests }
+RTInteractionBuilderTest >> testMultipleDraggable [
+
+	builder draggable; draggable.
+	self assert: builder numberOfInteractions equals: 1.
 ]
 
 { #category : #tests }

@@ -1,3 +1,14 @@
+"
+-=-=-=-=
+b := RTMondrian new.
+
+b interaction snapToGrid.
+b shape rectangle size: 20. 
+b nodes: (1 to: 9).
+b layout grid.
+b
+-=-=-=-=
+"
 Class {
 	#name : #RTInteractionBuilder,
 	#superclass : #RTAbstractBuilder,
@@ -36,6 +47,9 @@ RTInteractionBuilder >> decoration [
 { #category : #public }
 RTInteractionBuilder >> draggable [
 	| i |
+	interactions 
+		detect: [ :int | int class == RTDraggable] 
+		ifFound: [ :int | ^ int ]. 
 	i := RTDraggable new.
 	interactions add: i. 
 	^ i
@@ -121,7 +135,7 @@ RTInteractionBuilder >> noInteractions [
 ]
 
 { #category : #'accessing - computed' }
-RTInteractionBuilder >> numberOfMenuEntries [
+RTInteractionBuilder >> numberOfInteractions [
 	^ interactions size
 ]
 
@@ -161,6 +175,16 @@ RTInteractionBuilder >> popupView: aTwoArgBlock [
 	self addExclusiveInteraction: (RTPopup new background: (Color blue alpha: 0.6) group: aTwoArgBlock)
 ]
 
+{ #category : #public }
+RTInteractionBuilder >> removeInteractionOfType: cls [
+	"Remove the interaction of type cls if present"
+	| int |
+	(interactions anySatisfy: [ :anInt | anInt class == cls ])
+		ifTrue: [ 
+			int := interactions detect: [ :anInt | anInt class == cls ].
+			interactions := interactions copyWithout: int ]
+]
+
 { #category : #building }
 RTInteractionBuilder >> setUpElement: elementOrGroup [
 	"elements is an RTGroup, that contains RTElement or RTEdges"
@@ -179,6 +203,17 @@ RTInteractionBuilder >> showEdge [
 	| i |
 	i := RTShowEdge new.
 	interactions add: i. 
+	^ i
+]
+
+{ #category : #public }
+RTInteractionBuilder >> snapToGrid [
+	"Make the elements draggable and positioned on a grid"
+	| i cls |
+	cls := RTDraggable.
+	self removeInteractionOfType: cls.
+	i := RTDraggableSnapToGrid new.
+	interactions add: i.
 	^ i
 ]
 
