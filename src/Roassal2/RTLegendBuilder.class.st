@@ -24,10 +24,12 @@ Class {
 	#name : #RTLegendBuilder,
 	#superclass : #RTBuilder,
 	#instVars : [
+		'items',
 		'group',
 		'legendElement',
 		'offset',
-		'position'
+		'position',
+		'isOnDemand'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -40,147 +42,120 @@ RTLegendBuilder class >> on: aView [
 	^ i.
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addColor: aColor object: anObject text: aBlockOrSelector [
 	"Associate a color with a text"
-	| g |
-	g := RTGroup new.
-	g add: (RTBox new size: 10; color: aColor) element.
-	g add: ((RTLabel text: aBlockOrSelector) elementOn: anObject).
-	RTHorizontalLineLayout new alignCenter; on: g.
-	group add: g.
-	^ g
+	items add: (RTColorLegendItem new color: aColor; model: anObject; text: aBlockOrSelector)
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addColor: aColor text: aText [
 	"Associate a color with a text"
 	^ self addColor: aColor object: aText text: #yourself
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addColorFadingFrom: startColor to: endColor text: description [
 
-	| g shape es n label |
-	g := RTGroup new.
-	
-	shape := RTBox new width: 3; height: 20.
-	es := shape elementsOn: (1 to: 50).
-	g addAll: es.
-	RTHorizontalLineLayout new gapSize: -1; on: es.
-	
-	n := RTMetricNormalizer new.
-	n elements: es.
-	n normalizeColor: #yourself using: (Array with: startColor with: endColor).
-	
-	label := (self newLabelShape: description) element.
-	g add: label.
-	TRConstraint move: label onTheRightOf: es.
-	label translateBy: 20 @ 0.
-	
-	group add: g.
-	^ g
+	items add: (RTColorFadingLegendItem new startColor: startColor; endColor: endColor; description: description)
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addColoredObject: anObject text: aTextOrSymbolOrBlock color: aColor [
-	group add: (RTGroup new add: 
-					((self newLabelShape: aTextOrSymbolOrBlock) elementOn: anObject); yourself)
+	items add: (RTLabelLegendItem new model: anObject; text: aTextOrSymbolOrBlock; color: aColor)
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addColoredText: aText color: aColor [
 	^ self addColoredObject: nil text: aText color: aColor
 
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addLineColor: aColor text: aText [
 	"Associate a color with a text"
-	| g |
-	g := RTGroup new.
-	g add: (RTBox new height: 3; width: 10; color: aColor) element.
-	g add: (RTLabel elementOn: aText).
-	RTHorizontalLineLayout new alignCenter; on: g.
-	group add: g.
+	items add: (RTLineLegendItem new color: aColor; text: aText)
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addObject: anObject text: aTextOrASymbolOrBlock [
 	^ self addColoredObject: anObject text: aTextOrASymbolOrBlock color: Color lightGray
 ]
 
-{ #category : #adding }
-RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription [
+{ #category : #'public - convenient' }
+RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription box: boxDescription [
 	"Associate a color with a text"
 
-	| g ext1 ext2 box e lineExtremityShape lineShape topLine leftLine widthDescriptionElement heightDescriptionElement |
+	items add: (RTPolymorphicBoxLegendItem new 
+						widthDescription: widthDescription;
+						heightDescription: heightDescription;
+						boxDescription: boxDescription)
+]
+
+{ #category : #'public - convenient' }
+RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription boxIllustrate: boxDescription [
+	"Associate a color with a text"
+
+	| g ext1 ext2   lineExtremityShape lineShape topLine |
 	g := RTGroup new.
-	lineExtremityShape := RTBox new size: 1.
-	lineShape := RTDoubleArrowedLine new color: Color red.
-	widthDescriptionElement := (self newLabelShape: widthDescription) element.
-	heightDescriptionElement := (self newLabelShape: heightDescription) element.
-	g add: widthDescriptionElement.
-	g add: heightDescriptionElement.
-	box := (RTBox new extent: 30 @ 50) element.
-	g add: box.
-	e := box encompassingRectangle.
+	
+	"Defining extremities and line shape"
+	lineExtremityShape := RTBox new size: 10.
+	lineShape := RTLine new color: Color red.
+	
+	"The top line"
 	ext1 := lineExtremityShape element.
 	ext2 := lineExtremityShape element.
 	topLine := lineShape edgeFrom: ext1 to: ext2.
-	ext1 translateBy: e topLeft - (0 @ 10).
-	ext2 translateBy: e topRight - (0 @ 10).
-	g
-		add: ext1;
-		add: ext2.
-	g add: topLine.	"	TRConstraint move: widthDescriptionElement onTheRightOf: ext2."
-	TRConstraint move: widthDescriptionElement between: ext1 and: ext2.
-	widthDescriptionElement translateBy: 0 @ (widthDescriptionElement extent y / -2 - 3).
-	ext1 := lineExtremityShape element.
-	ext2 := lineExtremityShape element.
-	leftLine := lineShape edgeFrom: ext1 to: ext2.
-	ext1 translateBy: e topLeft - (10 @ 0).
-	ext2 translateBy: e bottomLeft - (10 @ 0).
-	g
-		add: ext1;
-		add: ext2.
-	g add: leftLine.
-	TRConstraint move: heightDescriptionElement between: ext1 and: ext2.
-	heightDescriptionElement translateBy: (heightDescriptionElement extent x / -2) @ 0.
+	
+	ext2 translateBy: (10 @ 10).
+	g add: ext1; add: ext2.
+	g add: topLine.
+	
 	group add: g.
 	^ g
 ]
 
-{ #category : #adding }
-RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription box: boxDescription [
+{ #category : #'public - convenient' }
+RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription boxVEYGOOD: boxDescription [
 	"Associate a color with a text"
 
 	| g ext1 ext2 box e lineExtremityShape lineShape topLine leftLine widthDescriptionElement heightDescriptionElement boxDescriptionLabel |
 	g := RTGroup new.
-	lineExtremityShape := RTBox new size: 1.
-	lineShape := RTDoubleArrowedLine new color: Color red.
+	
+	"Defining extremities and line shape"
+	lineExtremityShape := RTBox new size: 10.
+	lineShape := RTLine new color: Color red.
+	
+	"Label for the descriptions"
 	widthDescriptionElement := (self newLabelShape: widthDescription) element.
 	heightDescriptionElement := (self newLabelShape: heightDescription) element.
 	g add: widthDescriptionElement.
 	g add: heightDescriptionElement.
+	
+	"The box"
 	box := (RTBox new extent: 30 @ 50) element.
 	g add: box.
 	e := box encompassingRectangle.
+	
+	"The top line"
 	ext1 := lineExtremityShape element.
 	ext2 := lineExtremityShape element.
 	topLine := lineShape edgeFrom: ext1 to: ext2.
 	ext1 translateBy: e topLeft - (0 @ 10).
 	ext2 translateBy: e topRight - (0 @ 10).
+	g
+		add: ext1;
+		add: ext2.
+	g add: topLine.
 	
+	"The width label"
 	boxDescriptionLabel := (self newLabelShape: boxDescription) element.
 	g add: boxDescriptionLabel.
 	TRConstraint move: boxDescriptionLabel onTheRightOf: box.
 	
 	
-	g
-		add: ext1;
-		add: ext2.
-	g add: topLine.
+
 	TRConstraint move: widthDescriptionElement between: ext1 and: ext2.
 	widthDescriptionElement translateBy: 0 @ (widthDescriptionElement extent y / -2 - 3).
 	ext1 := lineExtremityShape element.
@@ -198,7 +173,7 @@ RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightD
 	^ g
 ]
 
-{ #category : #adding }
+{ #category : #'public - convenient' }
 RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: self textColor
 ]
@@ -213,12 +188,26 @@ RTLegendBuilder >> defaultOffset [
 	^ 20
 ]
 
+{ #category : #accessing }
+RTLegendBuilder >> group [
+	"Return all the elements"
+	| myGroup |
+	myGroup := RTGroup new.
+	items do: [ :item | myGroup add: item execute ].
+	RTVerticalLineLayout on: myGroup.
+	^ myGroup
+]
+
 { #category : #initialization }
 RTLegendBuilder >> initialize [
 	super initialize.
+	"Thisi group variable should be removed"
 	group := RTGroup new.
+	
 	offset := self defaultOffset.
-	position := #below
+	position := #below.
+	isOnDemand := false.
+	items := OrderedCollection new.
 ]
 
 { #category : #'public - positioning' }
@@ -262,30 +251,62 @@ RTLegendBuilder >> offset: aDistanceInPixel [
 	offset := aDistanceInPixel 
 ]
 
+{ #category : #'public - ondemand' }
+RTLegendBuilder >> onDemand [
+	isOnDemand := true
+]
+
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
+	| myGroup elementsInTheViewWithoutTheLegend |
 	super renderIn: aView.
-	RTVerticalLineLayout on: group.
+
+	isOnDemand ifTrue: [ ^ self renderOnDemandIn: aView ].
+
+	elementsInTheViewWithoutTheLegend := aView elements.
+	myGroup := self group.
 	legendElement := (RTBox new
 		borderColor: Color lightGray;
 		fillColor: Color white) element.
-	RTNest new on: legendElement nest: group.
+	aView add: legendElement.
+	myGroup do: [ :g | aView addAll: g ].
+	RTNest new on: legendElement nest: myGroup.
 	
 	self isBelow ifTrue: [ 
-		TRConstraint move: legendElement below: (RTGroup withAll: aView elements).
+		TRConstraint move: legendElement below: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
 		legendElement translateBy: 0 @ offset. ].
 
 	self isRight ifTrue: [ 
-		TRConstraint move: legendElement onTheRightOf: (RTGroup withAll: aView elements).
+		TRConstraint move: legendElement onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
 		legendElement translateBy: offset @ 0. ].
 
 	self isLeft ifTrue: [ 
-		TRConstraint move: legendElement onTheLeftOf: (RTGroup withAll: aView elements).
+		TRConstraint move: legendElement onTheLeftOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
 		legendElement translateBy: offset @ 0. ].
 	
-	aView add: legendElement.
-	group do: [ :g | aView addAll: g ].
 	legendElement @ RTDraggable
+]
+
+{ #category : #hooks }
+RTLegendBuilder >> renderOnDemandIn: aView [
+	| label myGroup |
+	super renderIn: aView.
+	RTVerticalLineLayout on: group.
+
+	label := (RTLabel new color: Color red) elementOn: '?'.
+	label setAsFixed.
+	label @ RTHighlightable.
+	aView add: label.
+	label translateTo: label extent / 2.
+	label @ (RTPopup new
+					alphaPopupBackground: 0.8;
+					background: Color white
+					group: [ :gg :el | 
+					 	 	myGroup := self group.
+							
+							gg addAll: (myGroup flatCollect: #yourself).
+					]).
+	
 ]
 
 { #category : #'public - positioning' }

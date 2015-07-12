@@ -29,7 +29,8 @@ Class {
 	#instVars : [
 		'groupBlock',
 		'text',
-		'textColor'
+		'textColor',
+		'alphaPopupBackground'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -37,7 +38,7 @@ Class {
 { #category : #lastPopup }
 RTPopup class >> removeLastPopup [
     self lastPopup ifNil: [ ^ self ].
-    self lastPopup first view isNotNil ifTrue: [ self lastPopup do: #remove ].
+    self lastPopup first view isNotNil ifTrue: [ self lastPopup do: [ :el | el view ifNotNil: [ el remove] ] ].
     self resetLastPopup
 ]
 
@@ -51,17 +52,29 @@ RTPopup >> accept: aVisitor with: args [
 	aVisitor visitPopupInteraction: self with: args.
 ]
 
+{ #category : #accessing }
+RTPopup >> alphaPopupBackground [
+	"Return the alpha value for the background. The alpha value is useful to make the background transparent"
+	^ alphaPopupBackground
+]
+
+{ #category : #accessing }
+RTPopup >> alphaPopupBackground: aValue [
+	"Set the alpha value for the background. The alpha value is useful to make the background transparent"
+	alphaPopupBackground := aValue
+]
+
 { #category : #public }
 RTPopup >> background: aColor group: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
 	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
 	
 	self group: [ :group :el |
-		| b |
-		b := (RTBox new color: (aColor alpha: 0.4)) element.
-		group add: b.
+		| backgroundElement |
+		backgroundElement := self createBackgroundElement: aColor.
+		group add: backgroundElement.
 		aTwoArgBlock value: group value: el.
-		RTNest new centerOn: b elements: (group copyWithout: b).
+		RTNest new centerOn: backgroundElement elements: (group copyWithout: backgroundElement).
 		]
 ]
 
@@ -81,6 +94,11 @@ RTPopup >> createAndShowPopupFor: element event: event [
 
 	popup translateTopLeftTo: popupPosition.	
 
+]
+
+{ #category : #public }
+RTPopup >> createBackgroundElement: aColor [
+	^ (RTBox new color: (aColor alpha: self alphaPopupBackground)) element
 ]
 
 { #category : #hooks }
@@ -111,26 +129,28 @@ RTPopup >> group: aTwoArgBlock [
 RTPopup >> initialize [
 	super initialize.
 	self text: #yourself.
-	textColor := Color black
+	textColor := Color black.
+	alphaPopupBackground := 0.4
 ]
 
 { #category : #public }
 RTPopup >> named: aOneArgBlock background: aColor group: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
 	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
-	
-	self group: [ :group :el |
-		| background label |
-		background := (RTBox new color: (aColor alpha: 0.4)) element.
-		label := (RTLabel new text: aOneArgBlock; color: Color black) elementOn: el model.
-		
-		aTwoArgBlock value: group value: el.
-		
-		group addFirst: background; addFirst: label.
-		RTNest new centerOn: background elements: (group copyWithoutAll: (Array with: background with: label)).
-		TRConstraint move: label above: background.
-		]
-	
+
+	self
+		group: [ :group :el | 
+			| background label |
+			background := self createBackgroundElement: aColor.
+			label := (RTLabel new
+				text: aOneArgBlock;
+				color: Color black) elementOn: el model.
+			aTwoArgBlock value: group value: el.
+			group
+				addFirst: background;
+				addFirst: label.
+			RTNest new centerOn: background elements: (group copyWithoutAll: (Array with: background with: label)).
+			TRConstraint move: label above: background ]
 ]
 
 { #category : #public }
