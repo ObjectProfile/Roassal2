@@ -22,7 +22,7 @@ RTViewForSpec >> addElement: anElement [
 				do: [ :ann | lastEvent value: ann ] ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RTViewForSpec >> initialize [
 
 	super initialize.
