@@ -6,5 +6,5 @@ Class {
 
 { #category : #hooks }
 RTFilledDiamond class >> trachelShapeClass [
-	^ DCTRFilledDiamondShape
+	^ TRFilledDiamondShape
 ]

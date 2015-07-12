@@ -6,5 +6,5 @@ Class {
 
 { #category : #hooks }
 RTNoDecorationShape class >> trachelShapeClass [
-	^ DCTRNoDecoratorShape
+	^ TRNoDecoratorShape
 ]

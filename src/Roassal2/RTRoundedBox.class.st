@@ -65,7 +65,7 @@ RTRoundedBox >> initialize [
 
 { #category : #hooks }
 RTRoundedBox >> trachelShapeClass [
-	^ DCTRBoxShape
+	^ TRRoundedBoxShape
 ]
 
 { #category : #rendering }

@@ -6,5 +6,5 @@ Class {
 
 { #category : #hooks }
 RTEmptyCircle class >> trachelShapeClass [
-	^ DCTRCircleHeadShape
+	^ TRCircleHeadShape
 ]

@@ -6,5 +6,5 @@ Class {
 
 { #category : #hooks }
 RTFilledNarrowArrow class >> trachelShapeClass [
-	^ DCTRFilledNarrowArrowHeadShape
+	^ TRFilledNarrowArrowHeadShape
 ]
