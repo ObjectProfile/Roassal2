@@ -1827,6 +1827,20 @@ kWDygcgHIt/kA5EPRL7JByIfiHyTD0Q+EPkmH4h8IPJNPhD5Jh+IfCDyTT4Q+UDkm3wg8oHI
 N/lA5AORb/KByDf5QBbC/gdzJXoZ+XSG6AAAAABJRU5ErkJggg=='
 ]
 
+{ #category : #icons }
+RTRoassalExample >> exampleCoolIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAB2ElEQVR4XuXasW3CQBiGYTcZ
+gqwAa2SSVFClSEPlkgUyAUoZiQKJkpqUmYDUFHYHDfocg9JGSoGSk5/39C9wj3z2Iaqu8yup
+yt8CH8TPB/FB/HwQH8TPB/FB/HwQH8TPB/HzQXwQPx/EB/HzQXwQPx/EB/HzQfx8EB/Ezwfx
+Qfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80FMkP1+391q2rYlN/GWe+iD+CDDaLvd5nw+
+p2iQw+GQ4/E4+KnrOlVVdaPRKJvNJsWCrNfrLBaLwc9kMrmCXGY2m8U/sgpoPp9nt9vFf4f4
+L/Xfz2rVdnXdceM/IQXUpIn/2VtIyyxT9eu+X5/9KvfIalddDaxxxum/sa5rmqn/lfXfpe+5
+eczlSSn6yGr6S1I+PpLvG+xgQV5fk7u75OEh+Sz4yGpeXq4Q6X9WGPJnVcbj9LfC7jKZFn5k
+5e0teX/P0I+sPD0ly6V/MfQvhj6ID+KD+CA+iA/yA8hlE281p9OJBLnlHvr/OiksH8QH8fNB
+fBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB/HwQH8TPB/FB/HwQPx/EB/HzQXwQPx/EB/Hz
+QXwQPx/EzwfxQfx8EB/EzwfxQfz+qC9z7PTjhlg+LgAAAABJRU5ErkJggg=='
+]
+
 { #category : #sources }
 RTRoassalExample >> exampleCreatingBitmap [
 
