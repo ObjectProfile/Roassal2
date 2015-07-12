@@ -328,21 +328,21 @@ RTMondrianTest >> testInteraction [
 RTMondrianTest >> testInteractionNoOverride [
 
 	"popup and draggable"	
-	self assert: b interaction numberOfMenuEntries equals: 2.
+	self assert: b interaction numberOfInteractions equals: 2.
 
 	b interaction when: TRMouseClick do: [ :evt | ].
-	self assert: b interaction numberOfMenuEntries equals: 3
+	self assert: b interaction numberOfInteractions equals: 3
 ]
 
 { #category : #'tests - interaction' }
 RTMondrianTest >> testInteractionOverridePopup [
 
 	"popup and draggable"	
-	self assert: b interaction numberOfMenuEntries equals: 2.
+	self assert: b interaction numberOfInteractions equals: 2.
 
 	"Since there is a popup in the interaction, we cannot have two popup"
 	b interaction popupText: 'hello'.
-	self assert: b interaction numberOfMenuEntries equals: 2
+	self assert: b interaction numberOfInteractions equals: 2
 ]
 
 { #category : #'tests - edges' }
