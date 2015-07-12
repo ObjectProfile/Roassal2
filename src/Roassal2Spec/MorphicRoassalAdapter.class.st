@@ -11,13 +11,6 @@ Class {
 	#category : #Roassal2Spec
 }
 
-{ #category : #specs }
-MorphicRoassalAdapter class >> defaultSpec [
-	self flag: 'Remove whenLastEventChangedDo:'.
-	^ #(RTViewForSpec
-		whenLastEventChangedDo: #(model whenLastEventChangedBlock))
-]
-
 { #category : #private }
 MorphicRoassalAdapter >> adapt: aComposableModel [
 
@@ -54,20 +47,16 @@ MorphicRoassalAdapter >> basicApplyScript [
 
 { #category : #private }
 MorphicRoassalAdapter >> buildWidget [
-
-	^ SpecInterpreter 
-		private_interpretASpec: self class defaultSpec 
-		model: self 
-		selector: nil
+	self flag: 'Remove whenLastEventChangedDo:'.
+		^ RTViewForSpec new
+		whenLastEventChangedDo: self whenLastEventChangedBlock;
+		yourself
 ]
 
 { #category : #private }
 MorphicRoassalAdapter >> freeCanvas [
 
-	self flag: 'Remove whenLastEventChangedDo:'.
-	view := RTViewForSpec new
-		whenLastEventChangedDo: self whenLastEventChangedBlock;
-		yourself.
+	view := self buildWidget.
 	canvas := view setUpCanvas.
 	widget extent: canvas extent.
 
@@ -83,5 +72,6 @@ MorphicRoassalAdapter >> view [
 { #category : #protocol }
 MorphicRoassalAdapter >> whenLastEventChangedBlock [
 	self flag: 'Remove me'.
-	^ [ :evt | self model lastEvent: evt ]
+	"^ [ :evt | self model lastEvent: evt ]"
+	^ [ :evt | ]
 ]
