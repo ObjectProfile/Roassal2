@@ -25,7 +25,9 @@ Class {
 		'view',
 		'canvas',
 		'shape1',
-		'shape2'
+		'shape2',
+		'originShape',
+		'conformingShape'
 	],
 	#category : #'Trachel-Tests'
 }
@@ -38,6 +40,9 @@ TRConstraintTest >> setUp [
 	shape2 := TRBoxShape new size: 10.
 	canvas addShape: shape1.
 	canvas addShape: shape2.
+	
+	(originShape := TRBoxShape new) extent: 10 @ 10.
+	(conformingShape := TRBoxShape new) extent: 20 @ 20
 ]
 
 { #category : #aligning }
@@ -78,6 +83,31 @@ TRConstraintTest >> testAlignFromTop [
 	TRConstraint alignFromTop: (Array with: shape1 with: shape2).
 	self assert: shape1 position equals: 0 @ 20.
 	self assert: shape2 position equals: 0 @ 0.
+]
+
+{ #category : #resizing }
+TRConstraintTest >> testChangingExtent [
+	
+	TRConstraint changeExtentOf: conformingShape like: originShape plus: 5 @ -5.
+	self assert: conformingShape extent = (15 @ 5).
+	self assert: originShape extent = (10 @ 10).
+	
+	originShape extent: 0 @ 0.
+	self assert: conformingShape extent = (15 @ 5).
+	
+	DCTRConstraint changeExtentOf: conformingShape like: originShape plus: 0 @ 0.
+	self assert: conformingShape extent = (0 @ 0)
+]
+
+{ #category : #resizing }
+TRConstraintTest >> testKeepingExtent [
+	originShape extent: 10 @ 10.
+	conformingShape extent: 20 @ 20.
+	TRConstraint keepExtentOf: conformingShape like: originShape plus: 5 @ -5.
+	self assert: conformingShape extent = (15 @ 5).
+	self assert: originShape extent = (10 @ 10).
+	originShape extent: 0 @ 5.
+	self assert: conformingShape extent = (5 @ 0)
 ]
 
 { #category : #resizing }

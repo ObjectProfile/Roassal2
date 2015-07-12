@@ -48,6 +48,11 @@ TRConstraint class >> alignFromTop: shapes [
 	self use: topMostElement alignFromTop: shapes
 ]
 
+{ #category : #'public - resizing' }
+TRConstraint class >> changeExtentOf: conformingShape like: originShape plus: aPoint [
+	^ conformingShape extent: originShape encompassingRectangle extent + aPoint
+]
+
 { #category : #'public - sticking' }
 TRConstraint class >> fix: aShape for: anotherShape [
 	"When anotherShape is moved, then move aShape"
@@ -57,6 +62,16 @@ TRConstraint class >> fix: aShape for: anotherShape [
 	anotherShape addCallback: (TRTranslationCallback block: b).
 
 	
+]
+
+{ #category : #'public - resizing' }
+TRConstraint class >> keepExtentOf: conformingShape like: originShape plus: aPoint [
+	| b |
+	self changeExtentOf: conformingShape like: originShape plus: aPoint.
+	b := [ :shape :step | self changeExtentOf: conformingShape like: originShape plus: aPoint ].
+	originShape
+		addCallback: (TRExtentCallback block: b);
+		addCallback: (TRTranslationCallback block: b)
 ]
 
 { #category : #'public - moving' }
@@ -98,6 +113,38 @@ TRConstraint class >> move: aShape between: s1 and: s2 offset: aFloat [
 ]
 
 { #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheBottomCenterOf: anotherShape [
+	"
+	Move aShape at the bottom of botom center of anotherShape
+	
+v := RTView new.
+
+lbl := RTLabel elementOn: 'Hello world'.
+box := (RTBox new width: 50; height: 80) element.
+
+v add: box.
+v add: lbl.
+box translateTo: 50 @ 50.
+TRConstraint move: lbl onTheBottomCenterOf: box.
+v
+	"
+
+	self
+		move: aShape
+		onTheBottomCenterOf: anotherShape
+		withWidthPadding: 5
+		withHeightPadding: 5
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheBottomCenterOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| rectangle bl |
+	rectangle := anotherShape encompassingRectangle.
+	bl := rectangle bottomLeft.
+	aShape translateTo: (bl x + (rectangle width / 2)) @ (bl y - aShape height)
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheBottomLeftOf: anotherShape [
 	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ ((anotherShape height/ -2) rounded))
 ]
@@ -106,6 +153,23 @@ TRConstraint class >> move: aShape onTheBottomLeftOf: anotherShape [
 TRConstraint class >> move: aShape onTheCenterOf: anotherShape [
 	^ aShape translateTo: anotherShape center
 
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheCenterRightOf: anotherShape [
+	self
+		move: aShape
+		onTheCenterRightOf: anotherShape
+		withWidthPadding: 5
+		withHeightPadding: 5
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheCenterRightOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| rectangle rect |
+	rect := anotherShape encompassingRectangle.
+	rectangle := anotherShape encompassingRectangle topRight.
+	^ aShape translateTo: (rectangle x - aShape width) @ (rectangle y + (rect height / 2))
 ]
 
 { #category : #'public - moving' }
@@ -129,6 +193,23 @@ TRConstraint class >> move: aShape onTheRightOf: anotherShape using: translator 
 ]
 
 { #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopCenterOf: anotherShape [
+	self
+		move: aShape
+		onTheTopCenterOf: anotherShape
+		withWidthPadding: 5
+		withHeightPadding: 5
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopCenterOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| rectangle tl |
+	rectangle := anotherShape encompassingRectangle.
+	tl := rectangle topLeft.
+	aShape translateTo: (tl x + (rectangle width / 2) + (widthPadding / 2)) @ (tl y + (aShape height / 2))
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape [
 	^ aShape translateTo: anotherShape center - ((((anotherShape width/2) rounded) + (aShape width/2 rounded)) @ ((anotherShape height/ 2) rounded))
 ]
@@ -143,6 +224,23 @@ TRConstraint class >> move: aShape onTheTopLeftOf: anotherShape withWidthPadding
 	| rectangle |
 	rectangle := anotherShape encompassingRectangle topLeft.
 	^ aShape translateTo: ((rectangle x + (aShape width/2) + widthPadding)@(rectangle y + (aShape height/2) + heightPadding))
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopRightOf: anotherShape [
+	^ self move: aShape onTheTopRightOf: anotherShape withPadding: 5
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopRightOf: anotherShape withPadding: padding [
+	^ self move: aShape onTheTopRightOf: anotherShape withWidthPadding: padding withHeightPadding: padding
+]
+
+{ #category : #'public - moving' }
+TRConstraint class >> move: aShape onTheTopRightOf: anotherShape withWidthPadding: widthPadding withHeightPadding: heightPadding [
+	| rectangle |
+	rectangle := anotherShape encompassingRectangle topRight.
+	^ aShape translateTo: ((rectangle x - (aShape width/2) - widthPadding)@(rectangle y + (aShape height/2) + heightPadding))
 ]
 
 { #category : #'public - moving' }
@@ -235,6 +333,30 @@ TRConstraint class >> stick: aShape between: s1 and: s2 offset: aFloat [
 ]
 
 { #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheBottomCenterOf: anotherShape [
+
+"
+v := RTView new.
+
+lbl := RTLabel elementOn: 'Hello world'.
+box := (RTBox new width: 50; height: 80) element.
+
+v add: box.
+v add: lbl.
+box translateTo: 50 @ 50.
+box @ RTDraggable.
+TRConstraint stick: lbl onTheBottomCenterOf: box.
+v
+"
+	| b |
+	self move: aShape onTheBottomCenterOf: anotherShape.
+
+	b := [ :shape :step | self move: aShape onTheBottomCenterOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b)
+]
+
+{ #category : #'public - sticking' }
 TRConstraint class >> stick: aShape onTheBottomLeftOf: anotherShape [
 	| b |
 	self move: aShape onTheBottomLeftOf: anotherShape. 
@@ -274,6 +396,30 @@ TRConstraint class >> stick: aShape onTheRightOf: anotherShape [
 	anotherShape addCallback: (TRTranslationCallback block: b).
 	anotherShape addCallback: (TRExtentCallback block: b) 
 	
+]
+
+{ #category : #'public - sticking' }
+TRConstraint class >> stick: aShape onTheTopCenterOf: anotherShape [
+
+"
+v := RTView new.
+
+lbl := RTLabel elementOn: 'Hello world'.
+box := (RTBox new width: 50; height: 80) element.
+
+v add: box.
+v add: lbl.
+box translateTo: 50 @ 50.
+box @ RTDraggable.
+TRConstraint stick: lbl onTheTopCenterOf: box.
+v
+"
+	| b |
+	self move: aShape onTheTopCenterOf: anotherShape.
+
+	b := [ :shape :step | self move: aShape onTheTopCenterOf: anotherShape ].
+	anotherShape addCallback: (TRTranslationCallback block: b).
+	anotherShape addCallback: (TRExtentCallback block: b)
 ]
 
 { #category : #'public - sticking' }
