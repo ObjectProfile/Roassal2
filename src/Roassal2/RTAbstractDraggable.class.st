@@ -32,6 +32,7 @@ RTAbstractDraggable >> initialize [
 
 { #category : #hooks }
 RTAbstractDraggable >> initializeElement: element [
+	self assert: [ element class ~~ RTView ] description: 'Please use RTDraggableView instead'.
 	element when: TRMouseDragging do: [ :e | 
 		| d t |
 		t := RTGroup withAll: groupToDrag.

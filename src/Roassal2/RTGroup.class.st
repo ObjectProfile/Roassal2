@@ -221,6 +221,11 @@ RTGroup >> rotateByDegrees: degreeAsABlockOrValue [
 	self do: [ :e | e rotateByDegrees: degreeAsABlockOrValue ]
 ]
 
+{ #category : #actions }
+RTGroup >> setAsFixed [
+	self do: #setAsFixed
+]
+
 { #category : #signalling }
 RTGroup >> signalUpdate [
 	self ifEmpty: [ ^ self ].

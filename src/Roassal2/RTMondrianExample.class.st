@@ -77,18 +77,17 @@ RK5CYII='
 { #category : #sources }
 RTMondrianExample >> exampleArrowedLines [
 
-| b |
-b := RTMondrianViewBuilder new.
+	| b |
+	b := RTMondrian new.
 
-b shape circle size: 30.
-b nodes: (RTShape withAllSubclasses).
+	b shape circle size: 30.
+	b nodes: (RTShape withAllSubclasses).
 
-b shape arrowedLine withShorterDistanceAttachPoint.
-b edgesFrom: #superclass.
-b forceBasedLayout charge: -500; nbIterations: 50.
-
-b build.
-^ b view
+	b shape arrowedLine withShorterDistanceAttachPoint.
+	b edgesFrom: #superclass.
+	b layout forceWithCharge: -500.
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -897,14 +896,14 @@ SUVORK5CYII='
 RTMondrianExample >> exampleClasses [
 
 	| b |
-	b := RTMondrianViewBuilder new.
+	b := RTMondrian new.
 	b shape rectangle 
 				withBorder;
 				width: #numberOfVariables;
 				height: #numberOfMethods;
 				fillColor: Color white.
 	b nodes: RTObject withAllSubclasses.
-	b gridLayout.
+	b layout grid.
 	b build.
 	^ b view
 ]
@@ -2422,11 +2421,11 @@ xAfx44P48UF8ED+t/AB/sRc/XKQU+AAAAABJRU5ErkJggg=='
 RTMondrianExample >> exampleNestingAndTitle [
 
 	| b |
-	b := RTMondrianViewBuilder new.
+	b := RTMondrian new.
 	b shape rectangle withTextAbove.
 	b nodes: RTShape withAllSubclasses forEach: [:cls | 
 		b shape rectangle color: Color white; size: #numberOfLinesOfCode.
-		b nodes: cls rtmethods. b gridLayout ].
+		b nodes: cls rtmethods. b layout grid ].
 	b flowLayout.
 	^ b build
 ]
@@ -2889,14 +2888,12 @@ QPzJHxB/QPzJHxB/8gfEHxB/8gfEHxB/8gfEHxB/8gfEHxB/8gfEn/wB8QfEn/wB8QfEn/wB
 
 { #category : #sources }
 RTMondrianExample >> exampleSimpleTreeLayout [
-
-
-| b |
-	b := RTMondrianViewBuilder new.
+	| b |
+	b := RTMondrian new.
 	b shape rectangle size: 10; borderColor: Color black.
 	b nodes: (1 to: 100).
 	b edges: (1 to: 100) from: [ :v | v // 2 ] to: #yourself.
-	b treeLayout.
+	b layout tree.
 	b build.
 	^ b view
 ]

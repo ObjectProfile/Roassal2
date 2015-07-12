@@ -97,6 +97,11 @@ RTShapeBuilder >> doesNotUnderstand: aMessage [
 		withArguments: aMessage arguments
 ]
 
+{ #category : #'shape - edges' }
+RTShapeBuilder >> doubleArrowedLine [
+	^ self shape: RTDoubleArrowedLine new
+]
+
 { #category : #'public - building' }
 RTShapeBuilder >> edgeFrom: element1 to: element2 [
 	self hasSetLineShape ifFalse: [ self line ].
