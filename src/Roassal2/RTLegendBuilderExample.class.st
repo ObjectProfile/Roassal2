@@ -89,3 +89,8 @@ mVpUclkWyEda7ISVHwin+IHwA+EXPxB+IPziB8IPhB8IPxB+IPxA+IHwA+EHwg+EX/xA+IHw
 ix/I1yD8LAm/JQtnkf4bHT+QFBA/EH4g/OIHwg+EX/xA+IHwix8IPxB+8QPhB8IvfiD84gfC
 D4Rf/ED4gfCLHwg/EH7xA+EHwi9+IPziB5IS+hcnzeuWXm7caQAAAABJRU5ErkJggg=='
 ]
+
+{ #category : #'as yet unclassified' }
+RTLegendBuilderExample >> label [
+	^ 'Legend'
+]

@@ -50,3 +50,8 @@ fppD8mhPEjGUIdse2vv1hSG+8IHgA8EXPhB8IPjCB4IPBF/4QPCFDwQfCL7wgeADwRc+EHwg
 +MIHgg8EX/hA8IUPBB8IvvCB4APBFz4QfCD4wgeCDwRf+EDwhQ8EHwi+8IHgA8EXPhB8IPjC
 B4IPBF/4QPCFD6So9QWkXF11duLGUQAAAABJRU5ErkJggg=='
 ]
+
+{ #category : #accessing }
+RTSparklineExample >> label [
+	^ 'Sparkline'
+]
