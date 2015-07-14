@@ -155,7 +155,6 @@ RTKiviatBuilder >> axis: aRTKiviatMetric [
 					positionLabel: [ :aLabel :aTick | aLabel translateTo: aTick position + (0 @ 15) ].
 					(axisTitle = #activated) ifTrue: [ config title: (aRTKiviatMetric named)].
 					
-					
 	centralPoint := (0@0).
 	
 	config axisFrom: 0@0 to: (aRTKiviatMetric modelBlock value: (self getNormalizedValue:(aRTKiviatMetric maxValue)  min:0  max:(aRTKiviatMetric maxSize)  minValue:(aRTKiviatMetric minValue) maxValue: (aRTKiviatMetric maxValue))).
