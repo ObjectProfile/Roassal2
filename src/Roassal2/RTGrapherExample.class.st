@@ -1682,6 +1682,46 @@ Acnf8gOSv+UHJD8g+Vt+QPIDkr/lB+R/3v4B+vM9Sl2AdzAAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleMarkerOnTheXAxis [
+
+| b ds |
+b := RTGrapher new.
+
+ds := RTDataSet new.
+ds connectColor: Color blue.
+ds points: #(3 4 5 6 7).
+ds x: #yourself.
+ds y: #yourself.
+
+b add: ds.
+b addDecorator: (RTMarkerOnX new value: 5).
+b addDecorator: (RTMarkerOnX new value: 6).
+
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleMarkerOnTheXAxisIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADFklEQVR4XuXcQUtqQRjG8VZ9
+jL5my1q6qYULaREItYoKC1clolJqauZChMhCQRQRFLV7E0oer3PAS2HIDc/VOef/gKsDwzg/
+3zPH16mNyYQfm7LBXwI+CD98ED4IP3wQPgg/fBA+CD98ED4IP3wQfvggfBB++CB8EH74IHwQ
+fvggfBB++CD88EH4IPzwQfgg/PBB+CD8eAMkEAio3+8rmUzq5uZG/OVcM0g4HHYQHh8fVS6X
+v4C8vb2p1+vxkVYJ0ul0VKlUVK/Xlc/n5xafD2LZHuJ3kNfXV/FBLMndnVQs8kHWnvFYuryU
++LcsS6pi+vwi/h7i86rgg1hWFXyQf6yKw8M2/7GXWBV8EAv2Cj6IxVXBB7GsKlwDCYVCzhsx
+nV7T8f18zTQX2+221SDX130rqsI1ENN6L5VKisViurq68kxzcVYVHx8f1s0Pd8uyZa/Ag5iq
+uLiQ9XsaAuT21u6qwIAMh791diZPfRfyLcj0wU+ZzC/PdQp8B2L2Cq9VhW9BTFWUy/J0h9kX
+IF6vCl+B+KEqfANyetqa+C38bq+fQJ6enpwFz2azGgwG/INy6waZdXhzuZxOTk6+LH6r1dLz
+8zMfZJUgOzs7E9Pljcfjc2d7+RXC30P4IHwQPggfhA/CB+GDUEG0v79wftrbEx9klSBbW1rm
+Oh+ED8IH4YOsCmN3V2bBdXyshdePjuQZkGAw6Ew2nU5Pf7/OeKp1ovNzaXNTenjQwuvFondA
+3t/fZZqI1WrVeX2+NhqNVKvV1O12XXs1m01Xxxttby+8Pm3WTX4ynhsfwKVAUqmU83fq9/f3
+KhQKc5Mx53vd/PS4PZ750Ng2Hv9/nRC+GM5Ow5sfrb6rnJ9mOBzq4ODAGefl5WXp8SKRiEy1
+uTU/k9lh82Xn919AZqfhzcn4RCIhN4ANinl4ML+9LDteo9FQNBp1bX7j8fjvw82y8+Pfsgi3
+LH74IHwQfvggfBB++CB8EP4S8EH44YPwQfjhg/BB+OGD8EH44YPwQfjhg/DDB+GD8MMH4YPw
+wwfhg/DDB+GD8MMH4efb/AE7UEBHDfiIBAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleMethodSize [
 
 
