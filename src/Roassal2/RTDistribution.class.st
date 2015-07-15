@@ -145,7 +145,7 @@ RTDistribution >> frequencyMin: numMin max: numMax amountOfIntervals: aNbOfInter
 	self nbOfIntervals: aNbOfIntervals.
 	
 	self interval: (self numberMax - self numberMin) / (self nbOfIntervals floor).
-
+	
 	bucketFor := self strategyBlock.
 	tmp := self objects copy.
 	result := (1 to: self nbOfIntervals) collect: [ :i | OrderedCollection new ].
