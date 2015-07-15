@@ -83,6 +83,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
 
 	labelShape := RTLabel new 
+		color: self defaultLabelColor;
 		text: [ :i | self getStringFromNumber: (labelValues at: i + 1) ];
 		height: self labelFontHeight.
 	labels := labelShape elementsOn: (0 to: self numberOfLabels).
@@ -134,6 +135,12 @@ RTAxisRenderer >> config: anAxisConfiguration [
 	config := anAxisConfiguration
 ]
 
+{ #category : #configuration }
+RTAxisRenderer >> defaultLabelColor [
+	"Label should be gray per default"
+	^ Color gray
+]
+
 { #category : #'accessing-computed' }
 RTAxisRenderer >> getStringFromNumber: aNumber [
 	^ config getStringFromNumber: aNumber
@@ -149,7 +156,7 @@ RTAxisRenderer >> insertTitleIfNecessaryTo: toPosition [
 			lbl translateTo: toPosition - config titlePosition ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAxisRenderer >> labelFontHeight [
 	^ config labelFontHeight 
 ]
