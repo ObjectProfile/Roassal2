@@ -46,7 +46,7 @@ Class {
 	#category : #'Roassal2-Builder-ScrollBar'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTScrollBarBuilder >> addShapesToView [
 	
 	self shapes collection do: [ :s | self view canvas addFixedShape: s ].
@@ -70,27 +70,27 @@ RTScrollBarBuilder >> barHeight [
 		] ifFalse: [ ^ self width]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> barShape [
 	^ barShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> barShape: aSymbol [
 	barShape := aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> barSpecific [
 	^ barSpecific 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> barSpecific: aSymbol [
 	barSpecific := aSymbol 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - bar management' }
 RTScrollBarBuilder >> barWidth [
  "This method is used to get the width of the bar from a scroll bar builder only, depending on the specificity of the bar"
 	(self barSpecific = #scalable) ifTrue: [
@@ -107,7 +107,7 @@ RTScrollBarBuilder >> barWidth [
 		] ifFalse: [ ^ self width]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #view }
 RTScrollBarBuilder >> configureView: aView [
 	aView.
 ]
@@ -131,25 +131,25 @@ RTScrollBarBuilder >> defaultScrollBar [
 	self orientation: #horizontal	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> encompassingRectangle [
 	^ encompassingRectangle
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> encompassingRectangle: aRectangle [
 	encompassingRectangle := aRectangle
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel [
 	^ encompassingRectangleFromSpaceToPixel
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel: aRectangle [
 	encompassingRectangleFromSpaceToPixel := aRectangle
 
@@ -169,13 +169,13 @@ RTScrollBarBuilder >> encompassingRectangleUpdate [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> fixedPosition [
 "get the value of the initial fixed Position, in case of block, evaluation of self"
 	^ (fixedPosition rtValue: self).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> fixedPosition: aPositionOrABlock [
 "set the initial position of the scroll bar, if a block, the block will be evaluated with 'cull self'. For example a block [:v | v view canvas extent] will set the position to canvas extent, just as [<myBuilder> view canvas extent]. If you want the scrollBar to be fully free and movable without reset position, set a point for fixedPosition."
 	fixedPosition:= aPositionOrABlock 
@@ -187,7 +187,7 @@ RTScrollBarBuilder >> fixedPositionBlock [
 	^ fixedPosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTScrollBarBuilder >> initialize [
 	super initialize.
 	self configureView: view.
@@ -196,12 +196,12 @@ RTScrollBarBuilder >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> movable [
 	^ movable
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> movable: aSymbol [
 	movable := aSymbol
 ]
@@ -226,18 +226,18 @@ RTScrollBarBuilder >> notifyWith: anElement [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> orientation [
 	^ orientation 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> orientation: aSymbol [
 "set orientation of scroll bar, #horizontal or #vertical"
 	orientation := aSymbol.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTScrollBarBuilder >> renderIn: aView [
 
 	(self scrollBarType = #isBasic) ifTrue: [ 
@@ -253,29 +253,29 @@ RTScrollBarBuilder >> renderIn: aView [
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> scrollBarType [
 	^ scrollBarType. 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> scrollBarType: aSymbol [
 	scrollBarType := aSymbol. 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> shapes [
 "the shapes used to build the scroll bar"
 	^ shapes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> shapes: aRTScrollBarShapes [
 "the shapes used to build the scroll bar"
 	shapes := aRTScrollBarShapes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #signalling }
 RTScrollBarBuilder >> signalUpdate [
 	
 	"this method is used to increase the size of the shapes composing the scroll bar when the size is defined by a Block, for example to follow the size of the windows
@@ -303,13 +303,13 @@ RTScrollBarBuilder >> signalUpdate [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> size [
 "get the value of the size, in case of block, evaluation of self"
 	^ size rtValue: self 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> size: aSizeOraBlock [
 "set the size of scroll bar, it's length. If a block, the block will be evaluated with 'cull self'. For example a block [ :v | v view canvas extent x] will set the size to canvas width, just as [<myBuilder> view canvas extent x]"
 	size:= aSizeOraBlock.
@@ -321,12 +321,12 @@ RTScrollBarBuilder >> sizeBlock [
 	^ size.  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> width [
 	^ width
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarBuilder >> width: aSize [
 "set width of the scroll bar"
 	width := aSize

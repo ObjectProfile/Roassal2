@@ -14,7 +14,7 @@ RTScrollBarBasic class >> fromBuilder: b [
 	 ^ self new view: b view; encompassingRectangle: b encompassingRectangle; encompassingRectangleFromSpaceToPixel: b encompassingRectangleFromSpaceToPixel; size: b sizeBlock; movable: b movable; fixedPosition: b fixedPositionBlock; scrollBarType: b scrollBarType; orientation: b orientation; barShape: b barShape; barSpecific: b barSpecific.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RTScrollBarBasic >> addAnimations [
 	"add animations on the bar, to make the scroll bar movable or not etc.."
 	| bar start stop surroundingRectangle margeRectangle |
@@ -128,7 +128,7 @@ RTScrollBarBasic >> defineShapes [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTScrollBarBasic >> initialize [
 	super initialize.
 	self shapes: RTScrollBarShapes new.
@@ -147,7 +147,7 @@ RTScrollBarBasic >> positionOnBorderVertical [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTScrollBarBasic >> renderIn: aView [
 
 	(self view elements isEmpty) ifTrue: [self defaultEncompassingRectangle] ifFalse: [ self encompassingRectangleUpdate ].
@@ -180,7 +180,7 @@ RTScrollBarBasic >> reverseTranslationVertical: evt [
 	^ 0@(t negated)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #signalling }
 RTScrollBarBasic >> signalUpdatePosition [
 
 	| pr pos sizeNow |
@@ -217,7 +217,7 @@ RTScrollBarBasic >> signalUpdatePosition [
 		self shapes margeRectangle position: pos.	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #signalling }
 RTScrollBarBasic >> signalUpdateSize [
 	| sizeNow |
 

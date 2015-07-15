@@ -47,7 +47,7 @@ b3 build.
 ^ b view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTScrollBarBuilderExamples >> example1 [
 
 "
@@ -75,7 +75,7 @@ b2 build.
 ^ b view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTScrollBarBuilderExamples >> example2 [
 
 "
@@ -103,7 +103,7 @@ b2 build.
 ^ b view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTScrollBarBuilderExamples >> example3 [
 
 "
@@ -134,7 +134,7 @@ b2 build.
 ^ b view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTScrollBarBuilderExamples >> initialize [
 	super initialize 
 ]

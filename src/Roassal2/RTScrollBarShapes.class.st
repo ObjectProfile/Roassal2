@@ -12,67 +12,67 @@ Class {
 	#category : #'Roassal2-Builder-ScrollBar'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> bar [
 	^ bar
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> bar: aTRShape [
 	bar := aTRShape. 
 	collection add: aTRShape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> collection [
 	^ collection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTScrollBarShapes >> initialize [
 	super initialize.
 	collection := OrderedCollection new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> margeRectangle [
 	^ margeRectangle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> margeRectangle: aTRShape [
 	margeRectangle := aTRShape.
 	collection add: aTRShape. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> start [
 	^ start
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> start: aTRShape [
 	start := aTRShape.
 	collection add: aTRShape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> stop [
 	^ stop
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> stop: aTRShape [
 	stop := aTRShape.
 	collection add: aTRShape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> surroundingRectangle [
 	^ surroundingRectangle 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScrollBarShapes >> surroundingRectangle: aTRShape [
 	surroundingRectangle := aTRShape.
 	collection add: aTRShape. 
