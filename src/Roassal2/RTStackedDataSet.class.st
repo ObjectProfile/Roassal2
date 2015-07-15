@@ -69,6 +69,12 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RTStackedDataSet >> addedInBuilder: aBuilder [
+	super addedInBuilder: aBuilder.
+	aBuilder axisX noLabel; noTick
+]
+
 { #category : #public }
 RTStackedDataSet >> barShape [
 	shouldHaveHistogramBars := true.
