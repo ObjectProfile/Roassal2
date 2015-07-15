@@ -95,7 +95,7 @@ TRConstraintTest >> testChangingExtent [
 	originShape extent: 0 @ 0.
 	self assert: conformingShape extent = (15 @ 5).
 	
-	DCTRConstraint changeExtentOf: conformingShape like: originShape plus: 0 @ 0.
+	TRConstraint changeExtentOf: conformingShape like: originShape plus: 0 @ 0.
 	self assert: conformingShape extent = (0 @ 0)
 ]
 
