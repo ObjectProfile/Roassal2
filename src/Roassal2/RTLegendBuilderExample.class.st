@@ -32,6 +32,75 @@ Class {
 }
 
 { #category : #sources }
+RTLegendBuilderExample >> exampleBelow [
+
+|  lb b |
+b := RTMondrian new.
+b shape rectangle
+	width: [ :c | c numberOfVariables * 5 ];
+	height: #numberOfMethods.
+b nodes: RTShape withAllSubclasses.
+b edges connectFrom: #superclass.
+b layout tree.
+b normalizer
+	normalizeColor: #numberOfLinesOfCode using: { Color black. Color red }.
+b build.
+
+lb := RTLegendBuilder new.
+lb view: b view.
+
+lb addText: 'System complexity view'.
+lb addRectanglePolymetricWidth: 'number of methods' height: 'Line of code' box: 'a Pharo class'.
+lb build.
+
+^ b view
+]
+
+{ #category : #icons }
+RTLegendBuilderExample >> exampleBelowIcon [
+	^ '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
+6Bcj/wHPMRRbfIEHkQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTLegendBuilderExample >> exampleOnDemand [
 
 | l lb |
@@ -90,7 +159,7 @@ ix/I1yD8LAm/JQtnkf4bHT+QFBA/EH4g/OIHwg+EX/xA+IHwix8IPxB+8QPhB8IvfiD84gfC
 D4Rf/ED4gfCLHwg/EH7xA+EHwi9+IPziB5IS+hcnzeuWXm7caQAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLegendBuilderExample >> label [
 	^ 'Legend'
 ]

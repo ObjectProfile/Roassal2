@@ -23,21 +23,23 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
+RTExampleBrowser >> examples [
+	| es |
+	es := RTAbstractExample allSubclasses collect: #new.
+	^ es sortedAs: #label
+]
+
+{ #category : #'instance creation' }
 RTExampleBrowser >> open [
 	| pager |
 	pager := GLMPager new.
 	pager title: 'Roassal examples browser'.
 	pager showFirst: [ :a | a list format: #label ].
-	pager show: [ :a :each |
+	pager
+		show: [ :a :each | 
 			a title: [ GTInspector new printObjectAsAnItem: each ].
-			a dynamicActions: [ :aPresentation | 
-				each gtInspectorActions asOrderedCollection ].
-			a dynamic 
-				display: [ :x | 
-					(GLMCompositePresentation new with: [:d | 
-						each 
-							gtInspectorPresentationsIn: d 
-							inContext: pager ])
-							startOn: x ] ].
-	pager openOn: (RTAbstractExample allSubclasses collect: #new)
+			a dynamicActions: [ :aPresentation | each gtInspectorActions asOrderedCollection ].
+			a dynamic
+				display: [ :x | (GLMCompositePresentation new with: [ :d | each gtInspectorPresentationsIn: d inContext: pager ]) startOn: x ] ].
+	pager openOn: self examples
 ]
