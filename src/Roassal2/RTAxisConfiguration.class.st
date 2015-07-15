@@ -116,7 +116,7 @@ RTAxisConfiguration >> initialize [
 	super initialize.
 	labelConvertion := [ :number | (number asFloat round: 2) asString ].
 	positionLabel := [ :aLabel :aTick | aLabel translateTo: aTick position ].
-	labelFontHeight := 12.
+	self smallFontSize.
 	numberOfTicks := 4.
 	numberOfLabels := numberOfTicks.
 	lineThickness := 1.
@@ -130,7 +130,7 @@ RTAxisConfiguration >> initialize [
 	color := self defaultColor.
 	titlePosition := self defaultTitlePosition.
 	self doNotRotateLabels.
-	ticksCentered := false.
+	ticksCentered := false
 ]
 
 { #category : #accessing }
@@ -150,8 +150,9 @@ RTAxisConfiguration >> labelFontHeight [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> labelFontHeight: anObject [
-	labelFontHeight := anObject
+RTAxisConfiguration >> labelFontHeight: aFontSize [
+	"Values between 6 and 20 are typically acceptable"
+	labelFontHeight := aFontSize
 ]
 
 { #category : #accessing }
@@ -236,6 +237,11 @@ RTAxisConfiguration >> noTitle [
 	self title: ''
 ]
 
+{ #category : #configuration }
+RTAxisConfiguration >> normalFontSize [
+	self labelFontHeight: 12
+]
+
 { #category : #accessing }
 RTAxisConfiguration >> numberOfLabels [
 	^ numberOfLabels
@@ -297,6 +303,11 @@ RTAxisConfiguration >> privateMinValue: aMinValue [
 RTAxisConfiguration >> rotateLabels [
 	"Rotate the labels"
 	labelRotation := -45
+]
+
+{ #category : #configuration }
+RTAxisConfiguration >> smallFontSize [
+	self labelFontHeight: 9
 ]
 
 { #category : #accessing }
