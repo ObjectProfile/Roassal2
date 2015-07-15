@@ -8,6 +8,14 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #'OBSOLETE CLASS' }
+TRConstraint class >> OBSOLETE [
+
+	"
+	This class is now obsolete. Please have a look at RTConstraint
+	"
+]
+
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromBottom: shapes [
 	| bottomMostElement |
@@ -533,4 +541,12 @@ TRConstraint class >> useHeightOf: aShape for: shapes [
 { #category : #'public - resizing' }
 TRConstraint class >> useWidthOf: aShape for: shapes [
 	shapes do: [ :s | s width: aShape width ]
+]
+
+{ #category : #OBSOLETECLASS }
+TRConstraint >> OBSOLETE_CLASS [
+
+	"
+	This class is now obsolete. Please have a look at RTConstraint
+	"
 ]
