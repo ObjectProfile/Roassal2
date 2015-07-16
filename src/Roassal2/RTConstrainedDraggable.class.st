@@ -40,8 +40,8 @@ RTConstrainedDraggable >> rectangle [
 ]
 
 { #category : #accessing }
-RTConstrainedDraggable >> rectangle: anObject [
-	rectangle := anObject
+RTConstrainedDraggable >> rectangle: aRectangleOrOneArgBlock [
+	rectangle := aRectangleOrOneArgBlock
 ]
 
 { #category : #hooks }
@@ -51,4 +51,9 @@ RTConstrainedDraggable >> transformDistance: distanceAsPoint forElement: anEleme
 	^ (rectangle containsPoint: distanceAsPoint + anElement position)
 		ifTrue: [ distanceAsPoint ]
 		ifFalse: [ 0 @ 0 ]"
+]
+
+{ #category : #accessing }
+RTConstrainedDraggable >> withinParent [
+	^ self rectangle: [ :anElement | anElement parentElement encompassingRectangle ]
 ]

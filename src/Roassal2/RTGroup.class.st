@@ -59,6 +59,11 @@ RTGroup >> attributeAt: aKey ifAbsentPut: aBlockClosure [
 ]
 
 { #category : #attributes }
+RTGroup >> attributeAt: aKey put: value [
+	^ self attributes at: aKey put: value
+]
+
+{ #category : #attributes }
 RTGroup >> attributes [
 	"Return the list of attributes associated to the element. Attributes are useful for caching values"
 
