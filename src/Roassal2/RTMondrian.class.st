@@ -183,7 +183,7 @@ RTMondrian >> initialize [
 	currentFrame := rootFrame.
 	super initialize.
 	self resetLayoutBuilder.
-	edgeBuilder := RTEdgeBuilder new
+	self resetEdgeBuilder
 ]
 
 { #category : #accessing }
@@ -223,6 +223,7 @@ RTMondrian >> nodes: objects forEach: aOneArgBlock [
 		self pushNewFrame.
 		self resetShapeBuilder.
 		self resetLayoutBuilder.
+		self resetEdgeBuilder.
 		self resetInteraction.
 			
 		aOneArgBlock rtValue: element model.
@@ -258,6 +259,11 @@ RTMondrian >> pushFrame: aFrame [
 { #category : #stack }
 RTMondrian >> pushNewFrame [
 	^ self pushFrame: self createNewFrame
+]
+
+{ #category : #initialization }
+RTMondrian >> resetEdgeBuilder [
+	edgeBuilder := RTEdgeBuilder new
 ]
 
 { #category : #initialization }

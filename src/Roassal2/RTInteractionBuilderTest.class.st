@@ -14,6 +14,22 @@ RTInteractionBuilderTest >> setUp [
 ]
 
 { #category : #tests }
+RTInteractionBuilderTest >> testAddingAndRemovingInteraction [
+	builder addInteraction: RTDraggable new.
+	self assert: builder numberOfInteractions equals: 1.
+	
+	builder removeInteractionOfType: RTAbstractDraggable.
+	self assert: builder numberOfInteractions equals: 0.
+	
+	builder addInteraction: RTConstrainedDraggable new.
+	self assert: builder numberOfInteractions equals: 1.
+	
+	builder removeInteractionOfType: RTAbstractDraggable.
+	self assert: builder numberOfInteractions equals: 0.
+
+]
+
+{ #category : #tests }
 RTInteractionBuilderTest >> testAddingOneAction [
 	builder action: #inspect.
 	self assert: builder numberOfInteractions equals: 1

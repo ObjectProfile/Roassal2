@@ -37,6 +37,16 @@ RTInteractionBuilder >> addInteraction: anInteraction [
 ]
 
 { #category : #public }
+RTInteractionBuilder >> constrainedDraggable [
+	| i |
+	self removeInteractionOfType: RTAbstractDraggable.
+	i := RTConstrainedDraggable new.
+	i withinParent.
+	interactions add: i. 
+	^ i
+]
+
+{ #category : #public }
 RTInteractionBuilder >> decoration [
 	| i |
 	i := RTDecoration new.
@@ -47,11 +57,9 @@ RTInteractionBuilder >> decoration [
 { #category : #public }
 RTInteractionBuilder >> draggable [
 	| i |
-	interactions 
-		detect: [ :int | int class == RTDraggable] 
-		ifFound: [ :int | ^ int ]. 
+	self removeInteractionOfType: RTAbstractDraggable.
 	i := RTDraggable new.
-	interactions add: i. 
+	self addInteraction: i.
 	^ i
 ]
 
@@ -178,11 +186,15 @@ RTInteractionBuilder >> popupView: aTwoArgBlock [
 { #category : #public }
 RTInteractionBuilder >> removeInteractionOfType: cls [
 	"Remove the interaction of type cls if present"
-	| int |
-	(interactions anySatisfy: [ :anInt | anInt class == cls ])
+	interactions 
+		detect: [ :anInt | anInt class == cls or: [ anInt class inheritsFrom: cls ] ] 
+		ifFound: [ :int | interactions := interactions copyWithout: int ]
+
+"	| int |
+	(interactions anySatisfy: [ :anInt | anInt class == cls or: [ anInt class inheritsFrom: cls ] ])
 		ifTrue: [ 
 			int := interactions detect: [ :anInt | anInt class == cls ].
-			interactions := interactions copyWithout: int ]
+			interactions := interactions copyWithout: int ]"
 ]
 
 { #category : #building }
