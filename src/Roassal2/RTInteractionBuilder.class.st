@@ -38,6 +38,7 @@ RTInteractionBuilder >> addInteraction: anInteraction [
 
 { #category : #public }
 RTInteractionBuilder >> constrainedDraggable [
+	"Make sure that the inner elements cannot escape the encompassing element"
 	| i |
 	self removeInteractionOfType: RTAbstractDraggable.
 	i := RTConstrainedDraggable new.

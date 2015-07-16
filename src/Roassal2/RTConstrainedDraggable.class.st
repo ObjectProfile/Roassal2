@@ -12,6 +12,23 @@ Class {
 
 { #category : #hooks }
 RTConstrainedDraggable >> constraintIfNecessary: anElement [
+	| rec e deltaX deltaY |
+	rec := rectangle rtValue: anElement.	
+	e := anElement encompassingRectangle.
+	(rec containsRect: e)
+		ifFalse: [ 
+			deltaX := 0.
+			deltaY := 0.
+			(e right > rec right) ifTrue: [ deltaX := rec right - e right ].
+			(e left < rec left) ifTrue: [ deltaX := rec left - e left ].
+
+			(e top < rec top) ifTrue: [ deltaY := rec top - e top].
+			(e bottom > rec bottom) ifTrue: [ deltaY := rec bottom - e bottom ].
+
+			anElement translateBy: deltaX @ deltaY
+			]
+			
+"
 	| p newX newY rec |
 	p := anElement position.
 	rec := rectangle rtValue: anElement.
@@ -26,6 +43,7 @@ RTConstrainedDraggable >> constraintIfNecessary: anElement [
 			(p y > rec bottom) ifTrue: [ newY := rec bottom ].
 
 			anElement translateTo: newX @ newY ]
+"
 ]
 
 { #category : #initialization }
