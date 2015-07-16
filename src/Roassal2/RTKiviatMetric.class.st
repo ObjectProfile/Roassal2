@@ -29,18 +29,21 @@ Class {
 		'minValue',
 		'maxValue',
 		'named',
-		'block'
+		'block',
+		'angle'
 	],
 	#category : #'Roassal2-Builder-Kiviat'
 }
 
 { #category : #accessing }
 RTKiviatMetric >> block [
+"This block is about values of metric"
 	^ block 
 ]
 
 { #category : #accessing }
 RTKiviatMetric >> block: aOneArgBlock [
+"This block is about values of metric"
 	block := aOneArgBlock 
 ]
 
@@ -95,11 +98,13 @@ RTKiviatMetric >> minValue: aNumber [
 
 { #category : #accessing }
 RTKiviatMetric >> modelBlock [
+"this block is about axis rotation, size..."
 	^ modelBlock 
 ]
 
 { #category : #accessing }
 RTKiviatMetric >> modelBlock: aBlockOrSymbol [
+"this block is about axis rotation, size..."
 	modelBlock :=  aBlockOrSymbol
 ]
 
