@@ -1,333 +1,258 @@
 "
 A RTScrollBarBuilder is a scroll bar that you can add to navigate in your view. More than a Draggable view, it allows to keep a mark about your position in the view and it scale for large views. 
 
-It can be static, movable, in one or two dimentions, navigation using scrollBarType: #isBasic,  #isPad then #isStatic or #isMovable
+It can be static, movable, using #isStatic or #isMovable
 aving an orientation #vertical or #horizontal.
 
 the default configuration is #isBasic and #isStatic,
 
 the bar shape is defined by #barShape: <#aBox or default value #anEllipse>
-the bar can have a specificity like #scalable, so it give an idea of the size of the view
+the bar can have a specificity like #scalable, so it give an idea of the size of the view.
 
-Size or fixedPosition can be defined as blocks
+Size or fixedPosition can be defined as blocks.
 
-
-Instance Variables
-	objects:		<Object>
-	scrollBarType:		<Object>
-	size:		<Object>
-
-objects
-	- xxxxx
-
-scrollBarType
-	- xxxxx
-
-size
-	- xxxxx
-
+width: to set a static size of width.
 "
 Class {
 	#name : #RTScrollBarBuilder,
-	#superclass : #RTBuilder,
-	#instVars : [
-		'fixedPosition',
-		'size',
-		'scrollBarType',
-		'movable',
-		'orientation',
-		'width',
-		'shapes',
-		'barShape',
-		'barSpecific',
-		'encompassingRectangleFromSpaceToPixel',
-		'encompassingRectangle'
-	],
+	#superclass : #RTAbstractScrollBuilder,
 	#category : #'Roassal2-Builder-ScrollBar'
 }
 
 { #category : #adding }
-RTScrollBarBuilder >> addShapesToView [
+RTScrollBarBuilder >> addAnimations [
+	"add animations on the bar, to make the scroll bar movable or not etc.. Callbacks on resize, drag and drop... A lot of precise case to reduce costly full update at maximum"
+	| bar surroundingRectangle margeRectangle |
+
+	bar := self shapes bar.
+	surroundingRectangle := self shapes surroundingRectangle.
+	margeRectangle := self shapes margeRectangle.
+
+	"bar and view drag animations"
+	(self orientation = #horizontal) ifTrue: [ 
+		self barDragHorizontal.
+		self viewDragHorizontal.
+		].
+
+	(self orientation = #vertical) ifTrue: [ 
+		self barDragVertical.
+		self viewDragVertical.
+		].
 	
-	self shapes collection do: [ :s | self view canvas addFixedShape: s ].
+	"Move the scroll bar when movable animation"
+	(self movable = #isMovable) ifTrue: [
+		surroundingRectangle when: TRMouseDragging do: [ :evt |
+			self shapes collection do: [ :s | s translateBy: (evt step) ].
+			self view signalUpdate.
+			]
+		].
+	
+	"Callbacks when translate, resize or rescale canvas"
+	self view elements do: [:e | e addCallback: (TRTranslationCallback new block: [
+			self encompassingRectangleUpdate. self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate.])
+		].
+	
+	self view when: TRResizeCanvasEvent do: [ :evt | self signalUpdate].
+	
+	self view canvas camera addCallback: (TRCameraScaleCallback new block: [ self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate. ]).
+
+
+
+	
 ]
 
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> barHeight [
- "This method is used to get the height of the bar from a scroll bar builder only, depending on the specificity of the bar"
-	(self barSpecific = #scalable) ifTrue: [
-		| max min s |
-		
-		max := self size -50.
-		min := 10.
+{ #category : #adding }
+RTScrollBarBuilder >> barDragHorizontal [
+	"Animation for a horizontal drag of the bar"
+	self shapes bar when: TRMouseDragging do: [ :evt |
 			
-		s := (self size * (self view canvas extent y) / (self encompassingRectangleFromSpaceToPixel height) / self view canvas camera scale).
+		(self encompassingRectangle containsPoint: (self view canvas camera position)) 
+			ifFalse: [ (self view canvas camera) translateTo:  ((self encompassingRectangle) pointNearestTo: (self view canvas camera position))  ].
+			
+		(self shapes margeRectangle includesPoint: (self shapes bar position + ((evt step x)@0))) & (self shapes surroundingRectangle includesPoint: (evt position x)@(self shapes bar position y)) 
+			ifTrue: [  
+				self shapes bar translateBy: (evt step x)@0.
+				self view canvas camera translateBy: (self translationHorizontal: evt).
+				].
+			
+		self view signalUpdate.
+		]
+]
+
+{ #category : #adding }
+RTScrollBarBuilder >> barDragVertical [
+	"Animation for a horizontal drag of the bar"
+	self shapes bar when: TRMouseDragging do: [ :evt |
 		
-		(s > max) ifTrue: [ ^max ].
-		(s < min) ifTrue: [ ^min ].
-		^ s.
+		(self encompassingRectangle containsPoint: (self view canvas camera position)) 
+			ifFalse: [ (self view canvas camera) translateTo:  ((self encompassingRectangle) pointNearestTo: (self view canvas camera position))  ].
+			
+		(self shapes margeRectangle includesPoint: (self shapes bar position + (0@(evt step y)))) & (self shapes surroundingRectangle includesPoint: (self shapes bar position x)@(evt position y)) 
+			ifTrue: [  
+				self shapes bar translateBy: 0@(evt step y).
+				self view canvas camera translateBy: (self translationVertical: evt).
+				].
 		
-		] ifFalse: [ ^ self width]
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> barShape [
-	^ barShape
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> barShape: aSymbol [
-	barShape := aSymbol
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> barSpecific [
-	^ barSpecific 
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> barSpecific: aSymbol [
-	barSpecific := aSymbol 
-]
-
-{ #category : #'private - bar management' }
-RTScrollBarBuilder >> barWidth [
- "This method is used to get the width of the bar from a scroll bar builder only, depending on the specificity of the bar"
-	(self barSpecific = #scalable) ifTrue: [
-		| max min s |
-		
-		max := self size -50.
-		min := 10.
-		
-		s := (self size * (self view canvas extent x) / (self encompassingRectangleFromSpaceToPixel width) / self view canvas camera scale).
-		
-		(s > max) ifTrue: [ ^max ].
-		(s < min) ifTrue: [ ^min ].
-		^ s.
-		] ifFalse: [ ^ self width]
-]
-
-{ #category : #view }
-RTScrollBarBuilder >> configureView: aView [
-	aView.
+		self view signalUpdate.
+		]
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> defaultEncompassingRectangle [
+RTScrollBarBuilder >> defineShapes [
+	"define shapes if scrollBar is horizontal or vertical."
+
+	"set bar shape, the draggable shape."	
+	(self barShape = #aBox) 
+		ifTrue: [ self shapes bar: TRBoxShape new ] 
+		ifFalse: [ self shapes bar: TREllipseShape new ].
+
+	"Start and stop are made to show the border of scroll Bar"
+	(self orientation = #horizontal) ifTrue: [
+		self shapes defineHorizontalShapes. 
+	].
+
+	(self orientation = #vertical) ifTrue: [ 	
+		self shapes defineVerticalShapes. 	
+	].
 	
-	self encompassingRectangle: (Rectangle origin: 0@0 corner: 10@10)
-
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> defaultScrollBar [
-"all default values of scroll bar"
-	self scrollBarType: #isBasic. 
-	self movable: #isMovable.
-	self barShape: #anEllipse.
-	self fixedPosition:  [ :v | (v view canvas extent x /2)@(v view canvas extent y  * 3 / 4)].
-	self size: 200.
-	self width: 20.
-	self orientation: #horizontal	
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> encompassingRectangle [
-	^ encompassingRectangle
-
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> encompassingRectangle: aRectangle [
-	encompassingRectangle := aRectangle
-
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel [
-	^ encompassingRectangleFromSpaceToPixel
-
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixel: aRectangle [
-	encompassingRectangleFromSpaceToPixel := aRectangle
-
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> encompassingRectangleFromSpaceToPixelUpdate [
-	
-	self encompassingRectangleFromSpaceToPixel: (self view canvas camera fromSpaceToPixelForRectangle: (self encompassingRectangle))
-
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> encompassingRectangleUpdate [
-	
-	self encompassingRectangle: (self view canvas camera encompassingRectangleOf: self view elements )
-
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> fixedPosition [
-"get the value of the initial fixed Position, in case of block, evaluation of self"
-	^ (fixedPosition rtValue: self).
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> fixedPosition: aPositionOrABlock [
-"set the initial position of the scroll bar, if a block, the block will be evaluated with 'cull self'. For example a block [:v | v view canvas extent] will set the position to canvas extent, just as [<myBuilder> view canvas extent]. If you want the scrollBar to be fully free and movable without reset position, set a point for fixedPosition."
-	fixedPosition:= aPositionOrABlock 
-]
-
-{ #category : #'as yet unclassified' }
-RTScrollBarBuilder >> fixedPositionBlock [
-"get the block of the initial fixed Position"
-	^ fixedPosition
 ]
 
 { #category : #initialization }
 RTScrollBarBuilder >> initialize [
 	super initialize.
-	self configureView: view.
-	self defaultScrollBar.
-
-
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> movable [
-	^ movable
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> movable: aSymbol [
-	movable := aSymbol
+	self shapes: (RTScrollShapesBuilder for: self).
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> notify [
-	"Update the scroll bar"
-	self encompassingRectangleUpdate.
-	self encompassingRectangleFromSpaceToPixelUpdate.
-	
-	
-	
+RTScrollBarBuilder >> positionOnBorderHorizontal [
+
+	((self shapes bar position x - (self barWidth / 2)) < (self shapes surroundingRectangle encompassingRectangle origin x)) ifTrue: [ self shapes bar translateTo: ((self shapes surroundingRectangle encompassingRectangle origin x) + (self barWidth / 2))@(self shapes surroundingRectangle position y)].
+	((self shapes bar position x + (self barWidth / 2)) > (self shapes surroundingRectangle encompassingRectangle corner x)) ifTrue: [ self shapes bar translateTo: ((self shapes surroundingRectangle encompassingRectangle corner x) - (self barWidth / 2))@(self shapes surroundingRectangle position  y)].
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> notifyWith: anElement [
-	"Update the scroll bar and add the callback"
-	self notify.
-	anElement addCallback: (TRTranslationCallback new block: [ self encompassingRectangleUpdate. self encompassingRectangleFromSpaceToPixelUpdate. self signalUpdate.]).
-	
-	
-	
-]
+RTScrollBarBuilder >> positionOnBorderVertical [
 
-{ #category : #accessing }
-RTScrollBarBuilder >> orientation [
-	^ orientation 
-]
+	((self shapes bar position y - (self barHeight / 2)) < (self shapes surroundingRectangle encompassingRectangle origin y)) ifTrue: [ self shapes bar translateTo: (self shapes surroundingRectangle position  x)@(self shapes surroundingRectangle encompassingRectangle origin y + (self barHeight / 2))].
+	((self shapes bar position y + (self barHeight / 2)) > (self shapes surroundingRectangle encompassingRectangle corner y)) ifTrue: [ self shapes bar translateTo: (self shapes surroundingRectangle position  x)@(self shapes surroundingRectangle encompassingRectangle corner y - (self barHeight / 2))].
 
-{ #category : #accessing }
-RTScrollBarBuilder >> orientation: aSymbol [
-"set orientation of scroll bar, #horizontal or #vertical"
-	orientation := aSymbol.
 ]
 
 { #category : #hooks }
 RTScrollBarBuilder >> renderIn: aView [
 
-	(self scrollBarType = #isBasic) ifTrue: [ 
-		self becomeForward: (RTScrollBarBasic fromBuilder: self).
-		self build.
-		 ].
-	
-	(self scrollBarType = #isPad) ifTrue: [ 
-		self becomeForward: (RTScrollPad fromBuilder: self).
-		self build.
-		 ].
+	(self view elements isEmpty) ifTrue: [self defaultEncompassingRectangle] ifFalse: [ self encompassingRectangleUpdate ].
+	self encompassingRectangleFromSpaceToPixelUpdate.
 
-	 
-]
+	self defineShapes.
+	self addShapesToView.
+	self addAnimations.
 
-{ #category : #accessing }
-RTScrollBarBuilder >> scrollBarType [
-	^ scrollBarType. 	
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> scrollBarType: aSymbol [
-	scrollBarType := aSymbol. 	
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> shapes [
-"the shapes used to build the scroll bar"
-	^ shapes
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> shapes: aRTScrollBarShapes [
-"the shapes used to build the scroll bar"
-	shapes := aRTScrollBarShapes
-]
-
-{ #category : #signalling }
-RTScrollBarBuilder >> signalUpdate [
-	
-	"this method is used to increase the size of the shapes composing the scroll bar when the size is defined by a Block, for example to follow the size of the windows
-	Or if the position is fixed on the border on the widows, the scroll bar should follow the windows border at signal updates"
-
-	self assert: (self shapes isNotNil).
-
-	(self shapes collection) ifNotEmpty: [ 
-
-		(self fixedPositionBlock isBlock) ifTrue: [ 
-			self signalUpdatePosition.				
-			].
-	
-		(self sizeBlock isBlock) ifTrue: [  
-			self signalUpdateSize.
-			] ifFalse: [ 
-				(self orientation = #horizontal) ifTrue: [
-						self positionOnBorderHorizontal.
-					] ifFalse: [ 
-						self positionOnBorderVertical.
-					 ]
-				]
-			 ].
-	self view signalUpdate. 
-	
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> size [
-"get the value of the size, in case of block, evaluation of self"
-	^ size rtValue: self 
-]
-
-{ #category : #accessing }
-RTScrollBarBuilder >> size: aSizeOraBlock [
-"set the size of scroll bar, it's length. If a block, the block will be evaluated with 'cull self'. For example a block [ :v | v view canvas extent x] will set the size to canvas width, just as [<myBuilder> view canvas extent x]"
-	size:= aSizeOraBlock.
 ]
 
 { #category : #'as yet unclassified' }
-RTScrollBarBuilder >> sizeBlock [
-"SizeBlock allows to get the block and not the result of the evaluation of the size block on size, obtained by self size"
-	^ size.  
+RTScrollBarBuilder >> reverseTranslationHorizontal: evt [
+	| t |
+
+	t := ((evt step x)  / (self encompassingRectangleFromSpaceToPixel width )) * (self size - self shapes bar width).
+		
+	^ (t negated)@0
 ]
 
-{ #category : #accessing }
-RTScrollBarBuilder >> width [
-	^ width
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> reverseTranslationVertical: evt [
+	| t |
+
+	t := ((evt step y)  / (self encompassingRectangleFromSpaceToPixel height)) * (self size - self shapes bar height).
+		
+	^ 0@(t negated)
 ]
 
-{ #category : #accessing }
-RTScrollBarBuilder >> width: aSize [
-"set width of the scroll bar"
-	width := aSize
+{ #category : #signalling }
+RTScrollBarBuilder >> signalUpdatePosition [
+	| pr pos sizeNow |
+	
+	pos := self fixedPosition.
+	sizeNow := self size.
+		
+			(self orientation = #horizontal) ifTrue: [	
+				pr := (((self view canvas camera position x) - (self encompassingRectangle origin x)) / (self encompassingRectangle width)) * sizeNow.
+				self shapes surroundingRectangle position: pos.
+				self shapes bar position: (pr + (self shapes surroundingRectangle encompassingRectangle origin x ))@(pos y).
+				self positionOnBorderHorizontal.	
+				].
+			
+			(self orientation = #vertical) ifTrue: [		
+				pr := (((0@(self view canvas camera position y)) dist: (0@(self encompassingRectangle origin y))) / (self encompassingRectangle height)) * (self shapes surroundingRectangle height).
+				self shapes surroundingRectangle position: pos.
+				self shapes bar position: (pos x)@(pr + (self shapes surroundingRectangle encompassingRectangle origin y)).
+				self positionOnBorderVertical.
+			].
+		
+		self shapes margeRectangle position: pos.	
+]
+
+{ #category : #signalling }
+RTScrollBarBuilder >> signalUpdateSize [
+	| sizeNow |
+
+	sizeNow := self size.
+	(self orientation = #horizontal) ifTrue: [
+				self shapes surroundingRectangle width: sizeNow.
+				self shapes margeRectangle width: (sizeNow - self barWidth).		
+				self shapes bar width: self barWidth.
+				].
+			
+	(self orientation = #vertical) ifTrue: [	
+				self shapes surroundingRectangle height: sizeNow.
+				self shapes margeRectangle height: (sizeNow - (self barHeight)).
+				self shapes bar height: self barHeight.
+				].
+				
+				
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> translationHorizontal: evt [
+	| t |
+
+	t := ((evt step x) / (self size  - self shapes bar width)) * ((self encompassingRectangleFromSpaceToPixel width) / self view canvas camera scale).
+	
+	^ t@0
+]
+
+{ #category : #'as yet unclassified' }
+RTScrollBarBuilder >> translationVertical: evt [
+	| t |
+
+	t := ((evt step y) / (self size  - self shapes bar height)) * ((self encompassingRectangleFromSpaceToPixel height) / self view canvas camera scale).
+	
+	^ 0@t
+]
+
+{ #category : #adding }
+RTScrollBarBuilder >> viewDragHorizontal [
+	"Animation for a horizontal drag of the view"
+	self view when: TRMouseDragging do: [ :evt | 
+		| translation |
+		translation := (self reverseTranslationHorizontal: evt).
+		((self shapes margeRectangle includesPoint: (self shapes bar position + translation))) ifTrue: [ 
+			shapes bar translateBy: translation.
+			self view signalUpdate
+			]. 
+		].
+]
+
+{ #category : #adding }
+RTScrollBarBuilder >> viewDragVertical [
+	"Animation for a vertical drag of the view"
+	self view when: TRMouseDragging do: [ :evt | 
+		| translation |
+		translation := (self reverseTranslationVertical: evt).
+		((self shapes margeRectangle includesPoint: (self shapes bar position + translation))) ifTrue: [ 
+			shapes bar translateBy: translation.
+			self view signalUpdate
+			]. 
+		].
+
 ]
