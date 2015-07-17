@@ -1,4 +1,6 @@
 "
+""This class is obsolete. Consider using RTData instead""
+
 A data set for which each element has to be plotted using two functions, one against the X-axis and another against the Y-axis), is modelled using the class RTDataSet. 
 
 -=-=-=
@@ -48,3 +50,8 @@ Class {
 	#superclass : #RTAbstractDataSet,
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
+
+{ #category : #OBSOLETE }
+RTDataSet >> OBSOLETE [
+	"This class is obsolete. Consider using RTData instead"
+]

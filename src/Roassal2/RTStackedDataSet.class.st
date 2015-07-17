@@ -69,7 +69,12 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #OBSOLETE }
+RTStackedDataSet >> OBSOLETE [
+	"This class is obsolete. Consider using RTData instead"
+]
+
+{ #category : #hooks }
 RTStackedDataSet >> addedInBuilder: aBuilder [
 	super addedInBuilder: aBuilder.
 	aBuilder axisX noLabel; noTick

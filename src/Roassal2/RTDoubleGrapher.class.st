@@ -197,3 +197,8 @@ RTDoubleGrapher >> renderIn: aView [
 	datasets do: [ :aDataset | aDataset renderIn: aView ].
 	rightDataSets do: [ :aDataset | aDataset renderIn: aView ]
 ]
+
+{ #category : #'as yet unclassified' }
+RTDoubleGrapher >> shouldUseNiceLabelsForX: aBool [
+	"Not much to do for now... This class has to be rewritten completely"
+]

@@ -116,7 +116,7 @@ b2 := RTGrapher new.
 b2 view: c view.
 b2 extent: 200 @ 150.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds points: classesToAnalyze.
 ds y: [ :cls | cls rtmethods size ].
@@ -147,7 +147,7 @@ c group: #pie.
 b4 := RTGrapher new.
 
 b4 extent: 290 @ 200.
-ds := RTDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
 ds points: classesToAnalyze.
@@ -202,7 +202,7 @@ b2 := RTGrapher new.
 b2 view: c view.
 b2 extent: 200 @ 150.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds points: classesToAnalyze.
 ds y: [ :cls | cls rtmethods size ].
@@ -233,7 +233,7 @@ b4 := RTGrapher new.
 b4 view: c view.
 b4 extent: 290 @ 200.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
 ds points: classesToAnalyze.
@@ -392,7 +392,7 @@ composer := RTComposer new.
 "Force"
 b := RTGrapher new.
 b view: composer view.
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds points: force.
 ds y: #second.
 ds barShape width: 30.
@@ -405,11 +405,11 @@ composer group: #force.
 "Torque"
 b := RTGrapher new.
 b view: composer view.
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds points: torque.
 ds y: #second.
 ds barShape width: 30.
-ds histogramWithBarTitle: #first rotation: 0.
+ds barChartWithBarTitle: #first rotation: 0.
 
 b add: ds.
 
@@ -479,7 +479,7 @@ RTComposerExample >> exampleWorldPopulation [
 	grapher := RTGrapher new.
 	grapher extent: 600 @ 300.
 	grapher view: v.
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds barShape width: 5; color: Color blue.
 	ds points: ((countries reverseSortedAs: #second) copyFrom: 1 to: 50).
 	ds y: #second.

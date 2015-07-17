@@ -37,25 +37,6 @@ RTGrapherBuilderTest >> testCentralPoint [
 ]
 
 { #category : #tests }
-RTGrapherBuilderTest >> testCentralPoint02 [
-
-	| ds |
-	b := RTGrapher new.
-
-	ds := RTStackedDataSet new.
-	ds interaction popupText.
-	ds points: #(-2 1 2 3).
-	ds x: #yourself.
-	ds y: #yourself.
-	b add: ds.
-
-	b build.
-	
-	self assert: b centralPoint equals: 0 @ -80
-
-]
-
-{ #category : #tests }
 RTGrapherBuilderTest >> testDefault [
 	self deny: b isXAxisDefined.
 	self deny: b isYAxisDefined.
@@ -134,7 +115,7 @@ RTGrapherBuilderTest >> testWithStrangeValues [
 	graphBuilder := RTGrapher new.
 	graphBuilder extent: 300 @ 200.
 
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds dotShape rectangle size: 0.
 	ds points: #(1 3 7 0 6).
 
