@@ -2310,6 +2310,77 @@ ID7Is0Da7XaMx+Po9XpRSZAi7f/7BZPJJJrNZtRqtTSu3luv15GGP80FnyEJ4ng8Rr/f9ye/
 ]
 
 { #category : #sources }
+RTGrapherExample >> examplePrimeNumberSpace [
+
+| diag v ds |
+"Made by Serge Serge Stinckwich <serge.stinckwich@gmail.com>"
+v := RTView new.
+
+diag := RTGrapher new.
+diag view: v.
+ds := RTDataSet new.
+ds dotShape ellipse color: (Color r: 0.9450000000000001 g: 0.768 b: 0.059000000000000004 alpha: 1.0); size: 0.1.
+ds points: ((0 to: 5e5) select:#isPrime);
+   y: [ :p |(p* (p cos))];
+   x: [ :p |(p* (p sin))].
+
+diag add: ds.
+diag axisX color: (Color black alpha:0); noTick; noLabel.
+diag axisY color: (Color black alpha:0); noTick; noLabel.
+diag build.
+
+anim := RTActiveAnimation new.
+anim intervalInMilliseconds: 100.
+anim blockToExecute: [ 
+    v canvas camera scale: v canvas camera scale + 0.2.
+    v signalUpdate.
+].
+anim inView: v.
+
+v canvas color: Color black.
+v
+]
+
+{ #category : #icons }
+RTGrapherExample >> examplePrimeNumberSpaceIcon [
+	^ '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
+11sAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleRandomCurves [
 
 | b ds |
