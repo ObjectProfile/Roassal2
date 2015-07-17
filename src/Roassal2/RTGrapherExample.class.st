@@ -172,7 +172,7 @@ RTGrapherExample >> exampleAverageAndStdev [
 	| b ds |
 	b := RTGrapher new.
 
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds interaction popup.
 	ds points: #(600 470 170 430 300).
 	ds barShape width: 20; color: Color lightGreen.
@@ -267,14 +267,14 @@ RTGrapherExample >> exampleBarAndCurve [
 b := RTGrapher new.
 b extent: 400 @ 400.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds barShape color: (Color red).
 ds points: (-3 to: 3.1415 * 5 by: 0.1).
 ds y: [ :v | v sin ].
 
 b add: ds.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds noDot.
 ds connectColor: Color blue.
 ds points: (-3 to: 3.1415 * 5 by: 0.1).
@@ -363,14 +363,14 @@ b := RTGrapher new.
 
 b extent: 300 @ 200.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds points: data.
 ds y: #cos.
 ds barShape color: (Color blue).
 b add: ds.
 
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds points: data.
 ds y: #cos.
 "ds barShape color: (Color blue)."
@@ -726,7 +726,7 @@ colors := Array with: Color red with: Color blue.
 points := OrderedCollection new.
 
 colors do: [ :c |
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	pts := ((1 to: 100) collect: [ :i | 50 atRandom - 25 ]) cumsum.
 	points add: pts.
 	ds points: pts.
@@ -825,7 +825,7 @@ b view add: title.
 RTHorizontalLineLayout on: (Array with: title). 
 
 (Array with: Color red with: Color blue with: Color green) do: [ :c |
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds dotShape circle size: 10.
 	ds points: ((1 to: 100) collect: [ :i | 50 atRandom - 25 ]) cumsum.
 	ds connectUsing: (RTLine new color: (c alpha: 0.5); width: 5).
@@ -1244,12 +1244,12 @@ RTGrapherExample >> exampleDoubleYAXis [
 	b := RTDoubleGrapher new.
 	b extent: 300 @ 200.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: #(4 3 2 2).
 	ds barShape width: 40.
 	b add: ds.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: (10 to: 13).
 	ds dotShape color: Color blue.
 	ds connectColor: Color red.
@@ -1334,7 +1334,7 @@ RTGrapherExample >> exampleEbola [
 	b := RTGrapher new.
 	b extent: 400 @ 200.
 
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds interaction fixedPopupText: [ :row | row value at: 12 ]. 
 	ds dotShape ellipse 
 		color: (Color blue alpha: 0.3);
@@ -1461,7 +1461,7 @@ RTGrapherExample >> exampleGroupViewOnHistogram [
 b := RTGrapher new.
 b extent: 300 @ 200.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds dotShape rectangle size: 0.
 ds points: RTShape withAllSubclasses.
 ds y: [ :c | c rtmethods size ].
@@ -1517,7 +1517,7 @@ RTGrapherExample >> exampleHistogram2 [
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	"When the mouse is above a bar, say which class we are point at"
 	ds interaction popup.
 	
@@ -1571,7 +1571,7 @@ RTGrapherExample >> exampleHistogramWithNegativeValues [
 
 	b extent: 300 @ 200.
 
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds interaction popup.
 	ds points: data.
 	ds barShape width: 8; 
@@ -1614,7 +1614,7 @@ RTGrapherExample >> exampleLabelledBars [
 b := RTGrapher new.
 b extent: 500 @ 200.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds interaction highlight.
 ds points: RTShape withAllSubclasses.
 ds barShape width: 10.
@@ -1734,7 +1734,7 @@ RTGrapherExample >> exampleMethodSize [
 	classes do: [ :c |
 		| ds data |
 		data := ((c rtmethods reverseSortedAs: #numberOfLinesOfCode ) collect: [ :m | m numberOfLinesOfCode ]).
-		ds := RTStackedDataSet new.
+		ds := RTData new.
 		ds dotShape ellipse size: 0.
 		ds points: data.
 		ds connectColor: (normalizer rtValue: c).
@@ -1760,7 +1760,7 @@ RTGrapherExample >> exampleMethodSize2 [
 	normalizer := RTMultiLinearColorForIdentity new objects: classes.
 	classes do: [ :c |
 		| data ds |
-		ds := RTStackedDataSet new.
+		ds := RTData new.
 		data := (c rtmethods reverseSortedAs: #numberOfLinesOfCode ).
 		
 		ds interaction popup.
@@ -1960,13 +1960,13 @@ RTGrapherExample >> exampleMinAndMaxValues [
 | b ds |
 b := RTGrapher new.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds points: RTShape withAllSubclasses.
 ds y: #numberOfMethods.
 b add: ds.
 
-b addDecorator:  RTVerticalMinValueDecorator new red.
-b addDecorator:  RTVerticalMaxValueDecorator new blue.
+b addDecorator: RTVerticalMinValueDecorator new red.
+b addDecorator: RTVerticalMaxValueDecorator new blue.
 
 b axisY noLabel.
 b build.
@@ -2004,19 +2004,18 @@ maxY := (points1 maxValue: #numberOfVariables) max: (points2 maxValue: #numberOf
 b := RTGrapher new.
 b extent: 300 @ 200.
 
-ds1 := RTStackedDataSet new.
+ds1 := RTData new.
 ds1 points: points1.
 ds1 connectColor: Color blue.
 ds1 y: #numberOfVariables" min: minY max: maxY".
 b add: ds1.
 
-ds2 := RTStackedDataSet new.
+ds2 := RTData new.
 ds2 points: points2.
 ds2 connectColor: Color green.
 ds2 y: #numberOfMethods" min: minY max: maxY".
 b add: ds2.
 
-b axisX noLabel.
 
 b build.
 ^ b view
@@ -2097,26 +2096,27 @@ AAAASUVORK5CYII='
 
 { #category : #sources }
 RTGrapherExample >> examplePointAspects [
-| b ds |
-b := RTGrapher new.
-b extent: 200 @ 100.
+	| b ds |
+	b := RTGrapher new.
 
-ds := RTStackedDataSet new.
-ds dotShape rectangle color: Color red.
-ds points: (RTShape withAllSubclasses sortedAs: #ageInDays).
-ds y: [ :c | c ageInDays ].
-b add: ds.
+	ds := RTData new.
+	ds dotShape rectangle color: Color red.
+	ds points: (RTShape withAllSubclasses sortedAs: #ageInDays).
+	ds y: [ :c | c ageInDays ].
+	b add: ds.
 
-ds := RTStackedDataSet new.
-ds dotShape circle color: Color blue.
-ds points: (TRShape withAllSubclasses sortedAs: #ageInDays).
-ds y: [ :c | c ageInDays ].
-b add: ds.
+	ds := RTData new.
+	ds dotShape circle color: Color blue.
+	ds points: (TRShape withAllSubclasses sortedAs: #ageInDays).
+	ds y: [ :c | c ageInDays ].
+	b add: ds.
 
-b axisX noDecimal.
-b build.
+	b axisX noDecimal; title: 'Classes'.
+	b axisY noDecimal; title: 'Age in days'.
 
-^ b view
+	b build.
+
+	^ b view
 ]
 
 { #category : #icons }
@@ -2282,7 +2282,7 @@ RTGrapherExample >> examplePositiveAndNegativeValues [
 
 | b ds |
 b := RTGrapher new.
-ds := RTStackedDataSet new. 
+ds := RTData new. 
 ds barShape
 		width: 15;
 		if: [:v | v < 0 ] fillColor: Color red;
@@ -2388,7 +2388,7 @@ b := RTGrapher new.
 b extent: 300 @ 200.
 
 5 timesRepeat: [ 
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds noDot.
 	ds points: ((1 to: 500) collect: [ :i | 50 atRandom - 25 ]) cumsum.
 	ds connectColor: Color green.
@@ -2679,7 +2679,7 @@ RTGrapherExample >> exampleSimpleCurve2 [
 	b := RTGrapher new.
 	b extent: 300 @ 300.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds dotShape ellipse color: (Color blue alpha: 0.5).
 	ds points: (RTObject withAllSubclasses sortedAs: #numberOfMethods).
 	ds connect.
@@ -2753,7 +2753,7 @@ b := RTGrapher new.
 values := #(5 6 7 -1 -3).
 b extent: 400 @ 300.
 
-ds := RTStackedDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds points: values.
 ds connectColor: Color red.
@@ -2761,8 +2761,6 @@ ds y: #yourself.
 
 b add: ds.
 
-b axisXWithNumberOfTicks: values size.
-b axisYWithNumberOfTicks: 6.
 b build.
 ^ b view
 ]
@@ -2801,13 +2799,13 @@ RTGrapherExample >> exampleStackingX [
 	b := RTGrapher new.
 	b extent: 400 @ 300.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: #( 5 6 7 ).
 	ds connectColor: Color red.
 	ds y: #yourself.
 	b add: ds.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: #(1 7 10 4).
 	ds connectColor: Color blue.
 	ds y: #yourself.
@@ -2831,7 +2829,7 @@ RTGrapherExample >> exampleStackingX3 [
 	normalizer := RTMultiLinearColorForIdentity new numberOfColors: (nbOfCurves).
 	1 to: nbOfCurves do: [ :i |
 		| data ds |
-		ds := RTStackedDataSet new.
+		ds := RTData new.
 		data := (100 to: 1 by: -1) collect: #atRandom.
 		ds dotShape ellipse size: 0.
 		ds points: data.
@@ -3009,12 +3007,12 @@ RTGrapherExample >> exampleTwoStackedCurves [
 	b := RTGrapher new.
 	b extent: 200 @ 200.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: #(0 1 2 3 10 20).
 	ds connectUsing: (RTLine new color: Color blue).
 	b add: ds.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: #(0 10 20 30).
 	ds connectUsing: (RTLine new color: Color red).
 	b add: ds.
@@ -3056,12 +3054,11 @@ RTGrapherExample >> exampleUsingLegend [
 
 | clss b lb n ds |
 b := RTGrapher new.
-b extent: 300 @ 200.
 
 clss := Array with: RTElement with: RTEdge.
 n := RTMultiLinearColorForIdentity new objects: clss.
 clss do: [ :cls |
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	ds points: (cls rtmethods sortedAs: #numberOfLinesOfCode).
 	ds connectColor: (n rtValue: cls).
 	ds y: #numberOfLinesOfCode.
@@ -3386,16 +3383,19 @@ RTGrapherExample >> examplehistogram [
 	grapher := RTGrapher new.
 	grapher extent: 300 @ 200.
 	
-	dataSet := RTStackedDataSet new 
+	dataSet := RTData new. 
+	dataSet barShape width: 10.
+	dataSet 
 		points: RTShape withAllSubclasses; 
 		y: #numberOfMethods.
-	dataSet barShape width: 10.
+	 
 	grapher add: dataSet.
 
-	dataSet := RTStackedDataSet new 
-		points: RTShape withAllSubclasses; 
-		y: #numberOfMethods.
+	dataSet := RTData new.
 	dataSet dotShape color: (Color red alpha: 0.3).
+	dataSet 
+		points: RTShape withAllSubclasses; 
+		y: #numberOfMethods. 
 	grapher add: dataSet.
 
 	grapher axisY.

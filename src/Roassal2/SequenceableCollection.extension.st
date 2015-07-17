@@ -61,7 +61,7 @@ SequenceableCollection >> plot [
 	"We defien the size of the charting area"
 	b extent: 500 @ 100.
 	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	"When the mouse is above a bar, say which class we are point at"
 	ds interaction popup.
 	ds points: self.
@@ -91,7 +91,7 @@ SequenceableCollection >> plotFrequency: nbOfInterval [
 	"We defien the size of the charting area"
 "	b extent: 500 @ 100.
 "	
-	ds := RTStackedDataSet new.
+	ds := RTData new.
 	"When the mouse is above a bar, say which class we are point at"
 	ds interaction popupText: [ :set | set size printString, ' x ', set anyOne printString ].
 	ds points: ((RTDistribution on: self) frequencyWithAmountOfIntervals: nbOfInterval).

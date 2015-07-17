@@ -98,7 +98,7 @@ RTOpenStreeMapExample >> exampleGraphs [
 			grapher := RTGrapher new.
 			grapher extent: 150 @ 100.
 			
-			dataSet := RTStackedDataSet new 
+			dataSet := RTData new 
 				points: tupple second.
 			dataSet barShape width: 10; color: Color red.
 			grapher add: dataSet.
