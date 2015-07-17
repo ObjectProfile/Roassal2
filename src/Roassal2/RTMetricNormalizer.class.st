@@ -185,6 +185,47 @@ RTMetricNormalizer >> normalizeElementX: metricBlock min: min max: max minValue:
 			translator translate: el to: el position + (tt @ 0) ] ] 
 ]
 
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeElementY: metricBlock min: min max: max minValue: minValue maxValue: maxValue [ 
+	"
+	metricBlock is evaluated on each element. 	
+
+	min represent the Y value of the minimum value.
+	max represent the Y value of the maximum value.
+	
+	minValue is the minimum value of the dataset.
+	maxValue is the maximum value of the dataset.
+	
+	[ minValue ; maxValue ] is mapped to [ min ; max ]
+
+	transformation is used to transform the metric value"
+		
+	self normalizeElementY: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: #yourself
+]
+
+{ #category : #'public normalize x' }
+RTMetricNormalizer >> normalizeElementY: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	"
+	metricBlock is evaluated on each element. 	
+
+	min represent the X value of the minimum value.
+	max represent the X value of the maximum value.
+	
+	minValue is the minimum value of the dataset.
+	maxValue is the maximum value of the dataset.
+	
+	[ minValue ; maxValue ] is mapped to [ min ; max ]
+
+	transformation is used to transform the metric value"
+		
+	(maxValue - minValue) ~= 0 ifTrue: [
+		elements do: [ :el | 
+			| tt t |
+			t := transformation rtValue: (metricBlock rtValue: el).
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
+			translator translate: el to: el position + (0 @ tt) ] ] 
+]
+
 { #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeHeight: metricBlock [
 	"metricBlock is evaluated on each node model"
