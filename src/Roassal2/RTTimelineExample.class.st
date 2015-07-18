@@ -1,32 +1,24 @@
 "
-RTTimelineExample new installTitle: 'ThresholdLines' 
+RTTimelineExample new installTitle: 'SimpleGantt2' 
 		code:
 		'
-	| data b s |
-	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
+| b s data |
+data := #(     #(WP1 0 4)      #(WP2 4 8)     #(WP3 8 12)         #(WP4 3 4)     #(WP4 7 9)     #(WP4 10 12)   
 
-	b := RTTimeline new.
-	
-	s := RTTimelineSet new.
-	s objects: data.
-	s lineIdentifier: #first.
-	s start: #second.
-	s end: #third.
-	b add: s.
-	
-	b axisX 
-		numberOfLabels: 5;
-		labelRotation: -45;
-		labelConversion: [ :v | Date year: 2015 day: v ]. 
-
-	p := RTHorizontalTimelineDecorator new.
-	p addLineAboveIdentifier: ''c3''.
-	p addLineAboveIdentifier: ''c2''.
-	p shape line width: 1; color: (Color red).
-	b addDecorator: p.
-
-	b build.
-	^ b view'
+  ).
+b := RTTimeline new.
+s := RTTimelineSet new.
+s objects: data.
+s lineIdentifier: #first.
+s start: #second.
+s end: #third.
+b add: s.
+b axisX
+	noDecimal;
+	title: ''Month'';
+	numberOfLabels: 12.
+b build.
+^ b view'
 "
 Class {
 	#name : #RTTimelineExample,
@@ -322,6 +314,47 @@ RTTimelineExample >> exampleSimpleGantt [
 	
 b build.
 ^ b view
+]
+
+{ #category : #sources }
+RTTimelineExample >> exampleSimpleGantt2 [
+
+| b s data |
+data := #(     #(WP1 0 4)      #(WP2 4 8)     #(WP3 8 12)         #(WP4 3 4)     #(WP4 7 9)     #(WP4 10 12)   
+
+  ).
+b := RTTimeline new.
+s := RTTimelineSet new.
+s objects: data.
+s lineIdentifier: #first.
+s start: #second.
+s end: #third.
+b add: s.
+b axisX
+	noDecimal;
+	title: 'Month';
+	numberOfLabels: 12.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTTimelineExample >> exampleSimpleGantt2Icon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAC5UlEQVR4XuXcy2rqUBSH8b6L
+T+jQkb6AIGKhE2fOFMGRU3HiDRHvVxC8X/E2UdHlcTtKoocjNa3J+f4QpKtmR/NLdrpq2o/L
+hR8r5YO/C/gg/PBB+CD88EH4IPzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH44YPwQfjh
+g/DDB+GD8MMH4YPwwwfhg3wjq9VKvrvu15eIcWk0xNTxHi31+v02XlmXD8IH4YPwQfggjzMa
+jSSVSonf7xen0ynb7Vbcbjcf5F0gDodDvF6v+Hw+yeVyUqlUxOVyCR+EP2XxQfggfBA+yDtB
+rpckMS7zuZg63rPbeGXd/wbkN/Lskc8/Q/ggfBA+CB/k5zv1RCIhwWBQ+CAW6dT3+72Ew2E+
+iFWmrNPpJPwpi38N4YPwQfggP5JnO3B+p26zI9rs8EH4IHwQPggBxNipJ5NJCYVCwgexSKde
+rVal3W7zQfhTFh+ED8IH4YNYDsSqnbVtQD4/V6Ye0a/cdWKn8EH4IHwQPggBxNipq8aQD2Kh
+Tp1/hvCnLD4IH4QPwgcxK8nkCtFZ2wZkMBjc/u5Quzyq9fv9p2qvrPuo1uv1TK0tl0tr3+TA
+Dx+ED/K3NJtNqdVqT53CjevVWvv1+XyWfD6vq43HY1Fjamvq00k1dWhr2Wz2NrUZt7HZbHQ1
+NX65XNbVWq2WFItFXW1+vXCpbc9mM9HW1GOpVLqrPdq2JUDUr96NO0G9WOML7na7FzW/a2vD
+4VAWi8XdGzPW1Fjr9VpX2+12Mp1O/7lTJpPJ3fPUeOqGcW0tnU7f7WhVUweN9gBRNfV+69cP
+WfhT1psSiUQkEAhIJpO5YcRiMYnH41IoFER9jw/yy1E7v9PpiMfjuWFEo1H1nyz4Z8i7czwe
+dQiHw0H4IPyfsvjhg/BB+OGD8MMH4YPwwwfhg/DDB+GD8MMH4YPwwwfhg/DDB+GHD8IH4YcP
+wgfhhw/CB+GHD8IH4YcPwg8fxB75A+4RqV/eY8yIAAAAAElFTkSuQmCC'
 ]
 
 { #category : #icons }
