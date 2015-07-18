@@ -100,6 +100,11 @@ RTCompositeShape >> allOfSameSize [
 	layout := #allOfSameSize
 ]
 
+{ #category : #'public - layout' }
+RTCompositeShape >> allOfSameSizeWithPadding [
+	layout := #allOfSameSizeWithPadding
+]
+
 { #category : #accessing }
 RTCompositeShape >> allShapes [
 	"Return all the shapes contained in me."
