@@ -64,8 +64,9 @@ RTInteractionBuilder >> draggable [
 	^ i
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> fixedPopupText: aBlock [
+	self removeInteractionOfType: RTAbstractPopup.
 	self addExclusiveInteraction: (RTFixedPopup new text: aBlock)
 ]
 
@@ -87,19 +88,19 @@ RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
 			unhighlight: event element ].
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightElements: elementsOrABlock [
 	"Highlight the elements, elementsOrABlock may either be a block (which takes as argument the selected element and return a list of elements"
 	interactions add: [ :element | element @ (RTHighlightable highlightElements: (elementsOrABlock rtValue: element model)) ]
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightNeighbour: aBlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
 	interactions add: [ :element | element @ (RTHighlightable highlight: aBlock) ]
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightNeighbour: aBlock color: aColorOrABlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
 	interactions add: [ :element | element @ (RTHighlightable new 
@@ -157,27 +158,27 @@ RTInteractionBuilder >> popup [
 	^ i
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupText [
 	self popupText: #yourself
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupText: aBlock [
 	^ self popup text: aBlock
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupText: aBlock color: aColorBlock [
 	self addExclusiveInteraction: (RTPopup new text: aBlock; textColor: aColorBlock)
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupTextColor: aColorBlock [
 	self popupText: #yourself color: aColorBlock
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupView: aTwoArgBlock [
 	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
 	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
@@ -230,7 +231,7 @@ RTInteractionBuilder >> snapToGrid [
 	^ i
 ]
 
-{ #category : #'events-registering' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> when: event do: block [
 	self addInteraction: [ :element | element when: event do: block ]
 ]
