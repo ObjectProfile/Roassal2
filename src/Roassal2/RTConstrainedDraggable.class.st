@@ -15,6 +15,7 @@ RTConstrainedDraggable >> constraintIfNecessary: anElement [
 	| rec e deltaX deltaY |
 	rec := rectangle rtValue: anElement.	
 	e := anElement encompassingRectangle.
+	
 	(rec containsRect: e)
 		ifFalse: [ 
 			deltaX := 0.
@@ -26,24 +27,14 @@ RTConstrainedDraggable >> constraintIfNecessary: anElement [
 			(e bottom > rec bottom) ifTrue: [ deltaY := rec bottom - e bottom ].
 
 			anElement translateBy: deltaX @ deltaY
-			]
-			
-"
-	| p newX newY rec |
-	p := anElement position.
-	rec := rectangle rtValue: anElement.
-	(rec containsPoint: p)
-		ifFalse: [ 
-			newX := p x.
-			newY := p y.
-			(p x > rec right) ifTrue: [ newX := rec right ].
-			(p x < rec left) ifTrue: [ newX := rec left ].
+			].
+		
+	"In case the constraining rectangle is larger than the encompassing rectangle of the constrained element"
+	(rec height <= e height) ifTrue: [ anElement translateTo: anElement position x @ rec center y ].
+	(rec width <= e width) ifTrue: [ anElement translateTo: rec center x @ anElement position y].
+	
+	
 
-			(p y < rec top) ifTrue: [ newY := rec top ].
-			(p y > rec bottom) ifTrue: [ newY := rec bottom ].
-
-			anElement translateTo: newX @ newY ]
-"
 ]
 
 { #category : #initialization }
