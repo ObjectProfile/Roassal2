@@ -144,6 +144,12 @@ RTElement >> parentElement [
 ]
 
 { #category : #accessing }
+RTElement >> parentElement: anElement [
+	"Keep a reference to the parent element"
+	self attributeAt: #parentElement put: anElement
+]
+
+{ #category : #accessing }
 RTElement >> position [
 	^ trachelShape position
 	
