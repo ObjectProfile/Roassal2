@@ -210,7 +210,7 @@ RTMondrianTest >> testEdgeInInnerFrame2 [
 			b layout verticalLine ].
 	b build.
 	
-	self assert: b view numberOfEdges equals: 2.
+	self assert: b view numberOfEdges equals: 0.
 ]
 
 { #category : #'tests - edges' }

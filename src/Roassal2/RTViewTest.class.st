@@ -272,7 +272,8 @@ RTViewTest >> testPushBackEdges [
 	
 	RTEdgeBuilder new
 		view: view;
-		objects: (1 to: 10) from: [ :aValue | aValue // 3 ] to:  #yourself.
+		objects: (1 to: 10);
+		connectFrom: [ :aValue | aValue // 3 ] to:  #yourself.
 	view add: (RTBox element).
 	RTTreeLayout on: es.
 	
@@ -292,7 +293,8 @@ RTViewTest >> testPushFrontEdges [
 	
 	RTEdgeBuilder new
 		view: view;
-		objects: (1 to: 10) from: [ :aValue | aValue // 3 ] to:  #yourself.
+		objects: (1 to: 10);
+		connectFrom: [ :aValue | aValue // 3 ] to:  #yourself.
 	view add: (RTBox element).
 	RTTreeLayout on: es.
 	

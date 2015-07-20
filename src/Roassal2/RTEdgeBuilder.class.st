@@ -3,10 +3,14 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'allowRepetition',
-		'elements',
+		'fromElements',
+		'toElements',
 		'elementsToLookup',
+		'fromElementsToLookup',
+		'toElementsToLookup',
 		'shouldMoveBehind',
-		'shouldNotBeUsedInLayout'
+		'shouldNotBeUsedInLayout',
+		'createdEdges'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -18,74 +22,94 @@ RTEdgeBuilder >> allowRepetition [
 
 { #category : #public }
 RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
-
-	| edges fromElement aModel |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		aModel := aBlockOrASymbol rtValue: e model.
-		fromElement := self elementsToLookup elementFromModel: aModel.
-		fromElement ifNotNil: [ edges add: (self edgeFrom: fromElement to: e) ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
+	| fromElement aModel |
+	self resetCreatedEdges.
+	self toElements copy
+		do: [ :e | 
+			aModel := aBlockOrASymbol rtValue: e model.
+			fromElement := self fromElements elementFromModel: aModel.
+			fromElement ifNotNil: [ self createEdgeIfNecessaryFrom: fromElement to: e ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges
 ]
 
 { #category : #public }
 RTEdgeBuilder >> connectFrom: aFromBlock to: aBlockOrASymbol [
-
-	| edges toElement fromElement |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		fromElement := self elements elementFromModel: (aFromBlock rtValue: e model). 
-		toElement := self elementsToLookup elementFromModel: (aBlockOrASymbol rtValue: e model).
-		toElement ifNotNil: [ 
-			(self shouldCreateEdgeFrom: fromElement to: toElement) ifTrue: [ 
-				edges add: (self edgeFrom: fromElement to: toElement) ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
+	| toElement fromElement |
+	self resetCreatedEdges.
+	self fromElements copy
+		do: [ :e | 
+			fromElement := self fromElements elementFromModel: (aFromBlock rtValue: e model).
+			toElement := self toElements elementFromModel: (aBlockOrASymbol rtValue: e model).
+			toElement ifNotNil: [ self createEdgeIfNecessaryFrom: fromElement to: toElement ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges
 ]
 
 { #category : #public }
 RTEdgeBuilder >> connectFrom: aFromBlock toAll: aBlockOrASymbol [
 
-	| edges toElements fromElement |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		fromElement := self elements elementFromModel: (aFromBlock rtValue: e model). 
-		toElements := self elementsToLookup elementsFromModels: (aBlockOrASymbol rtValue: e model).
-		toElements ifNotNil: [ 
-			toElements do: [ :toE | 
-				edges add: (self edgeFrom: fromElement to: toE) ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
+	| fromElement tes |
+	self resetCreatedEdges.
+	self fromElements copy do: [ :e | 
+		fromElement := self fromElements elementFromModel: (aFromBlock rtValue: e model).
+		tes := self toElements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		tes ifNotNil: [ 
+			tes do: [ :toE | 
+				self createEdgeIfNecessaryFrom: fromElement to: toE ] ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges 
+]
+
+{ #category : #public }
+RTEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
+
+	| toElement tfromElements |
+	self resetCreatedEdges.
+	self fromElements copy do: [ :e | 
+		tfromElements := self fromElements elementsFromModels: (aFromBlockOrSymbol rtValue: e model). 
+		toElement := self toElements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		tfromElements ifNotNil: [ 
+			tfromElements do: [ :fromElement | 
+				self createEdgeIfNecessaryFrom: fromElement to: toElement ] ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges
 ]
 
 { #category : #public }
 RTEdgeBuilder >> connectTo: aBlockOrASymbol [
 
-	| edges toElement |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		toElement := self elementsToLookup elementFromModel: (aBlockOrASymbol rtValue: e model).
-		toElement ifNotNil: [ edges add: (self edgeFrom: e to: toElement) ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
+	| toElement |
+	self resetCreatedEdges.
+	self fromElements copy do: [ :e | 
+		toElement := self toElements elementFromModel: (aBlockOrASymbol rtValue: e model).
+		toElement ifNotNil: [ 
+			self createEdgeIfNecessaryFrom: e to: toElement ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges
 ]
 
 { #category : #public }
 RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
 
-	| edges toElements |
-	edges := RTGroup new.
-	self elements copy do: [ :e | 
-		toElements := self elementsToLookup elementsFromModels: (aBlockOrASymbol rtValue: e model).
-		toElements ifNotNil: [ 
-			toElements do: [ :toE | 
-				edges add: (self edgeFrom: e to: toE) ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
+	| tmptoElements |
+	self resetCreatedEdges.
+	self fromElements copy do: [ :e | 
+		tmptoElements := self toElements elementsFromModels: (aBlockOrASymbol rtValue: e model).
+		tmptoElements ifNotNil: [ 
+			tmptoElements do: [ :toE | 
+				self createEdgeIfNecessaryFrom: e to: toE ] ] ].
+	self moveBehindIfNecessary: createdEdges.
+	^ createdEdges
 ]
 
-{ #category : #public }
+{ #category : #'private - utility' }
+RTEdgeBuilder >> createEdgeIfNecessaryFrom: fromElement to: toElement [
+	(self shouldCreateEdgeFrom: fromElement to: toElement)
+		ifTrue: [ createdEdges add: (self edgeFrom: fromElement to: toElement) ]
+]
+
+{ #category : #'private - utility' }
 RTEdgeBuilder >> edgeFrom: source to: target [ 
 	"source and target are elements"
 	| edge |
@@ -95,26 +119,9 @@ RTEdgeBuilder >> edgeFrom: source to: target [
 ]
 
 { #category : #accessing }
-RTEdgeBuilder >> elements [
-	elements ifNil: [ ^ self view elements ].
-	^ elements
-]
-
-{ #category : #accessing }
 RTEdgeBuilder >> elements: someElements [
-	elements := someElements
-]
-
-{ #category : #accessing }
-RTEdgeBuilder >> elementsToLookup [
-	"Return the group of elements to look up the ending of edges"
-	^ elementsToLookup isNil ifTrue: [ self elements asGroup ] ifFalse: [ elementsToLookup asGroup ]
-]
-
-{ #category : #accessing }
-RTEdgeBuilder >> elementsToLookup: someElements [
-	"Set the group of elements to look up the ending of edges"
-	^ elementsToLookup := someElements
+	self toElements: someElements.
+	self fromElements: someElements
 ]
 
 { #category : #'public associations' }
@@ -126,7 +133,15 @@ RTEdgeBuilder >> fromAssociation: assoc [
 { #category : #'public associations' }
 RTEdgeBuilder >> fromAssociations: associations [
 	"associations have to be between model objects"
-	^ self objects: associations from: #key to: #value
+	
+	| edges fromElement toElement |
+	edges := RTGroup new.
+	associations do: [ :assoc |
+		fromElement := self fromElements elementFromModel: assoc key.
+		toElement := self toElements elementFromModel: assoc value.
+		edges add: (self edgeFrom: fromElement to: toElement) ].
+	self moveBehindIfNecessary: edges.
+	^ edges
 ]
 
 { #category : #'public associations' }
@@ -136,8 +151,29 @@ RTEdgeBuilder >> fromElementAssociations: associationsBetweenElements [
 ]
 
 { #category : #accessing }
+RTEdgeBuilder >> fromElements [
+	fromElements ifNil: [ ^ self view elements ].
+	^ fromElements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> fromElements: someElements [
+	fromElements := someElements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> fromObjects: someObjectsOrABlock [
+	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
+	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	 
+	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
+		ifTrue: [ self fromElements: (view elementsFromModels: someObjectsOrABlock) ]
+		ifFalse: [ self fromElements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
+]
+
+{ #category : #accessing }
 RTEdgeBuilder >> globalScope [
-	^ RTGroup withAll: (self view elements collect: #model)
+	^ RSGroup withAll: (self view elements collect: #model)
 ]
 
 { #category : #initialization }
@@ -145,11 +181,12 @@ RTEdgeBuilder >> initialize [
 	super initialize.
 	self noRepetition.
 	shouldMoveBehind := false.
-	shouldNotBeUsedInLayout := true.	"If nil, then elements will be used to lookup"
-	elementsToLookup := nil
+	shouldNotBeUsedInLayout := true.
+	fromElementsToLookup := nil.
+	toElementsToLookup := nil
 ]
 
-{ #category : #public }
+{ #category : #'private - utility' }
 RTEdgeBuilder >> linkElements: someElements [
 	"Link the first element to the second, the second to the third and so on"
 	| head |
@@ -182,117 +219,22 @@ RTEdgeBuilder >> notUseInLayout [
 	shouldNotBeUsedInLayout := false
 ]
 
-{ #category : #deprecated }
-RTEdgeBuilder >> object: object fromAll: fromBlock to: toBlock [
-	"aGroup is a group of objects"
-
-	| edges fromElement toElement |
-	edges := RTGroup new.
-		toElement := self view elementFromModel: (toBlock rtValue: object).
-		(fromBlock rtValue: object) do: [ :fromObject |
-			fromElement := self view elementFromModel: fromObject.
-			(fromElement notNil and: [ toElement notNil ])
-				ifTrue: [  
-					(self shouldCreateEdgeFrom: fromElement to: toElement) ifTrue: 
-						[ | edge |
-						edge := self edgeFrom: fromElement to: toElement. 
-						edges add: edge ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-
+{ #category : #accessing }
+RTEdgeBuilder >> object: anObject [
+	^ self objects: (Array with: anObject)
 ]
 
 { #category : #accessing }
 RTEdgeBuilder >> objects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
-	 
-	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
-		ifTrue: [ self elements: (view elementsFromModels: someObjectsOrABlock) ]
-		ifFalse: [ self elements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
+	self toObjects: someObjectsOrABlock.
+	self fromObjects: someObjectsOrABlock.
 ]
 
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects from: fromBlock [
-	^ self objects: objects from: fromBlock to: #yourself
-]
-
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock [ 
-
-	^ self objects: objects from: fromBlock to: toBlock scope: self globalScope
-]
-
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects from: fromBlock to: toBlock scope: aGroup [
-
-	| edges fromElement toElement fromObject toObject |
-	objects isEmpty ifTrue: [ ^ #() ].
-	edges := RTGroup new.
-	objects do: [ :object |
-		fromObject := fromBlock rtValue: object.
-		toObject := toBlock rtValue: object.
-		((aGroup includes: fromObject) and: [ aGroup includes: toObject ]) ifTrue: [  
-				fromElement := self view elementFromModel: (fromBlock rtValue: object).
-				toElement := self view elementFromModel: (toBlock rtValue: object).
-				(self shouldCreateEdgeFrom: fromElement to: toElement)
-					ifTrue: [   
-						edges add: (self edgeFrom: fromElement to: toElement) ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-
-]
-
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects from: fromBlock toAll: toAllBlock [
-	"aGroup is a group of objects"
-
-	| edges fromElement toElement |
-	edges := RTGroup new.
-	objects isEmpty ifTrue: [ ^ edges ].
-	objects do: [ :object |
-		fromElement := self view elementFromModel: (fromBlock rtValue: object).
-		(toAllBlock rtValue: object) do: [ :toObject |
-			toElement := self view elementFromModel: toObject.
-			(fromElement notNil and: [ toElement notNil ])
-				ifTrue: [  
-					(self shouldCreateEdgeFrom: fromElement to: toElement) ifTrue: 
-						[ | edge |
-						edge := self edgeFrom: fromElement to: toElement. 
-						edges add: edge ] ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-
-]
-
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects fromAll: fromBlock to: toBlock [
-	"aGroup is a group of objects"
-
-	| edges fromElement toElement |
-	edges := RTGroup new.
-	objects isEmpty
-		ifTrue: [ ^ edges ].
-	
-	objects
-		do: [ :object | 
-			toElement := self view elementFromModel: (toBlock rtValue: object).
-			(fromBlock rtValue: object)
-				do: [ :fromObject | 
-					fromElement := self view elementFromModel: fromObject.		
-											 
-					(self shouldCreateEdgeFrom: fromElement to: toElement)
-						ifTrue: [ 
-							| edge |
-							edge := self edgeFrom: fromElement to: toElement.
-							edges add: edge ] ] ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-]
-
-{ #category : #deprecated }
-RTEdgeBuilder >> objects: objects to: toBlock [
-	^ self objects: objects from: toBlock to: #yourself
+{ #category : #'private - utility' }
+RTEdgeBuilder >> resetCreatedEdges [
+	createdEdges := RTGroup new
 ]
 
 { #category : #'public repetition' }
@@ -307,4 +249,30 @@ RTEdgeBuilder >> shouldCreateEdgeFrom: fromElement to: toElement [
 	(fromElement isNil or: [ toElement isNil ]) ifTrue: [ ^ false ].
 	allowRepetition ifFalse: [ ^ fromElement outgoingEdges noneSatisfy: [ :edge | edge to == toElement ] ].
 	^ true
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> toElements [
+	toElements ifNil: [ ^ self view elements ].
+	^ toElements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> toElements: someElements [
+	toElements := someElements
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> toObject: anObject [
+	^ self toObjects: (Array with: anObject)
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> toObjects: someObjectsOrABlock [
+	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
+	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	 
+	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
+		ifTrue: [ self toElements: (view elementsFromModels: someObjectsOrABlock) ]
+		ifFalse: [ self toElements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
 ]
