@@ -184,6 +184,7 @@ TRCamera >> noInitializationWhenOpen [
 
 { #category : #accessing }
 TRCamera >> position [
+	"Return the position of the camera, in the space coordinates"
 	^ position
 ]
 
