@@ -1,7 +1,7 @@
 Class {
 	#name : #TRSimpleArrowShape,
 	#superclass : #TRAbstractArrowHeadShape,
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-ShapesForArrow'
 }
 
 { #category : #visitor }

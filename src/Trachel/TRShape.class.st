@@ -93,7 +93,7 @@ TRShape >> color [
 
 { #category : #accessing }
 TRShape >> color: aColor [
-	
+	"Set the color of the shape"
 	color := aColor
 ]
 
@@ -238,6 +238,7 @@ TRShape >> isVisible [
 
 { #category : #accessing }
 TRShape >> matrix [
+	"Return the matrix behind the shape"
 	^ matrix
 ]
 
@@ -260,7 +261,7 @@ TRShape >> position [
 	^ matrix x @ matrix y
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 TRShape >> position: aPosition [
 	matrix translation: aPosition
 ]
@@ -315,6 +316,7 @@ TRShape >> rotateToDegrees: anAngle [
 
 { #category : #accessing }
 TRShape >> scale [
+	"Return the scale of the shape"
 	^ matrix scale
 ]
 
@@ -404,5 +406,6 @@ TRShape >> when: event do: aBlock [
 
 { #category : #accessing }
 TRShape >> width [
+	"Return the width of the shape"
 	^ self encompassingRectangle width
 ]
