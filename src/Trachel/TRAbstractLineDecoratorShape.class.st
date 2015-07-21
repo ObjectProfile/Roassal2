@@ -15,7 +15,7 @@ Class {
 		'type',
 		'baseSize'
 	],
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-ShapesForArrow'
 }
 
 { #category : #'as yet unclassified' }

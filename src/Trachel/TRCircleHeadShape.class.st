@@ -1,7 +1,7 @@
 Class {
 	#name : #TRCircleHeadShape,
 	#superclass : #TRAbstractLineDecoratorShape,
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-ShapesForArrow'
 }
 
 { #category : #hooks }

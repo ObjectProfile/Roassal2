@@ -1,7 +1,7 @@
 Class {
 	#name : #TRFilledDiamondShape,
 	#superclass : #TRDiamondShape,
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-ShapesForArrow'
 }
 
 { #category : #accessing }

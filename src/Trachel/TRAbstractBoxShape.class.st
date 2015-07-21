@@ -28,6 +28,18 @@ TRAbstractBoxShape >> basicEncompassingRectangle [
 	^ rectangle
 ]
 
+{ #category : #public }
+TRAbstractBoxShape >> bottomPosition [
+	"Return the shape center top position"
+	^ self position + (0 @ (self height / 2))
+]
+
+{ #category : #public }
+TRAbstractBoxShape >> bottomPosition: aPosition [
+	"Move the shape by locating its center top position at aPosition"
+	self position: (aPosition + (0 @ (self height / -2)))
+]
+
 { #category : #accessing }
 TRAbstractBoxShape >> center [
 	^ self position
@@ -71,6 +83,7 @@ TRAbstractBoxShape >> extent [
 
 { #category : #geometry }
 TRAbstractBoxShape >> extent: newExtent [
+	"Set the extent of the shape"
 	| oldExtent |
 	newExtent = rectangle extent ifTrue: [ ^ self ].
 	oldExtent := rectangle extent.
@@ -138,7 +151,14 @@ TRAbstractBoxShape >> initialize [
 ]
 
 { #category : #public }
+TRAbstractBoxShape >> leftPosition [
+	"Return the shape center left position"
+	^ self position - ((self width / 2) @ 0)
+]
+
+{ #category : #public }
 TRAbstractBoxShape >> leftPosition: aPosition [
+	"Move the shape by locating its center left position at aPosition"
 	self position: (aPosition - ((self width / -2) @ 0))
 ]
 
@@ -154,6 +174,18 @@ TRAbstractBoxShape >> rectangle: aRectangle [
 	"(oldExtent = (0 @ 0)) ifFalse: [ 
 		self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ].
 "
+]
+
+{ #category : #public }
+TRAbstractBoxShape >> rightPosition [
+	"Return the shape center right position"
+	^ self position + ((self width / 2) @ 0)
+]
+
+{ #category : #public }
+TRAbstractBoxShape >> rightPosition: aPosition [
+	"Move the shape by locating its center right position at aPosition"
+	self position: (aPosition - ((self width / 2) @ 0))
 ]
 
 { #category : #drawing }
@@ -177,12 +209,26 @@ TRAbstractBoxShape >> size: v [
 
 { #category : #hooks }
 TRAbstractBoxShape >> strokeWidth [
+	"Return the width of the border shape"
 	^ strokeWidth
 ]
 
 { #category : #accessing }
 TRAbstractBoxShape >> strokeWidth: aWidth [
+	"Set the width of the border shape"
 	strokeWidth := aWidth
+]
+
+{ #category : #public }
+TRAbstractBoxShape >> topPosition [
+	"Return the shape center top position"
+	^ self position - (0 @ (self height / 2))
+]
+
+{ #category : #public }
+TRAbstractBoxShape >> topPosition: aPosition [
+	"Move the shape by locating its center top position at aPosition"
+	self position: (aPosition - (0 @ (self height / -2)))
 ]
 
 { #category : #accessing }
