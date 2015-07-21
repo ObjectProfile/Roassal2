@@ -137,7 +137,7 @@ TRCamera >> fromPixelToSpace: aPoint [
 
 { #category : #convertion }
 TRCamera >> fromPixelToSpaceForRectangle: aRectangle [
-
+	"Return a new rectangle that corresponds to the projection of the argument (expressed in the space coordinate) into the pixels coordinate"
 	^ (self fromPixelToSpace: aRectangle topLeft) corner: (self fromPixelToSpace: aRectangle bottomRight)
 ]
 
@@ -174,12 +174,6 @@ TRCamera >> isVisible: aShape [
 	rec := self fromSpaceToPixelForRectangle: rec.
 	ext := self canvas extent.
 	^ (0 @ 0 extent: ext) intersects: rec
-	
-"	| p pOnScreen ext |
-	p := aShape position.
-	pOnScreen := self fromSpaceToPixel: p.
-	ext := self canvas extent.
-	^ (0 @ 0 extent: ext) intersects: pOnScreen"
 ]
 
 { #category : #actions }
@@ -212,12 +206,14 @@ TRCamera >> toAdjust: aCameraInitializer [
 
 { #category : #actions }
 TRCamera >> translateBy: aPoint [
+	"Move the camera using a step"
 	position := position + aPoint.
 	self triggerCallbacksForStep: aPoint
 ]
 
 { #category : #actions }
 TRCamera >> translateTo: newPosition [
+	"Move the camera to a new position. Note that some callbacks may be triggered"
 	| step |
 	step := newPosition - position.
 	position := newPosition.
