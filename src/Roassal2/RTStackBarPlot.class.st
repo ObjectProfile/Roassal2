@@ -103,7 +103,7 @@ RTStackBarPlot >> createShapeBuilder [
 	sb := RTShapeBuilder new.
 	sb
 			rectangle; 
-			height: self defaultBarHeight;
+			height: [ :anObject | self height rtValue: anObject ];
 			color: [ :association | self colorPalette level: (association value / self numberOfValuesPerRow) ];
 			yourself.
 	^ sb
@@ -214,12 +214,18 @@ RTStackBarPlot >> example05 [
 
 ]
 
+{ #category : #accessing }
+RTStackBarPlot >> height [
+	"Return the height that will be used for drawing the bars"
+	^ heightBlock
+]
+
 { #category : #initialization }
 RTStackBarPlot >> initialize [
 	super initialize.
 	values := OrderedCollection new.
 	colorPalette := RTMultiLinearColorForIdentity new.
-	self barWidth: self defaultBarWidth height: 20.
+	self barWidth: self defaultBarWidth height: self defaultBarHeight.
 	
 	labelConditionalBlock := true.
 	labelColor := Color black
@@ -282,4 +288,10 @@ RTStackBarPlot >> renderIn: aView [
 { #category : #accessing }
 RTStackBarPlot >> totalSum [
 	^ values first totalSum
+]
+
+{ #category : #accessing }
+RTStackBarPlot >> width [
+	"Return the width that will be used for drawing the bars"
+	^ widthBlock
 ]
