@@ -1,7 +1,7 @@
 Class {
 	#name : #RTGridLayoutTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Layouts'
+	#category : #'Roassal2-Layouts-Tests'
 }
 
 { #category : #tests }

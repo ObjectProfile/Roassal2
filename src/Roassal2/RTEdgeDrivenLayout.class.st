@@ -78,7 +78,7 @@ RTEdgeDrivenLayout >> defaultToPositions [
 ]
 
 { #category : #hook }
-RTEdgeDrivenLayout >> doExecute: aGraphElement [
+RTEdgeDrivenLayout >> doExecute: elements [
 	
 	self subclassResponsibility
 ]
