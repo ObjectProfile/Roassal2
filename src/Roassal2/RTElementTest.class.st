@@ -147,6 +147,34 @@ RTElementTest >> testHighlighting [
 	self assert: el trachelShape color = Color red.
 ]
 
+{ #category : #edges }
+RTElementTest >> testIsConnected [
+
+	self deny: RTElement new isConnected.
+]
+
+{ #category : #edges }
+RTElementTest >> testIsConnected02 [
+
+	| e1 e2 l |
+	e1 := RTBox element.
+	e2 := RTBox element.
+	
+	l := RTLine edgeFrom: e1 to: e2.
+	
+	self assert: e1 isConnected.
+	self assert: e2 isConnected.
+]
+
+{ #category : #edges }
+RTElementTest >> testIsConnected03 [
+	| e1 l |
+	e1 := RTBox element.
+	l := RTLine edgeFrom: e1 to: e1.	
+	self assert: e1 isConnected.
+
+]
+
 { #category : #tests }
 RTElementTest >> testModel [
 	self assert: (RTElement on: 10) model = 10

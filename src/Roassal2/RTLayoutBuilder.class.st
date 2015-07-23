@@ -95,6 +95,12 @@ RTLayoutBuilder >> dynamicForce [
 	dynamicForceBasedLayout := true
 ]
 
+{ #category : #'public - condition' }
+RTLayoutBuilder >> else: elseLayout [ 
+	self assert: [ layout class == RTConditionalLayout ].
+	layout elseLayout: elseLayout
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> flow [
 	layout := RTFlowLayout new.
@@ -170,6 +176,22 @@ RTLayoutBuilder >> horizontalTree [
 	^ layout
 ]
 
+{ #category : #'public - condition' }
+RTLayoutBuilder >> if: blockCondition then: thenLayout [
+	^ self ifElement: [ :anElement | blockCondition rtValue: anElement model ] then: thenLayout
+]
+
+{ #category : #'public - condition' }
+RTLayoutBuilder >> ifElement: blockCondition then: thenLayout [
+	| oldLayout |
+	oldLayout := layout.
+	layout := RTConditionalLayout new.
+	layout condition: blockCondition.
+	layout thenLayout: thenLayout.
+	layout elseLayout: oldLayout.
+	^ layout
+]
+
 { #category : #initialization }
 RTLayoutBuilder >> initialize [
 	super initialize.
@@ -189,6 +211,12 @@ RTLayoutBuilder >> month [
 	"Used by RTCalendarBuilder"
 	layout := RTMonthLayout new.
 	^ layout
+]
+
+{ #category : #'public - condition' }
+RTLayoutBuilder >> overall: overallLayout [ 
+	self assert: [ layout class == RTConditionalLayout ].
+	layout overallLayout: overallLayout
 ]
 
 { #category : #'public - partition' }
