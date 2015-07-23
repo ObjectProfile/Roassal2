@@ -4,7 +4,30 @@ Class {
 	#category : #'Roassal2-Builder-StackBarPlot'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
+RTStackBarPlotTest >> testBarHeight [
+
+	| b e |
+	b := RTStackBarPlot new.
+	b add: #(37).				
+	b barWidth: 150 height: 50.
+	b build.
+	self assert: b view numberOfElements equals: 1.
+
+	e := b view elements anyOne.
+	self assert: e extent y equals: 50
+]
+
+{ #category : #tests }
+RTStackBarPlotTest >> testDefault [
+
+	| b |
+	b := RTStackBarPlot new.
+	self assert: b height equals: 20.
+	self assert: (b createShapeBuilder current height rtValue: RTElement new) equals: 20.
+]
+
+{ #category : #tests }
 RTStackBarPlotTest >> testExample01 [
 
 	| b |
@@ -19,7 +42,7 @@ RTStackBarPlotTest >> testExample01 [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTStackBarPlotTest >> testExample02 [
 
 	| b |
