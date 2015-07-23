@@ -142,6 +142,46 @@ RTAxisConfigurationTest >> testNumberOfTicksAndLabel [
 ]
 
 { #category : #tests }
+RTAxisConfigurationTest >> testNumberOfTicksAndLabels02 [
+
+	self assert: config numberOfTicks equals: 4.
+	self assert: config numberOfLabels equals: 4.
+]
+
+{ #category : #tests }
+RTAxisConfigurationTest >> testNumberOfTicksAndLabels02Default [
+
+	self assert: config numberOfTicks equals: 4.
+	self assert: config numberOfLabels equals: 4.
+]
+
+{ #category : #tests }
+RTAxisConfigurationTest >> testNumberOfTicksAndLabels03 [
+
+	self assert: config numberOfLabels equals: 4.
+	
+	config numberOfTicks: 3.
+	"Cannot have more labels than ticks"
+	self assert: config numberOfLabels equals: 3.
+	
+]
+
+{ #category : #tests }
+RTAxisConfigurationTest >> testNumberOfTicksAndLabels04 [
+	
+	config numberOfTicks: 3.
+	self assert: config numberOfLabels equals: 3.
+	
+	config numberOfLabels: 2.
+	self assert: config numberOfTicks equals: 3.
+	self assert: config numberOfLabels equals: 2.
+	
+	config numberOfLabels: 5.
+	self assert: config numberOfTicks equals: 5.
+	self assert: config numberOfLabels equals: 5.
+]
+
+{ #category : #tests }
 RTAxisConfigurationTest >> testPlain [
 
 	config plain.

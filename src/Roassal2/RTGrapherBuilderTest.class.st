@@ -19,7 +19,7 @@ RTGrapherBuilderTest >> testCentralPoint [
 	| ds  |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popupText.
 	ds points: #(1 2 3).
 	ds x: #yourself.
@@ -47,13 +47,13 @@ RTGrapherBuilderTest >> testGetMaxNumberOfPoints [
 	| ds |
 	self assert: b getMaxNumberOfPoints equals: 0.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (1 to: 5).
 	b add: ds.
 	
 	self assert: b getMaxNumberOfPoints equals: 5.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (1 to: 10).
 	b add: ds.
 
@@ -66,11 +66,11 @@ RTGrapherBuilderTest >> testIgnoringEmptyDataSets [
 	| ds |
 	self assert: b numberOfDataSets equals: 0.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	b add: ds.
 	self assert: b numberOfDataSets equals: 0.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1).
 	b add: ds.
 	self assert: b numberOfDataSets equals: 1.
@@ -81,7 +81,7 @@ RTGrapherBuilderTest >> testIgnoringEmptyDataSets [
 RTGrapherBuilderTest >> testIsAxisDefined [
 
 	b := RTGrapher new.
-	b add: (RTDataSet new points: #(1 2 3)).
+	b add: (RTData new points: #(1 2 3); x: #yourself; y: #yourself).
 	
 	self deny: b isXAxisDefined.
 	self deny: b isYAxisDefined.
@@ -95,17 +95,17 @@ RTGrapherBuilderTest >> testIsAxisDefined [
 	self assert: b isYAxisDefined.
 
 	b build.
-	self assert: b getAxisX step equals: 3.
+	self assert: b getAxisX step equals: 3 / 2.
 ]
 
 { #category : #tests }
 RTGrapherBuilderTest >> testStepOnXAxis [
 
 	b := RTGrapher new.
-	b add: (RTDataSet new points: #(1 2 3)).
+	b add: (RTData new points: #(1 2 3)).
 	b axisXWithNumberOfTicks: 2.
 	b build.
-	self assert: b getAxisX step equals: 3.
+	self assert: b getAxisX step equals: 3 / 2.
 ]
 
 { #category : #tests }

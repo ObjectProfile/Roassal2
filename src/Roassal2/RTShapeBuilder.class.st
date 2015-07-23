@@ -104,6 +104,7 @@ RTShapeBuilder >> doubleArrowedLine [
 
 { #category : #'public - building' }
 RTShapeBuilder >> edgeFrom: element1 to: element2 [
+	"Return a new edge that goes from element1 to element2"
 	self hasSetLineShape ifFalse: [ self line ].
 	^ shape edgeFrom: element1 to: element2
 ]
@@ -278,7 +279,7 @@ RTShapeBuilder >> labelledAs: aBlock [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> line [
-	^ self shape: RTLine new
+	^ self shape: (RTLine new withShorterDistanceAttachPoint; yourself)
 ]
 
 { #category : #shapes }
