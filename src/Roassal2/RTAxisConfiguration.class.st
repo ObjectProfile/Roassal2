@@ -28,6 +28,30 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
+{ #category : #accessing }
+RTAxisConfiguration >> adjustNumberOfTicksAndLabelsIfNecessaryPriorityOnLabels [
+	"This methods is called after each change of the number of ticks or labels. 
+	The rule is that an axis config cannot have more than labels than ticks"
+	"Cannot have more labels than ticks"
+	"The number of labels remains fixed"
+	
+	self numberOfTicks < self numberOfLabels
+		ifTrue: [ self numberOfTicks: self numberOfLabels ]
+
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> adjustNumberOfTicksAndLabelsIfNecessaryPriorityOnTicks [
+	"This methods is called after each change of the number of ticks or labels. 
+	The rule is that an axis config cannot have more than labels than ticks"
+	"Cannot have more labels than ticks"
+	"The number of ticks remains fixed"
+		
+	self numberOfTicks < self numberOfLabels
+		ifTrue: [ self numberOfLabels: self numberOfTicks ]
+
+]
+
 { #category : #testing }
 RTAxisConfiguration >> areLabelRotated [
 	"Return true if labels are rotated"
@@ -249,11 +273,10 @@ RTAxisConfiguration >> numberOfLabels [
 
 { #category : #accessing }
 RTAxisConfiguration >> numberOfLabels: aValue [
+	"Set the number of labels the axis should contains. In case that the number of ticks is less than the number of labels, then an adjustment is made"
 	numberOfLabels := aValue.
-	
-	"Cannot have more labels than ticks"
-	self numberOfTicks < aValue
-		ifTrue: [ self numberOfTicks: aValue ]
+	self adjustNumberOfTicksAndLabelsIfNecessaryPriorityOnLabels.
+
 ]
 
 { #category : #accessing }
@@ -263,7 +286,9 @@ RTAxisConfiguration >> numberOfTicks [
 
 { #category : #accessing }
 RTAxisConfiguration >> numberOfTicks: aValue [
-	numberOfTicks := aValue
+	"Set the number of ticks the axis should contains. In case that the number of ticks is less than the number of labels, then an adjustment is made"
+	numberOfTicks := aValue.
+	self adjustNumberOfTicksAndLabelsIfNecessaryPriorityOnTicks
 ]
 
 { #category : #configuration }

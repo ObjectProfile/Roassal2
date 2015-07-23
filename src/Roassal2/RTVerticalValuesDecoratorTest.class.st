@@ -10,7 +10,7 @@ RTVerticalValuesDecoratorTest >> testBasic [
 	| b ds deco labels |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(2 3 4 5 6).
 	b add: ds.
 
@@ -32,7 +32,7 @@ RTVerticalValuesDecoratorTest >> testBasic02 [
 	| b ds deco labels |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(2 3 4 5 6).
 	b add: ds.
 
@@ -53,7 +53,7 @@ RTVerticalValuesDecoratorTest >> testBasic03 [
 	| b ds deco labels |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	"We repeat the points"
 	ds points: #(2 3 4 5 6 2).
 	b add: ds.

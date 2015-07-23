@@ -12,7 +12,7 @@ Class {
 		'w',
 		'epsilon'
 	],
-	#category : #'Roassal2-Builder-Grapher-Core'
+	#category : #'Roassal2-Builder-Grapher-Labeling'
 }
 
 { #category : #'instance creation' }

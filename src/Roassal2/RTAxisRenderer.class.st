@@ -28,9 +28,6 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 						height: tickLength; width: config lineThickness.
 	ticks := tickShape elementsOn: (0 to: self numberOfTicks).
 	
-	"ticks do: [ :t | t translateBy: (angle cos @ angle sin) * tickLength / 2 ]."
-	
-
 	self addAllToView: ticks.
 	ticks pushBack.
 	
