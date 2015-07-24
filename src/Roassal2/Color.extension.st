@@ -113,3 +113,9 @@ Color class >> red: r green: g blue: b alpha: a [
 
 	^ self r: (r/255 asFloat) g: (g/255 asFloat) b: (b/255 asFloat) alpha: a
 ]
+
+{ #category : #'*Roassal2-Core' }
+Color >> trans [
+	"Make the color transparent"
+	^ self alpha: 0.4
+]

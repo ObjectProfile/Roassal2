@@ -45,22 +45,74 @@ RTLayoutTranslator >> translate: element to: newPosition [
 	self subclassResponsibility 
 ]
 
-{ #category : #hook }
-RTLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
-	"Translate the bottom left corner of the element to the newPosition"
-	self translate: element to: (newPosition + ((element width / 2) @ (element height / -2))).
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translate: element to: newPosition direction: aDirection [
+	"Translate the bottom left corner of the element"
+
+	self translate: element to: newPosition + (element extent / 2 * aDirection)
 ]
 
-{ #category : #hook }
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateBottomLeftOf: element to: newPosition [
+	"Translate the bottom left corner of the element"
+
+	self translate: element to: newPosition direction: 1 @ -1.
+]
+
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateBottomOf: element to: newPosition [
+	"Translate the bottom side of the element"
+
+	self translate: element to: element position x @ newPosition direction: 0 @ -1
+]
+
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateBottomRightOf: element to: newPosition [
+	"Translate the bottom right corner of the element"
+
+	self translate: element to: newPosition direction: -1 @ -1
+]
+
+{ #category : #'public - translating' }
 RTLayoutTranslator >> translateCenterLeftOf: element to: newPosition [
 	"Translate the left center of the element to newPosition"
-	self translate: element to: (newPosition + ((element width / 2) @ 0)).
+
+	self translate: element to: newPosition direction: 1 @ 0
 ]
 
-{ #category : #hook }
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateLeftOf: element to: newPosition [
+	"Translate the left side of the element"
+
+	self translate: element to: newPosition @ element position y direction: 1 @ 0.
+]
+
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateRightOf: element to: newPosition [
+	"Translate the right side of the element"
+
+	self translate: element to: newPosition @ element position y direction: -1 @ 0.
+]
+
+{ #category : #'public - translating' }
 RTLayoutTranslator >> translateTopLeftOf: element to: newPosition [
-	"Translate the top left corner of the element"
-	self translate: element to: (newPosition + (element extent / 2))
+	"Translate the top right corner of the element"
+
+	self translate: element to: newPosition direction: 1 @ 1
+]
+
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateTopOf: element to: newPosition [
+	"Translate the top side of the element"
+
+	self translate: element to: element position x @ newPosition direction: 0 @ 1.
+]
+
+{ #category : #'public - translating' }
+RTLayoutTranslator >> translateTopRightOf: element to: newPosition [
+	"Translate the top right corner of the element"
+
+	self translate: element to: newPosition direction: -1 @ 1
 ]
 
 { #category : #accessing }
