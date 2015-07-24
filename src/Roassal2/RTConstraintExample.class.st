@@ -38,7 +38,7 @@ v add: e; add: b.
 b @ RTDraggable.
 e @ RTDraggable.
 
-(RTConstraint child: e parent: b)
+(RTConstraint on: e background: b)
 	above;
 	top;
 	stick.
@@ -71,7 +71,7 @@ v add: e; add: b.
 b @ RTDraggable.
 e @ RTDraggable.
 
-(RTConstraint child: e parent: b)
+(RTConstraint on: e background: b)
 	below;
 	stick.
 ^ v
@@ -102,7 +102,7 @@ v add: e; add: b.
 b @ RTDraggable.
 e @ RTDraggable.
 
-(RTConstraint child: e parent: b)
+(RTConstraint on: e background: b)
 	below;
 	stick.
 ^ v

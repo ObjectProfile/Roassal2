@@ -41,7 +41,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RTConstraint class >> child: aChildShape parent: aParentShape [
+RTConstraint class >> on: aChildShape background: aParentShape [
 	^ self new
 		setChild: aChildShape parent: aParentShape;
 		yourself

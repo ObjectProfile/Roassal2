@@ -13,13 +13,13 @@ v add: e.
 
 "
 Class {
-	#name : #RTResizeable,
+	#name : #RTSimpleResizable,
 	#superclass : #RTInteraction,
 	#category : #'Roassal2-Core'
 }
 
 { #category : #hooks }
-RTResizeable >> createHandleFor: element [
+RTSimpleResizable >> createHandleFor: element [
 
 	| handle |
 	handle := (RTEllipse new size: 10) element.
@@ -36,13 +36,13 @@ RTResizeable >> createHandleFor: element [
 ]
 
 { #category : #hooks }
-RTResizeable >> initializeElement: element [
+RTSimpleResizable >> initializeElement: element [
 	element when: TRMouseEnter do: [ :evt | self showResizeHandleOn: element ].
 	element when: TRMouseLeave do: [ :evt | self removeResizeHandleOn: element ].
 ]
 
 { #category : #hooks }
-RTResizeable >> removeResizeHandleOn: element [
+RTSimpleResizable >> removeResizeHandleOn: element [
 	| handle |
 	(element attributes includesKey: #resizeHandle) ifFalse: [ ^ self ].
 	handle := element attributeAt: #resizeHandle.
@@ -52,7 +52,7 @@ RTResizeable >> removeResizeHandleOn: element [
 ]
 
 { #category : #hooks }
-RTResizeable >> showResizeHandleOn: element [
+RTSimpleResizable >> showResizeHandleOn: element [
 	| handle |
 	self removeResizeHandleOn: element.
 	
