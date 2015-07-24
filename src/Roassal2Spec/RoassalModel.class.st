@@ -1,5 +1,5 @@
 "
-I am a Spec model to embed Roassal2 visualizations
+I am a Spec model to embed Roassal2 visualizations. See the SpecEasel class for an example use.
 "
 Class {
 	#name : #RoassalModel,
@@ -42,25 +42,26 @@ RoassalModel >> lastEvent: aBlock [
 	lastEvent value: aBlock
 ]
 
-{ #category : #protocol }
+{ #category : #api }
 RoassalModel >> refresh [
-
+	"Rerun the script"
 	self changed: #applyScript with: #()
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 RoassalModel >> script [
-
+	"Returns the block that draws the visualization."
 	^ script value
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 RoassalModel >> script: aBlock [
-
+	"Set the block that draws the visualization.
+	 It should take two arguments: the view and the canvas"
 	script value: aBlock
 ]
 
-{ #category : #'protocol-events' }
+{ #category : #'api-events' }
 RoassalModel >> whenLastEventChangedDo: aBlock [
 
 	lastEvent whenChangedDo: aBlock
