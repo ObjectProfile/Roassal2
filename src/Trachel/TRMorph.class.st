@@ -10,14 +10,22 @@ Class {
 		'eventBeginingDragging',
 		'shapeBeingPointed',
 		'shouldRefresh',
-		'session'
+		'session',
+		'eventOverseer'
 	],
 	#category : #'Trachel-MorphSpecific'
 }
 
+{ #category : #'event handling' }
+TRMorph >> announceToEventOverseer: evt [
+	eventOverseer ifNil: [ ^ self ].
+	eventOverseer firedEvent: evt 
+]
+
 { #category : #accessing }
 TRMorph >> canvas: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas.
+	eventOverseer := aTrachelCanvas eventOverseer.
 	surface := AthensCairoSurface extent: (aTrachelCanvas extent) asIntegerPoint
 ]
 
@@ -31,7 +39,6 @@ TRMorph >> checkSession [
 
 { #category : #'session management' }
 TRMorph >> createSurface [
-"	surface isNil ifFalse: [ ^ self ]."
 	surface := AthensCairoSurface extent: self extent asIntegerPoint.
 	session := Smalltalk session.
 ]
@@ -69,10 +76,14 @@ TRMorph >> drawOn: aCanvas [
 	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
 ]
 
-{ #category : #'as yet unclassified' }
-TRMorph >> extent: aPoint [
-	"aPoint ~= self extent ifTrue: [ self inform: 'extended !!! ' ]."
-	super extent: aPoint
+{ #category : #accessing }
+TRMorph >> eventOverseer [
+	^ eventOverseer
+]
+
+{ #category : #accessing }
+TRMorph >> eventOverseer: anObject [
+	eventOverseer := anObject
 ]
 
 { #category : #'events-processing' }
@@ -274,7 +285,7 @@ TRMorph >> rtMouseClick: evt [
 	ev canvas: trachelCanvas.
 	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
 	shape announce: ev.
-	
+	self announceToEventOverseer: ev
 ]
 
 { #category : #'event-processed' }
@@ -297,6 +308,7 @@ TRMorph >> rtMouseDoubleClick: evt [
 	ev canvas: trachelCanvas.
 	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
 	shape announce: ev.
+	self announceToEventOverseer: ev
 	
 ]
 
@@ -319,6 +331,7 @@ TRMorph >> rtMouseDragBegin: evt [
 	ee canvas: trachelCanvas.
 	ee morph: self.
 	shapeBeingPointed announce: ee.
+	self announceToEventOverseer: ee
 ]
 
 { #category : #'event-processed' }
@@ -332,6 +345,7 @@ TRMorph >> rtMouseDragEnd: evt [
 	ee morph: self.
 	ee position: relativePosition.
 	shapeBeingPointed announce: ee.
+	self announceToEventOverseer: ee.
 	
 	eventBeginingDragging := nil.
 	shapeBeingPointed := nil
@@ -361,7 +375,7 @@ TRMorph >> rtMouseDragging: evt [
 	event canvas: trachelCanvas.
 	event morph: self.
 	shapeBeingPointed announce: event.
-
+	self announceToEventOverseer: event.
 	eventBeginingDragging := evt copy.
 ]
 
@@ -379,6 +393,7 @@ TRMorph >> rtMouseEnter: evt [
 	ev morph: self.
 	ev canvas: trachelCanvas.
 	shape announce: ev.
+	self announceToEventOverseer: ev
 
 ]
 
@@ -393,7 +408,8 @@ TRMorph >> rtMouseLeave: evt [
 	ev shape: shape.
 	ev morph: self.
 	ev canvas: trachelCanvas.
-	shape announce: ev
+	shape announce: ev.
+	self announceToEventOverseer: ev
 
 ]
 
@@ -409,7 +425,8 @@ TRMorph >> rtMouseMoving: evt [
 	ev shape: shape.
 	ev morph: self.
 	ev canvas: trachelCanvas.
-	shape announce: ev
+	shape announce: ev.
+	self announceToEventOverseer: ev
 ]
 
 { #category : #'event-processed' }

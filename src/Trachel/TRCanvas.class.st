@@ -11,7 +11,8 @@ Class {
 		'camera',
 		'announcer',
 		'color',
-		'session'
+		'session',
+		'eventOverseer'
 	],
 	#category : #'Trachel-Core'
 }
@@ -196,6 +197,18 @@ TRCanvas >> encompassingRectangle [
 ]
 
 { #category : #accessing }
+TRCanvas >> eventOverseer [
+	"Return the event overseer, if defined. The overseer is an object that gets notificed by all events of the morph"
+	^ eventOverseer
+]
+
+{ #category : #events }
+TRCanvas >> eventOverseer: anEventOverseer [
+	"This method register anEventOverseer as the event overseer in the TRMorph. At each event fired by, the event overseer will get notified"
+	eventOverseer := anEventOverseer
+]
+
+{ #category : #accessing }
 TRCanvas >> extent [
 	"size of the canvas"
 	^ extent
@@ -256,7 +269,10 @@ TRCanvas >> initialize [
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
 	color := Color white.
-	session := Smalltalk session
+	session := Smalltalk session.
+	
+	"No event overseer at the creation"
+	eventOverseer := nil
 ]
 
 { #category : #testing }
@@ -277,6 +293,12 @@ TRCanvas >> morph [
 { #category : #'instance creation' }
 TRCanvas >> morphClass [
 	^ TRMorph
+]
+
+{ #category : #events }
+TRCanvas >> notifyEventOverseerWith: anEvent [
+	eventOverseer ifNil: [ ^ self ].
+	eventOverseer firedEvent: anEvent
 ]
 
 { #category : #animations }
