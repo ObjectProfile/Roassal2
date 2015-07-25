@@ -4,12 +4,13 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPDFExporterPlugin >> description [
-	^ 'When you open a visualization, you can export it by clicking on the "..." icon. By loading this plugin, you will be able to export the visualization as a PDF file.'
+	^ 'When you open a visualization, you can export it by clicking on the "..." icon. 
+By loading this plugin, you will be able to export the visualization as a PDF file.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPDFExporterPlugin >> execute [
 	Gofer new 
 		smalltalkhubUser: 'azazael' project: 'RTPDFExporter';
@@ -17,7 +18,7 @@ RTPDFExporterPlugin >> execute [
 	(Smalltalk at: #ConfigurationOfRTPDFExporter) loadDevelopment
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPDFExporterPlugin >> label [
 	^ 'PDF Exporter'
 ]
