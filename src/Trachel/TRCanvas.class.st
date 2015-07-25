@@ -29,7 +29,7 @@ TRCanvas >> addAnimation: anAnimation [
 	self signalUpdate
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> addFixedShape: shape [
 	fixedShapes add: shape.
 	shape canvas: self
@@ -65,14 +65,16 @@ TRCanvas >> addMenuAsSVG: aTitle scale: scaleAsFloat callback: aBlock [
 	self addFixedShape: icon
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> addShape: shape [
-	shape addedIn: self
+	shape addedIn: self.
+	shape triggerCallbacksForAddition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding removing shapes' }
 TRCanvas >> addShape: shape atIndex: index [
-	shape addedIn: self atIndex: index
+	shape addedIn: self atIndex: index.
+	shape triggerCallbacksForAddition
 ]
 
 { #category : #animations }
@@ -106,7 +108,7 @@ TRCanvas >> athensCanvas [
 	^ self canvas
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> buildArcAlphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRadius: eR [
 	| shape |
 	shape := TRArcShape new.
@@ -115,7 +117,7 @@ TRCanvas >> buildArcAlphaAngle: stAngle betaAngle: ndAngle innerRadius: iR exter
 	^ shape
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
 	| shape |
 	shape := TREllipseShape new.
@@ -124,7 +126,7 @@ TRCanvas >> buildCircleFrom: aPoint to: anotherPoint color: aColor [
 	^ shape
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> buildLineFrom: aPoint to: anotherPoint color: aColor [
 	|  shape |
 	shape := TRLineShape new.
@@ -141,7 +143,7 @@ TRCanvas >> buildMorph [
 	^ morph
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> buildRectangle: aRectangle color: aColor [
 	| shape |
 	shape := TRBoxShape new.
@@ -169,7 +171,7 @@ TRCanvas >> canvas [
 	^ canvas
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> clean [
 	self shapes copy do: #remove.
 	self fixedShapes copy do: #remove
@@ -206,7 +208,7 @@ TRCanvas >> extent: aPoint [
 	self announce: TRResizeCanvasEvent
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> firstElementOf: aCollection [ 
 	"Return the first element of aCollection that will be displayed. This method assume that all elements contained in aCollection belong to shapes. It also assumes that aCollection is not empty"
 	| lastElement lastIndex |
@@ -358,7 +360,7 @@ TRCanvas >> push: aShape behind: anotherShape [
 	aShape canvas: self 
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> push: aShape behindAll: aCollection [ 
 	"Move the first argument, which is supposely be contained in the shapes variable, before all elements contained in aCollection"
 	| firstElement |
@@ -366,7 +368,7 @@ TRCanvas >> push: aShape behindAll: aCollection [
 	self push: aShape behind: firstElement
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> pushAll: elements1 behindAll: elements2 [ 
 	"Move all elements in elements1, which are supposely contained in the shapes variable, before all elements contained in elements2"
 	| firstElement |
@@ -416,14 +418,14 @@ TRCanvas >> removeFixedShapes: someShapes [
 	fixedShapes := fixedShapes copyWithoutAll: someShapes
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> removeShape: shape [
 	shapes remove: shape ifAbsent: [ self removeFixedShape: shape ].
 	shape canvas: nil.
 	shape triggerRemoveCallbacks
 ]
 
-{ #category : #building }
+{ #category : #'adding removing shapes' }
 TRCanvas >> removeShapes: someShapes [
 	shapes := shapes copyWithoutAll: someShapes.
 	self removeFixedShapes: someShapes.
@@ -431,13 +433,13 @@ TRCanvas >> removeShapes: someShapes [
 	
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> resetLineShapes [
 	"Remove all the shapes, no callback on the shapes is invoked!"
 	shapes := shapes reject: #isLineShape
 ]
 
-{ #category : #action }
+{ #category : #actions }
 TRCanvas >> resetShapes [
 	"Remove all the shapes, no callback on the shapes is invoked!"
 	shapes := OrderedCollection new.
