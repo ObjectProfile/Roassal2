@@ -31,7 +31,7 @@ Class {
 		'handles',
 		'enabled'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions-Resize'
 }
 
 { #category : #example }
@@ -91,11 +91,11 @@ RTResizable >> basicCallbackFor: aHandle corner: aCorner [
 	| newExtent oppositeCornerPosition distance oppositeCorner |
 	"An absolute distance the handle has moved from it's assigned corner."
 	distance := aHandle position
-		- ((DCRTRectangle cornerDirectionFor: aCorner) abs * (element encompassingRectangle perform: aCorner)).
+		- ((RTResizableRectangle cornerDirectionFor: aCorner) abs * (element encompassingRectangle perform: aCorner)).
 	"Resizing with RTElement>>extent: changes the element in all directions, so we have to move it back in the opposite direction of the movement. (So when resizing by topRight corner, then bottomLeft should be fixed in place."
 	distance := self negate: distance forCorner: aCorner.
 	newExtent := element extent + distance max: self minSize.
-	oppositeCorner := DCRTRectangle oppositeCornerFor: aCorner.
+	oppositeCorner := RTResizableRectangle oppositeCornerFor: aCorner.
 	oppositeCornerPosition := element encompassingRectangle perform: oppositeCorner.
 	element trachelShape
 		doWithoutCallbacks: [ 
@@ -133,10 +133,10 @@ RTResizable >> connectAllHandles [
 RTResizable >> connectWithView: aView [
 	(aView hasAttribute: self className)
 		ifFalse: [ 
-			aView when: TRMouseLeftClick do: [ :evt | aView announce: DCRTResizeCanceled new ].
+			aView when: TRMouseLeftClick do: [ :evt | aView announce: RTResizeCanceled new ].
 			aView attributeAt: self className put: true ].
 
-	aView when: DCRTResizeCanceled do: [ self removeHandles ]
+	aView when: RTResizeCanceled do: [ self removeHandles ]
 ]
 
 { #category : #'instance creation' }
@@ -205,12 +205,12 @@ RTResizable >> minSize [
 
 { #category : #translating }
 RTResizable >> negate: aPoint forCorner: aCorner [
-	^ aPoint * (DCRTRectangle cornerDirectionFor: aCorner) negated
+	^ aPoint * (RTResizableRectangle cornerDirectionFor: aCorner) negated
 ]
 
 { #category : #hooks }
 RTResizable >> removeEveryonesHandles [
-	element view announce: DCRTResizeCanceled new
+	element view announce: RTResizeCanceled new
 ]
 
 { #category : #hooks }
@@ -226,7 +226,7 @@ RTResizable >> removeHandles [
 { #category : #hooks }
 RTResizable >> showHandles [
 	handles ifNotEmpty: [ ^ self ].
-	handles := DCRTRectangle cornersAndSides
+	handles := RTResizableRectangle cornersAndSides
 		collect: [ :corner | 
 			| handle |
 			handle := self createHandle.

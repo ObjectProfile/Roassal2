@@ -5,7 +5,7 @@ A RTFixedPopup creates a popup, located at a fixed position, in the window.
 Class {
 	#name : #RTFixedPopup,
 	#superclass : #RTPopup,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #initialization }

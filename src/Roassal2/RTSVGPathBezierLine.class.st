@@ -5,7 +5,7 @@ An edge with an array of control points will generate a sequence of quadratic Be
 Class {
 	#name : #RTSVGPathBezierLine,
 	#superclass : #RTBezierLine,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #'as yet unclassified' }

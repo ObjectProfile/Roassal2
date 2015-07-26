@@ -15,7 +15,7 @@ v add: e.
 Class {
 	#name : #RTSimpleResizable,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions-Resize'
 }
 
 { #category : #hooks }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rectangle'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #hooks }

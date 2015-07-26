@@ -69,7 +69,7 @@ Class {
 		'layout',
 		'automaticallyUpdateLayout'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #'instance creation' }

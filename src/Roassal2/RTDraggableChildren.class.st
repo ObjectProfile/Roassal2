@@ -4,7 +4,7 @@ A RTDraggableChildren makes an element draggable. When dragged, children of the 
 Class {
 	#name : #RTDraggableChildren,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #hooks }

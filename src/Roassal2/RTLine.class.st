@@ -63,7 +63,7 @@ Slightly more sophisticated example:
 Class {
 	#name : #RTLine,
 	#superclass : #RTAbstractLine,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #hooks }

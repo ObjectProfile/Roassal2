@@ -7,7 +7,7 @@ Class {
 		'zoomInElements',
 		'ratio'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #public }
