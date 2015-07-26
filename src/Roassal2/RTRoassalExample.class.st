@@ -5514,6 +5514,58 @@ CF/4QPhA+MIHwhc+ED4QvvCB8IHwhQ+k7vIP3qBBe9TjobAAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleResizable [
+
+	| v g |
+	v := RTView new.
+
+	g := {RTBox new
+		size: 100;
+		borderColor: Color black;
+		borderWidth: 1;
+		element.
+
+	RTRoundedBox new
+		size: 50;
+		borderRadius: 20;
+		borderColor: Color black;
+		borderWidth: 1;
+		element.
+
+	RTEllipse new
+		width: 100;
+		height: 30;
+		borderColor: Color black;
+		element} asGroup.
+
+	v addAll: g.
+
+	RTGridLayout on: g.
+
+	g @ RTDraggable.
+	g @ RTResizable.
+
+	v @ RTZoomableView.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleResizableIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAACDElEQVR4XuXaQYsBUQDA8f3G
+voK7D6EcuKGUi6McjRSRwkEphNx5s/u2dtut1WyZJru/f70Lr3eYXzMPz0ua+j1TL/4l8EH8
+fBAfxM8H8UH8fBAfxM8H8UH8fBA/H8QH8fNBfBA/H8QH8fNBfBA/H8TPB/FB/HwQH8TPB/FB
+/HwQH8TPB/HzQXwQPx/EB8mjy+USttttbqPdboev6zebzbBer9OP92ezWdrv94MPcqfj8fh+
+wfIapVLpc+1Op3N37VqtFnyQAkGq1WrmunGOD1IQSJIkmXPjHB+kIJDfzg9v+SBPBHK73XwQ
+/w4BQZbLZebcOMffQwoCqdfrmes2Gg3/U1ZRIPv9PrRarbtrDwaDcDgcfJAivxjG/aHX64Vy
+uRzi63FUKpXQ7XbDs+wdFIj/W5YP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4/SOQ3W4Xzudz
+Oh6Pw2q1yrwbRqNRiD8ibjab4IPk2Nu5RFgsFg8/uiLQs5wA/lmQ0+mU5rmHDIdDH+SR5vN5
+rpt6vNt8kBweWfFx8wjEdDp9/2fi9Xr1QfIqnuDFTT2OyWQSkiQJP52Nx00/An7M9Td1Px/E
+B/HzQXwQPx/EzwfxQfx8EB/EzwfxQfx8EB/Ezwfx80F8ED8fxAfx80F8ED8fxAfx80H8fBAf
+xM8H8UH8fBAfxM8H8UH8fBC/b70C+18/bEtmoXgAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleResizingElements [
 | v es resizeAnimation shape normalizer |
 v := RTView new.
