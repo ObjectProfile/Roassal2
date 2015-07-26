@@ -4,7 +4,7 @@ add an horizontal and vertical scrollbar to the view, on the border of the view
 Class {
 	#name : #RTDoubleScrollBar,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #adding }

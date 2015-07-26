@@ -18,7 +18,7 @@ Class {
 		'height',
 		'fontName'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #configuration }

@@ -27,7 +27,7 @@ Class {
 	#instVars : [
 		'borderRadius'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ add a simple scroll bar to the view
 Class {
 	#name : #RTScrollBar,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #'as yet unclassified' }

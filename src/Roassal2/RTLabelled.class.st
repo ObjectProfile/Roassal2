@@ -53,7 +53,7 @@ Class {
 		'text',
 		'fontSize'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #visitor }

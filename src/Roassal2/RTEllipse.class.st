@@ -10,7 +10,7 @@ v open
 Class {
 	#name : #RTEllipse,
 	#superclass : #RTAbstractElementShape,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #visitor }

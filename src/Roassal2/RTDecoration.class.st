@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'items'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #actions }

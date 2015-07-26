@@ -4,7 +4,7 @@ add a scroll pad to the view
 Class {
 	#name : #RTScrollpad,
 	#superclass : #RTInteraction,
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #'as yet unclassified' }

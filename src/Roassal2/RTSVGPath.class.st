@@ -45,7 +45,7 @@ Class {
 		'rotation',
 		'keepInOriginalPosition'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Shapes'
 }
 
 { #category : #countries }
