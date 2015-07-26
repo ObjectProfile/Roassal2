@@ -3,25 +3,19 @@ I provide element resizing in all eight directions.
 
 Resizing handles are displayed after clicking on an associated element, and are automatically removed when clicked on a view or another element.
 
+!! Assumptions
+
+You must provide this class with aView instance or the initialized element must be already added to the view.
+
 !! Collaborators
 
-RTRectangle
-RTResizeCanceled
+DCRTRectangle
+DCRTResizeCanceled
 
 !! Example
 
-[[[ 
-v := RTView new.
+see my class side
 
-s := RTBox new color: Color blue; width: [ :c | c numberOfVariables * 5 ]; height: #numberOfMethods.
-e := s elementOn: RTView.
-v add: e.
-
-e @ RTDraggable.
-e @ RTResizable.
-
-v
-]]]
 "
 Class {
 	#name : #RTResizable,
@@ -29,14 +23,15 @@ Class {
 	#instVars : [
 		'element',
 		'handles',
-		'enabled'
+		'enabled',
+		'view'
 	],
 	#category : #'Roassal2-Interactions-Resize'
 }
 
 { #category : #example }
 RTResizable class >> example [
-	| v g |
+	| v g el edge |
 	v := RTView new.
 
 	g := {RTBox new
@@ -58,11 +53,30 @@ RTResizable class >> example [
 		borderColor: Color black;
 		element} asGroup.
 
+	el := RTBox new
+		size: 50;
+		color: Color black;
+		element.
+
+	edge := RTLine new
+		color: Color black;
+		attachPoint: RTRectangleAttachPoint new;
+		edgeFrom: g first to: el.
+
 	v addAll: g.
+	v
+		add: el;
+		add: edge.
 
-	RTGridLayout on: g.
+	"add empty event to prevent event propagation to the view (and thus test event overseer)"
+	el when: TRMouseLeftClick do: [ :evt |  ].
+	edge when: TRMouseLeftClick do: [ :evt |  ].
 
-	g @ RTDraggable.
+	RTGridLayout new
+		gapSize: 50;
+		on: v elements.
+
+	v elements @ RTDraggable.
 	g @ RTResizable.
 
 	v @ RTZoomableView.
@@ -91,7 +105,7 @@ RTResizable >> basicCallbackFor: aHandle corner: aCorner [
 	| newExtent oppositeCornerPosition distance oppositeCorner |
 	"An absolute distance the handle has moved from it's assigned corner."
 	distance := aHandle position
-		- ((RTResizableRectangle cornerDirectionFor: aCorner) abs * (element encompassingRectangle perform: aCorner)).
+		- ((DCRTRectangle cornerDirectionFor: aCorner) abs * (element encompassingRectangle perform: aCorner)).
 	"Resizing with RTElement>>extent: changes the element in all directions, so we have to move it back in the opposite direction of the movement. (So when resizing by topRight corner, then bottomLeft should be fixed in place."
 	distance := self negate: distance forCorner: aCorner.
 	newExtent := element extent + distance max: self minSize.
@@ -132,11 +146,13 @@ RTResizable >> connectAllHandles [
 { #category : #hooks }
 RTResizable >> connectWithView: aView [
 	(aView hasAttribute: self className)
-		ifFalse: [ 
-			aView when: TRMouseLeftClick do: [ :evt | aView announce: RTResizeCanceled new ].
-			aView attributeAt: self className put: true ].
+		ifFalse: [ self setupView: aView ].
 
-	aView when: RTResizeCanceled do: [ self removeHandles ]
+	aView
+		when: TRResizeCanceled
+		do: [ :event | 
+			event shape = element trachelShape
+				ifFalse: [ self removeHandles ] ]
 ]
 
 { #category : #'instance creation' }
@@ -177,21 +193,23 @@ RTResizable >> initialize [
 	enabled := false
 ]
 
-{ #category : #hooks }
+{ #category : #initialization }
 RTResizable >> initializeElement: anElement [
-	element := anElement.
+	"postpone initialization if the element is not yet added to the view"
+	anElement view
+		ifNil: [ anElement addCallback: (TRAddedCallback block: [ :evt | self lazyInitializeElement: anElement ]) ]
+		ifNotNil: [ self lazyInitializeElement: anElement ]
+]
 
-	element
-		when: TRMouseLeftClick
-		do: [ :evt | 
-			self removeEveryonesHandles.
-			self showHandles ].
+{ #category : #initialization }
+RTResizable >> lazyInitializeElement: anElement [
+	element := anElement.
+	element when: TRMouseLeftClick do: [ :evt | self showHandles ].
 	element when: TRMouseDragStart do: [ :evt | self disable ].
 	element when: TRMouseDragEnd do: [ :evt | self enable ].
-
 	element addCallback: (TRRemoveCallback block: [ :evt | self removeHandles ]).
 
-	self connectWithView: element view.
+	self connectWithView: (view ifNil: [ element view ]).
 
 	self enable
 ]
@@ -210,7 +228,7 @@ RTResizable >> negate: aPoint forCorner: aCorner [
 
 { #category : #hooks }
 RTResizable >> removeEveryonesHandles [
-	element view announce: RTResizeCanceled new
+	element view announce: TRResizeCanceled new
 ]
 
 { #category : #hooks }
@@ -221,6 +239,16 @@ RTResizable >> removeHandles [
 	handles := #().
 
 	element view signalUpdate
+]
+
+{ #category : #hooks }
+RTResizable >> setupView: aView [
+	aView canvas eventOverseer ifNil: [ aView canvas eventOverseer: TRAnnouncingOverseer new ].
+
+	aView canvas eventOverseer
+		when: TRMouseLeftClick
+		do: [ :evt | aView announcer announce: (TRResizeCanceled shape: evt shape) ].
+	aView attributeAt: self className put: true
 ]
 
 { #category : #hooks }
@@ -242,4 +270,9 @@ RTResizable >> translateCorner: aCorner of: anElement to: aPosition [
 	| selector |
 	selector := ('translate' , aCorner capitalized , 'Of:to:') asSymbol.
 	RTDirectLayoutTranslator new perform: selector with: anElement with: aPosition
+]
+
+{ #category : #accessing }
+RTResizable >> view: aView [
+	view := aView
 ]
