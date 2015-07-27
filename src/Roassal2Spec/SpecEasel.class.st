@@ -102,7 +102,7 @@ SpecEasel >> startText [
 	RTCellLayout new lineItemsCount: 5; on: view elements.
 	
 	view @ RTDraggableView.
-	(RTGroup withAll: els) translateTo: 0 @ 0
+	canvas camera focusOnCenterScaled: 300.
 '  asText
 ]
 
