@@ -6,7 +6,8 @@ Class {
 	#superclass : #RTAbstractStackedDataSet,
 	#instVars : [
 		'metric',
-		'nbOfIntervals'
+		'nbOfIntervals',
+		'distribution'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -14,10 +15,10 @@ Class {
 { #category : #hooks }
 RTHistogramSet >> addedInBuilder: aBuilder [
 	"Really ugly method. This will be fixed soon!"
-	| distribution |
+
 	super addedInBuilder: aBuilder.
 	
-	distribution := RTDistribution new on: self points; metric: x.
+	distribution on: self points; metric: x.
 	
 	((self points first isKindOf: Number) not & (x = #yourself )) ifTrue: [ 
 		distribution metric: nil.
@@ -38,15 +39,31 @@ RTHistogramSet >> barShape [
 ]
 
 { #category : #initialization }
+RTHistogramSet >> defaultDistribution [ 
+	self distribution: RTDistribution new.
+]
+
+{ #category : #initialization }
 RTHistogramSet >> defaultNbOfIntervals [ 
 	self nbOfIntervals: [ :vls | (vls size) log * 3.3 + 1 ].
+]
+
+{ #category : #initialization }
+RTHistogramSet >> distribution [ 
+	^ distribution.
+]
+
+{ #category : #initialization }
+RTHistogramSet >> distribution: aDistributionInstance [ 
+	distribution := aDistributionInstance.
 ]
 
 { #category : #initialization }
 RTHistogramSet >> initialize [
 	super initialize.
 	self metric: #yourself.
-	self defaultNbOfIntervals 
+	self defaultNbOfIntervals.
+	self defaultDistribution
 ]
 
 { #category : #accessing }
