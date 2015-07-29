@@ -307,7 +307,7 @@ RTShapeBuilder >> orthoHorizontalLine [
 
 { #category : #shapes }
 RTShapeBuilder >> orthoVerticalLine [
-	^ self shape: RTMultiLine new orthoVertical
+	^ self shape: (RTMultiLine new withVerticallAttachPoint; orthoVertical)
 ]
 
 { #category : #copying }

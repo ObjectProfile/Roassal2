@@ -27,6 +27,11 @@ Class {
 }
 
 { #category : #public }
+RTShape class >> + anotherShape [
+	^ self new + anotherShape
+]
+
+{ #category : #public }
 RTShape class >> color: aColor [
 	^ self new color: aColor
 ]
@@ -61,6 +66,7 @@ RTShape class >> instance [
 
 { #category : #public }
 RTShape >> + anotherShape [
+	"Return a composed shape"
 	^ RTCompositeShape with: self with: anotherShape instance
 ]
 
