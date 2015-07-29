@@ -28,6 +28,8 @@ RTHistogramSet >> addedInBuilder: aBuilder [
 	
 	self y: #first.
 	
+	self barShape width: builder extent x - 3 / self points size.
+	
 	builder axisX noTick; noLabel.
 
 	

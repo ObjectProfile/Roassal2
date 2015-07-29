@@ -116,13 +116,14 @@ RTAbstractStackedDataSet >> renderBarChartIn: aView [
 	elements := histogramBuilder elementsOn: points.
 	builder view addAll: elements.
 	interaction setUpElements: elements.
+
 	RTMetricNormalizer new
 		elements: elements;
-		normalizeElementX: [ :element | (elements indexOf: element) + 1 ]
+		normalizeElementX: [ :element | (elements indexOf: element) + 0.513 ]
 			min: 0
 			max: builder extent x
 			minValue: 1
-			maxValue: maxX + 2.	
+			maxValue: maxX + 1.
 
 	"We treat the element with a positive value"
 	positiveElements := elements select: [ :el | (y rtValue: el model) >= 0 ].
