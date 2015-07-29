@@ -394,7 +394,7 @@ FGr7KFv/TWngqwqMybRQ6FUgmNpYM0RFRfHv+tnFZZkU/vjFBqUTfuEHwg+EX/iB8APhF34g
 { #category : #sources }
 RTTimelineExample >> exampleThresholdLines [
 
-	| data b s |
+	| data b s p |
 	data := #(#(c1 0 5) #(c1 6 8) #(c2 0 5) #(c2 8 10) #(c3 0 10) #(c4 5 10) #(c5 5 8)).
 
 	b := RTTimeline new.
