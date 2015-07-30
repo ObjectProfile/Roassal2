@@ -6,6 +6,11 @@ Collection >> asGroup [
 ]
 
 { #category : #'*Roassal2-Core' }
+Collection >> asIdentityGroup [
+	^ RTIdentityGroup withAll: self
+]
+
+{ #category : #'*Roassal2-Core' }
 Collection >> maxFor: aSymbolOrBlock [ 
 	"Return one of the elements which has the minimum value returned by aSymbolOrBlock"
 	

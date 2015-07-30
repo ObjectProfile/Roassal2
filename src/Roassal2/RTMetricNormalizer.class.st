@@ -33,6 +33,12 @@ Class {
 }
 
 { #category : #accessing }
+RTMetricNormalizer >> alphaColor [
+	"Make all the elements translucent"
+	^ self alphaColor: 0.4
+]
+
+{ #category : #accessing }
 RTMetricNormalizer >> alphaColor: anAlphaValue [
 	"Set an alpha color (transparency) for nodes"
 	"aFloat has to be between 0.0 and 1.0"
