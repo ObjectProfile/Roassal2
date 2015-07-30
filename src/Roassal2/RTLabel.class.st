@@ -24,7 +24,7 @@ Class {
 { #category : #configuration }
 RTLabel class >> defaultColor [
 
-	^ Color black
+	^ Color gray
 ]
 
 { #category : #public }
