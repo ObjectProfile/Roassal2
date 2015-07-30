@@ -2299,6 +2299,58 @@ biDM8YpuAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDraggingChildren [
+
+| v es |
+v := RTView new.
+v @ RTDraggableView.
+
+es := RTLabel elementsOn: (1 to: 40).
+v addAll: es.
+RTEdgeBuilder new
+	view: v;
+	elements: es;
+	connectFrom: [ :aValue | aValue // 2 ].
+RTClusterLayout on: es.
+es @ RTDraggableChildren.
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDraggingChildrenIcon [
+	^ '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
+AAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleDynamicBezierEdges [
 
 	| v es |
