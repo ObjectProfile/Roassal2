@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2-Builder-ScrollBar'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTScrollBarBuilderExamples >> doubleScrollBar [
 	"
 	RTScrollBarBuilderExamples new doubleScrollBar
@@ -107,7 +107,7 @@ RTScrollBarBuilderExamples >> initialize [
 	super initialize 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTScrollBarBuilderExamples >> scrollsWithInteraction [
 	"
 	RTScrollBarBuilderExamples new scrollsWithInteraction
