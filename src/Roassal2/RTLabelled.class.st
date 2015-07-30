@@ -56,6 +56,22 @@ Class {
 	#category : #'Roassal2-Interactions'
 }
 
+{ #category : #public }
+RTLabelled class >> above [
+	"Default behavior"
+	^ self new
+]
+
+{ #category : #public }
+RTLabelled class >> below [
+	^ self new below
+]
+
+{ #category : #public }
+RTLabelled class >> center [
+	^ self new center
+]
+
 { #category : #visitor }
 RTLabelled >> accept: aVisitor with: args [
 	aVisitor visitLabelledInteraction: self with: args

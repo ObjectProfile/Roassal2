@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #tests }
+RTLabelledTest >> testConstruction [
+
+	RTLabelled above; below; center
+]
+
+{ #category : #tests }
 RTLabelledTest >> testDefault [
 
 	| v el |
