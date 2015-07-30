@@ -43,6 +43,7 @@ RTEdge class >> buildEdgesFromAssociations: associations using: aLineShape inVie
 	 Takes the model of element into account"
 	
 	| edges associationsOfElements |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	associationsOfElements := associations collect: [ :assoc | (view elementFromModel: assoc key) -> (view elementFromModel: assoc value) ].
 	associationsOfElements isEmpty ifTrue: [ ^ #() ].
 	
@@ -85,6 +86,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 	"fromBlock and toBlock operate on the model of the elements"
 
 	| edges container fromElement toElement elementsWithModels |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	elements isEmpty ifTrue: [ ^ #() ].
 	edges := OrderedCollection new.
 	elementsWithModels := elements select: [ :el | el model notNil ].
@@ -107,7 +109,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock usi
 RTEdge class >> buildEdgesFromElements: elements from: fromBlock to: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	view addAll: (self buildEdgesFromElements: elements from: fromBlock to: toBlock using: aLineShape)
 ]
 
@@ -116,7 +118,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
 	"toBlock should return a collection of models"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: RTLine new inView: view
 ]
 
@@ -127,6 +129,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	"toBlock should return a collection of models"
 
 	| edges container fromElement toElements elementsWithModels |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	elements isEmpty ifTrue: [ ^ #() ].
 	edges := OrderedCollection new.
 	elementsWithModels := elements select: [ :el | el model notNil ].
@@ -162,6 +165,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 	"toBlock should return a collection of models"
 
 	| es |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	es := self buildEdgesFromElements: elements from: fromBlock toAll: toBlock using: aLineShape.
 	view addAll: es.
 	^ es
@@ -171,7 +175,7 @@ RTEdge class >> buildEdgesFromElements: elements from: fromBlock toAll: toBlock 
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view
 ]
 
@@ -179,7 +183,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inView: view scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine inView: view scope: aGroup
 ]
 
@@ -187,7 +191,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock inVie
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: RTLine new scope: aGroup
 ]
 
@@ -195,7 +199,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock scope
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toBlock operate on the model of the elements"
-
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
 ]
 
@@ -205,6 +209,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 	"fromBlock and toBlock operate on the model of the elements"
 
 	| es |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	es := self buildEdgesFromObjects: objects from: fromBlock to: toBlock using: aLineShape scope: aGroup.
 	view addAll: es.
 	^ es
@@ -216,6 +221,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 	"fromBlock and toBlock operate on the model of the elements"
 
 	| edges fromElement toElement |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	objects isEmpty ifTrue: [ ^ #() ].
 	edges := RTGroup new.
 	objects do: [ :object |
@@ -234,6 +240,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock to: toBlock using
 
 { #category : #'DEPRECATED - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock inView: view [
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new inView: view scope: (RTGroup withAll: view elements)
 ]
 
@@ -241,11 +248,13 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock scope: aGroup [
 	"Handy method to easily build edges. Return a list of edges"
 	"fromBlock and toAllBlock operate on the model of the elements"
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: RTLine new scope: aGroup
 ]
 
 { #category : #'DEPRECATED - edge construction' }
 RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view [ 
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	^ self buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock using: aLineShape inView: view scope: (RTGroup withAll: view elements)
 ]
 
@@ -255,6 +264,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 	"fromBlock and toAllBlock operate on the model of the elements"
 
 	| edges fromElement toElement |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	edges := RTGroup new.
 	objects isEmpty ifTrue: [ ^ edges ].
 	objects do: [ :object |
@@ -279,6 +289,7 @@ RTEdge class >> buildEdgesFromObjects: objects from: fromBlock toAll: toAllBlock
 	"fromBlock and toAllBlock operate on the model of the elements"
 
 	| edges fromElement toElement |
+	self deprecated: 'Please use RTEdgeBuilder instead'.
 	objects isEmpty ifTrue: [ ^ #() ].
 	edges := RTGroup new.
 	objects do: [ :object |
