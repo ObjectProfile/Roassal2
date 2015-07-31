@@ -99,7 +99,7 @@ RTDoubleBarBuilder >> metric: aBlock color: aColor height: anHeight [
 		normalizeWidth: aBlock min: 2 max: width minValue: 0.
  		
 	elements with: boxes do: [ :e :b | 		 
-		TRConstraint move: b onTheRightOf: e.
+		RTConstraint move: b onTheRightOf: e.
 		b translateBy: 2 @ 0. ].
 	view addAll: boxes.
 ]
@@ -125,8 +125,8 @@ RTDoubleBarBuilder >> points: someObjects [
 		on: elements.
 	topExtremity := (RTBox new size: 0) element.
 	bottomExtremity := (RTBox new size: 0) element.
-	TRConstraint move: topExtremity onTheRightOf: elements first.
-	TRConstraint move: bottomExtremity onTheRightOf: elements last.
+	RTConstraint move: topExtremity onTheRightOf: elements first.
+	RTConstraint move: bottomExtremity onTheRightOf: elements last.
 	topExtremity translateBy: 0 @ -15.
 	bottomExtremity translateBy: 0 @ 15.
 	view add: topExtremity.

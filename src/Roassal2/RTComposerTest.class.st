@@ -103,7 +103,7 @@ RTComposerTest >> testOnTheRightOf [
 
 	self assert: e1 position equals: (0 @ 0).	
 	self assert: e1 position y equals: e2 position y.
-	self assert: e2 position x equals: 25.5.
+	self assert: e2 position x equals: 25.
 ]
 
 { #category : #tests }

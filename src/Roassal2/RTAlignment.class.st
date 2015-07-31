@@ -10,7 +10,7 @@ For example, inspect the following:
 	es := shape elementsOn: objects.
 	v addAll: es.
 	RTHorizontalLineLayout new gapSize: 0; on: es.
-	RTAlignment new elements: es; fromTop.
+	RTAlignment new elements: es; top.
 	v
 -=-=-=
 "
@@ -18,13 +18,15 @@ Class {
 	#name : #RTAlignment,
 	#superclass : #RTObject,
 	#instVars : [
-		'elements'
+		'elements',
+		'fixedElement'
 	],
 	#category : #'Roassal2-Core'
 }
 
 { #category : #public }
 RTAlignment >> alignFromBottomUsing: anElement [
+	"The argument anElement is a fix point. It does not move"
 	| topY newY |
 	topY := anElement encompassingRectangle bottomCenter y.
 	elements do: [ :s |
@@ -63,8 +65,15 @@ RTAlignment >> alignFromTopUsing: anElement [
 	]
 ]
 
+{ #category : #public }
+RTAlignment >> bottom [
+
+	self alignFromBottomUsing: self bottomMostElement 
+]
+
 { #category : #'accessing - computed' }
 RTAlignment >> bottomMostElement [
+	fixedElement ifNotNil: [ ^ fixedElement ].
 	^ elements inject: elements first into: [ :maxS :s | 
 			maxS encompassingRectangle top <= s encompassingRectangle top
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
@@ -80,46 +89,77 @@ RTAlignment >> elements: someElements [
 	elements := someElements asGroup
 ]
 
-{ #category : #public }
+{ #category : #accessing }
+RTAlignment >> fixedElement [
+	^ fixedElement
+]
+
+{ #category : #accessing }
+RTAlignment >> fixedElement: anElement [
+	fixedElement := anElement
+]
+
+{ #category : #obsolete }
 RTAlignment >> fromBottom [
 
 	self alignFromBottomUsing: self bottomMostElement 
 ]
 
-{ #category : #public }
+{ #category : #obsolete }
 RTAlignment >> fromLeft [
 
 	self alignFromLeftUsing: self leftMostElement 
 ]
 
-{ #category : #public }
+{ #category : #obsolete }
 RTAlignment >> fromRight [
 
 	self alignFromRightUsing: self rightMostElement 
 ]
 
-{ #category : #public }
+{ #category : #obsolete }
 RTAlignment >> fromTop [
 
 	self alignFromTopUsing: self topMostElement 
 ]
 
+{ #category : #public }
+RTAlignment >> left [
+
+	self alignFromLeftUsing: self leftMostElement 
+]
+
 { #category : #'accessing - computed' }
 RTAlignment >> leftMostElement [
+	fixedElement ifNotNil: [ ^ fixedElement ].
 	^ elements inject: elements first into: [ :maxS :s | 
 			maxS encompassingRectangle left >= s encompassingRectangle left
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
 ]
 
+{ #category : #public }
+RTAlignment >> rght [
+
+	self alignFromRightUsing: self rightMostElement 
+]
+
 { #category : #'accessing - computed' }
 RTAlignment >> rightMostElement [
+	fixedElement ifNotNil: [ ^ fixedElement ].
 	^ elements inject: elements first into: [ :maxS :s | 
 			maxS encompassingRectangle right <= s encompassingRectangle right
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
 ]
 
+{ #category : #public }
+RTAlignment >> top [
+
+	self alignFromTopUsing: self topMostElement 
+]
+
 { #category : #'accessing - computed' }
 RTAlignment >> topMostElement [
+	fixedElement ifNotNil: [ ^ fixedElement ].
 	^ elements inject: elements first into: [ :maxS :s | 
 			maxS encompassingRectangle top >= s encompassingRectangle top
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 

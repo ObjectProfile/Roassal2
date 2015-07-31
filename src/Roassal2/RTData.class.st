@@ -427,7 +427,9 @@ RTData >> renderBarChartIn: aView [
 					max: builder extent y + centralDot position y
 					minValue: 0
 					maxValue: maxY ].
-	TRConstraint use: centralDot alignFromBottom: positiveElements.	
+
+	RTAlignment new elements: positiveElements; fixedElement: centralDot; bottom.
+	"TRConstraint use: centralDot alignFromBottom: positiveElements.	"
 		
 	"We treat the element with a negative value"
 	negativeElements := elements copyWithoutAll: positiveElements.
@@ -440,7 +442,8 @@ RTData >> renderBarChartIn: aView [
 					max: 0
 					minValue: minY
 					maxValue: 0.
-			TRConstraint use: centralDot alignFromTop: negativeElements ].	"We set the actions, if any"
+			RTAlignment new elements: negativeElements; fixedElement: centralDot; top.
+			"TRConstraint use: centralDot alignFromTop: negativeElements "].	"We set the actions, if any"
 	elementActions do: [ :act | act rtValue: elements ]
 ]
 

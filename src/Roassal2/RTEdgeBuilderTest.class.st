@@ -119,6 +119,28 @@ RTEdgeBuilderTest >> testFromAll [
 ]
 
 { #category : #tests }
+RTEdgeBuilderTest >> testFromObjectsError [
+
+"
+view := RTView new.
+	elements := RTBox elementsOn: (1 to: 10).
+	view addAll: elements. 
+	b := RTEdgeBuilder new."
+	self should: [ RTEdgeBuilder new  fromObjects: #(1 2) ] raise: Error
+]
+
+{ #category : #tests }
+RTEdgeBuilderTest >> testFromObjectsToElements [
+	| edges |
+	b view: view.
+	edges := 
+		b fromObjects: #(1 2);
+			toElements: (elements copyFrom: 10 to: 10);
+			connectTo: 10.
+	self assert: edges size equals: 2.
+]
+
+{ #category : #tests }
 RTEdgeBuilderTest >> testInit [
 	| eb |
 	eb := RTEdgeBuilder new.

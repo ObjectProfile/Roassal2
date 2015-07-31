@@ -45,7 +45,7 @@ RTColorFadingLegendItem >> execute [
 	
 	label := (self newLabelShape: description) element.
 	g add: label.
-	TRConstraint move: label onTheRightOf: es.
+	RTConstraint move: label onTheRightOf: es.
 	label translateBy: 20 @ 0.
 	
 	^ g

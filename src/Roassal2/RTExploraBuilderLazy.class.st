@@ -28,7 +28,7 @@ RTExploraBuilderLazy >> buildNode: object parent: parent [
 		elementIconOpen := (icons first) elementOn: #iconOpen.
 		elementIconClose := (icons second) elementOn: #iconClose.
 		
-		TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf: element.
+		RTConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf: element.
 
 		element addCallback: (TRTranslationCallback new block: [
 			TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf:element. 		

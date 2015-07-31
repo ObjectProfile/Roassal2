@@ -40,6 +40,12 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RTConstraint class >> move: es1 onTheRightOf: es2 [
+	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
+	(RTConstraint on: es1 background: es2) rightOf; move
+]
+
 { #category : #'instance creation' }
 RTConstraint class >> on: aChildShape background: aParentShape [
 	^ self new

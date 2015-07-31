@@ -10,7 +10,8 @@ Class {
 		'toElementsToLookup',
 		'shouldMoveBehind',
 		'shouldNotBeUsedInLayout',
-		'createdEdges'
+		'createdEdges',
+		'viewHasBeenManuallySet'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -78,7 +79,7 @@ RTEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 { #category : #public }
 RTEdgeBuilder >> connectTo: aBlockOrASymbol [
-
+	"Should this method use connectFrom:To: ?????"
 	| toElement |
 	self resetCreatedEdges.
 	self fromElements copy do: [ :e | 
@@ -91,7 +92,7 @@ RTEdgeBuilder >> connectTo: aBlockOrASymbol [
 
 { #category : #public }
 RTEdgeBuilder >> connectToAll: aBlockOrASymbol [
-
+	"Should this method use connectFrom:ToAll: ?????"
 	| tmptoElements |
 	self resetCreatedEdges.
 	self fromElements copy do: [ :e | 
@@ -164,7 +165,7 @@ RTEdgeBuilder >> fromElements: someElements [
 { #category : #accessing }
 RTEdgeBuilder >> fromObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	 
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
 		ifTrue: [ self fromElements: (view elementsFromModels: someObjectsOrABlock) ]
@@ -183,7 +184,10 @@ RTEdgeBuilder >> initialize [
 	shouldMoveBehind := false.
 	shouldNotBeUsedInLayout := true.
 	fromElementsToLookup := nil.
-	toElementsToLookup := nil
+	toElementsToLookup := nil.
+	
+	"The view has to be explicitely set by the end-user"
+	viewHasBeenManuallySet := false
 ]
 
 { #category : #'private - utility' }
@@ -227,7 +231,7 @@ RTEdgeBuilder >> object: anObject [
 { #category : #accessing }
 RTEdgeBuilder >> objects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
 ]
@@ -270,9 +274,15 @@ RTEdgeBuilder >> toObject: anObject [
 { #category : #accessing }
 RTEdgeBuilder >> toObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
-	self assert: [ view notNil ] description: 'A view has to be set, please use #view:'.
+	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	 
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
 		ifTrue: [ self toElements: (view elementsFromModels: someObjectsOrABlock) ]
 		ifFalse: [ self toElements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> view: aView [
+	viewHasBeenManuallySet := true.
+	super view: aView
 ]

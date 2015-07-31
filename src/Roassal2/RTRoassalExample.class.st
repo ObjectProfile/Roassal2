@@ -1158,7 +1158,7 @@ RTMetricNormalizer new
 labels := (RTLabel new height: 8) elementsOn: classes.
 RTFlowLayout new gapSize: 0; on: labels.
 v addAll: labels.
-TRConstraint move: labels onTheRightOf: es.
+RTConstraint move: labels onTheRightOf: es.
 labels translateBy: 20 @ 0.
 
 labels @ RTHighlightable.
@@ -2794,53 +2794,54 @@ H3744Ycffvjhhx9++PmP8heS8r9YwwsVmwAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleEdgesInTooltip [
-| v shapeBuilder elementClasses edges background label methods methodElements |
-v := RTView new.
+	"
+	self new exampleEdgesInTooltip
+	"
 
-"We use the bounded shape builder to:
-  - have no element smaller than 5 x 5 "
+	| v shapeBuilder elementClasses edges background label methods methodElements eb |
+	v := RTView new.
 
-shapeBuilder := RTBoundedShapeBuilder new.
-shapeBuilder 
-	rectangle;
-	width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
-elementClasses := shapeBuilder elementsOn: RTObject withAllSubclasses.
+	"We use the bounded shape builder to:
+	  - have no element smaller than 5 x 5 "
 
-"For each class, we add a popup that will show the method invocations and the class name"
-"The popup uses #group: to specify what is the group of elements to use
-#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
-the second argument, aClassElement, is the class element on which the popup is being triggered."
-elementClasses @ (RTPopup new group: 
-[ :group :aClassElement |
-	methods := aClassElement model rtmethods.
+	shapeBuilder := RTBoundedShapeBuilder new.
+	shapeBuilder 
+		rectangle;
+		width: [ :c | c numberOfVariables * 7 ]; height: #numberOfMethods.
+	elementClasses := shapeBuilder elementsOn: RTShape withAllSubclasses.
 
-	methodElements := (RTBox new color: Color red) elementsOn: methods.
+	"For each class, we add a popup that will show the method invocations and the class name"
+	"The popup uses #group: to specify what is the group of elements to use
+	#group: takes as argument a two-arg block. The first argument is a RTGroup, to which elements have to be added.
+	the second argument, aClassElement, is the class element on which the popup is being triggered."
+	elementClasses @ (RTPopup new group: 
+	[ :group :aClassElement |
+		methods := aClassElement model rtmethods.
 
-	"We do not want to directly add the edges to the view. We instead need to add the edges to the group"
-	edges := RTEdge 
-		buildEdgesFromObjects: methods 
-		from: #yourself 
-		toAll: #dependentMethods
-		using: (RTLine new color: Color white)
-		scope: methodElements.
+		methodElements := (RTBox new color: Color red) elementsOn: methods.
 
-	RTTreeLayout on: methodElements edges: edges.
-	
-	
-	background := (RTBox new color: (Color blue alpha: 0.4)) element. 
-	RTNest new centerOn: background elements: methodElements.
+		"We do not want to directly add the edges to the view. We instead need to add the edges to the group"
+		eb := RTEdgeBuilder new
+						elements: methodElements.
+		edges := eb connectToAll: #dependentMethods.
 
-	label := (RTLabel new text: aClassElement model name asString) element.
-	TRConstraint move: label above: background.
-	
-	group add: label.
-	group add: background.	
-	group addAll: edges.
-	group addAll: methodElements.
+		RTTreeLayout on: methodElements edges: edges.
+		
+		
+		background := (RTBox new color: (Color blue alpha: 0.4)) element. 
+		RTNest new centerOn: background elements: methodElements.
 
-]).
-v addAll: elementClasses.
-RTFlowLayout on: elementClasses.
+		label := (RTLabel new text: aClassElement model name asString) element.
+		TRConstraint move: label above: background.
+		
+		group add: label.
+		group add: background.	
+		group addAll: edges.
+		group addAll: methodElements.
+
+	]).
+	v addAll: elementClasses.
+	RTFlowLayout on: elementClasses.
 
 	^ v
 ]
@@ -3752,6 +3753,9 @@ Z/lBFhxkbW3tS6/X+/ls+v2NX2KBQfjwg/CD8OEH4QfhB+EH4cOHDx8+fPjw4cOHDx8+fPjw
 
 { #category : #sources }
 RTRoassalExample >> exampleGroupOfGroups [
+	"
+	self new exampleGroupOfGroups
+	"
 
 | objects groups edgesBlock1 edgesBlock2 colorNormalizer groupsOfElements v predicate layoutClass filteredObjects shape elements edges |
 objects := Collection withAllSubclasses.
@@ -3775,17 +3779,24 @@ groups doWithIndex: [ :assoc :index |
 	shape := RTEllipse new size: 20; color: (colorNormalizer rtValue: index).
 	elements := shape elementsOn: filteredObjects.
 	elements @ RTPopup.
-	elements when: TRMouseClick do: [ :evt | evt element model inspect ].
 	v add: elements.
 	groupsOfElements add: elements.
-	edges := RTEdge 
+"	edges := RTEdge 
 		buildEdgesFromObjects: filteredObjects from: #yourself toAll: edgesBlock1 using: (RTLine new color: Color red) scope: elements.
+"	
+	edges := RTEdgeBuilder new
+					elements: elements;
+					connectToAll: edgesBlock1.
+							
 	v addAll: edges.	
 
 	layoutClass  on: elements edges: edges.
 
-	v addAll: (RTEdge 
-		buildEdgesFromObjects: filteredObjects from: #yourself toAll: edgesBlock2 using: (RTLine new color: Color green) scope: elements).		
+	RTEdgeBuilder new
+		elements: elements;
+		connectToAll: edgesBlock2.
+"	v addAll: (RTEdge 
+		buildEdgesFromObjects: filteredObjects from: #yourself toAll: edgesBlock2 using: (RTLine new color: Color green) scope: elements)."		
 ].
 
 RTFlowLayout on: groupsOfElements.
@@ -5450,24 +5461,25 @@ SPtH+4S0T0j7R/uEtHH8C765dDqJMRw4AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTRoassalExample >> examplePlacingGroups [
 
-| v g1 g2 |
-v := RTView new.
-g1 := RTGroup new.
-g1 addAll: (RTBox new size: 10; elementsOn:( 1 to: 200)).
+	| v g1 g2 |
+	v := RTView new.
+	g1 := RTGroup new.
+	g1 addAll: (RTBox new size: 10; elementsOn:( 1 to: 200)).
 
-g2 := RTGroup new.
-g2 addAll: ((RTEllipse new size: 15; color: Color red )elementsOn: (RTShape withAllSubclasses)).
+	g2 := RTGroup new.
+	g2 addAll: ((RTEllipse new size: 15; color: Color red )elementsOn: (RTShape withAllSubclasses)).
 
-v addAll: g1; addAll: g2.
+	v addAll: g1; addAll: g2.
 
-v addAll: (RTEdge buildEdgesFromObjects: RTShape withAllSubclasses from: #superclass to: #yourself scope: g2).
+	RTEdgeBuilder new 
+		view: v;
+		objects: RTShape withAllSubclasses;
+		connectFrom: #superclass to: #yourself.
 
-RTGridLayout on: g1.
-RTTreeLayout on: g2.
+	RTGridLayout on: g1.
+	RTTreeLayout on: g2.
 
-TRConstraint move: g1 onTheRightOf: g2.
-
-
+	RTConstraint move: g1 onTheRightOf: g2.
 	^ v
 ]
 
