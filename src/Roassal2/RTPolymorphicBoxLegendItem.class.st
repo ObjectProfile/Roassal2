@@ -53,7 +53,7 @@ RTPolymorphicBoxLegendItem >> execute [
 	"The width label"
 	boxDescriptionLabel := (self newLabelShape: boxDescription) element.
 	g add: boxDescriptionLabel.
-	TRConstraint move: boxDescriptionLabel onTheRightOf: box.
+	RTConstraint move: boxDescriptionLabel onTheRightOf: box.
 	
 	
 

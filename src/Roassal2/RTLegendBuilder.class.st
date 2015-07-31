@@ -93,87 +93,6 @@ RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightD
 ]
 
 { #category : #'public - convenient' }
-RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription boxIllustrate: boxDescription [
-	"Associate a color with a text"
-
-	| g ext1 ext2   lineExtremityShape lineShape topLine |
-	g := RTGroup new.
-	
-	"Defining extremities and line shape"
-	lineExtremityShape := RTBox new size: 10.
-	lineShape := RTLine new color: Color red.
-	
-	"The top line"
-	ext1 := lineExtremityShape element.
-	ext2 := lineExtremityShape element.
-	topLine := lineShape edgeFrom: ext1 to: ext2.
-	
-	ext2 translateBy: (10 @ 10).
-	g add: ext1; add: ext2.
-	g add: topLine.
-	
-	group add: g.
-	^ g
-]
-
-{ #category : #'public - convenient' }
-RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightDescription boxVEYGOOD: boxDescription [
-	"Associate a color with a text"
-
-	| g ext1 ext2 box e lineExtremityShape lineShape topLine leftLine widthDescriptionElement heightDescriptionElement boxDescriptionLabel |
-	g := RTGroup new.
-	
-	"Defining extremities and line shape"
-	lineExtremityShape := RTBox new size: 10.
-	lineShape := RTLine new color: Color red.
-	
-	"Label for the descriptions"
-	widthDescriptionElement := (self newLabelShape: widthDescription) element.
-	heightDescriptionElement := (self newLabelShape: heightDescription) element.
-	g add: widthDescriptionElement.
-	g add: heightDescriptionElement.
-	
-	"The box"
-	box := (RTBox new extent: 30 @ 50) element.
-	g add: box.
-	e := box encompassingRectangle.
-	
-	"The top line"
-	ext1 := lineExtremityShape element.
-	ext2 := lineExtremityShape element.
-	topLine := lineShape edgeFrom: ext1 to: ext2.
-	ext1 translateBy: e topLeft - (0 @ 10).
-	ext2 translateBy: e topRight - (0 @ 10).
-	g
-		add: ext1;
-		add: ext2.
-	g add: topLine.
-	
-	"The width label"
-	boxDescriptionLabel := (self newLabelShape: boxDescription) element.
-	g add: boxDescriptionLabel.
-	TRConstraint move: boxDescriptionLabel onTheRightOf: box.
-	
-	
-
-	TRConstraint move: widthDescriptionElement between: ext1 and: ext2.
-	widthDescriptionElement translateBy: 0 @ (widthDescriptionElement extent y / -2 - 3).
-	ext1 := lineExtremityShape element.
-	ext2 := lineExtremityShape element.
-	leftLine := lineShape edgeFrom: ext1 to: ext2.
-	ext1 translateBy: e topLeft - (10 @ 0).
-	ext2 translateBy: e bottomLeft - (10 @ 0).
-	g
-		add: ext1;
-		add: ext2.
-	g add: leftLine.
-	TRConstraint move: heightDescriptionElement between: ext1 and: ext2.
-	heightDescriptionElement translateBy: (heightDescriptionElement extent x / -2) @ 0.
-	group add: g.
-	^ g
-]
-
-{ #category : #'public - convenient' }
 RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: self textColor
 ]
@@ -277,7 +196,7 @@ RTLegendBuilder >> renderIn: aView [
 		legendElement translateBy: 0 @ offset. ].
 
 	self isRight ifTrue: [ 
-		TRConstraint move: legendElement onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
+		RTConstraint move: legendElement onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
 		legendElement translateBy: offset @ 0. ].
 
 	self isLeft ifTrue: [ 
