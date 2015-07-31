@@ -19,6 +19,7 @@ TRConstraint class >> OBSOLETE [
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromBottom: shapes [
 	| bottomMostElement |
+	self deprecated: 'Please, use RTAlignement instead'.
 	shapes ifEmpty: [ ^ self ].
 	bottomMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle bottomLeft y >= s encompassingRectangle bottomLeft y
@@ -29,6 +30,7 @@ TRConstraint class >> alignFromBottom: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromLeft: shapes [
 	| leftMostElement |
+	self deprecated: 'Please, use RTAlignement instead'.
 	shapes ifEmpty: [ ^ self ].
 	leftMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft x <= s encompassingRectangle topLeft x
@@ -39,6 +41,7 @@ TRConstraint class >> alignFromLeft: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromRight: shapes [
 	| rightMostElement |
+	self deprecated: 'Please, use RTAlignement instead'.
 	shapes ifEmpty: [ ^ self ].
 	rightMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft x >= s encompassingRectangle topLeft x
@@ -49,6 +52,7 @@ TRConstraint class >> alignFromRight: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> alignFromTop: shapes [
 	| topMostElement |
+	self deprecated: 'Please, use RTAlignement instead'.
 	shapes ifEmpty: [ ^ self ].
 	topMostElement := shapes inject: shapes anyOne into: [ :maxS :s | 
 								maxS encompassingRectangle topLeft y <= s encompassingRectangle topLeft y
@@ -496,6 +500,7 @@ TRConstraint class >> stickCameraToTheRightIn: trachelCanvas [
 { #category : #'public - aligning' }
 TRConstraint class >> use: aShape alignFromBottom: shapes [
 	| topY newY |
+	self deprecated: 'Please, use RTAlignement instead'.
 	topY := aShape encompassingRectangle bottomCenter y.
 	shapes do: [ :s |
 		newY := topY - (s encompassingRectangle height / 2).
@@ -506,6 +511,7 @@ TRConstraint class >> use: aShape alignFromBottom: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> use: aShape alignFromLeft: shapes [
 	| topX newX |
+	self deprecated: 'Please, use RTAlignement instead'.
 	topX := aShape encompassingRectangle topLeft x.
 	shapes do: [ :s |
 		newX := topX + (s encompassingRectangle width / 2).
@@ -516,6 +522,7 @@ TRConstraint class >> use: aShape alignFromLeft: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> use: aShape alignFromRight: shapes [
 	| topX newX |
+	self deprecated: 'Please, use RTAlignement instead'.
 	topX := aShape encompassingRectangle topRight x.
 	shapes do: [ :s |
 		newX := topX - (s encompassingRectangle width / 2).
@@ -526,6 +533,7 @@ TRConstraint class >> use: aShape alignFromRight: shapes [
 { #category : #'public - aligning' }
 TRConstraint class >> use: aShape alignFromTop: shapes [
 	| topY newY |
+	self deprecated: 'Please, use RTAlignement instead'.
 	topY := aShape encompassingRectangle topCenter y.
 	shapes do: [ :s |
 		newY := topY + (s encompassingRectangle height / 2).
