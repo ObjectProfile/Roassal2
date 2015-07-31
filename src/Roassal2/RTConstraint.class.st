@@ -8,7 +8,7 @@ The order of configuration message sends is irrelevant, only the last of a group
 Note: ==move== and ==stick== will execute the movement on the configured object (so if you ==stick== shapes and then change configuration, it will honor the new configuration.
 
 [ [ [
-(DCRTConstraint child: childShape parent: parentShape)
+(RTConstraint on: aChildShape background:  parentShape)
 	top | middle | bottom; ""vertical position""
 	left | center | right; ""horizontal position""
 	inner | border | outer; ""inside the parent, on border, outside""
@@ -23,7 +23,7 @@ See ==self default== for default configuration.
 "
 Class {
 	#name : #RTConstraint,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'parentY',
 		'childY',

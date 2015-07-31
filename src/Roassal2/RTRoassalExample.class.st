@@ -32,7 +32,8 @@ v addAnimation: anim.
 v addMenu: 'add edges' callback: [ 
 	edges := RTEdgeBuilder new
 		view: v;
-		objects: RTObject withAllSubclasses from: #superclass.
+		objects: RTObject withAllSubclasses;
+		connectFrom: #superclass.
 	anim addEdges: edges ].
 
 v addMenu: 'remove edges' callback: [ 
@@ -253,8 +254,9 @@ groups := rootClasses collect: [ :cls |  | g |
 	g addAll: elements.
 	edges := RTEdgeBuilder new
 		view: g;
-		objects: cls withAllSubclasses from: #superclass.
-	RTForceBasedLayout on: elements edges: edges.
+		objects: cls withAllSubclasses;
+		connectFrom: #superclass.
+	RTTreeLayout on: elements edges: edges.
 	g
 	].
 
@@ -262,7 +264,7 @@ v := RTView new.
 groups do: [ :aGroup | v addAll: aGroup ].
 RTHorizontalLineLayout new gapSize: 30; on: groups.
 
-TRConstraint alignFromBottom: groups.
+RTAlignment new elements: groups; fromBottom.
 
 	^ v
 ]
@@ -309,6 +311,64 @@ VNy3D+BhHk9Q09btXbMmtrvoamKSUVjYOWO+cgXgw/p761YgVvxLCIh8ZUfygcgHIl/ygcgH
 Il/ygcgHIl/ygcgHIl/ygcgHIl/ygciXfCDygciXfCDygciXfCDygciXfCDygciXfCDyJR+I
 fCDyJR+IfCDyJR+IfCDyJR+IfCDyJR+IfMkHIh+IfMkHIh+IfKVR/wGCIFtqSLbxkQAAAABJ
 RU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleAlignmentFromTop [
+
+| rootClasses groups v elements edges |
+rootClasses := Array with: RTShape with: RTLayout with: RTBuilder.
+
+groups := rootClasses collect: [ :cls |  | g |
+	g := RTGroup new.
+	elements := (RTEllipse new size: 8; color: Color blue) elementsOn: cls withAllSubclasses.
+	g addAll: elements.
+	edges := RTEdgeBuilder new
+		view: g;
+		objects: cls withAllSubclasses;
+		connectFrom: #superclass.
+	RTTreeLayout on: elements edges: edges.
+	g
+	].
+
+v := RTView new.
+groups do: [ :aGroup | v addAll: aGroup ].
+RTHorizontalLineLayout new gapSize: 30; on: groups.
+
+RTAlignment new elements: groups; fromTop.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleAlignmentFromTopIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFeUlEQVR4XuWavWtTURjG76Au
+OrpVOourH+AkDg5ORR1EcFD8A4p2KIKoYIuCoIhTHV3Eog5+TFWUoovWP0CdlH43bb5zk6Z5
+4n3O6UlvLomN6W0S+jwQbnJzcj7e3znv+56T61Wr+uolefom0AeiL30g+kD0pQ9EH4i+9IHo
+A9GXPhB9IPrSB6IvfSD6QPSlD0QfiL70gegD0Zc+EH0g+tIHoi99IPpA9KUPRB+IvvSB6APR
+lz4QfSD60geiL30g+kD0pQ9EH4i+9IHoA9lO3boFTE0B+ji6CKRSqSCZTGJ5eRmeB4yMFJBK
+pZDJZKAPpENaXV2F7/tYXFzEysoKyuWyeRWLRXPfgSKkmZkZA2xtbQ36QGJULpczBqdx8/m8
+MXyhUDBG5ntCcmWjq4O/Jby5uTmzevh5Jxidk45jpR1KpRKWlpbMJDTeYjsaZGM0Pmc3r2yY
+ChuUMKjob2n46D3WwRWVzWbNa35+3gyo0e97SRw3+0k7OAB8cQycaLOzs7UrXxy7FxdxNuKM
+5FaBM5iD8y+jh8W6Gt3nbGK9BMs6+J6rh/edy+u06HLZF9eHdDoN2sONg96BfeT96enpGgyu
+CvafIFjGTbi2gBw8CFy4UDEdYCXPniEIzNbFuFXAQD06uuGerl4F9u1DS4ZzZZt9T9Cs99Kl
+Mi5e9PHoUR7HjxeCTC2DEyfy1WQyY/rz/Hk8K4h1PX1aMmMlABqXRuR3bIPf896BA+Xq5OQC
+Tp7MY2wsgStXchgcTOPu3TTOnctiYiKFgYFsNZFI4fTpXHVqKodTp3K4d6+Ay5cLOH9+rT0g
+BPDhw8ZggwmA4eF6Qw8PF+pS2Y8fETRcbslALHv/fqU26GZ6/x6gQb59A5g6B4swuLpUuloN
+PFssQIaGMsEsrzScTAsL9W3aPgBfv9q+sY92PECjstevF03Z8XFb1ovTX0bdS3RptxqUWda9
+J5Ruxgq6YboX9oOuKG7XGHXPXpyZVPgeP0eDeKtAooPm526kv5xkzAIJgpOE/YgbyrYAcavB
+BTM3w6MpbXjmbzYro/cIeDMXFqdce65NQmD/OVZOjrigxAKEseHXL6wbH3j1ynb6wQPbybEx
++3liwg+yB+DHD+D7d4BlX7/+t/txZZu5MhpichJBzh6/G2OdrJsQnjyxk+zhQ3t9+dI3/f/y
+xcfPnwgypbIpu9U2X7womnq3BGTXLgRZja2EwYlZxps3Nttg5svr6Ki9XrsGHDkC7NljA5q3
+SYtHjwK7d6Opi+IqZB3MxOIGwjpZ9507lfXMyX5+985e2X/27dgxgOPyvHgyOBfoe+ZwMSzu
+6J2r6PWN3446XGzmT13g5/topqYPpINnOy54hjMx7oC5y9cH0kGFT3qjexCXcW121CIP5MwZ
+4Pbt9v3779/A/v08RinWzn2os2ftLjdc9s8foK+Pp6NZ9PcDnz/v7LjSVSABi7o6mgFxZfv6
+9IE0Db6tbvL+Z/PH+BE9gtEP6i36/a3+WRQFQtfFl2JmtWUgPBKJG0i4vp3yz2BHgLgZHKfL
+Cp95udWiuClsCwi3+kNDwOHD9jiknUbfvkXtaKLR8cHgYDzHEhJAPn1C3YFhuw0/frzx2/Fx
+v+6ALZHgH2Al/RXSLTX6/6OTR+36QCJiPArHFMYp1QfmvF5ZHeHAziwrvIPXB9JB3bhRNn/+
+j4z45mGA8IMLN29W9E97O96B9cd19u4FmL0NDACHDtmnNPgokT4QfekD0Zc+EH0g+tIHog9E
+X/pA9IHoSx+IPhB96QPRlz4QfSD60geiD0Rf+kD0gehLH4g+EH3pA9GXPhB9IPrSB6IPRF/6
+QPSB6EsfiD4QfekD0Zc+EH0g+tIHog9EX/pA9IHoa1v0F3yNzF9907LgAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
@@ -7268,8 +7328,8 @@ RTNest new
 		group addAll: elements.
 		edges := RTEdgeBuilder new
 			view: group;
-			objects: model withAllSubclasses
-			from: #superclass.
+			objects: model withAllSubclasses;
+			connectFrom: #superclass.
 		RTTreeLayout on: elements edges: edges .
 	].
 
