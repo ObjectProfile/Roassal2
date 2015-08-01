@@ -44,11 +44,11 @@ RTCircleAttachPoint >> attachPointFor: anEdge from: fromRect to: toRect [
 ]
 
 { #category : #'public - hooks' }
-RTCircleAttachPoint >> endingPointOf: anEdge [
+RTCircleAttachPoint >> basicEndingPointOf: anEdge [
 	^ self attachPointFor: anEdge from: anEdge to encompassingRectangle to: anEdge from encompassingRectangle
 ]
 
 { #category : #'public - hooks' }
-RTCircleAttachPoint >> startingPointOf: anEdge [
+RTCircleAttachPoint >> basicStartingPointOf: anEdge [
 	^ self attachPointFor: anEdge from: anEdge from encompassingRectangle to: anEdge to encompassingRectangle
 ]
