@@ -55,8 +55,13 @@ RTShorterDistanceWithOffsetAttachPoint >> attachPointsFor: anEdge on: anElement 
 ]
 
 { #category : #'public - hooks' }
-RTShorterDistanceWithOffsetAttachPoint >> endingPointOf: anEdge [
-	^ (super endingPointOf: anEdge) + (self offsetNormalFor: anEdge)
+RTShorterDistanceWithOffsetAttachPoint >> basicEndingPointOf: anEdge [
+	^ (super basicEndingPointOf: anEdge) + (self offsetNormalFor: anEdge)
+]
+
+{ #category : #'public - hooks' }
+RTShorterDistanceWithOffsetAttachPoint >> basicStartingPointOf: anEdge [
+	^ (super basicStartingPointOf: anEdge) + (self offsetNormalFor: anEdge)
 ]
 
 { #category : #initialization }
@@ -93,9 +98,4 @@ RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
 	indexOfEdge := multipleEdges indexOf: anEdge.
 	normal := (anEdge to position - anEdge from position) normal.
 	^ (indexOfEdge - 1 - (multipleEdges size / 2)) * offset * normal
-]
-
-{ #category : #'public - hooks' }
-RTShorterDistanceWithOffsetAttachPoint >> startingPointOf: anEdge [
-	^ (super startingPointOf: anEdge) + (self offsetNormalFor: anEdge)
 ]

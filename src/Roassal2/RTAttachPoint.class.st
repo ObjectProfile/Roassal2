@@ -17,8 +17,20 @@ RTAttachPoint class >> instance [
 ]
 
 { #category : #'public - hooks' }
-RTAttachPoint >> endingPointOf: anEdge [
+RTAttachPoint >> basicEndingPointOf: anEdge [
 	self subclassResponsibility 
+]
+
+{ #category : #'public - hooks' }
+RTAttachPoint >> basicStartingPointOf: anEdge [
+	self subclassResponsibility 
+]
+
+{ #category : #'public - hooks' }
+RTAttachPoint >> endingPointOf: anEdge [
+    ^ inverted
+        ifTrue: [ self basicStartingPointOf: anEdge ]
+        ifFalse: [ self basicEndingPointOf: anEdge ]
 ]
 
 { #category : #initialization }
@@ -44,5 +56,8 @@ RTAttachPoint >> isInverted [
 
 { #category : #'public - hooks' }
 RTAttachPoint >> startingPointOf: anEdge [
-	self subclassResponsibility 
+    ^ inverted
+        ifTrue: [ self basicEndingPointOf: anEdge ]
+        ifFalse: [ self basicStartingPointOf: anEdge ]
+
 ]

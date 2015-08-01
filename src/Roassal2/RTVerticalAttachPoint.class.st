@@ -27,16 +27,11 @@ Class {
 }
 
 { #category : #'public - hooks' }
-RTVerticalAttachPoint >> endingPointOf: aRTEdge [
-	^ inverted 
-		ifTrue: [ aRTEdge from encompassingRectangle bottomCenter ]
-		ifFalse: [ aRTEdge to encompassingRectangle topCenter ].
+RTVerticalAttachPoint >> basicEndingPointOf: aRTEdge [
+	^ aRTEdge to encompassingRectangle topCenter
 ]
 
 { #category : #'public - hooks' }
-RTVerticalAttachPoint >> startingPointOf: aRTEdge [
-	^ inverted 
-		ifTrue: [ aRTEdge to encompassingRectangle topCenter ]
-		ifFalse: [ aRTEdge from encompassingRectangle bottomCenter ].
-
+RTVerticalAttachPoint >> basicStartingPointOf: aRTEdge [
+	^ aRTEdge from encompassingRectangle bottomCenter
 ]

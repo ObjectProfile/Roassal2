@@ -24,31 +24,24 @@ RTAbstractShorterDistanceAttachPoint >> attachPointsFor: anEdge on: anElement [
 	self subclassResponsibility 
 ]
 
+{ #category : #'public - hooks' }
+RTAbstractShorterDistanceAttachPoint >> basicEndingPointOf: anEdge [
+	^ self attachPointFor: anEdge on: anEdge from with: (self destinationAttachPointsFor: anEdge)
+]
+
+{ #category : #'public - hooks' }
+RTAbstractShorterDistanceAttachPoint >> basicStartingPointOf: anEdge [
+	^ self attachPointFor: anEdge on: anEdge to with: (self startingAttachPointsFor: anEdge)
+]
+
 { #category : #util }
 RTAbstractShorterDistanceAttachPoint >> destinationAttachPointsFor: anEdge [
 	"Return the four possible attach points for each of the four sides for this edges destination node."
 	^ self attachPointsFor: anEdge on: (anEdge to).
 ]
 
-{ #category : #'public - hooks' }
-RTAbstractShorterDistanceAttachPoint >> endingPointOf: anEdge [
-	| from to |
-	inverted
-		ifTrue: [ from := anEdge to. to := self startingAttachPointsFor: anEdge ]
-		ifFalse: [ from := anEdge from. to := self destinationAttachPointsFor: anEdge ].		
-	^ self attachPointFor: anEdge on: from with: to
-]
-
 { #category : #util }
 RTAbstractShorterDistanceAttachPoint >> startingAttachPointsFor: anEdge [
 	"Return the four possible attach points for each of the four sides for this edges starting node."
 	^ self attachPointsFor: anEdge on: (anEdge from).
-]
-
-{ #category : #'public - hooks' }
-RTAbstractShorterDistanceAttachPoint >> startingPointOf: anEdge [
-	
-	^ inverted 
-		ifTrue: [ self attachPointFor: anEdge on: anEdge from with: (self destinationAttachPointsFor: anEdge) ]
-		ifFalse: [self attachPointFor: anEdge on: (anEdge to) with: (self startingAttachPointsFor: anEdge).]
 ]
