@@ -58,7 +58,8 @@ TRCompositeShape >> addedIn: aCanvas atIndex: index [
 TRCompositeShape >> alignRight [
 	"Layout the shapes horizontally"
 
-	TRConstraint alignFromRight: self shapes.
+	"TRConstraint alignFromRight: self shapes."
+	RTAlignment new elements: self shapes; right.
 	shapeAndOffsets do: [ :tuple | tuple at: 2 put: tuple first position ].
 	self resetInnerShapes
 ]
@@ -387,7 +388,8 @@ TRCompositeShape >> vertical [
 { #category : #'public - layout' }
 TRCompositeShape >> verticalAndLeft [
 	"Layout the shapes vertically and aligned on the left hand side"
-	TRConstraint alignFromLeft: (shapeAndOffsets collect: #first).
+	"TRConstraint alignFromLeft: (shapeAndOffsets collect: #first)."
+	RTAlignment new elements: (shapeAndOffsets collect: #first); left.
 	RTVerticalLineLayout new gapSize: 0; on: (shapeAndOffsets collect: #first).
 	shapeAndOffsets doWithIndex: [ :tuple :index | tuple at: 2 put: (tuple first position "x @ (index * 20)") ].
 	self resetInnerShapes.
