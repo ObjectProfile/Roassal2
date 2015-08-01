@@ -125,7 +125,8 @@ RTTimeline >> renderTimeLineLabels [
 			labelElements add: (self label: aLabel on: position) ].
 	offset := 10.
 	halfVerticalStep := (self getPixelPositionOf: 0 @ 1) y / -2.
-	TRConstraint alignFromRight: labelElements.
+	"TRConstraint alignFromRight: labelElements."
+	RTAlignment new elements: labelElements; right.
 	labelElements translateBy: (labelElements extent x / 2 + offset) negated @ halfVerticalStep
 ]
 

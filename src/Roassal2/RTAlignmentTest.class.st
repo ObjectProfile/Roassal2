@@ -21,7 +21,7 @@ RTAlignmentTest >> testFromBottom [
 	es second translateBy: 0 @ 150.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
 	self assert: align bottomMostElement equals: es second.
-	align fromBottom.
+	align bottom.
 	self assert: (es collect: [ :e | e encompassingRectangle bottom ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 	"	
 	RTView new addAll: es; yourself.
@@ -37,7 +37,7 @@ RTAlignmentTest >> testFromLeft [
 	es second translateBy: -150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(0.0 -150.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align leftMostElement equals: es second.
-	align fromLeft.
+	align left.
 	self assert: (es collect: [ :e | e encompassingRectangle left ]) asArray equals: #(-150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0 -150.0)
 "	
 	RTView new addAll: es; inspect.
@@ -53,7 +53,7 @@ RTAlignmentTest >> testFromRight [
 	es second translateBy: 150 @ 0.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(10.0 170.0 30.0 40.0 50.0 60.0 70.0 80.0 90.0 100.0).
 	self assert: align rightMostElement equals: es second.
-	align fromRight.
+	align right.
 	self assert: (es collect: [ :e | e encompassingRectangle right ]) asArray equals: #(170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0 170.0)
 "	
 	RTView new addAll: es; inspect.
@@ -69,6 +69,21 @@ RTAlignmentTest >> testFromTop [
 	es second translateBy: 0 @ -50.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(0.0 -50.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0).
 	self assert: align topMostElement equals: es second.
-	align fromTop.
+	align top.
 	self assert: (es collect: [ :e | e encompassingRectangle top ]) asArray equals: #(-50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0 -50.0).
+]
+
+{ #category : #tests }
+RTAlignmentTest >> testHasElement [
+	self deny: align hasElement.
+	align elements: (Array with: RTElement new).
+	self assert: align hasElement.
+	align elements: #().
+	self deny: align hasElement.
+]
+
+{ #category : #tests }
+RTAlignmentTest >> testNoErrorOnDefault [
+
+	RTAlignment new left; right; top; bottom
 ]
