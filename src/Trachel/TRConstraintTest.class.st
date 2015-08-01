@@ -50,7 +50,8 @@ TRConstraintTest >> testAlignFromBottom [
 	"
 	TRCanvas new addShape: shape1; addShape: shape2; yourself
 	"
-	TRConstraint alignFromBottom: (Array with: shape1 with: shape2).
+	"TRConstraint alignFromBottom: (Array with: shape1 with: shape2)."
+	RTAlignment new elements: (Array with: shape1 with: shape2); bottom.
 	self assert: shape1 position equals: 0 @ -20.
 	self assert: shape2 position equals: 0 @ 0.
 ]
@@ -60,9 +61,9 @@ TRConstraintTest >> testAlignFromLeft [
 	"
 	TRCanvas new addShape: shape1; addShape: shape2; yourself
 	"
-	TRConstraint alignFromLeft: (Array with: shape1 with: shape2).
-	self assert: shape1 position equals: 20 @ 0.
-	self assert: shape2 position equals: 0 @ 0.
+	RTAlignment new elements: (Array with: shape1 with: shape2); left.
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: -20 @ 0.
 ]
 
 { #category : #aligning }
@@ -70,7 +71,8 @@ TRConstraintTest >> testAlignFromRight [
 	"
 	TRCanvas new addShape: shape1; addShape: shape2; yourself
 	"
-	TRConstraint alignFromRight: (Array with: shape1 with: shape2).
+	RTAlignment new elements: (Array with: shape1 with: shape2); right. 
+	"TRConstraint alignFromRight: (Array with: shape1 with: shape2)."
 	self assert: shape1 position equals: 0 @ 0.
 	self assert: shape2 position equals: 20 @ 0.
 ]
@@ -79,10 +81,12 @@ TRConstraintTest >> testAlignFromRight [
 TRConstraintTest >> testAlignFromTop [
 	"
 	TRCanvas new addShape: shape1; addShape: shape2; yourself
+	self debug: #testAlignFromTop
 	"
-	TRConstraint alignFromTop: (Array with: shape1 with: shape2).
-	self assert: shape1 position equals: 0 @ 20.
-	self assert: shape2 position equals: 0 @ 0.
+	"TRConstraint alignFromTop: (Array with: shape1 with: shape2)."
+	RTAlignment new elements: (Array with: shape1 with: shape2); top.
+	self assert: shape1 position equals: 0 @ 0.
+	self assert: shape2 position equals: 0 @ -20.
 ]
 
 { #category : #resizing }
