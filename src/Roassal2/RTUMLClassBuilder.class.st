@@ -65,12 +65,17 @@ RTUMLClassBuilder >> attributeselector: aSelector [
 
 { #category : #edges }
 RTUMLClassBuilder >> buildEdges [
-	| bool |
+	| bool eb |
 	bool := lineShape shape attachPoint isInverted.
 	lineShape verticalAttachPoint.
 	lineShape shape attachPoint inverted: bool.
-	RTEdge buildEdgesFromObjects: 
-		classes from: self superclass to: #yourself using: lineShape shape inView: view
+	eb := RTEdgeBuilder new.
+	eb view: view.
+	eb objects: classes.
+	eb shape shape: lineShape shape.
+	eb connectFrom: self superclass.
+"	RTEdge buildEdgesFromObjects: 
+		classes from: self superclass to: #yourself using: lineShape shape inView: view"
 ]
 
 { #category : #public }
