@@ -20,33 +20,58 @@ Note: ==move== and ==stick== will execute the movement on the configured object 
 ]]]
 
 See ==self default== for default configuration.
+
+[ [ [
+v := RTView new.
+es := (RTBox new size: 50) element.
+es @ RTDraggable.
+v add: es.
+
+l := RTLabel elementOn: 'This is a label!'.
+v add: l.
+
+RTConstraint new
+	moveable: l;
+	fix: es;
+	inner;
+	bottom;
+	move.
+v 
+ ] ] ]
 "
 Class {
 	#name : #RTConstraint,
 	#superclass : #RTObject,
 	#instVars : [
-		'parentY',
-		'childY',
-		'childShape',
-		'parentShape',
 		'verticalPadding',
 		'horizontalPadding',
-		'parentX',
-		'childX',
 		'directionY',
 		'directionX',
-		'orientation'
+		'orientation',
+		'fixedElement',
+		'fixedElementX',
+		'fixedElementY',
+		'moveableElementX',
+		'moveableElement',
+		'moveableElementY'
 	],
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #convenient }
 RTConstraint class >> move: es1 onTheRightOf: es2 [
 	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
 	(RTConstraint on: es1 background: es2) rightOf; move
 ]
 
 { #category : #'instance creation' }
+RTConstraint class >> moveable: moveableElement fix: fixedElement [
+	^ self new
+		moveable: moveableElement fix: fixedElement;
+		yourself
+]
+
+{ #category : #obsolete }
 RTConstraint class >> on: aChildShape background: aParentShape [
 	^ self new
 		setChild: aChildShape parent: aParentShape;
@@ -72,7 +97,7 @@ RTConstraint >> border [
 
 { #category : #'public - positioning' }
 RTConstraint >> bottom [
-	parentY := [ :shape | shape encompassingRectangle bottom ].
+	moveableElementY := [ :shape | shape encompassingRectangle bottom ].
 	directionY := -1
 ]
 
@@ -92,18 +117,18 @@ RTConstraint >> bottomRight [
 
 { #category : #'public - positioning' }
 RTConstraint >> center [
-	parentX := [ :shape | shape position x ].
+	moveableElementX := [ :shape | shape position x ].
 	directionX := 0
 ]
 
 { #category : #private }
 RTConstraint >> computeX [
-	^ childShape width / 2 + horizontalPadding * orientation * directionX + self parentX
+	^ fixedElement width / 2 + horizontalPadding * orientation * directionX + self parentX
 ]
 
 { #category : #private }
 RTConstraint >> computeY [
-	^ childShape height / 2 + verticalPadding * orientation * directionY + self parentY
+	^ fixedElement height / 2 + verticalPadding * orientation * directionY + self parentY
 ]
 
 { #category : #initialization }
@@ -112,6 +137,11 @@ RTConstraint >> default [
 	self inner.
 	self middle.
 	self center
+]
+
+{ #category : #initialization }
+RTConstraint >> fix: aFixedElement [
+	moveableElement := aFixedElement
 ]
 
 { #category : #'public - modifiers' }
@@ -123,8 +153,8 @@ RTConstraint >> horizontalPadding: aNumber [
 RTConstraint >> initialize [
 	super initialize.
 	self default.
-	childX := [ :shape | shape width / 2 ].
-	childY := [ :shape | shape height / 2 ]
+	fixedElementX := [ :shape | shape width / 2 ].
+	fixedElementY := [ :shape | shape height / 2 ]
 ]
 
 { #category : #'public - modifiers' }
@@ -134,7 +164,7 @@ RTConstraint >> inner [
 
 { #category : #'public - positioning' }
 RTConstraint >> left [
-	parentX := [ :shape | shape encompassingRectangle left ].
+	moveableElementX := [ :shape | shape encompassingRectangle left ].
 	directionX := 1
 ]
 
@@ -146,13 +176,24 @@ RTConstraint >> leftOf [
 
 { #category : #'public - positioning' }
 RTConstraint >> middle [
-	parentY := [ :shape | shape position y ].
+	moveableElementY := [ :shape | shape position y ].
 	directionY := 0
 ]
 
 { #category : #'public - executing' }
 RTConstraint >> move [
-	childShape translateTo: self computeX @ self computeY
+	fixedElement translateTo: self computeX @ self computeY
+]
+
+{ #category : #initialization }
+RTConstraint >> moveable: aMoveableElement [
+	fixedElement := aMoveableElement
+]
+
+{ #category : #initialization }
+RTConstraint >> moveable: aMoveableElement fix: aFixedElement [
+	fixedElement := aMoveableElement.
+	moveableElement := aFixedElement
 ]
 
 { #category : #'public - modifiers' }
@@ -168,17 +209,17 @@ RTConstraint >> padding: aNumber [
 
 { #category : #private }
 RTConstraint >> parentX [
-	^ parentX value: parentShape
+	^ moveableElementX value: moveableElement
 ]
 
 { #category : #private }
 RTConstraint >> parentY [
-	^ parentY value: parentShape
+	^ moveableElementY value: moveableElement
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> right [
-	parentX := [ :shape | shape encompassingRectangle right ].
+	moveableElementX := [ :shape | shape encompassingRectangle right ].
 	directionX := -1
 ]
 
@@ -188,10 +229,10 @@ RTConstraint >> rightOf [
 	self outer
 ]
 
-{ #category : #initialization }
+{ #category : #obsolete }
 RTConstraint >> setChild: aChildShape parent: aParentShape [
-	childShape := aChildShape.
-	parentShape := aParentShape
+	fixedElement := aChildShape.
+	moveableElement := aParentShape
 ]
 
 { #category : #'public - executing' }
@@ -199,13 +240,13 @@ RTConstraint >> stick [
 	| block |
 	self move.
 	block := [ :shape :step | self move ].
-	parentShape addCallback: (TRTranslationCallback block: block).
-	parentShape addCallback: (TRExtentCallback block: block)
+	moveableElement addCallback: (TRTranslationCallback block: block).
+	moveableElement addCallback: (TRExtentCallback block: block)
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> top [
-	parentY := [ :shape | shape encompassingRectangle top ].
+	moveableElementY := [ :shape | shape encompassingRectangle top ].
 	directionY := 1
 ]
 
