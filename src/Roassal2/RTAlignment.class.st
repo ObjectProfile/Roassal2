@@ -16,11 +16,7 @@ For example, inspect the following:
 "
 Class {
 	#name : #RTAlignment,
-	#superclass : #RTObject,
-	#instVars : [
-		'elements',
-		'fixedElement'
-	],
+	#superclass : #RTAbstractElementHandling,
 	#category : #'Roassal2-Core'
 }
 
@@ -77,27 +73,6 @@ RTAlignment >> bottomMostElement [
 	^ elements inject: elements first into: [ :maxS :s | 
 			maxS encompassingRectangle top <= s encompassingRectangle top
 					ifTrue: [ s ] ifFalse: [ maxS ] ] 
-]
-
-{ #category : #accessing }
-RTAlignment >> elements [
-	^ elements
-]
-
-{ #category : #accessing }
-RTAlignment >> elements: someElements [
-	elements := someElements asGroup
-]
-
-{ #category : #accessing }
-RTAlignment >> fixedElement [
-	^ fixedElement
-]
-
-{ #category : #accessing }
-RTAlignment >> fixedElement: anElement [
-	"Designate a particular element for which all the other will be aligned against"
-	fixedElement := anElement
 ]
 
 { #category : #testing }

@@ -51,24 +51,24 @@ Class {
 		'fixedElement',
 		'fixedElementX',
 		'fixedElementY',
-		'moveableElementX',
-		'moveableElement',
-		'moveableElementY'
+		'movableElementY',
+		'movableElement',
+		'movableElementX'
 	],
 	#category : #'Roassal2-Core'
 }
+
+{ #category : #'instance creation' }
+RTConstraint class >> movable: moveableElement fix: fixedElement [
+	^ self new
+		movable: moveableElement fix: fixedElement;
+		yourself
+]
 
 { #category : #convenient }
 RTConstraint class >> move: es1 onTheRightOf: es2 [
 	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
 	(RTConstraint on: es1 background: es2) rightOf; move
-]
-
-{ #category : #'instance creation' }
-RTConstraint class >> moveable: moveableElement fix: fixedElement [
-	^ self new
-		moveable: moveableElement fix: fixedElement;
-		yourself
 ]
 
 { #category : #obsolete }
@@ -97,7 +97,7 @@ RTConstraint >> border [
 
 { #category : #'public - positioning' }
 RTConstraint >> bottom [
-	moveableElementY := [ :shape | shape encompassingRectangle bottom ].
+	movableElementY := [ :shape | shape encompassingRectangle bottom ].
 	directionY := -1
 ]
 
@@ -117,7 +117,7 @@ RTConstraint >> bottomRight [
 
 { #category : #'public - positioning' }
 RTConstraint >> center [
-	moveableElementX := [ :shape | shape position x ].
+	movableElementX := [ :shape | shape position x ].
 	directionX := 0
 ]
 
@@ -141,7 +141,7 @@ RTConstraint >> default [
 
 { #category : #initialization }
 RTConstraint >> fix: aFixedElement [
-	moveableElement := aFixedElement
+	movableElement := aFixedElement
 ]
 
 { #category : #'public - modifiers' }
@@ -164,7 +164,7 @@ RTConstraint >> inner [
 
 { #category : #'public - positioning' }
 RTConstraint >> left [
-	moveableElementX := [ :shape | shape encompassingRectangle left ].
+	movableElementX := [ :shape | shape encompassingRectangle left ].
 	directionX := 1
 ]
 
@@ -176,24 +176,24 @@ RTConstraint >> leftOf [
 
 { #category : #'public - positioning' }
 RTConstraint >> middle [
-	moveableElementY := [ :shape | shape position y ].
+	movableElementY := [ :shape | shape position y ].
 	directionY := 0
+]
+
+{ #category : #initialization }
+RTConstraint >> movable: aMovableElement [
+	fixedElement := aMovableElement
+]
+
+{ #category : #initialization }
+RTConstraint >> movable: aMovableElement fix: aFixedElement [
+	fixedElement := aMovableElement.
+	movableElement := aFixedElement
 ]
 
 { #category : #'public - executing' }
 RTConstraint >> move [
 	fixedElement translateTo: self computeX @ self computeY
-]
-
-{ #category : #initialization }
-RTConstraint >> moveable: aMoveableElement [
-	fixedElement := aMoveableElement
-]
-
-{ #category : #initialization }
-RTConstraint >> moveable: aMoveableElement fix: aFixedElement [
-	fixedElement := aMoveableElement.
-	moveableElement := aFixedElement
 ]
 
 { #category : #'public - modifiers' }
@@ -209,17 +209,17 @@ RTConstraint >> padding: aNumber [
 
 { #category : #private }
 RTConstraint >> parentX [
-	^ moveableElementX value: moveableElement
+	^ movableElementX value: movableElement
 ]
 
 { #category : #private }
 RTConstraint >> parentY [
-	^ moveableElementY value: moveableElement
+	^ movableElementY value: movableElement
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> right [
-	moveableElementX := [ :shape | shape encompassingRectangle right ].
+	movableElementX := [ :shape | shape encompassingRectangle right ].
 	directionX := -1
 ]
 
@@ -232,7 +232,7 @@ RTConstraint >> rightOf [
 { #category : #obsolete }
 RTConstraint >> setChild: aChildShape parent: aParentShape [
 	fixedElement := aChildShape.
-	moveableElement := aParentShape
+	movableElement := aParentShape
 ]
 
 { #category : #'public - executing' }
@@ -240,13 +240,13 @@ RTConstraint >> stick [
 	| block |
 	self move.
 	block := [ :shape :step | self move ].
-	moveableElement addCallback: (TRTranslationCallback block: block).
-	moveableElement addCallback: (TRExtentCallback block: block)
+	movableElement addCallback: (TRTranslationCallback block: block).
+	movableElement addCallback: (TRExtentCallback block: block)
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> top [
-	moveableElementY := [ :shape | shape encompassingRectangle top ].
+	movableElementY := [ :shape | shape encompassingRectangle top ].
 	directionY := 1
 ]
 
