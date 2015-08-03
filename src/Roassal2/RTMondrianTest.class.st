@@ -226,8 +226,8 @@ RTMondrianTest >> testEdgeInInnerFrame3 [
 	b build.
 	
 	self assert: b view numberOfEdges equals: 1.
-	self assert: b view edges anyOne trachelShape from equals: (8.0@10.0).
-	self assert: b view edges anyOne trachelShape to equals: (8.0@20).
+	self assert: b view edges anyOne trachelShape from equals: (8.0 @ 7.5).
+	self assert: b view edges anyOne trachelShape to equals: (8.0 @ 22.5).
 ]
 
 { #category : #'tests - nodes' }
