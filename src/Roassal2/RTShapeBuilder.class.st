@@ -279,7 +279,7 @@ RTShapeBuilder >> labelledAs: aBlock [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> line [
-	^ self shape: (RTLine new withShorterDistanceAttachPoint; yourself)
+	^ self shape: (RTLine new)
 ]
 
 { #category : #shapes }
