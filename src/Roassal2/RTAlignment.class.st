@@ -67,7 +67,7 @@ RTAlignment >> alignFromTopUsing: anElement [
 
 { #category : #public }
 RTAlignment >> bottom [
-
+	self hasElement ifFalse: [ ^ self ].
 	self alignFromBottomUsing: self bottomMostElement 
 ]
 
@@ -96,36 +96,19 @@ RTAlignment >> fixedElement [
 
 { #category : #accessing }
 RTAlignment >> fixedElement: anElement [
+	"Designate a particular element for which all the other will be aligned against"
 	fixedElement := anElement
 ]
 
-{ #category : #obsolete }
-RTAlignment >> fromBottom [
-
-	self alignFromBottomUsing: self bottomMostElement 
-]
-
-{ #category : #obsolete }
-RTAlignment >> fromLeft [
-
-	self alignFromLeftUsing: self leftMostElement 
-]
-
-{ #category : #obsolete }
-RTAlignment >> fromRight [
-
-	self alignFromRightUsing: self rightMostElement 
-]
-
-{ #category : #obsolete }
-RTAlignment >> fromTop [
-
-	self alignFromTopUsing: self topMostElement 
+{ #category : #testing }
+RTAlignment >> hasElement [
+	"Return true if some elements have been set"
+	^ (elements isNil or: [ elements isEmpty ]) not
 ]
 
 { #category : #public }
 RTAlignment >> left [
-
+	self hasElement ifFalse: [ ^ self ].
 	self alignFromLeftUsing: self leftMostElement 
 ]
 
@@ -138,8 +121,8 @@ RTAlignment >> leftMostElement [
 ]
 
 { #category : #public }
-RTAlignment >> rght [
-
+RTAlignment >> right [
+	self hasElement ifFalse: [ ^ self ].
 	self alignFromRightUsing: self rightMostElement 
 ]
 
@@ -153,7 +136,7 @@ RTAlignment >> rightMostElement [
 
 { #category : #public }
 RTAlignment >> top [
-
+	self hasElement ifFalse: [ ^ self ].
 	self alignFromTopUsing: self topMostElement 
 ]
 
