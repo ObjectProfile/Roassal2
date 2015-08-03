@@ -28,3 +28,8 @@ RTAbstractElementHandling >> fixedElement: anElement [
 	"Designate a particular element for which all the other will be aligned against"
 	fixedElement := anElement
 ]
+
+{ #category : #'private - configuration' }
+RTAbstractElementHandling >> ifNoFixedElementThen: aBlock [
+	fixedElement ifNil: [ aBlock value  ]
+]
