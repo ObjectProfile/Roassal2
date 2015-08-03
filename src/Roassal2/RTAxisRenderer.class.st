@@ -134,8 +134,8 @@ RTAxisRenderer >> config: anAxisConfiguration [
 
 { #category : #configuration }
 RTAxisRenderer >> defaultLabelColor [
-	"Label should be gray per default"
-	^ Color gray
+	"Label should have the same colors than the axis"
+	^ config color
 ]
 
 { #category : #'accessing-computed' }
@@ -148,7 +148,7 @@ RTAxisRenderer >> insertTitleIfNecessaryTo: toPosition [
 	| lbl |
 	self title notEmpty
 		ifTrue: [ 
-			lbl := (RTLabel new text: self title) element.
+			lbl := (RTLabel new text: self title; color: self defaultLabelColor) element.
 			self addToView: lbl.
 			lbl translateTo: toPosition - config titlePosition ]
 ]
