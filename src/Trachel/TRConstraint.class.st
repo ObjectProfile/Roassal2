@@ -60,11 +60,6 @@ TRConstraint class >> alignFromTop: shapes [
 	self use: topMostElement alignFromTop: shapes
 ]
 
-{ #category : #'public - resizing' }
-TRConstraint class >> changeExtentOf: conformingShape like: originShape plus: aPoint [
-	^ conformingShape extent: originShape encompassingRectangle extent + aPoint
-]
-
 { #category : #'public - sticking' }
 TRConstraint class >> fix: aShape for: anotherShape [
 	"When anotherShape is moved, then move aShape"
@@ -74,16 +69,6 @@ TRConstraint class >> fix: aShape for: anotherShape [
 	anotherShape addCallback: (TRTranslationCallback block: b).
 
 	
-]
-
-{ #category : #'public - resizing' }
-TRConstraint class >> keepExtentOf: conformingShape like: originShape plus: aPoint [
-	| b |
-	self changeExtentOf: conformingShape like: originShape plus: aPoint.
-	b := [ :shape :step | self changeExtentOf: conformingShape like: originShape plus: aPoint ].
-	originShape
-		addCallback: (TRExtentCallback block: b);
-		addCallback: (TRTranslationCallback block: b)
 ]
 
 { #category : #'public - moving' }
