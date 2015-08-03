@@ -264,7 +264,7 @@ v := RTView new.
 groups do: [ :aGroup | v addAll: aGroup ].
 RTHorizontalLineLayout new gapSize: 30; on: groups.
 
-RTAlignment new elements: groups; bottom.
+RTAlignment new elements: groups; fromBottom.
 
 	^ v
 ]
