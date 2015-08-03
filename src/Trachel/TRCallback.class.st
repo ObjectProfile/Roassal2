@@ -1,3 +1,6 @@
+"
+I am abstract class for callbacks executed when Trachel shapes have changed in some way --- added to canvas, removed, changed size, etc.
+"
 Class {
 	#name : #TRCallback,
 	#superclass : #TRObject,
