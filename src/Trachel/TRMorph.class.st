@@ -10,22 +10,20 @@ Class {
 		'eventBeginingDragging',
 		'shapeBeingPointed',
 		'shouldRefresh',
-		'session',
-		'eventOverseer'
+		'session'
 	],
 	#category : #'Trachel-MorphSpecific'
 }
 
 { #category : #'event handling' }
 TRMorph >> announceToEventOverseer: evt [
-	eventOverseer ifNil: [ ^ self ].
-	eventOverseer firedEvent: evt 
+	self eventOverseer ifNil: [ ^ self ].
+	self eventOverseer firedEvent: evt 
 ]
 
 { #category : #accessing }
 TRMorph >> canvas: aTrachelCanvas [
 	trachelCanvas := aTrachelCanvas.
-	eventOverseer := aTrachelCanvas eventOverseer.
 	surface := AthensCairoSurface extent: (aTrachelCanvas extent) asIntegerPoint
 ]
 
@@ -78,12 +76,7 @@ TRMorph >> drawOn: aCanvas [
 
 { #category : #accessing }
 TRMorph >> eventOverseer [
-	^ eventOverseer
-]
-
-{ #category : #accessing }
-TRMorph >> eventOverseer: anObject [
-	eventOverseer := anObject
+	^ trachelCanvas eventOverseer
 ]
 
 { #category : #'events-processing' }
