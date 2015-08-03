@@ -205,6 +205,11 @@ RTBuilder >> shape [
 ]
 
 { #category : #accessing }
+RTBuilder >> shape: aShape [
+	shapeBuilder shape: aShape
+]
+
+{ #category : #accessing }
 RTBuilder >> shapeBuilder: anRTShapeBuilder [
 
 	shapeBuilder := anRTShapeBuilder

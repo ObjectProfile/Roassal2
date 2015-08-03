@@ -55,30 +55,6 @@ RTShapeBuilderTest >> testBoxWithDimensions [
 	self assert: (shape widthFor: (RTElement on: 5)) = 8
 ]
 
-{ #category : #tests }
-RTShapeBuilderTest >> testColor [
-
-	| e |
-	builder rectangle color: Color blue.
-	e := builder elementOn: 1.
-	
-	self assert: (e shape colorFor: e) equals: Color blue.
-	self assert: e trachelShape color equals: Color blue.
-]
-
-{ #category : #tests }
-RTShapeBuilderTest >> testColorIf [
-
-	| e |
-	builder box 
-		if: true color: Color blue;
-		if: true color: Color red.
-	e := builder elementOn: 1.
-	
-	self assert: (e shape colorFor: e) equals: Color red.
-	self assert: e trachelShape color equals: Color red.
-]
-
 { #category : #'created elements' }
 RTShapeBuilderTest >> testCreatingElements [
 	builder rectangle.
@@ -105,13 +81,6 @@ RTShapeBuilderTest >> testEnsure2 [
 	builder rectangle color: Color red.
 	builder ensure: RTEllipse.
 	self assert: ((builder current color) rtValue: RTElement new) equals: (RTEllipse new color).
-]
-
-{ #category : #tests }
-RTShapeBuilderTest >> testFillColor [
-
-	self assert: builder color class equals: Color.
-	self assert: builder fillColor class equals: Color
 ]
 
 { #category : #hasSetShape }

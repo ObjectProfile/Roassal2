@@ -41,11 +41,6 @@ RTShapeBuilder >> bezierLineUsingObjects: aFollowBlock [
  
 ]
 
-{ #category : #shapes }
-RTShapeBuilder >> box [
-	self shape: RTBox new
-]
-
 { #category : #'shape - attach point on edges' }
 RTShapeBuilder >> centeredAttachPoint [
 	"Set the vertical attach point for the edges to be built"
@@ -57,11 +52,6 @@ RTShapeBuilder >> centeredAttachPoint [
 { #category : #shapes }
 RTShapeBuilder >> circle [
 	self shape: RTEllipse new
-]
-
-{ #category : #'as yet unclassified' }
-RTShapeBuilder >> color [
-	^ self current color
 ]
 
 { #category : #shapes }
@@ -102,7 +92,7 @@ RTShapeBuilder >> directedLine [
 RTShapeBuilder >> doesNotUnderstand: aMessage [
 	"we simply forward the messages we do not understand
 	to the actual shape implementation"
-	self shape 
+	^ self shape 
 		perform: aMessage selector 
 		withArguments: aMessage arguments
 ]
@@ -148,11 +138,6 @@ RTShapeBuilder >> ensure: aClassShape [
 { #category : #shapes }
 RTShapeBuilder >> extensibleLabel [
 	^ self shape: RTExtensibleLabel new
-]
-
-{ #category : #'as yet unclassified' }
-RTShapeBuilder >> fillColor [
-	^ self color
 ]
 
 { #category : #'text shape' }
@@ -222,7 +207,7 @@ RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
 	| oldBlockOrValue |
 	oldBlockOrValue := self fillColor.
-	self fillColor: [ :aModel | (conditionBlock rtValue: aModel)
+	^self fillColor: [ :aModel | (conditionBlock rtValue: aModel)
 									ifTrue: [ colorBlock rtValue: aModel ] 
 									ifFalse: [ 
 										"Having to create a new element is rather ugly. 
@@ -333,7 +318,7 @@ RTShapeBuilder >> postCopy [
 
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
-	^ self box
+	self shape: RTBox new
 ]
 
 { #category : #accessing }
@@ -392,7 +377,7 @@ RTShapeBuilder >> shortestDistanceAttachPoint [
 	
 ]
 
-{ #category : #'shapes - texting' }
+{ #category : #shapes }
 RTShapeBuilder >> text [
 	self shape: RTLabel new
 ]
@@ -410,77 +395,29 @@ RTShapeBuilder >> withBorder [
 	self borderColor: Color black
 ]
 
-{ #category : #'shapes - texting' }
+{ #category : #shapes }
 RTShapeBuilder >> withText [
 	^ self withText: #yourself
 ]
 
-{ #category : #'shapes - texting' }
+{ #category : #shapes }
 RTShapeBuilder >> withText: aSymbolOrABlock [
 	shape := shape + (RTLabel new text: aSymbolOrABlock).
 	^ shape
 ]
 
-{ #category : #'shapes - texting' }
+{ #category : #shapes }
 RTShapeBuilder >> withTextAbove [
 	^ self withTextAbove: #yourself
 ]
 
-{ #category : #'shapes - texting' }
+{ #category : #shapes }
 RTShapeBuilder >> withTextAbove: aSymbolOrABlock [
 	| newShape |
 	newShape := RTCompositeShape new.
 	newShape add: (RTLabel new text: aSymbolOrABlock).
 	newShape add: shape.
 	newShape vertical.
-	newShape setAutomaticRelayout.
-	shape := newShape.
-]
-
-{ #category : #'text shape' }
-RTShapeBuilder >> withTextBelow [
-	^ self withTextBelow: #yourself
-]
-
-{ #category : #'text shape' }
-RTShapeBuilder >> withTextBelow: aSymbolOrABlock [
-	| newShape |
-	newShape := RTCompositeShape new.
-	newShape add: shape.
-	newShape add: (RTLabel new text: aSymbolOrABlock).
-	newShape vertical.
-	newShape setAutomaticRelayout.
-	shape := newShape.
-]
-
-{ #category : #'shapes - texting' }
-RTShapeBuilder >> withTextOnTheLeft [
-	^ self withTextOnTheLeft: #yourself
-]
-
-{ #category : #'shapes - texting' }
-RTShapeBuilder >> withTextOnTheLeft: aSymbolOrABlock [
-	| newShape |
-	newShape := RTCompositeShape new.
-	newShape add: (RTLabel new text: aSymbolOrABlock).
-	newShape add: shape.
-	newShape horizontal.
-	newShape setAutomaticRelayout.
-	shape := newShape.
-]
-
-{ #category : #'shapes - texting' }
-RTShapeBuilder >> withTextOnTheRight [
-	^ self withTextOnTheRight: #yourself
-]
-
-{ #category : #'shapes - texting' }
-RTShapeBuilder >> withTextOnTheRight: aSymbolOrABlock [
-	| newShape |
-	newShape := RTCompositeShape new.
-	newShape add: shape.
-	newShape add: (RTLabel new text: aSymbolOrABlock).
-	newShape horizontal.
 	newShape setAutomaticRelayout.
 	shape := newShape.
 ]
