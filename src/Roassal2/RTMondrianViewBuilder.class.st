@@ -98,7 +98,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 	builder circleLayout
 		
 	aToBlock should return a collection, edges will be drawn from the entity returned by aFromBlock to this collection"
-	
+
 	| es |
 	self setLineShapeIfNecessary.
 	es := RTEdge 
@@ -108,7 +108,7 @@ RTMondrianViewBuilder >> edges: objects from: fromBlock toAll: toAllBlock [
 		using: shapeBuilder current
 		inView: view 
 		scope: (RTGroup new addAll: view elements; yourself).
-		"scope: (RTGroup new addAll: topLevelNodes; yourself)."
+	"scope: (RTGroup new addAll: topLevelNodes; yourself)."
 	topLevelEdges addAll: es.
 	es do: #moveBehindItsExtremities.
 	^ es
