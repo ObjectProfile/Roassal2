@@ -158,7 +158,8 @@ RTShapeBuilder >> gradientLineFrom: fromColor to: toColor [
 
 { #category : #testing }
 RTShapeBuilder >> hasSetLineShape [
-	^ shape isKindOf: RTAbstractLine
+	"A bit hackish..."
+	^ (shape isKindOf: RTAbstractLine) or: [ (shape isKindOf: RTCompositeShape) and: [ shape allShapes anyOne isKindOf: RTAbstractLine ] ]
 ]
 
 { #category : #testing }
