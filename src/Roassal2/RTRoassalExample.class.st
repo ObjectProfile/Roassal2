@@ -504,20 +504,18 @@ Qfz5ID6IPx/Enw/ig/jzQXwQfz6ID+LPB/FB/Pkg/nwQH8SfD+KD+PNBfBB/PogP4s8H8eeD
 { #category : #sources }
 RTRoassalExample >> exampleAnotherTreeLayout [
 	| view elements |
-	view := RTView new.	
+	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 100).
 	elements @ RTDraggable.
 	view addAll: elements.
-	RTEdge 
-		buildEdgesFromObjects: (1 to: 100)
-		from: [ :v | v // 2 ] to: #yourself 
-		using: (RTLine new color: Color purple) inView: view.
+	RTEdgeBuilder new
+		view: view;
+		objects: (1 to: 100);
+		shape: (RTLine new color: Color purple);
+		connectFrom: [ :v | v // 2 ] to: #yourself.
 	RTTreeLayout on: view elements edges: view edges.
-	
 	view edges do: [ :e | e trachelShape pushBack ].
-	
 	view @ RTDraggableView.
-
 	^ view
 ]
 
@@ -653,26 +651,23 @@ AABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleArrow [
-| v es c arrow |
-v := RTView new.
-c := RTMultiLinearColor new.
-es := (RTEllipse new size: 30; color: [ :e | c level: e / 10 ]) elementsOn: (1 to: 10).
-v addAll: es.
-es @ RTDraggable.
-
-arrow := RTArrowedLine new 
-			color: Color red; 
-			attachPoint: RTVerticalAttachPoint instance.
-
-RTEdge 
-	buildEdgesFromObjects: (1 to: 10) 
-	from: [ :n | n // 2 ] 
-	to: #yourself 
-	using: arrow
-	inView: v.
-
-RTTreeLayout new on: es.
-
+	| v es c arrow |
+	v := RTView new.
+	c := RTMultiLinearColor new.
+	es := (RTEllipse new
+		size: 30;
+		color: [ :e | c level: e / 10 ]) elementsOn: (1 to: 10).
+	v addAll: es.
+	es @ RTDraggable.
+	arrow := RTArrowedLine new
+		color: Color red;
+		attachPoint: RTVerticalAttachPoint instance.
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 10);
+		shape: arrow;
+		connectFrom: [ :n | n // 2 ] to: #yourself.
+	RTTreeLayout new on: es.
 	^ v
 ]
 
@@ -776,21 +771,29 @@ z+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n+/vvADh2zp6vpL8RAAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleArrowedEdges [
-
-| view els |
-view := RTView new.
-els := (RTBox new size: 10; color: Color blue; borderColor: Color veryLightGray) elementsOn: Collection withAllSubclasses.
-els @ RTDraggable.
-view addAll: els.
-RTEdge
-        buildEdgesFromObjects: Collection withAllSubclasses
-        from: #yourself
-        toAll: #subclasses
-        using: ((RTLine new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray) + (RTSimpleArrowHead new attachPoint: RTShorterDistanceAttachPoint new; color: Color veryDarkGray))
-        inView: view.
-
-RTTreeLayout on: els.
-view @ RTDraggableView.
+	| view els |
+	view := RTView new.
+	els := (RTBox new
+		size: 10;
+		color: Color blue;
+		borderColor: Color veryLightGray)
+		elementsOn: Collection withAllSubclasses.
+	els @ RTDraggable.
+	view addAll: els.
+	RTEdgeBuilder new
+		view: view;
+		objects: Collection withAllSubclasses;
+		shape:
+			(RTLine new
+				attachPoint: RTShorterDistanceAttachPoint new;
+				color: Color veryDarkGray)
+				+
+					(RTSimpleArrowHead new
+						attachPoint: RTShorterDistanceAttachPoint new;
+						color: Color veryDarkGray);
+		connectFrom: #yourself toAll: #subclasses.
+	RTTreeLayout on: els.
+	view @ RTDraggableView.
 	^ view
 ]
 
@@ -1496,16 +1499,26 @@ AABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleCircleLayoutAndEdges [
-
 	| v els |
 	v := RTView new.
-	els := RTBox new size: 10; elementsOn: (1 to: 100).
+	els := RTBox new
+		size: 10;
+		elementsOn: (1 to: 100).
 	v addAll: els.
 	els @ RTDraggable.
-	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2 ] to: #yourself using: (RTLine new color: (Color blue alpha: 0.4); withVerticallAttachPoint; yourself) inView: v.
-	RTCircleLayout new initialRadius: 260; on: v elements.
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 100);
+		shape:
+			(RTLine new
+				color: (Color blue alpha: 0.4);
+				withVerticallAttachPoint;
+				yourself);
+		connectFrom: [ :value | value // 2 ] to: #yourself.
+	RTCircleLayout new
+		initialRadius: 260;
+		on: v elements.
 	v @ RTDraggableView.
-
 	^ v
 ]
 
@@ -1660,14 +1673,19 @@ spJ+9e7de9CFkMv/Ax50FY2/phGnAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTRoassalExample >> exampleClusterLayout [
-
-| v |
+	| v |
 	v := RTView new.
-	v addAll: ((RTEllipse new color: Color purple; size: 10) elementsOn: Collection withAllSubclasses) @ RTDraggable.
-	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
+	v
+		addAll:
+			((RTEllipse new
+				color: Color purple;
+				size: 10) elementsOn: Collection withAllSubclasses) @ RTDraggable.
+	RTEdgeBuilder new
+		view: v;
+		objects: Collection withAllSubclasses;
+		connectFrom: #superclass to: #yourself.
 	RTClusterLayout on: v elements edges: v edges.
 	v edges do: [ :e | e trachelShape pushBack ].
-
 	^ v
 ]
 
@@ -2028,37 +2046,39 @@ IebHF+Lfm8wwF8kmVgIAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTRoassalExample >> exampleDependenciesWithCurve [
-| v classesRoassal classesTrachel shape1 shape2 helpBar1 helpBar2 |
-v := RTView new.
-v @ RTDraggableView.
-
-shape1 := RTEllipse new size: #numberOfMethods; color: (Color gray alpha: 0.3).
-shape2 := RTEllipse new size: #numberOfMethods; color: (Color pink alpha: 0.3).
-classesRoassal := shape1 elementsOn: (RTObject withAllSubclasses).
-classesTrachel := shape2 elementsOn: (TRObject withAllSubclasses).
-
-classesRoassal@ RTPopup.
-
-classesTrachel @ RTPopup.
-
-v addAll: classesRoassal.
-v addAll: classesTrachel.
-
-RTEdge 
-	buildEdgesFromObjects: RTObject withAllSubclasses 
-	from: #yourself 
-	toAll: [ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ] 
-	using: (RTDirectedLine new color: (Color blue alpha: 0.5)) inView: v.
-
-RTHorizontalLineLayout new gapSize: 1;on: classesRoassal, classesTrachel.
-
-helpBar1 := TRLabelShape new text: 'Dependencies between Roassal and Trachel'.
-helpBar2 := TRLabelShape new text: 'down links = Roassal depends on Trachel'.
-v canvas addFixedShape: helpBar1.
-v canvas addFixedShape: helpBar2.
-TRConstraint stick: helpBar1 above: helpBar2.
-TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
-
+	| v classesRoassal classesTrachel shape1 shape2 helpBar1 helpBar2 |
+	v := RTView new.
+	v @ RTDraggableView.
+	shape1 := RTEllipse new
+		size: #numberOfMethods;
+		color: (Color gray alpha: 0.3).
+	shape2 := RTEllipse new
+		size: #numberOfMethods;
+		color: (Color pink alpha: 0.3).
+	classesRoassal := shape1 elementsOn: RTObject withAllSubclasses.
+	classesTrachel := shape2 elementsOn: TRObject withAllSubclasses.
+	classesRoassal @ RTPopup.
+	classesTrachel @ RTPopup.
+	v addAll: classesRoassal.
+	v addAll: classesTrachel.
+	RTEdgeBuilder new
+		view: v;
+		objects: RTObject withAllSubclasses;
+		shape: (RTDirectedLine new color: (Color blue alpha: 0.5));
+		connectFrom: #yourself
+			toAll:
+				[ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ].
+	RTHorizontalLineLayout new
+		gapSize: 1;
+		on: classesRoassal , classesTrachel.
+	helpBar1 := TRLabelShape new
+		text: 'Dependencies between Roassal and Trachel'.
+	helpBar2 := TRLabelShape new
+		text: 'down links = Roassal depends on Trachel'.
+	v canvas addFixedShape: helpBar1.
+	v canvas addFixedShape: helpBar2.
+	TRConstraint stick: helpBar1 above: helpBar2.
+	TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
 	^ v
 ]
 
@@ -2640,27 +2660,26 @@ AGxOp0bY2FZoAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTRoassalExample >> exampleEdgeTransparency [
-
-| v es |
-v := RTView new.
-
-es := RTEllipse new elementsOn: RTShape withAllSubclasses.
-v addAll: es.
-RTWeightedCircleLayout new initialRadius: 200; on: es.
-RTMetricNormalizer new
-	elements: es;
-	normalizeSize: #numberOfMethods min: 10 max: 35 using: #sqrt;
-	normalizeColor: #numberOfLinesOfCode.
-
-RTEdge 
-	buildEdgesFromObjects: RTShape withAllSubclasses 
-	from: #yourself 
-	toAll: #dependentClasses 
-	using: (RTLine new color: (Color blue))
-	inView: v.
-
-es @ RTPopup @ RTSetEdgeAlpha.	
- 
+	| v es |
+	v := RTView new.
+	es := RTEllipse new elementsOn: RTShape withAllSubclasses.
+	v addAll: es.
+	RTWeightedCircleLayout new
+		initialRadius: 200;
+		on: es.
+	RTMetricNormalizer new
+		elements: es;
+		normalizeSize: #numberOfMethods
+			min: 10
+			max: 35
+			using: #sqrt;
+		normalizeColor: #numberOfLinesOfCode.
+	RTEdgeBuilder new
+		view: v;
+		objects: RTShape withAllSubclasses;
+		shape: (RTLine new color: Color blue);
+		connectFrom: #yourself toAll: #dependentClasses.
+	es @ RTPopup @ RTSetEdgeAlpha.
 	^ v
 ]
 
@@ -3554,43 +3573,46 @@ QmCC'
 
 { #category : #sources }
 RTRoassalExample >> exampleForceBasedLayout [
-
-	| v classes edges | 
+	| v classes edges |
 	v := RTView new.
-	classes := (RTEllipse new color: (Color purple alpha: 0.3); size: 10) elementsOn: Collection withAllSubclasses.
+	classes := (RTEllipse new
+		color: (Color purple alpha: 0.3);
+		size: 10) elementsOn: Collection withAllSubclasses.
 	(classes elementFromModel: Collection) trachelShape color: Color red.
 	classes @ RTDraggable.
 	v addAll: classes.
-
-	edges := RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself using: (RTLine new color: (Color purple alpha: 0.2)) inView: v.
-
+	edges := RTEdgeBuilder new
+		view: v;
+		objects: Collection withAllSubclasses;
+		shape: (RTLine new color: (Color purple alpha: 0.2));
+		connectFrom: #superclass to: #yourself.
 	edges do: [ :e | e trachelShape pushBack ].
-
 	RTForceBasedLayout on: v elements edges: v edges.
 	"v addAnimation: (RTSpringLayoutStepping new view: v)."
 	v @ RTDraggableView.
-
 	^ v
 ]
 
 { #category : #sources }
 RTRoassalExample >> exampleForceBasedLayoutAnimated [
-
-	| v classes edges | 
+	| v classes edges |
 	v := RTView new.
-	classes := (RTEllipse new color: (Color purple alpha: 0.3); size: 10) elementsOn: Collection withAllSubclasses.
+	classes := (RTEllipse new
+		color: (Color purple alpha: 0.3);
+		size: 10) elementsOn: Collection withAllSubclasses.
 	(classes elementFromModel: Collection) trachelShape color: Color red.
 	classes @ RTDraggable.
 	v addAll: classes.
-
-	edges := RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself using: (RTLine new color: (Color purple alpha: 0.2)) inView: v.
-
+	edges := RTEdgeBuilder new
+		view: v;
+		objects: Collection withAllSubclasses;
+		shape: (RTLine new color: (Color purple alpha: 0.2));
+		connectFrom: #superclass to: #yourself.
 	edges do: [ :e | e trachelShape pushBack ].
 
 	"RTForceBasedLayout on: v elements edges: v edges."
 	v addAnimation: (RTSpringLayoutStepping new view: v).
 	v @ RTDraggableView.
-
 	^ v
 ]
 
@@ -4469,39 +4491,49 @@ g/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz7I4eoHSM9N3guI5iUAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTRoassalExample >> exampleLinkingObjects [
-| associations v labels |
+	| associations v labels |
+	associations := OrderedCollection new.
+	associations
+		add: 'bonjour' -> 'hello';
+		add: 'homme' -> 'man';
+		add: 'femme' -> 'women';
+		add: 'hello' -> 'goodbye';
+		add: 'people' -> 'homme';
+		add: 'people' -> 'women'.
 
-associations := OrderedCollection new.
-associations
-	add: 'bonjour' -> 'hello';
-	add: 'homme' -> 'man' ;
-	add: 'femme' -> 'women' ;
-	add: 'hello' -> 'goodbye' ;
-	add: 'people' -> 'homme' ;
-	add: 'people' -> 'women'.
+	"We create the nodes"
+	v := RTView new.
+	v @ RTDraggableView.
+	labels := Set new.
+	associations
+		do: [ :assoc | 
+			labels
+				add: assoc key;
+				add: assoc value ].
+	labels
+		do:
+			[ :aLabel | 
+			| n |
+			n := v elementFromModel: aLabel.
+			n
+				ifNil:
+					[ 
+					n := RTBox new + RTLabel elementOn: aLabel.
+					n @ RTDraggable ].
+			v add: n ].
 
-"We create the nodes"
-v := RTView new.
-v @ RTDraggableView.
-labels := Set new.
-associations do: [ :assoc |
-	labels add: assoc key; add: assoc value ].
-labels do: [ :aLabel |
-	| n |
-	n := v elementFromModel: aLabel.
-	n ifNil: [ n := (RTBox new + RTLabel) elementOn: aLabel. n @ RTDraggable ].
-	v add: n.
-].
+	"We add the links"
+	RTEdgeBuilder new
+		view: v;
+		objects: associations;
+		shape: (RTLine new color: (Color blue alpha: 0.4));
+		connectFrom: #key to: #value.
 
-"We add the links"
-RTEdge buildEdgesFromObjects: associations from: #key to: #value using: (RTLine new color: (Color blue alpha: 0.4)) inView: v.
-	
 
-"We do a layout"
-RTForceBasedLayout new 
-	charge: -500;
-	on: v elements.
-
+	"We do a layout"
+	RTForceBasedLayout new
+		charge: -500;
+		on: v elements.
 	^ v
 ]
 
@@ -4534,22 +4566,22 @@ gi8EH3wh+OALwReCD74QfCH44At5z/wBWVep7TxiFq0AAAAASUVORK5CYII='
 
 { #category : #sources }
 RTRoassalExample >> exampleMakingVisualizationFit [
-
 	| view |
-	view := RTView new.	
-	view addAll: (RTBox elementsOn: Collection withAllSubclasses) @ RTDraggable.
-	RTEdge 
-		buildEdgesFromObjects: Collection 
-		withAllSubclasses from: #superclass to: #yourself inView: view.
+	view := RTView new.
+	view
+		addAll:
+			(RTBox elementsOn: Collection withAllSubclasses) @ RTDraggable.
+	RTEdgeBuilder new
+		view: view;
+		objects: Collection withAllSubclasses;
+		connectFrom: #superclass to: #yourself.
 	RTTreeLayout on: view elements edges: view edges.
 	view @ RTDraggableView.
 	view edges do: [ :e | e trachelShape pushBack ].
-	
 	(RTGroup withAll: view elements) translateTo: 0 @ 0.
 
 	"Removing this line will make the visualization larger than the window"
-	view canvas camera focusOnCenterScaled: 500@500.
-
+	view canvas camera focusOnCenterScaled: 500 @ 500.
 	^ view
 ]
 
@@ -5005,35 +5037,33 @@ PCHHgZtBHrbP0ejxRf58jjswPkXnPbYRx2haIYfT11NA23Z+E4gIyrMnYEmd9d/uQ2Z9pa23
 
 { #category : #sources }
 RTRoassalExample >> exampleMovingGrid [
-
-| v es size initialLayout layout step |
-v := RTView new.
-v @ RTDraggableView.
-
-size := 10.
-es := (RTEllipse new size: 20; color: (Color red alpha: 0.4)) elementsOn: (1 to: (size * size)).
-v addAll: es.
-es @ RTDraggable @ RTPopup.
-"es when: TRMouseEnter do: [ :evt | evt element translateBy: (20 atRandom @ 20 atRandom) - (10 @ 10) ]."
-
-RTEdge buildEdgesFromElements: es
-	from: #yourself
-	toAll: [ :value |
-		(value \\ size) = 0
-			ifTrue: [ Array with: value + size ]
-			ifFalse: [ Array with: value + 1 with: value + size ] ]
-	inView: v.
-
-initialLayout := RTGridLayout new
-	lineItemsCount: size;
-	on: es.
-layout := RTForceBasedLayout new initialLayout: initialLayout.
-step :=  RTSpringLayoutStepping new 
-				view: v;
-				layout: layout.
-v addAnimation: step.
-	
-
+	| v es size initialLayout layout step |
+	v := RTView new.
+	v @ RTDraggableView.
+	size := 10.
+	es := (RTEllipse new
+		size: 20;
+		color: (Color red alpha: 0.4)) elementsOn: (1 to: size * size).
+	v addAll: es.
+	es @ RTDraggable @ RTPopup.
+	"es when: TRMouseEnter do: [ :evt | evt element translateBy: (20 atRandom @ 20 atRandom) - (10 @ 10) ]."
+	RTEdgeBuilder new
+		view: v;
+		elements: es;
+		connectFrom: #yourself
+			toAll:
+				[ :value | 
+			value \\ size = 0
+				ifTrue: [ Array with: value + size ]
+				ifFalse: [ Array with: value + 1 with: value + size ] ].
+	initialLayout := RTGridLayout new
+		lineItemsCount: size;
+		on: es.
+	layout := RTForceBasedLayout new initialLayout: initialLayout.
+	step := RTSpringLayoutStepping new
+		view: v;
+		layout: layout.
+	v addAnimation: step.
 	^ v
 ]
 
@@ -5268,23 +5298,23 @@ RTTreeLayout on: v elements.
 
 { #category : #sources }
 RTRoassalExample >> exampleOrthoVerticalLines2 [
-
-| v shape |
-v := RTView new.
-
-v addAll: ((RTEllipse new size: 20; color: (Color red alpha: 0.3)) elementsOn: (1 to: 20)).
-
-shape := RTMultiLine new.
-shape orthoVertical.
-shape color: (Color blue alpha: 0.3).
-
-RTEdge 
-	buildEdgesFromObjects: (1 to: 20) from: [ :n | n // 3 ] to: #yourself using: shape inView: v.
-
-v elements @ RTDraggable @ RTPopup.
-	
-RTTreeLayout on: v elements. 
-
+	| v shape |
+	v := RTView new.
+	v
+		addAll:
+			((RTEllipse new
+				size: 20;
+				color: (Color red alpha: 0.3)) elementsOn: (1 to: 20)).
+	shape := RTMultiLine new.
+	shape orthoVertical.
+	shape color: (Color blue alpha: 0.3).
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 20);
+		shape: shape;
+		connectFrom: [ :n | n // 3 ] to: #yourself.
+	v elements @ RTDraggable @ RTPopup.
+	RTTreeLayout on: v elements.
 	^ v
 ]
 
@@ -6580,45 +6610,39 @@ rT/v5CT+ky0riwAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleSelfCalls [
+	" The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."
 
-" The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."		
-| v classes classElement classElements shapeBuilder methods methodElements |
-v := RTView new.
-v @ RTDraggableView.
-
-shapeBuilder := RTShapeBuilder new.
-shapeBuilder rectangle
-	size: [ :m | m linesOfCode min: 60 max: 5 ].
-
-classElements := RTGroup new. 
-classes := RTShape withAllSubclasses.
-classes do: [ :class |
-	classElement := (RTBox new color: (Color blue alpha: 0.4)) elementOn: class.
-	classElement @ RTPopup.
-	v add: classElement.
-
-
-	methods := class rtmethods.
-
-	methodElements := shapeBuilder elementsOn: methods.
-	v addAll: methodElements.
-
-	RTEdge 
-		buildEdgesFromObjects: methods 
-		from: #yourself 
-		toAll: #dependentMethods 
-		inView: v.
-	RTTreeLayout on: methodElements.
-	methodElements @ RTDraggable @ RTPopup.
-	
-	RTNest new on: classElement nest: methodElements.
-	classElement @ RTDraggable.
-	classElements add: classElement.
-].
-
-RTEdge buildEdgesFromObjects: classes from: #superclass to: #yourself using: (RTLine new attachPoint: RTVerticalAttachPoint instance) inView: v.
-RTTreeLayout on: classElements.
-
+	| v classes classElement classElements shapeBuilder methods methodElements |
+	v := RTView new.
+	v @ RTDraggableView.
+	shapeBuilder := RTShapeBuilder new.
+	shapeBuilder rectangle size: [ :m | m linesOfCode min: 60 max: 5 ].
+	classElements := RTGroup new.
+	classes := RTShape withAllSubclasses.
+	classes
+		do:
+			[ :class | 
+			classElement := (RTBox new color: (Color blue alpha: 0.4))
+				elementOn: class.
+			classElement @ RTPopup.
+			v add: classElement.
+			methods := class rtmethods.
+			methodElements := shapeBuilder elementsOn: methods.
+			v addAll: methodElements.
+			RTEdgeBuilder new
+				view: v;
+				objects: methods;
+				connectFrom: #yourself toAll: #dependentMethods.
+			RTTreeLayout on: methodElements.
+			methodElements @ RTDraggable @ RTPopup.
+			RTNest new on: classElement nest: methodElements.
+			classElement @ RTDraggable.
+			classElements add: classElement ].
+	RTEdgeBuilder new
+		view: v;
+		shape: (RTLine new attachPoint: RTVerticalAttachPoint instance);
+		connectFrom: #superclass to: #yourself.
+	RTTreeLayout on: classElements.
 	^ v
 ]
 
@@ -6720,31 +6744,80 @@ AABJRU5ErkJggg=='
 
 { #category : #sources }
 RTRoassalExample >> exampleSmoothLayout [
-
 	| v translator |
 	translator := RTSmoothLayoutTranslator new.
 	v := RTView new.
-	v canvas addMenu: 'grid' callback: [ RTGridLayout new translator: translator; on: v elements. v canvas signalUpdate ].
-
-	v canvas addMenu: 'hori' callback: [ RTHorizontalLineLayout new translator: translator; on: v elements. v canvas signalUpdate ].
-
-	v canvas addMenu: 'treeV' callback: [ RTTreeLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
-
-	v canvas addMenu: 'treeH' callback: [ RTHorizontalTreeLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
-
-	v canvas addMenu: 'cluster' callback: [ RTClusterLayout new translator: translator; on: v elements edges: v edges. v canvas signalUpdate ].
-	
-	v canvas addMenu: 'circle' callback: [ RTCircleLayout new translator: translator; scaleBy: 0.8; on: v elements. v canvas signalUpdate ].
-	
-	v canvas addMenu: 'radial' callback: [ RTRadialTreeLayout new translator: translator; on: v elements. v canvas signalUpdate ].
-	
-	v canvas addMenu: 'sugiyama' callback: [ RTSugiyamaLayout new translator: translator; on: v elements. v canvas signalUpdate ].
-	
+	v canvas
+		addMenu: 'grid'
+		callback:
+			[ 
+			RTGridLayout new
+				translator: translator;
+				on: v elements.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'hori'
+		callback:
+			[ 
+			RTHorizontalLineLayout new
+				translator: translator;
+				on: v elements.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'treeV'
+		callback:
+			[ 
+			RTTreeLayout new
+				translator: translator;
+				on: v elements edges: v edges.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'treeH'
+		callback:
+			[ 
+			RTHorizontalTreeLayout new
+				translator: translator;
+				on: v elements edges: v edges.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'cluster'
+		callback:
+			[ 
+			RTClusterLayout new
+				translator: translator;
+				on: v elements edges: v edges.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'circle'
+		callback:
+			[ 
+			RTCircleLayout new
+				translator: translator;
+				scaleBy: 0.8;
+				on: v elements.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'radial'
+		callback:
+			[ 
+			RTRadialTreeLayout new
+				translator: translator;
+				on: v elements.
+			v canvas signalUpdate ].
+	v canvas
+		addMenu: 'sugiyama'
+		callback:
+			[ 
+			RTSugiyamaLayout new
+				translator: translator;
+				on: v elements.
+			v canvas signalUpdate ].
 	v addAll: (RTBox new elementsOn: (1 to: 100)).
-	RTEdge buildEdgesFromObjects: (1 to: 100) from: [ :value | value // 2  ] to: #yourself inView: v.
-
-	RTTreeLayout new  on: v elements edges: v edges.
-
+	RTEdgeBuilder new
+		view: v;
+		objects: (1 to: 100);
+		connectFrom: [ :value | value // 2 ] to: #yourself.
+	RTTreeLayout new on: v elements edges: v edges.
 	^ v
 ]
 
@@ -6892,13 +6965,15 @@ H4QPwg8fhA/CDx+EHz4IH4QfPsiPl98ByUwFby0fOIYAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTRoassalExample >> exampleTreeLayout [
-
 	| view |
-	view := RTView new.	
-	view addAll: (RTBox elementsOn: Collection withAllSubclasses) @ RTDraggable.
-	RTEdge 
-		buildEdgesFromObjects: Collection 
-		withAllSubclasses from: #superclass to: #yourself inView: view.
+	view := RTView new.
+	view
+		addAll:
+			(RTBox elementsOn: Collection withAllSubclasses) @ RTDraggable.
+	RTEdgeBuilder new
+		view: view;
+		objects: Collection withAllSubclasses;
+		connectFrom: #superclass to: #yourself.
 	RTTreeLayout on: view elements edges: view edges.
 	view @ RTDraggableView.
 	view edges do: [ :e | e trachelShape pushBack ].
@@ -7105,43 +7180,57 @@ hNsTaxN+e3srWwkPDw9u9djLWxm2WlqtljvOnnbbZyvBVoB9tmN+QNlLd3d37jw71sa2ibfr
 
 { #category : #sources }
 RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
+	| v inheritanceEdges shape helpBar1 helpBar2 elements eb |
+	v := RTView new.
+	shape := RTEllipse new
+		color: (Color red alpha: 0.4);
+		size: [ :e | e numberOfMethods / 5 max: 5 ].
+	elements := shape elementsOn: Collection withAllSubclasses.
+	elements @ RTPopup @ RTDraggable.
+	v addAll: elements.
 
-| v inheritanceEdges shape helpBar1 helpBar2 elements eb |
-v := RTView new.
-shape := RTEllipse new color: (Color red alpha: 0.4); size: [ :e | e numberOfMethods / 5 max: 5].
-elements := shape elementsOn: Collection withAllSubclasses.
-elements @ RTPopup @ RTDraggable.
-v addAll: elements.
+	"Defining edges from inheritance"
+	inheritanceEdges := RTEdgeBuilder new
+		view: v;
+		objects: Collection withAllSubclasses;
+		connectFrom: #superclass to: #yourself.
 
-"Defining edges from inheritance"
-inheritanceEdges := 
-	RTEdge buildEdgesFromObjects: Collection withAllSubclasses from: #superclass to: #yourself inView: v.
-
-"Layout the whole thing"
-RTForceBasedLayout new 
+	"Layout the whole thing"
+	RTForceBasedLayout new on: v elements edges: inheritanceEdges.
 	"userDefinedEdges: inheritanceEdges;"
-	on: v elements edges: inheritanceEdges.
 
-"Defining edges from dependencies"
-Collection withAllSubclasses do: [ :cls |
-cls rtmethods do: [ :cm | 
-			((cm literals select: [ :l | l class  == Association and: [ l value notNil ] ]) collect: #value) do: [ :depClass | (cls ~~ depClass and: [ Collection withAllSubclasses includes: depClass ]) ifTrue: [ 
-		
-eb := RTEdgeBuilder new.
-eb view: v.
-eb shape bezierLineFollowing: #superclass; color: (Color blue alpha: 0.1).
-eb fromAssociations: (Array with: cls -> depClass).
-] ] ]
-].
-
-
-helpBar1 := TRLabelShape new text: 'Circle = classes, size = number of methods; gray links = inheritance;'.
-helpBar2 := TRLabelShape new text: 'blue links = dependencies; layout = force based layout on the inheritance links'.
-v canvas addFixedShape: helpBar1.
-v canvas addFixedShape: helpBar2.
-TRConstraint stick: helpBar1 above: helpBar2.
-TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
-
+	"Defining edges from dependencies"
+	Collection withAllSubclasses
+		do:
+			[ :cls | 
+			cls rtmethods
+				do:
+					[ :cm | 
+					((cm literals
+						select: [ :l | l class == Association and: [ l value notNil ] ])
+						collect: #value)
+						do:
+							[ :depClass | 
+							(cls ~~ depClass
+								and: [ Collection withAllSubclasses includes: depClass ])
+								ifTrue:
+									[ 
+									eb := RTEdgeBuilder new.
+									eb view: v.
+									eb shape
+										bezierLineFollowing: #superclass;
+										color: (Color blue alpha: 0.1).
+									eb fromAssociations: (Array with: cls -> depClass) ] ] ] ].
+	helpBar1 := TRLabelShape new
+		text:
+			'Circle = classes, size = number of methods; gray links = inheritance;'.
+	helpBar2 := TRLabelShape new
+		text:
+			'blue links = dependencies; layout = force based layout on the inheritance links'.
+	v canvas addFixedShape: helpBar1.
+	v canvas addFixedShape: helpBar2.
+	TRConstraint stick: helpBar1 above: helpBar2.
+	TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
 	^ v
 ]
 
