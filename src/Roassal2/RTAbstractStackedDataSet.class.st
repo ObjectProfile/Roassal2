@@ -136,7 +136,7 @@ RTAbstractStackedDataSet >> renderBarChartIn: aView [
 					max: builder extent y + centralDot position y
 					minValue: 0
 					maxValue: maxY ].
-	RTAlignment new elements:  positiveElements; alignFromBottomUsing: centralDot. 
+	TRConstraint use: centralDot alignFromBottom: positiveElements.	
 		
 	"We treat the element with a negative value"
 	negativeElements := elements copyWithoutAll: positiveElements.
@@ -149,6 +149,6 @@ RTAbstractStackedDataSet >> renderBarChartIn: aView [
 					max: 0
 					minValue: minY
 					maxValue: 0.
-				RTAlignment new elements:  negativeElements; alignFromBottomUsing: centralDot. ].	"We set the actions, if any"
+			TRConstraint use: centralDot alignFromTop: negativeElements ].	"We set the actions, if any"
 	elementActions do: [ :act | act rtValue: elements ]
 ]
