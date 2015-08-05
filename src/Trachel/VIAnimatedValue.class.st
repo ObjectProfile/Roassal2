@@ -8,7 +8,7 @@ in evaluator, recibe a block to handle as f(t).
 "
 Class {
 	#name : #VIAnimatedValue,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#instVars : [
 		'evaluator',
 		'timer',
@@ -29,7 +29,7 @@ VIAnimatedValue >> + aValue [
 		add:aVIAnimatedValue."
 ]
 
-{ #category : #secuence }
+{ #category : #sequence }
 VIAnimatedValue >> , aVIAnimatedValue [ 
 	self error: 'Not yet supported'
 "	^VIAnimatedSecuence new
@@ -43,6 +43,16 @@ VIAnimatedValue >> - aValue [
 
 	^ [ self value - aValue value ]
 
+]
+
+{ #category : #converting }
+VIAnimatedValue >> @ anotherValue [
+	^ VIAnimatedPoint new x: self; y: anotherValue; yourself
+]
+
+{ #category : #converting }
+VIAnimatedValue >> adaptToNumber: rcvr andSend: selector [
+	^ self value perform: selector with: rcvr
 ]
 
 { #category : #actions }
@@ -78,6 +88,11 @@ VIAnimatedValue >> animationDidFinish [
 		ifTrue: [ finishCallback value ].
 ]
 
+{ #category : #converting }
+VIAnimatedValue >> asFloat [
+	^ self value asFloat
+]
+
 { #category : #accessing }
 VIAnimatedValue >> evaluator [
 	
@@ -99,10 +114,11 @@ VIAnimatedValue >> hasCompleted [
 	^ timer value = 1.0
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 VIAnimatedValue >> initialize [
 	super initialize.
 	timer := VITimer new.
+	evaluator := [ :time | time ]
 ]
 
 { #category : #actions }
