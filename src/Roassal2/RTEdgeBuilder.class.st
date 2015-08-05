@@ -189,11 +189,6 @@ RTEdgeBuilder >> fromObjects: someObjectsOrABlock [
 		ifFalse: [ self fromElements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
 ]
 
-{ #category : #accessing }
-RTEdgeBuilder >> globalScope [
-	^ RSGroup withAll: (self view elements collect: #model)
-]
-
 { #category : #initialization }
 RTEdgeBuilder >> initialize [
 	super initialize.
