@@ -15,7 +15,7 @@ Timer can be stopped (paused), resumed or fully reset. The timer value & elapsed
 "
 Class {
 	#name : #VIBasicTimer,
-	#superclass : #Object,
+	#superclass : #TRObject,
 	#category : #'Trachel-Viva'
 }
 
