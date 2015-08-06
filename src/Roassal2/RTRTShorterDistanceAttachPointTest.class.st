@@ -1,10 +1,17 @@
 Class {
 	#name : #RTRTShorterDistanceAttachPointTest,
 	#superclass : #RTTest,
+	#instVars : [
+		'e1',
+		'e2',
+		'lineShape',
+		'edge',
+		'view'
+	],
 	#category : #'Roassal2-AttachPoint-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTRTShorterDistanceAttachPointTest >> setUp [
 	super setUp.
 	view := RTView new.
@@ -15,9 +22,12 @@ RTRTShorterDistanceAttachPointTest >> setUp [
 	lineShape attachPoint: RTShorterDistanceAttachPoint new.
 	edge := lineShape edgeFrom: e1 to: e2.
 	view add: e1; add: e2; add: edge.
+	e2 @ RTDraggable.
+	e1 @ RTDraggable.
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTRTShorterDistanceAttachPointTest >> testHorizontalTwoElements [
 	e2 translateBy: 90 @ 0.
 	
@@ -25,10 +35,10 @@ RTRTShorterDistanceAttachPointTest >> testHorizontalTwoElements [
 	self assert: (lineShape endingPointOf: edge) equals: 55 @ 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTRTShorterDistanceAttachPointTest >> testVerticalTwoElements [
 	e2 translateBy: 0 @ 50.
-	e2 @ RTDraggable.
-	e1 @ RTDraggable.
-	view inspect
+		
+	self assert: (lineShape startingPointOf: edge) equals: 0 @ 15.
+	self assert: (lineShape endingPointOf: edge) equals: 0 @ 35.
 ]

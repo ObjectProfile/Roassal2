@@ -14,7 +14,7 @@ Class {
 	#category : #'Roassal2-AttachPoint-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 RTRectangleAttachPointTest >> setUp [
 	| shape |
 	true ifTrue: [ ^ self skip ].
@@ -30,7 +30,7 @@ RTRectangleAttachPointTest >> setUp [
 		edgeFrom: el to: elD
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTRectangleAttachPointTest >> testInside [
 	| ap |
 	el extent: 2000 @ 2000.
@@ -42,7 +42,7 @@ RTRectangleAttachPointTest >> testInside [
 	self assert: -110 @ -100 = ap | (-100 @ -110 = ap)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTRectangleAttachPointTest >> testNoCollision [
 	self assert: (edgeX shape startingPointOf: edgeX) = (10 @ 0).
 	self assert: (edgeX shape endingPointOf: edgeX) = (90 @ 0).
