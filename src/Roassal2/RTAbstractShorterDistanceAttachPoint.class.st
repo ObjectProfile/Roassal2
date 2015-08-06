@@ -5,10 +5,11 @@ Class {
 }
 
 { #category : #util }
-RTAbstractShorterDistanceAttachPoint >> attachPointFor: anEdge on: anElement with: elementsPossibleAttachPoints [
+RTAbstractShorterDistanceAttachPoint >> attachPointFor: anEdge on: referenceElement with: elementsPossibleAttachPoints [
 	"Returns the attach point having the shortest route for given edge on given element."
 	| p dp t |
-	p := anElement encompassingRectangle bottomRight.
+	"We take an arbitrary point. The center of the reference point"
+	p := referenceElement encompassingRectangle center.
 	
 	"We get the list of dot products"
 	dp := elementsPossibleAttachPoints collect: [ :pp | 

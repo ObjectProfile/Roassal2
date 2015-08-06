@@ -7030,6 +7030,140 @@ u5nePWZ+kW8AAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleTwoColumnFlow [
+
+| firstColumn secondColumn associations firstElements secondElements v eb |
+firstColumn := #( 'WP A.1'  'WP A.2' 'WP A.3'  ).
+secondColumn := #('WP B.1'  'WP B.2'  'WP B.3' ).
+associations := OrderedCollection new. 
+associations 
+	add: 'WP A.1' -> 'WP A.2';
+	add: 'WP A.2' -> 'WP A.3' ;
+
+	 add: 'WP B.1' -> 'WP B.2' ;
+	add: 'WP B.2' -> 'WP B.3' ;
+	
+	 add: 'WP A.3' -> 'WP B.1' ;
+	 add: 'WP B.1' -> 'WP A.1' ;
+	 add: 'WP B.2' -> 'WP B.2' ;
+	 add: 'WP B.3' -> 'WP A.2'.
+
+v := RTView new.
+firstElements := ((RTEllipse new extent: 70 @ 30; color: (Color r: 1.0 g: 1.0 b: 0.7020000000000001 alpha: 1.0)) + RTLabel) elementsOn: firstColumn.
+secondElements := ((RTEllipse new extent: 70 @ 30; color: (Color r: 0.996 g: 0.851 b: 0.651 alpha: 1.0)) + RTLabel) elementsOn: secondColumn.
+v addAll: firstElements.
+v addAll: secondElements.
+
+v elements @ RTDraggable.
+
+RTVerticalLineLayout new gapSize: 15; on: firstElements.
+RTVerticalLineLayout new gapSize: 15; on: secondElements.
+
+secondElements translateBy: 100 @ 0.
+
+eb := RTEdgeBuilder new.
+eb view: v.
+eb shape arrowedLine
+	withContinuousRectangleAttachPoint.
+eb fromAssociations: associations.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleTwoColumnFlowIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAER0lEQVR4XuXa/U9aVxzH8f7/
+yZJlXetsa0XXobW2ndq6Ne2i01jb1SfEuUoi+BgY8rBBEUHu97tzTgeCwBXdrTN5f5KTq9x4
+fjgv77n3fsItVX5uUm7xl4APwg8fhA/CDx+ED8IPH4QPwg8fhA/CDx+EHz4IH4QfPggfhB8+
+CB+EHz4IH4QfPgg/fBA+CD98ED4IP3wQPgg/fBA+CD98EH74IHwQfvggfBB++CB8kOuKyL6I
+fDRj3owXojplPntjfo6YsWXGqVxqvr/iIkcR8XZfibc1aqYIq7c9IZJ6L5JZF/EuNx8GRCTq
+Fr+XITJrYMq+Cyl/LrnF72kkXhrnY+GDNDBWHcbc3D1dWRl04927AV1bCzmAWOyRO9Z/P4MR
+OT4+toeWxZTkosP49dltXfmpT5en+3Q6/LX7OTZzX99O3HEQqz/3tcDwQRogvziQYvGZLi09
+1IODUZ2d7dd8flwjkZAuLNx3AIeHoy0ghUJB8vm8lMvlluHFJx1IITKsH17e1f23D3V88Cs9
+/eMHB1JYG3YAB+ZzPkhHkE/mf3zKd8vyvMlzV0es6xYjlYK5X4z4blk1g9PyWWaDv2W1w2xL
+/WrpfO+YMuc3zaj0tHiS+9i4WjoNbysskl4VqZ0I/6beY+w94r/8falUkmQyKUHNxwcJAMQO
+PsgNADk5+bwVVatVPsj/DVKpVMTzPAn6ikOD2K3GLmCtVrvc27l9bSy3vzhedT4+SNOWk8vl
+5CpXR5Dz8busRpc1bbadafcofNZl+f9325fFrl1WbExqscfC77Kuqctqfprid1kBdFnr60O6
+sTGsm5vD5jikqdSYA9jdHXHHeDzs6pQznPYnquYuK/LqO42+7tfNN/dcf5WYf2BqlAGNzz1w
+ENvmmFsZ4lcn3bqsVOqxLi8P6tHRmEajQ67T2t8f0adPv9H6+UrlxzaQ809U9bfz5PtBVyym
+P4R0/vm3rtOyXdbCv+WiPX/y+yM+iF+XVSo910QirNnsE7fo9mjOOZyZmX53rrnL6vRE1dxl
+fVr/3l0Rh4ufi8TMUkgXJ+84nJnx242rhd9lBdRldXui4ndZ1/himM1mJZPJuHHdVQwfpMMC
+2vtFsVh0gw9yA0Can6js+cssMh8kYJBuHZV9Bzk9vfgljw8SYJfVraNq7rD8tjF+lxVwl+X3
+RHX+Kui21fG7rIC6LM9b66nLapvv74RPlxXld1lfsstqmY/fZX35Lsu+rafTTzp2WS3z9dhl
+2bf19G8hfnVy1S5rb29Ed3bCF4L02mXtLQzozvwAH+SqXZb9RmO1OqG9fS8rfGGXZb/JWKmX
+i5kof8sKosvynY/fZfHDB+GD8MMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw/CB+GHD8IPH4QP
+wg8fhA/CDx+ED8IPH4QPwg8fhA/CXwI+CD98ED4IP3wQPgg/fBA+CD98ED4IP3wQfrrlHzNd
+3LoOQ52QAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleTwoColumnsAsFlow [
+
+| firstColumn secondColumn associations v eb firstElements secondElements |
+firstColumn := #( 'WP A.1' 'WP A.2' 'WP A.3' ).
+secondColumn := #( 'WP B.1' 'WP B.2' 'WP B.3' ).
+associations := OrderedCollection new
+	add: 'WP A.1' -> 'WP A.2';
+	add: 'WP A.2' -> 'WP A.3';
+
+	add: 'WP B.1' -> 'WP B.2';
+	add: 'WP B.2' -> 'WP B.3';
+	
+	add: 'WP A.3' -> 'WP B.1';
+	add: 'WP B.1' -> 'WP A.1';
+	add: 'WP B.2' -> 'WP A.2';
+	add: 'WP B.3' -> 'WP A.2';
+	yourself.
+
+v := RTView new.
+firstElements := ((RTEllipse new extent: 70 @ 30; color: Color lightBlue) + RTLabel) elementsOn: firstColumn.
+secondElements := ((RTEllipse new extent: 70 @ 30; color: Color yellow) + RTLabel) elementsOn: secondColumn.
+v addAll: firstElements.
+v addAll: secondElements.
+
+v elements @ RTDraggable.
+
+RTVerticalLineLayout new gapSize: 15; on: firstElements.
+RTVerticalLineLayout new gapSize: 15; on: secondElements.
+
+secondElements translateBy: 100 @ 0.
+
+eb := RTEdgeBuilder new.
+eb view: v.
+eb shape arrowedLine
+	withContinuousRectangleAttachPoint.
+eb fromAssociations: associations.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleTwoColumnsAsFlowIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEY0lEQVR4XuWazWtjVRiHhyoD
+ogMig8ooWmQEkQGVWTgigkvX/gPuXLp058KvvXt3IopI5kPB0elga5h2qiahk4YKU0nSNmlD
+mzS017RNmryv7zmmnSSTr3Zua+H5wctJensv3PNw33PuQ06p8nOScoo/BXwg/PCB8IHwwwfC
+B8IPHwgfCD98IHwg/PCB8MMHwgfCDx8IHwg/fCB8IPzwgfCB8MMHwg8fCB8IP3wgfCD88IHw
+gfDDB8IHwg8fCD98IHwg/PCB8IHwwwfCB3JcKYpIzuovq7hVzP6WtDFrlbeqWx3keiJf2Rkf
+WV2yOi3ulkVG7fP7Vh9b/SN8IF2y0Jz8YSpl/1sbAEbkA/nv9gaXyAW72orwgTSTbsL4NhrV
+K4mEXrb6fnpar87MeAA/3b3rxyvN73tlp8nW1pYbpB3Gex5GNPqWJhKv+rp+/R0/zs+f16mp
+N/ytz8y80gGHD8RntglkMgg0EovpzVxOv5mY0Gi5rFfv3NHvJic9gJv5fBuQzc1NKZfLsr29
+3VYiL3ogQfCoxmIXNZd7RiORd7VeH/FAguAxf+v5/Dk+kG5xUxgb0LL+aDTavi/3aVkif9vR
+h/q2rEZjpKNtfc5vWZ0p2DTO9gNjx5asdodc2EW+2H9auq8dI3b8Q6ui8Bf1IePWiAc5v1Kp
+yMrKvQX7Qa/HBxICEFd8ICcAyM7Ojj+3VqvxgfzfQKrVqjQaDQn7iUMDca3GTWC9Xj/g27n4
+7W9Y1+MDaWk56+vrcpinI8zr8V1W02UlnM+yttPqshoDtrzuZbG3yzpjbeyMjS+0uKwK32Ud
+lctq3U3xXVYILutaMqk/pFL649ycH38tFDyAGwsLfvw5nfY6pZvL2ttRtbqsZPKCplIv69zc
+S+avLmk2+7zXKJnMqL/1dHpUy+XH+eqkM8kmEAfgcjyuE2trem12VsfMaY0tLemXkYjuHZ+u
+Vu9zWRsbGx7MPZd13gMpFJ7SePw1XVs7q7duvWkwzrXJxULhSVtvTvOB9HNZU5WK/pLJ6G+l
+kp90N/5p3ckLx/Fxf6zVZXXbUYnM77usSuUR/0QsLz/tb7dUekJv337dwxkff3v/aRH5jN+y
+wnBZvXZUfJd1jC+GpVJJisWir+NWMXwgXSbQvYEHQeCLD+QEAGndUbnjB5lkPpCQgfRyVO4d
+ZHd3V/hAjtFl9XJUrQ6rXxvju6yQXVa/HVXnU9Cr1fFdVkguK2Pj8hAu6/6n5us+LusTvss6
+SpfVDoLvso7cZTmVMrG6ug+mN4zhXJb7vLp6lq9ODuuyxhYX9UY2OwSQ4VzW4uKzBuk5PpDD
+uiz3i8bfa7UhfpflXNbIQJflfslYqz3cbFuf8ltWGC6r/zrCd1n88IHwgfDDB8IHwg8fCD98
+IHwg/PCB8IHwwwfCB8IPHwgfCD98IPzwgfCB8MMHwgfCDx8IHwg/fCB8IPzwgfCB8MMHwg8f
+CB8IP3wgfCD88IHwgfDDB8IHwg8fCD898i/yRZSg2d3sdAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleUseOfMetrics [
 
 | metrics classes view mb xAxis yAxis refresh elements |

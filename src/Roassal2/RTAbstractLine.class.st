@@ -111,6 +111,22 @@ RTAbstractLine >> withCenteredAttachPoint [
 ]
 
 { #category : #'attach point' }
+RTAbstractLine >> withContinuousCircleAttachPoint [
+	| ap |
+	ap := RTCircleAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
+RTAbstractLine >> withContinuousRectangleAttachPoint [
+	| ap |
+	ap := RTRectangleAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
 RTAbstractLine >> withHorizontalAttachPoint [
 	| ap |
 	ap := RTHorizontalAttachPoint new.
@@ -127,7 +143,7 @@ RTAbstractLine >> withOffsetIfMultiple [
 { #category : #'attach point' }
 RTAbstractLine >> withShorterDistanceAttachPoint [
 	| ap |
-	ap := RTShorterDistanceAttachPoint new.
+	ap := RTCircleAttachPoint new.
 	self attachPoint: ap.
 	^ ap.
 ]

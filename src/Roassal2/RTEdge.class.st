@@ -352,7 +352,7 @@ RTEdge >> encompassingRectangle [
 
 { #category : #accessing }
 RTEdge >> from [
-	
+	"Return the starting element"
 	^ from
 ]
 
@@ -414,7 +414,7 @@ RTEdge >> remove [
 
 { #category : #accessing }
 RTEdge >> to [
-	
+	"Return the ending element"
 	^ to
 ]
 

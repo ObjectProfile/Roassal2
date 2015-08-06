@@ -16,7 +16,7 @@ RTShapeBuilder >> arc [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> arrowedLine [
-	^ self shape: RTArrowedLine new
+	self shape: RTArrowedLine new
 ]
 
 { #category : #'shape - attach point on edges' }
@@ -27,7 +27,7 @@ RTShapeBuilder >> attachPoint: aBlockOrSymbol [
 { #category : #'shape - edges' }
 RTShapeBuilder >> bezierLineFollowing: aFollowBlock [
 	"aFollowBlock return an element"
-	^ self shape: (RTBezierLine new follow: aFollowBlock)
+	self shape: (RTBezierLine new follow: aFollowBlock)
 ]
 
 { #category : #'shape - edges' }
@@ -36,9 +36,14 @@ RTShapeBuilder >> bezierLineUsingObjects: aFollowBlock [
 	| elements |
 	self error: 'Method is not finished!!!'.
 	elements := #().
-	^ self shape: (RTBezierLine new controllingElements: elements)
+	self shape: (RTBezierLine new controllingElements: elements)
 	
  
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> box [
+	self shape: RTBox new
 ]
 
 { #category : #'shape - attach point on edges' }
@@ -52,6 +57,11 @@ RTShapeBuilder >> centeredAttachPoint [
 { #category : #shapes }
 RTShapeBuilder >> circle [
 	self shape: RTEllipse new
+]
+
+{ #category : #'as yet unclassified' }
+RTShapeBuilder >> color [
+	^ self current color
 ]
 
 { #category : #shapes }
@@ -85,21 +95,21 @@ RTShapeBuilder >> current [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> directedLine [
-	^ self shape: RTDirectedLine new
+	self shape: RTDirectedLine new
 ]
 
 { #category : #'reflective operations' }
 RTShapeBuilder >> doesNotUnderstand: aMessage [
 	"we simply forward the messages we do not understand
 	to the actual shape implementation"
-	^ self shape 
+	self shape 
 		perform: aMessage selector 
 		withArguments: aMessage arguments
 ]
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> doubleArrowedLine [
-	^ self shape: RTDoubleArrowedLine new
+	self shape: RTDoubleArrowedLine new
 ]
 
 { #category : #'public - building' }
@@ -140,6 +150,11 @@ RTShapeBuilder >> extensibleLabel [
 	^ self shape: RTExtensibleLabel new
 ]
 
+{ #category : #'as yet unclassified' }
+RTShapeBuilder >> fillColor [
+	^ self color
+]
+
 { #category : #'text shape' }
 RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 	"Make sure we have something that this message is meaningful"
@@ -151,7 +166,7 @@ RTShapeBuilder >> fontSize: aValueOrASymbolOrABlock [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> gradientLineFrom: fromColor to: toColor [
-	^ self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); 
+	self shape: (RTGradientColoredLine new colors: (Array with: fromColor with: toColor); 
 							precision: 100; 
 							gradientColorShape)
 ]
@@ -208,7 +223,7 @@ RTShapeBuilder >> if: conditionBlock fillColor: colorBlock [
 	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
 	| oldBlockOrValue |
 	oldBlockOrValue := self fillColor.
-	^self fillColor: [ :aModel | (conditionBlock rtValue: aModel)
+	self fillColor: [ :aModel | (conditionBlock rtValue: aModel)
 									ifTrue: [ colorBlock rtValue: aModel ] 
 									ifFalse: [ 
 										"Having to create a new element is rather ugly. 
@@ -280,7 +295,7 @@ RTShapeBuilder >> labelledAs: aBlock [
 
 { #category : #'shape - edges' }
 RTShapeBuilder >> line [
-	^ self shape: (RTLine new)
+	self shape: RTLine new
 ]
 
 { #category : #shapes }
@@ -319,7 +334,7 @@ RTShapeBuilder >> postCopy [
 
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
-	self shape: RTBox new
+	^ self box
 ]
 
 { #category : #accessing }
@@ -378,7 +393,7 @@ RTShapeBuilder >> shortestDistanceAttachPoint [
 	
 ]
 
-{ #category : #shapes }
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> text [
 	self shape: RTLabel new
 ]
@@ -396,29 +411,77 @@ RTShapeBuilder >> withBorder [
 	self borderColor: Color black
 ]
 
-{ #category : #shapes }
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> withText [
 	^ self withText: #yourself
 ]
 
-{ #category : #shapes }
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> withText: aSymbolOrABlock [
 	shape := shape + (RTLabel new text: aSymbolOrABlock).
 	^ shape
 ]
 
-{ #category : #shapes }
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> withTextAbove [
 	^ self withTextAbove: #yourself
 ]
 
-{ #category : #shapes }
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> withTextAbove: aSymbolOrABlock [
 	| newShape |
 	newShape := RTCompositeShape new.
 	newShape add: (RTLabel new text: aSymbolOrABlock).
 	newShape add: shape.
 	newShape vertical.
+	newShape setAutomaticRelayout.
+	shape := newShape.
+]
+
+{ #category : #'text shape' }
+RTShapeBuilder >> withTextBelow [
+	^ self withTextBelow: #yourself
+]
+
+{ #category : #'text shape' }
+RTShapeBuilder >> withTextBelow: aSymbolOrABlock [
+	| newShape |
+	newShape := RTCompositeShape new.
+	newShape add: shape.
+	newShape add: (RTLabel new text: aSymbolOrABlock).
+	newShape vertical.
+	newShape setAutomaticRelayout.
+	shape := newShape.
+]
+
+{ #category : #'shapes - texting' }
+RTShapeBuilder >> withTextOnTheLeft [
+	^ self withTextOnTheLeft: #yourself
+]
+
+{ #category : #'shapes - texting' }
+RTShapeBuilder >> withTextOnTheLeft: aSymbolOrABlock [
+	| newShape |
+	newShape := RTCompositeShape new.
+	newShape add: (RTLabel new text: aSymbolOrABlock).
+	newShape add: shape.
+	newShape horizontal.
+	newShape setAutomaticRelayout.
+	shape := newShape.
+]
+
+{ #category : #'shapes - texting' }
+RTShapeBuilder >> withTextOnTheRight [
+	^ self withTextOnTheRight: #yourself
+]
+
+{ #category : #'shapes - texting' }
+RTShapeBuilder >> withTextOnTheRight: aSymbolOrABlock [
+	| newShape |
+	newShape := RTCompositeShape new.
+	newShape add: shape.
+	newShape add: (RTLabel new text: aSymbolOrABlock).
+	newShape horizontal.
 	newShape setAutomaticRelayout.
 	shape := newShape.
 ]

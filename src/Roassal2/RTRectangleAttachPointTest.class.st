@@ -3,7 +3,7 @@ A DCRTRectangleAttachPointTest is a test class for testing the behavior of DCRTR
 "
 Class {
 	#name : #RTRectangleAttachPointTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'el',
 		'elX',
