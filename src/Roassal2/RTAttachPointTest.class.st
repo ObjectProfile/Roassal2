@@ -36,9 +36,9 @@ RTAttachPointTest >> testContinuousCircleAttachPoint [
 		equals: (el1 encompassingRectangle topRight 
 					+ (0 @ (el1 encompassingRectangle extent y / 2)) asIntegerPoint).
 	self 
-		assert: (shape endingPointOf: edge) 
-		equals: (el2 encompassingRectangle topLeft 
-					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
+		assert: ((shape endingPointOf: edge) 
+					closeTo: (el2 encompassingRectangle topLeft 
+					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint)).
 ]
 
 { #category : #tests }
@@ -76,9 +76,9 @@ RTAttachPointTest >> testShorterDistancePoint1 [
 		equals: (el1 encompassingRectangle topRight 
 					+ (0 @ (el1 encompassingRectangle extent y / 2))) asIntegerPoint.
 	self 
-		assert: (shape endingPointOf: edge) 
-		equals: (el2 encompassingRectangle topLeft 
-					+ (0 @ (el2 encompassingRectangle extent y / 2))) asIntegerPoint.
+		assert: ((shape endingPointOf: edge) 
+					closeTo: (el2 encompassingRectangle topLeft 
+						+ (0 @ (el2 encompassingRectangle extent y / 2)))).
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,13 +90,13 @@ RTAttachPointTest >> testShorterDistancePoint2 [
 	el1 translateTo: el2 position.
 	el2 translateTo: p.
 	self 
-		assert: (shape startingPointOf: edge) 
-		equals: (el1 encompassingRectangle topLeft 
-					+ (0 @ (el1 encompassingRectangle extent y / 2))) asIntegerPoint.
+		assert: ((shape startingPointOf: edge) 
+					closeTo: (el1 encompassingRectangle topLeft 
+					+ (0 @ (el1 encompassingRectangle extent y / 2)))).
 	self 
-		assert: (shape endingPointOf: edge) 
-		equals: (el2 encompassingRectangle topRight 
-					+ (0 @ (el2 encompassingRectangle extent y / 2))) asIntegerPoint.
+		assert: ((shape endingPointOf: edge) 
+					closeTo: (el2 encompassingRectangle topRight 
+					+ (0 @ (el2 encompassingRectangle extent y / 2)))).
 ]
 
 { #category : #'as yet unclassified' }
@@ -108,14 +108,14 @@ RTAttachPointTest >> testShorterDistancePoint3 [
 	el1 translateBy: 0 @ 80.
 	el2 translateTo: p.
 	self 
-		assert: (shape startingPointOf: edge) 
-		equals: (el1 encompassingRectangle topLeft 
-					+ ((el1 encompassingRectangle width / 2) @ 0)) asIntegerPoint.
+		assert: ((shape startingPointOf: edge) 
+					closeTo: (el1 encompassingRectangle topLeft 
+					+ ((el1 encompassingRectangle width / 2) @ 0))).
 	self 
-		assert: (shape endingPointOf: edge) 
-		equals: (el2 encompassingRectangle topLeft 
+		assert: ((shape endingPointOf: edge) 
+					closeTo: (el2 encompassingRectangle topLeft 
 					+ ((el2 encompassingRectangle width / 2) 
-							@ el2 encompassingRectangle width)) asIntegerPoint.
+							@ el2 encompassingRectangle width))).
 ]
 
 { #category : #'as yet unclassified' }
