@@ -251,16 +251,6 @@ RTStyledMultiLine >> updateFor: anEdge trachelShape: trachelShape [
 ]
 
 { #category : #'attach point' }
-RTStyledMultiLine >> withContinuousCircleAttachPoint [
-	self attachPoint: RTCircleAttachPoint new
-]
-
-{ #category : #'attach point' }
-RTStyledMultiLine >> withContinuousRectangleAttachPoint [
-	self attachPoint: RTRectangleAttachPoint new
-]
-
-{ #category : #'attach point' }
 RTStyledMultiLine >> withShorterDistanceWithOffsetAttachPoint [
 	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new
 ]

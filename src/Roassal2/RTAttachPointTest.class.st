@@ -28,6 +28,32 @@ RTAttachPointTest >> setUp [
 
 ]
 
+{ #category : #tests }
+RTAttachPointTest >> testContinuousCircleAttachPoint [
+	shape withContinuousCircleAttachPoint.
+	self 
+		assert: (shape startingPointOf: edge) 
+		equals: (el1 encompassingRectangle topRight 
+					+ (0 @ (el1 encompassingRectangle extent y / 2)) asIntegerPoint).
+	self 
+		assert: (shape endingPointOf: edge) 
+		equals: (el2 encompassingRectangle topLeft 
+					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
+]
+
+{ #category : #tests }
+RTAttachPointTest >> testContinuousRectangleAttachPoint [
+	shape withContinuousRectangleAttachPoint.
+	self 
+		assert: (shape startingPointOf: edge) 
+		equals: (el1 encompassingRectangle topRight 
+					+ (0 @ (el1 encompassingRectangle extent y / 2)) asIntegerPoint).
+	self 
+		assert: (shape endingPointOf: edge) 
+		equals: (el2 encompassingRectangle topLeft 
+					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
+]
+
 { #category : #'as yet unclassified' }
 RTAttachPointTest >> testHorizontalAttachPoint [
 	shape withHorizontalAttachPoint.

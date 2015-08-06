@@ -3,7 +3,7 @@ A DCLineSegmentTest is a test class for testing the behavior of DCLineSegment
 "
 Class {
 	#name : #RTLineSegmentTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'lineX',
 		'lineY',
