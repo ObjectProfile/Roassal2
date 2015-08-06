@@ -1,3 +1,22 @@
+"
+Create a slider on a view. A callback may be set when it is moved
+
+[ [ [ 
+	| v label slider |
+	v := RTView new.
+	label := RTLabel elementOn: 0.
+	v add: label.
+	
+	slider := RTSlider new.
+	slider view: v.
+	slider labelled.
+	slider callback: [ :aValue | label model: aValue * 100. label updateShape ].
+	slider moveBelow.
+	slider build.
+	
+	v
+ ] ] ]
+"
 Class {
 	#name : #RTSlider,
 	#superclass : #RTBuilder,
@@ -27,6 +46,7 @@ RTSlider >> callback [
 
 { #category : #accessing }
 RTSlider >> callback: aOneArgBlock [
+	"At each movement of the slider, the argument aOneArgBlock will be evaluated. The bloc takes as argument a float value, ranging between 0.0 and 1.0"
 	callback := aOneArgBlock
 ]
 
