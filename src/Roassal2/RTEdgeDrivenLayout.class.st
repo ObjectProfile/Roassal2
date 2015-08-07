@@ -27,7 +27,8 @@ Class {
 		'edges',
 		'userDefinedEdges',
 		'fromPositions',
-		'toPositions'
+		'toPositions',
+		'shouldSetDefaultAttachPoint'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -48,6 +49,11 @@ RTEdgeDrivenLayout class >> withEdges: aCollection [
 	^self new initialize userDefinedEdges: aCollection
 ]
 
+{ #category : #'default attach points' }
+RTEdgeDrivenLayout >> addDefaultAttachPointToEdges [
+	edges do: [ :e | e shape attachPoint: self defaultAttachPoint ]
+]
+
 { #category : #accessing }
 RTEdgeDrivenLayout >> affectedNodes [
 	
@@ -65,6 +71,11 @@ RTEdgeDrivenLayout >> affectedNodesOf:  aNode [
 	^ affectedNodes ifNil: [ aNode nodes ]
 ]
 
+{ #category : #'default attach points' }
+RTEdgeDrivenLayout >> defaultAttachPoint [
+	^ RTCenteredAttachPoint instance
+]
+
 { #category : #'default values' }
 RTEdgeDrivenLayout >> defaultFromPositions [
 	^ #()
@@ -75,6 +86,12 @@ RTEdgeDrivenLayout >> defaultFromPositions [
 RTEdgeDrivenLayout >> defaultToPositions [
 	^ #()
 
+]
+
+{ #category : #'default attach points' }
+RTEdgeDrivenLayout >> doAttachPoint [
+	"Change the attach point of edges when added"
+	shouldSetDefaultAttachPoint := true
 ]
 
 { #category : #hook }
@@ -90,16 +107,23 @@ RTEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
 	self doExecute: anElementNode
 ]
 
+{ #category : #'default attach points' }
+RTEdgeDrivenLayout >> doNotAttachPoint [
+	"Do not add an attach point to edges"
+	shouldSetDefaultAttachPoint := false
+]
+
 { #category : #private }
 RTEdgeDrivenLayout >> edges [
 	
-	^edges
+	^ edges
 ]
 
 { #category : #accessing }
 RTEdgeDrivenLayout >> edges: aCollection [
 	
-	edges := aCollection
+	edges := aCollection.
+	self addDefaultAttachPointToEdges
 ]
 
 { #category : #iterator }
@@ -147,7 +171,8 @@ RTEdgeDrivenLayout >> fromPositions: anArray [
 RTEdgeDrivenLayout >> initialize [
 	"Initialization"
 	super initialize.
-	edges := nil
+	edges := nil.
+	shouldSetDefaultAttachPoint := false
 ]
 
 { #category : #testing }
@@ -165,6 +190,12 @@ RTEdgeDrivenLayout >> setEdgesFromElements: elements [
 	self edges: (view edges select: [ :el | 
 		(el isUsedInLayout and: [ elements includes: el from ]) and: [ elements includes: el to ] ]).
 	
+]
+
+{ #category : #'default attach points' }
+RTEdgeDrivenLayout >> shouldSetDefaultAttachPoint [
+	"Return true if an attach point has to be added to edges. False else"
+	^ shouldSetDefaultAttachPoint
 ]
 
 { #category : #private }

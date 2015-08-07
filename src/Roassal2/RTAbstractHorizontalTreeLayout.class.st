@@ -18,6 +18,11 @@ RTAbstractHorizontalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+RTAbstractHorizontalTreeLayout >> defaultAttachPoint [
+	^ RTHorizontalAttachPoint instance
+]
+
 { #category : #'hook-private' }
 RTAbstractHorizontalTreeLayout >> defaultFromPositions [
 	

@@ -5,6 +5,21 @@ Class {
 }
 
 { #category : #tests }
+RTCompositeShapeTest >> testAttachPoint [
+
+	| c l head attachPoint |
+	c := RTCompositeShape new.
+	l := RTLine new.
+	c add: l.
+	head := RTSimpleArrowHead new.
+	c add: head.
+	attachPoint := RTHorizontalAttachPoint instance.
+	c attachPoint: attachPoint.
+	self assert: l attachPoint equals: attachPoint.
+	self assert: head attachPoint equals: attachPoint.
+]
+
+{ #category : #tests }
 RTCompositeShapeTest >> testCallbacks [
 
 	| compo ellipse v shapes |
