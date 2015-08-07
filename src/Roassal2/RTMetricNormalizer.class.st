@@ -160,6 +160,12 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 ]
 
 { #category : #'public normalize color' }
+RTMetricNormalizer >> normalizeColorAsGray: metricBlock [
+	"aBlock is evaluated on each node model."
+	^ self normalizeColor: metricBlock using: (Array with: Color white with: Color black)
+]
+
+{ #category : #'public normalize color' }
 RTMetricNormalizer >> normalizeColorUsing: colors [
 	^ self normalizeColor: #yourself using: colors
 ]
