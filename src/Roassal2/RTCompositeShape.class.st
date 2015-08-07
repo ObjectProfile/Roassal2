@@ -111,6 +111,13 @@ RTCompositeShape >> allShapes [
 	^ shapes collect: #first as: Array
 ]
 
+{ #category : #'attach point' }
+RTCompositeShape >> attachPoint: anAttachPoint [
+	self allShapes do: [ :s | 
+		((s isKindOf: RTAbstractLine) or: [ s isKindOf: RTLineDecoration ]) 
+			ifTrue: [ s attachPoint: anAttachPoint ] ]
+]
+
 { #category : #accessing }
 RTCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].

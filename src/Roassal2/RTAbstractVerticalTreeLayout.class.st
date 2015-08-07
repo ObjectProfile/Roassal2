@@ -18,6 +18,11 @@ RTAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 	self subclassResponsibility
 ]
 
+{ #category : #'default attach points' }
+RTAbstractVerticalTreeLayout >> defaultAttachPoint [
+	^ RTVerticalAttachPoint instance
+]
+
 { #category : #'initialize-release' }
 RTAbstractVerticalTreeLayout >> initialize [
 	super initialize.
