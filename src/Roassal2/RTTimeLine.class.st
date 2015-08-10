@@ -48,6 +48,11 @@ RTTimeline >> elements [
 	^ elements
 ]
 
+{ #category : #initialization }
+RTTimeline >> gapBetweenTimeLines [
+	^ 3
+]
+
 { #category : #'accessing - computed' }
 RTTimeline >> indexOfLineIdentifier: anIdentifier [
 	^ self lineIdentifiers indexOf: anIdentifier
@@ -72,6 +77,11 @@ RTTimeline >> label: aString on: position [
 	e translateTo: position.
 	self view add: e.
 	^ e
+]
+
+{ #category : #'private - utility' }
+RTTimeline >> labelOffsetBetweenLines [
+	^ 10
 ]
 
 { #category : #'private - utility' }
@@ -116,18 +126,22 @@ RTTimeline >> renderIn: aView [
 
 { #category : #'private - utility' }
 RTTimeline >> renderTimeLineLabels [
-	| labels position labelElements offset halfVerticalStep |
+	| labels position labelElements halfVerticalStep |
 	labels := self lineIdentifierLabels.
 	labelElements := RTGroup new.
 	labels
-		doWithIndex: [ :aLabel :index | 
+		doWithIndex:
+			[ :aLabel :index | 
 			position := self getPixelPositionOf: 0 @ index.
 			labelElements add: (self label: aLabel on: position) ].
-	offset := 10.
 	halfVerticalStep := (self getPixelPositionOf: 0 @ 1) y / -2.
-	"TRConstraint alignFromRight: labelElements."
-	RTAlignment new elements: labelElements; right.
-	labelElements translateBy: (labelElements extent x / 2 + offset) negated @ halfVerticalStep
+
+	RTAlignment new
+		elements: labelElements;
+		right.
+	labelElements
+		translateBy:
+			(labelElements extent x / 2 + self labelOffsetBetweenLines) negated @ halfVerticalStep
 ]
 
 { #category : #'private - utility' }

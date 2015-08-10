@@ -37,6 +37,6 @@ RTHorizontalTimelineDecoratorTest >> testBasic [
 
 	b build.
 	
-	self assert: b view edges last from position equals: 0 @ -80.
-	self assert: b view edges last to position equals: 300 @ -80.
+	self assert: b view edges last from position equals: 0 @ (-163 / 2).
+	self assert: b view edges last to position equals: 300 @ (-163 / 2).
 ]
