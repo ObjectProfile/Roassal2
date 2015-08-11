@@ -145,9 +145,7 @@ RTSVGVisitor2 >> visitArcShape: aShape [
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
-
-	
-	| e ap |
+	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
 		{type: "headarrow", id: "';
@@ -156,36 +154,19 @@ RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape color.
 	self addBorderColor: arrowShape strokePaint.
-	ap := e shape class = RTCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
+	
 	stream nextPutAll: ' width: ', arrowShape width asString;
-		nextPutAll: ', size: ', arrowShape mySize asString, ', ap: ';
-		nextPutAll: ap attachPoint class name;
-		nextPutAll: ', base: ', arrowShape baseSize asString;
+		nextPutAll: ', size: ', arrowShape mySize asString.
+	self visitAttachPoint: e.
+	stream nextPutAll: ', base: ', arrowShape baseSize asString;
 		nextPutAll: '},'.
 	
-	
-	"| aid color bColor w s svgE|
-	aid := self getDecorationId: arrowHeadShape.
-	color := arrowHeadShape color.
-	bColor := arrowHeadShape strokePaint.
-	w := arrowHeadShape width.
-	s := arrowHeadShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			svgE := RTSVGArrowHeadMarker new id: aid fillColor: color borderColor: bColor width: w size: s.
-			svgE addOn: stream using: self. 
-			markers add: aid. 
-			]"
-		"TODO"
 	
 ]
 
 { #category : #visitor }
 RTSVGVisitor2 >> visitArrowShape: arrowShape [
-	
-	| e ap |
+	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
 		{type: "simplearrow", id: "';
@@ -193,14 +174,23 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape strokePaint.
-	ap := e shape class = RTCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
 	stream nextPutAll: ' width: ', arrowShape width asString;
-		nextPutAll: ', size: ', arrowShape mySize asString, ', ap: ';
-		nextPutAll: ap attachPoint class name;
-		nextPutAll: ', base: ', arrowShape baseSize asString;
+		nextPutAll: ', size: ', arrowShape mySize asString.
+	self visitAttachPoint: e.
+	stream nextPutAll: ', base: ', arrowShape baseSize asString;
 		nextPutAll: '},'.
+	
+]
+
+{ #category : #visitor }
+RTSVGVisitor2 >> visitAttachPoint: element [
+	| ap |
+	ap := element shape class = RTCompositeShape 
+		ifTrue: [ element shape allShapes first ] 
+		ifFalse: [ element shape ].
+	stream nextPutAll: ',ap: new ';
+		nextPutAll: ap attachPoint class name;
+		nextPutAll: '(', ap attachPoint isInverted asString, ')'.
 	
 ]
 
@@ -221,9 +211,9 @@ RTSVGVisitor2 >> visitBezierShape: aBezierShape [
 		(shape controllingElements rtValue:e) do: [ :el | 
 			stream nextPutAll: '"', (self nameFor: el trachelShape), '", '] ].
 	
-	stream nextPutAll: '], width: ', aBezierShape width asString, ', ap: ';
-		nextPutAll: shape attachPoint class name;
-		nextPutAll: '},'.
+	stream nextPutAll: '], width: ', aBezierShape width asString.
+	self visitAttachPoint: e.
+	stream nextPutAll: '},'.
 	
 ]
 
@@ -419,9 +409,8 @@ RTSVGVisitor2 >> visitLabelledInteraction: anInt with: el [
 { #category : #visitor }
 RTSVGVisitor2 >> visitLineShape: aLine [
 	
-	| e ap |
+	| e |
 	e := aLine element.
-	
 	e = nil ifTrue: [ ^ self ].
 	e shape = nil ifTrue: [ ^ self ].
 	
@@ -430,12 +419,9 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 		nextPutAll: (self nameFor: aLine);
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
-	ap := e shape class = RTCompositeShape 
-		ifTrue: [ e shape allShapes first ] 
-		ifFalse: [ e shape ].
 	self addColor: aLine color.
-	stream nextPutAll: ' width: ', aLine width asString, ', ap: '.
-	stream nextPutAll: ap attachPoint class name.
+	stream nextPutAll: ' width: ', aLine width asString.
+	self visitAttachPoint: e.
 	stream nextPutAll: '},'.
 	
 ]
@@ -455,7 +441,7 @@ RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 	stream nextPutAll: ']'.
 
 	(aShape element isNil not and: [aShape element shape isKindOf: RTMultiColoredLine]) ifTrue: [ 
-		stream nextPutAll: ', ap: ', aShape element shape attachPoint class name ].
+		self visitAttachPoint: aShape element. ].
 	stream nextPutAll: '},'.
 ]
 
