@@ -1,3 +1,14 @@
+"
+RTDSM build a Dependency Structural Matrix for a collection of objects and an arbitrary dependency function.
+
+For example, inspect the following:
+[[[ 
+	dsm := RTDSM new.
+	dsm objects: RTShape withAllSubclasses.
+	dsm dependency: #dependentClasses.
+	^ dsm
+]]]
+"
 Class {
 	#name : #RTDSM,
 	#superclass : #RTBuilder,
@@ -9,15 +20,71 @@ Class {
 	#category : #'Roassal2-Builder-DSM'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #UI }
+RTDSM >> addLabels [
+	self addLabelsLeft.
+	self addLabelsTop.
+]
+
+{ #category : #UI }
+RTDSM >> addLabelsLeft [
+	| es lblShape theModel lbl |
+	es := self columnAt: 1.
+	lblShape := RTLabel new height: self cellSize.
+	es do: [ :e |
+		theModel := e model key.
+		lbl := lblShape elementOn: theModel.
+		view add: lbl.
+		RTConstraint new
+			fix: e;
+			movable: lbl;
+			outer;
+			left;
+			move
+	]
+]
+
+{ #category : #UI }
+RTDSM >> addLabelsTop [
+	| es lblShape theModel lbl |
+	es := self rowAt: 1.
+	lblShape := RTLabel new height: self cellSize.
+	es do: [ :e |
+		theModel := e model value.
+		lbl := lblShape elementOn: theModel.
+		view add: lbl.
+		lbl rotateByDegrees: -55.
+		RTConstraint new
+			fix: e;
+			movable: lbl;
+			outer;
+			right;
+			top;
+			move.
+		lbl translateBy: (self cellSize negated @ 0)
+	]
+]
+
+{ #category : #UI }
+RTDSM >> cellSize [
+	^ 10
+]
+
+{ #category : #UI }
 RTDSM >> cellshape [
 	^ RTBox new
-		size: 10;
+		size: self cellSize;
 		color:
 				[ :assoc | 
 			(self isAssocDependent: assoc)
-				ifTrue: [ Color lightRed ]
-				ifFalse: [ Color lightGray ] ]
+				ifTrue: [ Color red alpha: 0.4 ]
+				ifFalse: [ Color gray alpha: 0.4 ] ]
+]
+
+{ #category : #accessing }
+RTDSM >> columnAt: aNumber [
+
+	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: aNumber @ i ]
 ]
 
 { #category : #UI }
@@ -33,7 +100,16 @@ RTDSM >> createElements [
 					[ :anObject2 :index2 | 
 					e := shape elementOn: anObject1 -> anObject2.
 					e @ RTPopup.
-					e attributeAt: #matrixIndex put: index1 @ index2.
+					e when: TRMouseEnter do: [ :evt | 
+						self highlightColumn: (evt element attributeAt: #matrixIndex) x.
+						self highlightRow: (evt element attributeAt: #matrixIndex) y.
+						 ].
+					e when: TRMouseLeave do: [ :evt | 
+						self unhighlightColumn: (evt element attributeAt: #matrixIndex) x.
+						self unhighlightRow: (evt element attributeAt: #matrixIndex) y.
+						 ].
+					
+					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 
 ]
@@ -85,6 +161,21 @@ RTDSM >> example02 [
 	^ dsm
 ]
 
+{ #category : #UI }
+RTDSM >> highlightColumn: aNumber [
+	^ self highlightElements: (self columnAt: aNumber)
+]
+
+{ #category : #UI }
+RTDSM >> highlightElements: someElements [
+	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.8) ]
+]
+
+{ #category : #UI }
+RTDSM >> highlightRow: aNumber [
+	^ self highlightElements: (self rowAt: aNumber)
+]
+
 { #category : #initialization }
 RTDSM >> initialize [
 	super initialize.
@@ -102,7 +193,7 @@ RTDSM >> isAssocDependent: assoc [
 		ifFalse: [ false ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #UI }
 RTDSM >> layoutElements: es [
 	RTGridLayout new
 		gapSize: 1;
@@ -131,5 +222,27 @@ RTDSM >> renderIn: aView [
 	self createElements.
 	aView addAll: elements.
 	self layoutElements: elements.
+	self addLabels.
 	^ aView
+]
+
+{ #category : #accessing }
+RTDSM >> rowAt: aNumber [
+
+	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: i @ aNumber ]
+]
+
+{ #category : #UI }
+RTDSM >> unhighlightColumn: aNumber [
+	^ self unhighlightElements: (self columnAt: aNumber)
+]
+
+{ #category : #UI }
+RTDSM >> unhighlightElements: someElements [
+	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.4) ]
+]
+
+{ #category : #UI }
+RTDSM >> unhighlightRow: aNumber [
+	^ self unhighlightElements: (self rowAt: aNumber)
 ]
