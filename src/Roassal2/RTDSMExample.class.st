@@ -153,7 +153,7 @@ IXz4QvhC+PCF8IXw4QvhC+HDF8IXwocvhA9fCF8IH74QvhA+fCF8IXz4QvhC+JyG3yIplAJj
 8utNAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDSMExample >> label [
 	^ 'Dependency Structural Matrix'
 ]
