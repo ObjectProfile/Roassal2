@@ -15,11 +15,11 @@ respective objects are.'
 RTVisualIDPlugin >> execute [
 	Gofer new
 		smalltalkhubUser: 'IgnacioFernandez' project: 'VisualiDs';
+		package: 'VisualID';
 		package: 'VisualID-Clustering';
 		package: 'VisualID-Random';
 		package: 'VisualID-Roassal';
 		package: 'VisualID-Canvas';
-		package: 'VisualID-Random';
 		package: 'VisualID-Test';
 		load
 ]
