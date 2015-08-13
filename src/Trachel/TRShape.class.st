@@ -360,6 +360,7 @@ TRShape >> strokePaint [
 { #category : #accessing }
 TRShape >> strokePaint: aColor [
 	"set the color of the border line"
+	[ aColor isNil or: [ aColor isKindOf: Color ] ] assert.
 	strokePaint := aColor
 ]
 
