@@ -92,6 +92,11 @@ RTSVGVisitor2 >> initialize [
 
 ]
 
+{ #category : #'as yet unclassified' }
+RTSVGVisitor2 >> pointToString: point [
+	^ '{x:',point x asFloat asString, ',y:',point y asFloat asString,'}'
+]
+
 { #category : #accessing }
 RTSVGVisitor2 >> stream [
 
@@ -185,6 +190,8 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 { #category : #visitor }
 RTSVGVisitor2 >> visitAttachPoint: element [
 	| ap |
+	element ifNil: [ 
+		^ stream nextPutAll: ',ap:RTCenteredAttachPoint' ].
 	ap := element shape class = RTCompositeShape 
 		ifTrue: [ element shape allShapes first ] 
 		ifFalse: [ element shape ].
@@ -295,6 +302,8 @@ RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
 			e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
 			ifFalse: [ list add: e trachelShape ] ].
 	].
+	list addAll: (anInteraction groupToDrag collect: [ :e|
+		(e isKindOf: TRShape) ifTrue: [ e ] ifFalse: [ e trachelShape ] ]).
 	list isEmpty ifTrue: [ self visitInteraction: anInteraction with: anObject ]
 	ifFalse: [
 		stream nextPutAll: 'new RTDraggable(['.
@@ -409,16 +418,18 @@ RTSVGVisitor2 >> visitLabelledInteraction: anInt with: el [
 { #category : #visitor }
 RTSVGVisitor2 >> visitLineShape: aLine [
 	
-	| e |
+	| e fromTo |
 	e := aLine element.
-	e = nil ifTrue: [ ^ self ].
-	e shape = nil ifTrue: [ ^ self ].
+	e ~= nil ifTrue: [ 
+		fromTo := '",fromid:<1p>,toid:<2p>,' 
+			expandMacrosWith: (self nameFor: e from trachelShape)
+			with: (self nameFor: e to trachelShape) .] ifFalse: [
+		fromTo := '", fromid: ',(self pointToString: aLine from),',toid:',(self pointToString: aLine to),','.].
 	
 	stream nextPutAll: '
 		{type: "line", id: "';
 		nextPutAll: (self nameFor: aLine);
-		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
-		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
+		nextPutAll: fromTo.
 	self addColor: aLine color.
 	stream nextPutAll: ' width: ', aLine width asString.
 	self visitAttachPoint: e.

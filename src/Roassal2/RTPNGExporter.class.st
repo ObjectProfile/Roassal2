@@ -64,7 +64,7 @@ RTPNGExporter >> exportToFile [
 				fillRectangle: (0@0 corner: viewExtent) withSolidColor: view canvas color.
 			cs pathTransform
 				translateBy: self viewHalfExtent asFloatPoint;
-				scaleBy: self cameraScale asFloat;
+				scaleBy: 1.0001;
 				translateBy: self cameraPositionNegated asFloatPoint.
 			trachelCanvas shapes do: [ :trachelShape | trachelShape drawOn: cs ].
 			cs pathTransform loadIdentity scaleBy: 1.001.
