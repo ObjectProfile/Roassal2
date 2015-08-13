@@ -74,6 +74,12 @@ TRMorph >> drawOn: aCanvas [
 	aCanvas image: surface asForm at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
 ]
 
+{ #category : #drawing }
+TRMorph >> drawOnMockCanvas [
+
+	self drawOn: (FormCanvas extent: 500 @ 500)
+]
+
 { #category : #accessing }
 TRMorph >> eventOverseer [
 	^ trachelCanvas eventOverseer
