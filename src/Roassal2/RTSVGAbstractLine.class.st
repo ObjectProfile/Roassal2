@@ -31,7 +31,7 @@ RTSVGAbstractLine >> decoration: anObject [
 { #category : #utils }
 RTSVGAbstractLine >> getDecorationId: aLineDecorationShape [
 	|t w c s lw|
-	t := aLineDecorationShape type.
+	t := aLineDecorationShape class name.
 	w := aLineDecorationShape mySize.
 	c := aLineDecorationShape color.
 	s := aLineDecorationShape strokePaint.

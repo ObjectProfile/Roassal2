@@ -18,6 +18,12 @@ RTDraggable >> accept: aVisitor with: args [
 	aVisitor visitDraggableInteraction: self with: args
 ]
 
+{ #category : #'as yet unclassified' }
+RTDraggable >> initializeElement: element [
+	super initializeElement: element.
+	self groupToDrag ifEmpty: [ self groupToDrag: (Array with: element) ]
+]
+
 { #category : #hooks }
 RTDraggable >> transformDistance: distanceAsPoint forElement: anElement [
 	"Nothing to be transformed since there is no restriction here"
