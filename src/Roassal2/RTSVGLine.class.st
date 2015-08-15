@@ -12,10 +12,9 @@ Class {
 
 { #category : #adding }
 RTSVGLine >> addOn: stream using: aSVGVisitor [
-	| closings from to|
-	from := aSVGVisitor names at: self element element from trachelShape.
-	to := aSVGVisitor names at: self element element to trachelShape.
-	self id: from , '_' , to.
+	| closings |
+	
+	self id: (aSVGVisitor nameFor: self element).
 	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPosition: stream.

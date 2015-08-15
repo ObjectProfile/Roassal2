@@ -48,7 +48,8 @@ RTHTML5Exporter class >> importRoassalJS: fileName [
 	code :=
 'roassalJSContent
 	^ ''' , content , ''''.
-	self compile: code classified: 'dependencies'
+	self compile: code classified: 'dependencies'.
+	self inform: 'imported roassal.js!!'.
 	
 ]
 
@@ -400,11 +401,11 @@ function createSVG(name){
 }
 
 Number.prototype.max = function (n){
-	if(this > n) return this;
+	if(this > n) return this.valueOf();
 	return n;
 }
 Number.prototype.min = function (n){
-	if(this < n ) return this;
+	if(this < n ) return this.valueOf();
 	return n;
 }
 
@@ -459,6 +460,9 @@ function lessEqThan(a, b){
 function lessThan(a, b){
 	return a.x<b.x && a.y<b.y;
 }
+function transposed(p){
+	return {x: p.y, y: p.x};
+}
 
 /*roassal/pharo classes*/	
 var Rectangle = Class.extend({
@@ -512,6 +516,18 @@ var Rectangle = Class.extend({
 	bottomCenter: function(){
 		return {x: this.center().x, y: this.corner.y};
 	},
+	bottomLeft: function(){
+		return {x: this.origin.x, y: this.corner.y};
+	},
+	bottomRight: function(){
+		return this.corner;
+	},
+	topLeft: function(){
+		return this.origin;
+	},
+	topRight: function(){
+		return {x: this.corner.x, y: this.origin.y};
+	},
 	extent: function(){
 		return {x: this.corner.x - this.origin.x, y: this.corner.y-this.origin.y}
 	},
@@ -532,6 +548,12 @@ var Rectangle = Class.extend({
 	},
 	containsPoint: function(aPoint){
 		return lessEqThan(this.origin, aPoint) && lessThan(aPoint, this.corner);
+	},
+	eq: function(rect){
+		return eq(this.origin, rect.origin) && eq(this.corner, rect.corner);
+	},
+	containsRect: function(rect){
+		return lessEqThan(this.origin, rect.origin) && lessEqThan(rect.corner, this.corner);
 	}
 });
 
@@ -1084,16 +1106,23 @@ var RTRectangleAttachPoint = RTContinuousAttachPoint.extend({
 	},
 	attachPointFor: function(anEdge, fromRect, toRect){
 		var offsetShift = this.offsetNormalFor(anEdge),
-			fromPoint = plus(this.center(),offsetShift),
-			toPoint = plus(this.center(), offsetShift);
-		if(eq(fromRect, toRect)) return fromRect.origin;
+			fromPoint = plus(fromRect.center(),offsetShift),
+			toPoint = plus(toRect.center(), offsetShift),
+			minP = null, minV, val;
+		if(fromRect.eq(toRect)) return fromRect.origin;
 		if(fromRect.containsRect(toRect)) return fromRect.pointNearestTo(toPoint);
 		if(toRect.containsRect(fromRect)) return fromRect.pointNearestTo(toRect.pointNearestTo(fromPoint));
 		var intersections = new RTLineSegment(fromPoint, toPoint).intersectRectangle(fromRect);
-		if(intersections.length == 0) return fromRect.pointNearestTo(toPoint);
-		var min = intersections[0];
-		for(var k = 1; k< intersections.length;k++) if(intersections[k].r < min) 
-		return min;
+		$.each(intersections, function(i, p){
+			if(minP == null) {minP = p; minV = r(p);}
+			else if( (val = r(p)) < minV ){
+				minP = p;
+				minV = val;
+			}
+		} );
+		
+		if(minP == null) return fromRect.pointNearestTo(toPoint);
+		return minP;
 	}
 });
 
@@ -1120,7 +1149,22 @@ var RTLineSegment = Class.extend({
 		return this;
 	},
 	intersectHorizontal: function(other){
-		
+		var p = this.intersectHorizontalLine(other);
+		if(!p) return p;
+		if(p.x < this.left().x || p.x > this.right().x||p.y<other.bottom().y||p.y>other.top().y) return null;
+		return p;
+	},
+	bottom: function(){
+		return this.from.y < this.to.y? this.from:this.to;
+	},
+	top: function(){
+		return this.from.y > this.to.y? this.from:this.to;
+	},
+	left: function(){
+		return this.from.x < this.to.x? this.from: this.to;
+	},
+	right: function(){
+		return this.from.x > this.to.x? this.from: this.to;
 	},
 	intersectHorizontalLine: function(other){
 		var vector = other.vector();
@@ -1129,22 +1173,41 @@ var RTLineSegment = Class.extend({
 		var x = (this.from.y-other.from.y)*other.cotan()+other.from.x;
 		return {x:x, y:y};
 	},
+	cotan: function(){
+		var vector = this.vector();
+		if(vector.y == 0) return null;
+		return vector.x/vector.y;
+	},
+	intersectVertical: function(other){
+		var pt = this.transposed().intersectHorizontal(other.transposed());
+		if(!pt) return null;
+		return transposed(pt);
+	},
+	transposed: function(){
+		return new RTLineSegment(transposed(this.from), transposed(this.to));
+	},
 	vector: function(){
-		return diff(this.to, this.from);
+		return minus(this.to, this.from);
 	},
 	intersectRectangle: function(aRect){
 		var bl = aRect.bottomLeft(),
 			br = aRect.bottomRight(),
 			tl = aRect.topLeft(),
 			tr = aRect.topRight(),
-			pts = {},
+			pts = [],
 			t= new RTLineSegment();
-		pts[t.fromTo(tl, tr).intersectHorizontal(this)] = true;
-		pts[t.fromTo(bl, br).intersectHorizontal(this)] = true;
-		pts[t.fromTo(tl, bl).intersectVertical(this)] = true;
-		pts[t.fromTo(tr, br).intersectVertical(this)] = true;
-		delete pts[null];
+		this.add(pts, t.fromTo(tl, tr).intersectHorizontal(this));
+		this.add(pts, t.fromTo(bl, br).intersectHorizontal(this));
+		this.add(pts, t.fromTo(tl, bl).intersectVertical(this));
+		this.add(pts, t.fromTo(tr, br).intersectVertical(this));
 		return pts;
+	},
+	add: function(pts, p){
+		if(p == null) return;
+		var flag = true;
+		for(var k = 0; k<pts.length; k++)
+			if(eq(pts[k], p)) eq = false;
+		if(flag) pts.push(p);
 	}
 });
 var TRAnnouceableObject = Class.extend({
@@ -1787,15 +1850,20 @@ var TRLineShape = TRAbstractBoxShape.extend({
 		var from = this.from();
 		var to = this.to();
 		if(from == null || to == null ) return;
-		from = this.attachPoint.startingPointOf(this);
-		to = this.attachPoint.endingPointOf(this);
+		if(to instanceof TRShape){
+			from = this.attachPoint.startingPointOf(this);
+			to = this.attachPoint.endingPointOf(this);
+		}
 		$(this.path).attr({x1: from.x, y1: from.y, x2: to.x, y2: to.y});
 	},
+	find: function(id){
+		return typeof id == "string"? this.canvas.getShapeById(id): id;
+	},
 	from: function (){
-		return this.canvas.getShapeById(this.fromid);
+		return this.find(this.fromid);
 	},
 	to: function(){
-		return this.canvas.getShapeById(this.toid);
+		return this.find(this.toid);
 	},
 	encompassingRectangle: function(){
 		var r = new Rectangle();
