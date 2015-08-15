@@ -5244,8 +5244,9 @@ v addAll: (RTBox elementsOn: Collection withAllSubclasses).
 eb := RTEdgeBuilder new.
 eb shape orthoHorizontalLine.
 eb view: v.
-eb	objects: Collection withAllSubclasses
-	from: #superclass
+eb	
+	objects: Collection withAllSubclasses;
+	connectFrom: #superclass
 	to: #yourself;
 	build.
 
@@ -5285,7 +5286,8 @@ v addAll: (RTBox elementsOn: Collection withAllSubclasses).
 eb := RTEdgeBuilder new.
 eb shape orthoVerticalLine.
 eb view: v.
-eb	objects: Collection withAllSubclasses
+eb	
+	objects: Collection withAllSubclasses;
 	from: #superclass
 	to: #yourself;
 	build.

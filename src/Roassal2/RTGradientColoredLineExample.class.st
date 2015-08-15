@@ -151,7 +151,9 @@ v edges do: #remove.
 eb := RTEdgeBuilder new.
 eb view: v.
 eb shape gradientLineFrom: Color green to: Color white.
-eb objects: RTShape withAllSubclasses, TRShape withAllSubclasses from: #yourself to: #superclass.
+eb 
+	objects: RTShape withAllSubclasses, TRShape withAllSubclasses;
+	connectFrom: #yourself to: #superclass.
 
 ^ v
 ]
