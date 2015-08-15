@@ -77,18 +77,8 @@ RTDSM >> cellshape [
 		color:
 				[ :assoc | 
 			(self isAssocDependent: assoc)
-				ifTrue: [ self colorForDependency ]
-				ifFalse: [ self colorForNonDependency ] ]
-]
-
-{ #category : #UI }
-RTDSM >> colorForDependency [
-	^ Color red alpha: 0.4
-]
-
-{ #category : #UI }
-RTDSM >> colorForNonDependency [
-	^ Color veryVeryLightGray alpha: 0.4
+				ifTrue: [ Color red alpha: 0.4 ]
+				ifFalse: [ Color gray alpha: 0.4 ] ]
 ]
 
 { #category : #accessing }

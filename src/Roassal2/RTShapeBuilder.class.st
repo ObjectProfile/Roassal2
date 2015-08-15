@@ -41,11 +41,6 @@ RTShapeBuilder >> bezierLineUsingObjects: aFollowBlock [
  
 ]
 
-{ #category : #accessing }
-RTShapeBuilder >> borderColor [
-	^ self current borderColor
-]
-
 { #category : #shapes }
 RTShapeBuilder >> box [
 	self shape: RTBox new
@@ -64,7 +59,7 @@ RTShapeBuilder >> circle [
 	self shape: RTEllipse new
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTShapeBuilder >> color [
 	^ self current color
 ]
@@ -155,7 +150,7 @@ RTShapeBuilder >> extensibleLabel [
 	^ self shape: RTExtensibleLabel new
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTShapeBuilder >> fillColor [
 	^ self color
 ]
