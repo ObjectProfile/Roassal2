@@ -170,7 +170,7 @@ RTSVGVisitor >> getCorrespondingLine: decorator from: lines [
 { #category : #utils }
 RTSVGVisitor >> getDecorationId: aLineDecorationShape [
 	|t w c s lw|
-	t := aLineDecorationShape type.
+	t := aLineDecorationShape class name.
 	w := aLineDecorationShape mySize.
 	c := aLineDecorationShape color.
 	s := aLineDecorationShape strokePaint.
@@ -300,7 +300,7 @@ RTSVGVisitor >> visitArrowShape: arrowShape [
 	bColor := arrowShape strokePaint.
 	w := arrowShape width.
 	s := arrowShape mySize.
-	(markers contains: aid)
+	(markers includes: aid)
 		ifFalse: [ 
 			svgE := RTSVGArrowMarker new id: aid fillColor: nil borderColor: bColor width: w size: s.
 			svgE addOn: stream using: self. 
