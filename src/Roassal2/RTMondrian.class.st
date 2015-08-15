@@ -163,7 +163,8 @@ RTMondrian >> edges [
 { #category : #'deprecated - compatibility layer' }
 RTMondrian >> edges: objects from: fromBlock to: toBlock [
 	^ self edges
-			objects: objects from: fromBlock to: toBlock
+			objects: objects;
+			connectFrom: fromBlock to: toBlock
 		
 ]
 
