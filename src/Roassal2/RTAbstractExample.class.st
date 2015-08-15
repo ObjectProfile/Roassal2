@@ -4,6 +4,26 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
+{ #category : #'as yet unclassified' }
+RTAbstractExample class >> runningAllExamples [
+	"
+	self new runningAllExamples
+	"
+
+	"Useful to find examples that may trigger an error"
+	
+	| examples result w |
+	w := '/tmp/result.txt' asFileReference writeStream.
+	self allSubclasses do: [ :cls |
+		examples := cls methods select: [ :k | k beginsWith: 'example' ].
+		examples do: [ :k | 
+			w nextPutAll: 'About to run ', cls name, '>>', k, ' ...'.
+			result := cls new perform: k.
+			[ result class == RTView or: [ result isKindOf: RTBuilder ] ] assert.
+			w nextPutAll: 'done!'; cr
+		] ]
+]
+
 { #category : #accessing }
 RTAbstractExample >> gtExamples [
 	"Return a list of RTEXampleSelection. This is necessary for "
