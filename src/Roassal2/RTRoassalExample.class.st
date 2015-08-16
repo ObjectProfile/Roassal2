@@ -335,7 +335,7 @@ v := RTView new.
 groups do: [ :aGroup | v addAll: aGroup ].
 RTHorizontalLineLayout new gapSize: 30; on: groups.
 
-RTAlignment new elements: groups; fromTop.
+RTAlignment new elements: groups; top.
 
 ^ v
 ]
@@ -3902,12 +3902,14 @@ RTRoassalExample >> exampleGroupedLayout [
 	
 	view addAll: group1; addAll: group2; add: host1; add: host2.
 	
-	edgesGroup1 := RTEdge 
-		buildEdgesFromObjects: (1 to: 10) 
-		from: [ :v | v //2 ] to: #yourself inView: view scope: group1.
-	edgesGroup2 := RTEdge 
-		buildEdgesFromObjects: (1 to: 10) 
-		from: [ :v | v //2 ] to: #yourself inView: view scope: group2.
+	edgesGroup1 := RTEdgeBuilder new
+		view: view;
+		elements: group1;
+		connectFrom: [ :v | v //2 ].	
+	edgesGroup2 := RTEdgeBuilder new
+		view: view;
+		elements: group2;
+		connectFrom: [ :v | v //2 ].
 
 	
 	RTTreeLayout on: group1 edges: edgesGroup1.
@@ -5288,9 +5290,7 @@ eb shape orthoVerticalLine.
 eb view: v.
 eb	
 	objects: Collection withAllSubclasses;
-	from: #superclass
-	to: #yourself;
-	build.
+	connectFrom: #superclass.
 
 v elements @ RTDraggable @ RTPopup.
 RTTreeLayout on: v elements.
@@ -6190,12 +6190,10 @@ RTRoassalExample >> exampleScaledNesting [
 		view add: host.
 		view addAll: inner.
 		edges := 
-			RTEdge 
-				buildEdgesFromObjects: (1 to: 100) 
-				from: [ :v | v // 2 ] 
-				to: #yourself 
-				inView: view
-				scope: inner.
+			RTEdgeBuilder new
+				view: view;
+				elements: inner;
+				connectFrom: [ :v | v // 2 ].
 
 		RTGridLayout new on: inner.
 		RTNest new		
@@ -6643,7 +6641,8 @@ RTRoassalExample >> exampleSelfCalls [
 	RTEdgeBuilder new
 		view: v;
 		shape: (RTLine new attachPoint: RTVerticalAttachPoint instance);
-		connectFrom: #superclass to: #yourself.
+		objects: classes;
+		connectFrom: #superclass.
 	RTTreeLayout on: classElements.
 	^ v
 ]

@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 RTAbstractExample class >> runningAllExamples [
 	"
-	self new runningAllExamples
+	self runningAllExamples
 	"
 
 	"Useful to find examples that may trigger an error"
@@ -15,7 +15,7 @@ RTAbstractExample class >> runningAllExamples [
 	| examples result w |
 	w := '/tmp/result.txt' asFileReference writeStream.
 	self allSubclasses do: [ :cls |
-		examples := cls methods select: [ :k | k beginsWith: 'example' ].
+		examples := cls selectors select: [ :k |( k beginsWith: 'example')  and: [ (k endsWith: 'Icon') not ] ].
 		examples do: [ :k | 
 			w nextPutAll: 'About to run ', cls name, '>>', k, ' ...'.
 			result := cls new perform: k.

@@ -136,7 +136,8 @@ es @ RTPopup.
 eb := RTEdgeBuilder new.
 eb view: v.
 eb shape line color: Color black.
-eb objects: RTShape withAllSubclasses from: #yourself toAll: #dependentClasses.
+eb objects: RTShape withAllSubclasses.
+eb connectToAll: #dependentClasses.
 
 RTMetricNormalizer new
 	elements: es;
