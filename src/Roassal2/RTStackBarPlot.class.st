@@ -270,7 +270,11 @@ RTStackBarPlot >> renderIn: aView [
 				gapSize: 0;
 				on: aLineOfElements ].
 	RTVerticalLineLayout on: lines.
-	TRConstraint use: lines first alignFromLeft: lines allButFirst.
+	RTConstraint new
+		fix: lines first;
+		movable: lines allButFirst;
+		leftOf.
+	"TRConstraint use: lines first alignFromLeft: lines allButFirst."
 	self addLabelToBarIfNecessary.
 	values
 		with: lines
