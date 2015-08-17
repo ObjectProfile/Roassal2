@@ -32,6 +32,7 @@ RTUMLClassBuilderTest >> testBasic02 [
 	classNode := #('Node').
 
 	b := RTUMLClassBuilder new.
+	b forSelfMadeClasses.
 	b addObjects: (Array with: classNode).
 	b build
 
