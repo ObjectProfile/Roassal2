@@ -22,3 +22,17 @@ RTUMLClassBuilderTest >> testBasic [
 	b build.
 
 ]
+
+{ #category : #tests }
+RTUMLClassBuilderTest >> testBasic02 [
+
+	| classes classNode b |
+	classes := OrderedCollection new.
+
+	classNode := #('Node').
+
+	b := RTUMLClassBuilder new.
+	b addObjects: (Array with: classNode).
+	b build
+
+]

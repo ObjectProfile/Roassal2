@@ -135,6 +135,44 @@ S9PC7Wk2m1I113Xpf6shjuNINRzJtj1RblMXxG8Z/Bd88sFNlxjeZgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTUMLExample >> exampleSimple [
+| b |
+classes := OrderedCollection new.
+
+classNode := #('Node' nil #()).
+classNumber := #('Number' 'Node' #('value: Float') ).
+classes add: classNode; add: classNumber.
+
+b := RTUMLClassBuilder new.
+b forSelfMadeClasses.
+b addObjects: classes.
+b classname: #first.
+b attributeselector: #yourself.
+b instanceVariables: #third.
+b superclass: [ :c | classes detect: [ :cc | cc first = c second ] ifNone: [ nil ] ].
+
+b layout tree.
+^ b 
+
+]
+
+{ #category : #icons }
+RTUMLExample >> exampleSimpleIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACQElEQVR4XuXYy2oiURRA0fz/
+bzj0B8SJBB2oKMQHKGriK4iSxAeIiqK3+xYEGiQRmo5Krw1CqOikFrcOdR5C8LunHvxb4IP4
++SA+iJ8P4oP4+SA+iJ8P4oP4+SB+PogP4ueD+CB+PogP4ueD+CB+PoifD+KD+PkgPoifD+KD
++PkgPoifD+Lng/ggfj6ID+Lng/ggfj6ID+Lng/j5ID7IP69QKJzy+fzFjw9ypV5eXk7+Cbkz
+kI+Pj7Prk8nEB7kVSLfbDc1mMzw9PYVyuRwajUaoVCohk8mEUqnkg9zihKzX6/D+/h46nU54
+fX0No9EoOSXb7dYHuTbIcrkMw+Hwy48PcsXm8/nZUN/v9yd/qN9Rm83GB/FBfBAf5F5aLBbf
+/v+7GXLptz7IX9Tv92/yWx/kwk39/Wj68jtvb28+yLVB4ht6fBGs1WrJG/rz83Pyd7yWzWaT
+d5BqtRra7XZYrVY+yDVAxuNxcuPT6XRotVphNpslpyOuTQaDQXh8fEyu+yfEnyEuyOFwOPtO
+fHz9uTY5Ho8+yE+CxIXidDoNqVQqWSDudrtQLBaTre/nwI+PrXgtl8slM+Z0OvkgP3lC4la3
+Xq8nMyOu3OM8iYvGz+K2t9frJYM9boPjSfJB/Bnir07+l3wQH8TPB/FB/HwQH8TPB/FB/HwQ
+H8TPB/HzQXwQPx/EB/HzQXwQPx/EB/HzQfx8EB/EzwfxQfx8EB/EzwfxQfx8ED8fxAfx80F8
+ED8fxAfx80F8ED8fxM8HufN+Ab7cfG3xZnGjAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTUMLExample >> examplecolored [
 | b |
 b := RTUMLClassBuilder new.
