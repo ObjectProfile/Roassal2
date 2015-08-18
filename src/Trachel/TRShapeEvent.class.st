@@ -15,7 +15,10 @@ TRShapeEvent class >> shape: aTrachelShape [
 { #category : #accessing }
 TRShapeEvent >> element [
 	"Could be any object"
-	^ self shape element
+
+	^ self shape class = TRCanvas
+		ifTrue: [ nil ]
+		ifFalse: [ self shape element ]
 ]
 
 { #category : #accessing }
