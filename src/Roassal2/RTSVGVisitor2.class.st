@@ -292,7 +292,7 @@ RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 
 { #category : #'visitor-interactions' }
 RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
-	| list |
+	| list trachelBlock |
 	list := OrderedCollection new.
 	(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
 		list add: (anObject attributes at: #RTLabelledLabel).
@@ -302,8 +302,9 @@ RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
 			e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
 			ifFalse: [ list add: e trachelShape ] ].
 	].
-	list addAll: (anInteraction groupToDrag collect: [ :e|
-		(e isKindOf: TRShape) ifTrue: [ e ] ifFalse: [ e trachelShape ] ]).
+	trachelBlock := [ :e|	(e isKindOf: TRShape) ifTrue: [ e ] ifFalse: [ e trachelShape ] ].
+	list addAll: (anInteraction groupToDrag collect: trachelBlock).
+	anInteraction element ifNotNil: [ :e | list add: (trachelBlock value: e) ].
 	list isEmpty ifTrue: [ self visitInteraction: anInteraction with: anObject ]
 	ifFalse: [
 		stream nextPutAll: 'new RTDraggable(['.

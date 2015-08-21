@@ -136,7 +136,7 @@ S9PC7Wk2m1I113Xpf6shjuNINRzJtj1RblMXxG8Z/Bd88sFNlxjeZgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTUMLExample >> exampleSimple [
-| b |
+| b classes classNode classNumber |
 classes := OrderedCollection new.
 
 classNode := #('Node' nil #()).
@@ -152,7 +152,8 @@ b instanceVariables: #third.
 b superclass: [ :c | classes detect: [ :cc | cc first = c second ] ifNone: [ nil ] ].
 
 b layout tree.
-^ b 
+b build.
+^ b view
 
 ]
 

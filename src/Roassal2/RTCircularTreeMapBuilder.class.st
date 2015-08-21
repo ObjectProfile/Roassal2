@@ -4,12 +4,8 @@ I am a variation of RTTreeMapBuilder in to explore in a better way any tree repr
 "
 Class {
 	#name : #RTCircularTreeMapBuilder,
-	#superclass : #RTBuilder,
+	#superclass : #RTAbstractTreeBuilder,
 	#instVars : [
-		'popup',
-		'elements',
-		'rootNodes',
-		'weight',
 		'baseradius'
 	],
 	#category : #'Roassal2-Builder-CircularMap'
@@ -25,23 +21,6 @@ RTCircularTreeMapBuilder >> baseradius: r [
 	baseradius := r.
 ]
 
-{ #category : #private }
-RTCircularTreeMapBuilder >> createElements: atree using: ablock depth: depth [
-	| children e |
-	e := ( shapeBuilder elementOn: atree) @ popup @ RTFocusElement animated.
-	self elements add: e.
-	
-	children := ablock rtValue: atree.
-	e attributes at: #depth put: depth.
-	children := children collect: [ :child | | e2 |
-		e2 := self createElements: child using: ablock depth: depth+1.
-		e2 attributes at: #parent put: e.
-		e2  ].
-	children ifNotNil: [ e attributes at: #children put: children ].
-	
-	^ e	
-]
-
 { #category : #hooks }
 RTCircularTreeMapBuilder >> createView [
 	^ super createView @ RTDraggableView @ RTZoomableView.
@@ -50,11 +29,6 @@ RTCircularTreeMapBuilder >> createView [
 { #category : #'default-values' }
 RTCircularTreeMapBuilder >> defaultBase [
 	^ 250
-]
-
-{ #category : #accessing }
-RTCircularTreeMapBuilder >> elements [
-	^ elements
 ]
 
 { #category : #layout }
@@ -72,16 +46,11 @@ RTCircularTreeMapBuilder >> expandCircles: e parent: parent [
 	"
 	| cc |
 	self expandCircle: e with: parent.
-	(e attributes includesKey: #children) ifFalse: [ ^ self ].
-	(e attributes at: #children) do: [ :child | 
+	(e attributes includesKey: self childrenKey) ifFalse: [ ^ self ].
+	(e attributes at: self childrenKey) do: [ :child | 
 		(child attributes includesKey: #circle) ifTrue: [ 
 			cc := self relToAbsCircle: (child attributes at: #circle) parent: parent.
 			self expandCircles: child parent: cc ] ].
-]
-
-{ #category : #building }
-RTCircularTreeMapBuilder >> explore: atree using: ablock [
-	^ (self from: (Array with: atree) using: ablock ) first.
 ]
 
 { #category : #private }
@@ -109,31 +78,23 @@ RTCircularTreeMapBuilder >> findBestGapIn: gaps children: children index: i
 	^ Array with: distance with: closest with: gap
 ]
 
-{ #category : #building }
-RTCircularTreeMapBuilder >> from: objects using: ablock [
-	rootNodes := objects collect: [ :obj | self createElements: obj using: ablock depth: 1 ].
-	^ rootNodes.
-]
-
 { #category : #initialization }
 RTCircularTreeMapBuilder >> initialize [
 	super initialize.
-	shapeBuilder circle
+	self shape circle
 		fillColor: Color white;
 		borderColor: Color gray.
-	popup := RTPopup new.
+	self interaction popup.
 	baseradius := self defaultBase.
-	elements := OrderedCollection new.
-	rootNodes := OrderedCollection new.
 ]
 
 { #category : #layout }
 RTCircularTreeMapBuilder >> layout: e [
 	
 	| children |
-	(e attributes includesKey: #children) ifFalse: [ ^ self ].
+	(e attributes includesKey: self childrenKey) ifFalse: [ ^ self ].
 	
-	children := e attributes at: #children.
+	children := e attributes at: self childrenKey.
 	children isEmpty ifTrue: [ ^ self ].
 	
 	children do: [ :child | self layout: child ].
@@ -146,9 +107,8 @@ RTCircularTreeMapBuilder >> layout: e [
 RTCircularTreeMapBuilder >> layoutElements [
 	| virtualRoot |
 	virtualRoot := (RTEllipse new borderWidth: 0.005) element.
-	virtualRoot attributes at: #children put: rootNodes.
+	virtualRoot attributes at: self childrenKey put: rootNodes.
 	self layout: virtualRoot.
-	
 	self expandCircles: virtualRoot parent: (RTCircleTree new r: self baseradius)
 ]
 
@@ -216,7 +176,7 @@ RTCircularTreeMapBuilder >> layoutNodes: children [
 
 { #category : #accessing }
 RTCircularTreeMapBuilder >> popup [
-	^ popup
+	^ self interaction popup
 ]
 
 { #category : #layout }
@@ -237,19 +197,9 @@ RTCircularTreeMapBuilder >> renderIn: aView [
 	self layoutElements.
 ]
 
-{ #category : #accessing }
-RTCircularTreeMapBuilder >> rootNodes [
-	^ rootNodes 
-]
-
 { #category : #layout }
 RTCircularTreeMapBuilder >> sortChildren: children [
 	children sort: [ :a :b | (self weightOf: a) > (self weightOf: b) ].
-]
-
-{ #category : #accessing }
-RTCircularTreeMapBuilder >> weight [
-	^ weight
 ]
 
 { #category : #layout }
@@ -258,18 +208,6 @@ RTCircularTreeMapBuilder >> weight2rad: w [
 ]
 
 { #category : #accessing }
-RTCircularTreeMapBuilder >> weight: ablockorsymbol [
-	weight := ablockorsymbol 
-]
-
-{ #category : #accessing }
 RTCircularTreeMapBuilder >> weightOf: e [
-	(e attributes includesKey: #weight)
-		ifTrue: [ ^ e attributes at: #weight ]
-		ifFalse: [ | w |
-			w := self weight rtValue: e model.
-			w isNumber ifFalse: [ w := 1 ].
-			e attributes at:#weight put: w.
-			^ w ]
-	 
+	^ self weight rtValue: e
 ]

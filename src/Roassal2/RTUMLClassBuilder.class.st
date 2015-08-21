@@ -16,7 +16,8 @@ Class {
 		'layout',
 		'attributeselector',
 		'attributeShapeBuilder',
-		'lineShape'
+		'lineShape',
+		'boxShape'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
@@ -63,6 +64,16 @@ RTUMLClassBuilder >> attributeselector: aSelector [
 	attributeselector := aSelector.
 ]
 
+{ #category : #shapes }
+RTUMLClassBuilder >> boxShape [
+	^ boxShape
+]
+
+{ #category : #shapes }
+RTUMLClassBuilder >> boxShape: aShapeBuilder [
+	boxShape := aShapeBuilder.
+]
+
 { #category : #edges }
 RTUMLClassBuilder >> buildEdges [
 	| bool eb |
@@ -80,7 +91,7 @@ RTUMLClassBuilder >> buildEdges [
 
 { #category : #public }
 RTUMLClassBuilder >> buildSchema: aView [
-	| group box r label e1 e2  l h |
+	| group box r label e1 e2  l h attributes methods line headerline midline clh |
 	self prepare: self methodShape selector: #methodselector.
 	self prepare: self attributeShape selector: #attributeselector.
 
@@ -90,34 +101,47 @@ RTUMLClassBuilder >> buildSchema: aView [
 		group add: ((RTLabel new height: self fontSizeOfClassname; 
 			text: [:c| self classNameFor: c]) 
 			elementOn: object).
+		clh := group encompassingRectangle height.
 			
 		label := self attributeShape shape.
-		(self attributesOf: object) do: [ :attribute |
+		(attributes := self attributesOf: object) do: [ :attribute |
 			group add: (label elementOn: attribute) ].
 		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		h := r height.
 		
 		label := self methodShape shape.
-		(self methodsForClass: object) do: [:method | 
+		(methods := self methodsForClass: object) do: [:method | 
 			group add: (label elementOn: method) ].
 	
 		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		group first trachelShape 
 			translateTo: (r center x @ group first trachelShape center y).
-		box := (RTBox new color: Color white; borderColor: Color gray) 
-			elementOn: object.
-		e1 := (RTBox new extent: 0@0) elementOn: 'p1'.
-		e2 := (RTBox new extent: 0@0) elementOn: 'p2'.
-		e1 trachelShape translateTo: r left@h.
-		e2 trachelShape translateTo: r right@h.
-		l := RTEdge from: e1 to: e2.
-		l + (RTLine new color: Color gray).
-		group add: e1; add: e2; add: l.
+		box := self boxShape elementOn: object.
+		
+		line := [ :p1 :p2 |
+			e1 := (RTBox new size: 0) elementOn: p1.
+			e2 := (RTBox new size: 0) elementOn: p2.
+			e1 trachelShape translateTo: p1.
+			e2 trachelShape translateTo: p2.
+			l := RTEdge on: object from: e1 to: e2.
+			l + (RTLine new color: box trachelShape strokePaint).
+			group add: e1; add: e2; add: l. ].
+		headerline := [ line value: (r left@ clh) value: (r right@ clh)  ].
+		midline := [ line value: (r left@h) value: (r right@h)  ].
+		attributes isEmpty 
+			ifTrue: [ 
+				methods isEmpty ifTrue: [  ]
+					ifFalse: [ headerline value. ] ]
+			ifFalse: [  
+				headerline value.
+				methods isEmpty ifTrue: [  ]
+					ifFalse: [ midline value ]  ].
+		
 		RTNest new on: box nest: group.
 	
-		box @ RTDraggable.
+		self interaction setUpElement: box.
 		classesGroup add: box.
 		aView add: box.
 		aView addAll: group.
@@ -311,7 +335,10 @@ RTUMLClassBuilder >> initialize [
 	self layout: RTLayoutBuilder new.
 	(self lineShape: RTShapeBuilder new) orthoVerticalLine.
 	self methodShape: RTShapeBuilder new.
-	self attributeShape: RTShapeBuilder new
+	self attributeShape: RTShapeBuilder new.
+	self boxShape: RTShapeBuilder new.
+	self boxShape box color: Color white; borderColor: Color gray.
+	self interaction draggable.
 ]
 
 { #category : #accessing }
