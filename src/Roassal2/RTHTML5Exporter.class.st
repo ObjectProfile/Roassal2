@@ -655,7 +655,6 @@ var RTDraggable = TRInteraction.extend({
 		s.whenDo(TRMouseDragging, function (e){
 			var t = new TRGroup();
 			t.addAll(self.getGroup(s));
-			if(! t.includes(s)) t.add(s);
 			var sc = s.canvas.camera.scale;
 			t.translateBy({x: e.step.x/sc, y: e.step.y/sc});
 			e.canvas.update();

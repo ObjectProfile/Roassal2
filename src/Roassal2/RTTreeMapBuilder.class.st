@@ -8,37 +8,14 @@ http://www.humane-assessment.com/blog/system-nesting-map
 "
 Class {
 	#name : #RTTreeMapBuilder,
-	#superclass : #RTBuilder,
+	#superclass : #RTAbstractTreeBuilder,
 	#instVars : [
 		'extent',
-		'nodes',
-		'elements',
-		'weight',
 		'rectangle',
-		'inset',
-		'popup',
-		'rootNodes'
+		'inset'
 	],
 	#category : #'Roassal2-Builder-TreeMap'
 }
-
-{ #category : #private }
-RTTreeMapBuilder >> createElements: atree using: ablock depth: depth [
-	| children e |
-	
-	e := ((shapeBuilder elementOn: atree)@RTDraggable @ popup).
-	self elements add: e.
-	
-	children := ablock rtValue: atree.
-	e attributes at: #depth put: depth.
-	children := children collect: [ :child | | e2 |
-		e2 := self createElements: child using: ablock depth: depth + 1.
-		e2 attributes at: #parent put: e.
-		e2 ].
-	children ifNotNil: [e attributes at: #elements put: children].
-	
-	^ e.
-]
 
 { #category : #hooks }
 RTTreeMapBuilder >> createView [
@@ -67,17 +44,6 @@ RTTreeMapBuilder >> depthShadedBorder [
 ]
 
 { #category : #accesing }
-RTTreeMapBuilder >> elements [
-	^ elements
-]
-
-{ #category : #building }
-RTTreeMapBuilder >> explore: atree using: ablock [
-	^ (self from: (Array with: atree) using: ablock) first.
-	
-]
-
-{ #category : #accesing }
 RTTreeMapBuilder >> extent [
 	^ extent
 ]
@@ -86,14 +52,6 @@ RTTreeMapBuilder >> extent [
 RTTreeMapBuilder >> extent: anObject [
 	extent := anObject.
 	
-]
-
-{ #category : #building }
-RTTreeMapBuilder >> from: objects using: ablock [
-
-	rootNodes := objects collect: [:obj | self createElements: obj using: ablock depth: 1 ].
-	
-	^ rootNodes
 ]
 
 { #category : #'layout-utils' }
@@ -116,14 +74,12 @@ RTTreeMapBuilder >> highestAspectRatioFor: row remainingSpace: remainingSpace [
 { #category : #initialization }
 RTTreeMapBuilder >> initialize [
 	super initialize.
-	shapeBuilder rectangle 
+	self shape rectangle 
 		fillColor: Color white;
 		borderColor: Color gray.
-	popup := RTPopup new.
+	self interaction popup; draggable.
 	inset := self defaultInset.
 	extent := self defaultExtent.
-	elements := OrderedCollection new.
-	rootNodes := OrderedCollection new
 ]
 
 { #category : #accesing }
@@ -141,7 +97,7 @@ RTTreeMapBuilder >> layoutChildrenOfRow: row [
 	| oldCanvas|
 	oldCanvas := self rectangle veryDeepCopy.
 	row do: [ :each | | children |
-		children := each attributes at: #elements ifAbsent: [ #() ].
+		children := each attributes at: self childrenKey ifAbsent: [ #() ].
 		self 
 			squarify: children 
 			inRectangle: (RTRectangleTreeMap fromContainerBounds: (each position extent: each extent) withInset: self inset) ].
@@ -151,7 +107,6 @@ RTTreeMapBuilder >> layoutChildrenOfRow: row [
 
 { #category : #layout }
 RTTreeMapBuilder >> layoutElements [
-	
 	self squarify: rootNodes
 		inRectangle: (RTRectangleTreeMap origin: 0@0 extent: self extent).
 
@@ -193,19 +148,8 @@ RTTreeMapBuilder >> layoutVerticalRow: row [
 ]
 
 { #category : #accesing }
-RTTreeMapBuilder >> nodes [
-	^ nodes
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> nodes: anObject [
-	nodes := anObject.
-	
-]
-
-{ #category : #accesing }
 RTTreeMapBuilder >> popup [
-	^ popup
+	^ self interaction popup.
 ]
 
 { #category : #'layout-utils' }
@@ -213,13 +157,11 @@ RTTreeMapBuilder >> prepareElementsForLayout: elms inRectangle: rec [
 	| elementsArea viewArea area |
 	elms isEmpty ifTrue: [ ^ elms ].
 	elementsArea := elms inject: 0 into: [ :s :e | 
-		s + (weight rtValue: e model) ].
-	elementsArea isZero ifTrue: [ self error: 'Invalid weight block' ].
+		s + (weight rtValue: e) ].
 	
 	viewArea := rec width * rec height.
-	area := [ :m | (viewArea * (self weight rtValue: m))/elementsArea ].
 	elms do: [ :e|
-		area := ((viewArea * (weight rtValue: e model))/elementsArea) asFloat.
+		area := ((viewArea * (weight rtValue: e))/elementsArea) asFloat.
 		e attributes at: #area put: area. ].
 	
 	^ elms
@@ -311,16 +253,6 @@ RTTreeMapBuilder >> translateElementsVertically: row in: container [
 		currentPoint := currentPoint translateBy: (0@(each height))]
 ]
 
-{ #category : #accesing }
-RTTreeMapBuilder >> weight [
-	^ weight
-]
-
-{ #category : #accesing }
-RTTreeMapBuilder >> weight: anObject [
-	weight := anObject
-]
-
 { #category : #customizing }
 RTTreeMapBuilder >> withShadedFramesFromColor: fromColor toColor: toColor [
 
@@ -328,7 +260,7 @@ RTTreeMapBuilder >> withShadedFramesFromColor: fromColor toColor: toColor [
 	
 	normalizer := RTNColorLinearNormalizer 
 		inContext: self elements 
-		withCommand: [ :e | self weight rtValue: e model ] 
+		withCommand: [ :e | weight rtValue: e ] 
 		lowColor: fromColor highColor: toColor.
 	self elements do: [ :e | e trachelShape strokePaint: (normalizer rtValue: e ) ].
 ]
