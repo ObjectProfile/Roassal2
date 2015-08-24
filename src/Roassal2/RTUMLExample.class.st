@@ -1,20 +1,25 @@
 "
-RTUMLExample new installTitle: 'colored' 
+RTUMLExample new installTitle: 'BlackColor' 
 		code:
-		'| b |
-b := RTUMLClassBuilder new.
-b methodShape label
-	if: [ :method | method selector beginsWith: ''init'' ] color: Color green;
-	if: [ :method | method selector beginsWith: ''with'' ] color: Color red.
-			
-b attributeShape label
-	if: [ :attribute | attribute beginsWith: ''a'' ] color: Color blue.
-b addObjects: RTShape withAllSubclasses.
-b treeLayout.
+		'
 
-b view setDefaultMenu.
-b open.
-b view canvas'
+| b |
+b := RTUMLClassBuilder new
+   instanceVariables: #instVarNames;
+   methodselector: #selector;
+	methodsNames: #methods;
+	attributeselector: #yourself.
+b attributeShape color: Color black.
+b methodShape color: Color black.
+b classNameShape color: Color black.
+b lineShape color: Color black.
+b boxShape borderColor: Color black.
+
+b addObjects: (TRAbstractArrowHeadShape withAllSubclasses ).
+b layout tree.
+
+b build.
+^b view'
 "
 Class {
 	#name : #RTUMLExample,
@@ -88,6 +93,71 @@ IJrs34H8A+JfZPkPuPmUyhb7ByRjwT8g/gHxH/wD4h8Q/8E/IP4B8R/8A+IfEP/BPyD+AfEf
 ]
 
 { #category : #sources }
+RTUMLExample >> exampleBlackColor [
+
+
+| b |
+b := RTUMLClassBuilder new
+   instanceVariables: #instVarNames;
+   methodselector: #selector;
+	methodsNames: #methods;
+	attributeselector: #yourself.
+b attributeShape color: Color black.
+b methodShape color: Color black.
+b classNameShape color: Color black.
+b lineShape color: Color black.
+b boxShape borderColor: Color black.
+
+b addObjects: (TRAbstractArrowHeadShape withAllSubclasses ).
+b layout tree.
+
+b build.
+^b view
+]
+
+{ #category : #icons }
+RTUMLExample >> exampleBlackColorIcon [
+	^ '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
+l78AbpUHhczSvmoAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTUMLExample >> exampleColoredProtocols [
 	| someClasses allMethodCategories b n |
 	someClasses := RTShape withAllSubclasses.
@@ -96,7 +166,7 @@ RTUMLExample >> exampleColoredProtocols [
 	b := RTUMLClassBuilder new.
 	n := RTMultiLinearColorForIdentity new objects: allMethodCategories.
 
-	b methodShape label
+	b methodShape
 		color: [ :m | n rtValue: m protocol ].
 
 	b methodsNames: [ :cls | (cls rtmethods sortedAs: #protocol) ].
@@ -174,10 +244,62 @@ ED8fxAfx80F8ED8fxM8HufN+Ab7cfG3xZnGjAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTUMLExample >> exampleWithNonClasses [
+
+| objects b |
+	"objects :=  {
+		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
+		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }."
+	objects := Array
+		with: (Array with: 'MyClass' with: (Array with: #iv1 with: #iv2) 
+			with: (Array with: #method1 with: #method2 with: #method3 ) )
+		with: (Array with: 'MyClass2' with: (Array with: #iv3 with: #iv4) 
+			with: (Array with: #method4 with: #method5 with: #method6 ) ).
+
+	b := RTUMLClassBuilder new.
+	b attributeShape label if: [ :a | a = #iv1 ] color: Color red.
+	b
+		addObjects: objects;
+		classname: #first;
+		instanceVariables: #second;
+		methodsNames: #third;
+		methodselector: #yourself;
+		attributeselector: #yourself;
+		superclass: nil.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTUMLExample >> exampleWithNonClassesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEFElEQVR4XuXZR0skaxTG8fl6
+LvwObty4UBDduFFRMSxEUcSMATMGRBAMqBgwx4VgzmGhjoqKC/vceg5478xgO109XO6d+T9Q
+tF3dbwv1qzpvvae+mPHzf8oX/iHgg/DDB+GD8MMH4YPwwwfhg/DDB+GD8MMH4YcPwgfhhw/C
+B+GHD8IH4YcPwgfhhw/CDx+ED8IPH4QPwg8fhA/CDx+ED8IPH4QfPggfhB8+CB+EHz4IH4Qf
+Pggf5L/O3t5eJOx2dHQU0diHh4dIPOO13dzcRPggH+Tw8DD0mImJie9e40kkCB8kJMjd3V3c
+ILe3t3yQeEGamppsdnbWtra27OzszKqrq/2z/v5+W1lZsenpabu6urKDg4MPQfLy8iwhIcGm
+pqZsbm7OgnJkHR0dtru7a4uLi/4b+j+jo6M2PDzMB/kZSFdXl3V3d9vl5aUVFhZaaWmp7e/v
+W29vr9XU1PiBbW5utszMzA9BSkpKLCsry0ZGRnSgbXNz08rLy62zs9P3NTY22sXFhWVkZNj4
++DgfJNaS9fLyYjMzM3HPIQMDA/w5hD+p/4kgwRwR1Cizr18tqDOhQdrb232e0Lyxvr7OB/ll
+kOBAWn29WVub2dJSaJCCggKbnJz0GwP+FcIvWXwQPsi/DLK8vOx/Pz8/W19fX2iQtbU1f9Ut
+bazAfJBPQDQZ9/T0BNNIva8fwoIkJSX5/LGxsWGPj498kF8F0Qo9aBTa9fW1ZWdnhwbZ3t52
+DI2NtYzxQT4B0ao81k09qm9B9D7M+Pff4IN8AqLe08nJibc91Mva2dnxV23K8fGxt1GiXSH6
+3vn5uZ2envp8kp6e7vvVnFTLRB0A/hUSAkT9K9X+nJwcbyxqcad9lZWVlpaW5t/Jzc2NCiKI
+uro673e9j83Pz/dSqKbk09MTH4R/2/sHgby9vX33Xme4ylYsIBqrdv23Udnig4QsWbW1tb6l
+pKTY2NiYpaamWllZmd8Ga32xuroaFUSlTS37xMTEoPvSZsnJyd7fGhwc9FtpIf2Iwgf5BERn
+9OvrqzcIh4aGHED79EBJk/XCwoLPCdFA7u/vfWxFRYW37zVW4/SwSnOS1jhLP/TI+CD8OeT3
+ukL0GFfzhM50lSw9QVQHV+sGXTGtra1RQVpaWvy7DQ0Nf5csPe5VS0Yla35+ng8Sz21vUVGR
+lxc9etU+vde8ogNfVVX109ve4uJifw6vsfod9cVUsrSG0UqeD8IvWb8fSHDmRoJSFWoLJm4/
+mMHCL/TY9y1YxfNB+OGD8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DDB+GD8MMH4YPwwwfh
+g/DDB+GHD8IH4YcPwgfhhw/CB+GHD8IH4YcPwg8fhA/CDx+ED8IPH4QPwg8fhA/CDx+En3/y
+F6uitrt8gybeAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTUMLExample >> examplecolored [
 | b |
 b := RTUMLClassBuilder new.
-b methodShape label
+b methodShape
 	if: [ :method | method selector beginsWith: 'init' ] color: Color green;
 	if: [ :method | method selector beginsWith: 'with' ] color: Color red.
 			
@@ -246,58 +368,6 @@ Vpa7NnLkyL6pxlHDwxeIG4hpBScX0A9IEgBhenGfnELsQC+L+d0ZWQtR08uCvAkukjHsb14y
 h9j0r34OCbH9oczkkMi7LmwuWD8gXylNgZems4+XTnyrv6nGE37DjvbiAWH2hlmzZrlBOmiw
 6NoyzR+BRQQN5M9RwmPWEEQwJSwzOXCOVyUhdMBHcU+ITcSbZK7Wfhr76/ih1rABQbmIp87N
 JkbFzfaBRYicORchb8TW1OP9U1yjI8A5CJ8nBxD/A2xqAIUQ0XD1AAAAAElFTkSuQmCC'
-]
-
-{ #category : #sources }
-RTUMLExample >> exampleexampleWithNonClasses [
-
-| objects b |
-	"objects :=  {
-		{ 'MyClass' . { #iv1 . #iv2 } . { #method1 . #method2 . #method3 }}  .
-		{ 'MyClass2' . { #iv2 . #iv2 } . { #method1 . #method2 . #method4 }}  }."
-	objects := Array
-		with: (Array with: 'MyClass' with: (Array with: #iv1 with: #iv2) 
-			with: (Array with: #method1 with: #method2 with: #method3 ) )
-		with: (Array with: 'MyClass2' with: (Array with: #iv3 with: #iv4) 
-			with: (Array with: #method4 with: #method5 with: #method6 ) ).
-
-	b := RTUMLClassBuilder new.
-	b attributeShape label if: [ :a | a = #iv1 ] color: Color red.
-	b
-		addObjects: objects;
-		classname: #first;
-		instanceVariables: #second;
-		methodsNames: #third;
-		methodselector: #yourself;
-		attributeselector: #yourself;
-		superclass: nil.
-b build.
-^ b view
-]
-
-{ #category : #icons }
-RTUMLExample >> exampleexampleWithNonClassesIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEFElEQVR4XuXZR0skaxTG8fl6
-LvwObty4UBDduFFRMSxEUcSMATMGRBAMqBgwx4VgzmGhjoqKC/vceg5478xgO109XO6d+T9Q
-tF3dbwv1qzpvvae+mPHzf8oX/iHgg/DDB+GD8MMH4YPwwwfhg/DDB+GD8MMH4YcPwgfhhw/C
-B+GHD8IH4YcPwgfhhw/CDx+ED8IPH4QPwg8fhA/CDx+ED8IPH4QfPggfhB8+CB+EHz4IH4Qf
-Pggf5L/O3t5eJOx2dHQU0diHh4dIPOO13dzcRPggH+Tw8DD0mImJie9e40kkCB8kJMjd3V3c
-ILe3t3yQeEGamppsdnbWtra27OzszKqrq/2z/v5+W1lZsenpabu6urKDg4MPQfLy8iwhIcGm
-pqZsbm7OgnJkHR0dtru7a4uLi/4b+j+jo6M2PDzMB/kZSFdXl3V3d9vl5aUVFhZaaWmp7e/v
-W29vr9XU1PiBbW5utszMzA9BSkpKLCsry0ZGRnSgbXNz08rLy62zs9P3NTY22sXFhWVkZNj4
-+DgfJNaS9fLyYjMzM3HPIQMDA/w5hD+p/4kgwRwR1Cizr18tqDOhQdrb232e0Lyxvr7OB/ll
-kOBAWn29WVub2dJSaJCCggKbnJz0GwP+FcIvWXwQPsi/DLK8vOx/Pz8/W19fX2iQtbU1f9Ut
-bazAfJBPQDQZ9/T0BNNIva8fwoIkJSX5/LGxsWGPj498kF8F0Qo9aBTa9fW1ZWdnhwbZ3t52
-DI2NtYzxQT4B0ao81k09qm9B9D7M+Pff4IN8AqLe08nJibc91Mva2dnxV23K8fGxt1GiXSH6
-3vn5uZ2envp8kp6e7vvVnFTLRB0A/hUSAkT9K9X+nJwcbyxqcad9lZWVlpaW5t/Jzc2NCiKI
-uro673e9j83Pz/dSqKbk09MTH4R/2/sHgby9vX33Xme4ylYsIBqrdv23Udnig4QsWbW1tb6l
-pKTY2NiYpaamWllZmd8Ga32xuroaFUSlTS37xMTEoPvSZsnJyd7fGhwc9FtpIf2Iwgf5BERn
-9OvrqzcIh4aGHED79EBJk/XCwoLPCdFA7u/vfWxFRYW37zVW4/SwSnOS1jhLP/TI+CD8OeT3
-ukL0GFfzhM50lSw9QVQHV+sGXTGtra1RQVpaWvy7DQ0Nf5csPe5VS0Yla35+ng8Sz21vUVGR
-lxc9etU+vde8ogNfVVX109ve4uJifw6vsfod9cVUsrSG0UqeD8IvWb8fSHDmRoJSFWoLJm4/
-mMHCL/TY9y1YxfNB+OGD8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DDB+GD8MMH4YPwwwfh
-g/DDB+GHD8IH4YcPwgfhhw/CB+GHD8IH4YcPwg8fhA/CDx+ED8IPH4QPwg8fhA/CDx+En3/y
-F6uitrt8gybeAAAAAElFTkSuQmCC'
 ]
 
 { #category : #accessing }

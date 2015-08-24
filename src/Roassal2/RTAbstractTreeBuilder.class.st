@@ -17,9 +17,19 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
+{ #category : #color }
+RTAbstractTreeBuilder >> borderColor: aBlockOrObject [
+	self shape borderColor: aBlockOrObject
+]
+
 { #category : #'default-values' }
 RTAbstractTreeBuilder >> childrenKey [
 	^ #elements
+]
+
+{ #category : #color }
+RTAbstractTreeBuilder >> color: aBlockOrObject [
+	self shape color: aBlockOrObject
 ]
 
 { #category : #private }
@@ -109,6 +119,15 @@ RTAbstractTreeBuilder >> initialize [
 	super initialize.
 	elements := OrderedCollection new.
 	rootNodes := OrderedCollection new.
+]
+
+{ #category : #color }
+RTAbstractTreeBuilder >> leafColor: aBlockOrColor [
+	self shape 
+		ifElement: [ :e | 
+			(e attributes includesKey: self childrenKey) and: 
+			[ (e attributes at: self childrenKey) isEmpty ]  ]
+		fillColor: [:e | aBlockOrColor rtValue: e model ] .
 ]
 
 { #category : #weight }
