@@ -114,17 +114,15 @@ zWoI7KMAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTTreeMapExample >> exampleFileSystem [
-
 | b color |
 b := RTTreeMapBuilder new.
 color := RTScale linear 
 	domain: { 0. 12000.};
 	range: { Color gray. Color red }.
-b shape
+b 
 	color: Color transparent;
 	borderColor: Color black;
-	if: [ :f | f isFile ] color: [ :f | color scale: f size sqrt ].
-b 
+	leafColor: [ :f | color scale: f size sqrt ];
 	leafWeight: [:f | f size sqrt ]; 
 	explore: FileSystem disk workingDirectory
 	nesting: #directories

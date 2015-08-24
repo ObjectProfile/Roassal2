@@ -16,6 +16,16 @@ RTNoShape class >> new [
 	^ instance
 ]
 
+{ #category : #'as yet unclassified' }
+RTNoShape >> color: aValueOrAOneArgBlock [
+	"do nothing"
+]
+
+{ #category : #'as yet unclassified' }
+RTNoShape >> colorElement: aValueOrAOneArgBlock [
+	"do nothing"
+]
+
 { #category : #rendering }
 RTNoShape >> heightFor: element [
 	^ 0

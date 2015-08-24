@@ -12,12 +12,13 @@ Class {
 		'methodsNames',
 		'superclass',
 		'methodselector',
-		'methodShapeBuilder',
+		'methodShape',
 		'layout',
 		'attributeselector',
-		'attributeShapeBuilder',
+		'attributeShape',
 		'lineShape',
-		'boxShape'
+		'boxShape',
+		'classNameShape'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
@@ -41,12 +42,12 @@ RTUMLClassBuilder >> applyLayout [
 
 { #category : #shapes }
 RTUMLClassBuilder >> attributeShape [
-	^ attributeShapeBuilder
+	^ attributeShape
 ]
 
 { #category : #shapes }
 RTUMLClassBuilder >> attributeShape: aUMLShapeBuilder [
-	attributeShapeBuilder := aUMLShapeBuilder
+	^ attributeShape := aUMLShapeBuilder
 ]
 
 { #category : #accessing }
@@ -71,7 +72,7 @@ RTUMLClassBuilder >> boxShape [
 
 { #category : #shapes }
 RTUMLClassBuilder >> boxShape: aShapeBuilder [
-	boxShape := aShapeBuilder.
+	^ boxShape := aShapeBuilder.
 ]
 
 { #category : #edges }
@@ -85,22 +86,15 @@ RTUMLClassBuilder >> buildEdges [
 	eb objects: classes.
 	eb shape shape: lineShape shape.
 	eb connectFrom: self superclass.
-"	RTEdge buildEdgesFromObjects: 
-		classes from: self superclass to: #yourself using: lineShape shape inView: view"
 ]
 
 { #category : #public }
 RTUMLClassBuilder >> buildSchema: aView [
 	| group box r label e1 e2  l h attributes methods line headerline midline clh |
-	self prepare: self methodShape selector: #methodselector.
-	self prepare: self attributeShape selector: #attributeselector.
-
+	
 	classes do: [ :object | 
 		group := RTGroup new.
-		
-		group add: ((RTLabel new height: self fontSizeOfClassname; 
-			text: [:c| self classNameFor: c]) 
-			elementOn: object).
+		group add: (self classNameShape elementOn: object).
 		clh := group encompassingRectangle height.
 			
 		label := self attributeShape shape.
@@ -152,6 +146,17 @@ RTUMLClassBuilder >> buildSchema: aView [
 { #category : #accessing }
 RTUMLClassBuilder >> classNameFor: obj [
 	^ self classname rtValue: obj
+]
+
+{ #category : #shapes }
+RTUMLClassBuilder >> classNameShape [
+	^ classNameShape
+]
+
+{ #category : #shapes }
+RTUMLClassBuilder >> classNameShape: aUMLShapeBuilder [
+	^ classNameShape := aUMLShapeBuilder
+	
 ]
 
 { #category : #accessing }
@@ -334,11 +339,17 @@ RTUMLClassBuilder >> initialize [
 	self forPharoClasses.
 	self layout: RTLayoutBuilder new.
 	(self lineShape: RTShapeBuilder new) orthoVerticalLine.
+	(self classNameShape: RTShapeBuilder new) label
+		height: self fontSizeOfClassname;
+		text: [:c| self classNameFor: c].
 	self methodShape: RTShapeBuilder new.
 	self attributeShape: RTShapeBuilder new.
-	self boxShape: RTShapeBuilder new.
-	self boxShape box color: Color white; borderColor: Color gray.
+	(self boxShape: RTShapeBuilder new) box
+		color: Color white;
+		borderColor: Color gray.
 	self interaction draggable.
+	self prepare: self methodShape selector: #methodselector.
+	self prepare: self attributeShape selector: #attributeselector.
 ]
 
 { #category : #accessing }
@@ -374,12 +385,12 @@ RTUMLClassBuilder >> lineShape: aShapeBuilder [
 
 { #category : #shapes }
 RTUMLClassBuilder >> methodShape [
-	^ methodShapeBuilder
+	^ methodShape
 ]
 
 { #category : #shapes }
 RTUMLClassBuilder >> methodShape: aUMLShapeBuilder [
-	methodShapeBuilder := aUMLShapeBuilder
+	^ methodShape := aUMLShapeBuilder
 ]
 
 { #category : #accessing }
