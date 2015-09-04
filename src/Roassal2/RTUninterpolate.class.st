@@ -5,7 +5,7 @@ Class {
 		'a',
 		'b'
 	],
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Scaling'
 }
 
 { #category : #'as yet unclassified' }
@@ -14,12 +14,12 @@ RTUninterpolate class >> uninterpolate: aNum1 and: aNum2 [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interpolating }
 RTUninterpolate >> uninterpolate: x [
 	self subclassResponsibility.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interpolating }
 RTUninterpolate >> uninterpolate: aNum1 and: aNum2 [
 	a := aNum1 .
 	b := aNum2 .
