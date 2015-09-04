@@ -105,6 +105,13 @@ RTView >> animations [
 	^ trCanvas animations
 ]
 
+{ #category : #announce }
+RTView >> announce: evt [
+	"Announce the event. If a callback for the event evt is defined, then it is executed, with myself as argument."
+	evt canvas: self canvas.
+	super announce: evt
+]
+
 { #category : #opening }
 RTView >> build [
 	"do nothing. This method is used polymorphically with builders"
