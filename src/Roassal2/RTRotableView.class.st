@@ -1,3 +1,19 @@
+"
+I am an interaction that makes a view rotable using the left button and draggable using the right mouse button.
+
+Here is an example
+
+[[[ 
+	v := RTView new.
+	v @ RTRotableView.
+	b := RTMondrian new.
+	b view: v.
+	b nodes: (1 to: 300).
+	b edges connectFrom: [ :value | value // 2 ].
+	b layout cluster.
+	b.			
+]]]
+"
 Class {
 	#name : #RTRotableView,
 	#superclass : #RTInteraction,
@@ -8,33 +24,46 @@ Class {
 		'center',
 		'startPoint'
 	],
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Interactions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTRotableView >> center [
+	^ center
+]
+
+{ #category : #accessing }
 RTRotableView >> center: anObject [
 	center := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'selection events' }
 RTRotableView >> dragViewWithEvent: e [
 	view canvas camera translateBy: e step negated / view canvas camera scale.
 	e signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
-RTRotableView >> elements: anObject [
-	elements := anObject
+{ #category : #accessing }
+RTRotableView >> elements [
+	"Return a block or a collection of Roassal elements"
+	^ elements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+RTRotableView >> elements: elementsOrBlock [
+	"Useful to specify which elements have to be rotated"
+	elements := elementsOrBlock
+]
+
+{ #category : #initialization }
 RTRotableView >> initialize [
 	super initialize.
 	elements := [ view elements ].
-	center := 0@0.
+	center := 0 @ 0.
+	startPoint := 0 @ 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTRotableView >> initializeElement: element. [
 	view := element.
 	draggingView := false.
@@ -50,7 +79,7 @@ RTRotableView >> initializeElement: element. [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 RTRotableView >> updateTargetElements: evt [
 	| target c angle eangle p d evtPoint |
 	target := elements value."A collection of elements"
