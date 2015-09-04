@@ -32,7 +32,14 @@ TREvent >> canvas [
 
 { #category : #accessing }
 TREvent >> canvas: aTrachelCanvas [
+	"Set the Trachel canvas"
 	canvas := aTrachelCanvas
+]
+
+{ #category : #initialization }
+TREvent >> initialize [
+	super initialize.
+	position := 0 @ 0.
 ]
 
 { #category : #accessing }
