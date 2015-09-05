@@ -165,10 +165,10 @@ TRCanvas >> camera: aCamera [
 
 { #category : #events }
 TRCanvas >> canvas [
-	session == Smalltalk session
+	session == TRPlatform current session
 		ifFalse: [ 
 			canvas := AthensCairoSurface extent: extent asIntegerPoint.
-			session := Smalltalk session ].
+			session := TRPlatform current session ].
 	^ canvas
 ]
 
@@ -269,7 +269,7 @@ TRCanvas >> initialize [
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
 	color := Color white.
-	session := Smalltalk session.
+	session := TRPlatform current session.
 	
 	"No event overseer at the creation"
 	eventOverseer := nil
@@ -292,7 +292,7 @@ TRCanvas >> morph [
 
 { #category : #'instance creation' }
 TRCanvas >> morphClass [
-	^ TRMorph
+	^ TRPlatform current trMorphClass
 ]
 
 { #category : #events }

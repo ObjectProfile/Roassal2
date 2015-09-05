@@ -199,7 +199,7 @@ TRShape >> initialize [
 	matrix := AthensAffineTransform new.
 	rotationAngleDegrees := 0.
 	self position: 0 @ 0.
-	session := Smalltalk session.
+	session := TRPlatform current session.
 ]
 
 { #category : #testing }
@@ -250,9 +250,11 @@ TRShape >> noBorder [
 
 { #category : #private }
 TRShape >> path [
-	session == Smalltalk session
+	session == TRPlatform current session
 		ifFalse: [ path := nil ].
-	path ifNil: [ self computePath ].
+	path ifNil: [ 
+		self computePath.
+		session := TRPlatform current session ].
 	^ path
 ]
 
@@ -360,7 +362,7 @@ TRShape >> strokePaint [
 { #category : #accessing }
 TRShape >> strokePaint: aColor [
 	"set the color of the border line"
-	[ aColor isNil or: [ aColor isKindOf: Color ] ] assert.
+	[ aColor isNil or: [ aColor isColor ] ] assert.
 	strokePaint := aColor
 ]
 

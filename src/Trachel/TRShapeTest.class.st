@@ -64,7 +64,7 @@ TRShapeTest >> testAddingNoShape [
 TRShapeTest >> testBitmapIncludesPoint [
 
 	| s c |
-	s := TRBitmapShape new form: (Form extent: 20 @ 20 depth: 32).
+	s := TRBitmapShape new form: (TRPlatform current newFormWithExtent: 20 @ 20 depth: 32).
 	c := TRCanvas new.
 	c addShape: s.
 	
@@ -77,7 +77,7 @@ TRShapeTest >> testBitmapIncludesPoint [
 { #category : #bitmap }
 TRShapeTest >> testBitmapWidth [
 
-	self assert: (TRBitmapShape new form: (ColorForm extent: 20 @ 20 depth: 32)) width equals: 20
+	self assert: (TRBitmapShape new form: (TRPlatform current newColorFormWithExtent: 20 @ 20 depth: 32)) width equals: 20
 ]
 
 { #category : #composite }

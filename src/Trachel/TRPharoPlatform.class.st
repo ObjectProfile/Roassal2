@@ -7,10 +7,50 @@ Class {
 	#category : #'Trachel-MorphSpecific'
 }
 
+{ #category : #testing }
+TRPharoPlatform class >> isActivePlatform [
+	^ true.
+	"^ SmalltalkImage current vm isPharoVM".
+]
+
 { #category : #public }
 TRPharoPlatform >> browseClass: aClass [
 	^ Nautilus openOnClass: aClass
 	
+]
+
+{ #category : #public }
+TRPharoPlatform >> colorFormClass [
+	^ ColorForm
+]
+
+{ #category : #public }
+TRPharoPlatform >> createPopupFor: aMorph in: aPoint background: aColor string: aString [
+	| popup tm vertices xdelta ydelta world position |
+	tm := SimpleBalloonMorph getTextMorph: aString for: aMorph.
+	tm composeToBounds.
+	vertices := SimpleBalloonMorph getVertices: tm bounds.
+	popup := SimpleBalloonMorph new color: aColor;
+		addMorph: tm; 
+		setTarget: nil;
+		setVertices: vertices.
+	world := aMorph world 
+		ifNil: [ ^ popup ].
+	position := aPoint + aMorph position.
+	xdelta := ydelta := 0.
+	
+	(position x + popup width) > world width 
+		ifTrue: [ xdelta := popup width negated ].
+	(position y + popup height) > world height 
+		ifTrue: [ ydelta := popup height negated ].
+	popup lock;
+		fullBounds;
+		setProperty: #morphicLayerNumber toValue: popup morphicLayerNumber.
+	popup position: position + (xdelta @ydelta).
+	aMorph world addMorphFront: popup.
+	
+	aMorph world activeHand balloonHelp: popup.
+	^ popup
 ]
 
 { #category : #public }
@@ -19,13 +59,36 @@ TRPharoPlatform >> dateAndTime [
 ]
 
 { #category : #public }
+TRPharoPlatform >> dateAndTimeClass [
+	^ DateAndTime
+]
+
+{ #category : #public }
 TRPharoPlatform >> dateAndTimeFromString: aString [
 	^ DateAndTime fromString: aString.
+]
+
+{ #category : #utilities }
+TRPharoPlatform >> dateTimeStringExample [
+	^ 'Ebola2.1,POINT (-9.696645 9.945587),2014-01-01T00:00:00,2015-01-01T00:00:00,Guinea,9.945587,-9.696645,ZEBOV,528,337,64%,"Outbreak is currently ongoing in southeastern Guinea, including the capital?Conakry?and the neighbour countries?Sierra Leone?andLiberia"
+Ebola2.2,POINT (32.290275 1.373333),2012-01-01T00:00:00,-0002-12-29T00:00:00,Uganda,1.373333,32.290275,SEBOV,24,17,71%,Outbreak occurred in the?Kibaale District.[34]
+Ebola2.6,POINT (21.758664 -4.038333),2008-01-01T00:00:00,2009-01-01T00:00:00,Democratic Republic of Congo,-4.038333,21.758664,ZEBOV,32,14,45%,Outbreak occurred in the Mweka and Luebo health zones of the Province of?Kasai-Occidental.[33]' 
+]
+
+{ #category : #public }
+TRPharoPlatform >> deletePopup: popup [
+	popup ifNil: [ ^ self ].
+	popup delete.
 ]
 
 { #category : #public }
 TRPharoPlatform >> dialogChooseFrom: options values: values [
 	^ UIManager default chooseFrom: options values: values.
+]
+
+{ #category : #public }
+TRPharoPlatform >> dialogInform: aMessage [
+	self inform: aMessage
 ]
 
 { #category : #public }
@@ -48,6 +111,11 @@ TRPharoPlatform >> download: aString [
 { #category : #public }
 TRPharoPlatform >> downloadPng: aUrl [
 	^ ZnEasy getPng: aUrl
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> exampleSelectionClass [
+	^ RTExampleSelection
 ]
 
 { #category : #public }
@@ -77,6 +145,13 @@ TRPharoPlatform >> httpClientRequestClass [
 ]
 
 { #category : #public }
+TRPharoPlatform >> imageExporterForType: imageType [
+	^ (imageType = #JPEG or: imageType = #JPG)
+		ifTrue: [ PluginBasedJPEGReadWriter ]
+		ifFalse: [ Smalltalk at: (imageType, 'ReadWriter') asSymbol ]
+]
+
+{ #category : #public }
 TRPharoPlatform >> inform: str [
 	UIManager default inform: str
 ]
@@ -84,6 +159,12 @@ TRPharoPlatform >> inform: str [
 { #category : #public }
 TRPharoPlatform >> jsonReaderClass [
 	^ NeoJSONReader
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> linearGradientClass [
+	^ LinearGradientPaint
+	
 ]
 
 { #category : #public }
@@ -109,6 +190,21 @@ TRPharoPlatform >> mimeEncode: aStream [
 { #category : #public }
 TRPharoPlatform >> mimeEncode: aStream multiLine: aBool [
 	^ Base64MimeConverter mimeEncode: aStream multiLine: aBool.
+]
+
+{ #category : #public }
+TRPharoPlatform >> morphClass [
+	^ Morph
+]
+
+{ #category : #public }
+TRPharoPlatform >> newColorFormWithExtent: extent depth: depth [
+	^ ColorForm extent: extent depth: depth.
+]
+
+{ #category : #public }
+TRPharoPlatform >> newFormWithExtent: extent depth: depth [
+	^ Form extent: extent depth: depth
 ]
 
 { #category : #public }
@@ -272,6 +368,21 @@ b7XMzMy8vDyLxTI+TdwigUDA6/V2d3f39/cPj3ai0FZVh8Nhs9nYbscazkTKQBH7Pv1+P8/z
 BoOB47jx7O2Jtod2ytJkYTAYeJ7neV7TxvaJlyEFJiqLThFBSgZdkJJBF6Rk0AUpGXRBSgZd
 kJJBF6Rk0AUpGXRBSgZdkJJBF6Rk0AUpGXRBSgZdkJJBF6Rk0AUpGXRBSgZd8H/z5igvd0LG
 TQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #public }
+TRPharoPlatform >> session [
+	^ Smalltalk session
+]
+
+{ #category : #windows }
+TRPharoPlatform >> showTemporaryCursor: cursorOrNil [
+	World currentHand showTemporaryCursor: cursorOrNil
+]
+
+{ #category : #public }
+TRPharoPlatform >> trMorphClass [
+	^ TRMorph
 ]
 
 { #category : #public }

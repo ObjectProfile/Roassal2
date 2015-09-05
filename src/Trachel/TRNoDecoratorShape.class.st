@@ -1,7 +1,7 @@
 Class {
 	#name : #TRNoDecoratorShape,
 	#superclass : #TRAbstractLineDecoratorShape,
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-ShapesForArrow'
 }
 
 { #category : #visitor }
