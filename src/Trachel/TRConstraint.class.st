@@ -551,10 +551,6 @@ TRConstraint class >> useWidthOf: aShape for: shapes [
 	shapes do: [ :s | s width: aShape width ]
 ]
 
-{ #category : #OBSOLETECLASS }
+{ #category : #'as yet unclassified' }
 TRConstraint >> OBSOLETE_CLASS [
-
-	"
-	This class is now obsolete. Please have a look at RTConstraint
-	"
 ]
