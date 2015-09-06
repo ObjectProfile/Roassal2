@@ -6,22 +6,22 @@ Class {
 		'output',
 		'input'
 	],
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> clamp: x [
 	clamp := x.
 	self rescale.
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> domain: x [
 	super domain: x.
 	self rescale.
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> initialize [
 	super initialize.
 	domain := {0. 1}.
@@ -31,18 +31,18 @@ RTScaleLinear >> initialize [
 	self rescale.
 ]
 
-{ #category : #transformations }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> invert: y [
 	^ input scale: y
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> range: r [
 	super range: r.
 	self rescale.
 ]
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> rescale [
 	| linear |
 	linear := (domain size min: range size ) > 2
@@ -59,7 +59,7 @@ RTScaleLinear >> rescale [
 	input rescale.
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleLinear >> scale: x [
 	^ output scale: x.
 ]
