@@ -5,16 +5,16 @@ Class {
 		'u',
 		'i'
 	],
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTScaleBilinear >> rescale [
 	u := uninterpolate uninterpolate: domain first and: domain second.
 	i := interpolate interpolate: range first and: range second.
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleBilinear >> scale: x [
 	^ i interpolate: (u uninterpolate: x)
 ]
