@@ -119,7 +119,9 @@ RTCanvasExporter >> format: imageFormat [
 	| imageFormatUC |
 	format := imageFormat.
 	imageFormatUC := imageFormat asUppercase.
-	imageExporter := TRPlatform current imageExporterForType: imageFormatUC
+	imageExporter := (imageFormatUC = #JPEG or: imageFormatUC = #JPG)
+		ifTrue: [ PluginBasedJPEGReadWriter ]
+		ifFalse: [ Smalltalk at: (imageFormatUC , 'ReadWriter') asSymbol ]
 ]
 
 { #category : #initialization }

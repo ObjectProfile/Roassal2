@@ -10,7 +10,7 @@ Class {
 		'interpolate',
 		'uninterpolate'
 	],
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Experimental'
 }
 
 { #category : #'instance creation' }
@@ -18,93 +18,57 @@ RTScale class >> linear [
 	^ RTScaleLinear new.
 ]
 
-{ #category : #'instance creation' }
-RTScale class >> log [
-	^ RTScaleLog new
-
-]
-
-{ #category : #todo }
-RTScale class >> oridinal [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> pow [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> quantile [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> quantize [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> sqrt [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> threshold [
-	"TODO"
-]
-
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> domain [
 	^ domain
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> domain: anObject [
 	domain := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> interpolate [
 	^ interpolate
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> interpolate: anObject [
 	interpolate := anObject
 ]
 
-{ #category : #transformations }
+{ #category : #'as yet unclassified' }
 RTScale >> invert: anObject [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> range [
 	^ range
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> range: anObject [
 	range := anObject
 ]
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTScale >> rescale [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> scale: anObject [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> uninterpolate [
 	^ uninterpolate
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScale >> uninterpolate: anObject [
 	uninterpolate := anObject
 ]

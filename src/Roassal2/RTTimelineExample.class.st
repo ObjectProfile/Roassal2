@@ -412,8 +412,8 @@ RTTimelineExample >> exampleThresholdLines [
 		labelConversion: [ :v | Date year: 2015 day: v ]. 
 
 	p := RTHorizontalTimelineDecorator new.
-	p addLineAboveIdentifier: #c3.
-	p addLineAboveIdentifier: #c2.
+	p addLineAboveIdentifier: 'c3'.
+	p addLineAboveIdentifier: 'c2'.
 	p shape line width: 1; color: (Color red).
 	b addDecorator: p.
 

@@ -24,16 +24,14 @@ RTResizableRectangle class >> cornerDirectionFor: aCorner [
 RTResizableRectangle class >> cornerDirections [
 	^ cornerDirections
 		ifNil: [ 
-			cornerDirections := (OrderedCollection new
-				add: (#top -> (0 @ 1));
-				add: (	#bottom -> (0 @ -1));
-				add: (#left -> (1 @ 0));
-				add: (#right -> (-1 @ 0));
-				add: (#topRight -> (-1 @ 1));
-				add: (#bottomRight -> (-1 @ -1));
-				add: (#bottomLeft -> (1 @ -1));
-				add: (#topLeft -> (1 @ 1));
-				yourself) asDictionary ]
+			cornerDirections := {#top -> (0 @ 1).
+			#bottom -> (0 @ -1).
+			#left -> (1 @ 0).
+			#right -> (-1 @ 0).
+			#topRight -> (-1 @ 1).
+			#bottomRight -> (-1 @ -1).
+			#bottomLeft -> (1 @ -1).
+			#topLeft -> (1 @ 1)} asDictionary ]
 ]
 
 { #category : #accessing }
@@ -43,15 +41,14 @@ RTResizableRectangle class >> corners [
 
 { #category : #accessing }
 RTResizableRectangle class >> cornersAndSides [
-	^ OrderedCollection new add: #top;
-		add: #topRight;
-		add: #right;
-		add: #bottomRight;
-		add: #bottom;
-		add: #bottomLeft;
-		add: #left;
-		add: #topLeft;
-		asArray
+	^ {#top.
+	#topRight.
+	#right.
+	#bottomRight.
+	#bottom.
+	#bottomLeft.
+	#left.
+	#topLeft}
 ]
 
 { #category : #'as yet unclassified' }
@@ -63,16 +60,14 @@ RTResizableRectangle class >> oppositeCornerFor: aCorner [
 RTResizableRectangle class >> oppositeCorners [
 	^ oppositeCorners
 		ifNil: [ 
-			oppositeCorners := (OrderedCollection new
-				add: (#topRight -> #bottomLeft);
-				add: (#bottomLeft -> #topRight);
-				add: (	#bottomRight -> #topLeft);
-				add: (#topLeft -> #bottomRight);
-				add: (	#top -> #bottom);
-				add: (	#bottom -> #top);
-				add: (	#left -> #right);
-				add: (	#right -> #left);
-				yourself) asDictionary ]
+			oppositeCorners := {#topRight -> #bottomLeft.
+			#bottomLeft -> #topRight.
+			#bottomRight -> #topLeft.
+			#topLeft -> #bottomRight.
+			#top -> #bottom.
+			#bottom -> #top.
+			#left -> #right.
+			#right -> #left} asDictionary ]
 ]
 
 { #category : #accessing }

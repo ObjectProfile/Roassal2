@@ -105,8 +105,7 @@ oA/kfmoUAPAWJvYeVmHCyBCbBNMHMoXq5ia3CCNdo5r0H22jD8RPahvyzx9Vpg9khok+EPpA
 
 { #category : #sources }
 RTSVGExample >> exampleDiamond [
-
-	| v s elements |
+ 
 	v := RTView new.
 v @ RTDraggableView.
 s := RTSVGPath new path: 'M342.906,153H170.301l-85.967,96.562L256,462l171.666-211.23L342.906,153z M181.634,256l52.171,123.905
@@ -409,8 +408,7 @@ RU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleRabbit [
-
-	| v s elements |
+ 
 	v := RTView new.
 v @ RTDraggableView.
 s := RTSVGPath new path: 'M397.49,222.581c-31.734-6.53-70.661,22.749-95.237,63.244c-11.35-13.957-25.565-26.455-42.892-37.536

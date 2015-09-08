@@ -132,7 +132,7 @@ addHead := [ :aHeadName :anOffset |
 		perform: aHeadName asSymbol;
 		edgeFrom: e1 to: e2.
 	l1 model: aHeadName.
-	view addAll: (Array with: e1 with: e2 with: l1).
+	view addAll: { e1 . e2 . l1 }.
 
 	e1 translateBy: -110 @ anOffset.
 	e2 translateBy: 110 @ anOffset.
@@ -141,8 +141,8 @@ addHead := [ :aHeadName :anOffset |
 
 heads := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
 offset := 0.
-heads	do: [ :id | 
-		addHead value: id value: offset.
+heads	do: [ :name | 
+		addHead value: name value: offset.
 		offset := offset + 40 ].
 
 ^ view
@@ -168,13 +168,13 @@ addStyle := [ :aStyleName |
 		perform: aStyleName asSymbol;
 		edgeFrom: e1 to: e2.
 	l1 model: aStyleName.
-	view addAll: (Array with: e1 with: e2 with: l1).
+	view addAll: { e1 . e2 . l1 }.
 
 	l1 @ (RTLabelled new color: Color black).
 ].
 
 styles := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
-styles do: [ :id | addStyle value: id ].
+styles do: [ :name | addStyle value: name ].
 
 RTGridLayout new
 	gapSize: 50;

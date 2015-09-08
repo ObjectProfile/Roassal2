@@ -29,10 +29,8 @@ RTNestTest >> testAutomaticLayout [
 		layout: RTFlowLayout new;
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position closeTo: (-12.0@23.5)) or: 
-					[bigElement position closeTo: (-12.0@18.5) ]).
-	self assert: ((bigElement2 position closeTo: (13.0@23.5)) or: 
-					[bigElement2 position closeTo: (13.0@18.5) ]).
+	self assert: bigElement position equals: (-12.0@23.5).
+	self assert: bigElement2 position equals: (13.0@23.5).
 ]
 
 { #category : #tests }
@@ -388,7 +386,7 @@ RTNestTest >> testInnerElement5 [
 { #category : #'composed shape' }
 RTNestTest >> testLabelInCompositeShape [
 
-	| v lbl box cs e bigElement p1 p2 |
+	| v lbl box cs e bigElement |
 	v := RTView new.
 
 	lbl := RTLabel new text: ''.
@@ -407,9 +405,7 @@ RTNestTest >> testLabelInCompositeShape [
 			group add: bigElement. ].
 
 	self assert: bigElement position ~= e position.
-	p1 := bigElement trachelShape position.
-	p2 := e trachelShape shapes second position.
-	self assert: ((p1 = p2) or: [ (p1 - p2) abs <= (0.5@0.5) ]).
+	self assert: bigElement trachelShape position equals: e trachelShape shapes second position.
 ]
 
 { #category : #'composed shape' }
@@ -456,10 +452,8 @@ RTNestTest >> testLayout [
 	RTNest new 
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position = (-12.0@23.5)) or: [ 
-		bigElement position = (-12.0@18.5) ]).
-	self assert: ((bigElement2 position = (13.0@23.5)) or: [
-		bigElement2 position = (13.0@18.5)] ).
+	self assert: bigElement position equals: (-12.0@23.5).
+	self assert: bigElement2 position equals: (13.0@23.5).
 ]
 
 { #category : #'multi line' }

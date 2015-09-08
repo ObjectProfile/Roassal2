@@ -6,35 +6,27 @@ Class {
 
 { #category : #tests }
 ColorPaletteTest >> testDiverging [
-	| palette c c2 |
+	| palette |
 	palette := ColorPalette diverging.
 
 	self assert: (palette colors: 11 scheme: 'RdGy') size equals: 11.
-	c := (palette colors: 11 scheme: 'RdGy') first.
-	c2 := Color colorFrom: '#67001F'.
-	self assert: (c closeTo: c2).
+	self assert: (palette colors: 11 scheme: 'RdGy') first asHTMLColor equals: '#67001F'.
 	
 	self assert: (palette colors: 6 scheme: 'RdGy') size equals: 6.
-	c := (palette colors: 6 scheme: 'RdGy') second.
-	c2 := Color colorFrom: '#EF8A62'.
-	c assert: (c closeTo: c2)
-	
+	self assert: (palette colors: 6 scheme: 'RdGy') second asHTMLColor equals: '#EF8A62'.
 ]
 
 { #category : #tests }
 ColorPaletteTest >> testDivergingError [
-	|palette c1 c2 |
+	|palette |
 	palette := ColorPalette diverging.
 	
+	
 	self assert: (palette colors: 11 scheme: 'RdGy') size equals: 11.
-	c1 := (palette colors: 11 scheme: 'RdGy') first.
-	c2 := Color colorFrom: '#67001F'.
-	self assert: (c1 closeTo: c2).
+	self assert: (palette colors: 11 scheme: 'RdGy') first asHTMLColor equals: '#67001F'.
 	
 	self assert: (palette colors: 6 scheme: 'RdGy') size equals: 6.
-	c1 := (palette colors: 6 scheme: 'RdGy') second.
-	c2 := Color colorFrom: '#EF8A62'.
-	self assert: (c1 closeTo: c2).
+	self assert: (palette colors: 6 scheme: 'RdGy') second asHTMLColor equals: '#EF8A62'.
 ]
 
 { #category : #tests }
@@ -60,20 +52,14 @@ ColorPaletteTest >> testQualitativeError [
 
 { #category : #tests }
 ColorPaletteTest >> testSequential [
-	| palette c1 c2 |
+	| palette |
 	palette := ColorPalette sequential.
 
 	self assert: (palette colors: 3 scheme: 'Purples') size equals: 3.
-	c1 := (palette colors: 3 scheme: 'Purples') first.
-	c2 := Color colorFrom: '#EFEDF5'.
-	self assert: (c1 closeTo: c2).
-	
-	c1 := (palette colors: 3 scheme: 'Purples') second.
-	c2 := Color colorFrom: '#BCBDDC'.
-	self assert: (c1 closeTo: c2).
-	
-	c1 := (palette colors: 3 scheme: 'Purples') third.
-	c2 := Color colorFrom: '#756BB1'.
-	self assert: (c1 closeTo: c2).
-
+	self assert: (palette colors: 3 scheme: 'Purples') first asHTMLColor equals: '#efedf5' asUppercase.
+	self assert: (palette colors: 3 scheme: 'Purples') second asHTMLColor equals: '#bcbddc' asUppercase.
+	self assert: (palette colors: 3 scheme: 'Purples') third asHTMLColor equals: '#756bb1' asUppercase.
+			
+"	self assert: (palette colors: 6 scheme: 'RdGy') size equals: 6.
+	self assert: (palette colors: 6 scheme: 'RdGy') second asHTMLColor equals: '#EF8A62'."
 ]

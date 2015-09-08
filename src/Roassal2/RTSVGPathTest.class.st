@@ -24,12 +24,8 @@ RTSVGPathTest >> testIncludesPointBasic [
 { #category : #tests }
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
-	res := Array 
-		with: (#m->(Array with: (100.0@100.0)))
-		with: (#l->(Array with: (300.0@100.0)))
-		with: (#l->(Array with: (200.0@300.0)))
-		with: (#l->(Array with: (100.0@100.0))).
-	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') curves.
+	res := '{#m->{(100.0@100.0)}. #l->{(300.0@100.0)}. #l->{(200.0@300.0)}. #l->{(100.0@100.0)}}'.
+	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') curves asString.
 	self assert: p1 = res.
 	
 	"

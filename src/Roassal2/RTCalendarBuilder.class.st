@@ -79,7 +79,7 @@ RTCalendarBuilder >> daysIndex: aCollection [
 { #category : #'accessing - computed' }
 RTCalendarBuilder >> getDateStructure [
 	| aDates firstDay currentMonth currentYear days months years |
-	aDates := self getDays."All the dates"
+	aDates := self getDays."All the dates".
 	
 	firstDay := aDates first.
 	currentMonth := firstDay asMonth.
@@ -184,7 +184,7 @@ RTCalendarBuilder >> monthShapePath: cellSize [
 		borderColor: Color black;
 		path: [ :e | | month d w0 d0 d1 w1 csize t1 t2 |
 			csize := cellSize asPoint.
-			month := e model."an instance of Month"
+			month := e model."an instance of Month".
 			t1 := month asDate.
 			t2 := Date newDay: month daysInMonth month: month name year: month year.
 			d0 := t1 weekdayIndex - 1.

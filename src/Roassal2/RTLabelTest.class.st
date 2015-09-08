@@ -56,21 +56,21 @@ RTLabelTest >> testEncompassing [
 
 { #category : #font }
 RTLabelTest >> testFont [
-	| v shape es firstShape fontList |
+	| v shape es firstShape |
 	v := RTView new.
-	fontList := TRPlatform current fontListStrings.
+
 	shape := RTLabel new 
-		fontName: [ :i | fontList at: i ]; 
+		fontName: [ :i | FontChooser new fontListStrings at: i ]; 
 		text: 'The quick brown fox jumps over the lazy dog'.
 
-	es := shape elementsOn: (1 to: fontList size).
+	es := shape elementsOn: (1 to: FontChooser new fontListStrings size).
 	es @ RTPopup.
 
 	v addAll: es.
 	RTVerticalLineLayout on: v elements.
 
 	firstShape := v canvas shapes first.
-	self assert: firstShape fontName equals: fontList first.
+	self assert: firstShape fontName equals: FontChooser new fontListStrings first.
 ]
 
 { #category : #tests }
