@@ -551,6 +551,6 @@ TRConstraint class >> useWidthOf: aShape for: shapes [
 	shapes do: [ :s | s width: aShape width ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #OBSOLETECLASS }
 TRConstraint >> OBSOLETE_CLASS [
 ]
