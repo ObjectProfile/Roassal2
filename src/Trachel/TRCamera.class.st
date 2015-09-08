@@ -59,12 +59,6 @@ TRCamera class >> new [
 	self error: 'Instance of this class have to be created with #forCanvas:'
 ]
 
-{ #category : #public }
-TRCamera class >> null [
-	nullCamera ifNil: [ nullCamera := self forCanvas: TRCanvas new ].
-	^ nullCamera
-]
-
 { #category : #actions }
 TRCamera >> adjust [
 	"This method adjust the camera from the initializer. This method is called by RTView>>setUpCanvas, when opening the view"
