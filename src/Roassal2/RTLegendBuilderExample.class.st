@@ -43,7 +43,7 @@ RTLegendBuilderExample >> exampleBelow [
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b normalizer
-		normalizeColor: #numberOfLinesOfCode using: (Array with: Color black with: Color red ) using: [:vv | (vv + 1) ln * 5 ] .
+		normalizeColor: #numberOfLinesOfCode using: { Color black. Color red } using: [:vv | (vv + 1) ln * 5 ] .
 	b build.
 
 	lb := RTLegendBuilder new.
@@ -113,7 +113,7 @@ RTLegendBuilderExample >> exampleOnDemand [
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b normalizer
-		normalizeColor: #numberOfLinesOfCode using: (Array with: Color black with: Color red).
+		normalizeColor: #numberOfLinesOfCode using: { Color black. Color red }.
 	b build.
 
 	lb := RTLegendBuilder new.

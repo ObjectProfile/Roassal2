@@ -19,6 +19,7 @@ RTAMItem >> addTag: aTag [
 
 { #category : #accessing }
 RTAMItem >> color [
+	self haltOnce.
 	^ color
 ]
 

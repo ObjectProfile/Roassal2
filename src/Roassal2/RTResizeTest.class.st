@@ -37,7 +37,7 @@ RTResizeTest >> testHighestElement [
 RTResizeTest >> testSameHeight [
 	resize fixedElement: elements second.
 	resize sameHeight.
-	self assert: (elements collect: #extent) sorted asArray equals: (Array with: (2.0@2.0) with: (3.0@2.0) with: (4.0@2.0))
+	self assert: (elements collect: #extent) asSet asArray equals: (Array with: (2.0@2.0) with: (4.0@2.0) with: (3.0@2.0))
 ]
 
 { #category : #tests }
@@ -57,7 +57,7 @@ RTResizeTest >> testSameSizeWithoutFixedElement [
 RTResizeTest >> testSameWidth [
 	resize fixedElement: elements second.
 	resize sameWidth.
-	self assert: (elements collect: #extent) sorted asArray equals: (Array with: (3.0@1.0) with:(3.0@2.0) with: (3.0@3.0))
+	self assert: (elements collect: #extent) asSet asArray equals: (Array with: (3.0@1.0) with:(3.0@2.0) with: (3.0@3.0))
 ]
 
 { #category : #tests }

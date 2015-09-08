@@ -30,9 +30,7 @@ Class {
 		'groupBlock',
 		'text',
 		'textColor',
-		'alphaPopupBackground',
-		'backgroundColor',
-		'borderColor'
+		'alphaPopupBackground'
 	],
 	#category : #'Roassal2-Interactions'
 }
@@ -78,26 +76,6 @@ RTPopup >> background: aColor group: aTwoArgBlock [
 		aTwoArgBlock value: group value: el.
 		RTNest new centerOn: backgroundElement elements: (group copyWithout: backgroundElement).
 		]
-]
-
-{ #category : #accessing }
-RTPopup >> backgroundColor [
-	^ backgroundColor
-]
-
-{ #category : #accessing }
-RTPopup >> backgroundColor: aColor [
-	backgroundColor := aColor
-]
-
-{ #category : #accessing }
-RTPopup >> borderColor [
-	^ borderColor
-]
-
-{ #category : #accessing }
-RTPopup >> borderColor: aColor [
-	borderColor := aColor
 ]
 
 { #category : #initialization }
@@ -152,9 +130,7 @@ RTPopup >> initialize [
 	super initialize.
 	self text: #yourself.
 	textColor := Color black.
-	alphaPopupBackground := 0.4.
-	backgroundColor := Color gray alpha: 0.8.
-	borderColor := Color gray alpha: 0.5
+	alphaPopupBackground := 0.4
 ]
 
 { #category : #public }
@@ -214,8 +190,7 @@ RTPopup >> textColor: aValueOrABlockOrASymbol [
 RTPopup >> textElement: aOneArgBlock [
 	self group: [ :group :element | 
 		| backRectangle lbl |
-		backRectangle := (RTBox new color: backgroundColor; borderColor: borderColor) element.
-		
+		backRectangle := (RTBox new color: (Color gray alpha: 0.8); borderColor: (Color gray alpha: 0.5)) element.
 		lbl := (RTLabel new 
 				color: textColor;
 				height: [:x | 9];

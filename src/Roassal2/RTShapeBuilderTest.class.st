@@ -110,8 +110,8 @@ RTShapeBuilderTest >> testEnsure2 [
 { #category : #tests }
 RTShapeBuilderTest >> testFillColor [
 
-	self assert: builder color isColor.
-	self assert: builder fillColor isColor.
+	self assert: builder color class equals: Color.
+	self assert: builder fillColor class equals: Color
 ]
 
 { #category : #hasSetShape }

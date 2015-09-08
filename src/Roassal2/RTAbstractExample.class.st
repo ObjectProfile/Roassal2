@@ -4,8 +4,9 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTAbstractExample class >> runningAllExamples [
+	<todo: 'deprecated (?) since the new GTExample API / UI-Runner is coming soon ...'>
 	"
 	self runningAllExamples
 	"
@@ -22,31 +23,6 @@ RTAbstractExample class >> runningAllExamples [
 			[ result class == RTView or: [ result isKindOf: RTBuilder ] ] assert.
 			w nextPutAll: 'done!'; cr
 		] ]
-]
-
-{ #category : #accessing }
-RTAbstractExample >> gtExamples [
-	"Return a list of RTEXampleSelection. This is necessary for "
-	^ (self class selectors 
-			select: [ :symbol | (symbol beginsWith: 'example') and: [ (symbol endsWith: 'Icon') not ] ])	
-				collect: [ :symbol | TRPlatform current exampleSelectionClass new provider: self; selector: symbol ]
-]
-
-{ #category : #'instance creation' }
-RTAbstractExample >> gtOpenOn: v [
-	|  icon64Mime form element  |
-
-	self gtExamples do: [ :anExample |
-		icon64Mime := self perform: (anExample selector, #Icon) asSymbol.
-		form := TRPlatform current formClass fromBinaryStream: 
-							(TRPlatform current mimeDecodeToBytes: icon64Mime readStream).
-		element := (RTBitmap new form: form) elementOn: anExample.
-		element @ (RTPopup new text: anExample selector asString).
-		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
-		v add: element ].
-
-	RTGridLayout new on: v elements.
-	
 ]
 
 { #category : #installing }
