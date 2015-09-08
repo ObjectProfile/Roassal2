@@ -344,6 +344,13 @@ TRCanvasTest >> testLine [
 
 ]
 
+{ #category : #tests }
+TRCanvasTest >> testNull [
+
+	self assert: TRCanvas null equals: TRCanvas null.
+	self assert: (TRCanvas null ~~ TRCanvas new)
+]
+
 { #category : #shapes }
 TRCanvasTest >> testPositionWithShapes [
 
