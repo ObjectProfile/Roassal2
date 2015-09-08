@@ -105,6 +105,12 @@ RTView >> animations [
 	^ trCanvas animations
 ]
 
+{ #category : #'as yet unclassified' }
+RTView >> announce: anEvent [
+	anEvent canvas: self canvas.
+	super announce: anEvent
+]
+
 { #category : #opening }
 RTView >> build [
 	"do nothing. This method is used polymorphically with builders"
