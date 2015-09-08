@@ -550,7 +550,3 @@ TRConstraint class >> useHeightOf: aShape for: shapes [
 TRConstraint class >> useWidthOf: aShape for: shapes [
 	shapes do: [ :s | s width: aShape width ]
 ]
-
-{ #category : #OBSOLETECLASS }
-TRConstraint >> OBSOLETE_CLASS [
-]

@@ -20,6 +20,13 @@ Class {
 	#category : #'Trachel-Core'
 }
 
+{ #category : #public }
+TRCanvas class >> null [
+	"Useful to avoid ifNil everywhere (e.g., as in the camera for example)"
+	nullCanvas ifNil: [ nullCanvas := self new ].
+	^ nullCanvas
+]
+
 { #category : #visitor }
 TRCanvas >> accept: aVisitor [
 	aVisitor visitCanvas: self

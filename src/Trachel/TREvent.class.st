@@ -36,6 +36,13 @@ TREvent >> canvas: aTrachelCanvas [
 	canvas := aTrachelCanvas
 ]
 
+{ #category : #initialization }
+TREvent >> initialize [
+	super initialize.
+	position := 0 @ 0.
+	canvas := TRCanvas null
+]
+
 { #category : #accessing }
 TREvent >> morph [
 	^ morph
