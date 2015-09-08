@@ -542,7 +542,7 @@ RTSVGVisitor2 >> visitView: aView [
 	| elements |
 	stream nextPutAll: ('mamani.color(<1p>);
 	mamani.camera.setScale(<2p>);' 
-	expandMacrosWith: aView canvas color printHtmlString with: aView canvas camera scale).
+	expandMacrosWith: aView canvas color asHexString with: aView canvas camera scale).
 
 	aView announcer subscriptions trSubscriptions isEmpty ifFalse: [
 		stream nextPutAll: 'mamani.addInteractions('.
