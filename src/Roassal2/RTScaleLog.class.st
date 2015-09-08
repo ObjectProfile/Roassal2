@@ -15,7 +15,7 @@ RTScaleLog >> base: number [
 	linear domain: (domain collect: [:n | self log: n ]).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScaleLog >> clamp: x [
 	 linear clamp: x
 ]
@@ -36,7 +36,7 @@ RTScaleLog >> initialize [
 	domain := #(1 10). 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScaleLog >> interpolate: x [
 	linear interpolate: x
 ]
@@ -68,7 +68,7 @@ RTScaleLog >> pow: x [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTScaleLog >> range: x [
 	linear range: x
 ]

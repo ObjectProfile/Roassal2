@@ -21,8 +21,8 @@ RTUninterpolate >> uninterpolate: x [
 
 { #category : #interpolating }
 RTUninterpolate >> uninterpolate: aNum1 and: aNum2 [
-	a := aNum1 .
-	b := aNum2 .
+	a := aNum1.
+	b := aNum2.
 	a isNumber 
 		ifFalse: [ 
 			^ a := b := Float nan. ].
