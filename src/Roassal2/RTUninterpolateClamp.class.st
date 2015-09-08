@@ -1,10 +1,10 @@
 Class {
 	#name : #RTUninterpolateClamp,
 	#superclass : #RTUninterpolate,
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Scaling'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #interpolating }
 RTUninterpolateClamp >> uninterpolate: x [
 	^ 0 max: (1 min: ((x -a )/ b))
 ]

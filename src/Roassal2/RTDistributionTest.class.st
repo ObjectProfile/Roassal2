@@ -14,7 +14,10 @@ RTDistributionTest >> testAnnotatedFrequency [
 	d := RTDistribution on: set.
 	f := d annotatedFrequency.
 	self assert: d amountOfDifferentValues = 2.
-	self assert: f = (Array with: {3. (OrderedCollection with:2 with:2 with:2)} with: {0. (OrderedCollection new)} with: {2. (OrderedCollection with:5 with:5)})
+	self assert: f = (Array 
+		with: (Array with: 3 with: #(2 2 2) asOrderedCollection)
+		with: (Array with: 0 with: OrderedCollection new) 
+		with: (Array with: 2 with: #(5 5) asOrderedCollection)) 
 
 ]
 
@@ -27,9 +30,9 @@ RTDistributionTest >> testBasic [
 	values := distribution frequencyMin: 1 max: 9 amountOfIntervals: 3.
 	
 	self assert: values size = 3.
-	self assert: values first = ((numbers select: [ :n | n < 4 ]) asOrderedCollection).
-	self assert: values second = ((numbers select: [ :n | n >= 4 and: [ n < 6 ] ]) asOrderedCollection).
-	self assert: values third = ((numbers select: [ :n | n >= 6 ]) asOrderedCollection).
+	self assert: values first asSortedCollection = ((numbers select: [ :n | n < 4 ]) asSortedCollection).
+	self assert: values second asSortedCollection = ((numbers select: [ :n | n >= 4 and: [ n < 6 ] ]) asSortedCollection).
+	self assert: values third asSortedCollection = ((numbers select: [ :n | n >= 6 ]) asSortedCollection).
 ]
 
 { #category : #tests }
@@ -41,9 +44,9 @@ RTDistributionTest >> testBasic2 [
 	values := distribution frequencyWithAmountOfIntervals: 3.
 	
 	self assert: values size = 3.
-	self assert: values first = ((numbers select: [ :n | n < 4 ]) asOrderedCollection).
-	self assert: values second = ((numbers select: [ :n | n >= 4 and: [ n < 6 ] ]) asOrderedCollection).
-	self assert: values third = ((numbers select: [ :n | n >= 6 ]) asOrderedCollection).
+	self assert: values first asSortedCollection = ((numbers select: [ :n | n < 4 ]) asSortedCollection).
+	self assert: values second asSortedCollection = ((numbers select: [ :n | n >= 4 and: [ n < 6 ] ]) asSortedCollection).
+	self assert: values third asSortedCollection = ((numbers select: [ :n | n >= 6 ]) asSortedCollection).
 ]
 
 { #category : #tests }
@@ -61,14 +64,17 @@ RTDistributionTest >> testFrequency [
 { #category : #tests }
 RTDistributionTest >> testFrequencyOfObjects [
 	| set d f |
-	set := {'yes'. 'yes'. 'no'. 'maybe'. 'no'. 'maybe'. 'maybe'. 'yes'. 'no'. 'maybe'. 'yes'. 'maybe'.}.
+	set := #(yes yes no maybe no maybe maybe yes no maybe yes maybe).
 	d := RTDistribution on: set.
 	
 	self assert: d amountOfDifferentValues = set asSet size.
 	
 	f := d annotatedFrequencyWithAmountOfIntervals: d amountOfDifferentValues.
 	self assert: f size = 3.
-	self assert: f = (Array with: {4. (OrderedCollection with:'yes' with:'yes' with:'yes' with:'yes')} with: {3. (OrderedCollection with:'no' with:'no' with:'no')} with: {5. (OrderedCollection with:'maybe' with:'maybe' with:'maybe' with:'maybe' with:'maybe')})
+	self assert: (f copy sort: [:a :b | a first < b first ]) = (Array 
+		with: (Array with: 3 with: #(no no no) asOrderedCollection)
+		with: (Array with: 4 with: #(yes yes yes yes) asOrderedCollection)
+		with: (Array with: 5 with: #(maybe maybe maybe maybe maybe) asOrderedCollection))
 ]
 
 { #category : #tests }

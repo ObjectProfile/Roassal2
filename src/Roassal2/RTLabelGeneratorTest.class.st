@@ -45,7 +45,8 @@ RTLabelGeneratorTest >> testSearch [
 	
 	lg setLooseFlag: true.
 	label := lg searchMin: 119 max: 178 desired: 3.
-	self assert: label asString = '(Score: -0.65) 110.00	150.00	190.00	'.
+	self assert: (label asString = '(Score: -0.65) 110.00	150.00	190.00	' or:
+				[label asString = '(Score: -0.65) 110.00	130.00	150.00	170.00	190.00	']).
 	lg setLooseFlag: false.
 	label := lg searchMin: 119 max: 178 desired: 3.
 	self assert: label asString = '(Score: 0.48) 120.00	150.00	180.00	'.

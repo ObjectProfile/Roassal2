@@ -19,7 +19,7 @@ RTShapeTest >> testArcShape [
 RTShapeTest >> testBitmapShape [
 	| shape e |
 	shape := RTBitmap new.
-	shape form: (ColorForm extent: 600 @ 523 depth: 32).
+	shape form: (TRPlatform current colorFormClass extent: 600 @ 523 depth: 32).
 	e := shape element.
 	self assert: e encompassingRectangle extent equals: 600 @ 523
 ]
@@ -29,7 +29,7 @@ RTShapeTest >> testBitmapShape2 [
 	| shape e form |
 	shape := RTBitmap new.
 	shape form: #yourself.
-	form := ColorForm extent: 600 @ 523 depth: 32.
+	form := TRPlatform current colorFormClass extent: 600 @ 523 depth: 32.
 	e := shape elementOn: form.
 	self assert: e trachelShape form equals: form.
 ]
@@ -39,7 +39,7 @@ RTShapeTest >> testBitmapShape3 [
 	| shape e form |
 	shape := RTBitmap new.
 	shape formElement: [ :anElement | anElement model ].
-	form := ColorForm extent: 600 @ 523 depth: 32.
+	form := TRPlatform current colorFormClass extent: 600 @ 523 depth: 32.
 	e := shape elementOn: form.
 	self assert: e trachelShape form equals: form.
 ]

@@ -33,25 +33,24 @@ Class {
 RTResizable class >> example [
 	| v g el edge |
 	v := RTView new.
-
-	g := {RTBox new
-		size: 100;
-		borderColor: Color black;
-		borderWidth: 1;
-		element.
-
-	RTRoundedBox new
-		size: 50;
-		borderRadius: 20;
-		borderColor: Color black;
-		borderWidth: 1;
-		element.
-
-	RTEllipse new
-		width: 100;
-		height: 30;
-		borderColor: Color black;
-		element} asGroup.
+	g := RTGroup new
+		add: (RTBox new
+			size: 100;
+			borderColor: Color black;
+			borderWidth: 1;
+			element);
+		add: (RTRoundedBox new
+			size: 50;
+			borderRadius: 20;
+			borderColor: Color black;
+			borderWidth: 1;
+			element);
+		add: (RTEllipse new
+			width: 100;
+			height: 30;
+			borderColor: Color black;
+			element);
+		yourself.
 
 	el := RTBox new
 		size: 50;
@@ -86,8 +85,8 @@ RTResizable class >> example [
 
 { #category : #hooks }
 RTResizable >> addCursorEventsOn: anElement corner: aCorner [
-	anElement when: TRMouseLeave do: [ :evt | World currentHand showTemporaryCursor: nil ].
-	anElement when: TRMouseEnter do: [ :evt | World currentHand showTemporaryCursor: (self cursorForCorner: aCorner) ]
+	anElement when: TRMouseLeave do: [ :evt | TRPlatform current showTemporaryCursor: nil ].
+	anElement when: TRMouseEnter do: [ :evt | TRPlatform current showTemporaryCursor: (self cursorForCorner: aCorner) ]
 ]
 
 { #category : #hooks }

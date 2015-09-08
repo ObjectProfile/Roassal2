@@ -1,5 +1,5 @@
 Class {
 	#name : #RTScalePolylinear,
 	#superclass : #RTScale,
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Scaling'
 }

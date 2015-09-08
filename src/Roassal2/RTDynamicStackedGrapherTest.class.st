@@ -44,8 +44,14 @@ RTDynamicStackedGrapherTest >> testBarPositionWithoutAnimation [
 RTDynamicStackedGrapherTest >> testEmbeddedInComposer [
 
 	| a1 a2 composer a b |
-	a1:= { {'x' . 10 }. { 'y' . 20 } . { 'z' . 100 } }.
-	a2 := { {'x' . 30 }. { 'y' . 20 } . { 'z' . 10 } }.
+	a1:= Array 
+		with: (Array with: 'x' with: 10) 
+		with: (Array with: 'y' with: 20) 
+		with: (Array with: 'z' with: 100).
+	a2 := Array 
+		with: (Array with: 'x' with: 30)
+		with: (Array with: 'y' with: 20)
+		with: (Array with: 'z' with: 10).
 
 	composer := RTComposer new.
 	    a := RTDynamicStackedGrapher new.
