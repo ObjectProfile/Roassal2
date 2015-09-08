@@ -37,6 +37,10 @@ RTAbstractExample >> gtExamples [
 	"
 ]
 
+{ #category : #'as yet unclassified' }
+RTAbstractExample >> gtOpenOn: a [
+]
+
 { #category : #installing }
 RTAbstractExample >> installOn: aView [
 	| el |

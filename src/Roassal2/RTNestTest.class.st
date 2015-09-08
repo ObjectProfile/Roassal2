@@ -29,9 +29,9 @@ RTNestTest >> testAutomaticLayout [
 		layout: RTFlowLayout new;
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position closeTo: (-12.0@23.5)) or: 
+	self assert: ((bigElement position closeTo: (-12.0@21.5)) or: 
 					[bigElement position closeTo: (-12.0@18.5) ]).
-	self assert: ((bigElement2 position closeTo: (13.0@23.5)) or: 
+	self assert: ((bigElement2 position closeTo: (13.0@21.5)) or: 
 					[bigElement2 position closeTo: (13.0@18.5) ]).
 ]
 
@@ -456,9 +456,9 @@ RTNestTest >> testLayout [
 	RTNest new 
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position = (-12.0@23.5)) or: [ 
+	self assert: ((bigElement position = (-12.0@21.5)) or: [ 
 		bigElement position = (-12.0@18.5) ]).
-	self assert: ((bigElement2 position = (13.0@23.5)) or: [
+	self assert: ((bigElement2 position = (13.0@21.5)) or: [
 		bigElement2 position = (13.0@18.5)] ).
 ]
 
