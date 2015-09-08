@@ -79,7 +79,7 @@ RTExperimentalExample class >> bumpLayer: n [
 	^ arr collectWithIndex: [ :d :i | i@(0 max: d)].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTExperimentalExample >> createExampleButton [
 	| shape base |
 	base := Color r: 0 g: 84 b: 85 range: 256.
@@ -98,7 +98,7 @@ colorRamp: (Array with: (0.0 -> (Color white alpha: 0.4)) with: (1.0 -> Color tr
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTExperimentalExample >> dataFor: dim stack: s [
 	^ s stack: ( (1 to: dim y) collect: [:n | self class bumpLayer: dim x ] )
 ]
@@ -1167,7 +1167,7 @@ AiCuE3/7hIBMieCOnUXxbzwlcSswVI2KIJ8kxhCCLLwB+tKMK9UAQm/RBvixSPIM8ChLv/Ka
 x0aTt5dqDF9FuTKHXnMVjUaW0HjmC2P9H5zbfXvW5tQ1AAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTExperimentalExample >> helper: method colorA: colorA colorB: colorB [
 
 | num m layers0 layers1 s width height x y color area button elements |
@@ -1222,7 +1222,7 @@ RTExperimentalExample >> label [
 	^ 'Experimental'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 RTExperimentalExample >> maxYValueFor: layers0 and: layers1 [ 
 
 	^ ((layers0, layers1) inject: Float fmin 
