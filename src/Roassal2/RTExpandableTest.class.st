@@ -14,7 +14,7 @@ RTExpandableTest >> testBasic [
 	
 	expand := (RTExpandable new
 					group: [ :group :element | 
-						es := (RTBox new color: Color red) elementsOn: element model methods.
+						es := (RTBox new color: Color red) elementsOn: element model rtmethods.
 						RTGridLayout on: es.
 						group addAll: es]).
 	e @ expand. 
@@ -26,7 +26,7 @@ RTExpandableTest >> testBasic [
 	expand clickOn: e.
 	self assert: (expand isSelected: e).
 	self assert: (expand hasElementBeenExpended: e).
-	self assert: v numberOfElements equals: 1 + RTComposer methods size.
+	self assert: v numberOfElements equals: 1 + RTComposer rtmethods size.
 
 	expand clickOn: e.
 	self deny: (expand isSelected: e).

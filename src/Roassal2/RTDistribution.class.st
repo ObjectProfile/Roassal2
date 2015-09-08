@@ -6,7 +6,7 @@ number of classes defined by default in #defaultNumberOfIntervals, a common calc
 "
 Class {
 	#name : #RTDistribution,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'objects',
 		'numberMax',
@@ -40,7 +40,7 @@ RTDistribution >> annotatedFrequency [
 	self sortObjectsAndDefineNumbers.
 	fr := self frequencyMin: self numbers min max: self numbers max amountOfIntervals: self defaultNumberOfIntervals.
 	
-	result := fr collect: [ :f | { f size. f } ].
+	result := fr collect: [ :f | Array with: f size with: f ].
 	
 	^ result asArray
 ]
@@ -53,7 +53,7 @@ RTDistribution >> annotatedFrequencyMin: numMin max: numMax amountOfIntervals: a
 
 	fr := self frequencyMin: numMin max: numMax amountOfIntervals: aNbOfIntervals.
 	
-	result := fr collect: [ :f | { f size. f } ].
+	result := fr collect: [ :f | Array with: f size with: f ].
 	
 	^ result asArray
 	
@@ -149,7 +149,7 @@ RTDistribution >> frequencyMin: numMin max: numMax amountOfIntervals: aNbOfInter
 	bucketFor := self strategyBlock.
 	tmp := self objects copy.
 	result := (1 to: self nbOfIntervals) collect: [ :i | OrderedCollection new ].
-	tmp do: [ :obj | (result at: (bucketFor value: obj)) add: obj ].
+	tmp do: [ :obj | (result at: (bucketFor value: obj) asInteger) add: obj ].
 	^ result asArray
 ]
 
@@ -251,7 +251,7 @@ RTDistribution >> on: collectionOfObjects [
 { #category : #public }
 RTDistribution >> sortObjectsAndDefineNumbers [
 	self defaultMetric.
-	self objects: (self objects sort: [ :o1 :o2 | (self metric rtValue: o1) < (self metric rtValue: o2)  ]).
+	self objects: (self objects copy sort: [ :o1 :o2 | (self metric rtValue: o1) < (self metric rtValue: o2)  ]).
 	self numbers: (self objects collect: [ :o | self metric rtValue: o ]). 	
 	self sorted: true.
 
