@@ -220,6 +220,11 @@ TRPlatform >> trMorphClass [
 	self subclassResponsibility
 ]
 
+{ #category : #public }
+TRPlatform >> visitInteractionsFor: aVisitor and: anObject [
+	self subclassResponsibility
+]
+
 { #category : #fonts }
 TRPlatform >> widthOfString: string font: font [
 	"retuns the width of string with an instance of the default Font class"
