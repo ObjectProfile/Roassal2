@@ -105,7 +105,7 @@ RTView >> animations [
 	^ trCanvas animations
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #announce }
 RTView >> announce: anEvent [
 	anEvent canvas: self canvas.
 	super announce: anEvent
