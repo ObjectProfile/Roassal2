@@ -15,7 +15,7 @@ TRMouseDragging class >> step: aStepAsPoint [
 { #category : #initialization }
 TRMouseDragging >> initialize [
 	super initialize.
-	step := 0 @ 0
+	step := 0 @ 0.
 ]
 
 { #category : #accessing }

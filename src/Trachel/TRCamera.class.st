@@ -31,6 +31,9 @@ Class {
 		'scale',
 		'initializer'
 	],
+	#classInstVars : [
+		'nullCamera'
+	],
 	#category : #'Trachel-Core'
 }
 
@@ -54,6 +57,12 @@ TRCamera class >> menuCommandOn: aBuilder [
 { #category : #public }
 TRCamera class >> new [
 	self error: 'Instance of this class have to be created with #forCanvas:'
+]
+
+{ #category : #public }
+TRCamera class >> null [
+	nullCamera ifNil: [ nullCamera := self forCanvas: TRCanvas new ].
+	^ nullCamera
 ]
 
 { #category : #actions }
