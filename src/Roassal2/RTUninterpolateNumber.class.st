@@ -1,10 +1,10 @@
 Class {
 	#name : #RTUninterpolateNumber,
 	#superclass : #RTUninterpolate,
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Scaling'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #interpolating }
 RTUninterpolateNumber >> uninterpolate: x [
 	^ (x - a )/b
 ]

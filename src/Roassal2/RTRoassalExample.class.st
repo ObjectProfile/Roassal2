@@ -4438,13 +4438,14 @@ RTRoassalExample >> exampleLazyFormLoading [
 "This example shows how to do lazy form loading. It is used to make Roassal use OpenStreetMap by loading tiles"
 
 | forms v emptyForm s elements visibleInteraction |
-forms := ColorForm allInstances select: [:f | f extent = (16 @ 16) ].
+
+forms := TRPlatform current colorFormClass allInstances select: [:f | f extent = (16 @ 16) ].
 
 v := RTView new.
 v @ RTDraggableView.
 
 "We first create elements on an empty form"
-emptyForm := ColorForm extent: 16 @ 16 depth: 32.
+emptyForm := TRPlatform current colorFormClass extent: 16 @ 16 depth: 32.
 emptyForm fillColor: Color blue.
 s := RTBitmap new
 			form: emptyForm.
@@ -5551,6 +5552,35 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
+RTRoassalExample >> examplePlatformPoup [
+
+| view e |
+view := RTView new.
+e := RTBox new size: 20; elementOn: 'parangaricutirimicuaro'.
+e @ RTDraggable@ (RTPlatformPopup text: [ :t| t, '
+
+
+
+
+
+is a town in Mexico' ] color: (Color green alpha: 0.5)).
+view add: e.
+^ view
+
+]
+
+{ #category : #icons }
+RTRoassalExample >> examplePlatformPoupIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABDElEQVR4XuXVQQ0AQAgDQfyb
+rBS4Lw4uzCYY6Dyobr+fKn8CH8TPB/FB/HwQH8TPB/FB/HwQH8TPB/HzQXwQPx/EB/HzQXwQ
+Px/EB/HzQfx8EB/EzwfxQfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80F8ED8fxM8H8UH8
+fBAfxM8H8UH8fBAfxM8H8TsFkmSdD+KD+CA+iA/ig/hP3c8H8fNBfBA/H8QH8fNBfBA/H8QH
+8fNB/HwQH8TPB/FB/HwQH8TPB/FB/HwQPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/E
+zwfxQfx8EB/Ezwfx80F8ED8fxAfx80F8ED8fxAfx80H8XgPtoabWrQOqsAAAAABJRU5ErkJg
+gg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> examplePolygons [
 
 | clss v ver d composedShape e s |
@@ -5678,25 +5708,24 @@ RTRoassalExample >> exampleResizable [
 
 	| v g |
 	v := RTView new.
-
-	g := {RTBox new
-		size: 100;
-		borderColor: Color black;
-		borderWidth: 1;
-		element.
-
-	RTRoundedBox new
-		size: 50;
-		borderRadius: 20;
-		borderColor: Color black;
-		borderWidth: 1;
-		element.
-
-	RTEllipse new
-		width: 100;
-		height: 30;
-		borderColor: Color black;
-		element} asGroup.
+	g := RTGroup new.
+	g 
+		add: (RTBox new
+			size: 100;
+			borderColor: Color black;
+			borderWidth: 1;
+			element);
+		add: (	RTRoundedBox new
+			size: 50;
+			borderRadius: 20;
+			borderColor: Color black;
+			borderWidth: 1;
+			element);
+		add: (RTEllipse new
+			width: 100;
+			height: 30;
+			borderColor: Color black;
+			element).
 
 	v addAll: g.
 

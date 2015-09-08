@@ -89,9 +89,8 @@ RTExperimentalExample >> createExampleButton [
 		add: (RTEllipse new width: 97; height: 47; 
 			color: base );
 		add: (RTEllipse new width: 71; height: 21;
-			color: (LinearGradientPaint new start: 0@ -0.5; stop: 0@0.5;
-colorRamp: {0.0 -> (Color white alpha: 0.4). 
-1.0 -> Color transparent})) translateBy: 0@ -10;
+			color: (TRPlatform current linearGradientClass new start: 0@ -0.5; stop: 0@0.5;
+colorRamp: (Array with: (0.0 -> (Color white alpha: 0.4)) with: (1.0 -> Color transparent)))) translateBy: 0@ -10;
 		add: (RTLabel new text: 'Swap Data'; color: Color white).
 		
 	^ shape element.
@@ -100,7 +99,7 @@ colorRamp: {0.0 -> (Color white alpha: 0.4).
 ]
 
 { #category : #'as yet unclassified' }
-RTExperimentalExample >> dataFor: dim stack: s. [
+RTExperimentalExample >> dataFor: dim stack: s [
 	^ s stack: ( (1 to: dim y) collect: [:n | self class bumpLayer: dim x ] )
 ]
 
@@ -109,7 +108,7 @@ RTExperimentalExample >> exampleClusterBezierAndSlider [
 
 | b lb |
 b := RTBundleBuilder new.
-b from: {TRObject. TRTest} using: #subclasses. 
+b from: (Array with: TRObject with: TRTest) using: #subclasses. 
 b edges shape line color: Color black.
 b bezier color: (Color blue alpha: 0.5).
 b useBezierlineWith: #dependentClasses.
@@ -445,23 +444,25 @@ TkSuQmCC'
 { #category : #sources }
 RTExperimentalExample >> exampleSimpleBundleBuilder [
 | tree searchTree relationsBlock relations b |
-tree := 'president'->{
-	'assistant1'->{}.
-	'director1'->{
-		'employee1'->{}.
-		'employee2'->{}.
-		'employee3'->{} }.
-	'director2'->{
-		'employee4'->{}.
-		'employee5'->{} }.
-	'guard1'->{}.
-	'guard2'->{}.
-	'chef'->{
-		'subchef'->{}.
-		'employee6'->{} }.
-	'vicepresident'->{
-		'assistant2'->{}.
-		'guard3'->{} } }.
+
+tree := 'president'->(OrderedCollection new
+	add: ('assistant1'-> #());
+	add: ('director1'-> (Array
+		with: ('employee1'->#())
+		with: ('employee2'->#())
+		with: ('employee3'->#())));
+	add: ('director2'->(Array
+		with: ('employee4'->#())
+		with: ('employee5'->#())));
+	add: ('guard1'->#());
+	add: ('guard2'->#());
+	add: ('chef'->(Array
+		with: ('subchef'->#())
+		with: ('employee6'->#())));
+	add: ('vicepresident'->(Array
+		with: ('assistant2'->#())
+		with: ('guard3'->#())));
+	yourself).
 searchTree := nil.
 searchTree := [ :s :t| t key = s ifTrue: [ t ]
 	ifFalse: [ | r |
@@ -703,11 +704,13 @@ layers := s stack: classes.
 maxY := layers inject: 0 into: [ :max :arr | arr inject: max into: [ :a :each| a max: (each y0 + each y) ] ].
 
 x := RTScale linear 
-	domain: { layers first first x. layers first last x }; 
-	range: { 0. extent x}.
+	domain: (Array with: layers first first x with: layers first last x); 
+	range: (Array with: 0 with: extent x).
 
-y := RTScale linear domain: { 0. maxY }; range: { extent y. 0 }.
-color := RTScale linear range: { Color green. Color darkGray }.
+y := RTScale linear 
+	domain: (Array with: 0 with: maxY);
+	range: (Array with: extent y with: 0).
+color := RTScale linear range: (Array with: Color green with: Color darkGray).
 
 area := RTAreaBuilder new
 	x: [ :d|  x scale: d x];
@@ -1179,9 +1182,13 @@ s := RTExperimentalStack new
 layers0 := self dataFor: m@num stack: s.
 layers1 := self dataFor: m@num stack: s.
 
-x := RTScale linear domain: { 1. m } ; range: { 0. width }.
-y := RTScale linear domain: {0. self maxYValueFor: layers0 and: layers1 }; range: {height. 0}.
-color := RTScale linear range: { colorA. colorB }.
+x := RTScale linear 
+	domain: (Array with: 1 with: m);
+	range: (Array with: 0 with: width).
+y := RTScale linear 
+	domain: (Array with: 0 with: (self maxYValueFor: layers0 and: layers1));
+	range: (Array with: height with: 0).
+color := RTScale linear range: (Array with: colorA with: colorB).
 
 area := RTAreaBuilder new 
 	x: [ :d | x scale: d x  ];
