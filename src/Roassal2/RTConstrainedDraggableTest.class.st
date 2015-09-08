@@ -92,16 +92,16 @@ RTConstrainedDraggableTest >> testWithParentWithEvent [
 	
 	
 	e2 announce: (TRMouseDragging new step: 50 @ 30).
-	self assert: e2 position equals: 7.5 @ 7.5.
+	self assert: (e2 position closeTo: 7.5 @ 7.5).
 	
 	e2 announce: (TRMouseDragging new step: -50 @ 30).
-	self assert: e2 position equals: -7.5 @ 7.5.
+	self assert: (e2 position closeTo: -7.5 @ 7.5).
 	
 	e2 announce: (TRMouseDragging new step: -50 @ -30).
-	self assert: e2 position equals: -7.5 @ -7.5.
+	self assert: (e2 position closeTo: -7.5 @ -7.5).
 	
 	e2 announce: (TRMouseDragging new step: 50 @ -30).
-	self assert: e2 position equals: 7.5 @ -7.5.
+	self assert: (e2 position closeTo: 7.5 @ -7.5).
 ]
 
 { #category : #tests }

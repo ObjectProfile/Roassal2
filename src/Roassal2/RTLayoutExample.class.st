@@ -207,7 +207,7 @@ TkSuQmCC'
 
 { #category : #sources }
 RTLayoutExample >> exampleConditionaLayoutInMondrian [
-
+| b |
 b := RTMondrian new.
 b shape rectangle
 	fillColor: Color white;
