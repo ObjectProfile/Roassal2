@@ -367,26 +367,8 @@ RTSVGVisitor2 >> visitInteraction: interaction with: anObject [
 
 { #category : #'visitor-interactions' }
 RTSVGVisitor2 >> visitInteractions: anObject [
-	| first list temp |
-	
-	first := true.
-	list := OrderedCollection new.
-	temp := OrderedCollection new.
-	(anObject announcer subscriptions trSubscriptions do: [ :sub | 
-		((validInteractions includes: sub subscriber class name) 
-		and: [ (temp includes: sub subscriber class) not ]) ifTrue: [ 
-			temp add: sub subscriber class.
-			list add: sub ] ] ).
-	stream nextPutAll: '['.
-	list do: [ :sub | 
-		first ifTrue: [ first := false.
-			sub subscriber accept: self with: anObject ]
-		ifFalse: [ 
-			stream nextPutAll: ', '.
-			sub subscriber accept: self with: anObject ]
-		 ].
-	stream nextPutAll: ']'.
-	self flag: 'review'.
+	TRPlatform current visitInteractionsFor: self and: anObject.
+
 ]
 
 { #category : #visitor }
@@ -560,7 +542,7 @@ RTSVGVisitor2 >> visitView: aView [
 	| elements |
 	stream nextPutAll: ('mamani.color(<1p>);
 	mamani.camera.setScale(<2p>);' 
-	expandMacrosWith: aView canvas color printHtmlString with: aView canvas camera scale).
+	expandMacrosWith: aView canvas color asHexString with: aView canvas camera scale).
 
 	aView announcer subscriptions trSubscriptions isEmpty ifFalse: [
 		stream nextPutAll: 'mamani.addInteractions('.
