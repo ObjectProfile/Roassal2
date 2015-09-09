@@ -6,5 +6,5 @@ Class {
 
 { #category : #interpolating }
 RTUninterpolateClamp >> uninterpolate: x [
-	^ 0 max: (1 min: ((x -a )/ b))
+	^ 0 max: (1 min: ((x - a ) / b))
 ]

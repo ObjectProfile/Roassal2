@@ -301,7 +301,7 @@ RTTabTable >> convertColumnsAsFloat: collectionOfIntegers [
 
 { #category : #converting }
 RTTabTable >> convertColumnsAsInteger: collectionOfIntegers [
-	^ self convertColumns: collectionOfIntegers to: [ :s | Integer readFrom: s ]
+	^ self convertColumns: collectionOfIntegers to: [ :s | s asNumber asInteger ]
 ]
 
 { #category : #'private-utility' }

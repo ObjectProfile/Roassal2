@@ -10,7 +10,7 @@ RTNestTest >> testAutomaticLayout [
 	| v lbl box cs e bigElement bigElement2 |
 	v := RTView new.
 
-	lbl := RTLabel new text: ''.
+	lbl := RTBox new color: Color pink.
 	box := RTBox new.
 	cs := RTCompositeShape new.
 	cs add: lbl.
@@ -29,10 +29,8 @@ RTNestTest >> testAutomaticLayout [
 		layout: RTFlowLayout new;
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position closeTo: (-12.0@23.5)) or: 
-					[bigElement position closeTo: (-12.0@18.5) ]).
-	self assert: ((bigElement2 position closeTo: (13.0@23.5)) or: 
-					[bigElement2 position closeTo: (13.0@18.5) ]).
+	self assert: (bigElement position closeTo: (-12.0@0)).
+	self assert: (bigElement2 position closeTo: (13.0@0)).
 ]
 
 { #category : #tests }
@@ -437,7 +435,7 @@ RTNestTest >> testLayout [
 	| v lbl box cs e bigElement bigElement2 |
 	v := RTView new.
 
-	lbl := RTLabel new text: ''.
+	lbl := RTBox new color: Color pink.
 	box := RTBox new.
 	cs := RTCompositeShape new.
 	cs add: lbl.
@@ -456,10 +454,8 @@ RTNestTest >> testLayout [
 	RTNest new 
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: ((bigElement position = (-12.0@23.5)) or: [ 
-		bigElement position = (-12.0@18.5) ]).
-	self assert: ((bigElement2 position = (13.0@23.5)) or: [
-		bigElement2 position = (13.0@18.5)] ).
+	self assert: (bigElement position = (-12.0@0)).
+	self assert: (bigElement2 position = (13.0@0)).
 ]
 
 { #category : #'multi line' }
