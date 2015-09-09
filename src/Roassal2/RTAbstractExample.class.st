@@ -25,22 +25,6 @@ RTAbstractExample class >> runningAllExamples [
 		] ]
 ]
 
-{ #category : #accessing }
-RTAbstractExample >> gtExamples [
-	<todo: 'deprecated: #gtExamples / please never use the selector #gtExamples / use RTExampleFinder instead / the selector #myExamples is a temporary bugfix - it will probably change'>
-	^ (Smalltalk classNamed: #RTExampleFinder) myExamples
-	"
-	Return a list of RTEXampleSelection. This is necessary for 
-	^ (self class selectors 
-			select: [ :symbol | (symbol beginsWith: 'example') and: [ (symbol endsWith: 'Icon') not ] ])	
-				collect: [ :symbol | TRPlatform current exampleSelectionClass new provider: self; selector: symbol ]
-	"
-]
-
-{ #category : #'as yet unclassified' }
-RTAbstractExample >> gtOpenOn: a [
-]
-
 { #category : #installing }
 RTAbstractExample >> installOn: aView [
 	| el |
