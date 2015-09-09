@@ -24,9 +24,8 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 
 { #category : #'instance creation' }
 RTExampleBrowser >> examples [
-	| es |
-	es := RTAbstractExample allSubclasses collect: #new.
-	^ es sortedAs: #label
+	<todo: 'deprecated (?) #title / dont use #label'>
+	^ RTExampleFinder myExamples asSortedCollection: [ :a :b | a label <= b label ]
 ]
 
 { #category : #'instance creation' }

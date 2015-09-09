@@ -25,7 +25,7 @@ RTScale class >> log [
 ]
 
 { #category : #todo }
-RTScale class >> ordinal [
+RTScale class >> oridinal [
 	"TODO"
 ]
 
