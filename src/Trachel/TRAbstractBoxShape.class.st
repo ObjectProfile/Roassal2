@@ -53,7 +53,6 @@ TRAbstractBoxShape >> drawOn: athensCanvas [
 		restoreAfter: [ 
 			athensCanvas pathTransform
 				multiplyBy: matrix asFloatTransform.
-			self preDrawOn: athensCanvas.
 			athensCanvas 
 				setPaint: color;
 				drawShape: self path.
@@ -160,10 +159,6 @@ TRAbstractBoxShape >> leftPosition [
 TRAbstractBoxShape >> leftPosition: aPosition [
 	"Move the shape by locating its center left position at aPosition"
 	self position: (aPosition - ((self width / -2) @ 0))
-]
-
-{ #category : #drawing }
-TRAbstractBoxShape >> preDrawOn: athensCanvas [
 ]
 
 { #category : #geometry }
