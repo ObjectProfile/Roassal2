@@ -14,7 +14,7 @@ TREllipseShapeTest >> testStrokeWidth [
 
 { #category : #tests }
 TREllipseShapeTest >> testStrokeWidth02 [
-	self assert: TREllipseShape new defaultStrokeWidth equals: 0.005.
+	self assert: TREllipseShape new defaultStrokeWidth equals: 1.
 
 ]
 
@@ -23,5 +23,5 @@ TREllipseShapeTest >> testWidth [
 
 	| s |
 	s := TREllipseShape new size: 30.
-	self assert: s strokeWidth equals: 0.005.
+	self assert: s strokeWidth equals: 1.
 ]
