@@ -70,6 +70,16 @@ RTShape >> + anotherShape [
 	^ RTCompositeShape with: self with: anotherShape instance
 ]
 
+{ #category : #hooks }
+RTShape >> borderColor: aBlockOrAColorOrSymbol [
+	"This method is empty, and may be overideen in subclasses. Having this method is empty enables RTLine and other to receive that message, and doing anything."
+]
+
+{ #category : #hooks }
+RTShape >> borderWidth: aBlockOrAColorOrSymbol [
+	"This method is empty, and may be overideen in subclasses. Having this method is empty enables RTLine and other to receive that message, and doing anything."
+]
+
 { #category : #accessing }
 RTShape >> color [
 	^ color

@@ -2,7 +2,8 @@ Class {
 	#name : #RTShapeBuilderTest,
 	#superclass : #RTTest,
 	#instVars : [
-		'builder'
+		'builder',
+		'shapes'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -38,6 +39,25 @@ RTShapeBuilderTest >> testAttachPoint03 [
 RTShapeBuilderTest >> testBasic [
 
 	self assert: builder shape class == RTNoShape
+]
+
+{ #category : #'composite shapes' }
+RTShapeBuilderTest >> testBorderColorAndCompositeShape [
+
+	| s label box |
+	builder box; withTextAbove; borderColor: Color black.
+	s := builder current.
+	shapes := s allShapes.
+	 
+	"Checking the label"
+	self assert: shapes first class equals: RTLabel.
+	label := shapes first.
+	self assert: label color equals: RTLabel defaultColor.
+	
+	"Checking the box"
+	self assert: shapes second class equals: RTBox.
+	box := shapes second.
+	self assert: (box borderColorFor: RTElement new) equals: Color black.
 ]
 
 { #category : #tests }
@@ -112,6 +132,44 @@ RTShapeBuilderTest >> testFillColor [
 
 	self assert: builder color isColor.
 	self assert: builder fillColor isColor.
+]
+
+{ #category : #'composite shapes' }
+RTShapeBuilderTest >> testFillColorAndCompositeShape [
+
+	| s label box |
+	builder box; withTextAbove; fillColor: Color black.
+	s := builder current.
+	shapes := s allShapes.
+	 
+	"Checking the label"
+	self assert: shapes first class equals: RTLabel.
+	label := shapes first.
+	self assert: (label colorFor: RTElement new) equals: RTLabel defaultColor.
+	
+	"Checking the box"
+	self assert: shapes second class equals: RTBox.
+	box := shapes second.
+	self assert: (box colorFor: RTElement new) equals: Color black.
+]
+
+{ #category : #'composite shapes' }
+RTShapeBuilderTest >> testFillColorAndCompositeShape02 [
+
+	| s label box |
+	builder box; withTextAbove; textColor: Color black; fillColor: Color red.
+	s := builder current.
+	shapes := s allShapes.
+	 
+	"Checking the label"
+	self assert: shapes first class equals: RTLabel.
+	label := shapes first.
+	self assert: (label colorFor: RTElement new) equals: Color black.
+	
+	"Checking the box"
+	self assert: shapes second class equals: RTBox.
+	box := shapes second.
+	self assert: (box colorFor: RTElement new) equals: Color red.
 ]
 
 { #category : #hasSetShape }

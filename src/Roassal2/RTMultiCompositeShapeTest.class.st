@@ -131,12 +131,6 @@ RTMultiCompositeShapeTest >> testScenario [
 ]
 
 { #category : #tests }
-RTMultiCompositeShapeTest >> testSetColorOnEmpty [
-
-	self should: [ RTCompositeShape new color: Color blue ] raise: Error
-]
-
-{ #category : #tests }
 RTMultiCompositeShapeTest >> testTranslationBy [
 
 	| view shape el ps ps2 |

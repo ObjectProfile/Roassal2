@@ -273,7 +273,6 @@ RTLayoutBuilder >> sugiyama [
 { #category : #'public - layout' }
 RTLayoutBuilder >> tree [
 	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
-
 	layout := RTTreeLayout new.
 	^ layout
 ]
