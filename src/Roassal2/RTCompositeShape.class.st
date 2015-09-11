@@ -118,15 +118,36 @@ RTCompositeShape >> attachPoint: anAttachPoint [
 			ifTrue: [ s attachPoint: anAttachPoint ] ]
 ]
 
+{ #category : #public }
+RTCompositeShape >> borderColor: aBlockOrColor [
+	self allShapes do: [ :s | s borderColor: aBlockOrColor ]
+]
+
+{ #category : #public }
+RTCompositeShape >> borderWidth: aBlockOrColor [
+	self allShapes do: [ :s | s borderWidth: aBlockOrColor ]
+]
+
+{ #category : #accessing }
+RTCompositeShape >> color: aOneArgBlockOrColorOrSymbol [
+	self allShapes do: [ :s | s color: aOneArgBlockOrColorOrSymbol ]
+]
+
 { #category : #accessing }
 RTCompositeShape >> colorElement: aOneArgBlock [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
-	shapes do: [ :s | s first colorElement: aOneArgBlock ]
+	self allShapes do: [ :s | s colorElement: aOneArgBlock ]
 ]
 
 { #category : #public }
 RTCompositeShape >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
+]
+
+{ #category : #accessing }
+RTCompositeShape >> fillColor: aOneArgBlockOrColorOrSymbol [
+	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
+	self allShapes do: [ :s | (s isKindOf: RTAbstractElementShape) ifTrue: [ s fillColor: aOneArgBlockOrColorOrSymbol ] ]
 ]
 
 { #category : #'public - layout' }
@@ -161,6 +182,11 @@ RTCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape
 					trachelShape perform: layout.
 					trachelShape relayout ].
 			ss do: [ :tupple | tupple first addCallback: b ] ]
+]
+
+{ #category : #accessing }
+RTCompositeShape >> textColor: aOneArgBlockOrColorOrSymbol [
+	self allShapes do: [ :s | (s isKindOf: RTLabel) ifTrue: [ s color: aOneArgBlockOrColorOrSymbol ] ]
 ]
 
 { #category : #public }
