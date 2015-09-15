@@ -11,7 +11,7 @@ Class {
 
 { #category : #shapes }
 RTShapeBuilder >> arc [
-	^ self shape: RTArc new
+	self shape: RTArc new
 ]
 
 { #category : #'shape - edges' }
@@ -339,7 +339,7 @@ RTShapeBuilder >> postCopy [
 
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
-	^ self box
+	self box
 ]
 
 { #category : #accessing }

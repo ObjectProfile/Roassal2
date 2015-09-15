@@ -147,3 +147,39 @@ RTMetricNormalizerTest >> testBasicPositiveRangeX3 [
 			normalizeX: #yourself min: 0 max: 200 minValue: 0.
 	self assert: (es collect: #position) asArray equals: (Array with: 100 @ 0 with: 200 @ 0)
 ]
+
+{ #category : #'test colors' }
+RTMetricNormalizerTest >> testColors [
+
+	| v objects es n |
+	v := RTView new.
+	objects := (1 to: 5).
+	es := RTBox new elementsOn: objects.
+	v addAll: es.
+
+	self assert: (es collect: [ :e | e trachelShape color ]) asSet size equals: 1.
+
+	n := RTMetricNormalizer new.
+	n view: v.
+	n objects: objects.
+	n distinctColor.
+	self assert: (es collect: [ :e | e trachelShape color ]) asSet size equals: 5.
+]
+
+{ #category : #'test colors' }
+RTMetricNormalizerTest >> testColors02 [
+
+	| v objects es n |
+	v := RTView new.
+	objects := (1 to: 5).
+	es := RTBox new elementsOn: objects.
+	v addAll: es.
+
+	self assert: (es collect: [ :e | e trachelShape color ]) asSet size equals: 1.
+
+	n := RTMetricNormalizer new.
+	n view: v.
+	n objects: objects.
+	n distinctColorUsing: #odd.
+	self assert: (es collect: [ :e | e trachelShape color ]) asSet size equals: 2.
+]
