@@ -2199,6 +2199,68 @@ qy1eeMw5HGuVnBo/NoHl+tfmWAI9cYHvCPa6vo6hXRaO43j1h3Z4PR1rPFPts+gYtc/3cx2P
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleDistinctColors [
+
+| b |
+b := RTMondrian new.
+b shape circle.
+b nodes: Collection withAllSubclasses.
+b edges connectFrom: #superclass.
+b layout tree.
+b normalizer
+	normalizeSize: #numberOfMethods;
+	distinctColorUsing: #package.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleDistinctColorsIcon [
+	^ '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
+dwKZbROAAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleDotIndex [
 
 | v values resolutionVertical groups maxValue g c el |

@@ -60,9 +60,23 @@ RTMetricNormalizer >> directTranslation [
 
 { #category : #'public normalize color' }
 RTMetricNormalizer >> distinctColor [
-	| normalizer |
-	normalizer := RTMultiLinearColorForIdentity new objects: elements.
-	elements do: [ :el | el trachelShape color: (normalizer rtValue: el) ]
+	^ self distinctColorUsing: #yourself
+]
+
+{ #category : #'public normalize color' }
+RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
+	| normalizer allObjects |
+	allObjects := elements collect: [ :e | aBlockOrSymbol rtValue: e model ].
+	allObjects removeDuplicates.
+	
+	normalizer := RTMultiLinearColorForIdentity new 
+						objects: allObjects; 
+						command: aBlockOrSymbol.
+
+"	normalizer := RTMultiLinearColorForIdentity new 
+						elements: elements; 
+						command: [ :element | aBlockOrSymbol rtValue: element model ].
+"	elements do: [ :el | el trachelShape color: (normalizer rtValue: el model) ]
 ]
 
 { #category : #accessing }
@@ -316,6 +330,13 @@ RTMetricNormalizer >> normalizeHeight: metricBlock [
 ]
 
 { #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeHeight: metricBlock max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 maxValue is an integer representing the maximum size in pixels for each node"
+	self normalizeHeight: metricBlock min: 5 max: maxValue
+]
+
+{ #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeHeight: metricBlock min: minValue max: maxValue [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
@@ -555,6 +576,13 @@ RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: min max: max minValu
 RTMetricNormalizer >> normalizeWidth: metricBlock [
 	"metricBlock is evaluated on each node model."
 	^ self normalizeWidth: metricBlock min: 5 max: 30
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeWidth: metricBlock max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 maxValue is an integer representing the maximum size in pixels for each node"
+	self normalizeWidth: metricBlock min: 5 max: maxValue
 ]
 
 { #category : #'public normalize size' }
