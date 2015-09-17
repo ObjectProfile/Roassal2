@@ -69,8 +69,7 @@ TRBitmapShape >> extent [
 
 { #category : #actions }
 TRBitmapShape >> extent: anExtent [
-	form := Form extent: anExtent depth: 32.
-	"form := ColorForm extent: anExtent depth: 32"
+	form := TRPlatform current formClass extent: anExtent depth: 32.
 ]
 
 { #category : #accessing }
