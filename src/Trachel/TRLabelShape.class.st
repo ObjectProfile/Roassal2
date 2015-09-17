@@ -15,11 +15,11 @@ TRLabelShape class >> defaultFamilyFontName [
 	"Default Family font"
 	| fontList |
 	fontList := TRPlatform current fontListStrings.
-	fontList ifEmpty: [ ^ StandardFonts defaultFont familyName ].
+	fontList ifEmpty: [ ^ TRPlatform current defaultFont familyName ].
 	(fontList includes: 'Source Sans Pro') ifTrue: [ ^ 'Source Sans Pro' ].
 	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
 	
-	^ StandardFonts defaultFont familyName
+	^ TRPlatform current defaultFont familyName
 ]
 
 { #category : #configuration }
@@ -41,7 +41,7 @@ TRLabelShape class >> getFontForSize: aNumber [
 
 { #category : #utility }
 TRLabelShape class >> getFontNamed: aFontName ForSize: aNumber [
-	^ LogicalFont familyName: aFontName pointSize: aNumber
+	^ TRPlatform current fontFamilyName: aFontName pointSize: aNumber
 ]
 
 { #category : #utility }

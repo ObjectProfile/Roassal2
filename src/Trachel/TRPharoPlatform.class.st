@@ -24,6 +24,82 @@ TRPharoPlatform >> colorFormClass [
 	^ ColorForm
 ]
 
+{ #category : #'drawing - helpers' }
+TRPharoPlatform >> computeArcPathFor: aShape [
+	| i e aAngle bAngle aSin aCos bSin bCos |
+	aShape canvas ifNil: [ ^ nil ].
+	aAngle:=aShape alphaAngle value degreesToRadians.
+	bAngle:=aShape betaAngle value degreesToRadians.
+	i := aShape innerRadius value.
+	e := aShape externalRadius value.
+	aCos := aAngle cos.
+	aSin := aAngle sin negated.
+	bCos := bAngle cos.
+	bSin := bAngle sin negated.
+	^ aShape athensCanvas
+			createPath: [ :builder | 
+				builder
+					absolute;
+					moveTo: ((i * (bCos)) @ (i * (bSin)));
+					arcTo:  ((i * (aCos)) @ (i * (aSin))) angle: bAngle - aAngle cw: true;
+					ccwArcTo: ((e * (aCos)) @ (e * (aSin))) angle: 0;
+					ccwArcTo: ((e * (bCos)) @ (e * (bSin))) angle: bAngle  - aAngle;
+					ccwArcTo: ((i * (bCos)) @ (i * (bSin))) angle: 0 ]
+]
+
+{ #category : #'drawing - helpers' }
+TRPharoPlatform >> computeEllipsePathFor: aShape [
+	| halfWidth halfHeight rectangle |
+	aShape canvas ifNil: [ ^ nil ].
+	rectangle := aShape basicEncompassingRectangle.
+	halfWidth := rectangle width / 2 asFloat.
+	halfHeight := rectangle height / 2 asFloat.
+
+	^ aShape athensCanvas
+		createPath: [ :builder | 
+			builder
+				relative;
+				moveTo: halfWidth negated @ 0;
+				curveVia: 0 @ (halfHeight negated * 0.55)
+					and: (0.45 * halfWidth) @ halfHeight negated
+					to: halfWidth @ halfHeight negated;
+				curveVia: (halfWidth * 0.55) @ 0 
+					and: halfWidth @ (0.45 * halfHeight) 
+					to: halfWidth @ halfHeight;
+				curveVia: 0 @ (halfHeight * 0.55) 
+					and: (0.45 * halfWidth negated) @ halfHeight 
+					to: halfWidth negated @ halfHeight;
+				curveVia: (halfWidth negated * 0.55) @ 0
+					and: halfWidth negated @ (halfHeight negated * 0.45)
+					to: halfWidth negated @ halfHeight negated ]
+				
+			
+]
+
+{ #category : #'drawing - helpers' }
+TRPharoPlatform >> computeRoundBoxPathFor: aShape [
+	| r vr hr rectangle |
+	aShape canvas ifNil: [ ^ nil ].
+	r := aShape borderRadius.
+	vr := 0 @ r.
+	hr := r @ 0.
+	rectangle := aShape basicEncompassingRectangle.
+	^ aShape athensCanvas
+		createPath: [ :builder | 
+			builder
+				absolute;
+				moveTo: rectangle topLeft + hr;
+				lineTo: rectangle topRight - hr;
+				cwArcTo: rectangle topRight + vr angle: Float halfPi;
+				lineTo: rectangle bottomRight - vr;
+				cwArcTo: rectangle bottomRight - hr angle: Float halfPi;
+				lineTo: rectangle bottomLeft + hr;
+				cwArcTo: rectangle bottomLeft - vr angle: Float halfPi;
+				lineTo: rectangle topLeft + vr;
+				cwArcTo: rectangle topLeft + hr angle: Float halfPi;
+				closePath ]
+]
+
 { #category : #public }
 TRPharoPlatform >> createPopupFor: aMorph in: aPoint background: aColor string: aString [
 	| popup tm vertices xdelta ydelta world position |
@@ -75,6 +151,11 @@ Ebola2.2,POINT (32.290275 1.373333),2012-01-01T00:00:00,-0002-12-29T00:00:00,Uga
 Ebola2.6,POINT (21.758664 -4.038333),2008-01-01T00:00:00,2009-01-01T00:00:00,Democratic Republic of Congo,-4.038333,21.758664,ZEBOV,32,14,45%,Outbreak occurred in the Mweka and Luebo health zones of the Province of?Kasai-Occidental.[33]' 
 ]
 
+{ #category : #fonts }
+TRPharoPlatform >> defaultFont [
+	^ StandardFonts defaultFont
+]
+
 { #category : #public }
 TRPharoPlatform >> deletePopup: popup [
 	popup ifNil: [ ^ self ].
@@ -116,6 +197,12 @@ TRPharoPlatform >> downloadPng: aUrl [
 { #category : #'accessing-classes' }
 TRPharoPlatform >> exampleSelectionClass [
 	^ RTExampleSelection
+]
+
+{ #category : #fonts }
+TRPharoPlatform >> fontFamilyName: name pointSize: number [
+	"return the an instance of the default class font with that name and that size"
+	^ LogicalFont familyName: name pointSize: number
 ]
 
 { #category : #public }

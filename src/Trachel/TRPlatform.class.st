@@ -35,6 +35,21 @@ TRPlatform >> colorFormClass [
 	self subclassResponsibility
 ]
 
+{ #category : #'drawing - helpers' }
+TRPlatform >> computeArcPathFor: aShape [
+	self subclassResponsibility
+]
+
+{ #category : #'drawing - helpers' }
+TRPlatform >> computeEllipsePathFor: aShape [
+	self subclassResponsibility.
+]
+
+{ #category : #'drawing - helpers' }
+TRPlatform >> computeRoundBoxPathFor: aShape [
+	self subclassResponsibility
+]
+
 { #category : #windows }
 TRPlatform >> createPopupFor: aMorph in: aPoint background: aColor string: aString [
 	"create a platform popup"
@@ -211,6 +226,11 @@ TRPlatform >> pngReadWriterClass [
 
 { #category : #public }
 TRPlatform >> roassalIcon [
+	self subclassResponsibility
+]
+
+{ #category : #public }
+TRPlatform >> session [
 	self subclassResponsibility
 ]
 
