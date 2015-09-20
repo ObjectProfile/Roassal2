@@ -64,7 +64,7 @@ RTRotableView >> initialize [
 ]
 
 { #category : #hooks }
-RTRotableView >> initializeElement: element [
+RTRotableView >> initializeElement: element. [
 	view := element.
 	draggingView := false.
 	view canvas when: TRMouseRightDragStart do: [ draggingView := true ].

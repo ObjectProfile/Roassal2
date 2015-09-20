@@ -2,10 +2,10 @@
 I am an interaction which allows the element to be dragged in a steps of fixed size equivalent to the size of the grid.
 
 Here is an example:
-[[[
+-=-=-=
 v := RTView new.
 
-s := RTBox new size: 25; color: (Color blue alpha: 0.3).
+s := RTBox new size: 20; color: (Color blue alpha: 0.3).
 es := s elementsOn: (1 to: 10).
 v addAll: es.
 RTGridLayout on: es.
@@ -13,21 +13,19 @@ RTGridLayout on: es.
 es @ RTDraggableSnapToGrid.
 
 v
-]]]
+-=-=-=
 
 
 When embedded within the RTInteractionBuilder (and thus by Mondrian):
-[[[
+-=-=-=
 b := RTMondrian new.
 
-b interaction snapToGrid gridSize: 10.
-b shape rectangle size: 25. 
-b shape color: Color transparent.
-b shape borderColor: Color black.
+b interaction snapToGrid.
+b shape rectangle size: 20. 
 b nodes: (1 to: 9).
 b layout grid.
 b
-]]]
+-=-=-=
 "
 Class {
 	#name : #RTDraggableSnapToGrid,
@@ -62,29 +60,6 @@ RTDraggableSnapToGrid >> initialize [
 
 { #category : #hooks }
 RTDraggableSnapToGrid >> initializeElement: element [
-	| totalD |
-	totalD := 0 @ 0.
-	element when: TRMouseDragStart do: [ :event | totalD := 0 @ 0 ].
-	element
-		when: TRMouseDragging
-		do:
-			[ :event | 
-			| d t |
-			t := RTGroup withAll: groupToDrag.
-			(t includes: element)
-				ifFalse: [ t add: element ].
-			d := element encompassingRectangle topLeft.
-			d := d + (element view canvas camera distanceFromPixelToSpace: event step).
-			totalD := totalD + d.
-			d := gridSize * ((totalD x / gridSize) rounded @ (totalD y / gridSize) rounded).
-			totalD := totalD - d.
-			d := d - element encompassingRectangle topLeft.
-			t translateBy: d.
-			event signalUpdate ]
-]
-
-{ #category : #hooks }
-RTDraggableSnapToGrid >> initializeElementOld: element [
 	| totalD |
 	totalD := 0 @ 0.
 	element when: TRMouseDragStart do: [ :event | totalD := 0 @ 0 ].

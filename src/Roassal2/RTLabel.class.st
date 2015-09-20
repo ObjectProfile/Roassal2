@@ -14,6 +14,7 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'text',
+		'font',
 		'height',
 		'fontName'
 	],
