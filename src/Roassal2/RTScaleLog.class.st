@@ -12,7 +12,7 @@ Class {
 { #category : #accessing }
 RTScaleLog >> base: number [
 	base := number.
-	linear domain: (domain collect: [:n | self lg: n ]).
+	linear domain: (domain collect: [:n | self log: n ]).
 ]
 
 { #category : #accessing }

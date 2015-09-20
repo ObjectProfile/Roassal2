@@ -196,7 +196,6 @@ Roassal2VW >> packages [
 			'Exporter-HTML5'. 'Exporter-PNG'. 'Exporter-SVG'. 
 			'Interactions'. 'Interactions-Resize'. 'Interactions-Resize-Tests'.
 			'Layouts'. 'Layouts-Tests'. 'LineDecorations'. 
-			'Scaling'. 'Scaling-Tests'.
 			'Selection'. 'Shapes'. 'Sparkline'. 'Table'. 'Tests'. 'Utility'}
 		}
 ]
