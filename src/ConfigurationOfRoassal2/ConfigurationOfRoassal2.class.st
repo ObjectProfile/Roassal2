@@ -567,6 +567,27 @@ ConfigurationOfRoassal2 >> version114: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfRoassal2 >> version115: spec [
+	<version: '1.15' imports: #('1.6-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.15 for Pharo4'.
+		spec author: 'AlexandreBergel'.
+		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Neo-JSON-Core' with: '10'.
+		spec 
+			package: 'Trachel' with: 'Trachel-PeterUhnak.325';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1060';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
+			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
+			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
+			package: 'GT-InspectorExtensions-CoreRoassal' with: 'GT-InspectorExtensions-CoreRoassal-TudorGirba.44';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15' ].
+
+]
+
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version11: spec [
 	<version: '1.1' imports: #('1.1-baseline' )>
 
