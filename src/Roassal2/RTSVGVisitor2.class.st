@@ -13,7 +13,7 @@ Class {
 	#category : #'Roassal2-Exporter-HTML5'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addBorderColor: c [
 	c ifNil: [ ^ self].
 	
@@ -23,21 +23,21 @@ RTSVGVisitor2 >> addBorderColor: c [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addBorderWidth: aShape [
 	(aShape strokePaint isNil or: [ aShape strokeWidth < 0 ]) ifTrue: [ ^ self ].
 	stream nextPutAll: 'sw: ', aShape strokeWidth asString, ','.
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addColor: c [
 	stream nextPutAll: ('color: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
 	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}, ' ]
 	ifFalse: [ stream nextPutAll: (', a: <1p>}, ' expandMacrosWith: c alpha) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addInteractions: aShape [
 	aShape isNil ifTrue: [ ^ self ].
 	(aShape isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
@@ -46,18 +46,17 @@ RTSVGVisitor2 >> addInteractions: aShape [
 	stream nextPutAll: ', '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addMatrix: m [
-	
-	stream nextPutAll: 'matrix:{shx: ', m shx asString, 
-		', shy: ',  m shy asString, 
-		', sx: ', m sx asString, 
-		', sy: ', m sy asString, 
-		', x: ', m x asString, ', y: ', m y asString, '}}, '.
+	stream nextPutAll: 'matrix:{shx: ', (self number: m shx), 
+		', shy: ',  (self number: m shy), 
+		', sx: ', (self number: m sx), 
+		', sy: ', (self number: m sy), 
+		', x: ', (self number: m x), ', y: ', (self number: m y), '}}, '.
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
 RTSVGVisitor2 >> addStringWithFont: aLabel [
 	| converter fn |
 	converter := RTSVGStringConverter new.
@@ -92,7 +91,14 @@ RTSVGVisitor2 >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #helpers }
+RTSVGVisitor2 >> number: n [
+	^ n isNaN 
+		ifTrue: ['NaN']
+		ifFalse: [ n asFloat asString ]
+]
+
+{ #category : #helpers }
 RTSVGVisitor2 >> pointToString: point [
 	^ '{x:',point x asFloat asString, ',y:',point y asFloat asString,'}'
 ]
@@ -107,6 +113,11 @@ RTSVGVisitor2 >> stream [
 RTSVGVisitor2 >> stream: aStream [
 
 	stream := aStream.
+]
+
+{ #category : #helpers }
+RTSVGVisitor2 >> validInteractions [
+	^ validInteractions
 ]
 
 { #category : #accessing }
