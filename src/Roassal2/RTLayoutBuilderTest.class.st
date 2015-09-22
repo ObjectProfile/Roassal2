@@ -45,6 +45,23 @@ RTLayoutBuilderTest >> testDefault [
 ]
 
 { #category : #tests }
+RTLayoutBuilderTest >> testFlowOnEmpty [
+
+	"Juraj had a problem on some point. This tests describes the problematic situation"
+	RTMondrian new layout flow
+]
+
+{ #category : #tests }
+RTLayoutBuilderTest >> testFlowOnEmpty02 [
+
+	"Juraj had a problem on some point. This tests describes the problematic situation"
+	| b |
+	b := RTMondrian new.
+	b layout flow. 
+	b build.
+]
+
+{ #category : #tests }
 RTLayoutBuilderTest >> testSugiyamaAndVerticalAttach [
 
 	| e1 e2 edge |
