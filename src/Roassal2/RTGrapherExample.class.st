@@ -550,16 +550,16 @@ hF/4gfAD4Rd+IPxA+IUfCD8QfuEHwg+EX/iB8Iuv/AW9/y7tOrRBIwAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTGrapherExample >> exampleCursorFollower [
 
-| b ds |
-b := RTGrapher new.
+	| b ds |
+	b := RTGrapher new.
 
-ds := RTDataSet new.
-ds points: #(5 10 6 2 -2.5).
-b add: ds.
+	ds := RTDataSet new.
+	ds points: #(5 10 6 2 -2.5).
+	b add: ds.
 
-b addDecorator: RTCursorFollower new.
-b build.
-^ b view
+	b addDecorator: (RTCursorFollower new color: Color blue).
+	b build.
+	^ b view
 ]
 
 { #category : #icons }

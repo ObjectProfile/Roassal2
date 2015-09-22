@@ -24,10 +24,21 @@ Class {
 		'labelH',
 		'labelV',
 		'labelXTextConvertion',
-		'labelYTextConvertion'
+		'labelYTextConvertion',
+		'color'
 	],
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
+
+{ #category : #accessing }
+RTCursorFollower >> color [
+	^ color
+]
+
+{ #category : #accessing }
+RTCursorFollower >> color: aColor [
+	color := aColor
+]
 
 { #category : #testing }
 RTCursorFollower >> convertPointForGraph: p [
@@ -39,15 +50,23 @@ RTCursorFollower >> createLinesAndLabelsIfNecessary [
 	lineH
 		ifNil: [ 
 			lineH := TRLineShape new.
+			lineH color: color.
 			canvas := builder view canvas.
 			canvas addShape: lineH.
 			lineV := TRLineShape new.
 			canvas addShape: lineV.
 			
 			labelH := TRLabelShape new.
+			labelH color: color.
 			canvas addShape: labelH.
 			labelV := TRLabelShape new.
-			canvas addShape: labelV.]
+			labelV color: color.
+			canvas addShape: labelV. ]
+]
+
+{ #category : #configuration }
+RTCursorFollower >> defaultColor [
+	^ Color gray
 ]
 
 { #category : #drawing }
@@ -69,7 +88,8 @@ RTCursorFollower >> getPositionFromPixel: p [
 RTCursorFollower >> initialize [
 	super initialize.
 	labelXTextConvertion := [ :v | v round: 2 ].
-	labelYTextConvertion := [ :v | v round: 2 ]
+	labelYTextConvertion := [ :v | v round: 2 ].
+	color := self defaultColor
 ]
 
 { #category : #testing }
@@ -77,6 +97,26 @@ RTCursorFollower >> isPointOverTheBuilder: p [
 	| pp |
 	pp := self convertPointForGraph: p.
 	^ pp >= (0 @ 0) and: [ pp <= builder extent ]
+]
+
+{ #category : #accessing }
+RTCursorFollower >> labelXTextConvertion [
+	^ labelXTextConvertion
+]
+
+{ #category : #accessing }
+RTCursorFollower >> labelXTextConvertion: aOneArgBlock [
+	labelXTextConvertion := aOneArgBlock
+]
+
+{ #category : #accessing }
+RTCursorFollower >> labelYTextConvertion [
+	^ labelYTextConvertion
+]
+
+{ #category : #accessing }
+RTCursorFollower >> labelYTextConvertion: aOneArgBlock [
+	labelYTextConvertion := aOneArgBlock
 ]
 
 { #category : #createLinesAndLabels }
