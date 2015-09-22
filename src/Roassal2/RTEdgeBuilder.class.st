@@ -180,6 +180,12 @@ RTEdgeBuilder >> fromElements: someElements [
 ]
 
 { #category : #accessing }
+RTEdgeBuilder >> fromObjects [
+	"Return the list of objects considered as targets for the edges"
+	^ self fromElements collect: #model
+]
+
+{ #category : #accessing }
 RTEdgeBuilder >> fromObjects: someObjectsOrABlock [
 	"Identify the elements we are considering for the edge building process. Note that the view has to be set beforehand."
 	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
@@ -279,6 +285,12 @@ RTEdgeBuilder >> toElements: someElements [
 { #category : #accessing }
 RTEdgeBuilder >> toObject: anObject [
 	^ self toObjects: (Array with: anObject)
+]
+
+{ #category : #accessing }
+RTEdgeBuilder >> toObjects [
+	"Return the list of objects considered as sources for the edges"
+	^ self toElements collect: #model
 ]
 
 { #category : #accessing }
