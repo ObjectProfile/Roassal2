@@ -423,7 +423,7 @@ ConfigurationOfRoassal2 >> development: spec [
 
 	spec for: #'common' version: '1.4-baseline'.
 	spec for: #'pharo4.x' version: '1.5-baseline'.
-
+	spec for: #'pharo5.x' version: '1.6-baseline'.
 ]
 
 { #category : #accessing }
@@ -446,7 +446,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-
+	spec for: #'pharo5.x' version: '1.16'.
 ]
 
 { #category : #versions }
@@ -584,6 +584,27 @@ ConfigurationOfRoassal2 >> version115: spec [
 			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
 			package: 'GT-InspectorExtensions-CoreRoassal' with: 'GT-InspectorExtensions-CoreRoassal-TudorGirba.44';
 			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-AndreiChis.15' ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version116: spec [
+	<version: '1.16' imports: #('1.6-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Release'.
+		spec author: 'AlexandreBergel'.
+		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Neo-JSON-Core' with: '10'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.326';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1071';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.10';
+			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
+			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-AlexandreBergel.41';
+			package: 'GT-InspectorExtensions-CoreRoassal' with: 'GT-InspectorExtensions-CoreRoassal-StefanReichhart';
+			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-StefanReichhart.21' ].
 
 ]
 
