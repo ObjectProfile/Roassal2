@@ -45,31 +45,21 @@ b.
 "
 Class {
 	#name : #RTData,
-	#superclass : #RTObject,
+	#superclass : #RTAbstractData,
 	#instVars : [
 		'points',
-		'elements',
-		'x',
-		'y',
-		'builder',
 		'dotBuilder',
-		'histogramBuilder',
 		'lineBuilder',
-		'minX',
-		'maxX',
-		'minY',
-		'maxY',
 		'shouldConnect',
 		'interaction',
-		'elementActions',
-		'shouldHaveHistogramBars'
+		'shouldHaveBars'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
 { #category : #hooks }
 RTData >> addedInBuilder: aBuilder [
-	self builder: aBuilder.
+	super addedInBuilder: aBuilder.
 	aBuilder shouldUseNiceLabelsForX: false
 ]
 
@@ -87,110 +77,15 @@ RTData >> adjustMinAndMaxValues [
 		ifTrue: [ maxX := 0 ].
 ]
 
-{ #category : #public }
-RTData >> barChartWithBarCenteredTitle: aBlockOrSymbol [
-	"Add bar charts with centered title, the default color is used. This is a public method"
-	^ self barChartWithBarCenteredTitle: aBlockOrSymbol color: self defaultLabelColor
-]
-
-{ #category : #public }
-RTData >> barChartWithBarCenteredTitle: aBlockOrSymbol color: aColor [
-	"Draw a bar chart with title"
-	self barShape.
-	elementActions add: [ :elements | 
-		| lbl |
-		elements do: [ :e |
-			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
-			TRConstraint move: lbl below: e.
-			"lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0)."
-			elements anyOne view add: lbl.
-		] ].
-	 
-]
-
-{ #category : #public }
-RTData >> barChartWithBarTitle: aBlockOrSymbol [
-	"Draw a barChart with title"
-	self barChartWithBarTitle: aBlockOrSymbol rotation: -45
-]
-
-{ #category : #public }
-RTData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
-	"Draw an histogram with title"
-
-	self barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: self defaultLabelColor
-]
-
-{ #category : #public }
-RTData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
-	"Draw an histogram with title"
-	self barShape.
-	elementActions add: [ :elements | 
-		| lbl |
-		elements do: [ :e |
-			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
-			lbl rotateByDegrees: rotationInDegree.
-			TRConstraint move: lbl below: e.
-			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
-			elements anyOne view add: lbl.
-		] ].
-	 
-]
-
 { #category : #'public - bar shape' }
 RTData >> barShape [
-	shouldHaveHistogramBars := true.
-	^ histogramBuilder
-]
-
-{ #category : #accessing }
-RTData >> builder: aBuilder [
-	builder := aBuilder 
-]
-
-{ #category : #hooks }
-RTData >> centralDot [
-	^ (RTEllipse new
-		size: 0;
-		color: Color red) element translateTo: (builder getPixelPositionOf: 0 @ 0)
-]
-
-{ #category : #'min and max' }
-RTData >> computeMinAndMax [
-	self computeMinAndMaxForX.
-	self computeMinAndMaxForY.
-]
-
-{ #category : #'min and max' }
-RTData >> computeMinAndMaxForX [
-	| computed |
-	computed := elements collect: x.
-	self assert: [ computed allSatisfy: [ :obj | obj isKindOf: Number ] ] description: 'You have provided objects that are not number. Please adjust what you provide to #points: #x: and #y:'.
-	minX := computed min.
-	maxX := computed max.
-
-	(minX < 0 and: [ maxX < 0 ]) ifTrue: [ maxX := 0 ].
-	(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ].
-	
-
-
-]
-
-{ #category : #'min and max' }
-RTData >> computeMinAndMaxForY [
-	| computed |
-	computed := elements collect: y.
-	self assert: [ computed allSatisfy: [ :obj | obj isKindOf: Number ] ] description: 'You have provided objects that are not number. Please adjust what you provide to #points: #x: and #y:'.
-	minY := computed min.
-	maxY := computed max.
-	
-	(minY < 0 and: [ maxY < 0 ]) ifTrue: [ maxY := 0 ].
-	(minY > 0 and: [ maxY > 0 ]) ifTrue: [ minY := 0 ].
-	
+	shouldHaveBars := true.
+	^ super barShape
 ]
 
 { #category : #'public - lines' }
 RTData >> connect [
+	"Connect the dot to form a connected line"
 	shouldConnect := true
 ]
 
@@ -207,22 +102,6 @@ RTData >> connectUsing: aShape [
 	self connect
 ]
 
-{ #category : #initialization }
-RTData >> defaultLabelColor [
-	"Label should be gray per default"
-	^ Color gray
-]
-
-{ #category : #initialization }
-RTData >> defaultMaxValue [
-	^ 1000000
-]
-
-{ #category : #initialization }
-RTData >> defaultMinValue [
-	^ -1000000
-]
-
 { #category : #'public - dots' }
 RTData >> dotShape [
 	^ dotBuilder
@@ -235,32 +114,6 @@ RTData >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: tran
 		RTMetricNormalizer new
 			elements: elements;
 			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
-]
-
-{ #category : #hooks }
-RTData >> getPixelPositionOf: aPoint [
-	"Return the position in the Roassal view of a point"
-
-	| anX anY |
-	anX := RTMetricNormalizer new
-		getValue: aPoint x min: 0 max: builder extent x minValue: minX maxValue: maxX.
-	anY := RTMetricNormalizer new
-		getValue: aPoint y min: 0 max: builder extent y negated minValue: minY maxValue: maxY.
-			
-	^ anX @ anY
-]
-
-{ #category : #hooks }
-RTData >> getPositionFromPixelPosition: aPoint [
-	"Return the position in the graph from a position in the Roassal view of a point"
-
-	| anX anY |
-	anX := RTMetricNormalizer new
-		getValue: aPoint x min: minX max: maxX minValue: 0 maxValue: builder extent x.
-	anY := RTMetricNormalizer new
-		getValue: aPoint y min: minY max: maxY minValue: 0 maxValue: builder extent y.
-			
-	^ anX @ anY negated
 ]
 
 { #category : #accessing }
@@ -317,8 +170,7 @@ RTData >> initialize [
 	self resetShapeBuilderForLine.
 	self resetInteractionBuilder.
 	shouldConnect := false.
-	elementActions := OrderedCollection new.
-	shouldHaveHistogramBars := false
+	shouldHaveBars := false
 ]
 
 { #category : #accessing }
@@ -335,46 +187,6 @@ RTData >> isStacked [
 { #category : #accessing }
 RTData >> lineShape [
 	^ lineBuilder
-]
-
-{ #category : #accessing }
-RTData >> maxX [
-	^ maxX
-]
-
-{ #category : #accessing }
-RTData >> maxX: anObject [
-	maxX := anObject
-]
-
-{ #category : #accessing }
-RTData >> maxY [
-	^ maxY
-]
-
-{ #category : #accessing }
-RTData >> maxY: anObject [
-	maxY := anObject
-]
-
-{ #category : #accessing }
-RTData >> minX [
-	^ minX
-]
-
-{ #category : #accessing }
-RTData >> minX: anObject [
-	minX := anObject
-]
-
-{ #category : #accessing }
-RTData >> minY [
-	^ minY
-]
-
-{ #category : #accessing }
-RTData >> minY: anObject [
-	minY := anObject
 ]
 
 { #category : #'public - dots' }
@@ -404,7 +216,7 @@ RTData >> renderBarChartIn: aView [
 	| centralDot positiveElements negativeElements |
 	centralDot := self centralDot.
 	
-	elements := histogramBuilder elementsOn: self points.
+	elements := barBuilder elementsOn: self points.
 	builder view addAll: elements.
 	interaction setUpElements: elements.
 	RTMetricNormalizer new
@@ -478,7 +290,7 @@ RTData >> renderDotAndLinesIn: aView [
 RTData >> renderIn: aView [
 
 	"This is a bit ugly. Maybe having a class hierarchy would be better"
-	shouldHaveHistogramBars 
+	shouldHaveBars 
 		ifTrue: [ self renderBarChartIn: aView ]
 		ifFalse: [ self renderDotAndLinesIn: aView ]
 	
@@ -506,22 +318,6 @@ RTData >> resetInteractionBuilder [
 	interaction popup
 ]
 
-{ #category : #utility }
-RTData >> resetMinAndMax [
-
-	minY := self defaultMaxValue.
-	maxY := self defaultMinValue.
-	minX := self defaultMaxValue.
-	maxX := self defaultMinValue.
-
-]
-
-{ #category : #initialization }
-RTData >> resetShapeBuilderForBar [
-	histogramBuilder := RTShapeBuilder new.
-	histogramBuilder rectangle
-]
-
 { #category : #initialization }
 RTData >> resetShapeBuilderForDot [
 	dotBuilder := RTShapeBuilder new.
@@ -531,6 +327,11 @@ RTData >> resetShapeBuilderForDot [
 { #category : #initialization }
 RTData >> resetShapeBuilderForLine [
 	lineBuilder := RTShapeBuilder new
+]
+
+{ #category : #hooks }
+RTData >> selectElementsForAddingBarTitle [
+	^ elements
 ]
 
 { #category : #accessing }
@@ -552,6 +353,11 @@ RTData >> x: blockOrSymbol [
 { #category : #accessing }
 RTData >> xElement: blockOrSymbol [
 	x := blockOrSymbol
+]
+
+{ #category : #accessing }
+RTData >> y [
+	^ y
 ]
 
 { #category : #accessing }
