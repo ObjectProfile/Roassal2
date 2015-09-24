@@ -578,7 +578,7 @@ ConfigurationOfRoassal2 >> version115: spec [
 		spec project: 'Neo-JSON-Core' with: '10'.
 		spec 
 			package: 'Trachel' with: 'Trachel-PeterUhnak.325';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1060';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1049';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6';
 			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
 			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-TudorGirba.38';
