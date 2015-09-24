@@ -238,7 +238,7 @@ RTAbstractData >> resetMinAndMax [
 
 ]
 
-{ #category : #initialization }
+{ #category : #hooks }
 RTAbstractData >> resetShapeBuilderForBar [
 	barBuilder := RTShapeBuilder new.
 	barBuilder rectangle.

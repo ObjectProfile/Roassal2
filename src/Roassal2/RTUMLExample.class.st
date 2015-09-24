@@ -33,7 +33,7 @@ RTUMLExample >> exampleArrowed [
 b := RTUMLClassBuilder new.
    b instanceVariables: #instVarNames.
    b methodselector: #selector.
-	b methodsNames: #rtmethods.
+	b methodsNames: #methods.
    b attributeselector: #yourself.
 
 b lineShape arrowedLine.
@@ -100,7 +100,7 @@ RTUMLExample >> exampleBlackColor [
 b := RTUMLClassBuilder new
    instanceVariables: #instVarNames;
    methodselector: #selector;
-	methodsNames: #rtmethods;
+	methodsNames: #methods;
 	attributeselector: #yourself.
 b attributeShape color: Color black.
 b methodShape color: Color black.

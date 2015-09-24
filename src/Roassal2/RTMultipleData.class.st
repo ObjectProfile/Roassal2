@@ -58,7 +58,7 @@ RTMultipleData >> colorPalette [
 	^ ColorPalette qualitative colors: 8 scheme: 'Set2'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTMultipleData >> getModelForElement:e atIndex: index [
 	"Return the model that is used to insert a label for the element. index is index-th label to be provided."
 	^ self points at: index
@@ -150,10 +150,13 @@ RTMultipleData >> renderIn: aView [
 	elementActions do: [ :act | act rtValue: elements ]
 ]
 
-{ #category : #initialization }
+{ #category : #hooks }
 RTMultipleData >> resetShapeBuilderForBar [
 	super resetShapeBuilderForBar.
-
+	
+	"Default width that compute an appropriate width"
+	barBuilder width: [ :object | 
+		(builder extent x / (self numberOfPoints * self numberOfMetrics * 2)) asFloat ]
 ]
 
 { #category : #hooks }
