@@ -17,6 +17,7 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontal [
 	d := RTHorizontalTickLineDecorator new.
 	b addDecorator: d.
 
+	b shouldUseNiceLabels: false.
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.

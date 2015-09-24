@@ -74,7 +74,7 @@ greatestAge := (methodsTrachel , methodsRoassal collect: [ :m | m date asUnixTim
 b := RTGrapher new.
 b extent: 300 @ 300.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds dotShape circle color: (Color blue alpha: 0.3); size: 5.
 ds points: methodsRoassal.
@@ -82,15 +82,15 @@ ds x: [ :m | ((m date asUnixTime - greatestAge) / 3600) asFloat ] .
 ds y: #numberOfLinesOfCode.
 b add: ds.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds dotShape circle color: (Color red alpha: 0.3); size: 5.
 ds points: methodsTrachel.
 ds x: [ :m | ((m date asUnixTime - greatestAge) / 3600) asFloat ] .
 ds y: #numberOfLinesOfCode.
 b add: ds.
 
-b axisXWithNumberOfTicks: 4.
-b axisYWithNumberOfTicks: 4.
+b axisX numberOfTicks: 4.
+b axisY numberOfTicks: 4.
 b build.
 ^ b view
 ]
@@ -156,7 +156,7 @@ RTGrapherExample >> exampleAverage [
 
 | b ds |
 b := RTGrapher new.
-ds := RTDataSet new. 
+ds := RTData new. 
 ds dotShape color: Color red. 
 ds points: #(5 1 20 8).
 b add: ds.
@@ -229,7 +229,7 @@ RTGrapherExample >> exampleAverageWithName [
 
 | b ds |
 b := RTGrapher new.
-ds := RTDataSet new. 
+ds := RTData new. 
 ds dotShape color: Color red. 
 ds points: #(5 1 20 8).
 b add: ds.
@@ -501,15 +501,13 @@ RTGrapherExample >> exampleCrosses [
 b := RTGrapher new.
 b extent: 300 @ 300.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds dotShape cross color: (Color red alpha: 0.3).
 ds points: (RTShape withAllSubclasses flatCollect: #rtmethods).
 ds x: #numberOfLinesOfCode.
 ds y: [ :m | m getSource size ].
 b add: ds.
 
-b axisX.
-b axisY.
 b build.
 ^ b view
 ]
@@ -553,7 +551,7 @@ RTGrapherExample >> exampleCursorFollower [
 	| b ds |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(5 10 6 2 -2.5).
 	b add: ds.
 
@@ -589,7 +587,7 @@ RTGrapherExample >> exampleDateOnXAxis [
 	b := RTGrapher new.
 	b extent: 300 @ 200.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds dotShape circle size: 5; color: (Color blue alpha: 0.1).
 	ds interaction popup.
 	ds points: methods.
@@ -621,7 +619,7 @@ minDate := dates min.
 b := RTGrapher new.
 b extent: 300 @ 200.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds dotShape rectangle color: Color blue.
 ds points: dates.
@@ -1409,7 +1407,7 @@ RTGrapherExample >> exampleFunctions [
 	b extent: 300 @ 300.
 	
 	(Array with: Color red with: Color blue with: Color green with: Color yellow) doWithIndex: [ :color :i |
-		ds := RTDataSet new.
+		ds := RTData new.
 		ds dotShape ellipse size: 0.
 		ds points: (0.0 to: 10.0 by: 0.1).
 		ds connectColor: color.
@@ -1687,7 +1685,7 @@ RTGrapherExample >> exampleMarkerOnTheXAxis [
 | b ds |
 b := RTGrapher new.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds connectColor: Color blue.
 ds points: #(3 4 5 6 7).
 ds x: #yourself.
@@ -1867,7 +1865,7 @@ RTGrapherExample >> exampleMethods [
 	b extent: 200 @ 200.
 
 	"Data set 1"
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popup.
 	ds dotShape circle color: (Color red alpha: 0.3).
 	ds points: methods.
@@ -1876,7 +1874,7 @@ RTGrapherExample >> exampleMethods [
 	b add: ds.
 
 	"Data set 2"
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popup.
 	ds dotShape circle color: (Color blue alpha: 0.3).
 	ds points: trachelMethods.
@@ -1922,7 +1920,7 @@ RTGrapherExample >> exampleMinAndMaxSetManually [
 
 | b ds |
 b := RTGrapher new.
-ds := RTDataSet new.
+ds := RTData new.
 ds points: #(1 2 3).
 b add: ds.
 
@@ -2098,7 +2096,7 @@ RTGrapherExample >> exampleNegativeY [
 b := RTGrapher new.
 b extent: 200 @ 200.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds points: (-3 to: 6).
 ds y: [ :v | v - 4 ].
 ds x: #yourself.
@@ -2263,7 +2261,7 @@ RTGrapherExample >> examplePopupOnCurves [
 
 	b extent: 300 @ 200.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (0 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) sin  ].
 	ds noDot.
@@ -2271,7 +2269,7 @@ RTGrapherExample >> examplePopupOnCurves [
 	ds connectColor: Color blue.
 	b add: ds.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (0 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) cos  ].
 	ds noDot.
@@ -2361,7 +2359,7 @@ RTGrapherExample >> examplePrimeNumberSpace [
 
 	diag := RTGrapher new.
 	diag view: v.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds dotShape ellipse color: (Color r: 0.9450000000000001 g: 0.768 b: 0.059000000000000004 alpha: 1.0); size: 0.1.
 	ds points: ((0 to: 5e5) select:#isPrime);
 	   y: [ :p |(p* (p cos))];
@@ -2506,7 +2504,7 @@ RTGrapherExample >> exampleScatterPlot2 [
 	b extent: 290 @ 200.
 	b interaction popup.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
 	ds points: RTObject withAllSubclasses.
 	 
@@ -2560,7 +2558,7 @@ RTGrapherExample >> exampleScatterplotWithHighlighting [
 	b := RTGrapher new.
 	b extent: 290 @ 200.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popup.
 	ds dotShape ellipse size: 15; color: (Color red alpha: 0.3).
 	ds points: RTObject withAllSubclasses.
@@ -2638,7 +2636,7 @@ tab convertColumnsAsFloat: #(4 5).
 
 
 b := RTGrapher new.
-ds := RTDataSet new.
+ds := RTData new.
 ds interaction popup.
 ds points: tab values.
 ds dotShape color: (Color blue alpha: 0.3).
@@ -2702,7 +2700,7 @@ RTGrapherExample >> exampleSimpleCurve [
 	b := RTGrapher new.
 	b extent: 300 @ 300.
 	
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds dotShape ellipse color: (Color blue alpha: 0.5).
 	ds points: (0.0 to: 1.0 by: 0.05).
 	ds connect.
@@ -2997,7 +2995,7 @@ RTGrapherExample >> exampleTwoInteractions [
 	b := RTGrapher new.
 	b extent: 300 @ 200.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popupText: [ :c | 'Roassal class: ', c name ].
 	ds dotShape circle color: (Color blue alpha: 0.3).
 	ds points: RTShape withAllSubclasses.
@@ -3005,7 +3003,7 @@ RTGrapherExample >> exampleTwoInteractions [
 	ds y: #numberOfLinesOfCode.
 	b add: ds.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popupText: [ :c | 'Trachel class: ', c name ].
 	ds dotShape circle color: (Color red alpha: 0.3).
 	ds points: TRShape withAllSubclasses.
@@ -3170,7 +3168,7 @@ RTGrapherExample >> exampleValuesDecoration [
 
 b := RTGrapher new.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds points: #(0 1 2 3 4 5 6).
 b add: ds.
 
@@ -3185,7 +3183,7 @@ b addDecorator: deco.
 
 b axisX noTick; noLabel.
 b axisY noTick; noLabel.
-b  build.
+b build.
 ^ b view
 ]
 
@@ -3213,7 +3211,7 @@ RTGrapherExample >> exampleVerticalAndHorizontalBars [
 	| b ds p |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #( 0 1 2 10).
 
 	b add: ds.
@@ -3264,7 +3262,7 @@ RTGrapherExample >> exampleVerticalAndHorizontalLines [
 
 	b extent: 300 @ 200.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (-50 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) sin  ].
 	ds noDot.
@@ -3272,7 +3270,7 @@ RTGrapherExample >> exampleVerticalAndHorizontalLines [
 	ds connectColor: Color blue.
 	b add: ds.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (-50 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) cos  ].
 	ds noDot.
@@ -3372,7 +3370,7 @@ xValues := (0 to: 100 by: 0.1).
 b := RTGrapher new.
 b extent: 300 @ 200.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds points: xValues.
 ds y: g.
 ds x: #yourself.
@@ -3386,7 +3384,6 @@ ds x: #yourself.
 ds connectColor: Color blue.
 b add: ds.
 
-b axisX; axisY.
 b build.
 ^ b view
 ]
@@ -3485,7 +3482,7 @@ greatestAge := (methodsTrachel , methodsRoassal collect: [ :m | m date asUnixTim
 b := RTGrapher new.
 b extent: 300 @ 300.
 
-ds := RTDataSet new
+ds := RTData new
 				points: methodsRoassal;
 				x: [ :m | (m date asUnixTime - greatestAge) / 3600 ];
 				y: #numberOfLinesOfCode.
@@ -3493,7 +3490,7 @@ ds dotShape circle color: (Color blue alpha: 0.3); size: 5.
 ds interaction popup.
 b add: ds.
 
-ds := RTDataSet new
+ds := RTData new
 				points: methodsTrachel;
 				x: [ :m | (m date asUnixTime - greatestAge) / 3600 ];
 				y: #numberOfLinesOfCode.
@@ -3570,7 +3567,7 @@ RTGrapherExample >> examplesinAndCos [
 b := RTGrapher new.
 b extent: 400 @ 400.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds dotShape rectangle size: 0.
 ds points: (-3 to: 3.1415 * 5 by: 0.01).
 ds y: [ :v | v sin ].
@@ -3578,7 +3575,7 @@ ds x: #yourself.
 ds connectColor: (Color red alpha: 0.4).
 b add: ds.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds dotShape rectangle size: 0.
 ds points: (0 to: 3.1415 * 5 by: 0.01).
 ds y: [ :v | v cos ].

@@ -10,7 +10,7 @@ RTSparklineExample >> exampleLOC [
 | shape es v |
 shape := RTSparkline new.
 shape width: 80; height: 20.
-shape values: [ :cls | (cls rtmethods collect: #numberOfLinesOfCode) sorted ].
+shape values: [ :cls | (cls methods collect: #numberOfLinesOfCode) sorted ].
 es := shape elementsOn: RTShape withAllSubclasses.
 
 es @ RTDraggable @ RTPopup.

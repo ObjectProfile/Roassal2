@@ -12,7 +12,7 @@ RTGrapherTest >> testAxis [
 
 	| x1 x2 ds |
 	b := RTGrapher new.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1 2).
 	b add: ds.
 	
@@ -29,7 +29,7 @@ RTGrapherTest >> testAxis02 [
 
 	| x1 x2 ds |
 	b := RTGrapher new.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1 2).
 	b add: ds.
 	
@@ -103,7 +103,7 @@ RTGrapherTest >> testNumberOfPlugins02 [
 RTGrapherTest >> testRender [
 	| v ds |
 	b := RTGrapher new.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1 2).
 	b add: ds.
 	
@@ -117,7 +117,7 @@ RTGrapherTest >> testSimple [
 	| ds |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds interaction popupText.
 	ds points: #(3 4 5 6).
 	ds x: #yourself.
@@ -140,7 +140,7 @@ RTGrapherTest >> testSimple02 [
 	| ds |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: (-100 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * (x + 30)) sin  ].
 	ds noDot.
@@ -174,7 +174,7 @@ RTGrapherTest >> testTitleOnAxes [
 
 	| ds labels |
 	b := RTGrapher new.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1 2).
 	b add: ds.
 
@@ -192,7 +192,7 @@ RTGrapherTest >> testTitleOnAxes02 [
 
 	| ds labels |
 	b := RTGrapher new.
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(1 2).
 	b add: ds.
 
