@@ -268,7 +268,7 @@ b := RTGrapher new.
 b extent: 400 @ 200.
 RTShape withAllSubclasses do: [ :cls |
 	ds := RTBoxPlotDataSet new.
-	ds points: (cls methods collect: #numberOfLinesOfCode).
+	ds points: (cls rtmethods collect: #numberOfLinesOfCode).
 	b add: ds.
 ].
 b build.
@@ -310,7 +310,7 @@ b extent: 700 @ 200.
 classes := RTShape withAllSubclasses.
 classes do: [ :cls | | ds |
 	ds := RTBoxPlotDataSet new.
-	ds points: cls methods.
+	ds points: cls rtmethods.
 	ds model: cls.
 	ds y: [ :method | method numberOfLinesOfCode ].
 	b add: ds.

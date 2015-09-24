@@ -6958,7 +6958,7 @@ cls := RTLayout withAllSubclasses.
 
 s := RTSparkline new
 		width: 50; height: 30;
-		values: [ :c | (c methods collect: #numberOfLinesOfCode) sorted ].
+		values: [ :c | (c rtmethods collect: #numberOfLinesOfCode) sorted ].
 
 es := s elementsOn: cls.
 v addAll: es.
@@ -7716,7 +7716,7 @@ oldestAge := (classes collect: #ageInDays) max.
 v := RTView new.
 v @ RTDraggableView.
 classes doWithIndex: [ :c :index |
-	elements := RTEllipse new elementsOn: c methods.
+	elements := RTEllipse new elementsOn: c rtmethods.
 	v addAll: elements.
 	RTMetricNormalizer new
 		elements: elements;
