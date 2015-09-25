@@ -66,7 +66,8 @@ Class {
 	#category : #'Roassal2-Shapes'
 }
 
-{ #category : #'as yet unclassified' }
-RTLine >> trachelShapeFor: a [
-	^ super trachelShapeFor: a
+{ #category : #hooks }
+RTLine >> trachelShapeClass [
+	^ TRLineShape
+
 ]
