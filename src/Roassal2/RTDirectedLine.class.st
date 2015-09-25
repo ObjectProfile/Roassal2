@@ -42,9 +42,9 @@ RTDirectedLine >> pointsFrom: from To: to [
 "
 ]
 
-{ #category : #hooks }
-RTDirectedLine >> trachelShapeClass [
-	^ TRBezierShape
+{ #category : #'as yet unclassified' }
+RTDirectedLine >> trachelShapeFor: a [
+	^ super trachelShapeFor: a
 ]
 
 { #category : #rendering }
