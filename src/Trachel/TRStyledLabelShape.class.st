@@ -24,7 +24,8 @@ TRStyledLabelShape >> drawOn: athensCanvas [
 	"self drawEncompassingRectangleOn: athensCanvas."
 	athensCanvas pathTransform
 		restoreAfter:
-			[ | advance |
+			[ | advance cls |
+			cls := TRPlatform current textEmphasisClass.
 			athensCanvas pathTransform
 				multiplyBy: matrix asFloatTransform;
 				translateBy: ((self textWidth / -2) @ (self textHeight / 2)) asFloatPoint;
@@ -32,9 +33,9 @@ TRStyledLabelShape >> drawOn: athensCanvas [
 			athensCanvas setFont: font.
 			athensCanvas setPaint: color.
 			advance := athensCanvas drawString: text.
-			(emphasis includes: TextEmphasis underlined)
+			(emphasis includes: cls underlined)
 				ifTrue: [ athensCanvas drawShape: (0 @ 1 extent: advance x @ 1) ].
-			(emphasis includes: TextEmphasis struckOut)
+			(emphasis includes: cls struckOut)
 				ifTrue:
 					[ athensCanvas pathTransform
 						translateBy: (0 @ (self textHeight / 4) negated) asFloatPoint.
