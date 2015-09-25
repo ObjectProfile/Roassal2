@@ -14,6 +14,21 @@ RTDataTest >> testBasic [
 ]
 
 { #category : #tests }
+RTDataTest >> testBasic02 [
+
+	| b ds |
+	b := RTGrapher new.
+	ds := RTData new. 
+	ds barShape.
+	ds points: #(5 1 20 8 5 1 20 8 5 1 20 8).
+	ds y: [ :v | v ].
+	b add: ds.
+	b build
+
+
+]
+
+{ #category : #tests }
 RTDataTest >> testComputeMinAndMax [
 
 	| b ds |
@@ -60,6 +75,24 @@ RTDataTest >> testConnectColor [
 RTDataTest >> testDefault [
 	self assert: RTData new points isEmpty.
 	self deny: RTData new shouldConnect
+]
+
+{ #category : #tests }
+RTDataTest >> testDotColor [
+
+	| b ds e |
+	b := RTGrapher new.
+	ds := RTData new.
+	ds interaction popup.
+	ds dotShape color: Color blue.
+	ds points: #(1 2 3 4).
+	ds x: #yourself; y: #yourself.
+	b add: ds.
+
+	b build.
+	
+	e := b view elementFromModel: 1.
+	self assert: e trachelShape color equals: Color blue.
 ]
 
 { #category : #tests }
