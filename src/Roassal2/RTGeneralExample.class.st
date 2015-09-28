@@ -1656,22 +1656,21 @@ RTGeneralExample >> styledLabel [
 	self new styledLabel
 	"
 
-	| v shape el all cls|
+	| v shape el all |
 	v := RTView new.
-	cls := TRPlatform current textEmphasisClass.
 	(shape := RTStyledLabel new) color: Color black.
 	#(#normal #italic #bold #underlined #struckOut)
 		do:
 			[ :each | 
 			el := shape
-				emphasis: (cls perform: each);
+				emphasis: (TextEmphasis perform: each);
 				elementOn: each.
 			v add: el ].
 	all := shape
 		emphasis:
-			(Array with: cls bold
-				with: cls italic
-				with: cls underlined);
+			{TextEmphasis bold.
+			TextEmphasis italic.
+			TextEmphasis underlined};
 		elementOn: 'bold + italic + underlined'.
 	v add: all.
 	RTVerticalLineLayout on: v elements.

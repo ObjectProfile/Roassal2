@@ -121,9 +121,9 @@ RTEdgeDrivenLayout >> edges [
 
 { #category : #accessing }
 RTEdgeDrivenLayout >> edges: aCollection [
+	
 	edges := aCollection.
-	self shouldSetDefaultAttachPoint
-		ifTrue: [ self addDefaultAttachPointToEdges ]
+	self addDefaultAttachPointToEdges
 ]
 
 { #category : #iterator }

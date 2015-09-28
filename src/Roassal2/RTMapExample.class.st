@@ -271,8 +271,8 @@ AAAASUVORK5CYII='
 { #category : #sources }
 RTMapExample >> exampleColoredAfrica [
 
-	|b countries countriesName max cn|	
-			b := RTMapBuilder new.	
+	| b countries countriesName max cn |	
+	b := RTMapBuilder new.	
 		
 	countries := RTMapBuilder africanPopulation.
 	countriesName := countries collect: #first.
