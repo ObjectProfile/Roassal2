@@ -1,3 +1,6 @@
+"
+All  my subclasses describes a line shape
+"
 Class {
 	#name : #RTAbstractLine,
 	#superclass : #RTShape,
