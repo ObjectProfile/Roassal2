@@ -1,3 +1,6 @@
+"
+I am the superclass of the class hierarchy describing attach points. An attach point indicates where lines start and end. 
+"
 Class {
 	#name : #RTAttachPoint,
 	#superclass : #RTObject,
