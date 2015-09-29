@@ -750,7 +750,7 @@ RTGeneralExample >> expandingArc [
 			externalRadius: externalRadius;
 			outerAngle: angle innerAngle: 30) element.
 	v add: e.
-	v addAnimation: (TRResetAllShapes new trCanvas: v canvas).
+	v addAnimation: (RTResetAllShape new trCanvas: v canvas).
 	angle start.
 	externalRadius start.
 	v open
@@ -1480,7 +1480,7 @@ RTGeneralExample >> rotatingLabelsAnimated [
 	v addAll: (shape elementsOn: Collection withAllSubclasses).
 
 	v canvas color: Color white.
-	v addAnimation: TRResetAllShapes new.
+	v addAnimation: RTResetAllShape new.
 	timer start.
 	v open
 ]

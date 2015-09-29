@@ -9,7 +9,7 @@ Class {
 		'trachelCanvas',
 		'blockToExecute'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Animation'
 }
 
 { #category : #actions }

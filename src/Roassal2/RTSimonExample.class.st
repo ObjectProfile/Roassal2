@@ -67,7 +67,7 @@ RTSimonExample >> basic03Animated [
 						color: [ :o | ((Array with: Color red with: Color blue with: Color white) atRandom alpha: 0.1)].
 	builder models: (1 to: 10).
 	timer start.
-	builder view addAnimation: (TRResetAllShapes new trCanvas: builder view canvas). 
+	builder view addAnimation: (RTResetAllShape new trCanvas: builder view canvas). 
 	builder open
 ]
 
