@@ -1,6 +1,9 @@
+"
+RTResetAllShape is an animation (in the Roassal sense) that reset all the trachel shapes in the canvas. 
+"
 Class {
-	#name : #TRResetAllShapes,
-	#superclass : #TRObject,
+	#name : #RTResetAllShape,
+	#superclass : #RTObject,
 	#instVars : [
 		'trCanvas'
 	],
@@ -8,36 +11,36 @@ Class {
 }
 
 { #category : #accessing }
-TRResetAllShapes >> addedIn: aTRCanvas [
+RTResetAllShape >> addedIn: aTRCanvas [
 	self trCanvas: aTRCanvas
 ]
 
 { #category : #testing }
-TRResetAllShapes >> hasCompleted [
+RTResetAllShape >> hasCompleted [
 	^ false
 ]
 
 { #category : #refreshing }
-TRResetAllShapes >> refresh [
+RTResetAllShape >> refresh [
 	self resetShapes
 ]
 
 { #category : #action }
-TRResetAllShapes >> resetShapes [
+RTResetAllShape >> resetShapes [
 	trCanvas shapes do: #resetPath
 ]
 
 { #category : #accessing }
-TRResetAllShapes >> start [
+RTResetAllShape >> start [
 	self resetShapes
 ]
 
 { #category : #accessing }
-TRResetAllShapes >> trCanvas [
+RTResetAllShape >> trCanvas [
 	^ trCanvas
 ]
 
 { #category : #accessing }
-TRResetAllShapes >> trCanvas: anObject [
+RTResetAllShape >> trCanvas: anObject [
 	trCanvas := anObject
 ]
