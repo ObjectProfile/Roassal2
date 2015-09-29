@@ -5920,7 +5920,7 @@ RTRoassalExample >> exampleRotatingAnimatedLabels [
 	v addAll: (shape elementsOn: Collection withAllSubclasses).
 
 	v canvas color: Color white.
-	v addAnimation: TRResetAllShapes new.
+	v addAnimation: RTResetAllShape new.
 	timer start.
 
 	^ v

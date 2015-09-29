@@ -8,7 +8,7 @@ Class {
 		'animatedValue',
 		'trachelCanvas'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Animation'
 }
 
 { #category : #'as yet unclassified' }
