@@ -24,7 +24,7 @@ TRCanvasExample >> animatedArc [
 	v addShape: e.
 	angle start.
 
-	v addAnimation: (TRResetAllShapes new).
+	v addAnimation: (RTResetAllShape new).
 	v open
 ]
 

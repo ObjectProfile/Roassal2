@@ -467,11 +467,6 @@ TRPharoPlatform >> showTemporaryCursor: cursorOrNil [
 	World currentHand showTemporaryCursor: cursorOrNil
 ]
 
-{ #category : #'accessing-classes' }
-TRPharoPlatform >> textEmphasisClass [
-	^ TextEmphasis
-]
-
 { #category : #public }
 TRPharoPlatform >> trMorphClass [
 	^ TRMorph
