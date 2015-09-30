@@ -183,3 +183,22 @@ RTMetricNormalizerTest >> testColors02 [
 	n distinctColorUsing: #odd.
 	self assert: (es collect: [ :e | e trachelShape color ]) asSet size equals: 2.
 ]
+
+{ #category : #'test line width' }
+RTMetricNormalizerTest >> testLineWidth01 [
+	| es v s |
+	es := RTBox elementsOn: #(1 2 3 4).
+	v := RTView new.
+	v addAll: es.
+	s := RTLine new.
+	v add: (s edgeFrom: es first to: es second).
+	v add: (s edgeFrom: es second to: es third).
+	v add: (s edgeFrom: es third to: es fourth).
+	RTMetricNormalizer new
+		elements: es;
+		normalizeLineWidth: [ :from :to | from ] min: 10 max: 30.
+	
+	self assert: es first outgoingEdges anyOne trachelShape width equals: 10.
+	self assert: es second outgoingEdges anyOne trachelShape width equals: 20.
+	self assert: es third outgoingEdges anyOne trachelShape width equals: 30.
+]

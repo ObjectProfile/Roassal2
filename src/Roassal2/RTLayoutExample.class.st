@@ -214,7 +214,7 @@ b shape rectangle
 	borderColor: Color lightGray;
 	withTextAbove: #name.
 b nodes: Collection withAllSubclasses forEach: [ :cls |
-	b nodes: cls methods.
+	b nodes: cls rtmethods.
 	b edges connectToAll: #dependentMethods.
 	b layout 
 		ifElement: #isConnected then: RTTreeLayout new;

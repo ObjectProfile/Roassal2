@@ -89,7 +89,7 @@ RTExperimentalExample >> createExampleButton [
 		add: (RTEllipse new width: 97; height: 47; 
 			color: base );
 		add: (RTEllipse new width: 71; height: 21;
-			color: (TRPlatform current linearGradientClass new start: 0@ -0.5; stop: 0@0.5;
+			color: (TRPlatform current linearGradientClass new start: 0@ -10.5; stop: 0@10.5;
 colorRamp: (Array with: (0.0 -> (Color white alpha: 0.4)) with: (1.0 -> Color transparent)))) translateBy: 0@ -10;
 		add: (RTLabel new text: 'Swap Data'; color: Color white).
 		
