@@ -448,7 +448,7 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue
 							minValue: minValue 
 							maxValue: maxValue 
 							using: transformation).
-	self edges with: values do: [ :edge :v | edge trachelShape width: v ] 
+	self edges with: values do: [ :edge :v | edge shape width: v ] 
 	
 	
 ]
@@ -460,6 +460,7 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max using: t
 	self checkNotEmpty.
 	
 	"We get the min and the max of the metric for all the edges"
+	self edges ifEmpty: [ ^ self ].
 	e := self edges anyOne.
 	minValue := transformation rtValue: (metricBlock value: e from model value: e to model).
 	maxValue := minValue.
