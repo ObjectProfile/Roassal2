@@ -3,29 +3,31 @@ I am an point with an offset
 "
 Class {
 	#name : #RTXPPoint,
-	#superclass : #Point,
+	#superclass : #RTObject,
 	#instVars : [
+		'x',
+		'y',
 		'y0'
 	],
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTXPPoint >> x: aNumber [
 	x := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTXPPoint >> y0 [
 	^ y0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTXPPoint >> y0: aNumber [
 	y0 := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTXPPoint >> y: aNumber [
 	y := aNumber
 ]

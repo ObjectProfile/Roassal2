@@ -27,7 +27,8 @@ Class {
 	#instVars : [
 		'elements',
 		'view',
-		'translator'
+		'translator',
+		'edges'
 	],
 	#category : #'Roassal2-ColorNormalizer'
 }
@@ -90,6 +91,16 @@ RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
 	elements do: [ :el | el trachelShape color: (normalizer rtValue: el model) ]
 ]
 
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> edges [
+	edges ifNotNil: [ ^ edges ].
+	
+	edges := Set new.
+	elements do: [ :el | edges addAll: el connectedEdges ]. 
+	edges := edges asArray.
+	^ edges
+]
+
 { #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
 	elements := someElements
@@ -111,6 +122,20 @@ RTMetricNormalizer >> getElementNormalizedValues: metricBlock min: min max: max 
  	^ elements collect: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el).
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
+]
+
+{ #category : #utility }
+RTMetricNormalizer >> getNormalizedForLineWidthValues: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	"aBlock is evaluated on each node model"
+
+	self checkNotEmpty.
+	(maxValue = minValue) ifTrue: [ 
+		^ self edges collect: [ :edge | min ] ].
+	
+ 	^ self edges collect: [ :edge | 
+			| tt t |
+			t := transformation rtValue: (metricBlock value: edge from model value: edge to model).
 			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
 ]
 
@@ -398,6 +423,53 @@ RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max using: tran
 		maxValue := maxValue max: t ].
 	
 	self normalizeHeight: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
+]
+
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> normalizeLineWidth: metricBlock [
+	"metricBlock is a two arg block that accept the from model and the to model"
+	^ self normalizeLineWidth: metricBlock min: 0.5 max: 30
+]
+
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max [
+	"metricBlock is a two arg block that accept the from model and the to model"
+	^ self normalizeLineWidth: metricBlock min: min max: max using: #yourself
+]
+
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	| values |
+	self checkNotEmpty.
+	
+	values := (self getNormalizedForLineWidthValues: metricBlock 
+							min: min 
+							max: max 
+							minValue: minValue 
+							maxValue: maxValue 
+							using: transformation).
+	self edges with: values do: [ :edge :v | edge trachelShape width: v ] 
+	
+	
+]
+
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max using: transformation [
+	"metricBlock is a two arg block that accept the from model and the to model"
+	| e minValue maxValue |
+	self checkNotEmpty.
+	
+	"We get the min and the max of the metric for all the edges"
+	e := self edges anyOne.
+	minValue := transformation rtValue: (metricBlock value: e from model value: e to model).
+	maxValue := minValue.
+	self edges do: [ :edge | 
+		| t |  
+		t := transformation rtValue: (metricBlock value: edge from model value: edge to model).
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
+	
+	^ self normalizeLineWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
 ]
 
 { #category : #'public normalize position' }
