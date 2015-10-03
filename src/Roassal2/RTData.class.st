@@ -110,9 +110,9 @@ RTData >> dotShape [
 { #category : #'public - effects' }
 RTData >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation [
 	"Set the size of the dots for each element"
-	elementActions add: [ :elements |
+	elementActions add: [ :elems |
 		RTMetricNormalizer new
-			elements: elements;
+			elements: elems;
 			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
 ]
 
@@ -133,8 +133,8 @@ RTData >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 	If true, secondOneArgBlock is then used for the label
 	"
 
-	elementActions add: [ :elements |
-		elements do: [ :element |
+	elementActions add: [ :elems |
+		elems do: [ :element |
 		(aOneArgBlock rtValue: element model) ifTrue: [ 
 			element @ (RTLabelled new text: [ :model | secondOneArgBlock rtValue: model ]; setAsHighlightable).
 		] ] ]
@@ -144,14 +144,14 @@ RTData >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 RTData >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
 	"Draw an histogram with title"
 	self barShape.
-	elementActions add: [ :elements | 
+	elementActions add: [ :elems | 
 		| lbl |
-		elements do: [ :e |
+		elems do: [ :e |
 			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: e model.
 			lbl rotateByDegrees: rotationInDegree.
 			TRConstraint move: lbl below: e.
 			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
-			elements anyOne view add: lbl.
+			elems anyOne view add: lbl.
 		] ].
 	 
 ]
@@ -298,13 +298,13 @@ RTData >> renderIn: aView [
 ]
 
 { #category : #utility }
-RTData >> renderLinesFor: elements in: aView [
+RTData >> renderLinesFor: elems in: aView [
 	"Render the lines between elements if necessary"
 	| t l |
 	shouldConnect ifFalse: [ ^ self ].
 
-	t := elements first.
-	elements allButFirst
+	t := elems first.
+	elems allButFirst
 		do: [ :tt | 
 			l := lineBuilder edgeFrom: t to: tt.
 			interaction setUpElement: l.
