@@ -234,6 +234,11 @@ TRPlatform >> session [
 	self subclassResponsibility
 ]
 
+{ #category : #windows }
+TRPlatform >> showTemporaryCursor: cursorOrNil [
+	self subclassResponsibility
+]
+
 { #category : #'accessing-classes' }
 TRPlatform >> trMorphClass [
 	"return the default TRMorph class, or visual component for other smalltalk systems"
