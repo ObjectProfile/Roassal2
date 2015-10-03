@@ -105,6 +105,11 @@ RTAbstractHighlightable >> highlight: aBlock [
 ]
 
 { #category : #public }
+RTAbstractHighlightable >> highlightElements [
+	^ highlightElements
+]
+
+{ #category : #public }
 RTAbstractHighlightable >> highlightElements: aBlock [
 	"aBlock return an element or a list of elements to highlight"
 	highlightElements := aBlock

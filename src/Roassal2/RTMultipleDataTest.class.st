@@ -42,10 +42,10 @@ RTMultipleDataTest >> testAddingInGrapher [
 { #category : #tests }
 RTMultipleDataTest >> testBasic [
 
-	| d |
-	d := RTMultipleData new.
-	self assert: d numberOfPoints equals: 0.
-	self assert: d numberOfMetrics equals: 0.
+	| data |
+	data := RTMultipleData new.
+	self assert: data numberOfPoints equals: 0.
+	self assert: data numberOfMetrics equals: 0.
 ]
 
 { #category : #tests }
