@@ -21,10 +21,3 @@ RTSVGExporterExample >> exampleDependencyAnalyzerBuilder [
 	"This line does the export."
 	"RTSVGExporter exportBuilderAsSVG: b filename:'exampleDependencyAnalyzerBuilder'."
 ]
-
-{ #category : #interactions }
-RTSVGExporterExample >> exampleWithDragAndDropHightlightPopup [
-	
-	"self new exampleWithDragAndDropHightlightPopup"
-
-]
