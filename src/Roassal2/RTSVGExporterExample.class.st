@@ -16,10 +16,10 @@ RTSVGExporterExample >> exampleDependencyAnalyzerBuilder [
 	b nodes: Collection withAllSubclasses.
 	b edges connectFrom: #superclass.
 	b layout tree.
-	b open.
+	^ b view.
 
-	"This line does the export"
-	RTSVGExporter exportBuilderAsSVG: b filename:'exampleDependencyAnalyzerBuilder'.
+	"This line does the export."
+	"RTSVGExporter exportBuilderAsSVG: b filename:'exampleDependencyAnalyzerBuilder'."
 ]
 
 { #category : #interactions }
