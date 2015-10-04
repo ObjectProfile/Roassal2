@@ -23,7 +23,8 @@ RTShapeBuilderExample >> example01 [
 				
 	v addAll: (builder elementsOn: Collection withAllSubclasses).
 	RTCellLayout new gapSize: 1; on: v elements.
-	v open
+	v build.
+	^ v view
 ]
 
 { #category : #'as yet unclassified' }
@@ -40,7 +41,8 @@ RTShapeBuilderExample >> example02 [
 				withText.
 	v addAll: (builder elementsOn: (1 to: 50)).
 	RTCellLayout on: v elements.
-	v open
+	v build.
+	^ v view
 ]
 
 { #category : #'as yet unclassified' }
@@ -59,5 +61,6 @@ RTShapeBuilderExample >> example03 [
 	els @ RTDraggable.
 	v addAll: els.
 	RTCellLayout on: v elements.
-	v open
+	v build.
+	^ v view
 ]
