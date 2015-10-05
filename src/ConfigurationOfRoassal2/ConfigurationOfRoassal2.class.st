@@ -376,6 +376,7 @@ ConfigurationOfRoassal2 >> baseline16: spec [
 		spec project: 'GlamourCore' with: [ 
 			spec
 				className: 'ConfigurationOfGlamourCore'; 
+				version: #development;
 				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
 			].	
 
