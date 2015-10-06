@@ -362,6 +362,12 @@ RTView >> trachelShape [
 	^ TRNoShape instance
 ]
 
+{ #category : #convenient }
+RTView >> updateAndAdjustCamera [
+	self canvas camera focusOnCenter.
+	self canvas signalUpdate
+]
+
 { #category : #'accessing-computed' }
 RTView >> view [
 	"This method is meant to be used polymorphically with builders.
