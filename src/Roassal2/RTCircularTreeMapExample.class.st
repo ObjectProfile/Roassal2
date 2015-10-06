@@ -40,7 +40,7 @@ RTCircularTreeMapExample >> example01 [
 		weight: #tally.
 	b explore: (MessageTally new
 		spyEvery: 1
-		on: [SystemNavigation default allSendersOf: #copy ]; 
+		on: [ Object numberOfLinesOfCode ]; 
 		yourself)
 		using: #children.
 	
