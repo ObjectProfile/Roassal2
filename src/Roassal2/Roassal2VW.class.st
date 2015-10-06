@@ -173,7 +173,7 @@ Roassal2VW >> packages [
 	 ^ {
 		'Trachel'->{'Callbacks'. 'Core'. 'Events'. 'Shapes'. 'ShapesForArrow'. 'Tests'. 'Viva'.}.
 		'Roassal2'->{
-			'AttachPoint'. 'AttachPoint-Tests'.
+			'Animation'. 'AttachPoint'. 'AttachPoint-Tests'.
 			'Builder-AnimatedScatterPlot'. 'Builder-ApplicationMatrix'. 'Builder-AxisAdapted'.
 			'Builder-BoxPlot'. 'Builder-Calendar'.
 			'Builder-CircularMap'. 'Builder-Common'.
