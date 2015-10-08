@@ -28,7 +28,7 @@ Class {
 
 { #category : #private }
 RTCircleAttachPoint >> attachPointFor: anEdge from: fromRect to: toRect [
-	| angle x y fromPoint toPoint offsetShift radius |
+	| angle x y fromPoint toPoint offsetShift radius vv |
 	offsetShift := self offsetNormalFor: anEdge.
 	fromPoint := fromRect center + offsetShift.
 	toPoint := toRect center + offsetShift.
@@ -37,7 +37,11 @@ RTCircleAttachPoint >> attachPointFor: anEdge from: fromRect to: toRect [
 	(toPoint dist: fromPoint) < (toRect width * 0.5 - radius)
 		ifTrue: [ angle := angle + Float pi ].	"fromCircle is inside toCircle"
 	offsetShift isZero
-		ifFalse: [ radius := radius * (offsetShift r / radius) arcSin cos ].	"recalculates radius based on offset"
+		ifFalse: [ 
+	vv := (offsetShift r / radius).
+	((vv < -1.0) or: [vv > 1.0]) ifTrue: [ radius := 1.0 ]
+		ifFalse: 	[ radius := radius * vv arcSin cos ] ].	
+	"recalculates radius based on offset"
 	x := radius * angle cos + fromPoint x.
 	y := radius * angle sin + fromPoint y.
 	^ x @ y
