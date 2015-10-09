@@ -331,12 +331,6 @@ RTShapeBuilder >> orthoVerticalLine [
 	^ self shape: (RTMultiLine new withVerticallAttachPoint; orthoVertical)
 ]
 
-{ #category : #copying }
-RTShapeBuilder >> postCopy [
-	super postCopy.
-	shape := shape copy.
-]
-
 { #category : #shapes }
 RTShapeBuilder >> rectangle [
 	self box
