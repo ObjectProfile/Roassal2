@@ -20,7 +20,7 @@ RTExploraBuilderExample >> exampleCircularList [
 		withPopup;
 		node: lst firstLink;
 		onClickExplore: [ :link | Array with: link nextLink ].
-	
+	builder build.
 	^ builder 
 ]
 
@@ -50,6 +50,7 @@ RTExploraBuilderExample >> exampleClassHierarchy [
 		withPopup;
 		dragChildren;
 		node: String.
+	builder build.
 	^ builder
 ]
 
@@ -68,6 +69,7 @@ RTExploraBuilderExample >> exampleClassHierarchy2 [
 		withPopup;
 		dragChildren;
 		node: Collection.
+	builder build.
 	^ builder
 ]
 
@@ -102,6 +104,7 @@ RTExploraBuilderExample >> exampleClassHierarchy3 [
 		dragChildren;
 		node: Collection.
 	builder view canvas color: Color white.
+	builder build.
 	^ builder
 ]
 
@@ -141,6 +144,7 @@ RTExploraBuilderExample >> exampleFileSystem [
 		withPopup: [ :file | file basename ];
 		dragChildren;
 		node: TRPlatform current workingDirectory.
+	builder build.
 	^ builder
 ]
 
@@ -170,6 +174,7 @@ RTExploraBuilderExample >> exampleNumbers [
 		dragChildren;
 		node: 1;
 		onClickExplore: [ :aNumber | aNumber*5 to: (aNumber*5 + 5) ].
+	builder build.
 	^ builder
 ]
 
