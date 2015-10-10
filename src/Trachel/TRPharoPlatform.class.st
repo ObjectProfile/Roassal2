@@ -48,6 +48,28 @@ TRPharoPlatform >> computeArcPathFor: aShape [
 ]
 
 { #category : #'drawing - helpers' }
+TRPharoPlatform >> computeCircleHeadPathFor: shape [
+	| vector r unit radius center |
+	vector := shape to - shape from.
+	r := vector r.
+	r = 0
+		ifTrue: [ ^ false ].
+	unit := vector / r.
+	radius := unit / 2 * shape mySize.
+	center := shape to - radius.
+	^  shape athensCanvas
+		createPath: [ :builder | 
+			builder
+				absolute;
+				moveTo: center + radius;
+				ccwArcTo: center + radius leftRotated angle: 90 degreesToRadians;
+				ccwArcTo: center - radius angle: 90 degreesToRadians;
+				ccwArcTo: center - radius leftRotated angle: 90 degreesToRadians;
+				ccwArcTo: center + radius angle: 90 degreesToRadians ]
+	
+]
+
+{ #category : #'drawing - helpers' }
 TRPharoPlatform >> computeEllipsePathFor: aShape [
 	| halfWidth halfHeight rectangle |
 	aShape canvas ifNil: [ ^ nil ].
@@ -292,6 +314,11 @@ TRPharoPlatform >> newColorFormWithExtent: extent depth: depth [
 { #category : #public }
 TRPharoPlatform >> newFormWithExtent: extent depth: depth [
 	^ Form extent: extent depth: depth
+]
+
+{ #category : #windows }
+TRPharoPlatform >> openFile: filename [
+	filename asUrl open
 ]
 
 { #category : #public }
