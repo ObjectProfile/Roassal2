@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTObject class >> basicNew [
 	^ super basicNew
 ]
