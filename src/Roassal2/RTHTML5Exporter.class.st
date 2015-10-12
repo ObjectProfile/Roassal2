@@ -40,17 +40,15 @@ RTHTML5Exporter class >> importRoassalJS: fileName [
 	"
 	self importRoassalJS: 'roassal.js'
 	"
+	
 	| content code |
-	content := (((fileName asFileReference readStream contents)
-		copyReplaceAll: '''' with: '"')
-		copyReplaceAll: String cr with: '')
-		copyReplaceAll: String lf with: String cr.
-	code :=
-'roassalJSContent
+	content := ((fileName asFileReference readStream contents copyReplaceAll: '''' with: '"')
+		copyReplaceAll: String cr
+		with: '') copyReplaceAll: String lf with: String cr.
+	code := 'roassalJSContent
 	^ ''' , content , ''''.
 	self compile: code classified: 'dependencies'.
-	self inform: 'imported roassal.js!!'.
-	
+	TRPlatform current inform: 'imported roassal.js!!'
 ]
 
 { #category : #public }
@@ -60,12 +58,15 @@ RTHTML5Exporter class >> interactiveExport: view [
 		dialogRequestSaveFilename: 'Export as html'
 		extensions: #('html')
 		path: nil.
-	filename ifNil: [ self inform: 'Saving cancelled'. ^ self ].
-	RTHTML5Exporter new
+	filename
+		ifNil: [
+			TRPlatform current inform: 'Saving cancelled'.
+			^ self].
+	(RTHTML5Exporter new)
 		directory: filename parent;
 		fileName: filename basename;
 		export: view.
-	filename asUrl open.
+	TRPlatform current openFile: filename
 ]
 
 { #category : #helpers }

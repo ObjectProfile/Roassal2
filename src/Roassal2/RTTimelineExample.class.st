@@ -37,7 +37,9 @@ RTTimelineExample >> exampleClassAges [
 	s := RTTimelineSet new.
 	s objects: data.
 	s start: [ :cls | cls computeYoungestMethod ageInDays ].
-	s end: [ :cls | cls computeOldestMethod ageInDays ].
+	s end: [ :cls | |temp |
+		temp := cls computeOldestMethod ageInDays.
+		temp isZero ifTrue: [ 1 ] ifFalse: [ 2 ] ].
 	b add: s.
 	
 b build.

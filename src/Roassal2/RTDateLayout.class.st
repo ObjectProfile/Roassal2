@@ -24,7 +24,7 @@ RTDateLayout >> doExecute: elements [
 			week := date asWeek.
 			currentWeek ifNil: [ currentWeek := week. index := index + 1. ].
 			currentWeek = week ifFalse: [ currentWeek := week. index := index +1 ].
-			position := date weekdayIndex @ index.
+			position := date dayOfWeek @ index.
 		] ifFalse: [ 
 			(date isKindOf: Integer) 
 				ifTrue: [ position := date @ index. ] 
