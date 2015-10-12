@@ -336,7 +336,7 @@ RTView >> setDefaultMenu [
 	b := RTMenuBuilder new view: self.
 	b menu: 'Zoom' submenu: '+' background: (Color yellow alpha: 0.5) callback: [ RTZoomInMove on: self ].
 	b menu: 'Zoom' submenu: '-' background: (Color yellow alpha: 0.5) callback: [ RTZoomOutMove on: self ].
-	b menu: 'Export' submenu: 'HTML' background: (Color blue alpha:0.5) callback: [ RTHTML5Exporter export: self ].
+	b menu: 'Export' submenu: 'HTML' background: (Color blue alpha:0.5) callback: [ RTHTML5Exporter interactiveExport self ].
 	
 	(Smalltalk allClasses anySatisfy: [ :c | c name == #RTPDFExporter ])
 		ifTrue: [ b menu: 'Export' submenu: 'PDF' background: (Color blue alpha: 0.5) callback: [ (Smalltalk at: #RTPDFExporter) exportView: self ]. ].
@@ -360,12 +360,6 @@ RTView >> signalUpdate [
 RTView >> trachelShape [
 
 	^ TRNoShape instance
-]
-
-{ #category : #convenient }
-RTView >> updateAndAdjustCamera [
-	self canvas camera focusOnCenter.
-	self canvas signalUpdate
 ]
 
 { #category : #'accessing-computed' }
