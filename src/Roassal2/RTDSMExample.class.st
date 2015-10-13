@@ -1,11 +1,14 @@
 "
-RTDSMExample new installTitle: 'Classes' 
+RTDSMExample new installTitle: 'TopLabelRotation' 
 		code:
 '
 	| dsm |
+	v := {#A -> { #B . #C} . #B -> {#A}}.
+	keys := {#A . #B . #C}.
 	dsm := RTDSM new.
-	dsm objects: RTShape withAllSubclasses.
-	dsm dependency: #dependentClasses.
+	dsm rotation: 0.
+	dsm objects: keys.
+	dsm dependency: [ :k  | v asDictionary at: k ifAbsent: #() ].
 	^ dsm
 '
 "
@@ -22,7 +25,6 @@ RTDSMExample >> exampleClasses [
 	dsm := RTDSM new.
 	dsm objects: RTShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
-	dsm build.
 	^ dsm
 
 ]
@@ -130,7 +132,6 @@ RTDSMExample >> exampleNumbers [
 	dsm := RTDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
-	dsm build.
 	^ dsm
 
 ]
@@ -153,6 +154,33 @@ kG1z3XDv8XvIX+5D+BXiASaTycYe4vYDe5Rigt9DjtQ/wuHwTn/himnwWimOeYZfIf8Jv98v
 oVCIL4QPXwgfvhC+ED58IXwhfPhC+EL48IXwhfDhC+HDF8IXwocvhC+ED18IXwgfvhC+ED58
 IXz4QvhC+PCF8IXw4QvhC+HDF8IXwocvhA9fCF8IH74QvhA+fCF8IXz4QvhC+JyG3yIplAJj
 8utNAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTDSMExample >> exampleTopLabelRotation [
+
+	| dsm |
+	v := {#A -> { #B . #C} . #B -> {#A}}.
+	keys := {#A . #B . #C}.
+	dsm := RTDSM new.
+	dsm rotation: 0.
+	dsm objects: keys.
+	dsm dependency: [ :k  | v asDictionary at: k ifAbsent: #() ].
+	^ dsm
+
+]
+
+{ #category : #icons }
+RTDSMExample >> exampleTopLabelRotationIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABqElEQVR4XuXWTYrCQBCAUe9/
+Ak/jTvFn5TIIZhEwQkhAQcc4Us50JGFOkFHeB0VBL/vRJJPn0++dmvhX4IP4+SA+iJ8P4oP4
++SA+iJ8P4oP4+SB+PogP4ueD+CB+PogP4ueD+CB+PoifD+KD+PkgPoifD+KD+PkgPoifD+Ln
+g/ggfj6ID+Lng/ggfj6ID+Lng/j5ID6Inw/ig/j5ID6Inw/ig3xch8Mh0t7tdpFlWazX60j5
+IP9UVVXRNE1cr9c4n89R13WkMx9k5Iqi6C79crlEmpjNXrPfD9sHGbH5fB5t28bpdOomptPX
+bDbD9kFGLM/z7sLbxSLSfG233Xwfj8P2QUZstVp1H/H+ZfQv5Xa7DdsHGbHlchn3+z0evzBp
++m9JOuu3DzJiZVl2F96/DP+FvAFIegXpV/fvJIh++yB+PogP4ueD+CB+PoifD+KD+PkgPoif
+D+KD+PkgPoifD+Lng/ggfj6ID+Lng/ggfj6ID+Lng/j5ID6Inw/ig/j5ID6Inw/ig/j5ID6I
+nw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SAf0Q9xU5fjChaEpQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #accessing }
