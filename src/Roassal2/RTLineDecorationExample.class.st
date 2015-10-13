@@ -139,7 +139,7 @@ addHead := [ :aHeadName :anOffset |
 
 	l1 @ (RTLabelled new color: Color black) ].
 
-heads := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
+heads := (RTStyledMultiLine rtmethods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
 offset := 0.
 heads	do: [ :id | 
 		addHead value: id value: offset.
@@ -173,7 +173,7 @@ addStyle := [ :aStyleName |
 	l1 @ (RTLabelled new color: Color black).
 ].
 
-styles := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
+styles := (RTStyledMultiLine rtmethods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
 styles do: [ :id | addStyle value: id ].
 
 RTGridLayout new
