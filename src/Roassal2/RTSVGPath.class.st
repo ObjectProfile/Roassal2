@@ -1001,22 +1001,22 @@ RTSVGPath >> scaleFor: anElement [
 RTSVGPath >> trachelShapeFor: anElement [
 	| shape |
 	shape := TRSVGPath new.
-	self updateFor: anElement trachelShape: shape.
+	shape strokePaint: (borderColor rtValue: anElement).
+	shape borderWidth: (borderWidth rtValue: anElement).
+	shape fillColor: (self fillColor rtValue: anElement).
+	keepInOriginalPosition
+		ifTrue: [ shape path: (path rtValue: anElement) ]
+		ifFalse: [ shape centeredPath: (path rtValue: anElement) ].
+	shape scaleBy: (self scaleFor: anElement).
+	rotation isNil
+		ifFalse: [ shape rotateByDegrees: rotation ].
 	^ shape
 ]
 
 { #category : #hooks }
 RTSVGPath >> updateFor: anElement trachelShape: trShape [
-	trShape isNil
-		ifTrue: [ ^ self ].
-	trShape strokePaint: (borderColor rtValue: anElement).
-	trShape borderWidth: (borderWidth rtValue: anElement).
-	trShape fillColor: (self fillColor rtValue: anElement).
-	keepInOriginalPosition
-		ifTrue: [ trShape path: (path rtValue: anElement) ]
-		ifFalse: [ trShape centeredPath: (path rtValue: anElement) ].
-	trShape scaleBy: (self scaleFor: anElement).
-	rotation isNil
-		ifFalse: [ trShape rotateByDegrees: rotation ].
-	trShape resetPath
+	trShape isNil ifTrue: [ ^ self ].
+	trShape resetPath.
+	
+	
 ]

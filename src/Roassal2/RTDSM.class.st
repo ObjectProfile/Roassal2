@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'objects',
 		'dependency',
-		'elements'
+		'elements',
+		'rotation'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -49,20 +50,21 @@ RTDSM >> addLabelsTop [
 	| es lblShape theModel lbl |
 	es := self rowAt: 1.
 	lblShape := RTLabel new height: self cellSize.
-	es do: [ :e |
-		theModel := e model value.
-		lbl := lblShape elementOn: theModel.
-		view add: lbl.
-		lbl rotateByDegrees: -55.
-		RTConstraint new
-			fix: e;
-			movable: lbl;
-			outer;
-			right;
-			top;
-			move.
-		lbl translateBy: (self cellSize negated @ 0)
-	]
+	es
+		do:
+			[ :e | 
+			theModel := e model value.
+			lbl := lblShape elementOn: theModel.
+			view add: lbl.
+			lbl rotateByDegrees: rotation.
+			RTConstraint new
+				fix: e;
+				movable: lbl;
+				outer;
+				right;
+				top;
+				move.
+			lbl translateBy: self cellSize negated @ 0 ]
 ]
 
 { #category : #UI }
@@ -99,6 +101,18 @@ RTDSM >> columnAt: aNumber [
 
 { #category : #UI }
 RTDSM >> createElements [
+	"
+	:: Void -> RTDSM
+	var shape : RTShape
+	var e : RTElement
+	var anObject1 : Object
+	var index1 : Number
+	var anObject2 : Object
+	var index2 : Number
+	var evt : TREvent
+	var elements : Collection
+	var objects : Collection
+	"
 	| shape e |
 	elements := RTGroup new.
 	shape := self cellshape.
@@ -122,6 +136,11 @@ RTDSM >> createElements [
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 
+]
+
+{ #category : #UI }
+RTDSM >> defaultTopLabelRotation [
+	^ -55
 ]
 
 { #category : #accessing }
@@ -188,9 +207,13 @@ RTDSM >> highlightRow: aNumber [
 
 { #category : #initialization }
 RTDSM >> initialize [
+	"
+	:: Void -> RTDSM
+	"
 	super initialize.
 	objects := #().
-	dependency := #yourself
+	dependency := #yourself.
+	rotation := self defaultTopLabelRotation.
 ]
 
 { #category : #testing }
@@ -234,6 +257,23 @@ RTDSM >> renderIn: aView [
 	self layoutElements: elements.
 	self addLabels.
 	^ aView
+]
+
+{ #category : #accessing }
+RTDSM >> rotation [
+	"
+	Return the rotation of the top labels
+	:: Void -> Integer
+	"
+	^ rotation
+]
+
+{ #category : #accessing }
+RTDSM >> rotation: anInteger [
+	"Set the rotation of the top label
+	:: Integer -> RTDSM
+	"
+	rotation := anInteger
 ]
 
 { #category : #accessing }

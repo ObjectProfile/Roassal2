@@ -8,8 +8,8 @@ Class {
 		'minX',
 		'minY',
 		'x',
-		'y',
 		'elements',
+		'y',
 		'barBuilder',
 		'elementActions'
 	],
