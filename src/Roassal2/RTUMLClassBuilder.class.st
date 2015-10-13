@@ -111,7 +111,7 @@ RTUMLClassBuilder >> buildSchema: aView [
 		(methods := self methodsForClass: object) do: [ :method | 
 			| lab | 
 			lab := label elementOn: method.
-			(lab notNil and: [ lab trachelShape text trimmed notEmpty ])
+			lab notNil
 				ifTrue: [ group add: lab ] ].
 	
 		RTVerticalLineLayout new gapSize: 0; on: group.
