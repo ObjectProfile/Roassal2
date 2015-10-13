@@ -73,7 +73,7 @@ RTCalendarBuilder >> dayLabelShape [
 
 { #category : #'accessing - computed' }
 RTCalendarBuilder >> daysIndex: aCollection [
-	^ (aCollection collect: [ :d | d weekdayIndex ]) asSet asSortedCollection.
+	^ (aCollection collect: [ :d | d dayOfWeek ]) asSet asSortedCollection.
 ]
 
 { #category : #'accessing - computed' }
@@ -187,8 +187,8 @@ RTCalendarBuilder >> monthShapePath: cellSize [
 			month := e model."an instance of Month"
 			t1 := month asDate.
 			t2 := Date newDay: month daysInMonth month: month name year: month year.
-			d0 := t1 weekdayIndex - 1.
-			d1 := t2 weekdayIndex - 1.
+			d0 := t1 dayOfWeek - 1.
+			d1 := t2 dayOfWeek - 1.
 			w0 := 0.
 			w1 := month weeks size-1.
 			d := 'M', (d0 * cellSize) asString , ',' , ((w0 + 1) * cellSize) asString

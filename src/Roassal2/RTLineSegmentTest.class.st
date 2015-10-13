@@ -31,6 +31,17 @@ RTLineSegmentTest >> testAngles [
 ]
 
 { #category : #tests }
+RTLineSegmentTest >> testEquals [
+	| anotherX |
+	anotherX := RTLineSegment from: lineX from to: lineX to.
+	self assert: anotherX equals: lineX.
+	self assert: anotherX = lineX.
+	self assert: anotherX hash equals: lineX hash.
+
+	self deny: lineX = lineY
+]
+
+{ #category : #tests }
 RTLineSegmentTest >> testIntersectHorizontal [
 	"assumes intersection: method is tested elsewhere"
 
@@ -88,6 +99,32 @@ RTLineSegmentTest >> testNormalForm [
 	self assert: lineX c = -1000.
 	self assert: lineY c = -1000.
 	self assert: lineDiagonal c = 2000
+]
+
+{ #category : #tests }
+RTLineSegmentTest >> testPointForBalance [
+	self assert: (lineX pointForBalance: 0) equals: lineX from.
+	self assert: (lineX pointForBalance: 0.5) equals: (lineX from + lineX to) / 2.
+	self assert: (lineX pointForBalance: 1) equals: lineX to.
+
+	self assert: (lineX pointForBalance: 10) equals: lineX from + (10 @ 0).
+	self assert: (lineX pointForBalance: 90) equals: lineX to - (10 @ 0).
+	self assert: (lineX pointForBalance: -10) equals: lineX to - (10 @ 0)
+]
+
+{ #category : #tests }
+RTLineSegmentTest >> testSideOfPoint [
+	self assert: (lineX sideOfPoint: 20 @ -20) equals: 1.
+	self assert: (lineX sideOfPoint: 20 @ -10) equals: 0.
+	self assert: (lineX sideOfPoint: 20 @ 0) equals: -1.
+
+	self assert: (lineY sideOfPoint: 0 @ 0) equals: -1.
+	self assert: (lineY sideOfPoint: 10 @ 0) equals: 0.
+	self assert: (lineY sideOfPoint: 20 @ 0) equals: 1.
+
+	self assert: (lineDiagonal sideOfPoint: -40 @ -30) equals: 1.
+	self assert: (lineDiagonal sideOfPoint: 10 @ -10) equals: 0.
+	self assert: (lineDiagonal sideOfPoint: -30 @ -70) equals: -1
 ]
 
 { #category : #tests }

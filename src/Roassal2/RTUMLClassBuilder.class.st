@@ -99,14 +99,20 @@ RTUMLClassBuilder >> buildSchema: aView [
 			
 		label := self attributeShape shape.
 		(attributes := self attributesOf: object) do: [ :attribute |
-			group add: (label elementOn: attribute) ].
+			| lab |
+			lab := label elementOn: attribute.
+			(lab notNil and: [ lab trachelShape text trimmed notEmpty ])
+				ifTrue: [ group add: lab ] ].
 		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
 		h := r height.
 		
 		label := self methodShape shape.
-		(methods := self methodsForClass: object) do: [:method | 
-			group add: (label elementOn: method) ].
+		(methods := self methodsForClass: object) do: [ :method | 
+			| lab | 
+			lab := label elementOn: method.
+			(lab notNil and: [ lab trachelShape text trimmed notEmpty ])
+				ifTrue: [ group add: lab ] ].
 	
 		RTVerticalLineLayout new gapSize: 0; on: group.
 		r := group encompassingRectangle.
@@ -337,11 +343,11 @@ RTUMLClassBuilder >> initialize [
 	classesGroup := RTGroup new.
 	classes := OrderedCollection new.
 	self forPharoClasses.
-	self layout: RTLayoutBuilder new.
-	(self lineShape: RTShapeBuilder new) orthoVerticalLine.
+	self initializeLayout.
+	self initializeShapeBuilder.
 	(self classNameShape: RTShapeBuilder new) label
 		height: self fontSizeOfClassname;
-		text: [:c| self classNameFor: c].
+		text: [ :c | self classNameFor: c ].
 	self methodShape: RTShapeBuilder new.
 	self attributeShape: RTShapeBuilder new.
 	(self boxShape: RTShapeBuilder new) box
@@ -349,7 +355,17 @@ RTUMLClassBuilder >> initialize [
 		borderColor: Color gray.
 	self interaction draggable.
 	self prepare: self methodShape selector: #methodselector.
-	self prepare: self attributeShape selector: #attributeselector.
+	self prepare: self attributeShape selector: #attributeselector
+]
+
+{ #category : #initialization }
+RTUMLClassBuilder >> initializeLayout [
+	self layout: RTLayoutBuilder new
+]
+
+{ #category : #initialization }
+RTUMLClassBuilder >> initializeShapeBuilder [
+	(self lineShape: RTShapeBuilder new) orthoVerticalLine
 ]
 
 { #category : #accessing }

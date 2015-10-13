@@ -205,6 +205,75 @@ S9PC7Wk2m1I113Xpf6shjuNINRzJtj1RblMXxG8Z/Bd88sFNlxjeZgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTUMLExample >> exampleNoInstVar [
+
+| b |
+b := RTUMLClassBuilder new.
+   b instanceVariables: #instVarNames.
+   b methodselector: #selector.
+	b methodsNames: [ :cls | cls rtmethods sortedAs: #selector ].
+   b attributeselector: ''.
+
+
+b addObjects: (RTShape withAllSubclasses).
+b layout tree.
+^ b
+]
+
+{ #category : #icons }
+RTUMLExample >> exampleNoInstVarIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAKAElEQVR4XuXc54/TShQF8Pf/
+/wF85isIoQVEB9F777333jvELz+Lg/zywm7Wm2SdnStZLnEZz5l77pk74/xTVeVbl+yf8qug
+fEDKt/IBKR+Q8q18QMoHpHwrH5DyASnfygekfEDKt/IBKd/KB6R8QMq38gEpH5DyrXxAygek
+fCsfkPIBKd/KB6R8Kx+Q8gEp38oHpHxAyrfyASkfkPKtfEDKB6R8Kx+Q8q18QMoHpHwrH5Dy
+ASnfygekfEDKt/IBKR+Q8q18QMq38gGZMUDevHnTW84CvX79ulc+IOUDsjIoa+/evUMr79ev
+X73yyWdhG1ZP5QPSNUBOnTpV3b17t7py5Up148aN0EZ1/vz56sGDB9XPnz9bA3L06NHq4sWL
+1eHDh6unT59Wly5dqo4fP169ePGi3j927Fj1+PHj6tGjR9WFCxeqd+/eVU+ePKm3Lez+/fvV
+6dOnq7dv39b3Gyyja549ezaRCtu6dWu1f//+uvzKqgwfPnyof1O+bdu21XXUtkxDAdmzZ8+f
+ndzYwwA1NzdX3bt3rzUgXsK9VHrur9DufeDAgboRsBMnTtRrwNh2jfNsf/r0qS6D31w/WMab
+N2/+uf+4bfPmzdWXL1/q+2tYngeQXq9XP18DaTbkxZZp0ZTVv2AilPX9+/c/62z/+PGjXntZ
+z81xNp+X5pppWso233NHKdNQQLS+NguXXAgQ3jet5c6dO60qF8Usx/K74f0fEK7FLa9du1Zt
+3Lixrmi87SJ8jr8fPnxYU4z93HAUDwk1qay+nK7vzeU/f/7cmcDqnfft21dT4qtXr+rYdvv2
+7dYALzmoC7RA2bVrV115ghgPCMefOXOmunr1ah3Ytm/fXvOqZdQYgmcPHjxYnT17tg6Antcl
+QNauXVu/lwYpBuD/Q4cOLR8g5cvejsnevjf0mkuflnqDx/629FvSSIA0lRruRA0J4stt8Vbr
+jx8/TlUojOQh40id5EHiD8pCcdevX68pkHwUi8QXx1ADDt+wYcOyAIKaPd/6+fPndYxTRnEV
+fSn/igHkyJEj1a1bt+oYJX7oU+gU8hge4pggCiiBtAMU8j/PnaQnTx2QWbO2NNX2upH6IX21
+0WvbNxlGWSgJHURWUlskcFcMPZHxqAldUZSOrVu3rlaWyvz+/ftaHVJi9tEZrxZzSHn7nVBZ
+o1AWyUtSexn0pU/jpbtiqNKCOtFT9pUT1QLD8cjg7GuAcoABaGqAeCATiFc6ZXVC9nJVLUGL
+0CHasmXLn31Uk8SZtWTfuXPn6g5fM9e00IN4R1dNZpbk5RXW8maOXb58ufZkGV4xwj6Kyn5k
+Mu9Aza73mzqz9jtvsu1+PErC1HYyxkMB0TvlehbyT2W7uX1UAwi5IpyZbCZuHQV5Lwdwklbc
+cG+xZFLZ2TamTNInYpvKJdENEVi8q0p1XN0knthPSkidyG4kK+F41s6jLN0fzQHDfecFxEPH
+sQwDREtSkKYKmXZmduYoa1oPmnYveKl9ENtad0zCdeYBwZ86f+iK+5KIYk+yy+Fw/Jq13nIT
+vEkbehE3UYyyoumMdCazrVxo1/FkF2YSEHyrZfEIL4uDo9uBZS34eeGstcxp5rlIcc9NgLYt
+ZaLSlYm4CXCOJ7sw85RVvnUAkEg/SsS4Ck5GDclpoanlNp7AK3iA1k8FUpmZ5EER+p2ypDxf
+vnxZl1+/jGLyXjzLmve7ngeRwps2barPc49hY0BTByTyMIuCrVq1qj6u4KTmcptMgtkl6Igc
+NVjlmH4HYBLMDWSRt/omwBJLMrCn0q29l+vdyz10F1CiLkMnACnfxkBZWm5pgKDPQUk+XyZi
+ooDoYWYCA/v27dufXvVSH4RHAcydKSzysmsmFYT/kyZCO6iJ6tI7nzogk5CYeZBAiGcFwgTH
+LnYIM+8rddFsjAvNCStf9k7YmlmEpNXbptdbAUIx6KR9/fq1phetmZxj5B2VgWMX03vOg3jE
+7t27a/mY6UTWkm3WXUihUEPemfwlw70nZeQYGqOYzOHlKWSt46R8prYm4bjQLM+RAVFpKp3k
+s601SF8ACSAe7NhiqC0PAoYXdn3mfa1evbpeS010YeaJ91MOlQ0MDTP1oMLTT7FW+VLoJGwA
+yIDV2ACZNmV1oe/RadnLTXmEFsEdtRDbzeNMy9ASMuiilfCq5oDL4IMGaa4pJW1rgcMGr+SP
+PGcahgXyLp6JRq0d927G0jOIxUN0CNWLbXXF253vnCbFJXGa8ZORAREv3IjLZdDFyCHOzGC+
+lIGHO94cgBEbtPi/AZKCoyfj6wCSTnA/90ZneYl8IwL49evX1zJcAyDB29DBqJY5Wd7Fe2TQ
+SUWePHmyLlcGsfzufTOX6/eE8/pdcly5M2q4c+fOuvypw4lS1nwSNg9KRWagKpaM7mAMGZSY
+CfqTBGShd1mqzRcnhwJCUYxrGbfsnbQEHee7t1mmHtTFCVJXp7Cp2sQN9CWGZCAoFBYJijac
+43rLfBK0S9OKlmoTBUSlqUgVm0ApNa3C0/ozDwotNSWoFpR5UhEAf5OgwC4fkPKzvbMDyO9A
+2Wuz9Ft/r+21fU/pNZ/fp7iZWzr3Xyfj+ieH/uBQr3wPWcGADI746ZeVD8gUACEQjIfo/Kp0
++TiCg+pLopVKjEKUJCUuiJbMVDEOxJxLnLjnqPO6xgqISmjL/+Nc5ubmem0AofKoP4CoSHOZ
+SXGfJmQaLXWn4gGiBw4Mg1yZD+165xnoyx8j2G/206YGyN8+Ap22/f52fWxlmeb3LBMBJDO9
+dfgGe/Exbj34iYN8klbm2oUss/KHfSbRFpBJDUQtOyASbizfFsqQ4lpcalxEYg4g+VMCXIwG
+8HbGsfXCubp9U3ICro6lpGUAyax852WWYQBBH+nRA9lzZG+dt2PHjrp8evmenU8JViQgTJCz
+6GUbWxfgvDROVpkq1TEVaa3CZIS1eL3zzKiXYVWJqVhZ03xqpuJd6zeVGzADSKav6vFLt7gv
+UDOdNeWzL4swLCM784Co9HF94tBm4THjjiEz7yFaef77SgvNV0QZJ0AlaMOi1TrHkgGdwfGV
+tkHdc3gC+ZrBNB7BG9Codc5ZsYCgBslEAzr5Ixd0lIGw5hdIYg3KcQ4aMyBE0YwLkGSNMwKq
+DAa/UBNZiuaSaV6xgAADd7e1cUx8KJ+yFuiHDAZLPV9ekxR8EwSteqmgDAIyON0oHwglbZ9e
+9KRHJpcFEC9FFfniSMVIM+j55msk00kzw1wAzlytyE8Sl4dRXM5Dfe6T/+haDCB63qS0a/OX
+fKS2e1JqOeZDzxxbKl12krJUpFZI9VgL3vkaqfmFEumr8rPwDEBZ8ypArVmz5j9fMi0GkExj
+FaMAYRvQ+eif5QsqS8THiqesWU+dzDwg+U9GqoaaITEpGT1lrXbS36kHkPytIA+h6qx53TT+
+La6t/QsKQ1/eU5eplQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTUMLExample >> exampleSimple [
 | b classes classNode classNumber |
 classes := OrderedCollection new.

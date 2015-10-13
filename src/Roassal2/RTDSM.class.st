@@ -15,9 +15,7 @@ Class {
 	#instVars : [
 		'objects',
 		'dependency',
-		'elements',
-		'rotation',
-		'wantsLabel'
+		'elements'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -26,12 +24,6 @@ Class {
 RTDSM >> addLabels [
 	self addLabelsLeft.
 	self addLabelsTop.
-]
-
-{ #category : #UI }
-RTDSM >> addLabelsIfNecessary [
-	self wantsLabel ifFalse: [ ^ self ].
-	self addLabels
 ]
 
 { #category : #UI }
@@ -57,21 +49,20 @@ RTDSM >> addLabelsTop [
 	| es lblShape theModel lbl |
 	es := self rowAt: 1.
 	lblShape := RTLabel new height: self cellSize.
-	es
-		do:
-			[ :e | 
-			theModel := e model value.
-			lbl := lblShape elementOn: theModel.
-			view add: lbl.
-			lbl rotateByDegrees: rotation.
-			RTConstraint new
-				fix: e;
-				movable: lbl;
-				outer;
-				right;
-				top;
-				move.
-			lbl translateBy: self cellSize negated @ 0 ]
+	es do: [ :e |
+		theModel := e model value.
+		lbl := lblShape elementOn: theModel.
+		view add: lbl.
+		lbl rotateByDegrees: -55.
+		RTConstraint new
+			fix: e;
+			movable: lbl;
+			outer;
+			right;
+			top;
+			move.
+		lbl translateBy: (self cellSize negated @ 0)
+	]
 ]
 
 { #category : #UI }
@@ -108,18 +99,6 @@ RTDSM >> columnAt: aNumber [
 
 { #category : #UI }
 RTDSM >> createElements [
-	"
-	:: Void -> RTDSM
-	var shape : RTShape
-	var e : RTElement
-	var anObject1 : Object
-	var index1 : Number
-	var anObject2 : Object
-	var index2 : Number
-	var evt : TREvent
-	var elements : Collection
-	var objects : Collection
-	"
 	| shape e |
 	elements := RTGroup new.
 	shape := self cellshape.
@@ -145,11 +124,6 @@ RTDSM >> createElements [
 
 ]
 
-{ #category : #UI }
-RTDSM >> defaultTopLabelRotation [
-	^ -55
-]
-
 { #category : #accessing }
 RTDSM >> dependency [
 	^ dependency
@@ -158,11 +132,6 @@ RTDSM >> dependency [
 { #category : #accessing }
 RTDSM >> dependency: aOneArgBlock [
 	dependency := aOneArgBlock
-]
-
-{ #category : #accessing }
-RTDSM >> doNotShowLabels [
-	wantsLabel := false
 ]
 
 { #category : #accessing }
@@ -219,14 +188,9 @@ RTDSM >> highlightRow: aNumber [
 
 { #category : #initialization }
 RTDSM >> initialize [
-	"
-	:: Void -> RTDSM
-	"
 	super initialize.
 	objects := #().
-	dependency := #yourself.
-	rotation := self defaultTopLabelRotation.
-	wantsLabel := true
+	dependency := #yourself
 ]
 
 { #category : #testing }
@@ -268,25 +232,8 @@ RTDSM >> renderIn: aView [
 	self createElements.
 	aView addAll: elements.
 	self layoutElements: elements.
-	self addLabelsIfNecessary.
+	self addLabels.
 	^ aView
-]
-
-{ #category : #accessing }
-RTDSM >> rotation [
-	"
-	Return the rotation of the top labels
-	:: Void -> Integer
-	"
-	^ rotation
-]
-
-{ #category : #accessing }
-RTDSM >> rotation: anInteger [
-	"Set the rotation of the top label
-	:: Integer -> RTDSM
-	"
-	rotation := anInteger
 ]
 
 { #category : #accessing }
@@ -308,9 +255,4 @@ RTDSM >> unhighlightElements: someElements [
 { #category : #UI }
 RTDSM >> unhighlightRow: aNumber [
 	^ self unhighlightElements: (self rowAt: aNumber)
-]
-
-{ #category : #accessing }
-RTDSM >> wantsLabel [
-	^ wantsLabel
 ]
