@@ -16,7 +16,8 @@ Class {
 		'objects',
 		'dependency',
 		'elements',
-		'rotation'
+		'rotation',
+		'wantsLabel'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -25,6 +26,12 @@ Class {
 RTDSM >> addLabels [
 	self addLabelsLeft.
 	self addLabelsTop.
+]
+
+{ #category : #UI }
+RTDSM >> addLabelsIfNecessary [
+	self wantsLabel ifFalse: [ ^ self ].
+	self addLabels
 ]
 
 { #category : #UI }
@@ -154,6 +161,11 @@ RTDSM >> dependency: aOneArgBlock [
 ]
 
 { #category : #accessing }
+RTDSM >> doNotShowLabels [
+	wantsLabel := false
+]
+
+{ #category : #accessing }
 RTDSM >> elementAt: aPoint [
 	"Return the element at position aPoint"
 	^ elements at: (self numberOfObjects) * (aPoint y - 1) + aPoint x
@@ -214,6 +226,7 @@ RTDSM >> initialize [
 	objects := #().
 	dependency := #yourself.
 	rotation := self defaultTopLabelRotation.
+	wantsLabel := true
 ]
 
 { #category : #testing }
@@ -255,7 +268,7 @@ RTDSM >> renderIn: aView [
 	self createElements.
 	aView addAll: elements.
 	self layoutElements: elements.
-	self addLabels.
+	self addLabelsIfNecessary.
 	^ aView
 ]
 
@@ -295,4 +308,9 @@ RTDSM >> unhighlightElements: someElements [
 { #category : #UI }
 RTDSM >> unhighlightRow: aNumber [
 	^ self unhighlightElements: (self rowAt: aNumber)
+]
+
+{ #category : #accessing }
+RTDSM >> wantsLabel [
+	^ wantsLabel
 ]
