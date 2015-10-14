@@ -142,32 +142,6 @@ RTEdgeBuilder >> elements: someElements [
 	self fromElements: someElements
 ]
 
-{ #category : #'public associations' }
-RTEdgeBuilder >> fromAssociation: assoc [
-	"assoc have to be between model objects"
-	self fromAssociations: (Array with: assoc)
-]
-
-{ #category : #'public associations' }
-RTEdgeBuilder >> fromAssociations: associations [
-	"associations have to be between model objects"
-	
-	| edges fromElement toElement |
-	edges := RTGroup new.
-	associations do: [ :assoc |
-		fromElement := self fromElements elementFromModel: assoc key.
-		toElement := self toElements elementFromModel: assoc value.
-		edges add: (self edgeFrom: fromElement to: toElement) ].
-	self moveBehindIfNecessary: edges.
-	^ edges
-]
-
-{ #category : #'public associations' }
-RTEdgeBuilder >> fromElementAssociations: associationsBetweenElements [
-	associationsBetweenElements do: [ :assoc |
-		self edgeFrom: assoc key to: assoc value ]
-]
-
 { #category : #accessing }
 RTEdgeBuilder >> fromElements [
 	fromElements ifNil: [ ^ self view elements ].
@@ -301,6 +275,32 @@ RTEdgeBuilder >> toObjects: someObjectsOrABlock [
 	(someObjectsOrABlock isCollection and: [ someObjectsOrABlock isSymbol not ])
 		ifTrue: [ self toElements: (view elementsFromModels: someObjectsOrABlock) ]
 		ifFalse: [ self toElements: (view elements select: [ :el | someObjectsOrABlock rtValue: el model ]) ]
+]
+
+{ #category : #'public associations' }
+RTEdgeBuilder >> useAssociation: assoc [
+	"assoc have to be between model objects"
+	self useAssociations: (Array with: assoc)
+]
+
+{ #category : #'public associations' }
+RTEdgeBuilder >> useAssociations: associations [
+	"associations have to be between model objects"
+	
+	| edges fromElement toElement |
+	edges := RTGroup new.
+	associations do: [ :assoc |
+		fromElement := self fromElements elementFromModel: assoc key.
+		toElement := self toElements elementFromModel: assoc value.
+		edges add: (self edgeFrom: fromElement to: toElement) ].
+	self moveBehindIfNecessary: edges.
+	^ edges
+]
+
+{ #category : #'public associations' }
+RTEdgeBuilder >> useElementAssociations: associationsBetweenElements [
+	associationsBetweenElements do: [ :assoc |
+		self edgeFrom: assoc key to: assoc value ]
 ]
 
 { #category : #accessing }

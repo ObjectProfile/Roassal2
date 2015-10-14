@@ -250,7 +250,7 @@ RTEdgeBuilderTest >> testNoMoveBehind [
 
 	RTEdgeBuilder new
 		view: view;
-		fromAssociations: (Array 
+		useAssociations: (Array 
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).
@@ -324,7 +324,7 @@ RTEdgeBuilderTest >> testSimple [
 
 	RTEdgeBuilder new
 		view: view;
-		fromElementAssociations: (Array 
+		useElementAssociations: (Array 
 									with: elements first -> elements second
 									with: elements second -> elements third).
 	self assert: view numberOfEdges equals: 2
@@ -335,7 +335,7 @@ RTEdgeBuilderTest >> testSimple2 [
 
 	RTEdgeBuilder new
 		view: view;
-		fromAssociations: (Array 
+		useAssociations: (Array 
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).
@@ -394,9 +394,9 @@ RTEdgeBuilderTest >> testSimple7 [
 
 	RTEdgeBuilder new
 		view: view;
-		fromAssociation: 1 -> 2;
-		fromAssociation: 2 -> 3;
-		fromAssociation: 5 -> 6.
+		useAssociation: 1 -> 2;
+		useAssociation: 2 -> 3;
+		useAssociation: 5 -> 6.
 
 	self assert: view numberOfEdges equals: 3
 ]
@@ -447,7 +447,7 @@ RTEdgeBuilderTest >> testWithMoveBehind [
 	RTEdgeBuilder new
 		view: view;
 		moveBehind;
-		fromAssociations: (Array 
+		useAssociations: (Array 
 									with: 1 -> 2
 									with: 2 -> 3
 									with: 5 -> 6).

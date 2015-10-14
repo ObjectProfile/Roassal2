@@ -25,7 +25,7 @@ RTLayoutTest >> testCellLayout [
 
 	RTEdgeBuilder new
 		view: v;
-		fromAssociations: (Array with: 30 -> 50 with: 30 -> 80).
+		useAssociations: (Array with: 30 -> 50 with: 30 -> 80).
 
 	RTCellLayout new 
 		gapSize: 0; on: els.
@@ -318,7 +318,7 @@ RTLayoutTest >> testHorizontalTreeLayout [
 
 	RTEdgeBuilder new
 		view: v;
-		fromAssociations: (Array with: 30 -> 50 with: 30 -> 80).
+		useAssociations: (Array with: 30 -> 50 with: 30 -> 80).
 	
 	RTHorizontalTreeLayout new 
 		isLayered: false; leftGap: 0; topGap: 0; verticalGap: 0; horizontalGap: 0; on: els.
@@ -505,7 +505,7 @@ RTLayoutTest >> testVerticalTreeLayout [
 
 	RTEdgeBuilder new
 		view: v;
-		fromAssociations: (Array with: 30 -> 50 with: 30 -> 80).
+		useAssociations: (Array with: 30 -> 50 with: 30 -> 80).
 
 	RTTreeLayout new 
 		isLayered: false; leftGap: 0; topGap: 0; verticalGap: 0; horizontalGap: 0; on: els.
