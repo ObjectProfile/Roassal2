@@ -410,6 +410,51 @@ ConfigurationOfRoassal2 >> baseline16: spec [
 						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ] ]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline17: spec [
+	<version: '1.7-baseline'>
+
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+
+		spec project: 'GlamourCore' with: [ 
+			spec
+				className: 'ConfigurationOfGlamourCore'; 
+				version: #development;
+				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
+			].	
+
+		spec project: 'Neo-JSON-Core' with: [ 
+			spec
+				className: 'ConfigurationOfNeoJSON'; 
+				repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main'.
+			].	
+
+		spec
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Glamour-Tools' with: [ 
+				spec 
+					 	requires: 'GlamourCore';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+			package: 'Glamour-Roassal2-Presentations' with: [ 
+				spec 
+						requires: 'Glamour-Tools';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+					
+			package: 'GT-InspectorExtensions-CoreRoassal' with: [ 
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ];
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ] ]
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -447,7 +492,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.16'.
+	spec for: #'pharo5.x' version: '1.17'.
 ]
 
 { #category : #versions }
@@ -590,7 +635,7 @@ ConfigurationOfRoassal2 >> version115: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version116: spec [
-	<version: '1.16' imports: #('1.6-baseline' )>
+	<version: '1.17' imports: #('1.7-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
@@ -599,8 +644,8 @@ ConfigurationOfRoassal2 >> version116: spec [
 		spec project: 'GlamourCore' with: '3.1.4'.
 		spec project: 'Neo-JSON-Core' with: '10'.
 		spec 
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.326';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1071';
+			package: 'Trachel' with: 'Trachel-akevalion.330';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1102';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.10';
 			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
 			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-AlexandreBergel.41';
