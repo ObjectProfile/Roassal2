@@ -1109,6 +1109,66 @@ fHx8fHx8fHx8fHx//QL7WkIkODawDAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleBezierLinesUsingObject [
+
+| v  es assocs centralPoint eb |
+v := RTView new.
+es := (RTEllipse new size: 15) elementsOn: (1 to: 15).
+v addAll: es.
+RTCircleLayout on: es.
+
+centralPoint := (RTEllipse new size: 10; color: Color red) elementOn: -1.
+centralPoint translateTo: es encompassingRectangle center.
+v add: centralPoint.
+centralPoint @ RTDraggable.
+
+es @ RTLabelled.
+
+eb := RTEdgeBuilder new.
+eb view: v.
+eb shape bezierLineUsingObjects: #( -1 ) inView: v.
+assocs := OrderedCollection new.
+assocs add: 1->10.
+assocs add: 2 -> 10.
+assocs add: 3 -> 10.
+assocs add: 5-> 10.
+eb useAssociations: assocs.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleBezierLinesUsingObjectIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFc0lEQVR4XuWdWUokQRCG6xpe
+xZt5HS/gkw+CIIgP4oMgCor7vu/7Gj3+DdkkNd12ZVVkVmT/ATI6bS+VX8UemRadDr9YkoJ/
+CfiB8As/EH4g/MIPhB8Iv/AD4QfCL/xA+IHwCz8QfuEHwg+EX/iB8ANpR3Z2duTr60v4gRiR
+vb09WVhYkJ+fn8pQHh8fBbKxsSH8QAzJ4uIiPxBtOT09lV8t6dzd3UmAVnW2t7eFH8gQWV1d
+lampKQk0Wb2vEAHAEIiUQI6Pj7v+IOQ5Z2dnXQ2BX6j6nIeHB3EQLUOh8SEvLy89ICEg6YDg
+bj08PJS3t7foi4T3ABh+k1XBH+zv75taqMvLy+7nWVtbEzYgXVPiFsCSbG5uytHRkdD5ECRs
+HX7hTAxDzdbV1ZXwAzEgv8FGz78hZM4aCAp/W1tbgsw4VyDPz8+9MPnz81Oy15Dp6Wn5+PjI
+2jd8f38HFTDNAkEmPTc311laWuJ31lY0BHYXdphfDABBRuzs7+3tLb+WtA0ETtABubi44Adi
+wWTBoT89Pcn7+7vAp7y+vo4UGBQokafgGrPLQwAHmnJzc5N95OULrml2dlayTAyhKfjCnYUY
+HyFlzjBgjhFFaudaRepkC1AQgblSeM5gEEVqBy3JSyf39/fd6Q8HBIlXjmDQx3GBC64pWyAQ
+5+ChKQDhfgaYXHyMX1rRbHq1Vlx0HUL8CwEUBwMXa72z5/yi9g3UGAjCvjrdPuQqzkwBCi4O
+4oeRgAI4/HlIoKyvr0vdO8x9D1/ifoa2+HkLwAFayqrryCWGVaXca/AnQqAd5Wor/m+UtaYx
+EGSrcGyYJmzqT/pBQW+lnz+BeQMY7Uw5eyB1pwjLmXy5r+58ih+ZDRoVAjQ8NgqaU2iYHI2p
+kX6LiUUuRzH4vb+GIgAH8CwPw5n2IX+ZLt+h91v0Ya8HcAADkxd7P4lW+FtYi+tDYJWjsSqv
+j9cBJO3KQOh8chZABpmuQRGZn6/UWWDc1Xg/QGo6yjo5OanSfzcHBGbmL/MyyDdgMTScOuA6
+zWujWmByLmvYQpRNm0xMiIyPi3tMuxkG2NBOVypBMdH/DH5dq+kUZmG5TjTscWciZGxMOkXx
+n39JMVEPwXSjVqHRLJAqF9YvLO73OrEjLPgvDGVrzA+oAIk1fzVMS/ykcJhfApgchrpVgMzP
+z0tbWuJsfFV4I79hBxeJ4YVYHzDE3FSB4kyd1SmYIuWdrJW9a32W0MQyCyDYRRtzS1qdZCt0
++0DKiCw6EI1qb5PsfZDUGTyAdrXdBCs0TAri8JiqX7fnUbfimyJUzi4PaeLcm2qXD+Yvk4lT
+KDAmSwmkagSlERj0y2H6gTk4OBBaDWlaOGwCdBgYSiCuRNHk+RpNJDdDBjAwV+fn50ILRCPf
+Kffq64q/S1dzvjcrIFp9cg0o/i6xpuYwCRAcpae9d0KzOKilKdQ+xGXVowwlOyCa5sEilGhA
+0KxB00Z7uiPGvJUlKEWsnME5PO3SfKyShhUoUYAgRndAYox3xlq4cp4CDU99jleWpwHFHLD2
+oeDowdQn3WUJJHbvwgUOy8vLycvxWQJJsQ8R4fX19XXU9rRJIOjuhdppzV2vVUojKSfpWweC
+Y5xmZmakzVxkkJ9yQFLuDG4dCCImnD5n0TTCf6TuHBYWSiGolqY4OABH0loZZjALxJkFhJgB
+9l1WVlaCFxaHIlvfWWUGSEhvGk2hOkBykNaBIKsPvWsBBKdOh74XoJ+cnJie8c0yD8GChk6a
++4fFWD4LMksgu7u73cXF3R6STDoglh17rn8UzORfVKAF4kLlUTz7hP/sd34g/MIPhB8Iv/AD
+4QfCL/xA+IHwCz8QfiD8wg+EX/iB8APhl1ryDy61TE1yL2FZAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleBitmap [
 
 	| v s |
@@ -7157,7 +7217,7 @@ eb := RTEdgeBuilder new.
 eb view: v.
 eb shape arrowedLine
 	withContinuousRectangleAttachPoint.
-eb fromAssociations: associations.
+eb useAssociations: associations.
 
 ^ v
 ]
@@ -7224,7 +7284,7 @@ eb := RTEdgeBuilder new.
 eb view: v.
 eb shape arrowedLine
 	withContinuousRectangleAttachPoint.
-eb fromAssociations: associations.
+eb useAssociations: associations.
 
 ^ v
 ]
@@ -7446,7 +7506,7 @@ RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
 									eb shape
 										bezierLineFollowing: #superclass;
 										color: (Color blue alpha: 0.1).
-									eb fromAssociations: (Array with: cls -> depClass) ] ] ] ].
+									eb useAssociations: (Array with: cls -> depClass) ] ] ] ].
 	helpBar1 := TRLabelShape new
 		text:
 			'Circle = classes, size = number of methods; gray links = inheritance;'.

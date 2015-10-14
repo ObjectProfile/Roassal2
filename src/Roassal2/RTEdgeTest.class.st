@@ -90,7 +90,7 @@ RTEdgeTest >> testBuildingFromAssociations [
 
 	RTEdgeBuilder new
 		view: view;
-		fromAssociations: (Array with: 1 -> 2).
+		useAssociations: (Array with: 1 -> 2).
 	
 	self assert: view numberOfElements = 2.
 	self assert: view numberOfEdges = 1.

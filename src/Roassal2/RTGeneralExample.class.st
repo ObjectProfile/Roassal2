@@ -571,7 +571,7 @@ RTGeneralExample >> edges2 [
 	
 	RTEdgeBuilder new
 		view: view;
-		fromAssociation: 1 -> 2.
+		useAssociation: 1 -> 2.
 	
 	RTHorizontalLineLayout on: elements.
 	view open
@@ -1633,7 +1633,7 @@ RTGeneralExample >> softviz01 [
 											(RTBezierLine new
 												follow: #superclass;
 												color: (Color blue alpha: 0.1));
-										fromAssociations: (Array with: cls -> depClass) ] ] ] ].
+										useAssociations: (Array with: cls -> depClass) ] ] ] ].
 	helpBar1 := TRLabelShape new
 		text:
 			'Circle = classes, size = number of methods; gray links = inheritance;'.

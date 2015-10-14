@@ -41,6 +41,28 @@ RTShapeBuilderTest >> testBasic [
 	self assert: builder shape class == RTNoShape
 ]
 
+{ #category : #'bezier line' }
+RTShapeBuilderTest >> testBezierLine01 [
+
+	| v es eb centralPoint |
+	v := RTView new.
+	es := (RTEllipse new size: 15) elementsOn: (1 to: 15).
+	v addAll: es.
+	RTCircleLayout on: es.
+
+	centralPoint := (RTEllipse new size: 10; color: Color red) elementOn: -1.
+	centralPoint translateTo: es encompassingRectangle center.
+	v add: centralPoint.
+
+	es @ RTLabelled.
+
+	eb := RTEdgeBuilder new.
+	eb view: v.
+	eb shape bezierLineUsingObjects: { -1 } inView: v.
+	eb useAssociations: { 1->10 . 2 -> 10 . 3 -> 10 }.
+
+]
+
 { #category : #'composite shapes' }
 RTShapeBuilderTest >> testBorderColorAndCompositeShape [
 
