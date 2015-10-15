@@ -446,10 +446,13 @@ ConfigurationOfRoassal2 >> baseline17: spec [
 						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
 					
 			package: 'GT-InspectorExtensions-CoreRoassal' with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
+				
 				spec 
 						requires: 'Glamour-Roassal2-Presentations';
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ];
 			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
 				spec 
 						requires: 'Glamour-Roassal2-Presentations';
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ] ]
