@@ -184,6 +184,141 @@ gOgPSOwDAhm94DvC3NuqVatAgiu8BOQ/+vultFsIHOIAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTSVGExample >> exampleFibonacciSpiral [
+ 
+	| view elem |
+view := RTView new.
+elem := (RTSVGPath new
+	path: (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 100
+		direction: 1@ 1
+		type: true);
+	fillColor: Color random;
+	scale: 2;
+	borderWidth: 0.5) element.
+elem @ RTDraggable.
+view add: elem.
+
+elem := (RTSVGPath new
+	path: (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 100
+		direction: -1@ 1
+		type: true);
+	fillColor: Color random;
+	scale: 2;
+	borderWidth: 0.5) element.
+elem @ RTDraggable.
+view add: elem.
+
+elem := (RTSVGPath new
+	path: (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 100
+		direction: -1@ -1
+		type: true);
+	fillColor: Color random;
+	scale: 2;
+	borderWidth: 0.5) element.
+elem @ RTDraggable.
+view add: elem.
+
+elem := (RTSVGPath new
+	path: (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 100
+		direction: 1@ -1
+		type: true);
+	fillColor: Color random;
+	scale: 2;
+	borderWidth: 0.5) element.
+elem @ RTDraggable.
+view add: elem.
+
+view elements do: [ :e| 
+	view addAnimation: (RTRotationMove angle: 300 during: 20 on: e)
+	 ].
+
+^ view
+	
+	
+]
+
+{ #category : #icons }
+RTSVGExample >> exampleFibonacciSpiralIcon [
+	^ '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
+HxBAs4ueZTTJAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTSVGExample >> exampleIcon1 [
  
 	| view element |

@@ -13,6 +13,20 @@ Class {
 }
 
 { #category : #sources }
+RTAnimationExample >> dustEffect: e and: v [
+	| e2 anim |
+	e2 := (RTEllipse new 
+		size: 10; 
+		color: (Color random alpha: 0.5)) element.
+	v add: e2.
+	e2 translateTo: e position.
+	anim := RTAccelerationMove to: 
+		e2 position + ((30 atRandom - 15) @ (30 atRandom - 15)) during: 3 on: e2.
+	anim after: [ anim element remove. ].
+	v addAnimation: anim
+]
+
+{ #category : #sources }
 RTAnimationExample >> exampleActive [
 
 | v anim |
@@ -355,6 +369,93 @@ cfAvzYo7S9L+W1vquyoR7YVeaX4ZpIZEH4hiEbvH2V5Y5+yyYJA8wl0hphxtFivtbT8D7+yL
 5+CuKRMGKaYAdhV2+8PHQ5YmgUJuJb7UP+MFyHuBVGF7wAXF2/HWzBgvdpY8Du9OIOJ+Pa1A
 O/Fd96PrFlSuJIo5MvQs3qnUWYU6sYmOZKNmzorGdr/1pTL4cFYUOSCLaaJTmKfFIP2qE/p+
 CH2hD4Q+EPpCHwh9IPSFPhAC8hdq2dSXLTY/DQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTAnimationExample >> examplePathAnimation [
+
+| v els eb effect t example |
+v := RTView new.
+"v canvas color: Color black."
+v add: (RTBitmap new form: RTIcon robowo) element.
+els := RTBox elementsOn: (1 to: 4).
+v addAll: els.
+
+eb := RTEdgeBuilder new.
+eb view: v.
+eb objects: (1 to: 4).
+eb useAssociations: {1->2. 3->4}.	
+
+t := 10.
+example := RTAnimationExample new.
+effect := [ :e| example dustEffect: e and: v ].
+v addAnimation: ((RTPathAnimation on: els first path:
+ ('L0,100L-110,110', (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 200
+		direction: 1@ 1
+		type: true)) seconds: t) repeat; duringDo: effect).
+
+v addAnimation: ((RTPathAnimation on: els third path:
+ ('L0,100L110,110', (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 200
+		direction: 1@ -1
+		type: true)) seconds: t) repeat; duringDo: effect).
+
+v addAnimation: ((RTPathAnimation on: els second path:
+ ('L0,-100L-110,-110', (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 200
+		direction: -1@ -1
+		type: true)) seconds: t) repeat; duringDo: effect) .
+
+v addAnimation: ((RTPathAnimation on: els fourth  path:
+ ('L0,-100L110,-110', (RTSVGPath 
+		goldenSpiral: 10 
+		start: 0@0
+		side: 200
+		direction: -1@ 1
+		type: true)) seconds: t) repeat; duringDo: effect).
+v
+
+
+]
+
+{ #category : #icons }
+RTAnimationExample >> examplePathAnimationIcon [
+	^ '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
+oXfLS/AAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
