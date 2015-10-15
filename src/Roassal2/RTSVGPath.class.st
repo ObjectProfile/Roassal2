@@ -923,6 +923,50 @@ RTSVGPath class >> countries [
 	^ #(#Afghanistan #Albania #Algeria #Angola #Argentina #Armenia #Australia #Austria #Azerbaijan #Bangladesh #Belarus #Belgium #Belize #Benin #Bhutan #Bolivia #BosniaandHerzegovina #Botswana #Brazil #BruneiDarussalam #Bulgaria #BurkinaFaso #Burundi #Cambodia #Cameroon #Canada #CentralAfricanRepublic #Chad #Chile #China #Colombia #Congo #CostaRica #Croatia #Cuba #Cyprus #CzechRepublic #DemocraticRepublicCongo #Denmark #Djibouti #DominicanRepublic #Ecuador #Egypt #ElSalvador #EquatorialGuinea #Eritrea #Estonia #Ethiopia #FalklandIslandsMalvinas #Fiji #Finland #France #FrenchGuyana #GM #Gabon #Georgia #Germany #Ghana #GreatBritian #Greece #Greenland #Guatemala #Guinea #GuineaBissau #Guyana #Haiti #Honduras #Hungary #Iceland #India #Indonesia #Iran #Iraq #Ireland #Israel #Italy #IvoryCoast #Jamaica #Japan #Jordan #Kazakhstan #Kenya #Kuwait #Kyrgyzstan #Laos #Latvia #Lebanon #Liberia #Libya #Lithuania #Luxembourg #Madagascar #Malawi #Malaysia #Mali #Mauritania #Mexico #Moldova #Mongolia #Morocco #Mozambique #MyanmarBurma #Namibia #Nepal #Netherlands #NewZealand #Nicaragua #Niger #Nigeria #NorthKorea #Norway #NewCaledonia #Oman #Pakistan #Palestine #Panama #PapuaNewGuinea #Paraguay #Peru #Philippines #Poland #Portugal #PuertoRico #Qatar #RepublicofMacedonia #RepublicofTurkey #Romania #Russia #Rwanda #SaudiArabia #Senegal #Serbia #SierraLeone #Slovakia #SolomonIslands #Somalia #SouthAfrica #Lesotho #SouthKorea #Spain #SriLanka #Sudan #Suriname #SvalbardJanMayen #Swaziland #Sweden #Switzerland #Syria #Taiwan #Tajikistan #Tanzania #Thailand #TimorLeste #Togo #Tunisia #Turkmenistan #Uganda #Ukraine #UnitedArabEmirates #UnitedStates #Uruguay #Uzbekistan #Vanuatu #Venezuela #Vietnam #WesternSahara #Yemen #Zambia #Zimbabwe)
 ]
 
+{ #category : #others }
+RTSVGPath class >> goldenSpiral: level start: p side: side direction: dir type: isNarrow [
+
+	"level: the number or golden rectangles
+	p: the start point
+	side: the size of the bigger rectangle
+	dir: the direction for rectangle in quadrants 1@1 = first quadrant etc
+	isNarrow: the arc direction"
+	| s point p1 p2 p3 goldenRatio si dirs d n |
+	dirs := Dictionary newFromPairs: (isNarrow 
+		ifTrue: [  { 1@1. 1@ -1. 1@ -1. -1@ -1. -1@ -1. -1@1. -1@1. 1@1 } ]
+		ifFalse: [ { 1@1. -1@1. -1@1. -1@ -1. -1@ -1. 1@ -1. 1@ -1. 1@1  } ]).
+	
+	goldenRatio := (1 + 5 sqrt)/2. 
+	s := WriteStream on: ''.
+	point := [ :z| z x asFloat asString, ',', z y asFloat asString,' ' ].
+	s nextPutAll: 'M', (point value: p).
+	si := side.
+	d := dir.
+	n := isNarrow.
+	((dir = (-1 @ 1)) or: [ dir= (1@ -1) ]) ifTrue: [ n := n not. ].
+	1 to: level do: [ :i|
+		p3 := p+(d * si).
+		n ifTrue: [ 
+			p1 :=p x @((0.55*(p3 y - p y))+ p y) .
+			p2 := ((0.45*(p3 x - p x))+p x ) @ p3 y.
+		] ifFalse: [ 
+			p1 := ((0.55*(p3 x - p x))+p x ) @ p y.
+			p2 := p3 x @((0.45*(p3 y - p y))+ p y). ].
+		si := (si * goldenRatio)-si.
+		d := dirs at: d.
+		n := n not.
+		s
+			nextPutAll: 'c';
+			nextPutAll: (point value: p1);
+			nextPutAll: (point value: p2);
+			nextPutAll: (point value: p3).
+		 ].
+	s nextPutAll: 'z'.
+	s close.
+	^ s contents.
+
+]
+
 { #category : #'list of countries' }
 RTSVGPath class >> icons [
 	^ #(#supermarketCart #America #puzzlePiece)
