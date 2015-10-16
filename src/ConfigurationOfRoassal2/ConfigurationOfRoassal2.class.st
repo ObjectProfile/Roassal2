@@ -524,12 +524,12 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
 			].	
 		
-		spec project: 'GToolkitCore' with: [ 
+		"spec project: 'GToolkitCore' with: [ 
 			spec
 				className: 'ConfigurationOfGToolkitCore'; 
 				version: #development;
 				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
-			].	
+			].	"
 		
 		spec project: 'Neo-JSON-Core' with: [ 
 			spec
