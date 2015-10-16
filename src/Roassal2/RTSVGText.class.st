@@ -17,7 +17,7 @@ Class {
 
 { #category : #adding }
 RTSVGText >> addOn: stream using: aSVGVisitor [
-	| closings |
+	| closings box |
 	aSVGVisitor names at: self element put: self id.
 	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
@@ -26,7 +26,9 @@ RTSVGText >> addOn: stream using: aSVGVisitor [
 	self addFillColor: stream.
 	self closeTag: stream.
 	self startTransform: stream.
-	self addRotation: self angle point: (self x@self y) into: stream.
+	box := element encompassingRectangle.
+	self addRotation: self angle point: (self x)@(self y) into: stream.
+	
 	self closeTag: stream.
 	self startClass: stream.
 	self addContainedInteractions: aSVGVisitor.
@@ -44,8 +46,9 @@ RTSVGText >> addPosition: stream [
 	box := TRLabelShape new
 		text: self content;
 		encompassingRectangle.
-	 fixX := (self x - (box width / 5)) rounded.
-	 fixY := (self y + (box height / 4)) rounded.
+	fixX := (self x - (box width / 5)) rounded.
+	fixY := (self y + (box height / 4)) rounded.
+	
 	stream
 		nextPutAll:
 				('x="<1p>" y="<2p>" ' expandMacrosWith: fixX with: fixY).
