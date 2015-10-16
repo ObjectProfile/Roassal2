@@ -524,12 +524,12 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
 			].	
 		
-		"spec project: 'GToolkitCore' with: [ 
+		spec project: 'GTInspectorCore' with: [ 
 			spec
-				className: 'ConfigurationOfGToolkitCore'; 
+				className: 'ConfigurationOfGTInspectorCore'; 
 				version: #development;
 				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
-			].	"
+			].	
 		
 		spec project: 'Neo-JSON-Core' with: [ 
 			spec
@@ -542,7 +542,7 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 			package: 'Roassal2' with: [ 
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour') ]			
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour' 'GTInspectorCore') ]			
 	]
 ]
 
