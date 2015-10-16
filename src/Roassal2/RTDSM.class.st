@@ -17,7 +17,8 @@ Class {
 		'dependency',
 		'elements',
 		'rotation',
-		'wantsLabel'
+		'wantsLabel',
+		'text'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -38,25 +39,26 @@ RTDSM >> addLabelsIfNecessary [
 RTDSM >> addLabelsLeft [
 	| es lblShape theModel lbl |
 	es := self columnAt: 1.
-	lblShape := RTLabel new height: self cellSize.
-	es do: [ :e |
-		theModel := e model key.
-		lbl := lblShape elementOn: theModel.
-		view add: lbl.
-		RTConstraint new
-			fix: e;
-			movable: lbl;
-			outer;
-			left;
-			move
-	]
+	lblShape := self labelShape.
+	es
+		do:
+			[ :e | 
+			theModel := e model key.
+			lbl := lblShape elementOn: theModel.
+			view add: lbl.
+			RTConstraint new
+				fix: e;
+				movable: lbl;
+				outer;
+				left;
+				move ]
 ]
 
 { #category : #UI }
 RTDSM >> addLabelsTop [
 	| es lblShape theModel lbl |
 	es := self rowAt: 1.
-	lblShape := RTLabel new height: self cellSize.
+	lblShape := self labelShape.
 	es
 		do:
 			[ :e | 
@@ -160,7 +162,7 @@ RTDSM >> dependency: aOneArgBlock [
 	dependency := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 RTDSM >> doNotShowLabels [
 	wantsLabel := false
 ]
@@ -226,7 +228,8 @@ RTDSM >> initialize [
 	objects := #().
 	dependency := #yourself.
 	rotation := self defaultTopLabelRotation.
-	wantsLabel := true
+	wantsLabel := true.
+	text := #yourself
 ]
 
 { #category : #testing }
@@ -237,6 +240,13 @@ RTDSM >> isAssocDependent: assoc [
 	^ v isCollection
 		ifTrue: [ v includes: assoc value ]
 		ifFalse: [ false ]
+]
+
+{ #category : #UI }
+RTDSM >> labelShape [
+	^ RTLabel new
+		height: self cellSize;
+		text: text
 ]
 
 { #category : #UI }
@@ -295,6 +305,18 @@ RTDSM >> rowAt: aNumber [
 	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: i @ aNumber ]
 ]
 
+{ #category : #accessing }
+RTDSM >> text [
+	"Return the text used for labelling"
+	^ text
+]
+
+{ #category : #accessing }
+RTDSM >> text: aOneArgBlockOrSymbol [
+	"Set the text used for each label. Per default, text is #yourself"
+	text := aOneArgBlockOrSymbol
+]
+
 { #category : #UI }
 RTDSM >> unhighlightColumn: aNumber [
 	^ self unhighlightElements: (self columnAt: aNumber)
@@ -310,7 +332,7 @@ RTDSM >> unhighlightRow: aNumber [
 	^ self unhighlightElements: (self rowAt: aNumber)
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RTDSM >> wantsLabel [
 	^ wantsLabel
 ]
