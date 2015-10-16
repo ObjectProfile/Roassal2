@@ -92,13 +92,6 @@ RTSVGVisitor2 >> initialize [
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> number: n [
-	^ n isNaN 
-		ifTrue: ['NaN']
-		ifFalse: [ n asFloat asString ]
-]
-
-{ #category : #helpers }
 RTSVGVisitor2 >> pointToString: point [
 	^ '{x:',point x asFloat asString, ',y:',point y asFloat asString,'}'
 ]

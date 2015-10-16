@@ -32,6 +32,13 @@ RTVisitor >> nameFor: anElement [
 			^ n.]
 ]
 
+{ #category : #helpers }
+RTVisitor >> number: n [
+	^ n isNaN 
+		ifTrue: ['NaN']
+		ifFalse: [ n asFloat asString ]
+]
+
 { #category : #visitor }
 RTVisitor >> visitCanvas: aCanvas [
 ]
