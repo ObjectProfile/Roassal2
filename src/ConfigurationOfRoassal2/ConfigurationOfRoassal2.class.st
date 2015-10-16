@@ -542,7 +542,7 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 			package: 'Roassal2' with: [ 
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour' 'GToolkitCore') ]			
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour') ]			
 	]
 ]
 
