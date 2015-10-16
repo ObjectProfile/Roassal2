@@ -458,6 +458,57 @@ ConfigurationOfRoassal2 >> baseline17: spec [
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ] ]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline18: spec [
+	<version: '1.8-baseline'>
+
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+
+		spec project: 'GlamourCore' with: [ 
+			spec
+				className: 'ConfigurationOfGlamourCore'; 
+				version: #development;
+				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
+			].	
+
+		spec project: 'Neo-JSON-Core' with: [ 
+			spec
+				className: 'ConfigurationOfNeoJSON'; 
+				repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main'.
+			].	
+
+		spec
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Glamour-Tools' with: [ 
+				spec 
+					 	requires: 'GlamourCore';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+			package: 'Roassal2GT'
+"			package: 'Glamour-Roassal2-Presentations' with: [ 
+				spec 
+						requires: 'Glamour-Tools';
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main' ];
+					
+			package: 'GT-InspectorExtensions-CoreRoassal' with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
+				
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ];
+			package: 'GT-SpotterExtensions-CoreRoassal' with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
+				spec 
+						requires: 'Glamour-Roassal2-Presentations';
+						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ] 
+"					
+					]
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -696,6 +747,25 @@ ConfigurationOfRoassal2 >> version118: spec [
 			package: 'Glamour-Roassal2-Presentations' with: 'Glamour-Roassal2-Presentations-AlexandreBergel.41';
 			package: 'GT-InspectorExtensions-CoreRoassal' with: 'GT-InspectorExtensions-CoreRoassal-StefanReichhart';
 			package: 'GT-SpotterExtensions-CoreRoassal' with: 'GT-SpotterExtensions-CoreRoassal-StefanReichhart.21' ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version119: spec [
+	<version: '1.19' imports: #('1.8-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Release'.
+		spec author: 'AlexandreBergel'.
+		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Neo-JSON-Core' with: '10'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.331';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1105';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.10';
+			package: 'Glamour-Tools' with: 'Glamour-Tools-TudorGirba.85';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.1' ].
 
 ]
 
