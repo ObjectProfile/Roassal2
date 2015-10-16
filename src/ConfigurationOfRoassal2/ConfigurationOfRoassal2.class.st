@@ -523,7 +523,7 @@ ConfigurationOfRoassal2 >> development: spec [
 
 	spec for: #'common' version: '1.4-baseline'.
 	spec for: #'pharo4.x' version: '1.5-baseline'.
-	spec for: #'pharo5.x' version: '1.7-baseline'.
+	spec for: #'pharo5.x' version: '1.8-baseline'.
 ]
 
 { #category : #accessing }
