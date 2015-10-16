@@ -509,6 +509,43 @@ ConfigurationOfRoassal2 >> baseline18: spec [
 					]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline19: spec [
+	<version: '1.9-baseline'>
+
+	spec for: #common do: [	
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+
+		spec project: 'Glamour' with: [ 
+			spec
+				className: 'ConfigurationOfGlamour'; 
+				version: #development;
+				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
+			].	
+		
+		spec project: 'GToolkitCore' with: [ 
+			spec
+				className: 'ConfigurationOfGToolkitCore'; 
+				version: #development;
+				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
+			].	
+		
+		spec project: 'Neo-JSON-Core' with: [ 
+			spec
+				className: 'ConfigurationOfNeoJSON'; 
+				repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main'.
+			].	
+
+		spec
+			package: 'Trachel';
+			package: 'Roassal2' with: [ 
+				spec requires: #('Trachel')];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour' 'GToolkitCore') ]			
+	]
+]
+
 { #category : #accessing }
 ConfigurationOfRoassal2 >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -523,7 +560,7 @@ ConfigurationOfRoassal2 >> development: spec [
 
 	spec for: #'common' version: '1.4-baseline'.
 	spec for: #'pharo4.x' version: '1.5-baseline'.
-	spec for: #'pharo5.x' version: '1.8-baseline'.
+	spec for: #'pharo5.x' version: '1.9-baseline'.
 ]
 
 { #category : #accessing }
