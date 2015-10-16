@@ -22,22 +22,6 @@ ColorPaletteTest >> testDiverging [
 ]
 
 { #category : #tests }
-ColorPaletteTest >> testDivergingError [
-	|palette c1 c2 |
-	palette := ColorPalette diverging.
-	
-	self assert: (palette colors: 11 scheme: 'RdGy') size equals: 11.
-	c1 := (palette colors: 11 scheme: 'RdGy') first.
-	c2 := Color colorFrom: '#67001F'.
-	self assert: (c1 closeTo: c2).
-	
-	self assert: (palette colors: 6 scheme: 'RdGy') size equals: 6.
-	c1 := (palette colors: 6 scheme: 'RdGy') second.
-	c2 := Color colorFrom: '#EF8A62'.
-	self assert: (c1 closeTo: c2).
-]
-
-{ #category : #tests }
 ColorPaletteTest >> testQualitative [
 	|palette |
 	palette := ColorPalette qualitative.
