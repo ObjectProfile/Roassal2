@@ -129,18 +129,18 @@ TRArcShape >> height [
 
 { #category : #testing }
 TRArcShape >> includesPoint: aPoint [
-	| pDistanceOrigin pointAngle inside aAngle bAngle |
+	| pDistanceOrigin pointAngle inside aAngle bAngle thePoint |
 	(alphaAngle value = betaAngle value) ifTrue: [ ^ false ].
 	inside:=true.
-	(alphaAngle value % 360 = 0 ) 
-		ifFalse: [ aAngle := alphaAngle value \\  360 ]
-		ifTrue: [ aAngle := alphaAngle value ].
-	(betaAngle value % 360 = 0 )
-		ifFalse: [ bAngle := betaAngle value \\  360 ]
-		ifTrue: [ bAngle := betaAngle value ].
-		self flag: 'reivew this'.
-	pointAngle:= ((aPoint x @ aPoint y) angleWith: 0@0"<-") radiansToDegrees \\  360.
-	pDistanceOrigin := (aPoint squaredDistanceTo: 0@0"<-") sqrt.
+	aAngle := (alphaAngle value % 360 = 0 ) 
+		ifFalse: [ alphaAngle value \\  360 ]
+		ifTrue: [ alphaAngle value ].
+	bAngle := (betaAngle value % 360 = 0 )
+		ifFalse: [ betaAngle value \\  360 ]
+		ifTrue: [ betaAngle value ].
+	thePoint := aPoint - self position.
+	pointAngle:= (thePoint angleWith: 0@0) radiansToDegrees \\  360.
+	pDistanceOrigin := (thePoint squaredDistanceTo: 0@0) sqrt.
 	((pDistanceOrigin < innerRadius value) or: (pDistanceOrigin > externalRadius value))
 		ifTrue: [ ^ false ].
 	(pointAngle % 360 = 0 )
