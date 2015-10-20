@@ -109,6 +109,9 @@ RTAbstractData >> computeMinAndMaxForX [
 	(minX < 0 and: [ maxX < 0 ]) ifTrue: [ maxX := 0 ].
 	(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ].
 	
+	"We do this to make sure that the bar on the right hand side is not on the right axisX extremity"
+	"(self dataSets anySatisfy: #shouldHaveBars) ifTrue: [ maxX := maxX + 1 ]"
+	
 
 
 ]
