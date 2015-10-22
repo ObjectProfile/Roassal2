@@ -49,7 +49,7 @@ CompiledMethod >> dateSinceEpoch [
 
 { #category : #'*roassal2' }
 CompiledMethod >> dependentClasses [
-	"Return the list of classes used myself"
+	"Return the list of classes used myself. The result contains my superclass."
 	
 	"(Morph>>#drawOn:) dependentClasses"
 	| cll | 
@@ -61,6 +61,7 @@ CompiledMethod >> dependentClasses [
 					((l isVariableBinding 
 					and: [ l value notNil ]) 
 					and: [ l value isBehavior ])  ifTrue: [ cll add: l value ] ].
+	cll add: self superclass.
 	^ cll asArray
 ]
 
