@@ -13,6 +13,13 @@ RTAbstractExample class >> gtExamplesProvider [
 ]
 
 { #category : #'*Roassal2GT-Inspector' }
+RTAbstractExample class >> gtInspectorPreviewIn: composite [
+	<gtInspectorPresentationOrder: 4>
+	<gtInspectorTag: #examples>
+	^ self new gtInspectorPreviewIn: composite
+]
+
+{ #category : #'*Roassal2GT-Inspector' }
 RTAbstractExample >> gtInspectorPreviewIn: composite [
 	<gtInspectorPresentationOrder: 4>
 	^ composite roassal2
@@ -22,13 +29,6 @@ RTAbstractExample >> gtInspectorPreviewIn: composite [
 		painting: [ :view | 
 			view @ RTDraggableView.
 			self gtOpenOn: view ]
-]
-
-{ #category : #'*Roassal2GT-Inspector' }
-RTAbstractExample class >> gtInspectorPreviewIn: composite [
-	<gtInspectorPresentationOrder: 4>
-	<gtInspectorTag: #examples>
-	^ self new gtInspectorPreviewIn: composite
 ]
 
 { #category : #'*Roassal2GT-Inspector' }
