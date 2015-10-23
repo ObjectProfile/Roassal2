@@ -41,7 +41,7 @@ Class {
 GLMRoassal2Presentation >> defaultActions [
 	GLMRoassal2Action initializePresentation: self.
 																
-	self 
+"	self 
 		act: [ :roassal | 
 				| fileName |
 				fileName := UITheme builder 
@@ -53,8 +53,8 @@ GLMRoassal2Presentation >> defaultActions [
 								builder: roassal view view;
 								fileName: fileName fullName;
 								exportToFile. ]  ]
-			entitled: 'Export to PNG'.
-	self 
+			entitled: 'Export to PNG'."
+	"self 
 		act: [ :roassal | 
 				| fileName |
 				fileName := UITheme builder 
@@ -65,7 +65,7 @@ GLMRoassal2Presentation >> defaultActions [
 					RTSVGExporter 
 								exportBuilderAsSVG: roassal view view 
 								filename: fileName fullName ]  ]
-			entitled: 'Export to SVG'.
+			entitled: 'Export to SVG'."
 	self act: [ :roassal |
 		| fileName |
 		fileName := (RTHTML5Exporter new export: roassal view view) asUrl.
