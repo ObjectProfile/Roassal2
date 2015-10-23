@@ -39,18 +39,7 @@ Class {
 
 { #category : #'initialize-release' }
 GLMRoassal2Presentation >> defaultActions [
-	self 
-		act: [ :roassal |  RTZoomInMove on: roassal view view ]
-		icon: GLMUIThemeExtraIcons glamorousZoomIn
-		entitled: 'Zoom in'.
-	self 
-		act: [ :roassal |  RTZoomOutMove on: roassal view view ]
-		icon: GLMUIThemeExtraIcons glamorousZoomOut
-		entitled: 'Zoom out'.
-	self
-		act: [ :roassal | roassal view view canvas focusOnCenterScaled. roassal view view signalUpdate ]
-		icon: GLMUIThemeExtraIcons glamorousZoomToFit
-		entitled: 'Camera center'.
+	GLMRoassal2Action initializePresentation: self.
 																
 	self 
 		act: [ :roassal | 
@@ -176,7 +165,8 @@ GLMRoassal2Presentation >> renderOn: aView [
 	aView build.
 	self shouldPopulateSelection ifTrue: [
 		aView view elements do: [:each |  
-			each when: TRMouseLeftClick do: [:event | self selection: each model ]] ].
+			each when: TRMouseLeftClick do: [:event | 
+				each model ifNotNil: [ self selection: each model ] ] ] ].
 	self view: aView
 ]
 
@@ -186,8 +176,9 @@ GLMRoassal2Presentation >> shouldPopulateSelection [
 ]
 
 { #category : #accessing }
-GLMRoassal2Presentation >> shouldPopulateSelection: anObject [
-	shouldPopulateSelection := anObject
+GLMRoassal2Presentation >> shouldPopulateSelection: aBoolean [
+	"Configure whether elements present in the view should be clickable or not"
+	shouldPopulateSelection := aBoolean
 ]
 
 { #category : #accessing }
@@ -196,6 +187,6 @@ GLMRoassal2Presentation >> view [
 ]
 
 { #category : #accessing }
-GLMRoassal2Presentation >> view: anObject [
-	view := anObject
+GLMRoassal2Presentation >> view: aRTView [
+	view := aRTView
 ]
