@@ -1680,47 +1680,6 @@ Acnf8gOSv+UHJD8g+Vt+QPIDkr/lB+R/3v4B+vM9Sl2AdzAAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTGrapherExample >> exampleLinesAndBars [
-
-| b d |
-b := RTGrapher new.
-
-d := RTData new.
-d points: #(3 4 3.5).
-d barShape.
-d noAlignmentOffset.
-b add: d.
-
-d := RTData new.
-d points: #(3 4 3.5).
-d connectColor: Color red.
-b add: d.
-
-b maxX: 5.
-b axisX numberOfLabels: 5; noDecimal.
-b
-]
-
-{ #category : #icons }
-RTGrapherExample >> exampleLinesAndBarsIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACvUlEQVR4XuXcz0vCYBzH8f76
-/oOIoEvHqINgh6BDIYiX1cCDUB60sOksdYRIB/0sH2GRyye3NXX1/sCDP3im43m559kX5vbC
-kJ8iZY8/BHwQfvggfBB++CB8EH74IHwQfvggfBB++CD88EH4IPzwQfgg/PBB+CD88EH4IPzw
-Qfjhg/BB+OGD8EH44YPwQfj5OyCj0UjmsdfriT+cOwYxCLVaTZ7nyff9byCDwSBXpDn+Uhtc
-XYVvJyeKv8+fsuaZTqffBl/z5LmzrVbrs/kHB5/Pn6rV0Ds7Cx/v7hav+SCWbArkZX9/CWcJ
-6vAwVKkkPsg2QO7vw+eLCytG1BbffXMjXV4q733gg0SfdXsr7/x8LUZ8ytL7u3R9Lbmu+CA5
-gchxpCBQEoyvIPHF/vX4WOZEpMgnAYUH0empVi3qSUDS9ueDrNv+6Ei2syw+yBZBFvP+fM34
-6bSXD2IZ8KggXFWpZwExEKpWta4O4YPYa4PMlXp8ce12u6H/8GBddPkgCTKbzWRalkp90wPM
-X0P4IHwQPggfhA/CB+GD8EH4IHyQ/1mp9/v9zJU6H2QDR4iBsFXqw+GQD7KrKYtfqfPXED4I
-H4QPwgfhg/BB+CB8ED4IH2RbIEEQ8Cv1IoHU63V+pc6v1Pkg/DWED8IH4YPwQfggfBA+CB+E
-D0IGiSp0fqVeAJCoQv+pUjdXwNta/Cp30z/+3uL/6Jb+tpa1fx5t50eIqdCzXv3+2/7/Mfx7
-nZBAHMdJ9YtvNBqp+jebTaWdYs3RnLR/p9NJ9fmrpu1CgVQqlVQ7WEp5B4ZyuZyqf7vd1mQy
-SbyN67qKbq6TJObfZOPxWPwpiz9l8cMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw/CB+GHD8IH
-4YcPwg8fhA/CDx+ED8IPH4QPwg8fhA/CDx+EHz4IH4SfDPkAjjgATwwDm+UAAAAASUVORK5C
-YII='
-]
-
-{ #category : #sources }
 RTGrapherExample >> exampleMarkerOnTheXAxis [
 
 | b ds |
