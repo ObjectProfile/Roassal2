@@ -16,5 +16,5 @@ RTPolygonTest >> testBasic02 [
 
 { #category : #tests }
 RTPolygonTest >> testBasic03 [
-	self assert: RTPolygon new vertices isEmpty
+	self assert: (RTPolygon new verticesFor: RTElement new) isEmpty
 ]

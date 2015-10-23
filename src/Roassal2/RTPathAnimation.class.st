@@ -91,7 +91,7 @@ RTPathAnimation >> refresh [
 	curves ifEmpty: [ ^ self ].
 	t := animatedValue value.
 	index := (t * curves size) ceiling.
-	index = 0 ifTrue: [ index := 1 ].
+	index <= 0 ifTrue: [ index := 1 ].
 	current := self position: index.
 	t := (t  - ((index - 1) / curves size)) / (1 / curves size).
 	index = 1
