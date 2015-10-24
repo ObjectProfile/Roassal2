@@ -61,7 +61,7 @@ RTFisheye >> initializeElement: aView [
 				ifFalse: [ e attributes at: #position put: e position ].
 			fisheye := self scale: e.
 			e attributes at: #fisheye put: fisheye.
-			e translateTo:  fisheye.
+			e translateTo:  fisheye x@ fisheye y.
 			e trachelShape class = TREllipseShape
 				ifTrue: [ e trachelShape extent: (fisheye y0 * 9) asPoint ].
 			]. 
