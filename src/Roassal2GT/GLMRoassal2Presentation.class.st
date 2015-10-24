@@ -39,63 +39,7 @@ Class {
 
 { #category : #'initialize-release' }
 GLMRoassal2Presentation >> defaultActions [
-	GLMRoassal2Action initializePresentation: self.
-																
-"	self 
-		act: [ :roassal | 
-				| fileName |
-				fileName := UITheme builder 
-									fileSave: 'Enter the PNG file name'
-									extensions: #('png')
-									path: nil.
-				fileName notNil ifTrue: [ 
-					RTPNGExporter new 
-								builder: roassal view view;
-								fileName: fileName fullName;
-								exportToFile. ]  ]
-			entitled: 'Export to PNG'."
-	"self 
-		act: [ :roassal | 
-				| fileName |
-				fileName := UITheme builder 
-									fileSave: 'Enter the SVG file name'
-									extensions: #('SVG')
-									path: nil.
-				fileName notNil ifTrue: [ 
-					RTSVGExporter 
-								exportBuilderAsSVG: roassal view view 
-								filename: fileName fullName ]  ]
-			entitled: 'Export to SVG'."
-	self act: [ :roassal |
-		| fileName |
-		fileName := (RTHTML5Exporter new export: roassal view view) asUrl.
-		self openIfPossible: fileName.
-		 ] entitled: 'Export to HTML'.
-	self
-		act: [ :roassal |
-				| fileName |
-				fileName := UITheme builder 
-									fileSave: 'Enter the HTML file name'
-									extensions: #('html')
-									path: nil.
-				fileName notNil ifTrue: [ 
-					RTHTML5Exporter new 
-						directory: fileName parent;
-						fileName: fileName basename; 
-						export: roassal view view.
-					self openIfPossible: fileName ] ]
-			entitled: 'Export to HTML...'.
-			
-	(Smalltalk includesKey:#RTPDFExporter) ifTrue: [ 
-			self
-				act: [ :roassal| (Smalltalk at: #RTPDFExporter) exportView: roassal view view ]
-				entitled: 'Export to PDF...'
-			 ].
-		
-	self 
-		act: [ :roassal | roassal view view inspect ]
-			entitled: 'Inspect View'.
-	
+	GLMRoassal2Action initializePresentation: self
 ]
 
 { #category : #'initialize-release' }

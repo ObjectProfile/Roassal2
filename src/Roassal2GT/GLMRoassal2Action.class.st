@@ -8,23 +8,34 @@ Class {
 }
 
 { #category : #initialization }
+GLMRoassal2Action class >> allLeafSubclasses [
+	^ self allSubclasses select: #isLeaf
+]
+
+{ #category : #initialization }
 GLMRoassal2Action class >> initializePresentation: aRoassal2Presentation [
 	| instances orderedInstances |
-	instances := self allSubclasses collect: #new.
+	instances := self allLeafSubclasses collect: #new.
 	orderedInstances := instances sortedAs: #order.
-	orderedInstances do: [ :inst | 
-		inst roassalPresentation: aRoassal2Presentation.
-		inst icon notNil 
-			ifTrue: [ 
-				aRoassal2Presentation 
-					act: [ :r | inst execute ]
-					icon: inst icon
-					entitled: inst title ]
-			ifFalse: [ 
-				aRoassal2Presentation 
-					act: [ :r | inst execute ]
-					entitled: inst title ]
-	]
+	orderedInstances
+		do:
+			[ :inst | 
+			inst roassalPresentation: aRoassal2Presentation.
+			inst icon notNil
+				ifTrue:
+					[ aRoassal2Presentation
+						act: [ :r | inst execute ]
+						icon: inst icon
+						entitled: inst title ]
+				ifFalse:
+					[ aRoassal2Presentation
+						act: [ :r | inst execute ]
+						entitled: inst title ] ]
+]
+
+{ #category : #testing }
+GLMRoassal2Action class >> isLeaf [
+	^ self subclasses size = 0
 ]
 
 { #category : #hooks }

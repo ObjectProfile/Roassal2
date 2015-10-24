@@ -18,10 +18,7 @@ GLMAbstractExportingAction >> execute [
 						extensions: self extensions
 						path: nil.
 	fileName notNil ifTrue: [ 
-		RTPNGExporter new 
-					builder: self roassalView;
-					fileName: fileName fullName;
-					exportToFile. ]
+		self doExportToFull: fileName fullName ]
 ]
 
 { #category : #hooks }
