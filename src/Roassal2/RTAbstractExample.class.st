@@ -1,8 +1,24 @@
 Class {
 	#name : #RTAbstractExample,
 	#superclass : #RTObject,
+	#classVars : [
+		'ExampleAnnouncer'
+	],
 	#category : #'Roassal2-ExampleBrowser'
 }
+
+{ #category : #announcement }
+RTAbstractExample class >> announcer [
+	ExampleAnnouncer ifNil: [ ExampleAnnouncer := Announcer new ].
+	^ ExampleAnnouncer
+]
+
+{ #category : #'as yet unclassified' }
+RTAbstractExample class >> initialize [
+	self announcer when: Announcement do: [ :announcement | 
+			RTEventCollector uniqueInstance add: announcement ]
+		
+]
 
 { #category : #examples }
 RTAbstractExample class >> runningAllExamples [
@@ -23,6 +39,12 @@ RTAbstractExample class >> runningAllExamples [
 			[ result class == RTView or: [ result isKindOf: RTBuilder ] ] assert.
 			w nextPutAll: 'done!'; cr
 		] ]
+]
+
+{ #category : #announcement }
+RTAbstractExample >> announcer [
+	"Return the announcer responsible to emit example-related events"
+	^ self class announcer
 ]
 
 { #category : #installing }
