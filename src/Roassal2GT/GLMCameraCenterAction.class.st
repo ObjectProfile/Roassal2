@@ -16,6 +16,11 @@ GLMCameraCenterAction >> icon [
 ]
 
 { #category : #hooks }
+GLMCameraCenterAction >> order [
+	^ 6
+]
+
+{ #category : #hooks }
 GLMCameraCenterAction >> title [
 	^ 'Camera center'
 ]
