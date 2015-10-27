@@ -42,6 +42,9 @@ RTAbstractExample >> gtOpenOn: v [
 		element := (RTBitmap new form: form) elementOn: anExample.
 		element @ (RTPopup new text: anExample method selector asString).
 		element @ (RTEventForwarder new eventClass: TRMouseDragging). 
+		element when: TRMouseClick do: [ :event |
+			self announcer announce: (RTExampleOpeningEvent new theClass: self className; theSelector: anExample method selector).
+		].
 		v add: element ].
 
 	RTGridLayout new on: v elements.
