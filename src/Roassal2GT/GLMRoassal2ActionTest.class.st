@@ -10,5 +10,5 @@ GLMRoassal2ActionTest >> testInitialize [
 	prez := GLMRoassal2Presentation new.
 	nbActionOriginal := prez actions size.
 	GLMRoassal2Action initializePresentation: prez.
-	self assert: prez actions size - nbActionOriginal equals: GLMRoassal2Action allSubclasses size.
+	self assert: prez actions size - nbActionOriginal equals: GLMRoassal2Action allLeafSubclasses size.
 ]
