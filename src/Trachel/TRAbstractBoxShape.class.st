@@ -3,7 +3,9 @@ Class {
 	#superclass : #TRShape,
 	#instVars : [
 		'rectangle',
-		'strokeWidth'
+		'strokeWidth',
+		'borderStyle',
+		'dashes'
 	],
 	#classInstVars : [
 		'nullRectangle'
@@ -45,6 +47,16 @@ TRAbstractBoxShape >> center [
 	^ self position
 ]
 
+{ #category : #accessing }
+TRAbstractBoxShape >> dashes [
+	^ dashes
+]
+
+{ #category : #accessing }
+TRAbstractBoxShape >> dashes: aDashSpecification [
+	dashes := aDashSpecification
+]
+
 { #category : #drawing }
 TRAbstractBoxShape >> drawOn: athensCanvas [
 	self shouldBeDrawn
@@ -65,8 +77,10 @@ TRAbstractBoxShape >> drawStrokeIfNecessaryOn: athensCanvas [
 	self canvas ifNil: [ ^ self ].
 	ratio := self scaledStrokeWidth.
 	^ strokePaint
-		ifNotNil: [ 
-			(athensCanvas setStrokePaint: strokePaint) width: ratio asFloat.
+		ifNotNil:
+			[ (athensCanvas setStrokePaint: strokePaint)
+				width: ratio asFloat;
+				dashes: dashes offset: 0.
 			athensCanvas drawShape: path ]
 ]
 
