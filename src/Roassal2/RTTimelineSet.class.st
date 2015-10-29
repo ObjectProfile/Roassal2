@@ -173,8 +173,7 @@ RTTimelineSet >> objects: anObject [
 RTTimelineSet >> renderIn: view using: timelineBuilder [
 
 	| translator |
-	shapeBuilder 
-		height: [ :obj | timelineBuilder extent y / timelineBuilder numberOfLines - self gapBetweenTimeLines ].
+	self setRenderedHeight: timelineBuilder.
 		
 	elements := shapeBuilder elementsOn: objects.
 	interactionBuilder setUpElements: elements.
@@ -192,12 +191,33 @@ RTTimelineSet >> renderIn: view using: timelineBuilder [
 	"For the location"
 	translator := RTDirectLayoutTranslator new.
 	elements do: [ :e | 
-		| nx ny indexY |
-		nx := ((start rtValue: e model) / globalMax * timelineBuilder extent x).
-		indexY := timelineBuilder indexOfLineIdentifier: (lineIdentifier rtValue: e model).
-		ny := (timelineBuilder getPixelPositionOf: 0 @ indexY) y.
+		| nx ny |
+		nx := self setRenderedXFor: e builder: timelineBuilder.
+		ny := self setRenderedYFor: e builder: timelineBuilder.
 		translator translateTopLeftOf: e to: nx @ ny ].
 
+]
+
+{ #category : #rendering }
+RTTimelineSet >> setRenderedHeight: timelineBuilder [
+	shapeBuilder
+		height:
+			[ :obj | 
+			timelineBuilder extent y / timelineBuilder numberOfLines
+				- self gapBetweenTimeLines ]
+]
+
+{ #category : #rendering }
+RTTimelineSet >> setRenderedXFor: element builder: timelineBuilder [
+	^ (start rtValue: element model) / globalMax * timelineBuilder extent x
+]
+
+{ #category : #rendering }
+RTTimelineSet >> setRenderedYFor: element builder: timelineBuilder [
+	| indexY |
+	indexY := timelineBuilder
+		indexOfLineIdentifier: (lineIdentifier rtValue: element model).
+	^ (timelineBuilder getPixelPositionOf: 0 @ indexY) y
 ]
 
 { #category : #accessing }
