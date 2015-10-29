@@ -384,7 +384,7 @@ v addAll: els.
 eb := RTEdgeBuilder new.
 eb view: v.
 eb objects: (1 to: 4).
-eb useAssociations: {1->2. 3->4}.	
+eb useAssociations: (Array with: 1->2 with: 3->4).	
 
 t := 10.
 example := RTAnimationExample new.
