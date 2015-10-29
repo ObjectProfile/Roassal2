@@ -442,6 +442,155 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
+RTExperimentalExample >> exampleFisheye [
+	|v|
+	v := RTLayoutExample new exampleForce.
+	v @ (RTFisheye radius: 120).
+	^ v
+	
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleFisheyeIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAE1ElEQVR4XuWbh1LjMBRF8/8f
+Se+9d5TleHwzQkhuzGIl984wJokxu+/oVYnFcumvmrTwN4E/EH/5A/EH4i9/IP5A/OUPxB+I
+v/yB+APxlz8Qf/kD8QfiL38g/kD85Q/EH4i//IH4A/GXPxB/+QPxB+IvfyD+QPzlD8QfiL/8
+gfgD8Zc/EH9tMJDLy8uwvb29fHp6Cv5A/liHh4eN8R8fH1fG39vba967vr7295C/lox/f3+/
+AgKcLxjBP2TNpM/Pz/Dy8vINiH8O+QO9vr6G9/f3orFPT08bb3l+fvYH8r/18fHRGJuvknZ2
+djYid6wFkPAljL21tRW6oF1dXYWpz/cHMlFjQ9Ld3V24vb0NMnycb9DNzU0D++joKPgDGRiu
+CEPxKqa6Oj4+/mbAUjJXqCP5f10b4wNJnwOL99Ln+QPp6TXOzs4CRn14eFjlk7e3t8AKV0I/
+Pz//YVRWPs+In5V6iWAqV+l+fyAZYay2evoWZmKPUHeeA4IAx7XUvauP0e/qKh78c8hIeKU8
+IuU+AxS5ibKaZ3SV13ZAMMzU0lWekAtb5I8UCL1NLR5RLRAZaGoJSzhLRyd6ZupBbTkdasgZ
+1QIBBEYiwf4GaFwe8z2gxpTQFBB4asnrNh4Iqzr+z08xBB5A+UpZ3Nev4B2ErNLnFxcXTTg7
+ODjwAwKMNJZjXErcAR4RSuFI5W2aO/iZtOundN7d3W1AkuT54r659lVmBaLkilHwjLj8THuG
+UogqhTgaP1a7DEsFFecUqqx4Qair988hiQgV6rB/E3ranLQCgICShkSAcS/iPnoTBpZzTY+r
+7EMwzpDkHo9CMl1+8zW2amtL5WKzadsYkkf6vITVTFiKq6c2B6xGLGM3rvgZqqyp1d7GAlHo
+6ortMnwMRWEIWApB6zR1WMzZd8TVFElcjR3vK3Skxo6rMQ0Y+zyNFd/nbdZA4skt35ML9Dp3
+UEGhiGEiK35Mwj05OWmezTUtudNwhjfOFapm9xAauXj187qrU1fVRPM3dqRC76HQB0xNibUA
+uIcxf/te8C97l8veA26EtLYTHwWDK0Dkjfpsf3+/CXea8PL8GjasFjWUuENj/JAOniopXekq
+EHJ9C+/hNUOebQFEoYJr3725igsAhD5WOOGO/iE3Wsfgpe6fBTHn/KoqIBqX9PULpZ5CQGNj
+EqrSXKTylyteEXuk/g1DFoVtH1LqOdKBIeEGGHEOyuUjdfXcX+vm1NoAaQ8hhCEVEN6Rg6ay
+V0NG5lX+QEYIwxHbWe0aCPYlXuWCtDQu7Ub2TZT9gWRGJ2mn3mVEzbHSwWC76fTjEENb4YWa
+jqFWA6RNrE0njmHxBvqHNB+QeEvjlJKU0HOnSuKJgT+QSOzapWElNxickpAFNZfs8aaaDjtU
+A4RSND06mptr4R2MPoacoeJZ6sh5rYFljbmj+hwi45V2BamcqL66Onw8LPYo7cPnTqL4A+nv
+O34ckC6Fua49D7xODSXwat8fqRYIxktjvv5eRGWtKrF1/8vbtezU46au1i7bDohyx1ynCv2B
+GMofiD8Qf/kD8QfiL38g/kD85Q/EH4i//IH4A/GXPxB/+QPxB+IvfyD+QPzlD8QfiL/8gfgD
+8Zc/EH/5A/EH4i9/IP5A/OUPxB+Iv/yB+APxVx36Bzo0Sa3V2uanAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTExperimentalExample >> exampleFlowerBuilder [
+ 
+| v angles angle b color size block bcolor arcs update |
+angle := 360 / 12.
+angles := 0 to: 360 by: angle.
+v := RTView new.
+v canvas color: Color black.
+bcolor := Color random.
+arcs := (RTArc new
+	color: [ bcolor ];
+	innerRadius: 0;
+	externalRadius: 250;
+	alphaAngle: [:m | m];
+	betaAngle: [ :m | m + 1 ]) elementsOn: angles.
+v addAll: arcs.
+update := [ arcs do: #update. v signalUpdate ].
+b := RTMenuBuilder new view: v.
+color := Color green.
+size := 10.
+b menu: 'Color' submenu: 'Red' background: Color yellow callback: [ color := Color red ].
+b menu: 'Color' submenu: 'Green' callback: [ color := Color green ].
+b menu: 'Color' submenu: 'Blue' callback: [ color := Color blue ].
+b menu: 'Color' submenu: 'Black' callback: [ color := Color black ].
+block := [ :i |
+	 b menu: 'Size' submenu: i asString background: Color yellow callback: [ size := i ] ].
+1 to: 10 do: [ :i | block value: i ].
+b menu: 'Base' submenu: 'Show' background: Color yellow callback: [ 
+	bcolor := Color random.
+	update value. ].
+b menu: 'Base' submenu: 'Hide' callback: [ 
+	bcolor := Color black.
+	update value. ].
+b menu: 'Clear' background: Color yellow callback: [ 
+	(v elements select: [ :e | e shape class = RTEllipse ]) do: #remove.
+	v signalUpdate. ].
+
+v when: TRMouseDragging do: [ :evt | | els p dist degrees |
+	els := (RTEllipse new 
+		color: color;
+		size: size) elementsOn: angles.
+	p := evt positionFromCamera.
+	dist := (p squaredDistanceTo: 0@0) sqrt.
+	degrees := p degrees.   
+	els doWithIndex: [ :e :i | | ang |
+		ang := i odd
+			ifTrue: [ e model + degrees ]
+			ifFalse: [ e model + angle - degrees ].
+		ang := ang degreesToRadians.
+		e translateTo: (dist * ang  cos)@(dist * ang sin) ].
+	
+	v addAll: els.
+	evt signalUpdate. ].
+^ v
+
+	
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleFlowerBuilderIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTExperimentalExample >> exampleScaleLog [
  
 | g s extent x y superscript |
