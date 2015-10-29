@@ -82,17 +82,6 @@ RTDSM >> cellSize [
 ]
 
 { #category : #UI }
-RTDSM >> cellshape [
-	^ RTBox new
-		size: self cellSize;
-		color:
-				[ :assoc | 
-			(self isAssocDependent: assoc)
-				ifTrue: [ self colorForDependency ]
-				ifFalse: [ self colorForNonDependency ] ]
-]
-
-{ #category : #UI }
 RTDSM >> colorForDependency [
 	^ Color red alpha: 0.4
 ]
@@ -122,16 +111,15 @@ RTDSM >> createElements [
 	var elements : Collection
 	var objects : Collection
 	"
-	| shape e |
+	| e |
 	elements := RTGroup new.
-	shape := self cellshape.
 	objects copy
 		doWithIndex:
 			[ :anObject1 :index1 | 
 			objects copy
 				doWithIndex:
 					[ :anObject2 :index2 | 
-					e := shape elementOn: anObject1 -> anObject2.
+					e := self elementOn: anObject1 -> anObject2.
 					e @ RTPopup.
 					e when: TRMouseEnter do: [ :evt | 
 						self highlightColumn: (evt element attributeAt: #matrixIndex) x.
@@ -145,6 +133,25 @@ RTDSM >> createElements [
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 
+]
+
+{ #category : #'as yet unclassified' }
+RTDSM >> createShapeBuilder [
+	| sb |
+	sb := super createShapeBuilder.
+	sb shape: self defaultCellShape.
+	^ sb
+]
+
+{ #category : #UI }
+RTDSM >> defaultCellShape [
+	^ RTBox new
+		size: self cellSize;
+		color:
+				[ :assoc | 
+			(self isAssocDependent: assoc)
+				ifTrue: [ self colorForDependency ]
+				ifFalse: [ self colorForNonDependency ] ]
 ]
 
 { #category : #UI }
