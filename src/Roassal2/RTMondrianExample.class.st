@@ -3128,7 +3128,8 @@ b nodes: nodes.
 
 b shape line color: (Color gray alpha: 0.3).
 b edges
-	source: edges connectFrom: #key to: #value.
+	objects: edges;
+	connectFrom: #key to: #value.
 
 b layout force.
 ^ b

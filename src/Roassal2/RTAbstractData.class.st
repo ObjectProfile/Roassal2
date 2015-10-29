@@ -22,23 +22,6 @@ RTAbstractData >> addedInBuilder: aBuilder [
 ]
 
 { #category : #public }
-RTAbstractData >> barChartUsing: barLabelFactory [
-	"Draw an histogram with title"
-	self barShape.
-	elementActions add: [ :someElements | 
-		| lbl |
-		self selectElementsForAddingBarTitle doWithIndex: [ :e :index |
-			| modelToBeUsed |
-			modelToBeUsed := self getModelForElement: e atIndex: index.
-			lbl := barLabelFactory createLabelForModel: modelToBeUsed.
-			TRConstraint move: lbl below: e.
-			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
-			elements anyOne view add: lbl.
-		] ].
-	 
-]
-
-{ #category : #public }
 RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol [
 	"Add bar charts with centered title, the default color is used. This is a public method"
 	^ self barChartWithBarCenteredTitle: aBlockOrSymbol color: self defaultLabelColor
@@ -77,13 +60,19 @@ RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegre
 { #category : #public }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
 	"Draw an histogram with title"
-	| barLabelFactory |
-	barLabelFactory := RTBarLabelFactory new.
-	barLabelFactory label: aBlockOrSymbol.
-	barLabelFactory rotation: rotationInDegree.
-	barLabelFactory color: aColor.
-	
-	^ self barChartUsing: barLabelFactory
+	self barShape.
+	elementActions add: [ :someElements | 
+		| lbl |
+		self selectElementsForAddingBarTitle doWithIndex: [ :e :index |
+			| modelToBeUsed |
+			modelToBeUsed := self getModelForElement:e atIndex: index.
+			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) elementOn: modelToBeUsed.
+			lbl rotateByDegrees: rotationInDegree.
+			TRConstraint move: lbl below: e.
+			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
+			elements anyOne view add: lbl.
+		] ].
+	 
 ]
 
 { #category : #accessing }
@@ -119,9 +108,6 @@ RTAbstractData >> computeMinAndMaxForX [
 
 	(minX < 0 and: [ maxX < 0 ]) ifTrue: [ maxX := 0 ].
 	(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ].
-	
-	"We do this to make sure that the bar on the right hand side is not on the right axisX extremity"
-	"(self dataSets anySatisfy: #shouldHaveBars) ifTrue: [ maxX := maxX + 1 ]"
 	
 
 

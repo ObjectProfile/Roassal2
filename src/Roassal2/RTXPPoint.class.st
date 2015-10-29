@@ -12,24 +12,9 @@ Class {
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #'initialize-release' }
-RTXPPoint class >> x: x y: y y0: y1 [
-	^ self new x: x; y: y; y0: y1
-]
-
-{ #category : #accessing }
-RTXPPoint >> x [
-	^ x
-]
-
 { #category : #accessing }
 RTXPPoint >> x: aNumber [
 	x := aNumber
-]
-
-{ #category : #accessing }
-RTXPPoint >> y [
-	^ y 
 ]
 
 { #category : #accessing }

@@ -46,7 +46,7 @@ RTPolygon >> updateFor: anElement trachelShape: trachelShape [
 	trachelShape color: (self colorFor: anElement).
 	trachelShape strokeWidth: (self borderWidthFor: anElement).
 	trachelShape strokePaint: (self borderColorFor: anElement).
-	trachelShape vertices: (self verticesFor: anElement).
+	trachelShape vertices: vertices
 ]
 
 { #category : #accessing }
@@ -56,15 +56,5 @@ RTPolygon >> vertices [
 
 { #category : #accessing }
 RTPolygon >> vertices: arrayOfPoints [
-	self verticesElement: [ :e | arrayOfPoints rtValue: e model ].
-]
-
-{ #category : #accessing }
-RTPolygon >> verticesElement: arrayOfPoints [
 	vertices := arrayOfPoints
-]
-
-{ #category : #hooks }
-RTPolygon >> verticesFor: anElement [
-	^ vertices rtValue: anElement.
 ]
