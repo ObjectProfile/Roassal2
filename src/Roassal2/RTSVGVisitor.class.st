@@ -424,7 +424,7 @@ RTSVGVisitor >> visitLabelShape: aLabel [
 		at: position 
 		color: color 
 		angle: aLabel angleInDegrees.
-.	svgE addOn: stream using: self.
+	svgE addOn: stream using: self.
 ]
 
 { #category : #visitor }

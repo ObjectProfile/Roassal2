@@ -214,9 +214,11 @@ IXz4QvhC+PCF8IXw4QvhC+HDF8IXwocvhA9fCF8IH74QvhA+fCF8IXz4QvhC+JyG3yIplAJj
 { #category : #sources }
 RTDSMExample >> exampleTopLabelRotation [
 
-	| dsm |
-	v := {#A -> { #B . #C} . #B -> {#A}}.
-	keys := {#A . #B . #C}.
+	| dsm v keys |
+	v := Array 
+		with: (#A -> (Array with: #B with: #C)) 
+		with: (#B -> (Array with: #A) ).
+	keys := #(A B C).
 	dsm := RTDSM new.
 	dsm rotation: 0.
 	dsm objects: keys.

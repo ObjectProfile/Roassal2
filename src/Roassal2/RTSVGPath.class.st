@@ -931,11 +931,13 @@ RTSVGPath class >> goldenSpiral: level start: p side: side direction: dir type: 
 	side: the size of the bigger rectangle
 	dir: the direction for rectangle in quadrants 1@1 = first quadrant etc
 	isNarrow: the arc direction"
-	| s point p1 p2 p3 goldenRatio si dirs d n |
-	dirs := Dictionary newFromPairs: (isNarrow 
-		ifTrue: [  { 1@1. 1@ -1. 1@ -1. -1@ -1. -1@ -1. -1@1. -1@1. 1@1 } ]
-		ifFalse: [ { 1@1. -1@1. -1@1. -1@ -1. -1@ -1. 1@ -1. 1@ -1. 1@1  } ]).
-	
+	| s point p1 p2 p3 goldenRatio si dirs d n ar |
+	ar := isNarrow 
+		ifTrue: [  #(1 1 1 -1 1 -1 -1 -1 -1 -1 -1 1 -1 1 1 1) ]
+		ifFalse: [ #(1 1 -1 1 -1 1 -1 -1 -1 -1 1 -1 1 -1 1 1) ].
+	dirs := Dictionary new.
+	(1 to: 16 by: 4) do: [ :i|
+		dirs at: (ar at: i)@(ar at: i+1) put: (ar at: i+2)@(ar at: i+3) ].
 	goldenRatio := (1 + 5 sqrt)/2. 
 	s := WriteStream on: ''.
 	point := [ :z| z x asFloat asString, ',', z y asFloat asString,' ' ].

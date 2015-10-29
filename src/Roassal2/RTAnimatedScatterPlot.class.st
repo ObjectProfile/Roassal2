@@ -142,7 +142,7 @@ RTAnimatedScatterPlot >> getTableForPackage: packageName [
 
 { #category : #'public - frames' }
 RTAnimatedScatterPlot >> getTitleNumber: aFrameNumber table: table [
-	^ (table attributes at: #title ifAbsent: '') , ' ' , aFrameNumber printString , '/' , self numberOfTables printString
+	^ (table attributes at: #title ifAbsent: ['']) , ' ' , aFrameNumber printString , '/' , self numberOfTables printString
 ]
 
 { #category : #coloring }
