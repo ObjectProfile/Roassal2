@@ -58,8 +58,8 @@ RTShapeBuilderTest >> testBezierLine01 [
 
 	eb := RTEdgeBuilder new.
 	eb view: v.
-	eb shape bezierLineUsingObjects: (Array with: -1)  inView: v.
-	eb useAssociations: (Array with: 1->10 with: 2 -> 10 with: 3 -> 10 ).
+	eb shape bezierLineUsingObjects: { -1 } inView: v.
+	eb useAssociations: { 1->10 . 2 -> 10 . 3 -> 10 }.
 
 ]
 

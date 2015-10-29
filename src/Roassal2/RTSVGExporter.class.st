@@ -239,7 +239,7 @@ RTSVGExporter >> interactiveExportToFile [
 		extensions: #('svg')
 		path: nil.
 		
-	fileRef ifNil: [ TRPlatform current inform: 'Saving cancelled'. ^ self ].
+	fileRef ifNil: [ self inform: 'Saving cancelled'. ^ self ].
 	
 	fileStream := fileRef writeStream.
 	[ self exportOnStream: fileStream ] 

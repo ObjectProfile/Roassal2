@@ -13,6 +13,18 @@ RTDSMTest >> testDefault [
 ]
 
 { #category : #tests }
+RTDSMTest >> testDefiningANewCellShape [
+	| dsm |
+	dsm := RTDSM new.
+	dsm shape box width: 20; height: 20; withText: [:assoc | assoc key + assoc value ].
+	dsm objects: (1 to: 10).
+	dsm dependency: [ :aValue | aValue // 2 ].
+	dsm build.
+	
+
+]
+
+{ #category : #tests }
 RTDSMTest >> testExample01 [
 
 	| dsm |

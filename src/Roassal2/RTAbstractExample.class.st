@@ -13,10 +13,11 @@ RTAbstractExample class >> announcer [
 	^ ExampleAnnouncer
 ]
 
-{ #category : #announcement }
+{ #category : #'as yet unclassified' }
 RTAbstractExample class >> initialize [
 	self announcer when: Announcement do: [ :announcement | 
-			"RTEventCollector uniqueInstance add: announcement" ]
+			RTEventCollector uniqueInstance add: announcement ]
+		
 ]
 
 { #category : #examples }

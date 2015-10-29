@@ -7,6 +7,6 @@ Class {
 { #category : #tests }
 RTExtensionTest >> testIsReferencedBy [
 
-	self deny: (String superclass isReferencedBy: self class).
-	self assert: (String isReferencedBy: Object)
+	self deny: (Halt superclass isReferencedBy: self class).
+	self assert: (Halt isReferencedBy: Object)
 ]
