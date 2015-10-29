@@ -16,12 +16,10 @@ ClassDescription >> ageInDaysRounded [
 
 { #category : #'*roassal2' }
 ClassDescription >> classReferences [
-	"Return the list of class references all my methods contains. The result also contains my superclass."
 	| references |
 	references := OrderedCollection new.
 	self methodDict valuesDo: [ :compiledMethod |
 			references addAll: compiledMethod classReferences ].
-	references add: self superclass.
 	^ references removeDuplicates
 ]
 
@@ -85,12 +83,7 @@ ClassDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
 
 { #category : #'*roassal2' }
 ClassDescription >> isReferencedBy: aClass [ 
-	"
-	Return true or false on whether the class receiver is referenced by aClass
-	
-	Halt isReferencedBy: Object 
-	"
-	^ aClass dependentClasses includes: self 
+	^ aClass classReferences includes: self 
 ]
 
 { #category : #'*roassal2' }
@@ -120,6 +113,16 @@ ClassDescription >> oldestMethod [
 			m := self computeOldestMethod.
 			aMethod properties at: #oldestMethod put: m ]
 
+]
+
+{ #category : #'*roassal2' }
+ClassDescription >> referencedByClasses: aCollectionOfClasses [
+	| references |
+	references := OrderedCollection new.
+	aCollectionOfClasses do: [ :eachClass |
+		(self isReferencedBy: eachClass) 
+			ifTrue: [ references add: eachClass ] ].
+	^ references
 ]
 
 { #category : #'*roassal2' }

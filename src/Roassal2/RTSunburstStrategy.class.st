@@ -63,8 +63,3 @@ RTSunburstStrategy >> radialSpacing [
 RTSunburstStrategy >> radialSpacing: aNumber [
 	radialSpacing := aNumber
 ]
-
-{ #category : #public }
-RTSunburstStrategy >> withoutCenter [
-	self hasCenter: false
-]

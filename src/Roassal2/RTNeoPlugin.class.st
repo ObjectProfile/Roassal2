@@ -4,13 +4,13 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTNeoPlugin >> description [
 	^ 
 'Neo offers a JSON and CSV parsers. Both parsers are highly stable, fast, and well supported.'
 ]
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTNeoPlugin >> execute [
 	Gofer new 
 		smalltalkhubUser: 'SvenVanCaekenberghe' project: 'Neo';
@@ -23,7 +23,7 @@ RTNeoPlugin >> execute [
 	(Smalltalk at: #ConfigurationOfNeoCSV) loadBleedingEdge.
 ]
 
-{ #category : #hooks }
+{ #category : #'as yet unclassified' }
 RTNeoPlugin >> label [
 	^ 'Neo JSON and CSV parser'
 ]

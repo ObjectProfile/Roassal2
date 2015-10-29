@@ -17,8 +17,7 @@ Class {
 	#superclass : #RTInteraction,
 	#instVars : [
 		'connectToElements',
-		'shape',
-		'reciber'
+		'shape'
 	],
 	#classInstVars : [
 		'lastHighlightedElements',
@@ -82,7 +81,7 @@ RTShowEdge >> doShowEdges: element [
 
 	t := (connectToElements rtValue: element).
 	t := t copyWithout: nil.
-	edges := (shape rtValue: element) edgesFrom: (reciber rtValue: element) toAll: t.
+	edges := (shape rtValue: element) edgesFrom: element toAll: t.
 	element view addAll: edges.
 	element attributes at: #showEdges put: edges.
 	self class lastHighlightedElements: edges
@@ -97,7 +96,6 @@ RTShowEdge >> highlightedColor [
 RTShowEdge >> initialize [
 	super initialize.
 	connectToElements := [ :el | Array with: el ].
-	reciber := #yourself.
 	self shape: RTLine
 ]
 
@@ -113,16 +111,6 @@ RTShowEdge >> initializeElement: element [
 		do: [ :e | 
 			self doHideEdges: element.
 			e signalUpdate ]
-]
-
-{ #category : #accessing }
-RTShowEdge >> reciber [
-	^ reciber
-]
-
-{ #category : #accessing }
-RTShowEdge >> reciber: anElementOrBlock [
-	reciber := anElementOrBlock
 ]
 
 { #category : #actions }
