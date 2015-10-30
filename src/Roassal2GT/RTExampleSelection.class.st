@@ -41,8 +41,7 @@ RTExampleSelection class >> gtExampleFlags3 [
 { #category : #ui }
 RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 	<gtInspectorPresentationOrder: 0>
-	^ composite smalltalkCode
-		beForScripting;
+	^ composite pharoScript
 		title: 'Playground';
 		format: [ 
 			| sourceCode firstLine sourceCodeWithoutFirstLine |
