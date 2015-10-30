@@ -198,6 +198,28 @@ RTTimelineSet >> renderIn: view using: timelineBuilder [
 
 ]
 
+{ #category : #rendering }
+RTTimelineSet >> setRenderedHeight: timelineBuilder [
+	shapeBuilder
+		height:
+			[ :obj | 
+			timelineBuilder extent y / timelineBuilder numberOfLines
+				- self gapBetweenTimeLines ]
+]
+
+{ #category : #rendering }
+RTTimelineSet >> setRenderedXFor: element builder: timelineBuilder [
+	^ (start rtValue: element model) / globalMax * timelineBuilder extent x
+]
+
+{ #category : #rendering }
+RTTimelineSet >> setRenderedYFor: element builder: timelineBuilder [
+	| indexY |
+	indexY := timelineBuilder
+		indexOfLineIdentifier: (lineIdentifier rtValue: element model).
+	^ (timelineBuilder getPixelPositionOf: 0 @ indexY) y
+]
+
 { #category : #accessing }
 RTTimelineSet >> shape [
 	^ shapeBuilder
