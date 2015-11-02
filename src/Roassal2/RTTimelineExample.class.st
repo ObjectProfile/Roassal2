@@ -291,6 +291,48 @@ HwhffCB8IHzxgfCB8MUHAtEfxTYBJq0poOcAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTTimelineExample >> exampleNestedTimeLine [
+
+	| b s data |
+	data := #(#(c1 0 5 1) #(c1 3 8 2) #(c2 0 9 1) #(c2 3 5 2) #(c2 6 8 2)).
+
+	b := RTTimeline new.
+	
+	s := RTSubTimelineSet new.
+	s objects: data.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	s level: #fourth.
+	b add: s.
+	
+	b axisX 
+		numberOfLabels: 5;
+		labelRotation: -45;
+		labelConversion: [ :v | Date year: 2015 day: v ]. 
+	^ b 
+]
+
+{ #category : #icons }
+RTTimelineExample >> exampleNestedTimeLineIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACyUlEQVR4XuXc2WryQBjG8d7/
+FRTaI2nxOgSpSwSpouK+4XaitrhGfdu8H/SgBctMifON/h+Ys6dhml+MyUzp3ccHPz7ljn8K
++CD88EH4IPzwQfgg/PBB+CD88EH4IPzwQfjhg/BB+OGD8EH44YPwQfjhg/BB+OGD8PN/Qd7e
+REjDe5D7exHS4IPwQfggfBA+CB+ED8IH4YPwQfgg7kGWy6XwQTwA6fV6Uq/XZbfbfZvU+7tI
+nOPhwX68vLg7njcg7XZbyuWyJJNJ2W634tMtMAjOn6i4j4dbXOSD8EH4IHwQPggfhA/CB+GD
+8EEAIE9PIrbj9fX8CYz7eN6D+LDPHYYivl9oqMXFTocPwgfhg/BB+CB8ED4IH4QPwgfhg9wy
+yH6/Fz6IByBfe+rpdFou+ab++Gg/EgmR5+f4Rr9/BUsnX3vqiei3P51Ocsu3wOhX5S8u8kH4
+IHwQPggfhA/CB+GD8EH4ICCQv+yBxz2u4sXwXIIgENLAfUJuNXwQKshwOBSb7s/V4lvuOwWR
+KJPJRLrdrtj0O9FaOaHvFOR4PIqu/k6nUzHt96NHlzAMvenbzt+m7xxkPp+L7o9oTPvValVs
+jn/pvu38bfpOQQqFgtXE9Koi9Z2B6JdZq9WSbDZrPLnxeCy1Wg3TdwqiED+3b3/LarWSSqWC
+6TsF0TfUZrNpPDm935L6TkEajYbxo57utedyOdGfIfSdgujkisWi1ZWi91zb75hr7jsD0Y+s
+fl/on/2Y9Eej0b/ebDYz6q/Xa6u+PulsNhsx7esLnM3x9YFF32NM+05B9GQdDgfrKyWVSln1
+M5mMcV//v0o+n7c6/mAwMO4vFgsplUri3VqWYmj+ujzAzwU+ITZXLj+eLJ3wwwfhg/DDB+GD
+8MMH4YPwwwfhhw/CB+GHD8IH4YcPwgfhhw/CB+GHD8IPH4QPwg8fhA/CDx/kRvMJxf6wAB6O
+MLQAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTTimelineExample >> exampleSimpleGantt [
 
 	| data b s d |
