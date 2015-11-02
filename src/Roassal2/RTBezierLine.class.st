@@ -27,6 +27,42 @@ Class {
 	#category : #'Roassal2-Shapes'
 }
 
+{ #category : #public }
+RTBezierLine class >> horizontal [
+	"Create an horizontal bezier line between the two extremities of the edge"
+	"
+	e.g.
+	v := RTView new.
+	shape := RTEllipse new size: 15; color: Color blue trans.
+	e1 := shape element.
+	e2 := shape element.
+	v add: e1; add: e2.
+	e1 @ RTDraggable.
+	e2 @ RTDraggable.
+	e := RTBezierLine horizontal edgeFrom: e1 to: e2.
+	v add: e.
+	"
+	^ self new horizontal
+]
+
+{ #category : #public }
+RTBezierLine class >> vertical [
+	"Create a vertical bezier line between the two extremities of the edge"
+	"
+	e.g.
+	v := RTView new.
+	shape := RTEllipse new size: 15; color: Color blue trans.
+	e1 := shape element.
+	e2 := shape element.
+	v add: e1; add: e2.
+	e1 @ RTDraggable.
+	e2 @ RTDraggable.
+	e := RTBezierLine vertical edgeFrom: e1 to: e2.
+	v add: e.
+	"
+	^ self new vertical
+]
+
 { #category : #private }
 RTBezierLine >> applyTension: points [
 	| n p1 dp p t |
@@ -171,6 +207,24 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	^ self applyTension: listOfPoints
 ]
 
+{ #category : #'control points' }
+RTBezierLine >> horizontal [
+	| b center intermediaryElement1 intermediaryElement2 |
+	b := [ :edge |
+		center := (RTGroup with: edge from with: edge to) center.
+		intermediaryElement1 := RTBox element.
+		intermediaryElement1 translateTo: (center x @ edge from position y).
+		
+		intermediaryElement2 := RTBox element.
+		intermediaryElement2 translateTo: (center x @ edge to position y).
+
+		Array with: intermediaryElement1 with: intermediaryElement2
+	].
+	self controllingElements:  b
+	
+
+]
+
 { #category : #initialization }
 RTBezierLine >> initialize [
 	super initialize.
@@ -262,5 +316,23 @@ RTBezierLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape width: (self widthFor: edge).
 	trachelShape points: (self getListOfPointsForTrachel: edge).
 	trachelShape strokePaint: (self colorFor: edge).
+
+]
+
+{ #category : #'control points' }
+RTBezierLine >> vertical [
+	| b center intermediaryElement1 intermediaryElement2 |
+	b := [ :edge |
+		center := (RTGroup with: edge from with: edge to) center.
+		intermediaryElement1 := RTBox element.
+		intermediaryElement1 translateTo: (edge from position x @ center y).
+		
+		intermediaryElement2 := RTBox element.
+		intermediaryElement2 translateTo: (edge to position x @ center y).
+
+		Array with: intermediaryElement1 with: intermediaryElement2
+	].
+	self controllingElements:  b
+	
 
 ]
