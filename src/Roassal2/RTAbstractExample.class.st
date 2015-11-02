@@ -81,12 +81,10 @@ RTAbstractExample >> installTitle: aTitle code: sourceCode [
 	
 	stream := WriteStream on: ByteArray new.
 	TRPlatform current pngReadWriterClass
-		putForm: (canvas morph imageForm scaledToSize: 100 @ 100)
-		onStream: stream.
+				putForm: (canvas morph imageForm scaledToSize: 100 @ 100)
+				onStream: stream .
 	icon64Mime := (TRPlatform current mimeEncode: stream contents readStream) contents.
-	self class 
-		compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, '''' 
-		classified: 'icons'.
+	self class compile: 'example', aTitle, 'Icon', String cr, '	^ ''', icon64Mime, '''' classified: 'icons'.
 	window delete.
 ]
 
