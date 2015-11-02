@@ -939,7 +939,7 @@ RTSVGPath class >> goldenSpiral: level start: p side: side direction: dir type: 
 	(1 to: 16 by: 4) do: [ :i|
 		dirs at: (ar at: i)@(ar at: i+1) put: (ar at: i+2)@(ar at: i+3) ].
 	goldenRatio := (1 + 5 sqrt)/2. 
-	s := WriteStream on: (String new: 100).
+	s := WriteStream on: ''.
 	point := [ :z| z x asFloat asString, ',', z y asFloat asString,' ' ].
 	s nextPutAll: 'M', (point value: p).
 	si := side.

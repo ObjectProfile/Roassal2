@@ -7,6 +7,7 @@ Class {
 	#instVars : [
 		'label',
 		'nodes',
+		'layout',
 		'edges',
 		'rootNodes',
 		'elements',
@@ -14,8 +15,7 @@ Class {
 		'connectBezierBlock',
 		'bezier',
 		'sliderShape',
-		'center',
-		'edgeBuilderDo'
+		'center'
 	],
 	#category : #'Roassal2-Experimental'
 }
@@ -29,12 +29,17 @@ RTBundleBuilder >> bezier [
 RTBundleBuilder >> createBezierIfNecessary: aView [
 	| ebuilder   |
 	connectBezierBlock ifNil: [ ^ self ].
-	edgeBuilderDo ifNil: [^ self ].
-	ebuilder := RTEdgeBuilder new
+	
+	bezier
+		follow: [ :m | self parentOf: m view: aView ];
+		tension: 0.5.
+	ebuilder := 	RTEdgeBuilder new
 		view: aView;
-		elements: elements;
-		shape: bezier.
-	edgeBuilderDo value: ebuilder.
+		elements: elements.
+	ebuilder shape shape: bezier.
+	ebuilder connectToAll: connectBezierBlock.
+	
+
 ]
 
 { #category : #private }
@@ -160,15 +165,10 @@ RTBundleBuilder >> initialize [
 	elements := RTGroup new.
 	label := RTRotatedLabel new.
 	edges := RTEdgeBuilder new.
-	layoutBuilder := RTLayoutBuilder new.
-	layoutBuilder cluster.
+	layout := RTLayoutBuilder new.
+	layout cluster.
 	bezier := RTBezierLine new.
 	connectBezierBlock := nil.
-	bezier
-		follow:  [ :m | self parentOf: m view: view ];
-		tension: 0.5.
-	self edgeBuilderDo: [:ebuilder| 
-		ebuilder connectToAll: connectBezierBlock. ].
 ]
 
 { #category : #accessing }
@@ -186,13 +186,12 @@ RTBundleBuilder >> parentOf: model view: aView [
 
 { #category : #hooks }
 RTBundleBuilder >> renderIn: aView [
-	view := aView.
 	aView addAll: elements.
 	edges
 		view: aView;
 		elements: elements;
 		connectToAll: childrenBlock.
-	layoutBuilder setUpElements: elements.
+	layout setUpElements: elements.
 	self createBezierIfNecessary: aView.
 	
 	center := elements encompassingRectangle center.

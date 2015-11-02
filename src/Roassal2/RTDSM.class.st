@@ -81,10 +81,6 @@ RTDSM >> cellSize [
 	^ 10
 ]
 
-{ #category : #'as yet unclassified' }
-RTDSM >> cellshape [
-]
-
 { #category : #UI }
 RTDSM >> colorForDependency [
 	^ Color red alpha: 0.4
@@ -137,6 +133,25 @@ RTDSM >> createElements [
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 
+]
+
+{ #category : #'as yet unclassified' }
+RTDSM >> createShapeBuilder [
+	| sb |
+	sb := super createShapeBuilder.
+	sb shape: self defaultCellShape.
+	^ sb
+]
+
+{ #category : #UI }
+RTDSM >> defaultCellShape [
+	^ RTBox new
+		size: self cellSize;
+		color:
+				[ :assoc | 
+			(self isAssocDependent: assoc)
+				ifTrue: [ self colorForDependency ]
+				ifFalse: [ self colorForNonDependency ] ]
 ]
 
 { #category : #UI }

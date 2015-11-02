@@ -2177,6 +2177,50 @@ AAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleNestingElementsInBars [
+
+| b ds back barElements someElements |
+b := RTGrapher new.
+
+ds := RTData new.
+ds barShape.
+barElements := ds points: #(1 2 3).
+b add: ds.
+
+b axisX noTick.
+b build.
+
+
+#(1 2 3) do: [ :value |
+	back := b view elementFromModel: value.
+	someElements := (RTBox new color: Color red) elementsOn: (1 to: back model * 20).
+	b view addAll: someElements.
+
+	RTFlowLayout new maxWidth: back trachelShape width; on: someElements.
+	someElements translateTo: back position.
+	(RTConstraint  on: someElements background: back)
+		top ; center ; inner; padding: 5; move.
+].
+
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleNestingElementsInBarsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAB/0lEQVR4XuXbMYrCQACG0ZxK
+j+Wt1NIbCFpaiI02EVHRlAELAxaTJZHtsmMhZmPeDzLtZh6fgqxJWfrr0hL/CnwQfz6ID+LP
+B/FB/PkgPog/H8QH8eeD+PNBfBB/PogP4s8H8UH8+SA+iD8fxJ8P4oP480F8EH8+iA/izwfx
+Qfz1AyTLslCd+/0++NfZAZDz+Ryqrdfr0IQ1n887DXW9XsPhcChfve73e+jFW9Y3gBSDQX3p
+sdMHaREkm07ri4+dPohfiF+IX4hfiA/iF+IX4oP4hXx7IcPhs4TI6YO0Wchk8iwhcvogfiF+
+Ib0o5HK51H/odrsNTQ/bBsjtdgt5npevXo/HI/S+kOVyGYqiCLvdLvxXIdWl5qNRfXmxs+lS
+/c+QDoL4nyF+IT6IX4hfiA/iF+IX4oP4hfiF+IX4heiFjMfPEiKnD9IiSK/+Ue73S8XVahV8
+kA6AzGaz+svFxWLxFsg7F+ODfOAtq7qYMknqh4+dPkiLIH4hPSrkHUwf5AOF+CB+IX4hfiF+
+IX4hfiE+iA/ig/ggDkiaptHfqfsgLYNsNps/f6dePezpdArH45F5VV+0dvoty58P4oP480F8
+EH8+iA/izwfx54P4IP58EB/Enw/ig/jzQXwQfz6IPx/EB/Hng/gg/nwQH8SfD+KD+PNB/Pkg
+Pog/H+Qb9wNAW4BOOD56cQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTGrapherExample >> examplePointAspects [
 	| b ds |
 	b := RTGrapher new.
