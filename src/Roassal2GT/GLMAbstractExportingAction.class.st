@@ -18,7 +18,7 @@ GLMAbstractExportingAction >> execute [
 						extensions: self extensions
 						path: nil.
 	fileName notNil ifTrue: [ 
-		self doExportToFull: fileName fullName ]
+		self doExportToFull: fileName asAbsolute ]
 ]
 
 { #category : #hooks }
