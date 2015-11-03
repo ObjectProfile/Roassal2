@@ -28,7 +28,8 @@ Class {
 		'shouldMoveBehind',
 		'shouldNotBeUsedInLayout',
 		'createdEdges',
-		'viewHasBeenManuallySet'
+		'viewHasBeenManuallySet',
+		'actions'
 	],
 	#category : #'Roassal2-Builder-Common'
 }
@@ -133,6 +134,7 @@ RTEdgeBuilder >> edgeFrom: source to: target [
 	| edge |
 	edge := super edgeFrom: source to: target.
 	shouldNotBeUsedInLayout ifFalse: [ edge notUseInLayout ].
+	self processEdge: edge.
 	^ edge
 ]
 
@@ -177,7 +179,20 @@ RTEdgeBuilder >> initialize [
 	shouldNotBeUsedInLayout := true.
 	
 	"The view has to be explicitely set by the end-user"
-	viewHasBeenManuallySet := false
+	viewHasBeenManuallySet := false.
+	
+	actions := OrderedCollection new
+]
+
+{ #category : #'public labelling' }
+RTEdgeBuilder >> label: twoArgBlock [
+	"Method useful to label edges. The argument is a two arg block that accept the starting object model and the ending object model. The block has to return a String that will be used to label the edge"
+	actions add: [ :edge | 
+		| lbl lblEl |
+		lbl := twoArgBlock value: edge from model value: edge to model.
+		lblEl := RTLabel elementOn: lbl.
+		view add: lblEl.
+		TRConstraint stick: lblEl between: edge from and: edge to ] 
 ]
 
 { #category : #'private - utility' }
@@ -224,6 +239,11 @@ RTEdgeBuilder >> objects: someObjectsOrABlock [
 	self assert: [ viewHasBeenManuallySet ] description: 'A view has to be set, please use #view:'.
 	self toObjects: someObjectsOrABlock.
 	self fromObjects: someObjectsOrABlock.
+]
+
+{ #category : #'private - utility' }
+RTEdgeBuilder >> processEdge: anEdge [
+	actions do: [ :action | action value: anEdge ]
 ]
 
 { #category : #'private - utility' }
