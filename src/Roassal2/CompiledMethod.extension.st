@@ -61,7 +61,6 @@ CompiledMethod >> dependentClasses [
 					((l isVariableBinding 
 					and: [ l value notNil ]) 
 					and: [ l value isBehavior ])  ifTrue: [ cll add: l value ] ].
-	cll add: self superclass.
 	^ cll asArray
 ]
 
