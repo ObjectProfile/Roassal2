@@ -9,7 +9,7 @@ GLMSVGExportingAction >> doExportToFull: fileName [
 
 	RTSVGExporter 
 		exportBuilderAsSVG: self roassalView
-		filename: fileName fullName
+		filename: fileName asAbsolute
 ]
 
 { #category : #hooks }
