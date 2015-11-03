@@ -1680,6 +1680,48 @@ Acnf8gOSv+UHJD8g+Vt+QPIDkr/lB+R/3v4B+vM9Sl2AdzAAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleLabelsInBar [
+
+| b ds |
+b := RTGrapher new.
+
+ds := RTData new.
+ds barShape.
+barElements := ds points: #(1 2 3 2 1).
+b add: ds.
+
+b axisX noTick.
+b build.
+
+
+ds barShape createdElements do: [ :back |
+	someElements := (RTLabel new color: Color red) elementsOn: (1 to: back model * 3).
+	b view addAll: someElements.
+
+	RTFlowLayout new maxWidth: back trachelShape width; on: someElements.
+	someElements translateTo: back position.
+	(RTConstraint  on: someElements background: back)
+		top ; center ; inner; padding: 5; move.
+].
+
+^ b 
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleLabelsInBarIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABwUlEQVR4XuXavYrCQBSAUd//
+NcTW3krBEMFOIiRWBl/An0JS3UjCVq6Fu7jrmPPBYCMhMwenuDhqW7+UGvlH4IP4+SA+iJ8P
+4oP4+SA+iJ8P4oP4+SB+PogP4ueD+CB+PogP4ueD+CB+PoifD+KD+PkgPoifD+KD+PkgPojf
+MEB2u110n3meh3+cCYCUZRnX6zUmk0k8wprP5/+2mcPhEPv9vr1fl8sl/CvrKx/EB/FBfBAf
+xAfxQXwQH8QH8UF8EB/EB/FBfBAfxAdJBaSu636zq9Xq26arqnrJcPF0OsXxeGzvV9M08RuQ
+Z5/3kSCLxSLO53Os1+v4q1/Iswf96u/5V5YP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID7I
+sECyLOs3MZvN/FlWCiDj8bgfLk6n0x+DvOugU4Z765Xlg/ggPogP4oP4ID6ID+KD+CA+iA/i
+g/ggPogPMnCQoij6l9tut/4sK5Vpb9dyuXz4V9IObLPZMKsbtCZ9Zfn5ID6Inw/ig/j5ID6I
+nw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P4oP4+SA+iJ8P4oP4+SB+PogP4ueDfGI3
+wxBGiYmHNxEAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleLinesAndBars [
 
 | b d |
