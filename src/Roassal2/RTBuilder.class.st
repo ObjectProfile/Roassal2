@@ -150,13 +150,6 @@ RTBuilder >> openIn: aView [
 	^ aView openTitled: title
 ]
 
-{ #category : #copying }
-RTBuilder >> postCopy [
-	super postCopy.
-	shapeBuilder := shapeBuilder copy.
-	interactionBuilder := interactionBuilder copy.
-]
-
 { #category : #'public-ui' }
 RTBuilder >> render [
 	self renderIn: self view
