@@ -3583,6 +3583,54 @@ QPRNH4g+EH3TB6IPRN/0gegD0Td9IPpA9E0fiL5F7A9htB21NeOvdgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTMondrianExample >> exampleStyledLabels [
+
+| b |
+b := RTMondrian new.
+b shape styledLabel 
+	height: 80;
+	bold.
+b node: 'Hello'.
+b shape styledLabel 
+	height: 80;
+	italic.
+b node: 'World'.
+^ b
+]
+
+{ #category : #icons }
+RTMondrianExample >> exampleStyledLabelsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFhUlEQVR4XuWZh0stPRDF/c9t
+2FDE3isWsPeCvVcQGxasWLFiQezj986+N0vu7l7dveKHcA4E705ys0l+yczkGvXxwa/fpCj+
+JeAHwi9+IPxA+MUPhB8Iv/iB8APhFz8QfiD84gfCL34g/ED4xQ+EHwi/+IHwA+EXPxB+IPzi
+B8IvfiD8QPjFD4QfCL/4gfAD4Rc/EH4g/OIHwi9+IPxA+MUPhB8Iv/iB8APhFz8QfiD84gfC
+L34g/ED49VuAnJ+fy9ramlVMu9pQz4/gfwQyPDz8ERMTYxVTakM9k8bGxuSrOUdhYeLi4iTI
+gv52IO/v73J3dydPT0+e84q07rvCnGtra4UOyPz8vITrv729PWxdR0eHVffw8CA/cTrQ997e
+Hh8Qfe/R0VHIvC4vL0Xfvb6+HlKHUwE7oPzEmBITE8XPOn4LyOLiotTV1UlOTo709PS4gnQk
+QOAyBgcHJT8/XyoqKmRkZCTwAlVVVXlOPiMjQxoaGqy6l5eXkH7Ly8sl0o33lTAn9N3f3y8/
+BiQ3N9febWaZmZmRSIFMTEx49olyeHgoQXy1851zc3MSGxsr4+PjroVH37AtLy+73jE1NWVt
+ONSnp6fLxsZG2LX6444+5I+wOdG+ubnZatvd3W09Pz4+ur57dXUlcKPR0dESHx8vFhAM9Pb2
+1lV6e3vFa3LFxcW2HZ8xmOTkZNt2fX0tQYFsbm6GwOjs7JTS0tIQG4K1XyDZ2dl227e3N6uf
+ra0tjNUFJC0tTXB6TNv+/j7aWW2bmpqkpaXFHgvGarYFSNi3t7etv0lJSYL10OQANrzDOc76
++nrRA4H5ZmZm/gXip6gQlNSGQGW+AGBh7+rqCgxEJ49iZjkmKD/+HdD+9W23LSsrk5KSEjE3
+k2ppacl6Pj09tdvv7u5aNrgxs2+1Z2VlhdjhXmEHBN2MKsQq1E1PT3u6yIWFBXG5rCBAQDKc
+GxsaGhLTBfoFcn9/b/c5MDDgWnQF7cfH6wLPzs5a/eBUmJDxuaCgQMyx1NTU2M83NzdWe0D0
+4w7hovCMoA052+spN6Wex3nSIoohCQkJ4hegXyCTk5N2n15+3HQXfjMsDdrwzWZiYAZX9fWm
+K8zLy5PP3CPqkDToM/qG7eTkRPzcPRBHvE5fxEBM1/JJCXRC1K+rn3eOQxfODxBkfdoOwRL+
+3PluvFfjiul24W5ga2tr81wPBHjU456jNgRina+fu4fegxDMne3hNgMDUd8XZLd+BcSMS6bv
+N4Ou33diceA+1A2a2dnz87MdfLFrsZheLvf4+Fj83CWwqHjG9/zePT6bR2NjY3AgZmrq/NHw
+OxdDtaWmpopXDo9SWFgofjIs+OiioiJx/kyxsrIimgUqGLMe/YdbLD0d5px1t7++voqfu4fG
+m3DzQF1E9xDTPfX19cnZ2ZlgcprGeX1/dXVVnN9vbW0VPc5wE2pHIER2oncHtTtv3k7phHGh
+9FpYHQ9gIdsKd6FENuWVKVVXV7vcnzNdVnndPfTUIg4721dWVkrEQA4ODj6NIxpE4RO9MjUz
+DpmnRHeoV/FyZU7pwjk3gNMloWBxnPV6n9BxoWiQd6bc2taMJ16b1hkT1Q646B8bGs960Y74
+po40Un+G0ILd4kzldLei4LJl5vMo2Blm+9HRUevWqvW4He/s7EiQ37DMtNYrBQ0XtPX95pzg
+9i4uLlzt9e4RTikpKZ4/YppzR0EG+S/BEFxA+f9jyPQPKn7xA+EHwi9+IPxA+MUPhB8Iv/iB
+8IsfCD8QfvED4QfCL34g/ED4xQ+EHwi/+IHwix8IPxB+8QPhB8IvfiD8QPjFD4QfCL/4gfCL
+Hwg/EH7xA+EHwi9+IPxA+MUPhB8Iv/iB8IsfCD8QfvED4QfCL34g/ED49bP6D68in6oZc4LN
+AAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTMondrianExample >> exampleSystemComplexity [
 
 	| b |
