@@ -143,6 +143,7 @@ RTData >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 
 { #category : #obsolete }
 RTData >> histogramWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
+	"Obsolete: use #barChartWithBarTitle: instead"
 	"Draw an histogram with title"
 	self barShape.
 	elementActions add: [ :elems | 
