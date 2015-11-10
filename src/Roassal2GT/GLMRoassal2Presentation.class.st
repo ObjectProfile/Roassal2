@@ -107,6 +107,7 @@ GLMRoassal2Presentation >> renderOn: aView [
 								self entity asGlamorousMultiValue,
 								self asGlamorousMultiValue ).
 	aView build.
+	"aView view canvas focusOnCenterScaled."
 	self shouldPopulateSelection ifTrue: [
 		aView view elements do: [:each |  
 			each when: TRMouseLeftClick do: [:event | 
