@@ -29,9 +29,20 @@ Class {
 	#category : #'Roassal2-Shapes'
 }
 
+{ #category : #'public - configuration' }
+RTStyledLabel >> bold [
+	emphasis add: self emphasisClass bold
+]
+
 { #category : #accessing }
 RTStyledLabel >> emphasis: aValueOrOneArgBlock [
 	self emphasisElement: [ :anElement | aValueOrOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #'private - utility' }
+RTStyledLabel >> emphasisClass [
+
+	^ TRPlatform current textEmphasisClass
 ]
 
 { #category : #accessing }
@@ -47,7 +58,27 @@ RTStyledLabel >> emphasisFor: anElement [
 { #category : #initialization }
 RTStyledLabel >> initialize [
 	super initialize.
-	emphasis := #()
+	emphasis := OrderedCollection new
+]
+
+{ #category : #'public - configuration' }
+RTStyledLabel >> italic [
+	emphasis add: self emphasisClass italic
+]
+
+{ #category : #'public - configuration' }
+RTStyledLabel >> narrow [
+	emphasis add: self emphasisClass narrow
+]
+
+{ #category : #'public - configuration' }
+RTStyledLabel >> normal [
+	emphasis add: self emphasisClass normal
+]
+
+{ #category : #'public - configuration' }
+RTStyledLabel >> struckOut [
+	emphasis add: self emphasisClass struckOut
 ]
 
 { #category : #'trachel shape production' }
@@ -62,6 +93,11 @@ RTStyledLabel >> trachelShapeForOneLine: anElement [
 		fontName: (self fontNameFor: anElement);
 		emphasis: (self emphasisFor: anElement).
 	^ shape
+]
+
+{ #category : #'public - configuration' }
+RTStyledLabel >> underlined [
+	emphasis add: self emphasisClass underlined
 ]
 
 { #category : #'trachel shape production' }
