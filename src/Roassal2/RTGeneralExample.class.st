@@ -1,3 +1,6 @@
+"
+This class contains some examples. These examples are not accessible from the World menu.
+"
 Class {
 	#name : #RTGeneralExample,
 	#superclass : #RTObject,
@@ -349,6 +352,29 @@ RTGeneralExample >> colorWaves [
 	v when: TRMouseMove do: [ :evt | mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
 	v open
+]
+
+{ #category : #morph }
+RTGeneralExample >> combiningRoassalAndMorphic [
+
+	"Example by Peter Uhnak"
+	|container button view es e|
+
+	view := RTView new.
+	container := BorderedMorph new.
+	(button := PluggableButtonMorph new)
+		label: 'I am a morph';
+		actionBlock: [ (view elements, view edges) do: [ :each | each color: Color random. each signalUpdate ] ].
+
+	es := RTBox new color: Color black; size: 50; elementsOn: #(1 2).
+	e := RTLine new color: Color black; edgeFrom: es first to: es second.
+	view addAll: es; add: e.
+	es second translateBy: 100 @ 200.
+
+	container addMorph: view canvas buildMorph.
+	container addMorph: button.
+
+	container openInWindow.
 ]
 
 { #category : #edges }
