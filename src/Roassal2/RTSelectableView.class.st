@@ -23,8 +23,8 @@ RTSelectableView >> announcer [
 ]
 
 { #category : #accessing }
-RTSelectableView >> announcer: anObject [
-	announcer := anObject.
+RTSelectableView >> announcer: anAnnouncer [
+	announcer := anAnnouncer.
 ]
 
 { #category : #accessing }
@@ -43,7 +43,7 @@ RTSelectableView >> dragViewWithEvent: e [
 	e signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTSelectableView >> getOrCreateShapeForView [
 	^ (view attributes includesKey: self key) 
 		ifTrue: [ view attributes at: self key ]
@@ -54,7 +54,7 @@ RTSelectableView >> getOrCreateShapeForView [
 			s ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTSelectableView >> getSelectedElementsWith: s [
 	| g r |
 	g := RTGroup new. 
@@ -67,7 +67,7 @@ RTSelectableView >> getSelectedElementsWith: s [
 
 { #category : #accessing }
 RTSelectableView >> group [
-	^ group.
+	^ group
 ]
 
 { #category : #util }
@@ -138,7 +138,7 @@ RTSelectableView >> removeDraggableViewInteraction [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTSelectableView >> removeShape [
 	(self getOrCreateShapeForView) remove.
 	view attributes removeKey: self key.
@@ -177,7 +177,7 @@ RTSelectableView >> unhighlight: aGroup [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTSelectableView >> updateSelectableShapeWithEvent: event [
 	| s newgroup |
 	s := self getOrCreateShapeForView.
@@ -196,7 +196,7 @@ RTSelectableView >> updateSelectableShapeWithEvent: event [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTSelectableView >> updateShape: s with: e [
 	"Update for box shape"
 	| p k o extent | 
