@@ -100,14 +100,15 @@ GLMRoassal2Presentation >> renderGlamorouslyOn: aRenderer [
 	^ aRenderer renderRoassal2Presentation: self
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 GLMRoassal2Presentation >> renderOn: aView [
 	self paintingBlock glamourValue: (
 								aView asGlamorousMultiValue, 
 								self entity asGlamorousMultiValue,
 								self asGlamorousMultiValue ).
 	aView build.
-	"aView view canvas focusOnCenterScaled."
+
+	aView view canvas when: TRResizeCanvasEvent do: [ :evt | aView view canvas focusOnCenterScaled ].
 	self shouldPopulateSelection ifTrue: [
 		aView view elements do: [:each |  
 			each when: TRMouseLeftClick do: [:event | 
