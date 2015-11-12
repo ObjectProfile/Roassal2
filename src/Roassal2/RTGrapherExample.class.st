@@ -1464,7 +1464,6 @@ ds dotShape rectangle size: 0.
 ds points: RTShape withAllSubclasses.
 ds y: [ :c | c rtmethods size ].
 ds barShape rectangle 
-	width: 10;
 	color: Color veryLightGray.
 ds interaction 
 	highlightColored: Color red.
