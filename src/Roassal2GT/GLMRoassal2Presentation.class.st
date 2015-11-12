@@ -42,6 +42,16 @@ GLMRoassal2Presentation >> defaultActions [
 	GLMRoassal2Action initializePresentation: self
 ]
 
+{ #category : #context }
+GLMRoassal2Presentation >> getContextFor: aView [
+	"Return the context associated to the view. It none is defined, then this method create one, and set it in view."
+	| context |
+	context :=  RTAbstractViewContext getContextFor: aView.
+	context view: aView.
+	context presentation: self. 
+	^ context
+]
+
 { #category : #'initialize-release' }
 GLMRoassal2Presentation >> initialize [ 
 	super initialize.
@@ -101,19 +111,14 @@ GLMRoassal2Presentation >> renderGlamorouslyOn: aRenderer [
 ]
 
 { #category : #rendering }
-GLMRoassal2Presentation >> renderOn: aView [
-	self paintingBlock glamourValue: (
-								aView asGlamorousMultiValue, 
-								self entity asGlamorousMultiValue,
-								self asGlamorousMultiValue ).
-	aView build.
-
-	aView view canvas when: TRResizeCanvasEvent do: [ :evt | aView view canvas focusOnCenterScaled ].
-	self shouldPopulateSelection ifTrue: [
-		aView view elements do: [:each |  
-			each when: TRMouseLeftClick do: [:event | 
-				each model ifNotNil: [ self selection: each model ] ] ] ].
-	self view: aView
+GLMRoassal2Presentation >> renderOn: aViewOrBuilder [
+	self paintingBlock
+		glamourValue:
+			aViewOrBuilder asGlamorousMultiValue , self entity asGlamorousMultiValue
+				, self asGlamorousMultiValue.
+	aViewOrBuilder build.
+	self useContextToInitialize: aViewOrBuilder view.
+	self view: aViewOrBuilder
 ]
 
 { #category : #accessing }
@@ -125,6 +130,14 @@ GLMRoassal2Presentation >> shouldPopulateSelection [
 GLMRoassal2Presentation >> shouldPopulateSelection: aBoolean [
 	"Configure whether elements present in the view should be clickable or not"
 	shouldPopulateSelection := aBoolean
+]
+
+{ #category : #context }
+GLMRoassal2Presentation >> useContextToInitialize: roassalView [
+	"Use the context of the view to initilize the view"
+	| context |
+	context := self getContextFor: roassalView.
+	context adjustView: roassalView inPresentation: self
 ]
 
 { #category : #accessing }
