@@ -4,12 +4,15 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMSelectableAction >> execute [
-	self roassalView @ RTSelectableView
+	| int |
+	int := RTSelectableView new.
+	self roassalView @ int.
+	int when: RTSelectionEnd do: [ :evt | self inform: 'hello' ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMSelectableAction >> title [
 	^ 'Add selection'
 ]
