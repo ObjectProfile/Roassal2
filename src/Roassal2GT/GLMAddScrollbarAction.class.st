@@ -4,13 +4,13 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMAddScrollbarAction >> execute [
 	self roassalView @ RTDoubleScrollBar.
 	self roassalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMAddScrollbarAction >> title [
 	^ 'Add scrollbars'
 ]
