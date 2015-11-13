@@ -213,6 +213,19 @@ RTCompositeShapeTest >> testCenterVerticalLineLayout2 [
 ]
 
 { #category : #tests }
+RTCompositeShapeTest >> testContainsShapeInstanceOf [
+
+	| shape |
+	shape := RTCompositeShape new.
+	shape allOfSameSizeWithPadding.
+	shape add: (RTBox new color: Color white; borderWidth: 2; borderColor: Color black).
+	shape add: (RTEditableLabel new height: 30).
+	self assert: (shape containsShapeInstanceOf: RTLabel).
+	self assert: (shape containsShapeInstanceOf: RTEditableLabel).	
+	self assert: (shape containsShapeInstanceOf: RTBox).
+]
+
+{ #category : #tests }
 RTCompositeShapeTest >> testRemoving [
 
 	| s e v |
@@ -227,4 +240,17 @@ RTCompositeShapeTest >> testRemoving [
 	
 	e remove.
 	self assert: v numberOfElements equals: 0.
+]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testTextFor [
+
+	| shape e |
+	shape := RTCompositeShape new.
+	shape allOfSameSizeWithPadding.
+	shape add: (RTBox new color: Color white; borderWidth: 2; borderColor: Color black).
+	shape add: (RTEditableLabel new height: 30).
+	e := shape elementOn: 'hello'.
+	
+	self assert: (shape textFor: e) equals: 'hello'
 ]
