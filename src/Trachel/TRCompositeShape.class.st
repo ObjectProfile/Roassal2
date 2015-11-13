@@ -89,6 +89,12 @@ TRCompositeShape >> allOfSameSizeWithPadding [
 	self shapesDo: [ :s | s extent: maxSize + padding ]
 ]
 
+{ #category : #accessing }
+TRCompositeShape >> allShapes [
+	"Return all the shapes contained in me."
+	^ shapeAndOffsets collect: #first as: Array
+]
+
 { #category : #events }
 TRCompositeShape >> announce: anEvent [
 	self shapesDo: [ :s | s announce: anEvent ]
@@ -344,6 +350,12 @@ TRCompositeShape >> shapesDo: aBlock [
 	"collect:thenDo: does not create temporary collection > improves performance"
 
 	shapeAndOffsets collect: #first thenDo: aBlock
+]
+
+{ #category : #'public - forwarding' }
+TRCompositeShape >> shapesInstancesOf: class [
+	"Return the list of shapes instances or subinstances of the argument class"
+	^ self allShapes select: [ :s | s isKindOf: class ]
 ]
 
 { #category : #actions }
