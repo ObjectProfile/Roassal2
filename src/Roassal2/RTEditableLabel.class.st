@@ -72,11 +72,14 @@ RTEditableLabel >> onPressingEnter: ablock [
 
 { #category : #rendering }
 RTEditableLabel >> showTextMorphFor: anElement [
+	"Return the created morph"
 	| shape rect  trachelShape str posBlock clazz |
+	self assert: [ anElement view notNil ] description: 'The argument should be within a view'.
 	shape := anElement shape.
 	rect := anElement encompassingRectangle.
 	anElement trachelShape class = TRCompositeShape ifTrue: [ 
-		trachelShape := anElement trachelShape shapes first.
+		"trachelShape := anElement trachelShape shapes first."
+		trachelShape := (anElement trachelShape shapesInstancesOf: TRLabelShape) first.
 		clazz := RubEditingArea ]
 	ifFalse: [ 
 		trachelShape := anElement trachelShape.
@@ -95,7 +98,9 @@ RTEditableLabel >> showTextMorphFor: anElement [
 		pos := anElement trachelShape isFixed ifTrue: 
 			[ anElement position ] ifFalse: 
 			[ anElement view canvas camera fromSpaceToPixel: anElement position ].
-		fieldArea position: anElement view canvas morph bounds origin+ pos - (fieldArea extent /2)].
+		anElement view canvas morph ifNotNil: 
+			[ fieldArea position: anElement view canvas morph bounds origin+ pos - (fieldArea extent /2) ] ].
+
 	posBlock value.
 	editLabelShape ifFalse: [ 
 		fieldArea minimumWidth: rect width.
@@ -106,6 +111,7 @@ RTEditableLabel >> showTextMorphFor: anElement [
 		[ evt value value: fieldArea text asString ] ] .
 	updateMorphExtent ifTrue: [ 
 		fieldArea announcer subscribe: RubTextChanged send: #value to: [ posBlock value ] ].
+	^ fieldArea
 	
 ]
 

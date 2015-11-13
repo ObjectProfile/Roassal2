@@ -139,15 +139,21 @@ RTCompositeShape >> colorElement: aOneArgBlock [
 	self allShapes do: [ :s | s colorElement: aOneArgBlock ]
 ]
 
+{ #category : #'public - forwarding' }
+RTCompositeShape >> containsShapeInstanceOf: class [
+	"Return true if the shape contains at least one of shape, subclass of the argument class"
+	^ (self shapesInstancesOf: class) notEmpty
+]
+
 { #category : #public }
 RTCompositeShape >> edgeFrom: el1 to: el2 [
 	^ (RTEdge from: el1 to: el2) addShape: self
 ]
 
-{ #category : #accessing }
+{ #category : #'public - forwarding' }
 RTCompositeShape >> fillColor: aOneArgBlockOrColorOrSymbol [
 	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
-	self allShapes do: [ :s | (s isKindOf: RTAbstractElementShape) ifTrue: [ s fillColor: aOneArgBlockOrColorOrSymbol ] ]
+	(self shapesInstancesOf: RTAbstractElementShape) do: [ :s | s fillColor: aOneArgBlockOrColorOrSymbol ]
 ]
 
 { #category : #'public - layout' }
@@ -184,9 +190,22 @@ RTCompositeShape >> setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape
 			ss do: [ :tupple | tupple first addCallback: b ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'public - forwarding' }
+RTCompositeShape >> shapesInstancesOf: class [
+	"Return the list of shapes instances or subinstances of the argument class"
+	^ self allShapes select: [ :s | s isKindOf: class ]
+]
+
+{ #category : #'public - forwarding' }
 RTCompositeShape >> textColor: aOneArgBlockOrColorOrSymbol [
-	self allShapes do: [ :s | (s isKindOf: RTLabel) ifTrue: [ s color: aOneArgBlockOrColorOrSymbol ] ]
+	(self shapesInstancesOf: RTLabel)
+		do: [ :s | s color: aOneArgBlockOrColorOrSymbol ]
+]
+
+{ #category : #'public - forwarding' }
+RTCompositeShape >> textFor: anElement [
+	^ (self shapesInstancesOf: RTLabel)
+		first textFor: anElement
 ]
 
 { #category : #public }
