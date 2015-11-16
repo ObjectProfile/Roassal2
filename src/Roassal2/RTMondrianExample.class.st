@@ -3036,7 +3036,7 @@ eiD6P5rJTjj+5tZzAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTMondrianExample >> exampleRadialTree [
-| b |
+	| b |
 	b := RTMondrian new.
 	b shape circle size: 10.
 	b nodes: (1 to: 100).
