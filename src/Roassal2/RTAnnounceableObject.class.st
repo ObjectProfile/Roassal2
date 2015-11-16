@@ -81,7 +81,14 @@ RTAnnounceableObject >> attributes [
 
 { #category : #testing }
 RTAnnounceableObject >> getInteractionForClass: anInteractionClass [
+	"Return the Announcement subscription for the interaction"
 	^ self announcer subscriptions getInteractionForClass: anInteractionClass
+]
+
+{ #category : #testing }
+RTAnnounceableObject >> getInteractionsForClass: anInteractionClass [
+	"Return the Announcement subscriptions for the interaction"
+	^ self announcer subscriptions getInteractionsForClass: anInteractionClass
 ]
 
 { #category : #attributes }
@@ -100,6 +107,7 @@ RTAnnounceableObject >> hasAttributes [
 
 { #category : #testing }
 RTAnnounceableObject >> hasInteraction: anInteractionClass [
+	"Return true or false if the receiver has an interaction. Note that the argument has to be an interaction class. And not an event"
 	self announcer subscriptions ifNil: [ ^ false ].
 	
 	^ self announcer subscriptions handleSubscriberClass: anInteractionClass
@@ -113,6 +121,13 @@ RTAnnounceableObject >> removeAttributeAt: aKey [
 { #category : #attributes }
 RTAnnounceableObject >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
+]
+
+{ #category : #removing }
+RTAnnounceableObject >> removeInteractionIfPresent: anInteractionClass [
+	"Remove all the callbacks associated to the interaction."
+	(self hasInteraction: anInteractionClass) ifFalse: [ ^ self ].
+	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
 { #category : #interaction }
