@@ -21,12 +21,12 @@ RTDraggable >> accept: aVisitor with: args [
 	aVisitor visitDraggableInteraction: self with: args
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTDraggable >> element [
 	^ element
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDraggable >> initializeElement: el [
 	element ifNil: [ 
 		element := el.

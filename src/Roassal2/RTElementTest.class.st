@@ -39,6 +39,17 @@ RTElementTest >> testAddingAndRemoving [
 	self assert: e view isNil.
 ]
 
+{ #category : #events }
+RTElementTest >> testAddingInteraction [
+
+	| e |
+	e := RTElement new.
+	e @ RTDraggable.
+	self assert: e announcer numberOfSubscriptions equals: 1.
+	e @ RTPopup.
+	self assert: e announcer numberOfSubscriptions equals: 4.
+]
+
 { #category : #attributes }
 RTElementTest >> testAttributes [
 	| el |
@@ -46,6 +57,11 @@ RTElementTest >> testAttributes [
 	self deny: el hasAttributes.
 	el attributes at: #oldColor put: Color black.
 	self assert: el hasAttributes.
+]
+
+{ #category : #events }
+RTElementTest >> testBasicEvent [
+	self assert: RTElement new announcer numberOfSubscriptions equals: 0.
 ]
 
 { #category : #'composite shape' }
@@ -296,6 +312,17 @@ RTElementTest >> testRemoveWithEdges [
 	
 	e1 remove.
 	e2 remove.
+]
+
+{ #category : #events }
+RTElementTest >> testRemovingEvent [
+
+	| e |
+	e := RTElement new.
+	e @ RTDraggable.
+	e @ RTPopup.
+	e removeInteractionIfPresent: RTPopup.
+	self assert: e announcer numberOfSubscriptions equals: 1.
 ]
 
 { #category : #tests }

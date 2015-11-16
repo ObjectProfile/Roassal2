@@ -127,12 +127,14 @@ RTSelectableView >> key: anObject [
 
 { #category : #initialization }
 RTSelectableView >> removeDraggableViewInteraction [
-	| a int |
+	view removeInteractionIfPresent: RTDraggableView
+	
+"	| a int |
 	a := view canvas announcer.
 	(view hasInteraction: RTDraggableView) ifTrue: [
 		int := view getInteractionForClass: RTDraggableView.
 		a unsubscribe: int ]
-	
+"	
 	
 	
 	
