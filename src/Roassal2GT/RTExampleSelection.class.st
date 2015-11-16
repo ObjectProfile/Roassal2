@@ -61,7 +61,6 @@ RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 { #category : #ui }
 RTExampleSelection >> gtInspectorRoassalViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
-	self returnValue class = RTView ifFalse: [ ^ self ].
 	composite roassal2
 		title: 'Canvas';
 		initializeView: [ self returnValue ]
@@ -98,23 +97,12 @@ RTExampleSelection >> iconForm [
 	^ self icon
 ]
 
-{ #category : #testing }
-RTExampleSelection >> ignoreCache [
-	^ true
-]
-
 { #category : #public }
 RTExampleSelection >> initializeIcon [
-	| icon64Mime iconSelector |
-	iconSelector := (self method selector, 'Icon') asSymbol.
-	(self provider canPerform: iconSelector) ifFalse: [ ^ self ].
-	icon64Mime := [ self provider perform: iconSelector ]
-		on: Error
-		do: [ ^ self ].
-	form := [ TRPlatform current formClass fromBinaryStream: 
-			(TRPlatform current mimeDecodeToBytes: icon64Mime readStream) ]
-		on: Error
-		do: [ ^ self ].
+	|icon64Mime|
+	icon64Mime := self provider perform: (self method selector, 'Icon') asSymbol.
+	form := TRPlatform current formClass fromBinaryStream: 
+		(TRPlatform current mimeDecodeToBytes: icon64Mime readStream) 
 ]
 
 { #category : #'*Roassal2GT-Spotter' }

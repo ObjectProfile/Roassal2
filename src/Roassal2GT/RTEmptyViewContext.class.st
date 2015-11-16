@@ -5,7 +5,6 @@ Class {
 }
 
 { #category : #hooks }
-RTEmptyViewContext >> registerCallbacks [
-	"Do nothing. No callback has to be registered"
-
+RTEmptyViewContext >> interactionsToBeRegistered [
+	^ #()
 ]
