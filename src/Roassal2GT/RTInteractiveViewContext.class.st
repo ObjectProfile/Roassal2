@@ -4,15 +4,12 @@ Class {
 	#category : #'Roassal2GT-Glamour-Context'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTInteractiveViewContext class >> isDefault [
 	^ true
 ]
 
 { #category : #hooks }
-RTInteractiveViewContext >> registerCallbacks [
-	"Do nothing. No callback has to be registered"
-
-	self makeViewAutomaticallyResizable.
-	self makeAllElementsInTheViewAsSelectable.
+RTInteractiveViewContext >> interactionsToBeRegistered [
+	^ Array with: RTSelectableElementContextInteraction with: RTResizeableViewContextInteraction
 ]

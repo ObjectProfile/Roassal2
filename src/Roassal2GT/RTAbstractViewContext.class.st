@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2GT-Glamour-Context'
 }
 
-{ #category : #public }
+{ #category : #'private - utility' }
 RTAbstractViewContext class >> createContext [
 	"Define a new context in case none has been set"
 	^ self defaultContextClass new
@@ -20,7 +20,7 @@ RTAbstractViewContext class >> defaultContextClass [
 	^ self withAllSubclasses detect: #isDefault
 ]
 
-{ #category : #public }
+{ #category : #'private - utility' }
 RTAbstractViewContext class >> getContextFor: aView [
 	"Return the context associated to the view. It none is defined, then this method create one, and set it in view."
 	^ aView attributeAt: #GlamourContext ifAbsentPut: [ self createContext ].
@@ -34,6 +34,10 @@ RTAbstractViewContext class >> isDefault [
 
 { #category : #public }
 RTAbstractViewContext class >> setOnView: aView [
+	"Set the context on the view"
+	(aView hasAttribute: #GlamourContext) ifTrue: [ 
+		(aView attributeAt: #GlamourContext) unregisterPreviousContext
+	].
 	aView attributeAt: #GlamourContext put: self new
 ]
 
@@ -49,22 +53,10 @@ RTAbstractViewContext >> canvas [
 	^ view canvas
 ]
 
-{ #category : #'available callbacks' }
-RTAbstractViewContext >> makeAllElementsInTheViewAsSelectable [
-	self view elements do: [:each |  
-			each when: TRMouseLeftClick do: [ :event | 
-				each model ifNotNil: [ self presentation selection: each model ] ] ].
-]
-
-{ #category : #'available callbacks' }
-RTAbstractViewContext >> makeViewAutomaticallyResizable [
-	self canvas
-		when: TRResizeCanvasEvent
-		do: [ :evt | 
-			| es |
-			es := self view elements asGroup encompassingRectangle. 
-			(es width + es height) > 4000
-				ifFalse: [ self canvas focusOnCenterScaled ] ]
+{ #category : #hooks }
+RTAbstractViewContext >> interactionsToBeRegistered [
+	"Override to return a list of classes that have be to registered"
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -79,10 +71,25 @@ RTAbstractViewContext >> presentation: aPresentation [
 	presentation := aPresentation
 ]
 
-{ #category : #hooks }
+{ #category : #public }
 RTAbstractViewContext >> registerCallbacks [
-	"This method should be overriden to define relevant callbacks"
-	self subclassResponsibility
+	"Register the different interactions on the view"
+	self interactionsToBeRegistered 
+		do: [ :intClass | self view @ (intClass new presentation: self presentation) ]
+]
+
+{ #category : #public }
+RTAbstractViewContext >> removeFromView [
+	"Remove the context from the view. All the callbacks due to the interaction are removed as well"
+	self view removeAttributeAt: #GlamourContext ifAbsent: [ ].
+
+	self interactionsToBeRegistered do: [ :intClass | 
+		self view removeInteractionIfPresent: intClass ]
+]
+
+{ #category : #public }
+RTAbstractViewContext >> unregisterPreviousContext [
+	(self class getContextFor: self view) removeFromView
 ]
 
 { #category : #accessing }
@@ -92,6 +99,7 @@ RTAbstractViewContext >> view [
 
 { #category : #accessing }
 RTAbstractViewContext >> view: aView [
+	"Set the view in the context"
 	self assert: [ aView isKindOf: RTView ] description: 'Only a roassal view may be provided'.
 	view := aView
 ]
