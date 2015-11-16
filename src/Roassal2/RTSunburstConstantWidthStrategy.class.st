@@ -2,7 +2,8 @@ Class {
 	#name : #RTSunburstConstantWidthStrategy,
 	#superclass : #RTSunburstStrategy,
 	#instVars : [
-		'arcWidth'
+		'arcWidth',
+		'centerWidth'
 	],
 	#category : #'Roassal2-Builder-Sunburst'
 }
@@ -17,10 +18,21 @@ RTSunburstConstantWidthStrategy >> arcWidth: aNumber [
 	arcWidth := aNumber
 ]
 
+{ #category : #accesing }
+RTSunburstConstantWidthStrategy >> centerWidth [
+	^ centerWidth
+]
+
+{ #category : #accesing }
+RTSunburstConstantWidthStrategy >> centerWidth: anObject [
+	centerWidth := anObject
+]
+
 { #category : #initialization }
 RTSunburstConstantWidthStrategy >> initialize [
 	super initialize.
 	self arcWidth: 50.
+	self centerWidth: 0.
 ]
 
 { #category : #public }
@@ -35,7 +47,7 @@ RTSunburstConstantWidthStrategy >> on: elements [
 		
 		depth isZero ifTrue: [ 
 			arc alphaAngle: 0 betaAngle: 360 innerRadius: 0
-				externalRadius: (self hasCenter ifTrue: [ self arcWidth ] ifFalse: [ 0 ]). ]
+				externalRadius: (self hasCenter ifTrue: [ self arcWidth ] ifFalse: [ self centerWidth ]). ]
 		ifFalse: [ 
 			radius := parent trachelShape externalRadius + self radialSpacing.
 			arc
