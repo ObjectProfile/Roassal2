@@ -1522,7 +1522,7 @@ b shape circle
 b nodes: RTObject withAllSubclasses.
 
 b normalizer
-	normalizeColor: #numberOfLinesOfCode using: (ColorPalette sequential colors: 9 scheme: 'PuBu') using: #ln.
+	normalizeColor: #numberOfLinesOfCode using: (RTColorPalette sequential colors: 9 scheme: 'PuBu') using: #ln.
 	
 b layout grid.
 b build.
@@ -1539,7 +1539,7 @@ b shape circle
 b nodes: RTObject withAllSubclasses.
 
 b normalizer
-	normalizeColor: #numberOfLinesOfCode using: (ColorPalette diverging colors: 11 scheme: 'PRGn') using: #ln.
+	normalizeColor: #numberOfLinesOfCode using: (RTColorPalette diverging colors: 11 scheme: 'PRGn') using: #ln.
 	
 b layout grid.
 b build.
@@ -1709,7 +1709,7 @@ b shape circle
 b nodes: RTObject withAllSubclasses.
 
 b normalizer
-	normalizeColor: #numberOfLinesOfCode using: (ColorPalette sequential colors: 9 scheme: 'YlOrRd') using: #ln.
+	normalizeColor: #numberOfLinesOfCode using: (RTColorPalette sequential colors: 9 scheme: 'YlOrRd') using: #ln.
 	
 b layout grid.
 b build.
