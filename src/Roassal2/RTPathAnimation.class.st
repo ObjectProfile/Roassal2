@@ -79,9 +79,9 @@ RTPathAnimation >> path: aString [
 ]
 
 { #category : #accessing }
-RTPathAnimation >> position: index [
+RTPathAnimation >> position: i [
 	| r |
-	r := (curves at: index) value.
+	r := (curves at: i) value.
 	^ r first.
 ]
 
