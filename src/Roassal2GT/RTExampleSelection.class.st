@@ -61,7 +61,8 @@ RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 { #category : #ui }
 RTExampleSelection >> gtInspectorRoassalViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
-	self returnValue class = RTView ifFalse: [ ^ self ].
+	((Array with: RTView with: RTBuilder) noneSatisfy: [ :c | self returnValue class inheritsFrom: c ])
+		ifTrue: [ ^ self ].
 	composite roassal2
 		title: 'Canvas';
 		initializeView: [ self returnValue ]
