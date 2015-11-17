@@ -8,7 +8,7 @@ Class {
 RTKiviatBuilderTest >> testBasic [
 	| b |
 	b := RTKiviatBuilder new.
-	b shapes: ((ColorPalette qualitative colors: 12 scheme:'Paired') do: [:c | c alpha: 0.3]).
+	b shapes: ((RTColorPalette qualitative colors: 12 scheme:'Paired') do: [:c | c alpha: 0.3]).
 	b objects: RTAbstractCircleLayout withAllSubclasses.
 	b addMetric: #numberOfLinesOfCode.
 	b addMetric: #numberOfMethods.

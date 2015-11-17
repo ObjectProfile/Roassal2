@@ -176,8 +176,3 @@ RTComposer >> setGeneralTitle: aTitleAsString gap: gapAsPoint [
 RTComposer >> view [
 	^ view
 ]
-
-{ #category : #accessing }
-RTComposer >> view: aView [
-	view := aView
-]
