@@ -1,13 +1,13 @@
 Class {
-	#name : #ColorPaletteTest,
+	#name : #RTColorPaletteTest,
 	#superclass : #TestCase,
 	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #tests }
-ColorPaletteTest >> testDiverging [
+RTColorPaletteTest >> testDiverging [
 	| palette c c2 |
-	palette := ColorPalette diverging.
+	palette := RTColorPalette diverging.
 
 	self assert: (palette colors: 11 scheme: 'RdGy') size equals: 11.
 	c := (palette colors: 11 scheme: 'RdGy') first.
@@ -22,9 +22,9 @@ ColorPaletteTest >> testDiverging [
 ]
 
 { #category : #tests }
-ColorPaletteTest >> testQualitative [
+RTColorPaletteTest >> testQualitative [
 	|palette |
-	palette := ColorPalette qualitative.
+	palette := RTColorPalette qualitative.
 	
 	
 	self assert: (palette colors: 9 scheme: 'Set1') size equals: 9.
@@ -32,9 +32,9 @@ ColorPaletteTest >> testQualitative [
 ]
 
 { #category : #tests }
-ColorPaletteTest >> testQualitativeError [
+RTColorPaletteTest >> testQualitativeError [
 	|palette |
-	palette := ColorPalette qualitative.
+	palette := RTColorPalette qualitative.
 	
 	
 	self should: [palette colors: 1 scheme: 'Set1'] raise: Error.
@@ -43,9 +43,9 @@ ColorPaletteTest >> testQualitativeError [
 ]
 
 { #category : #tests }
-ColorPaletteTest >> testSequential [
+RTColorPaletteTest >> testSequential [
 	| palette c1 c2 |
-	palette := ColorPalette sequential.
+	palette := RTColorPalette sequential.
 
 	self assert: (palette colors: 3 scheme: 'Purples') size equals: 3.
 	c1 := (palette colors: 3 scheme: 'Purples') first.

@@ -143,8 +143,8 @@ RTAxisAdaptedBuilder >> objects [
 ]
 
 { #category : #accessing }
-RTAxisAdaptedBuilder >> objects: AnRTElementsCollection [
-	objects := AnRTElementsCollection.
+RTAxisAdaptedBuilder >> objects: anRTElementsCollection [
+	objects := anRTElementsCollection.
 	self setObjectsLimits.
 
 ]
