@@ -9,7 +9,7 @@ VIAnimatedValueTest >> testAddingWithNumber [
 
 	| t |
 	t := VIAnimatedValue new.
-	t evaluator: [ :timE | 5 ].
+	t evaluator: [ :time | 5 ].
 
 	self assert: t value equals: 5.
 	self assert: (t + 4) value equals: 9.

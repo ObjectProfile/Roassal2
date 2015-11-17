@@ -286,11 +286,6 @@ TRPharoPlatform >> menuMorphClass [
 	^ MenuMorph
 ]
 
-{ #category : #'accessing-classes' }
-TRPharoPlatform >> messageTallyClass [
-	^ MessageTally
-]
-
 { #category : #public }
 TRPharoPlatform >> mimeDecodeToBytes: stream [
 	^ Base64MimeConverter mimeDecodeToBytes: stream.

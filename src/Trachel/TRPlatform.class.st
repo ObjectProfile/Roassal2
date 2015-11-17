@@ -176,11 +176,6 @@ TRPlatform >> menuMorphClass [
 	self subclassResponsibility 
 ]
 
-{ #category : #'accessing-classes' }
-TRPlatform >> messageTallyClass [
-	self subclassResponsibility
-]
-
 { #category : #'http requests' }
 TRPlatform >> mimeDecodeToBytes: bytes [
 	"return a stream from bytes"
