@@ -55,7 +55,7 @@ RTMultipleData >> addedInBuilder: aBuilder [
 
 { #category : #accessing }
 RTMultipleData >> colorPalette [
-	^ RTColorPalette qualitative colors: 8 scheme: 'Set2'
+	^ ColorPalette qualitative colors: 8 scheme: 'Set2'
 ]
 
 { #category : #hooks }

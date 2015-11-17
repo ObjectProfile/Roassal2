@@ -80,7 +80,7 @@ RTBucketColor >> colorScheme: aString [
 { #category : #'as yet unclassified' }
 RTBucketColor >> defaultPalette [
 
-	^ RTColorPalette diverging colors: numberOfBuckets scheme:'RdBu'
+	^ ColorPalette diverging colors: numberOfBuckets scheme:'RdBu'
 ]
 
 { #category : #initialize }
@@ -117,7 +117,7 @@ RTBucketColor >> palette [
 
 	^ colorScheme isNil 
 		ifTrue: [ self defaultPalette ]
-		ifFalse: [ (RTColorPalette paletteFor: colorScheme) colors: numberOfBuckets scheme: colorScheme
+		ifFalse: [ (ColorPalette paletteFor: colorScheme) colors: numberOfBuckets scheme: colorScheme
 			]
 ]
 

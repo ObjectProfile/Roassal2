@@ -41,7 +41,7 @@ RTMultiLinearColorForIdentity >> elements: roassalElements [
 { #category : #initialization }
 RTMultiLinearColorForIdentity >> initialize [
 	super initialize.
-	self colors: (RTColorPalette qualitative colors: 12 scheme: 'Set3').
+	self colors: (ColorPalette qualitative colors: 12 scheme: 'Set3').
 	objects := #()
 ]
 
