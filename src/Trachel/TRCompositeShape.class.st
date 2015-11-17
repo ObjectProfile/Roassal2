@@ -14,6 +14,7 @@ TRCompositeShape >> accept: aVisitor [
 
 { #category : #callbacks }
 TRCompositeShape >> addCallback: aCallback [
+	"Add a call back to only one subshape. This is necessary for example when one does not want to trigger many times the same callback when an action occurs"
 	^ self firstShape addCallback: aCallback
 ]
 
@@ -24,6 +25,7 @@ TRCompositeShape >> addCallbackToAllShapes: aCallback [
 
 { #category : #'public - adding' }
 TRCompositeShape >> addShape: aShape [
+	"Add a shape in the composite. Shapes added using this method have all the same center"
 	^ self addShape: aShape translateBy: 0 @ 0
 ]
 
@@ -313,6 +315,12 @@ TRCompositeShape >> relayout [
 { #category : #actions }
 TRCompositeShape >> remove [
 	self shapesDo: #remove
+]
+
+{ #category : #removing }
+TRCompositeShape >> removeShapesSuchAs: aBlock [
+	"Remove all the shapes such as aBlock evaluated with the shape is true"
+	shapeAndOffsets := shapeAndOffsets reject: [ :tupple | aBlock rtValue: tupple first ]
 ]
 
 { #category : #'public - layout' }
