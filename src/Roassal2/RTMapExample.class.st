@@ -279,7 +279,7 @@ RTMapExample >> exampleColoredAfrica [
 	max := (countries collect: [ :c | c at: 2 ]) max.
 	
 	cn := RTMultiLinearColor new
-		colors: (ColorPalette sequential colors: 8 scheme: 'Reds');
+		colors: (RTColorPalette sequential colors: 8 scheme: 'Reds');
 		command: [ :aCountry | (countries detect: [ :c | c first = aCountry ]) second / max ].
 	
 	b countries: countriesName.
@@ -300,7 +300,7 @@ RTMapExample >> exampleColoredAfrica02 [
 	max := (countries collect: [ :c | c at: 2 ]) max.
 	
 	cn := RTMultiLinearColor new
-		colors: (ColorPalette sequential colors: 8 scheme: 'Purples');
+		colors: (RTColorPalette sequential colors: 8 scheme: 'Purples');
 		command: [ :aCountry | (countries detect: [ :c | c first = aCountry ]) second / max ].
 	
 	b countries: countriesName.
@@ -405,7 +405,7 @@ RTMapExample >> exampleColoredAfrica03 [
 	max := (countries collect: [ :c | c at: 2 ]) max.
 	
 	cn := RTMultiLinearColor new
-		colors: (ColorPalette sequential colors: 8 scheme: 'GnBu');
+		colors: (RTColorPalette sequential colors: 8 scheme: 'GnBu');
 		command: [ :aCountry | (countries detect: [ :c | c first = aCountry ]) second / max ].
 	
 	b countries: countriesName.

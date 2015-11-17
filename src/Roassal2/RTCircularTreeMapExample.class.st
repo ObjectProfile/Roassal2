@@ -30,7 +30,7 @@ Class {
 { #category : #sources }
 RTCircularTreeMapExample >> example01 [
 
-| b |
+	| b mt |
 	b := RTCircularTreeMapBuilder new.
 	b shape
 		color: Color transparent.
@@ -38,7 +38,8 @@ RTCircularTreeMapExample >> example01 [
 	b
 		baseradius: 200;
 		weight: #tally.
-	b explore: (MessageTally new
+	mt := TRPlatform current messageTallyClass.
+	b explore: (mt new
 		spyEvery: 1
 		on: [ Object numberOfLinesOfCode ]; 
 		yourself)

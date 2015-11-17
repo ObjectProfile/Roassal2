@@ -32,7 +32,7 @@ RTTreeMapExampleTODELETE >> example03 [
 	"
 	self new example03
 	"
-	| b |
+	| b mt |
 	b := RTTreeMapBuilder new.
 	b shape 
 		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
@@ -41,7 +41,8 @@ RTTreeMapExampleTODELETE >> example03 [
 	b
 		extent: 400@400;
 		weight: [:m | m tally ].
-	b explore: (MessageTally new
+	mt := TRPlatform current messageTallyClass.
+	b explore: (mt new
 		spyEvery: 1
 		on: [Object browse]; yourself)
 		using: #children.
@@ -72,13 +73,13 @@ RTTreeMapExampleTODELETE >> example05 [
 	"
 	self new example05
 	"
-	| b normalizer tally methods |
+	| b normalizer tally methods mt |
 	b := RTTreeMapBuilder new.
 	b shape 
 		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
 		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
-	
-	tally := (MessageTally new
+	mt := TRPlatform current messageTallyClass.
+	tally := (mt new
 		spyEvery: 1
 		on: [Object browse]; yourself).
 	methods := tally withDeepCollect: #children.
@@ -101,7 +102,7 @@ RTTreeMapExampleTODELETE >> example06 [
 	"
 	self new example06
 	"
-	| b |
+	| b mt |
 	b := RTTreeMapBuilder new.
 	b shape 
 		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
@@ -111,7 +112,8 @@ RTTreeMapExampleTODELETE >> example06 [
 	b
 		extent: 400@400;
 		weight: [:m | m tally ].
-	b explore: (MessageTally new
+	mt := TRPlatform current messageTallyClass.
+	b explore: (mt new
 		spyEvery: 1
 		on: [Object browse]; yourself)
 		using: #children.
@@ -126,12 +128,13 @@ RTTreeMapExampleTODELETE >> example07 [
 	"
 	self new example07
 	"
-	| b |
+	| b mt |
 	b := RTTreeMapBuilder new.
+	mt := TRPlatform current messageTallyClass.
 	b
 		extent: 400@400;
 		weight: [:m | m tally ];
-		explore: (MessageTally new
+		explore: (mt new
 		spyEvery: 1
 		on: [Object browse]; yourself)
 		using: #children;

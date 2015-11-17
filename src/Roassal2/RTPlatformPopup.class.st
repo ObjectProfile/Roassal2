@@ -19,7 +19,7 @@ RTPlatformPopup class >> color: aColor [
 { #category : #'as yet unclassified' }
 RTPlatformPopup class >> removeLastPopup [
 	TRPlatform current deletePopup: self lastPopup.
-	lastPopup := nil.
+	self resetLastPopup.
 ]
 
 { #category : #'as yet unclassified' }
