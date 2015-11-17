@@ -14,7 +14,7 @@ More detailed information is on it class comments.
 All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brewer, Geography, Pennsylvania State University.
 "
 Class {
-	#name : #RTColorPalette,
+	#name : #ColorPalette,
 	#superclass : #Object,
 	#classInstVars : [
 		'palette'
@@ -23,19 +23,19 @@ Class {
 }
 
 { #category : #palettes }
-RTColorPalette class >> diverging [
+ColorPalette class >> diverging [
 
-	^ RTCPDiverging new
+	^ CPDiverging new
 ]
 
 { #category : #info }
-RTColorPalette class >> info [
+ColorPalette class >> info [
 
 	self subclassResponsibility 
 ]
 
 { #category : #default }
-RTColorPalette class >> initializePalette [
+ColorPalette class >> initializePalette [
 
 	palette := self rawPalette asDictionary.
 	palette keysDo: [ :k |  |v|
@@ -45,7 +45,7 @@ RTColorPalette class >> initializePalette [
 ]
 
 { #category : #public }
-RTColorPalette class >> palette [
+ColorPalette class >> palette [
 
 	^ palette ifNil: [ 
 			self initializePalette.
@@ -54,51 +54,51 @@ RTColorPalette class >> palette [
 ]
 
 { #category : #public }
-RTColorPalette class >> paletteFor: aColorScheme [
+ColorPalette class >> paletteFor: aColorScheme [
 	"Returns an instance of CPDiverging, CPQualitative or CPSequential depending on which of them has the color scheme"
 	^ ((self subclasses collect: [:cls | Array with: cls with: cls palette ] ) detect: [ :p | p second keys includes: aColorScheme ]) first new
 ]
 
 { #category : #info }
-RTColorPalette class >> paletteName [
+ColorPalette class >> paletteName [
 	|clsName|
 	clsName := self asString. 
 	^ clsName copyFrom: 3 to: clsName size. 
 ]
 
 { #category : #palettes }
-RTColorPalette class >> qualitative [
+ColorPalette class >> qualitative [
 
-	^ RTCPQualitative new
+	^ CPQualitative new
 ]
 
 { #category : #default }
-RTColorPalette class >> rawPalette [
+ColorPalette class >> rawPalette [
 	"Here you will find all the scales with colors as tripets of rgb numbers [0..255]"
 	self subclassResponsibility
 
 ]
 
 { #category : #public }
-RTColorPalette class >> reset [
+ColorPalette class >> reset [
 	"After executing this you would want to execute #palette to initialize it"
 	palette := nil.
 ]
 
 { #category : #palettes }
-RTColorPalette class >> sequential [
+ColorPalette class >> sequential [
 
-	^ RTCPSequential new
+	^ CPSequential new
 ]
 
 { #category : #public }
-RTColorPalette class >> show [
+ColorPalette class >> show [
 	"Open a window showing all colors scales of the palette"
 	^ self new show
 ]
 
 { #category : #'showing palette' }
-RTColorPalette >> addTitleTo: groups on: view [
+ColorPalette >> addTitleTo: groups on: view [
 	|label|
 	label := (RTLabel new text: (self class paletteName)) element.
 	label translateBy: 0 @label height negated.
@@ -125,7 +125,7 @@ RTColorPalette >> addTitleTo: groups on: view [
 ]
 
 { #category : #public }
-RTColorPalette >> colors: nbOfColors [ 
+ColorPalette >> colors: nbOfColors [ 
 	
 	|palette scheme|
 	palette := self palette.
@@ -136,7 +136,7 @@ RTColorPalette >> colors: nbOfColors [
 ]
 
 { #category : #public }
-RTColorPalette >> colors: nbOfColors scheme: aString [ 
+ColorPalette >> colors: nbOfColors scheme: aString [ 
 	|palette scheme|
 	palette := self palette.
 	
@@ -155,7 +155,7 @@ RTColorPalette >> colors: nbOfColors scheme: aString [
 ]
 
 { #category : #public }
-RTColorPalette >> colorsPerScheme [
+ColorPalette >> colorsPerScheme [
 	"It returns a list of schemes and the numbers of colors it contains"
 	|table palette|
 	table := OrderedCollection new.
@@ -165,13 +165,13 @@ RTColorPalette >> colorsPerScheme [
 ]
 
 { #category : #'private - processing' }
-RTColorPalette >> convertSchemeToColors: aCollectionOfRGB256triplets [
+ColorPalette >> convertSchemeToColors: aCollectionOfRGB256triplets [
 
 	^  aCollectionOfRGB256triplets collect: [:triplet | Color fromRgb256Triplet: triplet ] 
 ]
 
 { #category : #'showing palette' }
-RTColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
+ColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	| colors group label |
 	group := RTGroup new.
 	colors := rawColors collect: [ :t | Color fromRgb256Triplet: t ].
@@ -196,7 +196,7 @@ RTColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 ]
 
 { #category : #accessing }
-RTColorPalette >> palette [
+ColorPalette >> palette [
 
 	^ self class palette.
 	
@@ -204,7 +204,7 @@ RTColorPalette >> palette [
 ]
 
 { #category : #public }
-RTColorPalette >> scheme: aString [ 
+ColorPalette >> scheme: aString [ 
 	|palette scheme nbOfColors |
 	palette := self palette.
 	
@@ -221,7 +221,7 @@ RTColorPalette >> scheme: aString [
 ]
 
 { #category : #'showing palette' }
-RTColorPalette >> show [
+ColorPalette >> show [
 	| view |
 	view := RTView new.
 	self viewOn: view.
@@ -230,7 +230,7 @@ RTColorPalette >> show [
 ]
 
 { #category : #'showing palette' }
-RTColorPalette >> viewOn: view [
+ColorPalette >> viewOn: view [
 	
 	| palette groups nbOfColors |
 	palette := self class palette.

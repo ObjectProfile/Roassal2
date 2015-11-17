@@ -291,6 +291,50 @@ HwhffCB8IHzxgfCB8MUHAtEfxTYBJq0poOcAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTTimelineExample >> exampleLabelledAndColored [
+
+| b s data |
+data := #(     #(WP1 1 3)      #(WP2 3 6)     #(WP3 6 9)         #(WP4 9 12)     #(WP5 1 12)    ).
+b := RTTimeline new.
+s := RTTimelineSet new.
+s shape box 
+	color: Color blue trans;
+	withText: #first;
+	withTextColor: Color white.
+s objects: data.
+s lineIdentifier: #first.
+s start: #second.
+s end: #third.
+b add: s.
+b axisX
+	noDecimal;
+	title: 'Month';
+	numberOfLabels: 12.
+^ b
+]
+
+{ #category : #icons }
+RTTimelineExample >> exampleLabelledAndColoredIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADRUlEQVR4XuXb2UsqcRjG8f7/
+qy5bIYhuu2ghKrKiRSsibHUJhtI2csmCFrGnfE8cmhmtI0fLn/N9wAtfasT5zG95a6bv7Y0f
+l9LHPwV8EH74IHwQfvggfBB++CB8EH74IHwQfvgg/PBB+CD88EH4IPzwQfgg/PBB+CD88EH4
+4YPwQfjhg/BB+OGD8EH+I+VyWeHawIAU1RcfhA/CB3Ea5P7+XrlcTolEQnNzc1paWtLt7a26
+CbKxIS0uSjMz0uysNDkpra5CQPr7+7W5ual4PK7Ly0u9vr7Wv/xqV0GGh6VYTJqf/wCx2uio
+NDICnLJeXl7En7L4awgfpB2QnR0pqq+eBHE97YyQk5POoPBB+CB8kF/pQzzP09PTk6IEYlvm
+lRVpYeGzr1lfdxQk3IccHh7KkKI2QqampNPTz76mfv1pfJw/ZfGnLD4IH6TraacPqf8Zjw/i
+6lXOB+GD8EGcAwn3IbbtPT8/l2sgzXqJsbEIgoT7kMfHRx0cHMjFERLuJb76/0ikpqxqtSr+
+lMVfQ/ggroO40EtEDqSdqzyVUs81pHwQPggf5Nf7ENvyXl1d6SdAmvUSQ0N8kG/7kLOzM/3k
+CAn3EvWP5oPwpyw+CB/EBZBe7yV6BoRylfNB+CB8EOf7kL29vZbvfrfnOKanP57jsPcTE8Ft
+LB+kA31IPp9vGcR6Cf+DNIOD0tYWH4Q/ZfFB+CBOgVB6CSdBbE2xhd//alazjUErtXZ+t1nN
+bsjoZK1YLLp9oxw/fBA+yFdJp9M6Pj5uaQin6iu4/709Xr27uxuo2f9Z7Jj+WjabDdwHZtne
+3m7YflsqlUqgZsf337JkyWQySiaTgZo9dx/+XKvt7+831C4uLtydsmxBD58EO1Hhk+V53pvN
+7/6afbFCodDw5cI1O9bd3V2g9vDwoJubm3+emOvr64afs+M9Pz8Hatb0Hh0dNdSs/wrX1tbW
++GtIN2MjzJriv5A20m3U2mgOI/JBfiE2lZVKJS0vL//BsCk6FouJP0K6nFqtpu/e80H4uyx+
++CB8EH74IHwQfvgg/PBB+CD88EH4IPzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH44YPw
+Qfjhg/DDB3E375rcxfOvBJoWAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTTimelineExample >> exampleNestedTimeLine [
 
 	| b s data |

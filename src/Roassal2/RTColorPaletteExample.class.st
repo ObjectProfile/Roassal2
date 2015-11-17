@@ -15,7 +15,7 @@ RTColorPaletteExample >> exampleDivergingPalette [
 	| v |
 	v := RTView new.
 	v @ RTDraggableView.
-	RTCPDiverging new viewOn: v.
+	CPDiverging new viewOn: v.
 	^ v
 ]
 
@@ -63,7 +63,7 @@ RTColorPaletteExample >> exampleQualitativePalette [
 	| v |
 	v := RTView new.
 	v @ RTDraggableView.
-	RTCPQualitative new viewOn: v.
+	CPQualitative new viewOn: v.
 	^ v
 ]
 
@@ -117,7 +117,7 @@ RTColorPaletteExample >> exampleSequentialPalette [
 	| v |
 	v := RTView new.
 	v @ RTDraggableView.
-	RTCPSequential new viewOn: v.
+	CPSequential new viewOn: v.
 	^ v
 ]
 

@@ -15,7 +15,7 @@ RTMultiColoredLineTest >> testBasic [
 	v add: elem1.
 	v add: elem2.
 	edge := RTEdge from:elem1 to:elem2.
-	v add: (edge + (RTMultiColoredLine new colors: (RTColorPalette qualitative colors: 12 scheme:'Paired'); colorShape)).
+	v add: (edge + (RTMultiColoredLine new colors: (ColorPalette qualitative colors: 12 scheme:'Paired'); colorShape)).
 	
 
 ]

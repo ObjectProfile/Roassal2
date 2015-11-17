@@ -156,6 +156,12 @@ RTCompositeShape >> fillColor: aOneArgBlockOrColorOrSymbol [
 	(self shapesInstancesOf: RTAbstractElementShape) do: [ :s | s fillColor: aOneArgBlockOrColorOrSymbol ]
 ]
 
+{ #category : #'public - forwarding' }
+RTCompositeShape >> height: aOneArgBlockOrColorOrSymbol [
+	shapes ifEmpty: [ self error: 'You first need to add shape before setting the color' ].
+	(self shapesInstancesOf: RTAbstractElementShape) do: [ :s | s height: aOneArgBlockOrColorOrSymbol ]
+]
+
 { #category : #'public - layout' }
 RTCompositeShape >> horizontal [
 	layout := #horizontal
