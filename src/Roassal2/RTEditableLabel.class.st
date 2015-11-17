@@ -17,7 +17,7 @@ RTEditableLabel >> editLabelShape: aBool [
 
 { #category : #rendering }
 RTEditableLabel >> hideTextMorphFor: anElement [
-	| p base txt |
+	| p base txt sss |
 	fieldArea ifNil: [ ^ self ].
 	editLabelShape ifFalse: [ 
 		fieldArea delete. ^ self ].
@@ -34,7 +34,12 @@ RTEditableLabel >> hideTextMorphFor: anElement [
 		shape := anElement trachelShape.
 		p := shape position.
 		base := shape shapes first.
-		shape remove; setShapes: OrderedCollection new.
+		shape remove.
+		
+		sss := shape allShapes.
+		shape setShapes: OrderedCollection new.
+		(sss select: [ :ssss | ssss class ~~ TRLabelShape ]) do: [ :ssss | shape addShape: ssss ].
+		"shape removeShapesSuchAs: [ :ss | ss class == TRLabelShape ]."
 		
 		lines doWithIndex: [ :l :index | | lbl |
 			lbl := TRLabelShape new text: l.
