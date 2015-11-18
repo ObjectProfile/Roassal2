@@ -80,7 +80,7 @@ RTResizable class >> example [
 
 	v @ RTZoomableView.
 
-	v open
+	^ v
 ]
 
 { #category : #hooks }
