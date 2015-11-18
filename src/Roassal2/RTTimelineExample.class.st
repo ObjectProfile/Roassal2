@@ -310,7 +310,8 @@ b axisX
 	noDecimal;
 	title: 'Month';
 	numberOfLabels: 12.
-^ b
+b build.
+^ b view
 ]
 
 { #category : #icons }

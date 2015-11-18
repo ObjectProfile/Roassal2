@@ -1739,7 +1739,8 @@ b add: d.
 
 b maxX: 5.
 b axisX numberOfLabels: 5; noDecimal.
-b
+b build.
+^ b view
 ]
 
 { #category : #icons }
