@@ -22,8 +22,8 @@ I am using system time to implement a timer.
 ] ] ]
 "
 Class {
-	#name : #VITimer,
-	#superclass : #VIBasicTimer,
+	#name : #TRVITimer,
+	#superclass : #TRVIBasicTimer,
 	#instVars : [
 		'active',
 		'cycleLength',
@@ -35,22 +35,22 @@ Class {
 }
 
 { #category : #private }
-VITimer >> currentTime [
+TRVITimer >> currentTime [
 	^ Time millisecondClockValue 
 ]
 
 { #category : #accessing }
-VITimer >> cycleLength [
+TRVITimer >> cycleLength [
 	^ cycleLength
 ]
 
 { #category : #accessing }
-VITimer >> cycleLength: anObject [
+TRVITimer >> cycleLength: anObject [
 	cycleLength := anObject
 ]
 
 { #category : #private }
-VITimer >> cycleLengthScale [
+TRVITimer >> cycleLengthScale [
 	"cycle length are given in seconds,
 	while internally we using milliseconds to calculate time difference, hence scale is equal to 1000"
 	
@@ -58,7 +58,7 @@ VITimer >> cycleLengthScale [
 ]
 
 { #category : #accessing }
-VITimer >> elapsedCycles [
+TRVITimer >> elapsedCycles [
 
 	"Answer the total number of cycles passed during which timer was active since its first activation.
 	For example, if timer's cycle length is 2 seconds, and its total active time is 3.5 seconds,
@@ -88,13 +88,13 @@ VITimer >> elapsedCycles [
 ]
 
 { #category : #private }
-VITimer >> elapsedTime [
+TRVITimer >> elapsedTime [
 	^  (self currentTime - startTime) / self cycleLengthScale
 
 ]
 
 { #category : #'initialize-release' }
-VITimer >> initialize [
+TRVITimer >> initialize [
 	"defaults"
 	repeat := false.
 	cycleLength := 1.0.
@@ -103,37 +103,37 @@ VITimer >> initialize [
 ]
 
 { #category : #testing }
-VITimer >> isActive [
+TRVITimer >> isActive [
 	self value. "making sure it will stop if cycle time elapsed for non-repeating timer"
 	
 	^ active
 ]
 
 { #category : #testing }
-VITimer >> isRepeating [
+TRVITimer >> isRepeating [
 	^ repeat 
 ]
 
 { #category : #accessing }
-VITimer >> noRepeat [
+TRVITimer >> noRepeat [
 	"make receiver to be non-repeating timer (stops once first cycle elapses)"
 	repeat := false 
 ]
 
 { #category : #accessing }
-VITimer >> repeat [
+TRVITimer >> repeat [
 	"make receiver to be a repeating timer"
 	repeat := true 
 ]
 
 { #category : #accessing }
-VITimer >> repeat: veces [
+TRVITimer >> repeat: veces [
 	"make receiver to be a repeating timer"
 	repeat := [elapsedCycles < veces ]
 ]
 
 { #category : #actions }
-VITimer >> reset [
+TRVITimer >> reset [
 	"Reset the timer: stopping it, if it was active,
 	and setting its internal elapsed cycles counter to Zero "
 	
@@ -143,7 +143,7 @@ VITimer >> reset [
 ]
 
 { #category : #actions }
-VITimer >> start [
+TRVITimer >> start [
 	"Activate (start or resume) the timer.
 	Ignored if timer is already active"
 	
@@ -155,12 +155,12 @@ VITimer >> start [
 ]
 
 { #category : #accessing }
-VITimer >> startTime [
+TRVITimer >> startTime [
 	^ startTime
 ]
 
 { #category : #actions }
-VITimer >> stop [
+TRVITimer >> stop [
 	"Stop/pausing the timer "
 	
 	active ifTrue: [
@@ -171,7 +171,7 @@ VITimer >> stop [
 ]
 
 { #category : #accessing }
-VITimer >> value [
+TRVITimer >> value [
 	"Answer the current timer value.
 	The value is normalized in range between 0 and 1
 	relative to cycle length and elapsed time since timer started, e.g.

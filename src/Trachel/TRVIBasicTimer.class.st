@@ -14,99 +14,99 @@ Additionally to #value, there is #elapsedCycles , which can be used to tell, how
 Timer can be stopped (paused), resumed or fully reset. The timer value & elapsed cycles is changing only when timer active.
 "
 Class {
-	#name : #VIBasicTimer,
+	#name : #TRVIBasicTimer,
 	#superclass : #TRObject,
 	#category : #'Trachel-Viva'
 }
 
 { #category : #accessing }
-VIBasicTimer >> cycleLength [
+TRVIBasicTimer >> cycleLength [
 	"answer the timer cycle length, in seconds"
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-VIBasicTimer >> cycleLength: aNumber [
+TRVIBasicTimer >> cycleLength: aNumber [
 	"Set the timer cycle length, in seconds"
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-VIBasicTimer >> elapsedCycles [
+TRVIBasicTimer >> elapsedCycles [
 	self subclassResponsibility 
 ]
 
 { #category : #testing }
-VIBasicTimer >> isActive [
+TRVIBasicTimer >> isActive [
 	"Answer whether timer currently active or not"
 	
 	self subclassResponsibility 
 ]
 
 { #category : #testing }
-VIBasicTimer >> isRepeating [
+TRVIBasicTimer >> isRepeating [
 	"Answer whether timer is one-shot or repeating"
 	
 	self subclassResponsibility 
 ]
 
 { #category : #converting }
-VIBasicTimer >> mirrored [
+TRVIBasicTimer >> mirrored [
 	self error: 'not yet supported'
 	"^ VIMirrorRepeatTimer on: self"
 ]
 
 { #category : #accessing }
-VIBasicTimer >> noRepeat [
+TRVIBasicTimer >> noRepeat [
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
-VIBasicTimer >> pause [
+TRVIBasicTimer >> pause [
 	"synonym to stop"
 	
 	^ self stop
 ]
 
 { #category : #accessing }
-VIBasicTimer >> repeat [
+TRVIBasicTimer >> repeat [
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
-VIBasicTimer >> reset [
+TRVIBasicTimer >> reset [
 	"Reset the timer"
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
-VIBasicTimer >> resume [
+TRVIBasicTimer >> resume [
 	"synonym to start"
 	
 	^ self start
 ]
 
 { #category : #actions }
-VIBasicTimer >> start [
+TRVIBasicTimer >> start [
 	"Start the timer, after which its value change can be observed over time"
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
-VIBasicTimer >> stop [
+TRVIBasicTimer >> stop [
 
 	"Stop the timer"
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-VIBasicTimer >> value [
+TRVIBasicTimer >> value [
 	"answer the current value of timer"
 	self subclassResponsibility 
 ]
 
 { #category : #converting }
-VIBasicTimer >> withBias: aWeight [
+TRVIBasicTimer >> withBias: aWeight [
 	self error: 'not yet supported'
 	"^ (VIBiasedTimerModifier on: self) weight: aWeight"
 ]

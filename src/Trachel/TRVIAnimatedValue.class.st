@@ -7,7 +7,7 @@ in evaluator, recibe a block to handle as f(t).
 
 "
 Class {
-	#name : #VIAnimatedValue,
+	#name : #TRVIAnimatedValue,
 	#superclass : #TRObject,
 	#instVars : [
 		'evaluator',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #grouping }
-VIAnimatedValue >> + aValue [
+TRVIAnimatedValue >> + aValue [
 
 	^ [ self value + aValue value ]
 
@@ -30,7 +30,7 @@ VIAnimatedValue >> + aValue [
 ]
 
 { #category : #sequence }
-VIAnimatedValue >> , aVIAnimatedValue [ 
+TRVIAnimatedValue >> , aVIAnimatedValue [ 
 	self error: 'Not yet supported'
 "	^VIAnimatedSecuence new
 		add:self;
@@ -39,24 +39,24 @@ VIAnimatedValue >> , aVIAnimatedValue [
 ]
 
 { #category : #grouping }
-VIAnimatedValue >> - aValue [
+TRVIAnimatedValue >> - aValue [
 
 	^ [ self value - aValue value ]
 
 ]
 
 { #category : #converting }
-VIAnimatedValue >> @ anotherValue [
-	^ VIAnimatedPoint new x: self; y: anotherValue; yourself
+TRVIAnimatedValue >> @ anotherValue [
+	^ TRVIAnimatedPoint new x: self; y: anotherValue; yourself
 ]
 
 { #category : #converting }
-VIAnimatedValue >> adaptToNumber: rcvr andSend: selector [
+TRVIAnimatedValue >> adaptToNumber: rcvr andSend: selector [
 	^ self value perform: selector with: rcvr
 ]
 
 { #category : #actions }
-VIAnimatedValue >> animatedPoint: aPoints [
+TRVIAnimatedValue >> animatedPoint: aPoints [
 	| pnts |
 	pnts := aPoints asSortedCollection.
 	self evaluator: [ :t |
@@ -74,7 +74,7 @@ VIAnimatedValue >> animatedPoint: aPoints [
 ]
 
 { #category : #actions }
-VIAnimatedValue >> animatedValue: values [
+TRVIAnimatedValue >> animatedValue: values [
 	| val fraction currentValue |
 	fraction := 1.0 / (values size -1).
 	currentValue:= 0.
@@ -83,71 +83,71 @@ VIAnimatedValue >> animatedValue: values [
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> animationDidFinish [
+TRVIAnimatedValue >> animationDidFinish [
 	timer value = 1.0
 		ifTrue: [ finishCallback value ].
 ]
 
 { #category : #converting }
-VIAnimatedValue >> asFloat [
+TRVIAnimatedValue >> asFloat [
 	^ self value asFloat
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> evaluator [
+TRVIAnimatedValue >> evaluator [
 	
 	^ evaluator
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> evaluator: anObject [
+TRVIAnimatedValue >> evaluator: anObject [
 	evaluator := anObject
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> finishCallback: anObject [
+TRVIAnimatedValue >> finishCallback: anObject [
 	finishCallback := anObject
 ]
 
 { #category : #testing }
-VIAnimatedValue >> hasCompleted [
+TRVIAnimatedValue >> hasCompleted [
 	^ timer value = 1.0
 ]
 
 { #category : #initialization }
-VIAnimatedValue >> initialize [
+TRVIAnimatedValue >> initialize [
 	super initialize.
-	timer := VITimer new.
+	timer := TRVITimer new.
 	evaluator := [ :time | time ]
 ]
 
 { #category : #actions }
-VIAnimatedValue >> reset [
+TRVIAnimatedValue >> reset [
 	timer reset
 ]
 
 { #category : #actions }
-VIAnimatedValue >> start [
+TRVIAnimatedValue >> start [
 	timer start
 ]
 
 { #category : #actions }
-VIAnimatedValue >> stop [
+TRVIAnimatedValue >> stop [
 	timer stop
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> timer [
+TRVIAnimatedValue >> timer [
 	^ timer
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> timer: anObject [
+TRVIAnimatedValue >> timer: anObject [
 	timer := anObject
 ]
 
 { #category : #accessing }
-VIAnimatedValue >> value [
+TRVIAnimatedValue >> value [
 	" evaluate the value of receiver at current time "
 	self animationDidFinish.
 	^ evaluator value: timer value

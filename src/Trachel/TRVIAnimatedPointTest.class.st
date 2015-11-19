@@ -1,5 +1,5 @@
 Class {
-	#name : #VIAnimatedPointTest,
+	#name : #TRVIAnimatedPointTest,
 	#superclass : #TRTest,
 	#instVars : [
 		'pZero'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #running }
-VIAnimatedPointTest >> setUp [
+TRVIAnimatedPointTest >> setUp [
 	super setUp.
-	pZero := VIAnimatedPoint new.
+	pZero := TRVIAnimatedPoint new.
 ]
 
 { #category : #tests }
-VIAnimatedPointTest >> testAddToZero [
+TRVIAnimatedPointTest >> testAddToZero [
 	| p |
 	p := pZero + (1 @ 1).
 	self assert: p x value equals: 1.
@@ -22,7 +22,7 @@ VIAnimatedPointTest >> testAddToZero [
 ]
 
 { #category : #tests }
-VIAnimatedPointTest >> testZero [
+TRVIAnimatedPointTest >> testZero [
 
 	self assert: pZero x value equals: 0.
 	self assert: pZero y value equals: 0.

@@ -19,8 +19,8 @@
  ] ] ]
 "
 Class {
-	#name : #VIManualTimer,
-	#superclass : #VIBasicTimer,
+	#name : #TRVIManualTimer,
+	#superclass : #TRVIBasicTimer,
 	#instVars : [
 		'value'
 	],
@@ -28,23 +28,23 @@ Class {
 }
 
 { #category : #actions }
-VIManualTimer >> incrementBy: aDelta [
+TRVIManualTimer >> incrementBy: aDelta [
 	value := (value + aDelta) \\ 1
 ]
 
 { #category : #initialization }
-VIManualTimer >> initialize [
+TRVIManualTimer >> initialize [
 	super initialize.
 	value := 0.0
 ]
 
 { #category : #accessing }
-VIManualTimer >> value [
+TRVIManualTimer >> value [
 	^ value
 ]
 
 { #category : #accessing }
-VIManualTimer >> value: aFloat [
+TRVIManualTimer >> value: aFloat [
 	self assert: [ aFloat >= 0.0 and: [ aFloat <= 1.0 ] ] description: 'Must provide a value between 0 and 1'.
 	value := aFloat
 ]
