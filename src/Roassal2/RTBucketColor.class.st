@@ -24,8 +24,7 @@ RTBucketColor class >> example [
 	view := RTView new.
 	view addAll: elements.
 	RTGridLayout on: view elements.
-	view open.
-
+	^ view
 ]
 
 { #category : #examples }
@@ -37,7 +36,7 @@ RTBucketColor class >> example1 [
 	view := RTView new.
 	view addAll: elements.
 	RTGridLayout on: view elements.
-	view open.
+	^ view
 
 ]
 

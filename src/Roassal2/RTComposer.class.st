@@ -1,27 +1,3 @@
-"
-I am responsible to compose several visualizations.
-
-For example:
-====
-compo := RTComposer new.
-
-b := RTMondrian new.
-b view: compo view.
-b nodes: (1 to: 3).
-b build.
-compo group: #g1.
-
-b := RTMondrian new.
-b view: compo view.
-b nodes: (1 to: 4).
-b build.
-
-compo group: #g2.
-
-compo layout: RTVerticalLineLayout new alignCenter. 
-compo view
-====
-"
 Class {
 	#name : #RTComposer,
 	#superclass : #RTObject,
@@ -87,7 +63,7 @@ RTComposer >> initialize [
 
 { #category : #'public-layout' }
 RTComposer >> layout: aLayout [
-	"Layout all the group of elements"
+	
 	aLayout on: groups.
 
 ]
@@ -180,44 +156,6 @@ RTComposer >> propagateHighlight [
 RTComposer >> propagateHighlightToAll [
 
 	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
-]
-
-{ #category : #'public-background' }
-RTComposer >> setBackgroundForGroup: aName color: aColor [
-
-"
-
-Example:
-
-compo := RTComposer new.
-
-b := RTMondrian new.
-b view: compo view.
-b nodes: (1 to: 3).
-b build.
-compo group: #g1.
-
-b := RTMondrian new.
-b view: compo view.
-b nodes: (1 to: 4).
-b build.
-compo group: #g2.
-
-compo layout: RTVerticalLineLayout new alignCenter. 
-
-compo setBackgroundForGroup: #g1 color: Color red.
-compo view
-
-"
-
-	| box g |
-	box := RTBox element.
-	g := mapping at: aName.
-"	center := g encompassingRectangle center.
-"	RTNest new on: box nest: g.
-	view add: box.
-	box pushBack.
-	^ box
 ]
 
 { #category : #'public title' }

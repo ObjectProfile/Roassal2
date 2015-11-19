@@ -27,7 +27,8 @@ RTSBFadeInteractionExamples >> example01 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -49,7 +50,8 @@ RTSBFadeInteractionExamples >> example02 [
 	b view @ RTDraggableView.
 	"This should'nt work"
 	b interactions add: (RTSBFadeInteraction new).
-	b open
+	b build.
+	^ b view
 ]
 
 { #category : #examples }
@@ -72,5 +74,6 @@ RTSBFadeInteractionExamples >> example03 [
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
 
-	b open
+	b build.
+	^ b view
 ]

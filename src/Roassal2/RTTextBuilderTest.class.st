@@ -99,7 +99,7 @@ RTTextBuilderTest >> testClickableWord [
 { #category : #tests }
 RTTextBuilderTest >> testExamples [
 	RTTextBuilderExamples selectors do: [ :eachSelector |
-		(RTTextBuilderExamples new perform: eachSelector) delete.
+		(RTTextBuilderExamples new perform: eachSelector) build.
 	]
 ]
 
