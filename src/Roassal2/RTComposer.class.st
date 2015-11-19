@@ -153,6 +153,34 @@ RTComposer >> move: name1 onTheRightOf: name2 [
 
 { #category : #'public-naming' }
 RTComposer >> nameGroup: aName as: title [
+	"Give a title to a group.
+	
+	For example:
+	
+| compo |
+compo := RTComposer new.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 30).
+b layout grid.
+b build.
+compo group: #g1.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 30).
+b layout grid.
+b build.
+compo group: #g2. 
+
+compo layout: RTVerticalLineLayout new alignCenter.
+
+compo setBackgroundForGroup: #g1 color: Color red trans.
+compo nameGroup: #g1 as: 'Goup 1'.
+compo view
+
+	"
 	| lbl |
 	lbl := (RTLabel new text: title) element.
 	TRConstraint move: lbl above: (mapping at: aName).
@@ -184,11 +212,10 @@ RTComposer >> propagateHighlightToAll [
 
 { #category : #'public-background' }
 RTComposer >> setBackgroundForGroup: aName color: aColor [
-
 "
+Set a background for a visualization.
 
 Example:
-
 compo := RTComposer new.
 
 b := RTMondrian new.
@@ -210,14 +237,28 @@ compo view
 
 "
 
-	| box g |
-	box := RTBox element.
+
+	| box g outterGap |
+	outterGap := 5 @ 5.
+	box := TRRoundedBoxShape new.
+	box color: aColor.
+	box strokeWidth: 0.
+	box borderRadius: 5.
 	g := mapping at: aName.
-"	center := g encompassingRectangle center.
-"	RTNest new on: box nest: g.
-	view add: box.
+	box translateTo: g center.
+	box extent: g extent + outterGap.
+	"RTNest new centerOnTrachelShape: box elements: g."
+	view canvas addShape: box.
 	box pushBack.
 	^ box
+	
+"	| box g |
+	box := RTBox element.
+	g := mapping at: aName.
+	RTNest new centerOn: box elements: g.
+	view add: box.
+	box pushBack.
+	^ box"
 ]
 
 { #category : #'public title' }
