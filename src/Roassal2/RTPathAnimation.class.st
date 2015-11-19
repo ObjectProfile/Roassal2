@@ -126,9 +126,9 @@ RTPathAnimation >> repeat [
 
 { #category : #private }
 RTPathAnimation >> seconds: seconds [
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 		evaluator: [ :t | t ];
-		timer: (VITimer new cycleLength: seconds);
+		timer: (TRVITimer new cycleLength: seconds);
 		yourself.
 	
 

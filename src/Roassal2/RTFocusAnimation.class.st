@@ -39,13 +39,13 @@ RTFocusAnimation >> on: el during: seconds [
 	sc :=canvas extent / (rec extent * 1.1).
 	finalScale := (sc x < sc y ) ifTrue: [sc x] ifFalse: [sc y].
 	
-	anime1 := VIAnimatedValue new 
+	anime1 := TRVIAnimatedValue new 
 		evaluator: [ :t | initialScale interpolateTo: finalScale at: t ];
-		timer: (VITimer new cycleLength: seconds);
+		timer: (TRVITimer new cycleLength: seconds);
 		yourself.
-	anime2 := VIAnimatedValue new
+	anime2 := TRVIAnimatedValue new
 		evaluator: [ :t | initialPosition interpolateTo: finalPosition at: t ];
-		timer: (VITimer new cycleLength: seconds);
+		timer: (TRVITimer new cycleLength: seconds);
 		yourself.
 	
 ]

@@ -10,9 +10,9 @@ RTAccelerationMove >> to: anEndPoint during: seconds on: anElement [
 	element := anElement.
 	
 	position := anElement position.
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 							evaluator: [ :t | position interpolateTo: anEndPoint at: (t sqrt) ];
-							timer: (VITimer new cycleLength: seconds);
+							timer: (TRVITimer new cycleLength: seconds);
 							yourself.
 	
 ]

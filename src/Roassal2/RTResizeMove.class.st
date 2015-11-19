@@ -48,9 +48,9 @@ RTResizeMove >> toExtent: toExtent during: numberOfSeconds on: anElement [
 	element := anElement.
 	originalExtent := anElement extent.
 	
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 									evaluator: [ :t | originalExtent interpolateTo: toExtent at: t ];
-									timer: (VITimer new cycleLength: numberOfSeconds);
+									timer: (TRVITimer new cycleLength: numberOfSeconds);
 									yourself.
 	
 ]

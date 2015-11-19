@@ -17,9 +17,9 @@ RTRotationMove >> angle: anAngle during: seconds on: anElement [
 	|currentAngle|
 	element := anElement.
 	currentAngle := element trachelShape angleInDegrees.
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 							evaluator: [ :t | currentAngle interpolateTo: anAngle at: t ];
-							timer: (VITimer new cycleLength: seconds);
+							timer: (TRVITimer new cycleLength: seconds);
 							yourself.
 ]
 

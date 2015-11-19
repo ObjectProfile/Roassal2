@@ -57,15 +57,7 @@ RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 		- perform a layout if one is set"
 
 	behavior centerOnTrachelShape: trachelShape elements: elements asGroup.
-"	self doLayoutIfNecessaryOn: elements.
-	encompassingRectangle := self encompassingRectangleOf: elements.
 
-	trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
-
-	off := trachelShape encompassingRectangle center - encompassingRectangle center. 
-	off := off asIntegerPoint.
-	elements do: [ :e | e translateBy: off ].
-	"
 ]
 
 { #category : #utility }
@@ -148,13 +140,13 @@ RTNest >> layout: aLayout [
 	layout := aLayout
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> makeElements: elements draggableBy: backElement [
 	^ self makeElements: elements draggableByTrachelShape: backElement trachelShape
 	 
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> makeElements: elements draggableByTrachelShape: trachelShape [
 	| callback |
 	callback := TRTranslationCallback block: [ :shape :step | elements do: [ :e | e translateBy: step ] ].
@@ -256,7 +248,7 @@ RTNest >> on: backElement nest: elements [
 	self mark: backElement with: elements
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> onResizable: backElement nest: elements [
 	"PROBABLY THIS METHOD HAS TO BE DELETED"
 
@@ -275,7 +267,7 @@ RTNest >> onResizable: backElement nest: elements [
 
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> onTrachelShape: trachelShape nest: elements [
 	"public method"
 	"backElement is the elements on which elements are layout-ed"
@@ -302,7 +294,7 @@ RTNest >> padding: aNumber [
 	padding := aNumber
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> resize: backElement bounds: encompassingRectangle [
 	"it translates backElement, but does not trigger events."
 	| newRec |
@@ -315,7 +307,7 @@ RTNest >> resize: backElement bounds: encompassingRectangle [
 	backElement translateTo: encompassingRectangle center
 ]
 
-{ #category : #'to be removed' }
+{ #category : #'OBSOLETE - to be removed' }
 RTNest >> resize: backElement for: elements [
 	| encompassingRectangle |
 	encompassingRectangle := self encompassingRectangleOf: elements.

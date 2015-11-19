@@ -49,7 +49,7 @@ RTSimonExample >> basic03Animated [
 	self new basic03Animated
 	"
 	| builder timer |
-	timer := VITimer new cycleLength: 10.
+	timer := TRVITimer new cycleLength: 10.
 	
 	builder := RTSimon new.
 	builder shape current 
@@ -59,7 +59,7 @@ RTSimonExample >> basic03Animated [
 							| a b |
 							a := 300 atRandom.
 							b := 200 atRandom.
-							VIAnimatedValue new
+							TRVIAnimatedValue new
 													evaluator: [ :t | a interpolateTo: (a + b) at: t ];
 													timer: timer;
 													yourself. ]

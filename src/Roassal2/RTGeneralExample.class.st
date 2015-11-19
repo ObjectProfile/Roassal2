@@ -762,13 +762,13 @@ RTGeneralExample >> expandingArc [
 
 	| v e angle externalRadius |
 	v := RTView new.
-	angle := VIAnimatedValue new
+	angle := TRVIAnimatedValue new
 					evaluator: [ :t | 0 interpolateTo: 360 at: t ];
-					timer: (VITimer new cycleLength: 4);
+					timer: (TRVITimer new cycleLength: 4);
 					yourself.
-	externalRadius := VIAnimatedValue new
+	externalRadius := TRVIAnimatedValue new
 					evaluator: [ :t | 50 interpolateTo: 150 at: t ];
-					timer: (VITimer new cycleLength: 4);
+					timer: (TRVITimer new cycleLength: 4);
 					yourself.
 					
 	e := (RTArc new 
@@ -1489,14 +1489,14 @@ RTGeneralExample >> rotatingLabelsAnimated [
 	| v shape timer rotationRatio seconds |
 	v := RTView new.
 	seconds := 7.
-	timer := VITimer new cycleLength: seconds.
+	timer := TRVITimer new cycleLength: seconds.
 	rotationRatio := 0.2.
 
 	shape := RTRotatedLabel new.
 	shape angleInDegree: [ :cls | 
 		| valueEnd |
 		valueEnd := cls numberOfMethods negated / rotationRatio.
-		VIAnimatedValue new
+		TRVIAnimatedValue new
 					evaluator: [ :t | 0 interpolateTo: valueEnd at: t ];
 					timer: timer;
 					yourself. ].
