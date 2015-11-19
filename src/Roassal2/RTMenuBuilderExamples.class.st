@@ -30,7 +30,7 @@ RTMenuBuilderExamples >> example01 [
 		tra nbCycles: 0.5.
 		(v elements do: [ :e | tra translate: e to: ((500 atRandom @ 500 atRandom) - (250 @ 250)) ]) ].		
 
-	^ v
+	v open
 ]
 
 { #category : #examples }
@@ -104,7 +104,7 @@ RTMenuBuilderExamples >> example03 [
 		s pushBack.
 		v canvas signalUpdate ].
 	menus := b menu: 'options' subcheckmenus: menus background: Color red.
-	^ v
+	v open.
 ]
 
 { #category : #examples }
@@ -150,7 +150,7 @@ RTMenuBuilderExamples >> example04 [
 		('with border'->[:m | withBorder := m selected]) .
 	menus := b menu: 'opions' subcheckmenus: menus background: Color green.
 	menus first selected: true.
-	^ v
+	v open.
 ]
 
 { #category : #examples }
@@ -178,7 +178,7 @@ RTMenuBuilderExamples >> example05 [
 		menu: 'add3' submenu: 'box' background: Color blue
 			callback: [ v add: (RTBox new size: 40) element @ RTDraggable. v signalUpdate ];
 		build.	
-	^ v
+	v open.
 
 ]
 
@@ -215,5 +215,5 @@ RTMenuBuilderExamples >> example06 [
 		tra nbCycles: 0.5.
 		(v elements do: [ :e | tra translate: e to: ((500 atRandom @ 500 atRandom) - (250 @ 250)) ]) ].		
 
-	^ v
+	v open
 ]

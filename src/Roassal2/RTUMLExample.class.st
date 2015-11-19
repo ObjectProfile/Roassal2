@@ -207,18 +207,17 @@ S9PC7Wk2m1I113Xpf6shjuNINRzJtj1RblMXxG8Z/Bd88sFNlxjeZgAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTUMLExample >> exampleNoInstVar [
 
-	| b |
-	b := RTUMLClassBuilder new.
-	   b instanceVariables: #instVarNames.
-	   b methodselector: #selector.
-		b methodsNames: [ :cls | cls rtmethods sortedAs: #selector ].
-	   b attributeselector: ''.
+| b |
+b := RTUMLClassBuilder new.
+   b instanceVariables: #instVarNames.
+   b methodselector: #selector.
+	b methodsNames: [ :cls | cls rtmethods sortedAs: #selector ].
+   b attributeselector: ''.
 
 
-	b addObjects: (RTShape withAllSubclasses).
-	b layout tree.
-	b build.
-	^ b view.
+b addObjects: (RTShape withAllSubclasses).
+b layout tree.
+^ b
 ]
 
 { #category : #icons }

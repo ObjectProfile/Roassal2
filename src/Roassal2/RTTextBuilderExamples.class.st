@@ -18,8 +18,7 @@ RTTextBuilderExamples >> example01Highlighting [
 	builder := RTTextBuilder new.
 	builder wordInteraction highlightColored: Color blue.
 	builder addText: 'hello world'.
-	builder build.
-	^ builder view
+	^ builder open
 ]
 
 { #category : #examples }
@@ -34,8 +33,7 @@ RTTextBuilderExamples >> example02ClickableWord [
 					highlightColored: Color blue;
 					when: TRMouseClick do: [ :event | event element model inspect ].
 	builder addText: 'hello world', String cr, 'hola mundo'.
-	builder build.
-	^ builder view
+	^ builder open
 ]
 
 { #category : #examples }
@@ -52,8 +50,7 @@ RTTextBuilderExamples >> example03ShowCode [
 					highlight;
 					when: TRMouseClick do: [ :event | event element model inspect ].
 	builder addText: (RTTextBuilderExamples >> #example03ShowCode) getSource.
-	builder build.
-	^ builder view
+	^ builder open
 ]
 
 { #category : #examples }
@@ -74,6 +71,5 @@ RTTextBuilderExamples >> example04ShowCodeAsBoxes [
 					popup;
 					when: TRMouseClick do: [ :event | event element model inspect ].
 	builder addText: (RTTextBuilderExamples>>#example04ShowCodeAsBoxes) getSource.
-	builder build.
-	^ builder view
+	^ builder open
 ]
