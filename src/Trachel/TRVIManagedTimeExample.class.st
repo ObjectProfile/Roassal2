@@ -1,17 +1,17 @@
 Class {
-	#name : #VIManagedTimeExample,
+	#name : #TRVIManagedTimeExample,
 	#superclass : #TRObject,
 	#category : #'Trachel-Viva'
 }
 
 { #category : #examples }
-VIManagedTimeExample >> example01 [
+TRVIManagedTimeExample >> example01 [
 
 	| v timer t e |
 	v := RTView new.
 
-	timer := VITimer new cycleLength: 2.
-	t := VIAnimatedValue new.
+	timer := TRVITimer new cycleLength: 2.
+	t := TRVIAnimatedValue new.
 	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
 	t timer: timer.
 	timer start.
@@ -27,14 +27,14 @@ VIManagedTimeExample >> example01 [
 ]
 
 { #category : #examples }
-VIManagedTimeExample >> example02 [
+TRVIManagedTimeExample >> example02 [
 
 	| v timer t e slider |
 	v := RTView new.
 
-	timer := VIManualTimer new.
+	timer := TRVIManualTimer new.
 
-	t := VIAnimatedValue new.
+	t := TRVIAnimatedValue new.
 	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
 	t timer: timer.
 	

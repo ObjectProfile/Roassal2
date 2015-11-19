@@ -1,5 +1,5 @@
 Class {
-	#name : #VIAnimatedPoint,
+	#name : #TRVIAnimatedPoint,
 	#superclass : #TRObject,
 	#instVars : [
 		'x',
@@ -9,8 +9,8 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-VIAnimatedPoint >> + anotherPoint [
-	^ VIAnimatedPoint new 
+TRVIAnimatedPoint >> + anotherPoint [
+	^ TRVIAnimatedPoint new 
 		x: [ self x value + (anotherPoint x) ];
 		y: [ self y value + (anotherPoint y) ];
 		yourself
@@ -22,8 +22,8 @@ VIAnimatedPoint >> + anotherPoint [
 ]
 
 { #category : #'as yet unclassified' }
-VIAnimatedPoint >> - anotherPoint [
-	^ VIAnimatedPoint new 
+TRVIAnimatedPoint >> - anotherPoint [
+	^ TRVIAnimatedPoint new 
 		x: [ self x value - (anotherPoint x) ];
 		y: [ self y value - (anotherPoint y) ];
 		yourself
@@ -35,28 +35,28 @@ VIAnimatedPoint >> - anotherPoint [
 ]
 
 { #category : #initialization }
-VIAnimatedPoint >> initialize [
+TRVIAnimatedPoint >> initialize [
 	super initialize.
 	x := 0.
 	y := 0.
 ]
 
 { #category : #accessing }
-VIAnimatedPoint >> x [
+TRVIAnimatedPoint >> x [
 	^ x
 ]
 
 { #category : #accessing }
-VIAnimatedPoint >> x: anObject [
+TRVIAnimatedPoint >> x: anObject [
 	x := anObject
 ]
 
 { #category : #accessing }
-VIAnimatedPoint >> y [
+TRVIAnimatedPoint >> y [
 	^ y
 ]
 
 { #category : #accessing }
-VIAnimatedPoint >> y: anObject [
+TRVIAnimatedPoint >> y: anObject [
 	y := anObject
 ]

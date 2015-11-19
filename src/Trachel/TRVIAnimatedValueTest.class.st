@@ -1,15 +1,15 @@
 Class {
-	#name : #VIAnimatedValueTest,
+	#name : #TRVIAnimatedValueTest,
 	#superclass : #TRTest,
 	#category : #'Trachel-Viva'
 }
 
 { #category : #tests }
-VIAnimatedValueTest >> testAddingWithNumber [
+TRVIAnimatedValueTest >> testAddingWithNumber [
 
 	| t |
-	t := VIAnimatedValue new.
-	t evaluator: [ :time | 5 ].
+	t := TRVIAnimatedValue new.
+	t evaluator: [ :timE | 5 ].
 
 	self assert: t value equals: 5.
 	self assert: (t + 4) value equals: 9.
@@ -17,35 +17,35 @@ VIAnimatedValueTest >> testAddingWithNumber [
 ]
 
 { #category : #tests }
-VIAnimatedValueTest >> testBasic [
+TRVIAnimatedValueTest >> testBasic [
 	| t |
-	t := VIAnimatedValue new.
+	t := TRVIAnimatedValue new.
 	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
 	self assert: t value equals: 0
 ]
 
 { #category : #tests }
-VIAnimatedValueTest >> testBasicWithOutEvaluator [
+TRVIAnimatedValueTest >> testBasicWithOutEvaluator [
 	| t  |
-	t := VIAnimatedValue new.
+	t := TRVIAnimatedValue new.
 	self assert: t value equals: 0
 ]
 
 { #category : #tests }
-VIAnimatedValueTest >> testBasicWithTimer [
+TRVIAnimatedValueTest >> testBasicWithTimer [
 	| t timer |
-	t := VIAnimatedValue new.
+	t := TRVIAnimatedValue new.
 	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
-	timer := VITimer new cycleLength: 2.
+	timer := TRVITimer new cycleLength: 2.
 	t timer: timer.
 	self assert: t value equals: 0
 ]
 
 { #category : #tests }
-VIAnimatedValueTest >> testPoint [
+TRVIAnimatedValueTest >> testPoint [
 	| t1 t2 p |
-	t1 := VIAnimatedValue new.
-	t2 := VIAnimatedValue new.
+	t1 := TRVIAnimatedValue new.
+	t2 := TRVIAnimatedValue new.
 	p := t1 @ t2.
-	self assert: p class equals: VIAnimatedPoint.
+	self assert: p class equals: TRVIAnimatedPoint.
 ]

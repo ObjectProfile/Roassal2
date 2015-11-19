@@ -12,9 +12,9 @@ TRCanvasExample >> animatedArc [
 
 	| v e angle timer |
 	v := TRCanvas new.
-	timer := VITimer new cycleLength: 2.
+	timer := TRVITimer new cycleLength: 2.
 	timer repeat.
-	angle := VIAnimatedValue new
+	angle := TRVIAnimatedValue new
 					evaluator: [ :t | 0 interpolateTo: 360 at: t ];
 					timer: timer;
 					yourself.
