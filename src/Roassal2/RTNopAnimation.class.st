@@ -52,19 +52,19 @@ RTNopAnimation >> start [
 
 { #category : #'waiting-specific' }
 RTNopAnimation >> waitFor: seconds [
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 							evaluator: [ :t | blockToExecute value ];
-							timer: (VITimer new cycleLength: seconds);
+							timer: (TRVITimer new cycleLength: seconds);
 							yourself.
 	
 ]
 
 { #category : #'waiting-specific' }
 RTNopAnimation >> waitFor: seconds after: aBlock [
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 							evaluator: [ :t | ];
 							finishCallback: aBlock;
-							timer: (VITimer new cycleLength: seconds);
+							timer: (TRVITimer new cycleLength: seconds);
 							yourself.
 	
 ]

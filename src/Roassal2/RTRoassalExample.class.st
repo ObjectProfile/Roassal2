@@ -5962,7 +5962,7 @@ RTRoassalExample >> exampleRotatingAnimatedLabels [
 
 	| v shape timer |
 	v := RTView new.
-	timer := VITimer new cycleLength: 2.
+	timer := TRVITimer new cycleLength: 2.
 	
 	
 	shape := RTRotatedLabel new.
@@ -5970,7 +5970,7 @@ RTRoassalExample >> exampleRotatingAnimatedLabels [
 	shape angleInDegree: [ :cls | 
 		| valueEnd |
 		valueEnd := cls numberOfMethods negated / 1.5.
-		VIAnimatedValue new
+		TRVIAnimatedValue new
 					evaluator: [ :t | 0 interpolateTo: valueEnd at: t ];
 					timer: timer;
 					yourself. ].
@@ -7313,6 +7313,44 @@ SpfVDoLvso7cZTmVMrG6ug+mN4zhXJb7vLp6lq9ODuuyxhYX9UY2OwSQ4VzW4uKzBuk5PpDD
 uiz3i8bfa7UhfpflXNbIQJflfslYqz3cbFuf8ltWGC6r/zrCd1n88IHwgfDDB8IHwg8fCD98
 IHwg/PCB8IHwwwfCB8IPHwgfCD98IPzwgfCB8MMHwgfCDx8IHwg/fCB8IPzwgfCB8MMHwg8f
 CB8IP3wgfCD88IHwgfDDB8IHwg8fCD898i/yRZSg2d3sdAAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
+RTRoassalExample >> exampleUseOfDecoration [
+
+	| view element decoration |
+	view := RTView new.
+	element := RTBox new size: 50; color: Color blue; element.
+	decoration := RTDecoration new 
+						shape: (RTEllipse new color: Color red; borderColor: Color black; size: 10)
+							tooltip: 'Set red color'
+							action: [ :anElement | 
+											anElement trachelShape color: Color red.
+											anElement signalUpdate. ];
+						shape: (RTEllipse new color: Color yellow; borderColor: Color black; size: 10)
+							tooltip: 'Set yellow color'
+							action: [ :anElement | 
+											anElement trachelShape color: Color yellow.
+											anElement signalUpdate. ];
+						shape: (RTEllipse new color: Color green; borderColor: Color black; size: 10)
+							tooltip: 'Set green color'
+							action: [ :anElement | 
+											anElement trachelShape color: Color green.
+											anElement signalUpdate. ].
+	element @ decoration @ RTDraggable.
+	view add: element.
+^ view
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleUseOfDecorationIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABFElEQVR4XuXYsQkAMAhFwb//
+0JoMkIBNIHAP7MXrTLffT8U/gQ/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P4oP4+SA+
+iJ8P4oP4+SB+PogP4ueD+CB+PogP4ueD+CB+PoifD+KD+PkgPoifD+KD+PkgPoifD+Lng/gg
+fj6ID+Lng/ggfj7IZenMpnY+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig7yuhvmvEz8fxAfx
+80F8ED8fxM8H8UH8fBAfxM8H8UH8fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TP
+B/FB/HwQH8TPB/FB/HwQH8TPB/HzQXwQPx/EB/HzQXwQPx/EB/HzQfzOLZ+d5T9+ROpBAAAA
+AElFTkSuQmCC'
 ]
 
 { #category : #sources }

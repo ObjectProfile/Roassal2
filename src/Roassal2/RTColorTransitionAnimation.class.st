@@ -36,8 +36,8 @@ RTColorTransitionAnimation >> toColor: finalColor during: numberOfSeconds on: an
 		lowColor: anElement trachelShape color
 		highColor: finalColor.
 		
-	animatedValue := VIAnimatedValue new
+	animatedValue := TRVIAnimatedValue new
 							evaluator: [ :t | colorNormalizer rtValue: t ];
-							timer: (VITimer new cycleLength: numberOfSeconds);
+							timer: (TRVITimer new cycleLength: numberOfSeconds);
 							yourself.
 ]
