@@ -73,7 +73,7 @@ RTAbstractLineLayout >> alignBottom [
 
 { #category : #accessing }
 RTAbstractLineLayout >> alignCenter [
-	"Make the element centered"
+	
 	alignment := #center
 ]
 

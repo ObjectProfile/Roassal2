@@ -1739,7 +1739,8 @@ b add: d.
 
 b maxX: 5.
 b axisX numberOfLabels: 5; noDecimal.
-b
+b build.
+^ b view
 ]
 
 { #category : #icons }
@@ -2957,6 +2958,48 @@ KY4HoQA5OTlRA3ZbW5sqxMnSdckhaqauhbK0RJRIUCg9ZGtrSw2anK0zCG74mZkZwresElDu
 GfxMvTwLy8fjFAjI3t7e1366s9TuBQQ/UzfX/cWF9quq2h7i7KczFF5qx2++6IT//0PwgeAL
 Hwg+EHzhA8EHgi98IPhA8IUPBB8IvvCB4AsfCD4QfOEDwQeCL3wg+EDwhQ8EWX8BBR3Ll9qy
 s4kAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
+RTGrapherExample >> exampleSquaredCurve [
+
+| data b ds |
+data := (0 to: 40000 by: 1000) 
+collect: [:n | n @ (Random new next * 3) floor].
+b := RTGrapher new.
+b extent: 1000@ 200. 
+ds := RTData new.
+ds dotShape rectangle height: 1; width: 25; color: Color blue.
+ds connectUsing: (RTLine new 
+	color: (Color blue); 
+	width: 1; 
+	withHorizontalAttachPoint; yourself).
+ds 
+	points: data;
+	x: #x;
+	y: #y.
+
+b add: ds.
+b axisX. 
+b axisY title: 'alles Count'.
+b
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleSquaredCurveIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACV0lEQVR4XuXcPU8iQRzAYT6k
+Jup3UaiML1/B91qN3wB6Co7QLVDREAoqErT5r9kzuYgzl9sgd8o9v2QSMpnZdXxAizU2ytLv
+O9XwvwU+iJ8P4oP4+SA+iJ8P4oP4+SA+iJ8P4ueD+CB+PogP4ueD+CB+PogP4ueD+PkgPoif
+D+KD+PkgPoifD+KD+PkgfjVAiiKi2Vwdp6cRdS6W23t+vv71hsP1945G6++tW+4eufOenKT3
+HY/TdWdnEQnIxUW6OTeX6/Jys+uurtJ1ublc19fputzcZ7q9rXe93Lq7u/xeH8QH8UF8EB/E
+B/FBfBAfxAfxQXwQH8QH8UF8EB/EB/FBfBAfxAfxQXwQH8QH8UFokGazLN+Pvb2/D3J/Xz1D
+Xr1v7nl37pv/8JDufXuOvTq3v5/ufXxM1+Wed789K19dVz3v/jh3cFDvvE9P9ffW+quTTYNs
++tPwmW5u0nvk5v5VPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/gg
+PogP4oPQIO12u/zTODz8Ea1WlO/H8fFz+XFuZ+c56lwvN46Oesk9dndf1r5e3dFqfc19fzd+
+fUKGw+GXvSs2WVEUW30O/19rfDeQyWQSy+UyxuNxjEajn++u6vW2HGCxWER1hm0/R/W1V2do
+dDqdmM/n0ev1ot/vR1X1elsOMpvNYjAYxLafYzqdRrfbDf9Hlv87xM8H8UH8fBAfxM8H8UH8
+fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB/HyQ/7pXlUUAwIdknNYAAAAA
+SUVORK5CYII='
 ]
 
 { #category : #sources }
