@@ -36,7 +36,7 @@ RTTreeMapExample >> example08 [
 	b from: (1 to: 5) using: [#()].
 	b weight: #yourself.
 	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -66,8 +66,7 @@ b
 	leafWeight: #numberOfLinesOfCode;
 	explore: Collection
 	using: #subclasses.
-b build.
-^ b view
+^ b
 ]
 
 { #category : #icons }
@@ -127,8 +126,7 @@ b
 	explore: TRPlatform current workingDirectory
 	nesting: #directories
 	leaves: #files.
-b build.
-^ b view
+^ b
 ]
 
 { #category : #icons }
@@ -169,8 +167,7 @@ RTTreeMapExample >> exampleNumber [
 		explore: 1
 		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
 		weight: [ :n | n ].
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }

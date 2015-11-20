@@ -3054,7 +3054,7 @@ RTOSM class >> example [
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView.
-	v open
+	^ v
 ]
 
 { #category : #examples }
@@ -3075,7 +3075,7 @@ RTOSM class >> exampleDili [
 	view canvas addMenu: 'In' callback: [ RTZoomInMove on: view ].
 	view canvas addMenu: 'Out' callback: [ RTZoomOutMove on: view ].
 	view @ RTDraggableView.
-	view open
+	^ view
 ]
 
 { #category : #examples }
