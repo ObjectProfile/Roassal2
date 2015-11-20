@@ -211,7 +211,7 @@ RTComposer >> propagateHighlightToAll [
 ]
 
 { #category : #'public-background' }
-RTComposer >> setBackgroundForGroup: aName color: aColor [
+RTComposer >> setBackgroundColor: aColor forGroup: aName [
 "
 Set a background for a visualization.
 
