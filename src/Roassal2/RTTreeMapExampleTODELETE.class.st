@@ -24,7 +24,7 @@ RTTreeMapExampleTODELETE >> example02 [
 		extent: 400@400;
 		explore: TRShape using: #subclasses;
 		weight: [:el | el numberOfMethods == 0 ifTrue: [ 1 ] ifFalse: [ el numberOfMethods ]  ].
-	b open.
+	^ b
 ]
 
 { #category : #examples }
@@ -47,7 +47,7 @@ RTTreeMapExampleTODELETE >> example03 [
 		on: [Object browse]; yourself)
 		using: #children.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
-	b open.
+	^ b
 ]
 
 { #category : #examples }
@@ -65,7 +65,7 @@ RTTreeMapExampleTODELETE >> example04 [
 		
 	b from: (1 to: 10)
 		using: [:n | n < 5 ifTrue: [ Array with: n+1 with: n+2 ] ifFalse: [ #() ] ].
-	b open.
+	^ b
 ]
 
 { #category : #examples }
@@ -94,7 +94,7 @@ RTTreeMapExampleTODELETE >> example05 [
 	b explore: tally
 		using: #children.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
-	b open.
+	^ b
 ]
 
 { #category : #examples }
@@ -120,7 +120,7 @@ RTTreeMapExampleTODELETE >> example06 [
 	b withShadedFramesFromColor: Color gray toColor: Color red.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
 	
-	b open.
+	^ b
 ]
 
 { #category : #examples }
@@ -139,5 +139,5 @@ RTTreeMapExampleTODELETE >> example07 [
 		on: [Object browse]; yourself)
 		using: #children;
 		depthShadedBorder.
-	b open.
+	^ b
 ]
