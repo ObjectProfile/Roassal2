@@ -152,7 +152,7 @@ TROSMShape >> equatorLength [
 TROSMShape >> fromCameraSpaceToOurSpace: aPoint [
 	"To convert our boundaries from the camera space into our space (0@0 at center, no zoom)."
 
-	^ AthensAffineTransform new
+	^ TRPlatform current affineTransformClass new
 		scaleBy: canvas camera scale;
 		translateBy: canvas camera position negated;
 		transform: aPoint
@@ -170,7 +170,7 @@ TROSMShape >> fromOSMSpaceToOurSpace: aPoint [
 TROSMShape >> fromOurSpaceToCameraSpace: aPoint [
 	"To convert our boundaries into the camera space."
 
-	^ AthensAffineTransform new
+	^ TRPlatform current affineTransformClass new
 		translateBy: canvas camera position;
 		scaleBy: 1 / canvas camera scale;
 		transform: aPoint

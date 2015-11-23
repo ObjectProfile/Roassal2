@@ -36,14 +36,14 @@ RTPNGExporter >> cameraScale [
 RTPNGExporter >> createFormCanvas [
 	"Return a new form"
 	| form |
-	form := FormCanvas extent: self viewExtent.
+	form := TRPlatform current formCanvasClass extent: self viewExtent.
 	form fillRectangle: self encompassingRectangle color: self trachelCanvas color.
 	^ form
 ]
 
 { #category : #util }
 RTPNGExporter >> createSurface [
-	^ AthensCairoSurface extent: self viewExtent
+	^ TRPlatform current surfaceClass extent: self viewExtent
 ]
 
 { #category : #util }
