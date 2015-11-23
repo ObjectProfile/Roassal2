@@ -44,7 +44,7 @@ TRRotatedLabelShape >> encompassingRectangle [
 	| w h transformation translation notRotatedRectangle rotatedRectangle topLeft topRight bottomRight bottomLeft p1 p2 p3 p4 |
 	w := self notRotatedWidth.
 	h := self notRotatedHeight.
-	transformation := AthensAffineTransform new 
+	transformation := TRPlatform current affineTransformClass new 
 						rotateByDegrees: angle value;
 						translateBy: ((w / -2) @ (h / 2)) asIntegerPoint.
 	notRotatedRectangle  := 0 @ h negated corner: (w @ 0).
@@ -61,7 +61,7 @@ TRRotatedLabelShape >> encompassingRectangle [
 	rotatedRectangle := 
 		(p1 min @ p2 min) corner:
 		(p3 max @ p4 max).
-	translation := AthensAffineTransform new
+	translation := TRPlatform current affineTransformClass new
 					translateBy: self position asIntegerPoint.
 	^ (translation transform: rotatedRectangle topLeft)
 	 	corner: (translation transform: rotatedRectangle bottomRight)
@@ -74,7 +74,7 @@ TRRotatedLabelShape >> includesPoint: aPoint [
 	w := self notRotatedWidth.
 	h := self notRotatedHeight.
 	wh := (w/2)@(h/2).
-	p := AthensAffineTransform new 
+	p := TRPlatform current affineTransformClass new 
 		rotateByDegrees: angle value negated; 
 		transform: aPoint - self position.
 	rec:= wh negated corner: wh.

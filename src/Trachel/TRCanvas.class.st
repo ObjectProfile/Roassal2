@@ -177,7 +177,7 @@ TRCanvas >> camera: aCamera [
 TRCanvas >> canvas [
 	session == TRPlatform current session
 		ifFalse: [ 
-			canvas := AthensCairoSurface extent: extent asIntegerPoint.
+			canvas := TRPlatform current surfaceClass extent: extent asIntegerPoint.
 			session := TRPlatform current session ].
 	^ canvas
 ]
@@ -273,7 +273,7 @@ TRCanvas >> hasAnimation: anAnimation [
 TRCanvas >> initialize [
 	super initialize.
 	extent := 500 @ 500.
-	canvas := AthensCairoSurface extent: extent.
+	canvas := TRPlatform current surfaceClass extent: extent.
 	shapes := OrderedCollection new.
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.

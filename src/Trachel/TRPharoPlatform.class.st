@@ -13,6 +13,11 @@ TRPharoPlatform class >> isActivePlatform [
 	"^ SmalltalkImage current vm isPharoVM".
 ]
 
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> affineTransformClass [
+	^ AthensAffineTransform
+]
+
 { #category : #public }
 TRPharoPlatform >> browseClass: aClass [
 	^ Nautilus openOnClass: aClass
@@ -237,6 +242,11 @@ TRPharoPlatform >> fontListStrings [
 	^ FontChooser new fontListStrings.
 ]
 
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> formCanvasClass [
+	^ FormCanvas
+]
+
 { #category : #public }
 TRPharoPlatform >> formClass [
 	^ Form
@@ -279,6 +289,11 @@ TRPharoPlatform >> linearGradientClass [
 { #category : #public }
 TRPharoPlatform >> materializeFromByteArray: array [
  	^ FLMaterializer materializeFromByteArray: array.
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> matrixClass [
+	^ Matrix
 ]
 
 { #category : #public }
@@ -334,6 +349,11 @@ TRPharoPlatform >> packageNamed: packageName [
 { #category : #public }
 TRPharoPlatform >> pngReadWriterClass [
 	^ PNGReadWriter
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> polygonTesterClass [
+	^ AthensPolygonTester
 ]
 
 { #category : #public }
@@ -497,6 +517,11 @@ TRPharoPlatform >> session [
 { #category : #windows }
 TRPharoPlatform >> showTemporaryCursor: cursorOrNil [
 	World currentHand showTemporaryCursor: cursorOrNil
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> surfaceClass [
+	^ AthensCairoSurface
 ]
 
 { #category : #'accessing-classes' }
