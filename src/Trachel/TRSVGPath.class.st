@@ -242,7 +242,7 @@ TRSVGPath >> height [
 TRSVGPath >> includesPoint: aPoint [
 	|apt invertedPoint |
 	invertedPoint := matrix inverseTransform: aPoint.
-	apt := AthensPolygonTester new.
+	apt := TRPlatform current polygonTesterClass new.
 	^ polygons anySatisfy: [ :eachPolygon | ((apt polygon: eachPolygon) includesPoint: invertedPoint) ]
 ]
 

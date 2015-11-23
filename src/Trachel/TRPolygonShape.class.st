@@ -74,9 +74,7 @@ TRPolygonShape >> height [
 
 { #category : #testing }
 TRPolygonShape >> includesPoint: point [
-
-  ^ ( AthensPolygonTester new polygon: vertices ) includesPoint: point.
-"self encompassingRectangle containsPoint: point"
+  ^ (TRPlatform current polygonTesterClass new polygon: vertices ) includesPoint: point.
 ]
 
 { #category : #initialization }

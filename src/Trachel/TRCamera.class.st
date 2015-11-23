@@ -137,7 +137,7 @@ TRCamera >> focusOnCenterScaled: aFactor [
 { #category : #convertion }
 TRCamera >> fromPixelToSpace: aPoint [
 
-	^ AthensAffineTransform new
+	^ TRPlatform current affineTransformClass new
 		translateBy: self position;
 		scaleBy: 1 / self scale;
 		translateBy: (self canvas extent / 2) negated;
@@ -153,7 +153,7 @@ TRCamera >> fromPixelToSpaceForRectangle: aRectangle [
 { #category : #convertion }
 TRCamera >> fromSpaceToPixel: aPoint [
 
-	^ AthensAffineTransform new
+	^ TRPlatform current affineTransformClass new
 		translateBy: self canvas extent / 2;
 		scaleBy: self scale;
 		translateBy: self position negated;

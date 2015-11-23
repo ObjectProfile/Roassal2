@@ -20,7 +20,7 @@ TRVIAnimatedValueTest >> testAddingWithNumber [
 TRVIAnimatedValueTest >> testBasic [
 	| t |
 	t := TRVIAnimatedValue new.
-	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
+	t evaluator: [ :time1 | 0 interpolateTo: 100 at: time1 ].
 	self assert: t value equals: 0
 ]
 
@@ -35,7 +35,7 @@ TRVIAnimatedValueTest >> testBasicWithOutEvaluator [
 TRVIAnimatedValueTest >> testBasicWithTimer [
 	| t timer |
 	t := TRVIAnimatedValue new.
-	t evaluator: [ :time | 0 interpolateTo: 100 at: time ].
+	t evaluator: [ :time1 | 0 interpolateTo: 100 at: time1 ].
 	timer := TRVITimer new cycleLength: 2.
 	t timer: timer.
 	self assert: t value equals: 0

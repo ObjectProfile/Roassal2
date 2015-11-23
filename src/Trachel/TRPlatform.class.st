@@ -23,6 +23,11 @@ TRPlatform class >> isActivePlatform [
 	self subclassResponsibility.
 ]
 
+{ #category : #'accessing-classes' }
+TRPlatform >> affineTransformClass [
+	self subclassResponsibility.
+]
+
 { #category : #windows }
 TRPlatform >> browseClass: aClass [
 	"Open the default system browser for a class"
@@ -129,6 +134,11 @@ TRPlatform >> fontListStrings [
 ]
 
 { #category : #'accessing-classes' }
+TRPlatform >> formCanvasClass [
+	self subclassResponsibility.
+]
+
+{ #category : #'accessing-classes' }
 TRPlatform >> formClass [
 	"return the default font class"
 	self subclassResponsibility 
@@ -168,6 +178,11 @@ TRPlatform >> jsonReaderClass [
 { #category : #public }
 TRPlatform >> materializeFromByteArray: array [
 	self subclassResponsibility
+]
+
+{ #category : #'accessing-classes' }
+TRPlatform >> matrixClass [
+	self subclassResponsibility.
 ]
 
 { #category : #'accessing-classes' }
@@ -229,6 +244,11 @@ TRPlatform >> pngReadWriterClass [
 	self subclassResponsibility 
 ]
 
+{ #category : #'accessing-classes' }
+TRPlatform >> polygonTesterClass [
+	self subclassResponsibility
+]
+
 { #category : #public }
 TRPlatform >> roassalIcon [
 	self subclassResponsibility
@@ -242,6 +262,11 @@ TRPlatform >> session [
 { #category : #windows }
 TRPlatform >> showTemporaryCursor: cursorOrNil [
 	self subclassResponsibility
+]
+
+{ #category : #'accessing-classes' }
+TRPlatform >> surfaceClass [
+	self subclassResponsibility.
 ]
 
 { #category : #'accessing-classes' }
