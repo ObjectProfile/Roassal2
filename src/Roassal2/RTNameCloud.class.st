@@ -102,7 +102,7 @@ RTNameCloud >> example01 [
 	self new example01
 	"
 
-	^ RTNameCloud new 
+	RTNameCloud new 
 		addString: 'open
 
 		| v shape |
@@ -111,7 +111,7 @@ RTNameCloud >> example01 [
 		v addAll: (shape elementsOn: table associations).
 		RTFlowLayout on: v elements.
 		v open';
-		yourself
+		open
 ]
 
 { #category : #examples }
@@ -122,7 +122,7 @@ RTNameCloud >> example02 [
 	| b |
 	b := RTNameCloud new.
 	b addStrings: (RTNameCloud rtmethods collect: #getSource).
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -135,7 +135,7 @@ RTNameCloud >> example03 [
 	b dictionary: (RTSourceCodeDictionary new).
 	RTObject withAllSubclasses do: [ :c | 
 		b addObjects: c rtmethods description: #getSource ].
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -148,7 +148,7 @@ RTNameCloud >> example04 [
 	b minHeight: 20.
 	b maxHeight: 30.
 	b addString: 'I am not that tall but I speak many languages. But I have tall legs and big feet'.
-	^ b
+	b open
 ]
 
 { #category : #initialization }

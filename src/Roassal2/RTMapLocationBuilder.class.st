@@ -41,7 +41,7 @@ RTMapLocationBuilder >> example01 [
 	b addPoint: paris value: 10. 
 	b addPoint: london value: 15.
 	b addPoint: santiago value: 20.
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -58,7 +58,7 @@ RTMapLocationBuilder >> example02 [
 		size: [ :v | (2 raisedTo: v) / 2 ];
 		color: (Color red alpha: 0.3).
 	tab values do: [ :row | b addPoint: row second @ row third value: row fifth ].
-	^ b
+	b open
 ]
 
 { #category : #utility }

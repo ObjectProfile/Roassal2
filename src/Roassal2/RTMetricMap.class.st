@@ -108,7 +108,7 @@ RTMetricMap >> example01 [
 	| b |
 	b := RTMetricMap new.
 	b countries: #('France' 'Germany').
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -119,7 +119,7 @@ RTMetricMap >> example02 [
 	| b |
 	b := RTMetricMap new.
 	b countries: #(#('France' 50) #('Germany' 80)) named: #first.
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -130,7 +130,7 @@ RTMetricMap >> example03 [
 	| b |
 	b := RTMetricMap new.
 	b countries: #(#('France' 50) #('Germany' 80)) named: #first metric: #second.
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -335,7 +335,7 @@ Somalia	0.00000589
 '.
 	data convertColumn: 2 to: [ :t | Float readFrom: t ].
 	b countries: data values named: #first metric: #second.
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -552,7 +552,7 @@ RTMetricMap >> example05 [
 	b makeSelectable: #fifth as: 'Citable documents'.
 	b makeSelectable: [ :row | row at: 9 ] as: 'H index'.
 	
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -654,7 +654,7 @@ RTMetricMap >> example06DeepIntoPharo [
 	b countries: RTSVGPath countries color: Color white.
 	b countries: data values named: #second metric: #first.
 	
-	^ b
+	b open
 ]
 
 { #category : #examples }
@@ -695,7 +695,7 @@ table convertColumn: 3 to: [ :t | Float readFrom: t ].
 b allCountriesColor: Color white.
 b countries: table values named: #first metric: #third.
 
-^ b
+b open.
 
 ]
 

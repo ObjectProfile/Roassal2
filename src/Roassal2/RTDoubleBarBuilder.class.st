@@ -76,7 +76,7 @@ RTDoubleBarBuilder >> example01 [
 	b points: RTShape withAllSubclasses.
 	b bottomValue: #numberOfMethods.
 	b topValue: #numberOfVariables.
-	^ b
+	b open maximize
 ]
 
 { #category : #initialization }

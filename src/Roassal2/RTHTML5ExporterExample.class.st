@@ -99,7 +99,7 @@ RTHTML5ExporterExample >> example01 [
 		connectFrom: #superclass to: #yourself.
 	RTTreeLayout on: view elements.
 	e export: view.
-	^ view
+	view open
 ]
 
 { #category : #examples }

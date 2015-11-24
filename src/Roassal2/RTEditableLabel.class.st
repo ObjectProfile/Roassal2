@@ -1,6 +1,3 @@
-"
-I am a class to create editable label shapes, but do not forget that roassal is for visualizations not to build morphs
-"
 Class {
 	#name : #RTEditableLabel,
 	#superclass : #RTLabel,

@@ -211,7 +211,7 @@ RTComposer >> propagateHighlightToAll [
 ]
 
 { #category : #'public-background' }
-RTComposer >> setBackgroundColor: aColor forGroup: aName [
+RTComposer >> setBackgroundForGroup: aName color: aColor [
 "
 Set a background for a visualization.
 
@@ -278,4 +278,9 @@ RTComposer >> setGeneralTitle: aTitleAsString gap: gapAsPoint [
 { #category : #accessing }
 RTComposer >> view [
 	^ view
+]
+
+{ #category : #accessing }
+RTComposer >> view: aView [
+	view := aView
 ]
