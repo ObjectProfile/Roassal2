@@ -193,10 +193,10 @@ RTUMLClassBuilder >> example1 [
 	self new example1
 	"
 
-	^ RTUMLClassBuilder new
+	RTUMLClassBuilder new
 		addObjects: RTShape withAllSubclasses;
 		gridLayout;
-		yourself
+		open.
 ]
 
 { #category : #examples }
@@ -205,10 +205,11 @@ RTUMLClassBuilder >> example2 [
 	self new example2
 	"
 
-	^ RTUMLClassBuilder new
+	RTUMLClassBuilder new
 		addObjects: RTShape withAllSubclasses;
 		treeLayout;
-		yourself
+		open.
+		
 ]
 
 { #category : #examples }
@@ -223,7 +224,7 @@ RTUMLClassBuilder >> example3 [
 		with: (Array with: 'MyClass2' with: (Array with: #iv3 with: #iv4) 
 			with: (Array with: #method4 with: #method5 with: #method6 ) ).
 
-	^ RTUMLClassBuilder new
+	RTUMLClassBuilder new
 		addObjects: objects;
 		classname: #first;
 		instanceVariables: #second;
@@ -231,7 +232,7 @@ RTUMLClassBuilder >> example3 [
 		methodselector: #yourself;
 		attributeselector: #yourself;
 		superclass: nil;
-		yourself
+		open
 ]
 
 { #category : #examples }
@@ -248,8 +249,8 @@ RTUMLClassBuilder >> example4 [
 	b attributeShape label
 		if: [ :attribute | attribute beginsWith: 'a' ] color: Color blue.
 	b addObjects: RTShape withAllSubclasses.
-	b treeLayout.
-	^ b
+	b treeLayout; open.
+		
 ]
 
 { #category : #examples }
@@ -273,8 +274,8 @@ RTUMLClassBuilder >> example5 [
 		methodsNames: #third;
 		methodselector: #yourself;
 		attributeselector: #yourself;
-		superclass: nil.
-	^ b
+		superclass: nil;
+		open
 ]
 
 { #category : #examples }
@@ -297,7 +298,8 @@ RTUMLClassBuilder >> example6WithColoredProtocols [
 	b treeLayout.
 
 	b view setDefaultMenu.
-	^ b
+	b open
+
 ]
 
 { #category : #private }

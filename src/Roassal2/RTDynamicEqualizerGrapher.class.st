@@ -31,7 +31,7 @@ RTDynamicEqualizerGrapher >> example01 [
 	b addName: 'Z2' metric: [ :anArray | anArray sixth ].
 
 	b view addMenu: 'Generate' callback: [ b object: ((1 to: 6) collect: [ :ii | 40 atRandom - 20]) ].
-	^ b
+	^ b open
 ]
 
 { #category : #initialization }
