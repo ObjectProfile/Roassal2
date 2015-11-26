@@ -1,6 +1,8 @@
 "
 I am an interaction which allows the element to be dragged in a steps of fixed size equivalent to the size of the grid.
 
+If the view has RTGridView interaction, then I will use it's spacing instead.
+
 Here is an example:
 [[[
 v := RTView new.
@@ -54,6 +56,16 @@ RTDraggableSnapToGrid >> gridSize: anInteger [
 	gridSize := anInteger
 ]
 
+{ #category : #accessing }
+RTDraggableSnapToGrid >> gridSizeFor: anElement [
+	anElement view
+		ifNotNil:
+			[ :v | 
+			(v hasAttribute: #RTGridView)
+				ifTrue: [ ^ (v attributeAt: #RTGridView) gridSize ] ].
+	^ gridSize
+]
+
 { #category : #initialization }
 RTDraggableSnapToGrid >> initialize [
 	super initialize.
@@ -62,9 +74,10 @@ RTDraggableSnapToGrid >> initialize [
 
 { #category : #hooks }
 RTDraggableSnapToGrid >> initializeElement: element [
-	| totalD |
+	| totalD spacing|
 	totalD := 0 @ 0.
 	element when: TRMouseDragStart do: [ :event | totalD := 0 @ 0 ].
+	spacing := self gridSizeFor: element.
 	element
 		when: TRMouseDragging
 		do:
@@ -76,7 +89,7 @@ RTDraggableSnapToGrid >> initializeElement: element [
 			d := element encompassingRectangle topLeft.
 			d := d + (element view canvas camera distanceFromPixelToSpace: event step).
 			totalD := totalD + d.
-			d := gridSize * ((totalD x / gridSize) rounded @ (totalD y / gridSize) rounded).
+			d := spacing * ((totalD x / spacing) rounded @ (totalD y / spacing) rounded).
 			totalD := totalD - d.
 			d := d - element encompassingRectangle topLeft.
 			t translateBy: d.
