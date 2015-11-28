@@ -1681,7 +1681,7 @@ Acnf8gOSv+UHJD8g+Vt+QPIDkr/lB+R/3v4B+vM9Sl2AdzAAAAAASUVORK5CYII='
 { #category : #sources }
 RTGrapherExample >> exampleLabelsInBar [
 
-| b ds barElements someElements |
+| b ds |
 b := RTGrapher new.
 
 ds := RTData new.

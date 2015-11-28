@@ -29,6 +29,8 @@ Class {
 
 { #category : #sources }
 RTSVGExample >> exampleAnimated [
+	<gtExample>
+	<iconSelectorBase64: #exampleAnimatedIcon>
  
 	| view randInt rand |
 	rand := Random new.
@@ -105,24 +107,26 @@ oA/kfmoUAPAWJvYeVmHCyBCbBNMHMoXq5ia3CCNdo5r0H22jD8RPahvyzx9Vpg9khok+EPpA
 
 { #category : #sources }
 RTSVGExample >> exampleDiamond [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleDiamondIcon>
+	
 	| v s elements |
 	v := RTView new.
-v @ RTDraggableView.
-s := RTSVGPath new path: 'M342.906,153H170.301l-85.967,96.562L256,462l171.666-211.23L342.906,153z M181.634,256l52.171,123.905
-	L133.688,256H181.634z M311.741,256L256,388.371L200.259,256H311.741z M208.055,238.833L256,190.887l47.945,47.946H208.055z
-	 M330.367,256h48.801L277.895,380.626L330.367,256z M371.875,238.833h-43.654l-51.5-51.5h50.511L371.875,238.833z M185.69,187.333
-	h49.589l-51.5,51.5h-43.922L185.69,187.333z M126.396,150.67l-42.062-42.062l24.274-24.274l40.653,40.653L126.396,150.67z
-	 M238.834,118.667V50h34.332v68.667H238.834z M363.442,124.283l39.95-39.949l24.273,24.274l-41.676,41.676L363.442,124.283z'.
+	v @ RTDraggableView.
+	s := RTSVGPath new path: 'M342.906,153H170.301l-85.967,96.562L256,462l171.666-211.23L342.906,153z M181.634,256l52.171,123.905
+		L133.688,256H181.634z M311.741,256L256,388.371L200.259,256H311.741z M208.055,238.833L256,190.887l47.945,47.946H208.055z
+		 M330.367,256h48.801L277.895,380.626L330.367,256z M371.875,238.833h-43.654l-51.5-51.5h50.511L371.875,238.833z M185.69,187.333
+		h49.589l-51.5,51.5h-43.922L185.69,187.333z M126.396,150.67l-42.062-42.062l24.274-24.274l40.653,40.653L126.396,150.67z
+		 M238.834,118.667V50h34.332v68.667H238.834z M363.442,124.283l39.95-39.949l24.273,24.274l-41.676,41.676L363.442,124.283z'.
 
-s color: Color black.
-elements := s elementsOn: (1 to: 40).
+	s color: Color black.
+	elements := s elementsOn: (1 to: 40).
 
-v addAll: elements.
+	v addAll: elements.
 
-RTGridLayout on: elements.
+	RTGridLayout on: elements.
 
-^ v	
+	^ v	
 ]
 
 { #category : #icons }
@@ -185,66 +189,68 @@ gOgPSOwDAhm94DvC3NuqVatAgiu8BOQ/+vultFsIHOIAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTSVGExample >> exampleFibonacciSpiral [
- 
+ 	<gtExample>
+	<iconSelectorBase64: #exampleFibonacciSpiralIcon>
+	
 	| view elem |
-view := RTView new.
-elem := (RTSVGPath new
-	path: (RTSVGPath 
-		goldenSpiral: 10 
-		start: 0@0
-		side: 100
-		direction: 1@ 1
-		type: true);
-	fillColor: Color random;
-	scale: 2;
-	borderWidth: 0.5) element.
-elem @ RTDraggable.
-view add: elem.
+	view := RTView new.
+	elem := (RTSVGPath new
+		path: (RTSVGPath 
+			goldenSpiral: 10 
+			start: 0@0
+			side: 100
+			direction: 1@ 1
+			type: true);
+		fillColor: Color random;
+		scale: 2;
+		borderWidth: 0.5) element.
+	elem @ RTDraggable.
+	view add: elem.
 
-elem := (RTSVGPath new
-	path: (RTSVGPath 
-		goldenSpiral: 10 
-		start: 0@0
-		side: 100
-		direction: -1@ 1
-		type: true);
-	fillColor: Color random;
-	scale: 2;
-	borderWidth: 0.5) element.
-elem @ RTDraggable.
-view add: elem.
+	elem := (RTSVGPath new
+		path: (RTSVGPath 
+			goldenSpiral: 10 
+			start: 0@0
+			side: 100
+			direction: -1@ 1
+			type: true);
+		fillColor: Color random;
+		scale: 2;
+		borderWidth: 0.5) element.
+	elem @ RTDraggable.
+	view add: elem.
 
-elem := (RTSVGPath new
-	path: (RTSVGPath 
-		goldenSpiral: 10 
-		start: 0@0
-		side: 100
-		direction: -1@ -1
-		type: true);
-	fillColor: Color random;
-	scale: 2;
-	borderWidth: 0.5) element.
-elem @ RTDraggable.
-view add: elem.
+	elem := (RTSVGPath new
+		path: (RTSVGPath 
+			goldenSpiral: 10 
+			start: 0@0
+			side: 100
+			direction: -1@ -1
+			type: true);
+		fillColor: Color random;
+		scale: 2;
+		borderWidth: 0.5) element.
+	elem @ RTDraggable.
+	view add: elem.
 
-elem := (RTSVGPath new
-	path: (RTSVGPath 
-		goldenSpiral: 10 
-		start: 0@0
-		side: 100
-		direction: 1@ -1
-		type: true);
-	fillColor: Color random;
-	scale: 2;
-	borderWidth: 0.5) element.
-elem @ RTDraggable.
-view add: elem.
+	elem := (RTSVGPath new
+		path: (RTSVGPath 
+			goldenSpiral: 10 
+			start: 0@0
+			side: 100
+			direction: 1@ -1
+			type: true);
+		fillColor: Color random;
+		scale: 2;
+		borderWidth: 0.5) element.
+	elem @ RTDraggable.
+	view add: elem.
 
-view elements do: [ :e| 
-	view addAnimation: (RTRotationMove angle: 300 during: 20 on: e)
-	 ].
+	view elements do: [ :e| 
+		view addAnimation: (RTRotationMove angle: 300 during: 20 on: e)
+		 ].
 
-^ view
+	^ view
 	
 	
 ]
@@ -320,6 +326,8 @@ HxBAs4ueZTTJAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSVGExample >> exampleIcon1 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon1Icon>
  
 	| view element |
 	view := RTView new.
@@ -354,6 +362,8 @@ fBA+CL+H+wX6dsn/L7VWKgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleIcon2 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon2Icon>
  
 	| view element |
 	view := RTView new.
@@ -406,6 +416,8 @@ CL7wgeADwRc+EHwg+MIHgg8EX/hA8IUPBB8IvvCB4APBFz4QfCD4wgeCDwRf+EDwhQ8EHwi+
 
 { #category : #sources }
 RTSVGExample >> exampleIcon3 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon3Icon>
  
 	| view element |
 	view := RTView new.
@@ -446,6 +458,8 @@ TkSuQmCC'
 
 { #category : #sources }
 RTSVGExample >> exampleIcon4 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon4Icon>
  
 	| view element |
 	view := RTView new.
@@ -489,7 +503,9 @@ AABJRU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleIcon5 [
- 
+ 	<gtExample>
+	<iconSelectorBase64: #exampleIcon5Icon>
+	
 	| view element |
 	view := RTView new.
 	element := (RTSVGPath new
@@ -544,7 +560,9 @@ RU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleRabbit [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleRabbitIcon>
+	
 	| v s elements |
 	v := RTView new.
 v @ RTDraggableView.
@@ -665,7 +683,9 @@ g8UTxgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleSimpleBezier [
- 
+ 	<gtExample>
+	<iconSelectorBase64: #exampleSimpleBezierIcon>
+	
 	| view element |
 	view := RTView new.
 	element := (RTSVGPath new
@@ -698,6 +718,8 @@ YII='
 
 { #category : #sources }
 RTSVGExample >> exampleSouthAmerica [
+	<gtExample>
+	<iconSelectorBase64: #exampleSouthAmericaIcon>
  
 	| view |
 	view := RTView new.
@@ -770,6 +792,8 @@ wR/8IPhB8Ac/CH4Q/MEPgh8Ef/CD4AfBH/wg+CMv/wPUXzVRy2qRJgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTSVGExample >> exampleTheWorld [
+	<gtExample>
+	<iconSelectorBase64: #exampleTheWorldIcon>
  
 	| view |
 	view := RTView new.
@@ -924,7 +948,9 @@ wv0g3F+4H4T7Qbi/cD8I94Nwf+F+EO4v3A+yysr/AeXGPG2h70mRAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSVGExample >> exampleVeryBasic [
- 
+ 	<gtExample>
+	<iconSelectorBase64: #exampleVeryBasicIcon>
+	
 	| view element |
 	view := RTView new.
 	element := (RTSVGPath new
@@ -953,6 +979,9 @@ dcSD3KokuY54kOu2xx+/diz1/hvoB7lRSXodqwD5rmQFdawG5FrJGupYDch1wzD4Qfzzg/hB
 
 { #category : #basic }
 RTSVGExample >> icon [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon1Icon>
+	
 	"
 	self new icon
 	"
@@ -965,11 +994,14 @@ RTSVGExample >> icon [
 		fillColor: Color black) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> icon2 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon2Icon>
+	
 	"
 	self new icon2
 	"
@@ -982,11 +1014,13 @@ RTSVGExample >> icon2 [
 		fillColor: Color black) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> icon3 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon3Icon>
 	"
 	self new icon3
 	"
@@ -999,11 +1033,14 @@ RTSVGExample >> icon3 [
 		fillColor: Color black) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> icon4 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon4Icon>
+	
 	"
 	self new icon4
 	"
@@ -1016,11 +1053,13 @@ RTSVGExample >> icon4 [
 		scale: 8) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> icon5 [
+	<gtExample>
+	<iconSelectorBase64: #exampleIcon5Icon>
 	"
 	self new icon5
 	"
@@ -1033,11 +1072,13 @@ RTSVGExample >> icon5 [
 		scale: 10) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> icons [
+	<gtExample>
+	
 	"
 	self new icons
 	"
@@ -1053,7 +1094,7 @@ RTSVGExample >> icons [
 		elem @ RTDraggable.
 		view add: elem.
 	].
-	view open
+	^ view
 ]
 
 { #category : #accessing }
@@ -1063,6 +1104,8 @@ RTSVGExample >> label [
 
 { #category : #basic }
 RTSVGExample >> rotatingIcons [
+	<gtExample>
+	
 	"
 	self new rotatingIcons
 	"
@@ -1082,11 +1125,14 @@ RTSVGExample >> rotatingIcons [
 		elem translateBy: (randInt value: 400) @ (randInt value: 400).
 		view addAnimation: (RTRotationMove angle: 100 during: (randInt value: 90) + 10 on: elem).
 	].
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> simpleBezier [
+	<gtExample>
+	<iconSelectorBase64: #exampleSimpleBezierIcon>
+	
 	"
 	self new simpleBezier
 	"
@@ -1096,11 +1142,13 @@ RTSVGExample >> simpleBezier [
 		path: 'M600,800 C625,700 725,700 750,800 S875,900 900,800 z';
 		fillColor: Color blue) element.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> simpleExample [
+	<gtExample>
+	
 	"
 	self new simpleExample
 	"
@@ -1111,11 +1159,14 @@ RTSVGExample >> simpleExample [
 		fillColor: Color green) element.
 	element @ RTDraggable.
 	view add: element.
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> southAmerica [
+	<gtExample>
+	<iconSelectorBase64: #exampleSouthAmericaIcon>
+	
 	"
 	self new southAmerica
 	"
@@ -1131,11 +1182,14 @@ RTSVGExample >> southAmerica [
 		elem @ RTPopup.
 		view add: elem.
 	].
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> southAmerica2 [
+	<gtExample>
+	<iconSelectorBase64: #exampleSouthAmericaIcon>
+	
 	"
 	self new southAmerica2
 	"
@@ -1154,11 +1208,14 @@ RTSVGExample >> southAmerica2 [
 		elem @ RTDraggable.
 		view add: elem.
 	].
-	view open
+	^ view
 ]
 
 { #category : #basic }
 RTSVGExample >> theWorld [
+	<gtExample>
+	<iconSelectorBase64: #exampleTheWorldIcon>
+	
 	"
 	self new theWorld
 	"
@@ -1173,5 +1230,5 @@ RTSVGExample >> theWorld [
 		elem @ RTPopup.
 		view add: elem.
 	].
-	view open
+	^ view
 ]

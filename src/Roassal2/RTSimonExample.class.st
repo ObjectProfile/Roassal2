@@ -6,17 +6,19 @@ Class {
 
 { #category : #basic }
 RTSimonExample >> basic01 [
+	<gtExample>
 	"
 	self new basic01
 	"
 	| builder |
 	builder := RTSimon new.
 	builder models: (1 to: 20).
-	builder open
+	^ builder
 ]
 
 { #category : #basic }
 RTSimonExample >> basic02 [
+	<gtExample>
 	"
 	self new basic02
 	"
@@ -24,11 +26,12 @@ RTSimonExample >> basic02 [
 	builder := RTSimon new.
 	builder shape current externalRadius: [ :obj | (obj * 3) + 80].
 	builder models: (1 to: 20).
-	builder open
+	^ builder
 ]
 
 { #category : #basic }
 RTSimonExample >> basic03 [
+	<gtExample>
 	"
 	self new basic03
 	"
@@ -40,11 +43,12 @@ RTSimonExample >> basic03 [
 						outerAngle: [ :o | 360 atRandom ] innerAngle: [ :o | 50 atRandom ];
 						color: [ :o | ((Array with: Color red with: Color blue with: Color white) atRandom alpha: 0.1)].
 	builder models: (1 to: 10).
-	builder open
+	^ builder
 ]
 
 { #category : #basic }
 RTSimonExample >> basic03Animated [
+	<gtExample>
 	"
 	self new basic03Animated
 	"
@@ -68,11 +72,12 @@ RTSimonExample >> basic03Animated [
 	builder models: (1 to: 10).
 	timer start.
 	builder view addAnimation: (RTResetAllShape new trCanvas: builder view canvas). 
-	builder open
+	^ builder
 ]
 
 { #category : #'software visualization' }
 RTSimonExample >> softviz01 [
+	<gtExample>
 	"
 	self new softviz01
 
@@ -86,5 +91,5 @@ RTSimonExample >> softviz01 [
 				thickness: [ :cls | cls numberOfMethods * 2 ];
 				color: (Color red alpha: 0.2).
 	b models: RTObject withAllSubclasses.
-	b open
+	^ b
 ]
