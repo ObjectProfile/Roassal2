@@ -14,7 +14,8 @@ Class {
 
 { #category : #examples }
 RTDecoratedLine class >> example [
-	<todo: #gtNotCompatible>
+	" this class is a problem as it provides examples as well / this is not gtExample-compatible "
+	<todo: 'reorganize examples'>
 	| v b1 b2 edges |
 	b1 := (RTBox new
 		size: 150;

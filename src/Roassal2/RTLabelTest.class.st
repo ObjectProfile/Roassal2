@@ -6,6 +6,7 @@ Class {
 
 { #category : #tests }
 RTLabelTest >> rotated45gridLayout [
+	<gtExample>
 	"
 	self new rotated45gridLayout.
 	"
@@ -18,11 +19,12 @@ RTLabelTest >> rotated45gridLayout [
 			v add: shape element.
 	].
 	RTGridLayout on: v elements.
-	v open
+	^ v
 ]
 
 { #category : #tests }
 RTLabelTest >> rotated90gridLayout [
+	<gtExample>
 	"
 	self new rotated90gridLayout.
 	"
@@ -35,7 +37,7 @@ RTLabelTest >> rotated90gridLayout [
 			v add: shape element.
 	].
 	RTGridLayout on: v elements.
-	v open
+	^ v
 ]
 
 { #category : #tests }

@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 RTEditableLabelExample >> editableSearchField [
+	<gtExample>
 	"
 	self new editableSearchField.
 	"
@@ -31,11 +32,12 @@ lbl onPressingEnter: [ :text| lbl hideTextMorphFor: searchField ].
 b view add: searchField.
 RTHorizontalLineLayout on: (Array with: searchField). 
 
-b
+^ b
 ]
 
 { #category : #examples }
 RTEditableLabelExample >> editableTextMultiLine [
+	<gtExample>
 	"
 	self new editableTextMultiLine.
 	"
@@ -51,11 +53,12 @@ Green'.
 	].
 	RTGridLayout on: v elements.
 	
-	v open
+	^ v
 ]
 
 { #category : #examples }
 RTEditableLabelExample >> editableTextOneLine [
+	<gtExample>
 	"
 	self new editableTextOneLine.
 	"
@@ -68,5 +71,5 @@ RTEditableLabelExample >> editableTextOneLine [
 	].
 	RTGridLayout on: v elements.
 	
-	v open
+	^ v
 ]
