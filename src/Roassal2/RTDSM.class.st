@@ -18,7 +18,9 @@ Class {
 		'elements',
 		'rotation',
 		'wantsLabel',
-		'text'
+		'text',
+		'colorForDependency',
+		'colorForNonDependency'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -83,12 +85,12 @@ RTDSM >> cellSize [
 
 { #category : #UI }
 RTDSM >> colorForDependency [
-	^ Color red alpha: 0.4
+	^ colorForDependency
 ]
 
 { #category : #UI }
 RTDSM >> colorForNonDependency [
-	^ Color veryVeryLightGray alpha: 0.4
+	^ colorForNonDependency
 ]
 
 { #category : #accessing }
@@ -135,7 +137,7 @@ RTDSM >> createElements [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTDSM >> createShapeBuilder [
 	| sb |
 	sb := super createShapeBuilder.
@@ -152,6 +154,16 @@ RTDSM >> defaultCellShape [
 			(self isAssocDependent: assoc)
 				ifTrue: [ self colorForDependency ]
 				ifFalse: [ self colorForNonDependency ] ]
+]
+
+{ #category : #'as yet unclassified' }
+RTDSM >> defaultColorForDependency [
+	^ Color red alpha: 0.4
+]
+
+{ #category : #'as yet unclassified' }
+RTDSM >> defaultColorForNonDependency [
+	^ Color veryVeryLightGray alpha: 0.4
 ]
 
 { #category : #UI }
@@ -236,7 +248,9 @@ RTDSM >> initialize [
 	dependency := #yourself.
 	rotation := self defaultTopLabelRotation.
 	wantsLabel := true.
-	text := #yourself
+	text := #yourself.
+	colorForDependency := self defaultColorForDependency.
+	colorForNonDependency := self defaultColorForNonDependency.
 ]
 
 { #category : #testing }

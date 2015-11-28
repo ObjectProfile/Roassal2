@@ -41,8 +41,8 @@ RTCache >> getFormElements: someElements [
 	
 	| extent surface formCanvas |
 	extent := someElements extent asIntegerPoint.
-	surface := AthensCairoSurface extent: extent.
-	formCanvas := FormCanvas extent: extent.
+	surface := TRPlatform current surfaceClass extent: extent.
+	formCanvas := TRPlatform current formCanvasClass extent: extent.
 	formCanvas fillRectangle: ((0 @ 0) extent: extent) color: Color transparent.
 	surface
 		drawDuring: [ :cs | 
