@@ -1,6 +1,11 @@
 Extension { #name : #RTSBFadeInteractionExamples }
 
 { #category : #'*Roassal2GT-Inspector' }
+RTSBFadeInteractionExamples class >> gtExamplesProvider [
+	^ self new
+]
+
+{ #category : #'*Roassal2GT-Inspector' }
 RTSBFadeInteractionExamples class >> gtExamplesSource [
 	^ RTSBFadeInteraction
 ]
