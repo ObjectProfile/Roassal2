@@ -21,6 +21,8 @@ Class {
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic1 [
+	<gtExample>
+	
 	"
 	self new basic1
 	"
@@ -29,12 +31,13 @@ RTSunburstBuilderExamples >> basic1 [
 	b shape color: [ :e | Color random ].
 	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view 
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic10 [
+	<gtExample>
+	
 	"
 	self new basic10
 	"	
@@ -53,12 +56,13 @@ RTSunburstBuilderExamples >> basic10 [
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic11 [
+	<gtExample>
+	
 	"
 	self new basic11
 	"	
@@ -77,12 +81,13 @@ RTSunburstBuilderExamples >> basic11 [
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic12 [
+	<gtExample>
+	
 	"
 	self new basic12
 	"	
@@ -100,12 +105,14 @@ RTSunburstBuilderExamples >> basic12 [
      on: [ Object browse ];
      yourself) using: #children.
 	b view @ RTDraggableView.
-	b open.
 	b view canvas focusOnCenterScaled.
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic13 [
+	<gtExample>
+	
 	"
 	self new basic13
 	"	
@@ -124,12 +131,14 @@ RTSunburstBuilderExamples >> basic13 [
      on: [ Object browse];
      yourself) using: #children.
 	b view @ RTDraggableView.
-	b open.
 	b view canvas focusOnCenterScaled.
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic14 [
+	<gtExample>
+	
 	"
 	self new basic14
 	"
@@ -139,12 +148,13 @@ RTSunburstBuilderExamples >> basic14 [
 	b shape color: [ :e | Color random ].
 	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic15 [
+	<gtExample>
+	
 	"
 	self new basic15
 	"
@@ -156,12 +166,13 @@ RTSunburstBuilderExamples >> basic15 [
 	b strategy hasCenter: false.
 	b radialSpacing: 0.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic2 [
+	<gtExample>
+	
 	"
 	self new basic2
 	"
@@ -172,12 +183,13 @@ RTSunburstBuilderExamples >> basic2 [
 	b strategy hasCenter: false.
 	b radialSpacing: 0.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic3 [
+	<gtExample>
+	
 	"
 	self new basic3
 	"	
@@ -188,12 +200,12 @@ RTSunburstBuilderExamples >> basic3 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic4 [
+	<gtExample>
 	"
 	self new basic4
 	"	
@@ -203,12 +215,12 @@ RTSunburstBuilderExamples >> basic4 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic5 [
+	<gtExample>
 	"
 	self new basic5
 	"	
@@ -220,12 +232,12 @@ RTSunburstBuilderExamples >> basic5 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic6 [
+	<gtExample>
 	"
 	self new basic6
 	"	
@@ -237,12 +249,12 @@ RTSunburstBuilderExamples >> basic6 [
 
 	b explore: Object using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic7 [
+	<gtExample>
 	"
 	self new basic7
 	"	
@@ -255,12 +267,12 @@ RTSunburstBuilderExamples >> basic7 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic8 [
+	<gtExample>
 	"
 	self new basic8
 	"	
@@ -272,12 +284,12 @@ RTSunburstBuilderExamples >> basic8 [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
 RTSunburstBuilderExamples >> basic9 [
+	<gtExample>
 	"
 	self new basic9
 	"	
@@ -291,13 +303,14 @@ RTSunburstBuilderExamples >> basic9 [
 	
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleBasic [
-| b |
+	<gtExample>
+	
+	| b |
 	b := RTSunburstBuilder new.
 	b strategy radialSpacing:10.
 	b shape current 
@@ -305,13 +318,15 @@ RTSunburstBuilderExamples >> exampleBasic [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleBasic2 [
-| b data |
+	<gtExample>
+	<iconSelectorBase64: #exampleBasic2Icon>
+	
+	| b data |
 	data := Array 
 		with: 'Chile' -> (Array with: 'Santiago' with: 'Iquique' )
 		with: 'France' -> (Array with: 'Paris' with: 'Nice').
@@ -326,8 +341,7 @@ RTSunburstBuilderExamples >> exampleBasic2 [
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -481,8 +495,10 @@ vx80SC/WvCb4gJQLINOmHV/Qug01Hn//A/IvE70QdxQwAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleCollectionSubclasses [
-
-| b |
+	<gtExample>
+	<iconSelectorBase64: #exampleCollectionSubclassesIcon>
+	
+	| b |
 	b := RTSunburstBuilder new.
 	b strategy: RTSunburstExtentStrategy new.
 	b angularSpacing: 1.
@@ -492,8 +508,7 @@ RTSunburstBuilderExamples >> exampleCollectionSubclasses [
 
 	b explore: Collection using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -585,6 +600,7 @@ vA9IjDlEvHaTdVbCr43wPiCRBsQ3mUFFBXr2RGlN8/E+IG6gbNxY5r4kzPvfFu19QLx/eR8Q
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleFileSystem [
+	<gtExample>
 
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
@@ -603,12 +619,14 @@ RTSunburstBuilderExamples >> exampleFileSystem [
 	b view @ RTDraggableView.
 	b build.
 	b view canvas camera scale: 1.5.
-	^ b view
+	^ b
 ]
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleFileSystem2 [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleFileSystem2Icon>
+	
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
 	b strategy: RTSunburstExtentStrategy new.
@@ -624,8 +642,7 @@ RTSunburstBuilderExamples >> exampleFileSystem2 [
 			
 	b strategy hasCenter: false.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -831,7 +848,9 @@ V55W/z+4y7BrAdq4hgAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleMorphSubclasses [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleMorphSubclassesIcon>
+	
 	| b |
 	b := RTSunburstBuilder new.
 	b strategy: (RTSunburstExtentStrategy new extent: 800@800).
@@ -839,8 +858,7 @@ RTSunburstBuilderExamples >> exampleMorphSubclasses [
 
 	b explore: TRPlatform current morphClass using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -963,14 +981,15 @@ GhDU06LKPejlLAaIq7MB7nr9P3KokYfJwDqeAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleOnNumbers [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleOnNumbersIcon>
+	
 	| b|
 	b := RTSunburstBuilder new.
 	b shape color: [ :e | e < 5 ifTrue: [ Color gray ] ifFalse: [Color blue] ].
 	b explore: 1 using: [ :n | n< 5 ifTrue: [ Array with: n + 1 with: n + 2 with: n+3 ] ifFalse: [ #( ) ] ].
 	b view @ RTDraggableView.
-	b build.
-	^ b view 
+	^ b
 ]
 
 { #category : #icons }
@@ -1041,7 +1060,9 @@ TkSuQmCC'
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleRTObjectSubclasses [
-
+	<gtExample>
+	<iconSelectorBase64: #exampleRTObjectSubclassesIcon>
+	
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
 	b strategy: RTSunburstExtentStrategy new.
@@ -1051,8 +1072,7 @@ RTSunburstBuilderExamples >> exampleRTObjectSubclasses [
 
 	b explore: RTObject using: #subclasses.
 	b view @ RTDraggableView.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }

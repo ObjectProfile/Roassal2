@@ -1,12 +1,13 @@
 Class {
 	#name : #RTBitmapExamples,
-	#superclass : #Object,
+	#superclass : #RTAbstractExample,
 	#category : #'Roassal2-ExampleBrowser'
 }
 
 { #category : #examples }
 RTBitmapExamples >> image01 [
-
+	<gtExample>
+	
 	"
 	self new image01
 	"
@@ -17,13 +18,14 @@ RTBitmapExamples >> image01 [
 	s := TRBitmapShape new.
 	s form: RTIcon roassal.
 	c addShape: s.
-	v  open
+	^ v
 
 ]
 
 { #category : #examples }
 RTBitmapExamples >> image02 [
-
+	<gtExample>
+	
 	"
 	self new image02
 
@@ -43,5 +45,5 @@ RTBitmapExamples >> image02 [
 	1 to: 80 do: [ :i |
 		trachelShape at: i @ i put: Color green ].
 
-	v open
+	^ v
 ]

@@ -131,13 +131,6 @@ RTBundleBuilder >> defaultSliderShape [
 ]
 
 { #category : #accessing }
-RTBundleBuilder >> edgeBuilderDo: aBlock [
-	"aBlock recibes one argument, the EdgeBulder
-	this is used in createBezierIfnecessary:"
-	edgeBuilderDo := aBlock
-]
-
-{ #category : #accessing }
 RTBundleBuilder >> edges [
 	^ edges
 ]

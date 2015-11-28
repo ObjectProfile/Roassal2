@@ -1,6 +1,3 @@
-"
-I am a class example of RTEditable label
-"
 Class {
 	#name : #RTEditableLabelExample,
 	#superclass : #RTObject,
