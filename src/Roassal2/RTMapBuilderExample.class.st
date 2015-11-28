@@ -6,6 +6,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> citiesExample1 [
+	<gtExample>
 	"self new citiesExample1"
 	| b |
 	b := RTMapBuilder new.
@@ -48,11 +49,12 @@ RTMapBuilderExample >> citiesExample1 [
 	b scale: 3.
 	b withPopup.
 	
-	b open.
+	^ b
 ]
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> citiesExample2 [
+	<gtExample>
 	"self new citiesExample2"
 	| b |
 	b := RTMapBuilder new.	
@@ -77,11 +79,12 @@ RTMapBuilderExample >> citiesExample2 [
 		withPopup: #lengthString.
 	
 	b color: Color veryVeryLightGray.
-	b open.
+	^ b
 ]
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> cityEvolution [
+	<gtExample>
 	"self new cityEvolution"
 	| b |
 	b := RTMapBuilder new.
@@ -118,7 +121,7 @@ RTMapBuilderExample >> cityEvolution [
 	b scale: 3.
 	b withPopup.
 	
-	b open.
+	^ b
 ]
 
 { #category : #dbPedia }
@@ -226,6 +229,7 @@ map view openInWindowSized: 1000 @ 500.
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> simpleExample [
+	<gtExample>
 	"self new simpleExample"
 	| b |
 	b := RTMapBuilder new.	
@@ -233,11 +237,12 @@ RTMapBuilderExample >> simpleExample [
 	b countries: #('Chile').
 	b color: Color red.
 	b scale: 3.
-	b open.
+	^ b
 ]
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> southAmericaPopulation [
+	<gtExample>
 	"self new southAmericaPopulation"
 	| b countries cn sum|
 	b := RTMapBuilder new.	
@@ -256,11 +261,12 @@ RTMapBuilderExample >> southAmericaPopulation [
 		(c at: 1) asString, ': ',
 		(((c at: 2) / sum * 100 asFloat roundTo: 0.01) printString), '%'].
 	b scale: 2.
-	b open.
+	^ b
 ]
 
 { #category : #'as yet unclassified' }
 RTMapBuilderExample >> worldPopulation [
+	<gtExample>
 	"self new worldPopulation"
 	| b countries cn |
 	b := RTMapBuilder new.	
@@ -275,5 +281,5 @@ RTMapBuilderExample >> worldPopulation [
 	b countries: countries named: [ :c | c at: 1 ].
 	b color: [ :dic | cn rtValue: (dic at: 2) ].
 	b withPopup: [ :c | (c at: 1) asString, ': ',(((c at: 2) / 1000000 asFloat roundTo: 0.001) asString, ' Million') ].
-	b open.
+	^ b
 ]

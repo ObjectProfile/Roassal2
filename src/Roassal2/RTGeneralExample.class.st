@@ -9,6 +9,7 @@ Class {
 
 { #category : #animations }
 RTGeneralExample >> animationTest [
+	<gtExample>
 	"
 	self new animationTest
 	"
@@ -18,12 +19,12 @@ RTGeneralExample >> animationTest [
 	view add: circle.
 	view addAnimation: (RTLinearMove to: 100 @ 100 during: 2 on: circle). 
 
-	view open.
 	^ view
 ]
 
 { #category : #edges }
 RTGeneralExample >> arrowedEdges01 [
+	<gtExample>
 	"
 	self new arrowedEdges01
 	"
@@ -43,31 +44,33 @@ RTGeneralExample >> arrowedEdges01 [
 	l + (RTLine new color: Color red) + (RTSimpleArrowHead new color: Color red).
 	v add: l.
 
-	v open
+	^ v
 ]
 
 { #category : #attachpoints }
 RTGeneralExample >> attachPoint01 [
+	<gtExample>
 
-| v e1 e2 l |
-v := RTView new.
-e1 := (RTEllipse new size: 30; color: (Color blue alpha: 0.3)) element.
+	| v e1 e2 l |
+	v := RTView new.
+	e1 := (RTEllipse new size: 30; color: (Color blue alpha: 0.3)) element.
 
-e2 := (RTEllipse new size: 30; color: (Color yellow alpha: 0.3)) element.
+	e2 := (RTEllipse new size: 30; color: (Color yellow alpha: 0.3)) element.
 
-l := (RTLine new attachPoint: RTShorterDistanceAttachPoint new) edgeFrom: e1 to: e2.
- 
-e1 @ RTDraggable.
-e2 @ RTDraggable.
+	l := (RTLine new attachPoint: RTShorterDistanceAttachPoint new) edgeFrom: e1 to: e2.
+	 
+	e1 @ RTDraggable.
+	e2 @ RTDraggable.
 
-v addAll: (Array with: l with: e2 with: e1).
+	v addAll: (Array with: l with: e2 with: e1).
 
-v open
+	^ v
 ]
 
 { #category : #beziers }
 RTGeneralExample >> beziers01 [
-
+	<gtExample>
+	
 	| v shape  edge els |
 	v := RTView new.
 	shape := RTEllipse new size: 10; color: (Color purple alpha: 0.3).
@@ -78,11 +81,13 @@ RTGeneralExample >> beziers01 [
 	edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
 	v add: edge.
 
-	v open
+	^ v
 ]
 
 { #category : #beziers }
 RTGeneralExample >> beziers02 [
+	<gtExample>
+	
 	"
 	self new beziers02
 	"
@@ -138,11 +143,12 @@ RTGeneralExample >> beziers02 [
 	hierarchicalLinks do: [ :e | e trachelShape pushBack ].
 
 	"Open the view"
-	v openWithMenu
+	^ v
 ]
 
 { #category : #beziers }
 RTGeneralExample >> beziersWithArrow [
+	<gtExample>
 
 	"self new beziersWithArrow"
 	| v shape  edge els |
@@ -154,11 +160,12 @@ RTGeneralExample >> beziersWithArrow [
 	edge := (RTEdge from: els first to: els last) + ((RTBezierLine new controllingElements: v elements) + (RTEmptyArrowHead new)).
 	v add: edge.
 
-	v open
+	^ v
 ]
 
 { #category : #animations }
 RTGeneralExample >> blinking [
+	<gtExample>
 	"
 	self new blinking
 	"
@@ -167,12 +174,12 @@ RTGeneralExample >> blinking [
 	el := (RTBox new size: 100) element.
 	view add: el.
 	el when: TRMouseClick do: [ :evt | RTBlink on: el in: view ].
-	view open.
-	
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> cellLayout [
+	<gtExample>
 	"
 	self new cellLayout
 	"
@@ -183,11 +190,12 @@ RTGeneralExample >> cellLayout [
 	
 	RTCellLayout on: view elements.
 	view @ RTDraggableView.
-	view open
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> cellLayout2 [
+	<gtExample>
 	"
 	self new cellLayout2
 	"
@@ -198,11 +206,12 @@ RTGeneralExample >> cellLayout2 [
 	
 	RTCellLayout new lineItemsCount: 3; on: view elements.
 	view @ RTDraggableView.
-	view open
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> cellLayout3 [
+	<gtExample>
 	"
 	self new cellLayout3
 	"
@@ -213,11 +222,12 @@ RTGeneralExample >> cellLayout3 [
 	
 	RTCellLayout new lineItemsCount: 5; on: view elements.
 	view @ RTDraggableView.
-	view open
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> circleLayout [
+	<gtExample>
 	"
 	self new circleLayout
 	"
@@ -242,11 +252,12 @@ RTGeneralExample >> circleLayout [
 		initialRadius: 260;
 		on: v elements.
 	v @ RTDraggableView.
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> circleWaves [
+	<gtExample>
 	"
 	self new circleWaves
 	"
@@ -263,11 +274,12 @@ RTGeneralExample >> circleWaves [
 	
 	v when: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> circles [
+	<gtExample>
 	"
 	self new circles
 	"
@@ -281,11 +293,12 @@ RTGeneralExample >> circles [
 		view add: el. 
 		view addAnimation: (RTLinearMove to: 500 atRandom @ 500 atRandom during: 2 on: el).
 	].	
-	view open
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> classHierarchy [
+	<gtExample>
 	"
 	self new classHierarchy
 	"
@@ -302,11 +315,12 @@ RTGeneralExample >> classHierarchy [
 	RTTreeLayout on: view elements edges: view edges.
 	view @ RTDraggableView.
 	view edges do: [ :e | e trachelShape pushBack ].
-	view open
+	^ view
 ]
 
 { #category : #layout }
 RTGeneralExample >> clusterLayout [
+	<gtExample>
 	"
 	self new clusterLayout
 	"
@@ -324,11 +338,12 @@ RTGeneralExample >> clusterLayout [
 		connectFrom: #superclass to: #yourself.
 	RTClusterLayout on: v elements edges: v edges.
 	v edges do: [ :e | e trachelShape pushBack ].
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> colorWaves [
+	<gtExample>
 	"
 	self new colorWaves
 	"
@@ -351,7 +366,7 @@ RTGeneralExample >> colorWaves [
 	
 	v when: TRMouseMove do: [ :evt | mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
-	v open
+	^ v
 ]
 
 { #category : #morph }
@@ -379,6 +394,7 @@ RTGeneralExample >> combiningRoassalAndMorphic [
 
 { #category : #edges }
 RTGeneralExample >> directedEdges01 [
+	<gtExample>
 	"
 	self new directedEdges01
 	"
@@ -416,11 +432,12 @@ RTGeneralExample >> directedEdges01 [
 	v canvas addFixedShape: helpBar2.
 	TRConstraint stick: helpBar1 above: helpBar2.
 	TRConstraint stickAtTheBottomOfTheWindow: helpBar2.
-	v open
+	^ v
 ]
 
 { #category : #edges }
 RTGeneralExample >> directedEdges02 [
+	<gtExample>
 	"
 	self new directedEdges02
 	"
@@ -455,11 +472,12 @@ RTGeneralExample >> directedEdges02 [
 	RTHorizontalLineLayout new
 		gapSize: 1;
 		on: elements1 , elements2.
-	v open
+	^ v
 ]
 
 { #category : #fun }
 RTGeneralExample >> dragonCurve [
+	<gtExample>
 	"
 	self new dragonCurve
 	"
@@ -505,48 +523,51 @@ RTGeneralExample >> dragonCurve [
 		curveDragon value: p1 value: p2 value: level value: true ].
 	
 	calc value: 800@800 value: 13.
-	v open.
+	^ v
 ]
 
 { #category : #edges }
 RTGeneralExample >> dynamicEdges01 [
+	<gtExample>
 	"
 	self new dynamicEdges01
 	"
 
-| v es |
-v := RTView new.
-es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
-v addAll: es.
-RTCircleLayout new initialRadius: 150; on: es.
+	| v es |
+	v := RTView new.
+	es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
+	v addAll: es.
+	RTCircleLayout new initialRadius: 150; on: es.
 
-es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
+	es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
 
-v open
+	^ v
 ]
 
 { #category : #edges }
 RTGeneralExample >> dynamicEdges02 [
+	<gtExample>
 	"
 	self new dynamicEdges02
 	"
-| v es |
-v := RTView new.
-es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
-v addAll: es.
-RTCircleLayout new initialRadius: 150; on: es.
+	| v es |
+	v := RTView new.
+	es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
+	v addAll: es.
+	RTCircleLayout new initialRadius: 150; on: es.
 
-es @ (RTShowEdge new 
-			connectTo: [ :value | value - 5 to: value + 5]; 
-			shape: [ :el | RTBezierLine new 
-								centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
-								color: (Color blue alpha: 0.4) ] ).
+	es @ (RTShowEdge new 
+				connectTo: [ :value | value - 5 to: value + 5]; 
+				shape: [ :el | RTBezierLine new 
+									centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
+									color: (Color blue alpha: 0.4) ] ).
 
-v open
+	^ v
 ]
 
 { #category : #edges }
 RTGeneralExample >> dynamicLabels [
+	<gtExample>
 	"
 	self new dynamicLabels
 	"
@@ -560,11 +581,12 @@ RTGeneralExample >> dynamicLabels [
 	elements @ (RTShowEdge new 
 						connectTo: [ :value | value - 5 to: value + 5]; 
 						shape: (RTLine new color: (Color blue alpha: 0.4))).
-	view open
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> edges [
+	<gtExample>
 	"
 	self new edges
 	"
@@ -580,11 +602,12 @@ RTGeneralExample >> edges [
 		shape: (RTLine new color: (Color blue alpha: 0.2));
 		connectFrom: #yourself to: #superclass.
 	RTGridLayout on: view elements.
-	view open
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> edges2 [
+	<gtExample>
 	"
 	self new edges2
 	"
@@ -600,11 +623,12 @@ RTGeneralExample >> edges2 [
 		useAssociation: 1 -> 2.
 	
 	RTHorizontalLineLayout on: elements.
-	view open
+	^ view
 ]
 
 { #category : #interaction }
 RTGeneralExample >> edition [
+	<gtExample>
 
 	"
 	self new edition
@@ -666,11 +690,12 @@ RTGeneralExample >> edition [
 	TRConstraint stickAtTheBottomOfTheWindow: statusBar.
 
 	view canvas color: Color white.
-	view open
+	^ view
 ]
 
 { #category : #nesting }
 RTGeneralExample >> elementWithFontsZooming [
+	<gtExample>
 	"
 	self new elementWithFontsZooming
 	"
@@ -700,11 +725,12 @@ RTGeneralExample >> elementWithFontsZooming [
 													during: 0.3 on: mainElement) ].
 	view addMenu: 'Original' callback: [ mainElement extent: originalExtent. view signalUpdate ].
 	view addMenu: 'Half' callback: [ mainElement extent: originalExtent / 2. view signalUpdate ].
-	^ view open
+	^ view
 ]
 
 { #category : #nesting }
 RTGeneralExample >> elementZooming [
+	<gtExample>
 	"
 	self new elementZooming
 	"
@@ -734,12 +760,13 @@ RTGeneralExample >> elementZooming [
 													during: 0.3 on: mainElement) ].
 	view addMenu: 'Original' callback: [ mainElement extent: originalExtent. view signalUpdate ].
 	view addMenu: 'Half' callback: [ mainElement extent: originalExtent / 2. view signalUpdate ].
-	^ view open
+	^ view
 ]
 
 { #category : #animations }
 RTGeneralExample >> escapingCircle [
-
+	<gtExample>
+	
 	| v e |
 	v := RTView new.
 	e := (RTEllipse new size: 50; color: (Color blue alpha: 0.4)) element.
@@ -749,13 +776,13 @@ RTGeneralExample >> escapingCircle [
 		| newPos |
 		newPos := ((300 atRandom - 150) @ (300 atRandom - 150)) + evt element position. 
 		v addAnimation: (RTAccelerationMove to: newPos  during: 2 on: evt element) ].
-	v open.
-
+	^ v
 
 ]
 
 { #category : #animations }
 RTGeneralExample >> expandingArc [
+	<gtExample>
 	"
 	self new expandingArc
 	"
@@ -779,11 +806,12 @@ RTGeneralExample >> expandingArc [
 	v addAnimation: (RTResetAllShape new trCanvas: v canvas).
 	angle start.
 	externalRadius start.
-	v open
+	^ v
 ]
 
 { #category : #layout }
 RTGeneralExample >> forceBasedLayout [
+	<gtExample>
 	"
 	self new forceBasedLayout
 	"
@@ -806,12 +834,12 @@ RTGeneralExample >> forceBasedLayout [
 	"RTForceBasedLayout on: v elements edges: v edges."
 	v addAnimation: (RTSpringLayoutStepping new view: v).
 	v @ RTDraggableView.
-	v open.
-	v
+	^ v
 ]
 
 { #category : #groups }
 RTGeneralExample >> group1 [
+	<gtExample>
 	"self new group1"
 
 	| view group1 group2 host1 host2 edgesGroup1 edgesGroup2 |
@@ -848,11 +876,12 @@ RTGeneralExample >> group1 [
 
 	view @ RTDraggableView.
 	
-	view open
+	^ view
 ]
 
 { #category : #animations }
 RTGeneralExample >> growingSquare [
+	<gtExample>
 	" 
 	self new growingSquare
 	"
@@ -869,11 +898,12 @@ RTGeneralExample >> growingSquare [
 		evt element trachelShape extent: t @ t. evt signalUpdate ].
 
 	view add: el.
-	view open
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> growingSquares [
+	<gtExample>
 	"
 	self new growingSquares
 	"
@@ -887,11 +917,12 @@ RTGeneralExample >> growingSquares [
 	].
 	RTGridLayout on: view elements.
 	
-	view open
+	^ view
 ]
 
 { #category : #interaction }
 RTGeneralExample >> highlight [
+	<gtExample>
 	" self new highlight "
 		
 	| v es |
@@ -909,11 +940,12 @@ RTGeneralExample >> highlight [
 
 	RTGridLayout on: es.
 	v addAll: es.
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> highlightSquare [
+	<gtExample>
 	"
 	self new highlightSquare
 	"
@@ -932,11 +964,12 @@ RTGeneralExample >> highlightSquare [
 	].
 	RTGridLayout on: view elements.
 	
-	view open
+	^ view
 ]
 
 { #category : #interaction }
 RTGeneralExample >> hoverZoom [
+	<gtExample>
 	"
 	self new hoverZoom
 	"
@@ -957,11 +990,12 @@ RTGeneralExample >> hoverZoom [
 	es @ RTMouseHoverZoom.
 
 	RTGridLayout on: es.
-	^ v open
+	^ v
 ]
 
 { #category : #labels }
 RTGeneralExample >> label [
+	<gtExample>
 	"
 	self new label
 	"
@@ -971,11 +1005,12 @@ RTGeneralExample >> label [
 	els := label elementsOn: (1 to: 30).
 	v addAll: els.
 	RTGridLayout on: els.
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> label2 [
+	<gtExample>
 	"
 	self new label2
 	"
@@ -987,11 +1022,12 @@ RTGeneralExample >> label2 [
 "	RTVerticalLineLayout on: view elements."
 	RTGridLayout on: view elements.
 "	RTHorizontalLineLayout on: view elements."
-	view open
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> label3 [
+	<gtExample>
 	"
 	self new label3
 	"
@@ -1003,11 +1039,12 @@ RTGeneralExample >> label3 [
 "	RTVerticalLineLayout on: view elements."
 	RTGridLayout on: view elements.
 "	RTHorizontalLineLayout on: view elements."
-	view open
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> linkedSquares [
+	<gtExample>
 	"
 	self new linkedSquares
 	"
@@ -1026,11 +1063,12 @@ RTGeneralExample >> linkedSquares [
 	edge := RTLine edgeFrom: fromEl to: toEl.  	
 	view add: fromEl; add: toEl; add: edge.
 
-	view open.
+	^ view
 ]
 
 { #category : #shapes }
 RTGeneralExample >> manySquares [
+	<gtExample>
 	"
 	self new manySquares
 	"
@@ -1048,11 +1086,13 @@ RTGeneralExample >> manySquares [
 	].
 	RTGridLayout new gapSize: 1; on: view elements.
 	
-	view open
+	^ view
 ]
 
 { #category : #camera }
 RTGeneralExample >> movingCamera [
+	<gtExample>
+	
 	"
 	self new movingCamera
 	"
@@ -1067,11 +1107,12 @@ RTGeneralExample >> movingCamera [
 	menu menu: 'V' callback: [ v canvas camera translateBy: 0 @ 10. v signalUpdate ].
 	menu menu: '^' callback: [ v canvas camera translateBy: 0 @ -10. v signalUpdate ].
 	 
-	v open
+	^ v
 ]
 
 { #category : #nesting }
 RTGeneralExample >> multipleNesting [
+	<gtExample>
 	" 
 	self new multipleNesting
 	"
@@ -1115,11 +1156,12 @@ RTGeneralExample >> multipleNesting [
 													toExtent: resizable extent * (1 / 0.6) 
 													during: 0.3 on: resizable) ].
 	
-	view openWithMenu
+	^ view
 ]
 
 { #category : #nesting }
 RTGeneralExample >> nestedHierarchy [
+	<gtExample>
 	" 
 	self new nestedHierarchy
 	"
@@ -1140,11 +1182,12 @@ RTGeneralExample >> nestedHierarchy [
 		connectFrom: [ :v | v // 2 ] to: #yourself.
 	RTTreeLayout new on: inner edges: view edges.
 	RTNest new on: host nest: inner.
-	view openWithMenu
+	^ view
 ]
 
 { #category : #nesting }
 RTGeneralExample >> nesting [
+	<gtExample>
 	"
 	self new nesting
 	"
@@ -1166,13 +1209,13 @@ RTGeneralExample >> nesting [
 		on: el nest: inner.
 		
 	el translateTo: 100 @ 50.
-	view open.
-	
+	^ view
 	
 ]
 
 { #category : #nesting }
 RTGeneralExample >> nesting2 [
+	<gtExample>
 	"
 	self new nesting2
 	"
@@ -1194,13 +1237,13 @@ RTGeneralExample >> nesting2 [
 		
 	view add: el.
 	
-	view open.
-	
+	^ view
 	
 ]
 
 { #category : #nesting }
 RTGeneralExample >> nesting3 [
+	<gtExample>
 	"
 	self new nesting3
 	"
@@ -1220,13 +1263,13 @@ RTGeneralExample >> nesting3 [
 		on: el nest: (Array with: inner).
 		
 	el translateTo: 100 @ 50.
-	view open.
-	
+	^ view
 	
 ]
 
 { #category : #nesting }
 RTGeneralExample >> nesting4 [
+	<gtExample>
 	"
 	self new nesting4
 	"
@@ -1252,12 +1295,12 @@ RTGeneralExample >> nesting4 [
 			RTHorizontalFlowLayout on: group ].
 
 	RTHorizontalFlowLayout on: es.
-	v open
+	^ v
 ]
 
 { #category : #animations }
 RTGeneralExample >> newYear2014 [
-
+	<gtExample>
 	"
 	self new newYear2014
 	"
@@ -1290,11 +1333,12 @@ RTGeneralExample >> newYear2014 [
 		].
 	   x := 0.
 	].
-	view openInWindowSized: 800 @ 450
+	^ view
 ]
 
 { #category : #normalizers }
 RTGeneralExample >> normalizer01 [
+	<gtExample>
 	"
 	self new normalizer01
 	"
@@ -1313,11 +1357,12 @@ RTGeneralExample >> normalizer01 [
 	es @ RTPopup.
 	RTGridLayout on: es.
 
-	v open
+	^ v
 ]
 
 { #category : #layout }
 RTGeneralExample >> numbers [
+	<gtExample>
 	"self new numbers"
 
 	| view elements |
@@ -1333,11 +1378,12 @@ RTGeneralExample >> numbers [
 	RTTreeLayout on: view elements edges: view edges.
 	view edges do: [ :e | e trachelShape pushBack ].
 	view @ RTDraggableView.
-	view openWithMenu
+	^ view
 ]
 
 { #category : #popup }
 RTGeneralExample >> popup1 [
+	<gtExample>
 	"
 	self new popup1
 	"
@@ -1350,12 +1396,12 @@ RTGeneralExample >> popup1 [
 	els when: TRMouseClick do: [ :evt | evt element inspect ].
 	v addAll: els.
 	RTGridLayout on: els.
-	v open.
-
+	^ v
 ]
 
 { #category : #popup }
 RTGeneralExample >> popupView1 [
+	<gtExample>
 	"
 	self new popupView1
 	"
@@ -1374,12 +1420,12 @@ RTGeneralExample >> popupView1 [
 	
 	v addAll: els.
 	RTGridLayout on: els.
-	v open.
-
+	^ v
 ]
 
 { #category : #popup }
 RTGeneralExample >> popupView2 [
+	<gtExample>
 	"
 	self new popupView2
 	"
@@ -1403,67 +1449,68 @@ RTGeneralExample >> popupView2 [
 	
 	v addAll: els.
 	RTGridLayout on: els.
-	v open.
-
+	^ v
 ]
 
 { #category : #popup }
 RTGeneralExample >> popupWithLegend [
+	<gtExample>
 	"
 	self new popupWithLegend
 	"
 
-| view |
+	| view |
 
-view := RTMondrianViewBuilder new.
-view interaction noInteractions.
+	view := RTMondrianViewBuilder new.
+	view interaction noInteractions.
 
-view interaction popup group: [ :group :el |
-	
-	| background elements cls legend1 legend2 | 
-	elements := RTGroup new.
-	background := (RTBox new color: (Color green alpha: 0.8)) element.
-	
-	el model timesRepeat: [ 
-			cls := RTEllipse.
-			50 atRandom > 25
-				ifTrue: [ cls := RTBox ].
-			elements add: (cls new size: 10; color: (Color purple alpha: 0.5)) element
-			].
-	RTGridLayout on: elements.
-	
-	
-	"Legend Good"
-	legend1 := RTGroup new.
-	legend1 add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
-	legend1 add: (RTLabel elementOn: '= Good').
-	RTHorizontalLineLayout on: legend1.
-	
-	"Legend Bad"
-	legend2 := RTGroup new.
-	legend2 add: (RTEllipse new size: 10; color: (Color purple alpha: 0.5)) element.
-	legend2 add: (RTLabel elementOn: '= Bad').
-	RTHorizontalLineLayout on: legend2.
-	
-	RTVerticalLineLayout new gapSize: 0; on: (Array with: legend1 with: legend2 with: elements). 
-	
-		RTNest new centerOn: background elements: (Array with: legend1 with: legend2 with: elements).
+	view interaction popup group: [ :group :el |
+		
+		| background elements cls legend1 legend2 | 
+		elements := RTGroup new.
+		background := (RTBox new color: (Color green alpha: 0.8)) element.
+		
+		el model timesRepeat: [ 
+				cls := RTEllipse.
+				50 atRandom > 25
+					ifTrue: [ cls := RTBox ].
+				elements add: (cls new size: 10; color: (Color purple alpha: 0.5)) element
+				].
+		RTGridLayout on: elements.
+		
+		
+		"Legend Good"
+		legend1 := RTGroup new.
+		legend1 add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element.
+		legend1 add: (RTLabel elementOn: '= Good').
+		RTHorizontalLineLayout on: legend1.
+		
+		"Legend Bad"
+		legend2 := RTGroup new.
+		legend2 add: (RTEllipse new size: 10; color: (Color purple alpha: 0.5)) element.
+		legend2 add: (RTLabel elementOn: '= Bad').
+		RTHorizontalLineLayout on: legend2.
+		
+		RTVerticalLineLayout new gapSize: 0; on: (Array with: legend1 with: legend2 with: elements). 
+		
+			RTNest new centerOn: background elements: (Array with: legend1 with: legend2 with: elements).
 
-	
-	group add: background.
-	group addAll: legend1.
-	group addAll: legend2.
-	group addAll: elements ].
+		
+		group add: background.
+		group addAll: legend1.
+		group addAll: legend2.
+		group addAll: elements ].
 
 
-view shape rectangle size: #yourself.
-view nodes: (1 to:50).
-view gridLayout.
-view open
+	view shape rectangle size: #yourself.
+	view nodes: (1 to:50).
+	view gridLayout.
+	^ view
 ]
 
 { #category : #labels }
 RTGeneralExample >> rotatingLabels [
+	<gtExample>
 	"
 	self new rotatingLabels
 	"
@@ -1477,11 +1524,12 @@ RTGeneralExample >> rotatingLabels [
 	v addAll: (shape elementsOn: Collection withAllSubclasses).
 
 	v canvas color: Color white.
-	v open
+	^ v
 ]
 
 { #category : #labels }
 RTGeneralExample >> rotatingLabelsAnimated [
+	<gtExample>
 	"
 	self new rotatingLabelsAnimated
 	"
@@ -1508,35 +1556,37 @@ RTGeneralExample >> rotatingLabelsAnimated [
 	v canvas color: Color white.
 	v addAnimation: RTResetAllShape new.
 	timer start.
-	v open
+	^ v
 ]
 
 { #category : #animations }
 RTGeneralExample >> shrinking [
+	<gtExample>
 	"
 	self new shrinking
 	"
-| e v |
-v := RTView new.
-e := (RTBox new color: Color green; width: 150; height: 120) element.
-v add: e.
+	| e v |
+	v := RTView new.
+	e := (RTBox new color: Color green; width: 150; height: 120) element.
+	v add: e.
 
-e when: TRMouseClick do: [ :evt |
-	| anim |
-	anim := RTResizeMove new toExtent: (50 @ 30) on: e.
-	anim after: [ 
-		| el |
-		el := RTLabel elementOn: 'hello'.
-		v add: el.
-		RTNest new on: e nest: (Array with: el). e trachelShape signalUpdate ].
-	v addAnimation: anim.
-].
-e @ RTDraggable.
-v open
+	e when: TRMouseClick do: [ :evt |
+		| anim |
+		anim := RTResizeMove new toExtent: (50 @ 30) on: e.
+		anim after: [ 
+			| el |
+			el := RTLabel elementOn: 'hello'.
+			v add: el.
+			RTNest new on: e nest: (Array with: el). e trachelShape signalUpdate ].
+		v addAnimation: anim.
+	].
+	e @ RTDraggable.
+	^ v
 ]
 
 { #category : #layout }
 RTGeneralExample >> smoothLayout [
+	<gtExample>
 	"
 	self new smoothLayout
 	"
@@ -1607,11 +1657,12 @@ RTGeneralExample >> smoothLayout [
 		objects: (1 to: 100);
 		connectFrom: [ :value | value // 2 ] to: #yourself.
 	RTTreeLayout new on: v elements edges: v edges.
-	v open
+	^ v
 ]
 
 { #category : #beziers }
 RTGeneralExample >> softviz01 [
+	<gtExample>
 	"
 	self new softviz01
 	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
@@ -1673,11 +1724,12 @@ RTGeneralExample >> softviz01 [
 
 
 	"Open the view"
-	v open
+	^ v
 ]
 
 { #category : #shapes }
 RTGeneralExample >> styledLabel [
+	<gtExample>
 	"
 	self new styledLabel
 	"
@@ -1701,11 +1753,12 @@ RTGeneralExample >> styledLabel [
 		elementOn: 'bold + italic + underlined'.
 	v add: all.
 	RTVerticalLineLayout on: v elements.
-	v open
+	^ v
 ]
 
 { #category : #'software visualization' }
 RTGeneralExample >> systemComplexity [
+	<gtExample>
 	"
 	self new systemComplexity
 	"
@@ -1734,51 +1787,53 @@ RTGeneralExample >> systemComplexity [
 	edges do: #moveBehindItsExtremities.
 	RTTreeLayout on: v elements.
 	v @ RTDraggableView.
-	v open
+	^ v
 ]
 
 { #category : #fun }
 RTGeneralExample >> worm [
+	<gtExample>
 	"
 	self new worm
 	"
 
-| v s e last lineLength callback nbOfElements head |
-v := RTView new.
-s := RTEllipse new 
-				size: [ :m | m * 10 ]; 
-				color: (Color blue alpha: 0.4).
-nbOfElements := 10.
-last := nil.
-1 to: nbOfElements do: [ :i | 
-	e := (s elementOn: i).
-	v add: e.		
-	last ifNotNil: [ v add: (RTLine new edgeFrom: e to: last) ].
-	last := e.		
-].
+	| v s e last lineLength callback nbOfElements head |
+	v := RTView new.
+	s := RTEllipse new 
+					size: [ :m | m * 10 ]; 
+					color: (Color blue alpha: 0.4).
+	nbOfElements := 10.
+	last := nil.
+	1 to: nbOfElements do: [ :i | 
+		e := (s elementOn: i).
+		v add: e.		
+		last ifNotNil: [ v add: (RTLine new edgeFrom: e to: last) ].
+		last := e.		
+	].
 
-lineLength := 40.
+	lineLength := 40.
 
-callback := TRTranslationCallback 
-	block: [ :shape :step | 
-			| diff alpha dist |
-			(shape element outgoingEdges collect: #to) do: [ :el | 
-				diff := shape position - el position.
-				alpha := diff theta.
-				dist := ((diff x * diff x) + (diff y * diff y)) sqrt. 
-				el translateBy: (alpha cos * (dist - lineLength)) @ (alpha sin * (dist - lineLength)) ] ].
- 
-v elements do: [ :el | el trachelShape addCallback: callback ].
+	callback := TRTranslationCallback 
+		block: [ :shape :step | 
+				| diff alpha dist |
+				(shape element outgoingEdges collect: #to) do: [ :el | 
+					diff := shape position - el position.
+					alpha := diff theta.
+					dist := ((diff x * diff x) + (diff y * diff y)) sqrt. 
+					el translateBy: (alpha cos * (dist - lineLength)) @ (alpha sin * (dist - lineLength)) ] ].
+	 
+	v elements do: [ :el | el trachelShape addCallback: callback ].
 
-head := v elements last.
-v when: TRMouseMove do: [ :evt | 
-	head translateBy: (evt positionFromCamera - head position) / 10.
-	v canvas signalUpdate ].
-v open
+	head := v elements last.
+	v when: TRMouseMove do: [ :evt | 
+		head translateBy: (evt positionFromCamera - head position) / 10.
+		v canvas signalUpdate ].
+	^ v
 ]
 
 { #category : #animations }
 RTGeneralExample >> zooming [
+	<gtExample>
 
 	| v |
 	v := RTView new.
@@ -1787,6 +1842,5 @@ RTGeneralExample >> zooming [
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView.
-	v open.
-
+	^ v
 ]
