@@ -3900,6 +3900,45 @@ Z/lBFhxkbW3tS6/X+/ls+v2NX2KBQfjwg/CD8OEH4QfhB+EH4cOHDx8+fPjw4cOHDx8+fPjw
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleGrid [
+
+| v es |
+v := RTView new.
+v @ RTDraggableView.
+v @ (RTGridView new gridSize: 10).
+v @ RTZoomableView.
+
+es := RTBox new
+	color: Color green;
+	size: 20;
+	elementsOn: #(1 2).
+
+v addAll: es.
+
+es @ (RTDraggableSnapToGrid new gridSize: 40).
+es @ RTResizable.
+
+es first translateTo: 70 negated @ 90 negated.
+es second translateTo: 70 @ 110.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleGridIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAABwUlEQVR4XuXbTQqCQACAUc9t
+RNeKpJ3HEG/gvnFo+tlEY5vBwIleIkMLFfl8+IM2McYUQkixYFzOpcutXf+W29piX0qWbW6P
+3/NPybj8lS63dv1bbmuLfSlZ1g/iB/GD+EH8IH6Q1UGif5XlX2X5QnwhvhBfiC/EF+IL8YX4
+QnwhvhBfiC/EF+IL8YX4QnwhvhBfiC/EF+IL8YX4Qnwh1Y+qOc7Z7AupeFQ9AzS3fPKFVDyq
+LuHyEcQX4gvxhWRCFpMvxL/K8l+U84P4QfwgfhA/iB/ED+IH8YP4QfzH7/6NoS/EF+IL8YX4
+QnwhvhBfiC/EF5KPwzD4Qn5FyDiOqe/7NE2TL8Q/h/hC/HOIL8QX4gvxhfhCfCG+EF+IL8QX
+4gvxhfhCfCG+EF+I/xqQH8QP4gfxg/hB/CB+ED+IH8S/D/lyPF/P6fA2neaTfx9SU8jhMb1/
+hr2LO19ITSH76z77Nr6dW1+IL8QX8hq72KU2tq/5GI6+EP8qyxfiP+31hfhCfCG+EF+IL8QX
+4gvxhfhCfCG+EF+IL8QX4gvxhfhCfCG+EF+IL8QX4gvxhfhC/Bfl/CB+ED+IH8QP4gf5wyB3
+CTnGiKMrhLsAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleGroupOfGroups [
 	"
 	self new exampleGroupOfGroups
