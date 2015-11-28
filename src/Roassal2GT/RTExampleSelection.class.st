@@ -43,12 +43,7 @@ RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 	<gtInspectorPresentationOrder: 0>
 	^ composite pharoScript
 		title: 'Playground';
-		format: [ 
-			| sourceCode firstLine sourceCodeWithoutFirstLine |
-			sourceCode := self method sourceCode.
-			firstLine := sourceCode lines first.
-			sourceCodeWithoutFirstLine := sourceCode copyFrom: firstLine size + 1 to: sourceCode size.
-			sourceCodeWithoutFirstLine ];
+		format: [ self playgroundSourceCode ];
 		act: [ :text :page |
 				text selectionInterval: (1 to: text text size).
 				text evaluateSelectionAndDo: [ :anObject | text selection: anObject ] ]
@@ -80,9 +75,9 @@ RTExampleSelection >> gtInspectorViewIn: composite [
 { #category : #'*Roassal2GT-Spotter' }
 RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	<spotterPreview: 10>
-	(self provider class canPerform: (self selector, 'Icon') asSymbol)
+	(self icon notNil or: [ self provider class canPerform: (self selector, 'Icon') asSymbol ])
 		ifTrue: [ 
-			aComposite addBrickBack: (self iconForm asAlphaImageMorph
+			aComposite addBrickBack: (self icon asAlphaImageMorph
 				layout: #center;
 				scale: 2.0) asBrick ]
 
@@ -109,6 +104,7 @@ RTExampleSelection >> ignoreCache [
 { #category : #public }
 RTExampleSelection >> initializeIcon [
 	| icon64Mime iconSelector |
+	form ifNotNil: [ ^ self ].
 	iconSelector := (self method selector, 'Icon') asSymbol.
 	(self provider canPerform: iconSelector) ifFalse: [ ^ self ].
 	icon64Mime := [ self provider perform: iconSelector ]
@@ -127,6 +123,19 @@ RTExampleSelection >> matchesQuery: aSetOfNames [
 	sourceCode := self method sourceCode asLowercase.
 	^ aSetOfNames allSatisfy: [ :each | sourceCode includesSubstring: each ]
 
+]
+
+{ #category : #public }
+RTExampleSelection >> playgroundSourceCode [ 
+	" this is really ugly - we would like to perfectly preserve the original format including comments BUT with pragmas stripped - is there a better way ? original code below "
+	^ self method parseTree body formattedCodeWithMaxLineLength: 999
+	"
+	| sourceCode firstLine sourceCodeWithoutFirstLine |
+	sourceCode := self method sourceCode.
+	firstLine := sourceCode lines first.
+	sourceCodeWithoutFirstLine := sourceCode copyFrom: firstLine size + 1 to: sourceCode size.
+	^ sourceCodeWithoutFirstLine 
+	"
 ]
 
 { #category : #'*Roassal2GT-Spotter' }

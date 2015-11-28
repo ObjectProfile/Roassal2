@@ -3,9 +3,9 @@ Extension { #name : #RTExampleSelection }
 { #category : #'*Roassal2GT-Spotter' }
 RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	<spotterPreview: 10>
-	(self provider class canPerform: (self selector, 'Icon') asSymbol)
+	(self icon notNil or: [ self provider class canPerform: (self selector, 'Icon') asSymbol ])
 		ifTrue: [ 
-			aComposite addBrickBack: (self iconForm asAlphaImageMorph
+			aComposite addBrickBack: (self icon asAlphaImageMorph
 				layout: #center;
 				scale: 2.0) asBrick ]
 

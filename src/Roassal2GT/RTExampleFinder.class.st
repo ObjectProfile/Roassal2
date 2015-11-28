@@ -18,6 +18,14 @@ RTExampleFinder class >> gtExampleInstance [
 
 { #category : #private }
 RTExampleFinder >> class: aClass selector: aSelector method: aMethod to: examples [
+	" allow gt examples using pragmas and old-style roassal examples at the same time "
+		
+	aMethod pragmas size > 0 ifTrue: [ 
+		| previousSize |
+		previousSize := examples size.
+		super class: aClass selector: aSelector method: aMethod to: examples.
+		examples size > previousSize ifTrue: [ ^ self ]. " we have found some examples in this method, no need to continue " ].
+	
 	(aSelector beginsWith: 'example') ifFalse: [ ^ self ].
 	(aSelector endsWith: 'Icon') ifTrue: [ ^ self ].
 	
