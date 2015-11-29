@@ -40,6 +40,7 @@ Class {
 
 { #category : #sources }
 RTGradientColoredLineExample >> edgePaletteColored [
+	<gtExample>
 
 	| v elem1 elem2 edge|
 	v := RTView new.
@@ -73,7 +74,7 @@ RTGradientColoredLineExample >> exampleA [
 	edge := RTEdge from:elem1 to:elem2.
 	v add: (edge + (RTGradientColoredLine new colors: (Array with: (elem1 color) with: (elem2 color)); precision: 100; gradientColorShape)).
 
-^ v
+	^ v
 ]
 
 { #category : #icons }
@@ -106,7 +107,7 @@ RTGradientColoredLineExample >> exampleB [
 	edge := RTEdge from:elem1 to:elem2.
 	v add: (edge + (RTGradientColoredLine new colors: (Array with: (elem1 color) with: (elem2 color)); precision: 100; gradientColorShape)).
 
-^ v
+	^ v
 ]
 
 { #category : #icons }
@@ -125,38 +126,39 @@ ID6Inw/ig/j5ID6Inw/ig/j5IH4+iA/i54P4IH4+iA/i54P4IH4+iJ8P4oP4+SA+iJ8P4oP4
 
 { #category : #sources }
 RTGradientColoredLineExample >> exampleDependencies [
-| eb v es |
-v := RTView new.
+	
+	| eb v es |
+	v := RTView new.
 
-es := RTEllipse new elementsOn: RTShape withAllSubclasses, TRShape withAllSubclasses.
-v addAll: es.
-es @ RTDraggable.
-es @ RTPopup.
+	es := RTEllipse new elementsOn: RTShape withAllSubclasses, TRShape withAllSubclasses.
+	v addAll: es.
+	es @ RTDraggable.
+	es @ RTPopup.
 
-eb := RTEdgeBuilder new.
-eb view: v.
-eb shape line color: Color black.
-eb objects: RTShape withAllSubclasses.
-eb connectToAll: #dependentClasses.
+	eb := RTEdgeBuilder new.
+	eb view: v.
+	eb shape line color: Color black.
+	eb objects: RTShape withAllSubclasses.
+	eb connectToAll: #dependentClasses.
 
-RTMetricNormalizer new
-	elements: es;
-	normalizeSize: #numberOfLinesOfCode min: 10  max: 30;
-	normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red) using: #sqrt;
-	alphaColor: 0.5.
+	RTMetricNormalizer new
+		elements: es;
+		normalizeSize: #numberOfLinesOfCode min: 10  max: 30;
+		normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red) using: #sqrt;
+		alphaColor: 0.5.
 
-RTForceBasedLayout new charge: -300; on: es.
+	RTForceBasedLayout new charge: -300; on: es.
 
-v edges do: #remove.
+	v edges do: #remove.
 
-eb := RTEdgeBuilder new.
-eb view: v.
-eb shape gradientLineFrom: Color green to: Color white.
-eb 
-	objects: RTShape withAllSubclasses, TRShape withAllSubclasses;
-	connectFrom: #yourself to: #superclass.
+	eb := RTEdgeBuilder new.
+	eb view: v.
+	eb shape gradientLineFrom: Color green to: Color white.
+	eb 
+		objects: RTShape withAllSubclasses, TRShape withAllSubclasses;
+		connectFrom: #yourself to: #superclass.
 
-^ v
+	^ v
 ]
 
 { #category : #icons }
@@ -256,7 +258,8 @@ bds3rYWUFCD5+g6aOqZiGN2vxqYAUeT/N3NbBL6mxdQAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTGradientColoredLineExample >> exampleedgePaletteColored [
-| v elem1 elem2 edge|
+	
+	| v elem1 elem2 edge|
 	v := RTView new.
 	elem1 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 1.
 	elem2 := (RTEllipse new color: (Color blue alpha:0.6); size:10) elementOn: 2.

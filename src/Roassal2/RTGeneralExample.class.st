@@ -371,7 +371,8 @@ RTGeneralExample >> colorWaves [
 
 { #category : #morph }
 RTGeneralExample >> combiningRoassalAndMorphic [
-
+	<todo: 'connect to gtExamples'>
+	
 	"Example by Peter Uhnak"
 	|container button view es e|
 

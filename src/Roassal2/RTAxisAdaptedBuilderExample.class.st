@@ -16,50 +16,52 @@ Class {
 
 { #category : #examples }
 RTAxisAdaptedBuilderExample >> boxesFlowLayout [
+	<gtExample>
 
 	"RTAxisAdaptedBuilderExample new boxesFlowLayout"
-| view coll n  b |
-view := RTView new.
+	| view coll n  b |
+	view := RTView new.
 
-coll:= #(50 60 80 100 85 10 35).
+	coll:= #(50 60 80 100 85 10 35).
 
-n := RTMultiLinearColorForIdentity new objects: (coll).
+	n := RTMultiLinearColorForIdentity new objects: (coll).
 
-coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
+	coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
 
-RTFlowLayout new applyOn: view elements.
-view elements do: [ :e | e @ (RTPopup text: [:el | el])].
+	RTFlowLayout new applyOn: view elements.
+	view elements do: [ :e | e @ (RTPopup text: [:el | el])].
 
-b := RTAxisAdaptedBuilder new.
-b view: view.
-b margin: 20.
-b objects: view elements.
-b build.
-^ b view
+	b := RTAxisAdaptedBuilder new.
+	b view: view.
+	b margin: 20.
+	b objects: view elements.
+	b build.
+	^ b view
 
 ]
 
 { #category : #sources }
 RTAxisAdaptedBuilderExample >> exampleboxesFlLayout [
+	<gtExample>
 
-| view coll n  b |
-view := RTView new.
+	| view coll n  b |
+	view := RTView new.
 
-coll:= #(50 60 80 100 85 10 35).
+	coll:= #(50 60 80 100 85 10 35).
 
-n := RTMultiLinearColorForIdentity new objects: (coll).
+	n := RTMultiLinearColorForIdentity new objects: (coll).
 
-coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
+	coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
 
-RTFlowLayout new applyOn: view elements.
-view elements do: [ :e | e @ (RTPopup text: [:el | el])].
+	RTFlowLayout new applyOn: view elements.
+	view elements do: [ :e | e @ (RTPopup text: [:el | el])].
 
-b := RTAxisAdaptedBuilder new.
-b view: view.
-b margin: 20.
-b objects: view elements.
-b build.
-^ b view
+	b := RTAxisAdaptedBuilder new.
+	b view: view.
+	b margin: 20.
+	b objects: view elements.
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -91,24 +93,25 @@ CD8QfvED4QfCr1rqFwbGcUaeNWcPAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTAxisAdaptedBuilderExample >> exampleboxesFlowLayout [
-| view coll n  b |
-view := RTView new.
+	<gtExample>
+	| view coll n  b |
+	view := RTView new.
 
-coll:= #(50 60 80 100 85 10 35).
+	coll:= #(50 60 80 100 85 10 35).
 
-n := RTMultiLinearColorForIdentity new objects: (coll).
+	n := RTMultiLinearColorForIdentity new objects: (coll).
 
-coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
+	coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
 
-RTFlowLayout new applyOn: view elements.
-view elements do: [ :e | e @ (RTPopup text: [:el | el])].
+	RTFlowLayout new applyOn: view elements.
+	view elements do: [ :e | e @ (RTPopup text: [:el | el])].
 
-b := RTAxisAdaptedBuilder new.
-b view: view.
-b margin: 20.
-b objects: view elements.
-b build.
-^ b view
+	b := RTAxisAdaptedBuilder new.
+	b view: view.
+	b margin: 20.
+	b objects: view elements.
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -138,7 +141,8 @@ RB+IvvSB6EsfiD4QfekD0QeiL30g+kD0pQ9EH4i+nkI/AWbyx21YZEZCAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTAxisAdaptedBuilderExample >> examplewithComposer [
-| c b |
+	<gtExample>
+	| c b |
 	c := RTComposerExample new exampleClassAnalysis2.
 
 	b := RTAxisAdaptedBuilder new.
@@ -215,7 +219,8 @@ AABJRU5ErkJggg=='
 
 { #category : #sources }
 RTAxisAdaptedBuilderExample >> examplewithMondrian1 [
-| c b |
+	<gtExample>
+	| c b |
 	c := RTMondrianExample new exampleNormalization .
 
 	b := RTAxisAdaptedBuilder new.
@@ -332,6 +337,7 @@ RTAxisAdaptedBuilderExample >> label [
 
 { #category : #examples }
 RTAxisAdaptedBuilderExample >> withColorPalette [
+	<gtExample>
 
 	"RTAxisAdaptedBuilderExample new withColorPalette"
 	| c b |
@@ -348,6 +354,7 @@ RTAxisAdaptedBuilderExample >> withColorPalette [
 
 { #category : #examples }
 RTAxisAdaptedBuilderExample >> withComposer [
+	<gtExample>
 
 	"RTAxisAdaptedBuilderExample new withComposer"
 	| c b |
@@ -364,6 +371,7 @@ RTAxisAdaptedBuilderExample >> withComposer [
 
 { #category : #examples }
 RTAxisAdaptedBuilderExample >> withMondrian1 [
+	<gtExample>
 
 	"RTAxisAdaptedBuilderExample new withMondrian1"
 	| c b |
@@ -380,6 +388,7 @@ RTAxisAdaptedBuilderExample >> withMondrian1 [
 
 { #category : #examples }
 RTAxisAdaptedBuilderExample >> withMondrian2 [
+	<gtExample>
 
 	"RTAxisAdaptedBuilderExample new withMondrian2"
 	| c b |
