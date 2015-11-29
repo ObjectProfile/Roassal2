@@ -10,6 +10,9 @@ Class {
 { #category : #examples }
 RTEditableLabelExample >> editableSearchField [
 	<gtExample>
+	<label: 'Editable search-field'>
+	<description: 'Display a tree of classes. Highlight nodes/classes that match the search-query'>
+	
 	"
 	self new editableSearchField.
 	"
@@ -38,6 +41,9 @@ RTHorizontalLineLayout on: (Array with: searchField).
 { #category : #examples }
 RTEditableLabelExample >> editableTextMultiLine [
 	<gtExample>
+	<label: 'Scalable multi-line text'>
+	<description: 'Display some multi-line text that scales (instead of wrapping around) with its window'>
+	
 	"
 	self new editableTextMultiLine.
 	"
@@ -59,6 +65,9 @@ Green'.
 { #category : #examples }
 RTEditableLabelExample >> editableTextOneLine [
 	<gtExample>
+	<label: 'Scalable text'>
+	<description: 'Display some text that scales (instead of wrapping around) with its window'>
+	
 	"
 	self new editableTextOneLine.
 	"
