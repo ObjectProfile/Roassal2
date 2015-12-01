@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-CircularMap'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTCircularTreeMapTest >> testBasic [
 
 

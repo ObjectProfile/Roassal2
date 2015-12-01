@@ -5,17 +5,28 @@ Class {
 	#name : #RTSelectionEvent,
 	#superclass : #Announcement,
 	#instVars : [
-		'group'
+		'group',
+		'shape'
 	],
 	#category : #'Roassal2-Selection'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSelectionEvent >> group [
 	^ group
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTSelectionEvent >> group: g [
 	group := g
+]
+
+{ #category : #accessing }
+RTSelectionEvent >> shape [
+	^ shape
+]
+
+{ #category : #accessing }
+RTSelectionEvent >> shape: s [
+	shape := s.
 ]
