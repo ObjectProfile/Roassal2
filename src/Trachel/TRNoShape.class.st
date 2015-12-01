@@ -10,7 +10,7 @@ Class {
 	#category : #'Trachel-Shapes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRNoShape class >> instance [
 	instance ifNil: [ instance := self new ].
 	^ instance
