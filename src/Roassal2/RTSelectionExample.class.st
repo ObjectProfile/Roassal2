@@ -1,16 +1,11 @@
 "
-RTSelectionExample new installTitle: 'DifferentSelectionColor' 
+RTSelectionExample new installTitle: 'ElasticBoxZoom' 
 		code:
 '
-| int v |
-v := #exampleClassAnalysis2 rtValue: (RTComposerExample new).
-int := RTSelectableView new.
-int shapeBuilder color: (Color black alpha: 0.4).
-int color: [ :e | e color = Color red ifTrue: [Color green] ifFalse: [ Color red ] ].
-
-v @ int.
-^v
-
+| v |
+v := RTGrapherExample new exampleDeviation.
+v @ RTZoomableBoxView.
+v
 '
 	
 "
@@ -24,7 +19,7 @@ Class {
 RTSelectionExample >> exampleDifferentSelectionColor [
 
 | int v |
-v := #exampleClassAnalysis2 rtValue: (RTComposerExample new).
+v := RTComposerExample new exampleClassAnalysis2.
 int := RTSelectableView new.
 int color: [ :e | e color = Color red ifTrue: [Color green] ifFalse: [ Color red ] ].
 
@@ -97,15 +92,78 @@ R3uZn+EN39kpfuMfoPwflK1GDgc822sAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTSelectionExample >> exampleElasticBoxZoom [
+
+| v |
+v := RTGrapherExample new exampleDeviation.
+v @ RTZoomableBoxView.
+v
+
+]
+
+{ #category : #icons }
+RTSelectionExample >> exampleElasticBoxZoomIcon [
+	^ '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
+9PEAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTSelectionExample >> exampleSelectionChange [
 
 | int v |
-v := #exampleClassAnalysis2 rtValue: (RTComposerExample new).
+v := RTComposerExample new exampleClassAnalysis2.
 int := RTSelectableView new.
 
 int when: RTSelectionChange do: [ :evt | 
-	int getOrCreateShapeForView trachelShape color: (int group size < 10 ifTrue: [Color green alpha: 0.3 ] ifFalse: [ Color red alpha: 0.3 ]) ].
-
+	evt shape trachelShape color: (int group size < 10 ifTrue: [Color green alpha: 0.3 ] ifFalse: [ Color red alpha: 0.3 ]) ].
 v @ int.
 ^ v
 
@@ -177,8 +235,8 @@ R3uZn+EN39kpfuMfoPwflK1GDgc822sAAAAASUVORK5CYII='
 { #category : #sources }
 RTSelectionExample >> exampleSimple [
 
-|  v |
-v := #exampleClassAnalysis2 rtValue: (RTComposerExample new).
+| v |
+v := RTComposerExample new exampleClassAnalysis2.
 v @ RTSelectableView.
 ^ v
 
