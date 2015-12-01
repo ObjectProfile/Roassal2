@@ -35,17 +35,15 @@ RTTreeMapExampleTODELETE >> example03 [
 	| b mt |
 	b := RTTreeMapBuilder new.
 	b shape 
-		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red.
+		if: [ :m| Smalltalk includesKey: (m name,'Test') asSymbol ] fillColor: Color lightGreen;
+		if: [ :m| m hasAbstractMethods ] fillColor: Color red.
 	
 	b
 		extent: 400@400;
-		weight: [:m | m tally ].
-	mt := TRPlatform current messageTallyClass.
-	b explore: (mt new
-		spyEvery: 1
-		on: [Object browse]; yourself)
-		using: #children.
+		weight: 1.
+	mt := TRPlatform current morphClass.
+	b explore: mt
+		using: #subclasses.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
 	^ b
 ]
@@ -105,18 +103,16 @@ RTTreeMapExampleTODELETE >> example06 [
 	| b mt |
 	b := RTTreeMapBuilder new.
 	b shape 
-		if: [ :m| Smalltalk includesKey: (m theClass name,'Test') asSymbol ] fillColor: Color lightGreen;
-		if: [ :m| m theClass hasAbstractMethods ] fillColor: Color red;
+		if: [ :m| Smalltalk includesKey: (m name,'Test') asSymbol ] fillColor: Color lightGreen;
+		if: [ :m| m hasAbstractMethods ] fillColor: Color red;
 		borderWidth: 2.
 	
 	b
 		extent: 400@400;
-		weight: [:m | m tally ].
-	mt := TRPlatform current messageTallyClass.
-	b explore: (mt new
-		spyEvery: 1
-		on: [Object browse]; yourself)
-		using: #children.
+		weight: 1.
+	mt := TRPlatform current morphClass.
+	b explore: mt
+		using: #subclasses.
 	b withShadedFramesFromColor: Color gray toColor: Color red.
 	b elements do: [ :e | e when: TRMouseClick do: [ :evt | e model inspect ] ].
 	
@@ -130,14 +126,12 @@ RTTreeMapExampleTODELETE >> example07 [
 	"
 	| b mt |
 	b := RTTreeMapBuilder new.
-	mt := TRPlatform current messageTallyClass.
+	mt := TRPlatform current morphClass.
 	b
 		extent: 400@400;
-		weight: [:m | m tally ];
-		explore: (mt new
-		spyEvery: 1
-		on: [Object browse]; yourself)
-		using: #children;
+		weight: 1;
+		explore: mt
+		using: #subclasses;
 		depthShadedBorder.
 	^ b
 ]

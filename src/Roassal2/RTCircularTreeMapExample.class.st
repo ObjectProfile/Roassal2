@@ -34,16 +34,12 @@ RTCircularTreeMapExample >> example01 [
 	b := RTCircularTreeMapBuilder new.
 	b shape
 		color: Color transparent.
-	
 	b
 		baseradius: 200;
-		weight: #tally.
-	mt := TRPlatform current messageTallyClass.
-	b explore: (mt new
-		spyEvery: 1
-		on: [ Object numberOfLinesOfCode ]; 
-		yourself)
-		using: #children.
+		weight: 1.
+	mt := TRPlatform current morphClass.
+	b explore: mt
+		using: #subclasses.
 	
 	b build.
 	^ b view
