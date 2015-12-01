@@ -1,3 +1,8 @@
+"
+This is an interaction for an element
+
+
+"
 Class {
 	#name : #RTSelectableElementContextInteraction,
 	#superclass : #RTAbstractContextInteraction,
@@ -5,10 +10,9 @@ Class {
 }
 
 { #category : #hooks }
-RTSelectableElementContextInteraction >> initializeElement: aView [
+RTSelectableElementContextInteraction >> initializeElement: anElement [
 	self assert: [ self presentation notNil ] description: 'The presentation has to be set'.
 	
-	aView elements do: [:each |  
-		each when: TRMouseLeftClick do: [ :event | 
-			each model ifNotNil: [ self presentation selection: each model ] ] ].
+	anElement when: TRMouseLeftClick do: [ :event | 
+			anElement model ifNotNil: [ self presentation selection: anElement model ] ]
 ]

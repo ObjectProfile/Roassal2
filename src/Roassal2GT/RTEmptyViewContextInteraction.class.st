@@ -14,7 +14,7 @@ Class {
 	#category : #'Roassal2GT-Glamour-Roassal-Interaction'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTEmptyViewContextInteraction >> initializeElement: aView [
 	RTEmptyViewContext setOnView: aView 
 ]

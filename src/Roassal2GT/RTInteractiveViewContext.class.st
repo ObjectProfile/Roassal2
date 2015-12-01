@@ -11,5 +11,5 @@ RTInteractiveViewContext class >> isDefault [
 
 { #category : #hooks }
 RTInteractiveViewContext >> interactionsToBeRegistered [
-	^ Array with: RTSelectableElementContextInteraction with: RTResizeableViewContextInteraction
+	^ Array with: RTSelectableElementsContextInteraction with: RTResizeableViewContextInteraction
 ]
