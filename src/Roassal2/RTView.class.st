@@ -48,6 +48,9 @@ RTView >> add: anElementOrAnEdge [
 
 { #category : #'adding - removing' }
 RTView >> addAll: someElements [
+	"
+	:: Collection -> RTView
+	"
 	"Add a number of of elements to the view"
 	someElements do: [ :el | self add: el ]
 ]
@@ -79,7 +82,12 @@ RTView >> addFindMenu [
 
 { #category : #menu }
 RTView >> addLayoutMenu [
-	"Simply add some useful menu"
+	"Simply add some useful menu
+	
+	:: Void -> RTView
+	var b : RTMenuBuilder
+	var translator : RTSmoothLayoutTranslator
+	"
 	| b translator |
 	translator := RTSmoothLayoutTranslator new.
 	b := RTMenuBuilder new view: self.
@@ -145,17 +153,26 @@ RTView >> edgeFromModel: anObject [
 
 { #category : #accessing }
 RTView >> edges [
+	"
+	:: Void -> Collection
+	"
 	^ edges copy
 ]
 
 { #category : #'accessing-computed' }
 RTView >> elementFromModel: anObject [
+	"
+	:: Object -> RTElement
+	"
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
 RTView >> elements [
+	"
+	:: Void -> RTGroup
+	"
 	^ RTGroup withAll: elements
 ]
 
@@ -167,6 +184,12 @@ RTView >> elementsFromModel: anObject [
 
 { #category : #'accessing-computed' }
 RTView >> elementsFromModels: objects [
+	"
+	:: Collection -> RTGroup
+	var answer : RTGroup
+	var t : Object
+	var o : Object
+	"
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
 	| answer t |
 	answer := RTGroup new.
@@ -228,6 +251,9 @@ RTView >> openTitled: aTitle [
 
 { #category : #opening }
 RTView >> openWithMenu [
+	"
+	:: Void -> Object
+	"
 	self canvas addMenu: 'In' callback: [ RTZoomInMove on: self ].
 	self canvas addMenu: 'Out' callback: [ RTZoomOutMove on: self ].
 
@@ -272,6 +298,10 @@ RTView >> removeEdge: anEdge [
 
 { #category : #'adding - removing' }
 RTView >> removeEdges: someEdges [
+	"
+	:: Collection -> RTView
+	"
+	
 	someEdges do: #remove
 
 	"In case we are trying to remove everything, as it may happen with the cachetor"
@@ -294,6 +324,9 @@ RTView >> removeElement: anElement [
 
 { #category : #'adding - removing' }
 RTView >> removeElements: someElements [
+	"
+	:: Collection -> RTView
+	"
 	someElements do: #remove
 
 	"In case we are trying to remove everything, as it may happen with the cachetor"
@@ -302,6 +335,7 @@ RTView >> removeElements: someElements [
 		self canvas resetShapes. 
 		^ self ].
 "	
+	
 "	elements := elements copyWithoutAll: someElements.
 	self canvas removeShapes: (someElements collect: #trachelShape).
 "
@@ -331,6 +365,10 @@ RTView >> setCanvas: aTrachelCanvas [
 
 { #category : #menu }
 RTView >> setDefaultMenu [
+	"
+	:: Void -> RTView
+	var b : RTMenuBuilder
+	"
 	"Simply add some useful menu"
 	| b |
 	b := RTMenuBuilder new view: self.
@@ -358,7 +396,9 @@ RTView >> signalUpdate [
 
 { #category : #'accessing-computed' }
 RTView >> trachelShape [
-
+	"
+	:: Void -> String
+	"
 	^ TRNoShape instance
 ]
 
