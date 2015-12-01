@@ -97,13 +97,9 @@ RTSunburstBuilderExamples >> basic12 [
 	
 	b interactions add: RTSBFadeInteraction new.
 	b shape current 
-				color: [ :m | m children notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
- 	b weight: [ :m | m tally ].
-	mt := TRPlatform current messageTallyClass.
-	b explore: (mt new
-     spyEvery: 1
-     on: [ Object browse ];
-     yourself) using: #children.
+				color: [ :m | m subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+	mt := TRPlatform current morphClass.
+	b explore: mt using: #subclasses.
 	b view @ RTDraggableView.
 	b view canvas focusOnCenterScaled.
 	^ b
@@ -123,13 +119,10 @@ RTSunburstBuilderExamples >> basic13 [
 	
 	b interactions add: RTSBFadeInteraction new.
 	b shape current 
-				color: [ :m | m children notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
- 	b weight: [ :m | m tally ].
-	mt := TRPlatform current messageTallyClass.
-	b explore: (mt new
-     spyEvery: 1
-     on: [ Object browse];
-     yourself) using: #children.
+				color: [ :m | m subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+ 	b weight: 1.
+	mt := TRPlatform current morphClass.
+	b explore: mt using: #subclasses.
 	b view @ RTDraggableView.
 	b view canvas focusOnCenterScaled.
 	^ b
