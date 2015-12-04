@@ -236,7 +236,7 @@ RoassalExporter >> getClassNamesUsedIn: aMethodReference [
 RoassalExporter >> includesClass: class [
 	| c |
 	c := class isMeta ifTrue: [ class soleInstance ] ifFalse: [ class ].
-	self packages do: [ :pkg | (pkg includesClass: c) ifTrue: [ ^ true. ] ].
+	packagesInfo do: [ :pkg | (pkg includesClass: c) ifTrue: [ ^ true. ] ].
 	^ false.
 ]
 
@@ -318,14 +318,14 @@ RoassalExporter >> packageNameForMethod: aMethodReference [
 
 { #category : #accesing }
 RoassalExporter >> packages [
-	^ packages "packagesInfo ifNil: [ packagesInfo := OrderedCollection new.
+	^ packagesInfo ifNil: [ packagesInfo := OrderedCollection new.
 		
 		packages do: [ :asso | | pkg |
 			pkg := RPackageOrganizer default packageNamed: asso key.
 			asso value do: [ :tag | 
 				packagesInfo add: (pkg classTagNamed: tag) ]
 			 ].
-		packagesInfo ]."
+		packagesInfo ].
 ]
 
 { #category : #export }

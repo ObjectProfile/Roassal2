@@ -14,36 +14,12 @@ Class {
 	#category : #'Roassal2-Builder-AxisAdapted'
 }
 
-{ #category : #examples }
-RTAxisAdaptedBuilderExample >> boxesFlowLayout [
-	<gtExample>
-
-	"RTAxisAdaptedBuilderExample new boxesFlowLayout"
-	| view coll n  b |
-	view := RTView new.
-
-	coll:= #(50 60 80 100 85 10 35).
-
-	n := RTMultiLinearColorForIdentity new objects: (coll).
-
-	coll do: [ :r | view add: ((RTBox new color: [ :value | n rtValue: r]; size: r) elementOn: r )].
-
-	RTFlowLayout new applyOn: view elements.
-	view elements do: [ :e | e @ (RTPopup text: [:el | el])].
-
-	b := RTAxisAdaptedBuilder new.
-	b view: view.
-	b margin: 20.
-	b objects: view elements.
-	b build.
-	^ b view
-
-]
-
 { #category : #sources }
-RTAxisAdaptedBuilderExample >> exampleboxesFlLayout [
+RTAxisAdaptedBuilderExample >> boxesFlLayout [
 	<gtExample>
+	<iconSelectorBase64: #boxesFlLayoutIcon>
 
+	"RTAxisAdaptedBuilderExample new boxesFlLayout"
 	| view coll n  b |
 	view := RTView new.
 
@@ -65,7 +41,7 @@ RTAxisAdaptedBuilderExample >> exampleboxesFlLayout [
 ]
 
 { #category : #icons }
-RTAxisAdaptedBuilderExample >> exampleboxesFlLayoutIcon [
+RTAxisAdaptedBuilderExample >> boxesFlLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAEjElEQVR4XuWc20sbQRTG+9/5
 6l/gn6Hgg5YiqNDig4iIl75UUJAiVgoqXmK8+xCiqG3UpEu8YBITc10N9WzzHRixRZNmjemm
 3weH2Vn2ZGbnt5PJnMzsG8fhl5f0hr8J+IHwix8IPxB+8QPhB8IvfiD8QPjFD4QfCL/4gfCL
@@ -92,8 +68,11 @@ CD8QfvED4QfCr1rqFwbGcUaeNWcPAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTAxisAdaptedBuilderExample >> exampleboxesFlowLayout [
+RTAxisAdaptedBuilderExample >> boxesFlowLayout [
 	<gtExample>
+	<iconSelectorBase64: #boxesFlowLayoutIcon>
+	
+	"RTAxisAdaptedBuilderExample new boxesFlowLayout"
 	| view coll n  b |
 	view := RTView new.
 
@@ -115,7 +94,7 @@ RTAxisAdaptedBuilderExample >> exampleboxesFlowLayout [
 ]
 
 { #category : #icons }
-RTAxisAdaptedBuilderExample >> exampleboxesFlowLayoutIcon [
+RTAxisAdaptedBuilderExample >> boxesFlowLayoutIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAENUlEQVR4XuWcy0tbQRjF+7e5
 1D/DpXsXIhrro4JVEURcKClSKS7swuD7GWNMKQgtbdVamjSJUTTiK/GtJ+0ZesXa5nmj3vQc
 OMSE+e53M79MJjPOzLNUSl9O0jP9KtAHoi99IPpA9KUPRB+IvvSB6APRlz4QfSD60geiL30g
@@ -139,9 +118,34 @@ VlZWBusgsPuHeOG39Ktavw/RB6IvfSD6QPSlD0QfiL70gehLH4g+EH3pA9EHoi99IPpA9KUP
 RB+IvvSB6EsfiD4QfekD0QeiL30g+kD0pQ9EH4i+nkI/AWbyx21YZEZCAAAAAElFTkSuQmCC'
 ]
 
+{ #category : #examples }
+RTAxisAdaptedBuilderExample >> label [
+	^ 'Axis adapted'
+]
+
 { #category : #sources }
-RTAxisAdaptedBuilderExample >> examplewithComposer [
+RTAxisAdaptedBuilderExample >> withColorPalette [
 	<gtExample>
+
+	"RTAxisAdaptedBuilderExample new withColorPalette"
+	| c b |
+	c := RTColorPaletteExample new exampleSequentialPalette.
+
+	b := RTAxisAdaptedBuilder new.
+	b view: c view.
+	b margin: 20.
+	b objects:  c view elements.
+	b build.
+	^ b view.
+
+]
+
+{ #category : #sources }
+RTAxisAdaptedBuilderExample >> withComposer [
+	<gtExample>
+	<iconSelectorBase64: #withComposerIcon>
+	
+	"RTAxisAdaptedBuilderExample new withComposer"
 	| c b |
 	c := RTComposerExample new exampleClassAnalysis2.
 
@@ -154,7 +158,7 @@ RTAxisAdaptedBuilderExample >> examplewithComposer [
 ]
 
 { #category : #icons }
-RTAxisAdaptedBuilderExample >> examplewithComposerIcon [
+RTAxisAdaptedBuilderExample >> withComposerIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAMQ0lEQVR4XuWd21OT1xrG7d/T
 C+9b73rrfdsLnba2nXY61U6rzuw906111/HQbqrV7nqorYooihaFLUiQkwTCmRxJSDgKISBg
 OIOiz7e/ZyUrfgk5AYnErHfmne/78q1v5cv7+9b7rtO3sk3TQjI0NAQty7K0tIRnz54JTZV2
@@ -218,8 +222,11 @@ AABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTAxisAdaptedBuilderExample >> examplewithMondrian1 [
+RTAxisAdaptedBuilderExample >> withMondrian1 [
 	<gtExample>
+	<iconSelectorBase64: #withMondrian1Icon>
+	
+	"RTAxisAdaptedBuilderExample new withMondrian1"
 	| c b |
 	c := RTMondrianExample new exampleNormalization .
 
@@ -232,7 +239,7 @@ RTAxisAdaptedBuilderExample >> examplewithMondrian1 [
 ]
 
 { #category : #icons }
-RTAxisAdaptedBuilderExample >> examplewithMondrian1Icon [
+RTAxisAdaptedBuilderExample >> withMondrian1Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAATuUlEQVR4XuVdW3Abx5WdzUcq
 Vana/PjLP1upykf2J1XZj/3YMkmoLMuWrdiOH2XFD2XLFW3tbiRRXtmM47J3FD1MyZZ3JTuW
 lJRNSpQUWdHDLnlNKTQJEASfEkmAb5EUSZAQHyYpgk8BIIA7O6elHvY0BiRIgk/cqiNMgzPT
@@ -330,63 +337,7 @@ wPaBZLcpLzds5PQ9nbM0K/bUV+rrTanjMzv7OuF9fhh38X6/1H+sy0wIVqbiytzlak99QlJ/
 yEp9QlJflkH+H8RhkxEE0SGTAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #examples }
-RTAxisAdaptedBuilderExample >> label [
-	^ 'Axis adapted'
-]
-
-{ #category : #examples }
-RTAxisAdaptedBuilderExample >> withColorPalette [
-	<gtExample>
-
-	"RTAxisAdaptedBuilderExample new withColorPalette"
-	| c b |
-	c := RTColorPaletteExample new exampleSequentialPalette.
-
-	b := RTAxisAdaptedBuilder new.
-	b view: c view.
-	b margin: 20.
-	b objects:  c view elements.
-	b build.
-	^ b view.
-
-]
-
-{ #category : #examples }
-RTAxisAdaptedBuilderExample >> withComposer [
-	<gtExample>
-
-	"RTAxisAdaptedBuilderExample new withComposer"
-	| c b |
-	c := RTComposerExample new exampleClassAnalysis2.
-
-	b := RTAxisAdaptedBuilder new.
-	b view: c view.
-	b margin: 20.
-	b objects:  c view elements.
-	b build.
-	^ b view.
-
-]
-
-{ #category : #examples }
-RTAxisAdaptedBuilderExample >> withMondrian1 [
-	<gtExample>
-
-	"RTAxisAdaptedBuilderExample new withMondrian1"
-	| c b |
-	c := RTMondrianExample new exampleNormalization .
-
-	b := RTAxisAdaptedBuilder new.
-	b view: c view.
-	b margin: 20.
-	b objects:  c view elements.
-	b build.
-	^ b view.
-
-]
-
-{ #category : #examples }
+{ #category : #sources }
 RTAxisAdaptedBuilderExample >> withMondrian2 [
 	<gtExample>
 

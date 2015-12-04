@@ -111,7 +111,6 @@ RTElement >> initialize [
 { #category : #testing }
 RTElement >> isConnected [
 	"Return true if the element is connected to at least one element (which would be itself)"
-	"An element is connected if it has at least one incoming or outgoing edge"
 	^ self connectedEdges notEmpty
 ]
 
@@ -126,13 +125,6 @@ RTElement >> isConnectedTo: anElement [
 RTElement >> isDirectlyConnectedTo: anElement [
 	connectedEdges ifNil: [ ^ false ].
 	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
-]
-
-{ #category : #testing }
-RTElement >> isNotConnected [
-	"Return false if the element is connected to at least one element (which would be itself)"
-	"An element is connected if it has at least one incoming or outgoing edge"
-	^ self isConnected not
 ]
 
 { #category : #accessing }

@@ -47,3 +47,8 @@ RTBitmapExamples >> image02 [
 
 	^ v
 ]
+
+{ #category : #accessing }
+RTBitmapExamples >> label [
+	^ 'Bitmaps'
+]

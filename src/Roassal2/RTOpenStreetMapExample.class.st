@@ -21,40 +21,61 @@ self halt.
 	
 "
 Class {
-	#name : #RTOpenStreeMapExample,
+	#name : #RTOpenStreetMapExample,
 	#superclass : #RTAbstractExample,
 	#category : #'Roassal2-OpenStreetMap'
 }
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleCitySelection [
+RTOpenStreetMapExample >> example [
+	<gtExample>
+	
+	"This example center the view on lat 0, lon 0."
 
-| v map e movingCamera mb |
-v := RTView new.
-map := RTOSM new.
-e := map element.
+	"RTOpenStreetMapExample new example"
 
-v add: e.
+	| v s e |
+	v := RTView new.
+	s := RTOSM new.
+	e := s element.
+	v add: e.
+	v add: (RTBox new size: 40) element @ RTHighlightable @ RTDraggable.
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView.
+	^ v
+]
 
-v @ RTDraggableView.
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleCitySelection [
+	<gtExample>
+	
+	| v map e movingCamera mb |
+	v := RTView new.
+	map := RTOSM new.
+	e := map element.
 
-movingCamera := [ :locationLatLong |
-	v canvas camera translateTo: 
-		(map latLonToRoassal: locationLatLong). 
-	v signalUpdate ].
- 
-mb := RTMenuBuilder new.
-mb view: v.
-mb menu: 'Paris' callback: [ movingCamera value: 48.8567 @ 2.3508 ].
-mb menu: 'London' callback: [ movingCamera value: 51.50722 @ -0.12750 ].
-mb menu: 'NewYork' callback: [ movingCamera value: 40.7127 @ -74.0059 ].
-mb build.
+	v add: e.
+
+	v @ RTDraggableView.
+
+	movingCamera := [ :locationLatLong |
+		v canvas camera translateTo: 
+			(map latLonToRoassal: locationLatLong). 
+		v signalUpdate ].
+	 
+	mb := RTMenuBuilder new.
+	mb view: v.
+	mb menu: 'Paris' callback: [ movingCamera value: 48.8567 @ 2.3508 ].
+	mb menu: 'London' callback: [ movingCamera value: 51.50722 @ -0.12750 ].
+	mb menu: 'NewYork' callback: [ movingCamera value: 40.7127 @ -74.0059 ].
+	mb build.
 
 	^ v
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleCitySelectionIcon [
+RTOpenStreetMapExample >> exampleCitySelectionIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAACpElEQVR4XuXVS09aQQCG4f65
 7l25aJMuWJSQxjY0BUlpopVgaAkQG1opwSA3QUAOF+83VLxgAuo/+npmFk1N2qo747t4M2TO
 nOFkHk54tnFzow1+jyY+CB+E34NAvtVqag2Ht+bWr6/vtZm592/z0UzmQQ8VX162/TnXGY0U
@@ -72,53 +93,79 @@ Uc3FNJ/bLqAZfwHUaAlcKtt76AAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleGraphOnLondon [
+RTOpenStreetMapExample >> exampleDili [
+	<gtExample>
+	<noTest>
+	
+	"This example puts a name on Dili and let the background be moved around."
 
-| v map data b d whiteBackground london elementsAndEdges |
-v := RTView new.
-v @ RTDraggableView.
-map := RTOSM new.
-v add: map element.
+	"RTOpenStreetMapExample new exampleDili"
 
-"Place to set the data and center the camera"
-london := 51.507222@ -0.1275.
-    
-"Some arbitrary data"
-data := ((1 to: 500) collect: [ :i | 50 atRandom - 25 ]) cumsum.
+	| view map e p |
+	view := RTView new.
+	map := RTOSM new
+		extent: 300 @ 300;
+		ratio: 10.
+	e := map elementOn: 'OSM'.
+	view add: e @ RTDraggable.
+	p := map latLonToRoassal: (self downloadCityCoordinatesFor: 'Dili').
+	view add: ((RTLabel new text: 'Dili') element @ RTHighlightable translateTo: p).
+	view canvas addMenu: 'In' callback: [ RTZoomInMove on: view ].
+	view canvas addMenu: 'Out' callback: [ RTZoomOutMove on: view ].
+	view @ RTDraggableView.
+	^ view
+]
 
-"We build the graph"
-b := RTGrapher new.
-b extent: 100@30.
-d := RTData new.
-d noDot.
-d connectColor: Color red.
-d points: data.
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleGraphOnLondon [
+	<gtExample>
 
-b add: d.
-b axisY 
-	labelFontHeight: 6;
-	color: Color red; 
-    title: 'Sale'.
+	| v map data b d whiteBackground london elementsAndEdges |
+	v := RTView new.
+	v @ RTDraggableView.
+	map := RTOSM new.
+	v add: map element.
 
-b axisX color: Color red; noTick; title: 'country'.
-b build.
-elementsAndEdges := b view elements, b view edges.
+	"Place to set the data and center the camera"
+	london := 51.507222@ -0.1275.
+	    
+	"Some arbitrary data"
+	data := ((1 to: 500) collect: [ :i | 50 atRandom - 25 ]) cumsum.
 
-"We create a white background"
-whiteBackground := (RTRoundedBox new color: Color white trans; borderRadius: 10) element.
-v add: whiteBackground.
-v addAll: elementsAndEdges.
-RTNest new on: whiteBackground nest: elementsAndEdges.
-whiteBackground translateTo: (map latLonToRoassal: london).
+	"We build the graph"
+	b := RTGrapher new.
+	b extent: 100@30.
+	d := RTData new.
+	d noDot.
+	d connectColor: Color red.
+	d points: data.
 
-v canvas camera translateTo: (map latLonToRoassal: london).
-v canvas camera noInitializationWhenOpen.
-v canvas camera scale: 1.5.
+	b add: d.
+	b axisY 
+		labelFontHeight: 6;
+		color: Color red; 
+	    title: 'Sale'.
+
+	b axisX color: Color red; noTick; title: 'country'.
+	b build.
+	elementsAndEdges := b view elements, b view edges.
+
+	"We create a white background"
+	whiteBackground := (RTRoundedBox new color: Color white trans; borderRadius: 10) element.
+	v add: whiteBackground.
+	v addAll: elementsAndEdges.
+	RTNest new on: whiteBackground nest: elementsAndEdges.
+	whiteBackground translateTo: (map latLonToRoassal: london).
+
+	v canvas camera translateTo: (map latLonToRoassal: london).
+	v canvas camera noInitializationWhenOpen.
+	v canvas camera scale: 1.5.
+	
 	^ v
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleGraphOnLondonIcon [
+RTOpenStreetMapExample >> exampleGraphOnLondonIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAABQjUlEQVR4Xs29V5cs6XUldv+K
 9HP0MrOkpReJmhlyRiRIEN4SxEAgKA1BgiQcwYZrdDfa3Hu7ry/vK6vSex8ZPiK9K3MNGgDn
 4WjvExFZVQ2CBBpocB5iZVVWVmTEd9w++5zvxK3lciDO1JRdc09s25Z6syEt15KUnZbZPJTA
@@ -505,7 +552,9 @@ jwKjQPj+6zj0/aMjfaUw9ByPH8tbb23pzxQUX/9/85wgkMxes8wAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleGraphs [
+RTOpenStreetMapExample >> exampleGraphs [
+	<gtExample>
+	<noTest>
 
 	| v map e paris newyork london data allGraphElements |
 
@@ -553,7 +602,7 @@ RTOpenStreeMapExample >> exampleGraphs [
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleGraphsIcon [
+RTOpenStreetMapExample >> exampleGraphsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAABFyElEQVR4Xr29V5Mj6ZUlmP9w
 XnbM1tp2dh9mbW1sZrvbtjls9nTb2I4gjb07vdNDsptkaa0rdWRmRIYOaK0c7g7A4XBoFaoy
 q4rsFXb3nPu5O4CISLJYxawHWCgE4PiuOvdc4bceVauylSnLI3y99ihUZCuNB7/iOVvZSvy3
@@ -889,7 +938,44 @@ Pj08lIeg/CmMz46P5Z379+XjvT39noLi1/8fw4NScWx7ApQAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleParis [
+RTOpenStreetMapExample >> exampleOpenStreetMap [
+	<gtExample>
+	<noTest>
+	
+	"This example uses fome OpenStreetMap data and represent part of the map as graphical entities on top of the map background."
+
+	"We need a ratio here, otherwise Roassal centers incorrectly the view and has precision issues. This ratio of 10 means we are at: 100m at equator for 1.0 in Roassal coordinates."
+
+	"RTOpenStreetMapExample new exampleOpenStreetMap"
+
+	| v map response nodes |
+	v := RTView new.
+	map := RTOSM new ratio: 100.
+	v add: map element.
+	response := self buildingsAndStreamKampungMelayu.
+	nodes := (((response at: 'elements') select: [ :el | (el at: 'type') = 'node' ])
+		collect: [ :el | (el at: 'id') -> (map latLonToRoassal: (el at: 'lat') @ (el at: 'lon')) ]) asDictionary.
+	((response at: 'elements') select: [ :el | (el at: 'type') = 'way' ])
+		do: [ :way | 
+			| shape |
+			shape := RTPolygon new.
+			shape
+				color:
+					(((way at: 'tags') at: 'building' ifAbsent: [  ]) = 'yes'
+						ifTrue: [ Color gray ]
+						ifFalse: [ Color blue ]).
+			shape vertices: ((way at: 'nodes') collect: [ :n | nodes at: n ]).
+			v add: (shape elementOn: (way at: 'tags')) @ RTPopup ].
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView.
+	v open.
+	v canvas camera focusOnCenterScaled
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleParis [
+	<gtExample>
 
 	| v map e paris |
 	v := RTView new.
@@ -910,7 +996,7 @@ RTOpenStreeMapExample >> exampleParis [
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleParisIcon [
+RTOpenStreetMapExample >> exampleParisIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAABtc0lEQVR4XmW9Z5Pt13Wnhw9m
 fwFX2X5pu2psl6dKNWVprNFopkayZAUqkAQJAbgBuLlzPKFPzjnnnHPqeAMyQACkevlZ+1DU
 0H7R1X37dp8+/71X+IUd3it/XpbcNCe79pTkFm75H6t78l8aFvlvKi+k13DKoFORUb8tzXpF
@@ -1434,7 +1520,54 @@ MxKB86hwek4j1wUQ52enlG8QJ4jsYfChXF1t7v9fq+gRZvLBtEwAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleRefugies [
+RTOpenStreetMapExample >> exampleRefugees [
+	<gtExample>
+	
+	"UNHCR data."
+
+	"self exampleRefugees"
+
+	| v map e tab countries |
+	countries := RTOSM downloadCountries at: 'result'.
+	tab := RTTabTable new input: RTOSM peopleForUNHCR usingDelimiter: $,.
+	4 timesRepeat: [ tab removeFirstRow ].
+	tab
+		convertColumn: 3
+		to: [ :value | 
+			value = '*'
+				ifTrue: [ 0 ]
+				ifFalse: [ value asNumber ] ].
+	v := RTView new.
+	map := RTOSM new.
+	e := map element.
+	v add: e.
+	((tab values reject: [ :row | row third < 1 ]) sorted: [ :a :b | a third > b third ])
+		do: [ :row | 
+			(countries detect: [ :each | '*' , (each at: 'name') , '*' match: row second ] ifNone: [  ])
+				ifNotNil: [ :country | 
+					| lat lon |
+					lat := (country at: '/location/location/geolocation') first at: 'latitude'.
+					lon := (country at: '/location/location/geolocation') first at: 'longitude'.
+					v
+						add:
+							(((RTEllipse new
+								width: (row third / Float pi) sqrt * 2;
+								height: (row third / Float pi) sqrt * 2;
+								color: (Color blue alpha: 0.3))
+								elementOn:
+									(Array with: (row second) with:
+									(row third))) @ RTPopup translateTo: (map latLonToRoassal: lat @ lon)) ] ].
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView @ RTZoomableView.
+	v open.
+	v canvas camera focusOnCenterScaled.
+	^ v
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleRefugies [
+	<gtExample>
 
 	| v map e tab countries interestingRows |
 	"Data extracted from http://popstats.unhcr.org/PSQ_POC.aspx"
@@ -1478,7 +1611,7 @@ RTOpenStreeMapExample >> exampleRefugies [
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleRefugiesIcon [
+RTOpenStreetMapExample >> exampleRefugiesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAal0lEQVR4XuVdV3McV3aeP+Ty
 T/Cjy+sXvzhUuVzrcpBK0nq1irurlWWpLJPKokSKAcxJpCRKzAMiCYFEGACDyTnnDFDS7vPx
 +U73HTQGPTM9CYAWD7camNDdc0/6znfOvW176HbTQ5PxJBSkRr1I6UKGKtU8bdVLVOVjMp+m
@@ -1610,7 +1743,102 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleSeisms [
+RTOpenStreetMapExample >> exampleSeismOnEarth [
+	<gtExample> 
+	
+	"This example reuse the seism data of Roassal 2. But we need to zoom out a lot to see any earthquake spot."
+
+	"RTOpenStreetMapExample new exampleSeismOnEarth"
+
+	| v map e tab |
+	tab := RTTabTable new input: RTMapLocationBuilder new seismData2 usingDelimiter: $,.
+	tab removeFirstRow.
+	tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).
+	tab convertColumnsAsFloat: #(2 3 4 5).
+	v := RTView new.
+	map := RTOSM new.
+	e := map element.
+	v add: e.
+	tab values
+		do: [ :row | 
+			v
+				add:
+					(((RTEllipse new
+						width: (2 raisedTo: row fifth) * 10;
+						height: (2 raisedTo: row fifth) * 10;
+						color: (Color red alpha: 0.3)) elementOn: row fifth) @ RTPopup
+						translateTo: (map latLonToRoassal: row second @ row third)) ].
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView.
+	v open.
+	^ v
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleSeismOnEarthLive [
+	<gtExample>
+	
+	"This example directly queries the usgs earthquake data. But we need to zoom out a lot to see any earthquake spot."
+
+	"RTOpenStreetMapExample new exampleSeismOnEarthLive"
+
+	| v map e tab |
+	tab := RTTabTable new
+		input: (TRPlatform current download:  'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv') contents
+		usingDelimiter: $,.
+	tab removeFirstRow.
+	tab replaceEmptyValuesWith: '0' inColumns: #(2 3 4 5).
+	tab convertColumnsAsFloat: #(2 3 4 5).
+	v := RTView new.
+	map := RTOSM new.
+	e := map element.
+	v add: e.
+	tab values
+		do: [ :row | 
+			v
+				add:
+					(((RTEllipse new
+						width: (2 raisedTo: row fifth) * 10;
+						height: (2 raisedTo: row fifth) * 10;
+						color: (Color red alpha: 0.3)) elementOn: row fifth) @ RTPopup @ RTHighlightable
+						translateTo: (map latLonToRoassal: row second @ row third)) ].
+	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
+	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
+	v @ RTDraggableView.
+	v open.
+	^ v
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleSeismOnEarthLiveZoom: aView [
+	<gtExample>
+	<depends: #exampleSeismOnEarthLive>
+	
+	"This example download a data set from the web and scale the view afterwards."
+
+	"RTOpenStreetMapExample new exampleSeismOnEarthLiveZoom"
+
+	aView canvas camera focusOnCenterScaled.
+	^ aView
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleSeismOnEarthZoom: aView [
+	<gtExample>
+	<depends: #exampleSeismOnEarth>
+	
+	"This example reuse the seism data of Roassal 2."
+
+	"RTOpenStreetMapExample new exampleSeismOnEarthZoom"
+
+	aView canvas camera focusOnCenterScaled.
+	^ aView
+]
+
+{ #category : #sources }
+RTOpenStreetMapExample >> exampleSeisms [
+	<gtExample>
 
 	| v map e tab |
 	tab := RTTabTable new
@@ -1640,7 +1868,7 @@ RTOpenStreeMapExample >> exampleSeisms [
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleSeismsIcon [
+RTOpenStreetMapExample >> exampleSeismsIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAYaUlEQVR4XuVdWW8j15XmT8if
 yVPGL8FgECR/IQ+J5zFAjEGASQYxPNM2Eo+TWToeezw20rGDNuIA7thtp0XtTa2UKHERd3Hf
 d0rU1m0kmMGZ813WLV4Wi2SVRFJq8+GCEllk3XvP/p1zTzkWjo5oQRsb0Yh43UvEqVwr0mIw
@@ -1761,7 +1989,8 @@ uu3hFcTAb7l3NigWDojrcVoZ/Xv/HzmYxsv71YswAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTOpenStreeMapExample >> exampleVerySimple [
+RTOpenStreetMapExample >> exampleVerySimple [
+	<gtExample>
 
 	| v map e paris |
 	v := RTView new.
@@ -1782,7 +2011,7 @@ RTOpenStreeMapExample >> exampleVerySimple [
 ]
 
 { #category : #icons }
-RTOpenStreeMapExample >> exampleVerySimpleIcon [
+RTOpenStreetMapExample >> exampleVerySimpleIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAA8oElEQVR4XqV9SXfjanKl/rXX
 7o3d7Y23fU61T5ddVa7Bb8hM5SSlRorzPIIESGIgOJNi1ntV5WX0vYGBAEgpX51e4KRS4gB8
 8UXEjRvDd/G+1ZL337h+KHa++ZrkdVluyrvvS3JZa8plqXH+NY2WDFsjMUqG3OHze3d9sVt1
@@ -2075,6 +2304,6 @@ Pj7z/wEOLvZLsFGUsQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #accessing }
-RTOpenStreeMapExample >> label [
+RTOpenStreetMapExample >> label [
 	^ 'OpenStreetMap Integration'
 ]
