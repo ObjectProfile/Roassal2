@@ -368,6 +368,12 @@ TRMorph >> rtMouseDragging: evt [
 
 	shapeBeingPointed ifNil: [  
 			shapeBeingPointed := self shapeWithAction: TRMouseDragging forPositionInPixels: relativePosition ].
+	"If the element was removed during the drag then cancel the event"
+	shapeBeingPointed canvas ifNil: [
+		eventBeginingDragging := nil.
+		shapeBeingPointed := nil.
+		^ self
+	].
 	
 	event := TRMouseDragging new 
 				morph: self;
