@@ -14,6 +14,17 @@ lb setUpElements: es.
 
 v
 -=-=-=-=-=-=-=-=-=-=-=-=
+
+Another example using conditional layout:
+-=-=-=-=-=-=-=-=-=-=-=-=
+b := RTMondrian new.
+b nodes: self.
+b edges connectToAll: [ :c | c queryAllOutgoingInvocations atTypeScope ].
+b layout 
+	forceWithCharge: -300;
+	ifElement: #isNotConnected then: RTNullLayout new.
+b
+-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTLayoutBuilder,
@@ -182,7 +193,33 @@ RTLayoutBuilder >> if: blockCondition then: thenLayout [
 ]
 
 { #category : #'public - condition' }
+RTLayoutBuilder >> ifConnectedThen: thenLayout [
+"
+b := RTMondrian new.
+b nodes: (1 to: 100).
+b layout 
+	force;
+	ifConnectedThen: RTGridLayout new.
+b edges connectTo: [ :v | v \\ 4 ].
+b
+"
+	^ self ifElement: #isConnected then: thenLayout
+]
+
+{ #category : #'public - condition' }
 RTLayoutBuilder >> ifElement: blockCondition then: thenLayout [
+
+"
+Here is an example:
+b := RTMondrian new.
+b nodes: (1 to: 100).
+b layout 
+	force;
+	ifElement: #isNotConnected then: RTGridLayout new.
+b edges connectTo: [ :v | v \\ 4 ].
+b.
+"
+	
 	| oldLayout |
 	oldLayout := layout.
 	layout := RTConditionalLayout new.
@@ -190,6 +227,11 @@ RTLayoutBuilder >> ifElement: blockCondition then: thenLayout [
 	layout thenLayout: thenLayout.
 	layout elseLayout: oldLayout.
 	^ layout
+]
+
+{ #category : #'public - condition' }
+RTLayoutBuilder >> ifNotConnectedThen: thenLayout [
+	^ self ifElement: #isNotConnected then: thenLayout
 ]
 
 { #category : #initialization }
