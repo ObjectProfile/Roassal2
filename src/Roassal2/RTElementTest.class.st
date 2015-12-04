@@ -167,7 +167,6 @@ RTElementTest >> testHighlighting [
 RTElementTest >> testIsConnected [
 
 	self deny: RTElement new isConnected.
-	self assert: RTElement new isNotConnected.
 ]
 
 { #category : #edges }
@@ -181,8 +180,6 @@ RTElementTest >> testIsConnected02 [
 	
 	self assert: e1 isConnected.
 	self assert: e2 isConnected.
-	self deny: e1 isNotConnected.
-	self deny: e2 isNotConnected.
 ]
 
 { #category : #edges }
@@ -191,7 +188,6 @@ RTElementTest >> testIsConnected03 [
 	e1 := RTBox element.
 	l := RTLine edgeFrom: e1 to: e1.	
 	self assert: e1 isConnected.
-	self deny: e1 isNotConnected.
 
 ]
 

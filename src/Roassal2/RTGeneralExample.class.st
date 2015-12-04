@@ -841,6 +841,7 @@ RTGeneralExample >> forceBasedLayout [
 { #category : #groups }
 RTGeneralExample >> group1 [
 	<gtExample>
+	<noTest>
 	"self new group1"
 
 	| view group1 group2 host1 host2 edgesGroup1 edgesGroup2 |
@@ -1114,6 +1115,7 @@ RTGeneralExample >> movingCamera [
 { #category : #nesting }
 RTGeneralExample >> multipleNesting [
 	<gtExample>
+	<noTest>
 	" 
 	self new multipleNesting
 	"
@@ -1403,6 +1405,8 @@ RTGeneralExample >> popup1 [
 { #category : #popup }
 RTGeneralExample >> popupView1 [
 	<gtExample>
+	<noTest>
+	
 	"
 	self new popupView1
 	"
@@ -1427,6 +1431,7 @@ RTGeneralExample >> popupView1 [
 { #category : #popup }
 RTGeneralExample >> popupView2 [
 	<gtExample>
+	<noTest>
 	"
 	self new popupView2
 	"

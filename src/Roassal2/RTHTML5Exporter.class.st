@@ -62,7 +62,7 @@ RTHTML5Exporter class >> interactiveExport: view [
 		ifNil: [
 			TRPlatform current inform: 'Saving cancelled'.
 			^ self].
-	(self new)
+	(RTHTML5Exporter new)
 		directory: filename parent;
 		fileName: filename basename;
 		export: view.
