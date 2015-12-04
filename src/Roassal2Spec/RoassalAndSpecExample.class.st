@@ -5,12 +5,13 @@ Class {
 		'label',
 		'diagram',
 		'button1',
-		'button2'
+		'button2',
+		'view'
 	],
 	#category : #'Roassal2Spec-Example'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #specs }
 RoassalAndSpecExample class >> defaultSpec [ 
 	<spec: #default>
 	^ SpecLayout composed
@@ -20,6 +21,15 @@ RoassalAndSpecExample class >> defaultSpec [
 						add: #button1 height: self toolbarHeight;
 						add: #button2 height: self toolbarHeight;
 						add: #diagram ]
+]
+
+{ #category : #'instance creation' }
+RoassalAndSpecExample class >> open [
+	<script>
+	"
+	RoassalAndSpecExample open
+	"
+	^ self new openWithSpec
 ]
 
 { #category : #accessing }
@@ -52,11 +62,12 @@ RoassalAndSpecExample >> diagram: anObject [
 	diagram := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RoassalAndSpecExample >> initializePresenter [
 
 	"This causes the diagram's script to be executed again."
-	button1 action: [ diagram inspect ]
+	button1 action: [ view add: (RTEllipse new size: 40 atRandom) element. view signalUpdate ].
+	button2 action: [ RTFlowLayout on: view elements. view signalUpdate ]
 ]
 
 { #category : #initialization }
@@ -73,6 +84,7 @@ RoassalAndSpecExample >> initializeWidgets [
 
 	
 	diagram := self instantiate: RoassalModel.	
+	diagram script: [ :aView :canvas | self view: aView. aView @ RTDraggableView ].
 "	diagram script: [ :view :canvas | self textAsCode value: view value: canvas ]"
 ]
 
@@ -84,4 +96,14 @@ RoassalAndSpecExample >> label [
 { #category : #accessing }
 RoassalAndSpecExample >> label: anObject [
 	label := anObject
+]
+
+{ #category : #accessing }
+RoassalAndSpecExample >> view [
+	^ view
+]
+
+{ #category : #accessing }
+RoassalAndSpecExample >> view: anObject [
+	view := anObject
 ]
