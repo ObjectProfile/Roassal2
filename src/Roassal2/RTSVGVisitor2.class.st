@@ -32,9 +32,17 @@ RTSVGVisitor2 >> addBorderWidth: aShape [
 
 { #category : #helpers }
 RTSVGVisitor2 >> addColor: c [
-	stream nextPutAll: ('color: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
-	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}, ' ]
-	ifFalse: [ stream nextPutAll: (', a: <1p>}, ' expandMacrosWith: c alpha) ]
+	stream nextPutAll: 'color: '.
+	self addColorBase: c.
+	stream nextPutAll: ', '.
+	
+]
+
+{ #category : #helpers }
+RTSVGVisitor2 >> addColorBase: c [
+	stream nextPutAll: ('{r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
+	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}' ]
+	ifFalse: [ stream nextPutAll: (', a: <1p>}' expandMacrosWith: c alpha) ]
 ]
 
 { #category : #helpers }
@@ -544,9 +552,11 @@ RTSVGVisitor2 >> visitShowLabelInteraction: anInt with: el [
 { #category : #visitor }
 RTSVGVisitor2 >> visitView: aView [
 	| elements |
-	stream nextPutAll: ('mamani.color(<1p>);
-	mamani.camera.setScale(<2p>);' 
-	expandMacrosWith: aView canvas color asHexString with: aView canvas camera scale).
+	stream nextPutAll: 'mamani.color('.
+	self addColorBase: aView canvas color.
+	stream nextPutAll:(');
+	mamani.camera.setScale(<1p>);' 
+	expandMacrosWith: aView canvas camera scale).
 
 	aView announcer subscriptions trSubscriptions isEmpty ifFalse: [
 		stream nextPutAll: 'mamani.addInteractions('.

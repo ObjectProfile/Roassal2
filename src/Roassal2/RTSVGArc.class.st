@@ -35,26 +35,31 @@ RTSVGArc >> addOn: stream using: aSVGVisitor [
 
 { #category : #adding }
 RTSVGArc >> addPath: stream [
-	| p1 sweepFlag end aAngle p2 start alpha beta bAngle |
-	alpha := self makePositive: self alphaAngle.
-	beta := self makePositive: self betaAngle.
-	alpha > beta
-		ifTrue: [ sweepFlag := 1 ]
-		ifFalse: [ sweepFlag := 0 ].
-	aAngle := self toRadian: alpha.
-	bAngle := self toRadian: beta.
-	start := self getPointFrom: self center angle: aAngle radius: self innerRadius.
-	end := self getPointFrom: self center angle: bAngle radius: self innerRadius.
-	p1 := self getPointFrom: self center angle: aAngle radius: self outterRadius.
-	p2 := self getPointFrom: self center angle: bAngle radius: self outterRadius.
+	| aAngle bAngle xAngle i e xcos xsin acos asin bcos bsin c b|
+	aAngle := self alphaAngle degreesToRadians.
+	bAngle := self betaAngle degreesToRadians.
+	i := self innerRadius.
+	e := self outterRadius.
+	xAngle := (aAngle + bAngle) /2.
+	xcos := xAngle cos.
+	xsin := xAngle sin negated.
+	acos := aAngle cos.
+	asin := aAngle sin negated.
+	bcos := bAngle cos.
+	bsin := bAngle sin negated.
+	
+	c := self center.
+	b := [ :a | a asFloat asString ].
 	stream
-		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: start x with: start y);
-		nextPutAll: ('L<1p>,<2p> ' expandMacrosWith: p1 x with: p1 y);
-		nextPutAll: ('A<1p>,<2p> 0 <3p>,1 ' expandMacrosWith: self outterRadius with: self outterRadius with: sweepFlag);
-		nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p2 x with: p2 y);
-		nextPutAll: ('L<1p>,<2p> ' expandMacrosWith: end x with: end y);
-		nextPutAll: ('A<1p>,<2p> 0 <3p>,0 ' expandMacrosWith: self innerRadius with: self innerRadius with: sweepFlag);
-		nextPutAll: ('<1p>,<2p>z" ' expandMacrosWith: start x with: start y)
+		nextPutAll: 'd="M ',(b value: i*acos+c x),' ',(b value: i*asin + c y);
+		nextPutAll: ' L ',(b value: e*acos+c x),' ',(b value: e*asin+c y);
+		nextPutAll: ' A ',(b value: e),' ',(b value: e), ' 0 0 0 ', (b value: e*xcos+c x),' ',(b value: e*xsin+c y);
+		nextPutAll: ' A ',(b value: e),' ',(b value: e), ' 0 0 0 ', (b value: e*bcos+c x),' ',(b value: e*bsin+c y);
+		nextPutAll: ' L ',(b value: i * bcos+c x),' ',(b value: i*bsin + c y);
+		nextPutAll: ' A ',(b value: i),' ',(b value: i), ' 0 0 1 ', (b value: i*xcos+c x),' ',(b value: i*xsin+c y);
+		nextPutAll: ' A ',(b value: i+c x),' ',(b value: i+c y), ' 0 0 1 ', (b value: i*acos+c x),' ',(b value: i*asin+c y);
+		nextPutAll: ' Z" '.
+		
 ]
 
 { #category : #accessing }

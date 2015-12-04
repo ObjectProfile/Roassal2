@@ -97,7 +97,7 @@ RTSelectionExample >> exampleElasticBoxZoom [
 | v |
 v := RTGrapherExample new exampleDeviation.
 v @ RTZoomableBoxView.
-v
+^ v
 
 ]
 

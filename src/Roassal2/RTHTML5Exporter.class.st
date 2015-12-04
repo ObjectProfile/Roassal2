@@ -1291,9 +1291,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 	},
 	color: function (c){
 		this.color = c;
-		if(c.r == undefined)
-			$(this.svg).css("background-color", c);
-		else $(this.svg).css("background-color","rgb("+c.r+","+c.g+"," +c.b+")");
+		var color = c.r == undefined?c:c.a == undefined?"rgb("+c.r+","+c.g+"," +c.b+")":"rgba("+c.r+","+c.g+"," +c.b+","+c.a+")";
+		$(this.svg).css("background-color", color);
 	},
 	createShape: function (s){
 		var shape = this.definedShapes[s.type];
