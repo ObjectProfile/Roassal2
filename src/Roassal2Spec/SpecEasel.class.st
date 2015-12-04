@@ -13,7 +13,7 @@ Class {
 		'diagram',
 		'button'
 	],
-	#category : #Roassal2Spec
+	#category : #'Roassal2Spec-Example'
 }
 
 { #category : #specs }

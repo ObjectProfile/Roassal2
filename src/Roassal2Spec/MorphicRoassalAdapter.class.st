@@ -8,7 +8,7 @@ Class {
 		'view',
 		'canvas'
 	],
-	#category : #Roassal2Spec
+	#category : #'Roassal2Spec-Core'
 }
 
 { #category : #private }
