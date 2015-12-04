@@ -106,7 +106,7 @@ RTExampleSelection >> initializeIcon [
 	| icon64Mime iconSelector |
 	form ifNotNil: [ ^ self ].
 	iconSelector := (self method selector, 'Icon') asSymbol.
-	(self provider canPerform: iconSelector) ifFalse: [ ^ self ].
+	(self provider class canPerform: iconSelector) ifFalse: [ ^ self ].
 	icon64Mime := [ self provider perform: iconSelector ]
 		on: Error
 		do: [ ^ self ].
