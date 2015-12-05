@@ -182,7 +182,8 @@ RTSankeyBuilder >> renderIn: aView [
 	edges := RTEdgeBuilder new
 		view: aView;
 		elements: elements;
-		objects: links from: linkFrom to: linkTo.
+		objects: links;
+		connectFrom: linkFrom to: linkTo.
 	edges doWithIndex: [:e :i| 
 		e attributes at: #value put: (linkValue rtValue: (links at:i) ) ].
 	
