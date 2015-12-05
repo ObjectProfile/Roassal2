@@ -9,7 +9,14 @@ GLMSelectableAction >> execute [
 	| int |
 	int := RTSelectableView new.
 	self roassalView @ int.
-	int when: RTSelectionEnd do: [ :evt | self inform: 'hello' ].
+	int when: RTSelectionEnd do: [ :evt | 
+		self inform: 'hello'.
+		roassalPresentation selection: evt group ].
+]
+
+{ #category : #'as yet unclassified' }
+GLMSelectableAction >> order [
+	^ 1
 ]
 
 { #category : #hooks }
