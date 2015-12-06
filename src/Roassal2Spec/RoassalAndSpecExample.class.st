@@ -94,8 +94,8 @@ RoassalAndSpecExample >> label [
 ]
 
 { #category : #accessing }
-RoassalAndSpecExample >> label: anObject [
-	label := anObject
+RoassalAndSpecExample >> label: aString [
+	label := aString
 ]
 
 { #category : #accessing }
@@ -104,6 +104,6 @@ RoassalAndSpecExample >> view [
 ]
 
 { #category : #accessing }
-RoassalAndSpecExample >> view: anObject [
-	view := anObject
+RoassalAndSpecExample >> view: aRoassalView [
+	view := aRoassalView
 ]

@@ -48,7 +48,7 @@ MorphicRoassalAdapter >> basicApplyScript [
 { #category : #private }
 MorphicRoassalAdapter >> buildWidget [
 	self flag: 'Remove whenLastEventChangedDo:'.
-		^ RTViewForSpec new
+	^ RTViewForSpec new
 		whenLastEventChangedDo: self whenLastEventChangedBlock;
 		yourself
 ]
