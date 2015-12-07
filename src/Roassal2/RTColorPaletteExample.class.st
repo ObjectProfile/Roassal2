@@ -59,6 +59,72 @@ P/KFyBciP/KFyBciP88m/wAWA3WQRJl+fAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTColorPaletteExample >> examplePalettes [
+| v allLines lbl es lb| 
+v := RTView new.
+allLines := OrderedCollection new.
+
+(RTPalette class selectors sorted) do: [ :selector |
+	lbl := RTLabel elementOn: selector.
+	
+	v add: lbl.
+	
+	es := (RTBox new size: 20) elementsOn: (1 to: 5).
+	v addAll: es.
+	es @ (RTMouseHoverZoom new desiredExtent: [ :anElement | anElement extent * 1.7 ]).
+	TRConstraint stick: lbl onTheLeftOf: es first.
+	
+	RTHorizontalLineLayout new gapSize: 3; on: es.
+	RTMetricNormalizer new
+		elements: es;
+		normalizeColor: #yourself using: (RTPalette perform: selector).
+	allLines add: es.
+].
+RTVerticalLineLayout on: allLines.
+
+lb := RTLegendBuilder new.
+lb view: v.
+lb onDemand.
+lb addText: 'Many color palettes are offered by Roassal'.
+lb addText: 'To obtain the a palette, simply evaluate: RTPalette c5'.
+lb build.
+^ v
+
+]
+
+{ #category : #icons }
+RTColorPaletteExample >> examplePalettesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFjUlEQVR4XuWcTWhcVRiGC+5d
+COLOjbpxK7pwKS5cKlItIqggdBNEUMGmiBXB4l9tTEsbKmiSQiVJm8YhwaaThoIxk79pxsxk
+EpPM352ZNJP5STKZ/8x3nO9m7uGe2Norgj3T9y0P4TvMap7m3HfOnZtDQuBHpxyiuTmia9cI
+/63QRcj6Or4MrYQsLOAL0UkI/luALwQ/+ELwheAHXwi+kP8lueR1inrbhcVW0i2q1YAoFgck
+PHPq6z0KnNJguwLH3/aqAjWCL+Qf4vf7KZVKEb4QTZJOpwn/N0SjVCoVfCH4wReCn1YUcn7g
+F3rmzaPCouuyS6RS82Ix0C3hmZO52abA+f395xQ43z3xlALV6/hb1p2Sz+cpmUw2zjsXaGlp
+yQRfyH2MYRjmGxOPx2lzc9OsvvhC7nPqB94cfCH4wReCnxYS8u2XnfT4o08Li1NfnRHdfQPi
+xdfekPDMOdzZpcD5ePSiAmdk9lMF/A+GDlqWdZaFL0STloX/G6Jpy8IXgh98IfhpISGJvhM0
+e+QhYZHo/0xkh78WobbHJDxzdk8+rGCm5xEVzuizCkT4Hwzv2bIikQj5fD7CF6JJy+Lam8lk
+8IXo1rLwheAHXwh+WkiIO1um4+EdYTGWK4uFSklcym9JeOYES7sKZlFIZRU4xfmQAv4HQwct
+KxwOk9frJXwhmrSsWq1GgUAAX4guLcv6iS8EP/hC8NNCQsgzQdT5jZBMTYiyf1ps952V8MwJ
+dJ9R4Fw/26XA6evoVcDfshy0rHK5TOPj4/hCdGlZGxsb5Ha7CV+IZmdZ+ELwgy8EPy0k5MKV
+YXr+7feExQ+DI6J/1C2OfNQu4Znz4RcnFDjfXzipwBn+9UcF/C3rHuFnDK07hvhCNAg/Y2jd
+McQXokHszxjiC8EPvhD8tJCQ4maScsteYVFKJ8VWbFfEJlISnjmT/TkF80Pg6awC59SxnAL+
+luVERLFIfISCL0SDcMPig0Z8IZpkdnaWQqGQefKLL0Sz0IHcae1u6/9mDV8IflpTSIf7Fj15
+/Cdh0TF2i64uB8U7rkEJz5zzvlEFc/tL3VDgFOYvUdH3s7DA37Ichv+Sw+m/CxH/VYhdBr4Q
+hy3L5XLR0NAQvhBdWhb/DIfDAl8IfsvCF4KfFhLC90RWVlYlPMeNOE1NTkt45tcea/+E7PDa
+Sy+/TnZ47YV3PyA7+FuWg8RiMfO7WSxgdXVNWGQyWRE3EmLaMyPhuSlEoSlEoSlEAV+Ig5bF
+51h8KxdfiCYta21tzfyyHL4QzVvW3YLfsvCDKWRzK0PB6IqE59p2mkrxZQnP5v98f4Ds8Fp1
+zEN2zMLQe5ns4G9ZDltWoVAwBSzFVoVFYxa1nbQoJ/6U8GwmsKjSSO3GlALHuHhFAV+Ig5YV
+jUYpGAziC9GlZfGfieXHE/CF4LcsfCH4aSEhub06has1Cc/Gdp4m4+sSnvm1A7/NkR1e+/xc
+N9nhtVfeOkp28LcsB7G+l8UCIrU9YZGr14WxkxeexG0Jz6aQCa9CU4hCU4gCvhAHLcu8INdq
++EJ0aVnVapWsLQtfyAPUsup1Ijv7a3Wyg39Rx0/rCpluXEfONW5UWcw05vntGvUYZQnP/NqR
+cIns8NqkL0t2eG1ueJXs4G9ZDi/sfC/EFFKpCIuZvT0xv70neuIVCc+mkEhZYV9ITmFfyJoC
+vhCHZ1mLi4v4QnRpWXyOxeAL0bBl1W3gn2XhB1+IPYWiQenMlKRQbByn5A2K3PZIeObXzoRu
+kh1eu/qHi+zwWsdkL9nB37IcJJvNUiKRIBaSyU4Ji2IxLrZ2DRHd8Eh4bgpRaApRaApRwBfi
+sPLy4wj4QjRpWfyMIT/4iS/kQTvLOtDS9tfUf/gXdfzgC8EXgh98IfhC8IMvBF8IfvCFIOcv
+FMdBUx6uJnQAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTColorPaletteExample >> exampleQualitativePalette [
 	| v |
 	v := RTView new.
