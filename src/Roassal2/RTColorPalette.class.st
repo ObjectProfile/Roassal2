@@ -15,7 +15,7 @@ All colors, palettes and schemes are from www.ColorBrewer.org by Cynthia A. Brew
 "
 Class {
 	#name : #RTColorPalette,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#classInstVars : [
 		'palette'
 	],
