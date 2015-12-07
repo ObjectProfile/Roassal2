@@ -126,14 +126,14 @@ RTLayoutBuilder >> for: aBlockCondition use: aLayout [
 
 { #category : #'public - layout' }
 RTLayoutBuilder >> force [
-	layout := RTForceBasedLayout new.
+	layout := RTOptimizedForceBasedLayout new.
 	^ layout
 ]
 
 { #category : #'public - layout' }
 RTLayoutBuilder >> forceWithCharge: aBlockOrANumber [
 	"E.g -300"
-	layout := RTForceBasedLayout new.
+	layout := RTOptimizedForceBasedLayout new.
 	layout charge: aBlockOrANumber.
 	^ layout
 ]
