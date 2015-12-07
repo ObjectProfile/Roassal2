@@ -420,7 +420,7 @@ RTEdgeBuilder new
 	elements: es;
 	connectFrom: [ :value | value // 2 ].
 
-RTForceBasedLayout new on: es.
+RTOptimizedForceBasedLayout new on: es.
 ^ v
 ]
 

@@ -1690,7 +1690,7 @@ RTGeneralExample >> softviz01 [
 		connectFrom: #superclass to: #yourself.
 
 	"Layout the whole thing"
-	RTForceBasedLayout new
+	RTOptimizedForceBasedLayout new
 		userDefinedEdges: inheritanceEdges;
 		on: v elements.
 
