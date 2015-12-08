@@ -33,7 +33,7 @@ RTGridView class >> example [
 	es @ RTResizable.
 	es first translateTo: 70 negated @ 90 negated.
 	es second translateTo: 70 @ 110.
-	v open
+	^ v
 ]
 
 { #category : #adding }
