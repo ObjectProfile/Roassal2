@@ -172,6 +172,7 @@ RTElement >> position [
 
 { #category : #actions }
 RTElement >> remove [
+	"Remove the element from the view. Edges that may be connected are also removed"
 	view ifNil: [ self error: 'cannot remove an element that is not part of a view' ].
 	view removeElement: self.
 	self removeConnectedEdges.
@@ -195,6 +196,14 @@ RTElement >> removeWithItsConnectedEdges [
 	self connectedEdges copy do: [ :anEdge | anEdge view ifNotNil: [ anEdge remove ] ].
 	view removeElement: self.
 	view := nil 
+]
+
+{ #category : #actions }
+RTElement >> removeWithNestedElements [
+	"Remove the element from the view. Edges that may be connected are also removed"
+	self nestedElements do: #remove.
+	self remove. 
+	
 ]
 
 { #category : #actions }
