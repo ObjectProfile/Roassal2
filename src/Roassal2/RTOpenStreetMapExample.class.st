@@ -29,7 +29,7 @@ Class {
 { #category : #sources }
 RTOpenStreetMapExample >> example [
 	<gtExample>
-	
+	<noTest>	
 	"This example center the view on lat 0, lon 0."
 
 	"RTOpenStreetMapExample new example"
@@ -49,7 +49,7 @@ RTOpenStreetMapExample >> example [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleCitySelection [
 	<gtExample>
-	
+	<noTest>	
 	| v map e movingCamera mb |
 	v := RTView new.
 	map := RTOSM new.
@@ -108,7 +108,7 @@ RTOpenStreetMapExample >> exampleDili [
 		ratio: 10.
 	e := map elementOn: 'OSM'.
 	view add: e @ RTDraggable.
-	p := map latLonToRoassal: (self downloadCityCoordinatesFor: 'Dili').
+	p := map latLonToRoassal: (RTOSM downloadCityCoordinatesFor: 'Dili').
 	view add: ((RTLabel new text: 'Dili') element @ RTHighlightable translateTo: p).
 	view canvas addMenu: 'In' callback: [ RTZoomInMove on: view ].
 	view canvas addMenu: 'Out' callback: [ RTZoomOutMove on: view ].
@@ -119,7 +119,7 @@ RTOpenStreetMapExample >> exampleDili [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleGraphOnLondon [
 	<gtExample>
-
+	<noTest>
 	| v map data b d whiteBackground london elementsAndEdges |
 	v := RTView new.
 	v @ RTDraggableView.
@@ -580,8 +580,8 @@ RTOpenStreetMapExample >> exampleGraphs [
 			grapher := RTGrapher new.
 			grapher extent: 150 @ 100.
 			
-			dataSet := RTData new 
-				points: tupple second.
+			dataSet := RTData new.
+			dataSet points: tupple second.
 			dataSet barShape width: 10; color: Color red.
 			grapher add: dataSet.
 
@@ -952,7 +952,7 @@ RTOpenStreetMapExample >> exampleOpenStreetMap [
 	v := RTView new.
 	map := RTOSM new ratio: 100.
 	v add: map element.
-	response := self buildingsAndStreamKampungMelayu.
+	response := RTOSM buildingsAndStreamKampungMelayu.
 	nodes := (((response at: 'elements') select: [ :el | (el at: 'type') = 'node' ])
 		collect: [ :el | (el at: 'id') -> (map latLonToRoassal: (el at: 'lat') @ (el at: 'lon')) ]) asDictionary.
 	((response at: 'elements') select: [ :el | (el at: 'type') = 'way' ])
@@ -976,7 +976,7 @@ RTOpenStreetMapExample >> exampleOpenStreetMap [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleParis [
 	<gtExample>
-
+	<noTest>
 	| v map e paris |
 	v := RTView new.
 	map := RTOSM new.
@@ -1522,7 +1522,7 @@ MxKB86hwek4j1wUQ52enlG8QJ4jsYfChXF1t7v9fq+gRZvLBtEwAAAAASUVORK5CYII='
 { #category : #sources }
 RTOpenStreetMapExample >> exampleRefugees [
 	<gtExample>
-	
+	<noTest>	
 	"UNHCR data."
 
 	"self exampleRefugees"
@@ -1560,7 +1560,6 @@ RTOpenStreetMapExample >> exampleRefugees [
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView @ RTZoomableView.
-	v open.
 	v canvas camera focusOnCenterScaled.
 	^ v
 ]
@@ -1568,7 +1567,7 @@ RTOpenStreetMapExample >> exampleRefugees [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleRefugies [
 	<gtExample>
-
+	<noTest>
 	| v map e tab countries interestingRows |
 	"Data extracted from http://popstats.unhcr.org/PSQ_POC.aspx"
 	countries := RTOSM downloadCountries at: 'result'.
@@ -1745,7 +1744,7 @@ TkSuQmCC'
 { #category : #sources }
 RTOpenStreetMapExample >> exampleSeismOnEarth [
 	<gtExample> 
-	
+	<noTest>	
 	"This example reuse the seism data of Roassal 2. But we need to zoom out a lot to see any earthquake spot."
 
 	"RTOpenStreetMapExample new exampleSeismOnEarth"
@@ -1778,7 +1777,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarth [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleSeismOnEarthLive [
 	<gtExample>
-	
+	<noTest>	
 	"This example directly queries the usgs earthquake data. But we need to zoom out a lot to see any earthquake spot."
 
 	"RTOpenStreetMapExample new exampleSeismOnEarthLive"
@@ -1814,7 +1813,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthLive [
 RTOpenStreetMapExample >> exampleSeismOnEarthLiveZoom: aView [
 	<gtExample>
 	<depends: #exampleSeismOnEarthLive>
-	
+	<noTest>
 	"This example download a data set from the web and scale the view afterwards."
 
 	"RTOpenStreetMapExample new exampleSeismOnEarthLiveZoom"
@@ -1827,7 +1826,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthLiveZoom: aView [
 RTOpenStreetMapExample >> exampleSeismOnEarthZoom: aView [
 	<gtExample>
 	<depends: #exampleSeismOnEarth>
-	
+	<noTest>
 	"This example reuse the seism data of Roassal 2."
 
 	"RTOpenStreetMapExample new exampleSeismOnEarthZoom"
@@ -1839,7 +1838,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthZoom: aView [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleSeisms [
 	<gtExample>
-
+	<noTest>
 	| v map e tab |
 	tab := RTTabTable new
 		input: (TRPlatform current download: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv') contents
@@ -1991,7 +1990,8 @@ uu3hFcTAb7l3NigWDojrcVoZ/Xv/HzmYxsv71YswAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTOpenStreetMapExample >> exampleVerySimple [
 	<gtExample>
-
+	<noTest>
+	
 	| v map e paris |
 	v := RTView new.
 	map := RTOSM new.
