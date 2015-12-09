@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Core-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTShapedObjectTest >> testEmittingEvent [
 
 	| el t |
