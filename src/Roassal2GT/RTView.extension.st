@@ -32,8 +32,8 @@ RTView >> gtInspectorViewIn: composite [
 { #category : #'*Roassal2GT-Glamour' }
 RTView >> openWithToolbar [
 	^ GLMCompositePresentation new 
-		title: 'Roassal painting';
-		with: [:composite | composite roassal2 initializeView: [self ] ];
+		title: 'Roassal';
+		with: [:composite | composite roassal2 title: 'Painting'; initializeView: [self ] ];
 		openOn: self
 ]
 
