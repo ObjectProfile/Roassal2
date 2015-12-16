@@ -198,7 +198,8 @@ TRCanvasTest >> testContainsPointAfterTranslation [
 { #category : #tests }
 TRCanvasTest >> testDefault [
 
-	self assert: canvas shapes isEmpty
+	self assert: canvas shapes isEmpty.
+	self assert: canvas numberOfShapes equals: 0.
 ]
 
 { #category : #animations }
@@ -210,6 +211,13 @@ TRCanvasTest >> testDefaultAnimation [
 { #category : #label }
 TRCanvasTest >> testDefaultFontSize [
 	self assert: (TRLabelShape new fontSize = TRLabelShape new defaultFontSize)
+]
+
+{ #category : #tests }
+TRCanvasTest >> testEncompassingRectangle [
+	| r |
+	r := TRCanvas new encompassingRectangle.
+	self assert: r extent equals: 1 @ 1
 ]
 
 { #category : #'event overseer' }
@@ -448,6 +456,16 @@ TRCanvasTest >> testRemovingLine [
 	line remove.
 	self deny: line isInACanvas.
 
+]
+
+{ #category : #tests }
+TRCanvasTest >> testResetShapes [
+
+	canvas addShape: TRBoxShape new.
+	canvas addShape: TRBoxShape new.
+	self assert: canvas numberOfShapes equals: 2.
+	canvas resetShapes.
+	self assert: canvas numberOfShapes equals: 0.
 ]
 
 { #category : #resizing }

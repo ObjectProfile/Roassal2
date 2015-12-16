@@ -1,7 +1,7 @@
 Class {
 	#name : #TRCanvasExample,
 	#superclass : #TRObject,
-	#category : #'Trachel-Core'
+	#category : #'Trachel-Examples'
 }
 
 { #category : #animation }
