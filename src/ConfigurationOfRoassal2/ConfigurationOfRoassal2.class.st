@@ -583,7 +583,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.18'.
+	spec for: #'pharo5.x' version: '1.20'.
 ]
 
 { #category : #versions }
@@ -818,6 +818,25 @@ ConfigurationOfRoassal2 >> version11: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.234';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.585';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version120: spec [
+	<version: '1.20' imports: #('1.9-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Release'.
+		spec author: 'AlexandreBergel'.
+		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Neo-JSON-Core' with: '10'.
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.344';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1181';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Glamour-Tools' with: 'Glamour-Tools-AndreiChis.87';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.30' ].
 
 ]
 
