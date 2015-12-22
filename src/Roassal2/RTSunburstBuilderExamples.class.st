@@ -28,10 +28,9 @@ RTSunburstBuilderExamples >> basic1 [
 	"
 	| b|
 	b := RTSunburstBuilder new.
-	b explore: 1 using: [ :n | 
-		n< 4 
-			ifTrue: [ Array with: n + 1 with: n + 2 ] 
-			ifFalse: [ #( ) ] ].
+	b shape color: [ :e | Color random ].
+	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -42,19 +41,21 @@ RTSunburstBuilderExamples >> basic10 [
 	"
 	self new basic10
 	"	
-	| b |
+	| b data |
+	data := Array 
+		with: 'Chile' -> (Array with: 'Santiago' with: 'Iquique' )
+		with: 'France' -> (Array with: 'Paris' with: 'Nice').
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b shape color: [ :cls | 
-		cls subclasses isEmpty 
-			ifTrue: [ Color red ] 
-			ifFalse: [ Color orange ] ].
-	
-	b
-		radialSpacing: 10;
-		angularSpacing: 2;
-		explore: TREvent using: #subclasses.
 
+	b 
+		explore: data 
+		using: [ :o | 
+			o class == Association 
+				ifTrue: [ o value ] 
+				ifFalse: [ o isString 
+									ifTrue: [ #() ] 
+									ifFalse:  [ o ] ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -65,17 +66,21 @@ RTSunburstBuilderExamples >> basic11 [
 	"
 	self new basic11
 	"	
-	| b |
+	| b data |
+	data := Array 
+		with: 'Chile' -> (Array with: 'Santiago' with: 'Iquique' )
+		with: 'France' -> (Array with: 'Paris' with: 'Nice').
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b strategy radialSpacing:10.
-	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
-			ifTrue: [ Color lightGray ]
-			ifFalse: [ Color blue ] ].
-	b
-		angularSpacing: 1; 
-		from: (Array with: TREvent with: RTInteraction) using: #subclasses.
+	b interactions add: RTSBFadeInteraction new.
+	b 
+		explore: data 
+		using: [ :o | 
+			o class == Association 
+				ifTrue: [ o value ] 
+				ifFalse: [ o isString 
+									ifTrue: [ #() ] 
+									ifFalse:  [ o ] ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -86,18 +91,17 @@ RTSunburstBuilderExamples >> basic12 [
 	"
 	self new basic12
 	"	
-	| b |
+	| b mt |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b strategy radialSpacing:10.
-	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
-			ifTrue: [ Color lightGray ]
-			ifFalse: [ Color blue ] ].
-	b
-		angularSpacing: 1; 
-		hasCenter: false;
-		from: (Array with: TREvent with: RTInteraction) using: #subclasses.
+	b radialSpacing: 5.
+	
+	b interactions add: RTSBFadeInteraction new.
+	b shape current 
+				color: [ :m | m subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+	mt := TRPlatform current morphClass.
+	b explore: mt using: #subclasses.
+	b view @ RTDraggableView.
+	b view canvas focusOnCenterScaled.
 	^ b
 ]
 
@@ -110,13 +114,16 @@ RTSunburstBuilderExamples >> basic13 [
 	"	
 	| b mt |
 	b := RTSunburstBuilder new.
+	b strategy: RTSunburstExtentStrategy new.
 	b radialSpacing: 1.
-	b interaction addInteraction: RTSBFadeInteraction new.
+	
+	b interactions add: RTSBFadeInteraction new.
 	b shape current 
 				color: [ :m | m subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
-				
+ 	b weight: 1.
 	mt := TRPlatform current morphClass.
 	b explore: mt using: #subclasses.
+	b view @ RTDraggableView.
 	b view canvas focusOnCenterScaled.
 	^ b
 ]
@@ -128,18 +135,12 @@ RTSunburstBuilderExamples >> basic14 [
 	"
 	self new basic14
 	"
-	| b mt |
+	| b|
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b radialSpacing: 1.
-	b interaction addInteraction: RTSBFadeInteraction new.
-	b shape color: [ :m | m subclasses notEmpty 
-		ifTrue: [ Color lightGray ] 
-		ifFalse: [ Color purple ] ].
-				
-	mt := TRPlatform current morphClass.
-	b explore: mt using: #subclasses.
-	b view canvas focusOnCenterScaled.
+	b strategy: RTSunburstExtentStrategy new.
+	b shape color: [ :e | Color random ].
+	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -150,21 +151,14 @@ RTSunburstBuilderExamples >> basic15 [
 	"
 	self new basic15
 	"
-	| b mt |
+	| b|
 	b := RTSunburstBuilder new.
-	b layout sunburstWithArcWidth: 30.
-	b 
-		radialSpacing: 2;
-		angularSpacing: 1.
-	
-	b interaction addInteraction: RTSBFadeInteraction new.
-	b shape color: [ :m | m subclasses notEmpty 
-		ifTrue: [ Color orange ] 
-		ifFalse: [ Color red ] ].
-				
-	mt := TRPlatform current morphClass.
-	b explore: mt using: #subclasses.
-	b view canvas focusOnCenterScaled.
+	b strategy: RTSunburstExtentStrategy new.
+	b shape color: [ :e | Color random ].
+	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
+	b strategy hasCenter: false.
+	b radialSpacing: 0.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -177,13 +171,11 @@ RTSunburstBuilderExamples >> basic2 [
 	"
 	| b|
 	b := RTSunburstBuilder new.
-	b
-		explore: 1
-		using: [ :n | n< 4 
-			ifTrue: [ Array with: n + 1 with: n + 2 ] 
-			ifFalse: [ #( ) ] ].
-	b hasCenter: false.
+	b shape color: [ :e | Color random ].
+	b explore: 1 using: [ :n | n< 4 ifTrue: [ Array with: n + 1 with: n + 2 ] ifFalse: [ #( ) ] ].
+	b strategy hasCenter: false.
 	b radialSpacing: 0.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -197,9 +189,10 @@ RTSunburstBuilderExamples >> basic3 [
 	| b |
 	b := RTSunburstBuilder new.
 	b shape current 
-		colorElement: [ :el | Color grayScale256: ((el attributeAt: #depth ifAbsent: [ 0 ]) * 30) ].
+				colorElement: [ :el | Color grayScale256: ((el attributeAt: #depth ifAbsent: [ 0 ]) * 30) ].
 
 	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -211,16 +204,10 @@ RTSunburstBuilderExamples >> basic4 [
 	"	
 	| b |
 	b := RTSunburstBuilder new.
-	b shape color: [ :cls | 
-		cls subclasses isEmpty 
-			ifTrue: [ Color red ] 
-			ifFalse: [ Color orange ] ].
-	
-	b
-		radialSpacing: 10;
-		angularSpacing: 2;
-		explore: TREvent using: #subclasses.
+	b shape colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
 
+	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -233,13 +220,11 @@ RTSunburstBuilderExamples >> basic5 [
 	| b |
 	b := RTSunburstBuilder new.
 	b strategy radialSpacing:10.
-	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
-			ifTrue: [ Color lightGray ]
-			ifFalse: [ Color blue ] ].
-	b
-		angularSpacing: 1; 
-		from: (Array with: TREvent with: RTInteraction) using: #subclasses.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+
+	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -251,15 +236,12 @@ RTSunburstBuilderExamples >> basic6 [
 	"	
 	| b |
 	b := RTSunburstBuilder new.
-	b strategy radialSpacing:10.
-	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
-			ifTrue: [ Color lightGray ]
-			ifFalse: [ Color blue ] ].
-	b
-		angularSpacing: 1; 
-		hasCenter: false;
-		from: (Array with: TREvent with: RTInteraction) using: #subclasses.
+	b strategy radialSpacing:5.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+
+	b explore: Object using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -269,13 +251,15 @@ RTSunburstBuilderExamples >> basic7 [
 	"
 	self new basic7
 	"	
-	| b|
+	| b |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b explore: 1 using: [ :n | 
-		n< 4 
-			ifTrue: [ Array with: n + 1 with: n + 2 ] 
-			ifFalse: [ #( ) ] ].
+	b angularSpacing: 1.
+	b radialSpacing: 3.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+
+	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -285,16 +269,14 @@ RTSunburstBuilderExamples >> basic8 [
 	"
 	self new basic8
 	"	
-	| b|
+	| b |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b
-		explore: 1
-		using: [ :n | n< 4 
-			ifTrue: [ Array with: n + 1 with: n + 2 ] 
-			ifFalse: [ #( ) ] ].
-	b hasCenter: false.
-	b radialSpacing: 0.
+	b radialSpacing: 15.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+
+	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -306,11 +288,14 @@ RTSunburstBuilderExamples >> basic9 [
 	"	
 	| b |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
+	b radialSpacing: 0.
+	b angularSpacing: 1.
+	b strategy hasCenter: false.
 	b shape current 
-		colorElement: [ :el | Color grayScale256: ((el attributeAt: #depth ifAbsent: [ 0 ]) * 30) ].
-
+				color: [ :cls | cls subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
+	
 	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -320,12 +305,12 @@ RTSunburstBuilderExamples >> exampleBasic [
 	
 	| b |
 	b := RTSunburstBuilder new.
-	b radialSpacing: 10.
-	b shape color: [ :cls | cls subclasses notEmpty 
-		ifTrue: [ Color orange ] 
-		ifFalse: [ Color red ] ].
+	b strategy radialSpacing:10.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
 
-	b explore: TRShape using: #subclasses.
+	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -348,6 +333,7 @@ RTSunburstBuilderExamples >> exampleBasic2 [
 				ifFalse: [ o isString 
 									ifTrue: [ #() ] 
 									ifFalse:  [ o ] ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -507,15 +493,14 @@ RTSunburstBuilderExamples >> exampleCollectionSubclasses [
 	
 	| b |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
-	b 
-		angularSpacing: 1;
-		radialSpacing: 5.
-	b shape color: [ :cls | cls subclasses notEmpty 
-		ifTrue: [ Color orange ] 
-		ifFalse: [ Color red ] ].
+	b strategy: RTSunburstExtentStrategy new.
+	b angularSpacing: 1.
+	b radialSpacing: 5.
+	b shape current 
+				colorElement: [ :el | el model subclasses notEmpty ifTrue: [ Color orange ] ifFalse: [ Color red ] ].
 
 	b explore: Collection using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -612,20 +597,20 @@ RTSunburstBuilderExamples >> exampleFileSystem [
 
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
-	
+	b strategy: RTSunburstExtentStrategy new.
 	c2 := Color r: 177/255.0 g: 175/255.0 b: 134/255.0.
 	c1 := Color r: 98/255.0 g: 101/255.0 b: 73/255.0.
-	
-	b
-		color: c2; 
-		angularSpacing: 1;
-		radialSpacing: 5;
-		leafWeight: [:f | f size sqrt ];
-		leafColor: c1;
-		explore: TRPlatform current workingDirectory
-		nesting: #directories
-		leaves: #files.
+	b shape color: [ :e | Color random ].
+	b explore: TRPlatform current workingDirectory
+		using: [:file |	| children |
+				[ children := file isDirectory ifTrue: [ file children ] ifFalse: [ #() ] ]
+				on: Error do: [ children := #() ].
+				children ] .
 			
+	b strategy hasCenter: false.
+	b radialSpacing: 0.
+	b view @ RTDraggableView.
+	b build.
 	b view canvas camera scale: 1.5.
 	^ b
 ]
@@ -637,21 +622,19 @@ RTSunburstBuilderExamples >> exampleFileSystem2 [
 	
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
-	
+	b strategy: RTSunburstExtentStrategy new.
+	b radialSpacing: 3.
 	c2 := Color r: 177/255.0 g: 175/255.0 b: 134/255.0.
 	c1 := Color r: 98/255.0 g: 101/255.0 b: 73/255.0.
-	b interaction addInteraction: RTSBFadeInteraction new.
-	b
-		color: c2; 
-		angularSpacing: 1;
-		radialSpacing: 5;
-		leafWeight: [:f | f size sqrt ];
-		leafColor: c1;
-		explore: TRPlatform current workingDirectory
-		nesting: #directories
-		leaves: #files.
+	b shape color: [ :e | e isDirectory ifTrue: [ c2 ] ifFalse: [ c1 ] ].
+	b explore: TRPlatform current workingDirectory
+		using: [:file |	| children |
+				[ children := file isDirectory ifTrue: [ file children ] ifFalse: [ #() ] ]
+				on: Error do: [ children := #() ].
+				children ] .
 			
-	b view canvas camera scale: 1.5.
+	b strategy hasCenter: false.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -863,10 +846,11 @@ RTSunburstBuilderExamples >> exampleMorphSubclasses [
 	
 	| b |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 400.
-	b color: [ :cls | cls subclasses isEmpty ifTrue: [ Color purple ] ifFalse: [ Color lightGray ] ].
+	b strategy: (RTSunburstExtentStrategy new extent: 800@800).
+	b shape colorElement: [ :el | el model subclasses isEmpty ifTrue: [ Color purple ] ifFalse: [ Color lightGray ] ].
 
 	b explore: TRPlatform current morphClass using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -995,15 +979,9 @@ RTSunburstBuilderExamples >> exampleOnNumbers [
 	
 	| b|
 	b := RTSunburstBuilder new.
-	b
-		color: [ :e | e < 5 
-			ifTrue: [ Color gray ] 
-			ifFalse: [Color blue] ].
-	b 
-		explore: 1 
-		using: [ :n | n< 5 
-			ifTrue: [ Array with: n + 1 with: n + 2 with: n+3 ] 
-			ifFalse: [ #( ) ] ].
+	b shape color: [ :e | e < 5 ifTrue: [ Color gray ] ifFalse: [Color blue] ].
+	b explore: 1 using: [ :n | n< 5 ifTrue: [ Array with: n + 1 with: n + 2 with: n+3 ] ifFalse: [ #( ) ] ].
+	b view @ RTDraggableView.
 	^ b
 ]
 
@@ -1080,13 +1058,13 @@ RTSunburstBuilderExamples >> exampleRTObjectSubclasses [
 	
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
-	b layout sunburstWithRadius: 100.
+	b strategy: RTSunburstExtentStrategy new.
 	c1 := Color r: 0/255.0 g: 100/255.0 b: 0/255.0.
 	c2 := Color r: 73/255.0 g: 121/255.0 b: 107/255.0.
-	b color: [ :cls | cls subclasses notEmpty 
-		ifTrue: [ c2 ] ifFalse: [ c1 ] ].
+	b shape colorElement: [ :el | el model subclasses notEmpty ifTrue: [ c2 ] ifFalse: [ c1 ] ].
 
 	b explore: RTObject using: #subclasses.
+	b view @ RTDraggableView.
 	^ b
 ]
 

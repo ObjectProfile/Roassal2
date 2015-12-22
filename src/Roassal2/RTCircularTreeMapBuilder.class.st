@@ -193,7 +193,7 @@ RTCircularTreeMapBuilder >> relToAbsCircle: rel parent: parent [
 
 { #category : #hooks }
 RTCircularTreeMapBuilder >> renderIn: aView [
-	super renderIn: aView.
+	aView addAll: self elements.
 	self layoutElements.
 ]
 
@@ -205,4 +205,9 @@ RTCircularTreeMapBuilder >> sortChildren: children [
 { #category : #layout }
 RTCircularTreeMapBuilder >> weight2rad: w [
 	^ (w / Float pi) sqrt
+]
+
+{ #category : #accessing }
+RTCircularTreeMapBuilder >> weightOf: e [
+	^ self weight rtValue: e
 ]

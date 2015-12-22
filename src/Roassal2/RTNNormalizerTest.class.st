@@ -40,7 +40,7 @@ RTNNormalizerTest >> testExplicitIdentity [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTNNormalizerTest >> testExplicitIdentity2 [
 	| normalizer |
 	
