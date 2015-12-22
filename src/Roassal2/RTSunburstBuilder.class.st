@@ -1,13 +1,11 @@
-"
-I am a class to create visualizations about rings, center is the root of the tree and arcs are the sub trees.
-
-You can customize the angle of the arc, and play with the with radius and width of each arc.
-
-"
 Class {
 	#name : #RTSunburstBuilder,
-	#superclass : #RTAbstractTreeBuilder,
+	#superclass : #RTBuilder,
 	#instVars : [
+		'strategy',
+		'elements',
+		'weight',
+		'interactions',
 		'maxLevel'
 	],
 	#category : #'Roassal2-Builder-Sunburst'
@@ -18,65 +16,31 @@ RTSunburstBuilder >> angularSpacing: anInteger [
 	self strategy angularSpacing: anInteger
 ]
 
-{ #category : #private }
-RTSunburstBuilder >> createElements: atree nesting: block1 leaves: block2 depth: depth [
+{ #category : #public }
+RTSunburstBuilder >> explore: anObject using: aBlock [ 
 	| e |
-	e := super createElements: atree nesting: block1 leaves: block2 depth: depth.
-	maxLevel := maxLevel max: depth.
-	^ e
-]
-
-{ #category : #private }
-RTSunburstBuilder >> createElements: atree using: ablock depth: depth [
-	| e |
-	e := super createElements: atree using: ablock depth: depth.
-	maxLevel := maxLevel max: depth.
-	^ e
-]
-
-{ #category : #hooks }
-RTSunburstBuilder >> createView [
-	^ super createView @ RTDraggableView.
-]
-
-{ #category : #building }
-RTSunburstBuilder >> from: objects nesting: block1 leaves: block2 [
-	| r |
-	r := super from: objects nesting: block1 leaves: block2.
-	r do: [ :e | e attributes at: #parent put: nil].
-	^ r
-]
-
-{ #category : #building }
-RTSunburstBuilder >> from: objects using: ablock [
-	| r |
-	r := super from: objects using: ablock.
-	r do: [ :e | e attributes at: #parent put: nil].
-	^ r
-]
-
-{ #category : #configuration }
-RTSunburstBuilder >> hasCenter: aBool [
-	^ self strategy hasCenter: aBool
+	elements := OrderedCollection new.
+	maxLevel := 0.
+	e := self recurse: anObject using: aBlock level: 0.
+	e attributes at: #parent put: nil.
 ]
 
 { #category : #initialization }
 RTSunburstBuilder >> initialize [
 	super initialize.
-	layoutBuilder := RTLayoutBuilder new.
-	layoutBuilder sunburstWithArcWidth: 25.
-	self leafWeight: 1.
-	self shape arc color: [ Color random ]..
-	self interaction popup.
-	maxLevel := 0.
+	self strategy: RTSunburstConstantWidthStrategy new.
+	self shape arc color:  [ :o | Color random ].
+	self weight: [ :e | 1 ].
+	
+	self interactions add: RTPopup.
 ]
 
-{ #category : #accesing }
-RTSunburstBuilder >> layout [
-	^ layoutBuilder.
+{ #category : #accessing }
+RTSunburstBuilder >> interactions [
+	^ interactions ifNil: [ interactions := OrderedCollection new ]
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTSunburstBuilder >> maxLevel [
 	^ maxLevel
 ]
@@ -86,17 +50,55 @@ RTSunburstBuilder >> radialSpacing: anInteger [
 	self strategy radialSpacing: anInteger
 ]
 
-{ #category : #hooks }
-RTSunburstBuilder >> renderIn: aView [
-	| layout |
-	super renderIn: aView.
-	layout := self layout layout.
-	layout builder: self.
-	self layout setUpElements: self rootNodes.
+{ #category : #utility }
+RTSunburstBuilder >> recurse: object using: aBlock level: level [
 
+	| children e list total |
+	
+	e := shapeBuilder elementOn: object.
+	elements add: e.
+	self interactions do: [ :i | e @ i ].
+	children := aBlock rtValue: object.
+	list := OrderedCollection new: children size.
+	total := 0.
+	children do: [ :childObject | 
+		| n |
+		n := self recurse: childObject using: aBlock level: level + 1.
+		n attributes at: #parent put: e.
+		total := total + (self weight rtValue: childObject ).
+		list add: n. ].
+	e attributes at: #children put: list.
+	e attributes at: #depth put: level.
+	level > maxLevel ifTrue: [ maxLevel := level ].
+	e attributes at: #weight put: total.
+	^ e.
 ]
 
-{ #category : #accesing }
+{ #category : #hooks }
+RTSunburstBuilder >> renderIn: aView [
+	strategy on: elements.
+	aView addAll: elements.
+	"visitor lines do: [ :line | aView canvas addShape: line]."
+	
+]
+
+{ #category : #accessing }
 RTSunburstBuilder >> strategy [
-	^ self layout layout
+	^ strategy
+]
+
+{ #category : #accessing }
+RTSunburstBuilder >> strategy: aRTStrategy [
+	strategy := aRTStrategy.
+	strategy builder: self.
+]
+
+{ #category : #accessing }
+RTSunburstBuilder >> weight [
+	^ weight
+]
+
+{ #category : #accessing }
+RTSunburstBuilder >> weight: aBlock [
+	weight := aBlock 
 ]

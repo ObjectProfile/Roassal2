@@ -153,12 +153,6 @@ RTAbstractTreeBuilder >> minWeightValue [
 	^ 1
 ]
 
-{ #category : #hooks }
-RTAbstractTreeBuilder >> renderIn: aView [
-	aView addAll: self elements.
-	self elements do: #updateShape.
-]
-
 { #category : #accessing }
 RTAbstractTreeBuilder >> rootNodes [
 	^ rootNodes
@@ -188,9 +182,4 @@ RTAbstractTreeBuilder >> weightElement: block [
 	weight := block
 	
 	
-]
-
-{ #category : #weight }
-RTAbstractTreeBuilder >> weightOf: e [
-	^ self weight rtValue: e
 ]
