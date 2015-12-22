@@ -313,6 +313,26 @@ RTLayoutBuilder >> sugiyama [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> sunburstWithArcWidth: aNumber [
+	layout := RTSunburstConstantWidthLayout new.
+	layout arcWidth: aNumber.
+	^ layout
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> sunburstWithRadius [
+	^ self sunburstWithRadius: 200.
+
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> sunburstWithRadius: radius [
+	layout := RTSunburstExtentLayout new.
+	layout extent: radius asPoint * 2.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> tree [
 	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
 	layout := RTTreeLayout new.
