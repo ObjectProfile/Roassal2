@@ -11,77 +11,14 @@ For example, inspect the following:
 "
 Class {
 	#name : #RTDSM,
-	#superclass : #RTBuilder,
+	#superclass : #RTAbstractDSM,
 	#instVars : [
-		'objects',
 		'dependency',
-		'elements',
-		'rotation',
-		'wantsLabel',
-		'text',
 		'colorForDependency',
 		'colorForNonDependency'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
-
-{ #category : #UI }
-RTDSM >> addLabels [
-	self addLabelsLeft.
-	self addLabelsTop.
-]
-
-{ #category : #UI }
-RTDSM >> addLabelsIfNecessary [
-	self wantsLabel ifFalse: [ ^ self ].
-	self addLabels
-]
-
-{ #category : #UI }
-RTDSM >> addLabelsLeft [
-	| es lblShape theModel lbl |
-	es := self columnAt: 1.
-	lblShape := self labelShape.
-	es
-		do:
-			[ :e | 
-			theModel := e model key.
-			lbl := lblShape elementOn: theModel.
-			view add: lbl.
-			RTConstraint new
-				fix: e;
-				movable: lbl;
-				outer;
-				left;
-				move ]
-]
-
-{ #category : #UI }
-RTDSM >> addLabelsTop [
-	| es lblShape theModel lbl |
-	es := self rowAt: 1.
-	lblShape := self labelShape.
-	es
-		do:
-			[ :e | 
-			theModel := e model value.
-			lbl := lblShape elementOn: theModel.
-			view add: lbl.
-			lbl rotateByDegrees: rotation.
-			RTConstraint new
-				fix: e;
-				movable: lbl;
-				outer;
-				right;
-				top;
-				move.
-			lbl translateBy: self cellSize negated @ 0 ]
-]
-
-{ #category : #UI }
-RTDSM >> cellSize [
-	^ 10
-]
 
 { #category : #UI }
 RTDSM >> colorForDependency [
@@ -93,82 +30,25 @@ RTDSM >> colorForNonDependency [
 	^ colorForNonDependency
 ]
 
-{ #category : #accessing }
-RTDSM >> columnAt: aNumber [
-
-	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: aNumber @ i ]
-]
-
-{ #category : #UI }
-RTDSM >> createElements [
-	"
-	:: Void -> RTDSM
-	var shape : RTShape
-	var e : RTElement
-	var anObject1 : Object
-	var index1 : Number
-	var anObject2 : Object
-	var index2 : Number
-	var evt : TREvent
-	var elements : Collection
-	var objects : Collection
-	"
-	| e |
-	elements := RTGroup new.
-	objects copy
-		doWithIndex:
-			[ :anObject1 :index1 | 
-			objects copy
-				doWithIndex:
-					[ :anObject2 :index2 | 
-					e := self elementOn: anObject1 -> anObject2.
-					e @ RTPopup.
-					e when: TRMouseEnter do: [ :evt | 
-						self highlightColumn: (evt element attributeAt: #matrixIndex) x.
-						self highlightRow: (evt element attributeAt: #matrixIndex) y.
-						 ].
-					e when: TRMouseLeave do: [ :evt | 
-						self unhighlightColumn: (evt element attributeAt: #matrixIndex) x.
-						self unhighlightRow: (evt element attributeAt: #matrixIndex) y.
-						 ].
-					
-					e attributeAt: #matrixIndex put: index2 @ index1.
-					elements add: e ] ].
-
-]
-
-{ #category : #hooks }
-RTDSM >> createShapeBuilder [
-	| sb |
-	sb := super createShapeBuilder.
-	sb shape: self defaultCellShape.
-	^ sb
-]
-
 { #category : #UI }
 RTDSM >> defaultCellShape [
 	^ RTBox new
 		size: self cellSize;
 		color:
 				[ :assoc | 
-			(self isAssocDependent: assoc)
-				ifTrue: [ self colorForDependency ]
-				ifFalse: [ self colorForNonDependency ] ]
+					(self isAssocDependent: assoc)
+						ifTrue: [ self colorForDependency ]
+						ifFalse: [ self colorForNonDependency ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDSM >> defaultColorForDependency [
-	^ Color red alpha: 0.4
+	^ Color red alpha: self transparency
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 RTDSM >> defaultColorForNonDependency [
-	^ Color veryVeryLightGray alpha: 0.4
-]
-
-{ #category : #UI }
-RTDSM >> defaultTopLabelRotation [
-	^ -55
+	^ Color veryVeryLightGray alpha: self transparency
 ]
 
 { #category : #accessing }
@@ -179,22 +59,6 @@ RTDSM >> dependency [
 { #category : #accessing }
 RTDSM >> dependency: aOneArgBlock [
 	dependency := aOneArgBlock
-]
-
-{ #category : #configuration }
-RTDSM >> doNotShowLabels [
-	wantsLabel := false
-]
-
-{ #category : #accessing }
-RTDSM >> elementAt: aPoint [
-	"Return the element at position aPoint"
-	^ elements at: (self numberOfObjects) * (aPoint y - 1) + aPoint x
-]
-
-{ #category : #accessing }
-RTDSM >> elements [
-	^ elements copy
 ]
 
 { #category : #examples }
@@ -223,32 +87,13 @@ RTDSM >> example02 [
 	^ dsm
 ]
 
-{ #category : #UI }
-RTDSM >> highlightColumn: aNumber [
-	^ self highlightElements: (self columnAt: aNumber)
-]
-
-{ #category : #UI }
-RTDSM >> highlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.8) ]
-]
-
-{ #category : #UI }
-RTDSM >> highlightRow: aNumber [
-	^ self highlightElements: (self rowAt: aNumber)
-]
-
 { #category : #initialization }
 RTDSM >> initialize [
 	"
 	:: Void -> RTDSM
 	"
 	super initialize.
-	objects := #().
 	dependency := #yourself.
-	rotation := self defaultTopLabelRotation.
-	wantsLabel := true.
-	text := #yourself.
 	colorForDependency := self defaultColorForDependency.
 	colorForNonDependency := self defaultColorForNonDependency.
 ]
@@ -261,99 +106,4 @@ RTDSM >> isAssocDependent: assoc [
 	^ v isCollection
 		ifTrue: [ v includes: assoc value ]
 		ifFalse: [ false ]
-]
-
-{ #category : #UI }
-RTDSM >> labelShape [
-	^ RTLabel new
-		height: self cellSize;
-		text: text
-]
-
-{ #category : #UI }
-RTDSM >> layoutElements: es [
-	RTGridLayout new
-		gapSize: 1;
-		lineItemsCount: objects size;
-		on: es
-]
-
-{ #category : #accessing }
-RTDSM >> numberOfObjects [
-	"Return the number of objects"
-	^ objects size
-]
-
-{ #category : #accessing }
-RTDSM >> objects [
-	^ objects
-]
-
-{ #category : #accessing }
-RTDSM >> objects: someObjects [
-	objects := someObjects
-]
-
-{ #category : #hooks }
-RTDSM >> renderIn: aView [
-	self createElements.
-	aView addAll: elements.
-	self layoutElements: elements.
-	self addLabelsIfNecessary.
-	^ aView
-]
-
-{ #category : #accessing }
-RTDSM >> rotation [
-	"
-	Return the rotation of the top labels
-	:: Void -> Integer
-	"
-	^ rotation
-]
-
-{ #category : #accessing }
-RTDSM >> rotation: anInteger [
-	"Set the rotation of the top label
-	:: Integer -> RTDSM
-	"
-	rotation := anInteger
-]
-
-{ #category : #accessing }
-RTDSM >> rowAt: aNumber [
-
-	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: i @ aNumber ]
-]
-
-{ #category : #accessing }
-RTDSM >> text [
-	"Return the text used for labelling"
-	^ text
-]
-
-{ #category : #accessing }
-RTDSM >> text: aOneArgBlockOrSymbol [
-	"Set the text used for each label. Per default, text is #yourself"
-	text := aOneArgBlockOrSymbol
-]
-
-{ #category : #UI }
-RTDSM >> unhighlightColumn: aNumber [
-	^ self unhighlightElements: (self columnAt: aNumber)
-]
-
-{ #category : #UI }
-RTDSM >> unhighlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.4) ]
-]
-
-{ #category : #UI }
-RTDSM >> unhighlightRow: aNumber [
-	^ self unhighlightElements: (self rowAt: aNumber)
-]
-
-{ #category : #testing }
-RTDSM >> wantsLabel [
-	^ wantsLabel
 ]
