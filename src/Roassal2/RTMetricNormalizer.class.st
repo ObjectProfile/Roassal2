@@ -61,8 +61,6 @@ RTMetricNormalizer >> directTranslation [
 
 { #category : #'public normalize color' }
 RTMetricNormalizer >> distinctColor [
-	"give a color to each element based on the model identify.
-	Two elements have the same color if they have the same model"
 	^ self distinctColorUsing: #yourself
 ]
 
