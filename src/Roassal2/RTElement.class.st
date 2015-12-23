@@ -261,6 +261,7 @@ RTElement >> updateEdgesON [
 
 { #category : #accessing }
 RTElement >> width [
+	"Return the width of an element"
 	^ trachelShape width
 ]
 

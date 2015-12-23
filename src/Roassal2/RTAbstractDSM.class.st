@@ -4,9 +4,13 @@ Class {
 	#instVars : [
 		'elements',
 		'objects',
+		'objectsX',
+		'objectsY',
 		'wantsLabel',
 		'text',
-		'rotation'
+		'rotation',
+		'transparencyWhenNonHighlighted',
+		'transparencyWhenHighlighted'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -72,7 +76,7 @@ RTAbstractDSM >> cellSize [
 { #category : #accessing }
 RTAbstractDSM >> columnAt: aNumber [
 
-	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: aNumber @ i ]
+	^ (1 to: objectsY size) collect: [ :i | self elementAt: aNumber @ i ]
 ]
 
 { #category : #UI }
@@ -91,10 +95,10 @@ RTAbstractDSM >> createElements [
 	"
 	| e |
 	elements := RTGroup new.
-	objects copy
+	objectsY copy
 		doWithIndex:
 			[ :anObject1 :index1 | 
-			objects copy
+			objectsX copy
 				doWithIndex:
 					[ :anObject2 :index2 | 
 					e := self elementOn: anObject1 -> anObject2.
@@ -134,7 +138,7 @@ RTAbstractDSM >> doNotShowLabels [
 { #category : #accessing }
 RTAbstractDSM >> elementAt: aPoint [
 	"Return the element at position aPoint"
-	^ elements at: (self numberOfObjects) * (aPoint y - 1) + aPoint x
+	^ elements at: (objectsX size) * (aPoint y - 1) + aPoint x
 ]
 
 { #category : #accessing }
@@ -149,7 +153,7 @@ RTAbstractDSM >> highlightColumn: aNumber [
 
 { #category : #UI }
 RTAbstractDSM >> highlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.8) ]
+	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenHighlighted) ]
 ]
 
 { #category : #UI }
@@ -163,11 +167,12 @@ RTAbstractDSM >> initialize [
 	:: Void -> RTDSM
 	"
 	super initialize.
-	objects := #().
+	self objects: #().
 	rotation := self defaultTopLabelRotation.
 	wantsLabel := true.
 	text := #yourself.
-
+	transparencyWhenNonHighlighted := 0.4.
+	transparencyWhenHighlighted := 0.9
 ]
 
 { #category : #UI }
@@ -181,24 +186,45 @@ RTAbstractDSM >> labelShape [
 RTAbstractDSM >> layoutElements: es [
 	RTGridLayout new
 		gapSize: 1;
-		lineItemsCount: objects size;
+		lineItemsCount: objectsX size;
 		on: es
 ]
 
 { #category : #accessing }
 RTAbstractDSM >> numberOfObjects [
 	"Return the number of objects"
-	^ objects size
+	^ self objects size
 ]
 
 { #category : #accessing }
 RTAbstractDSM >> objects [
-	^ objects
+	^ (objectsX, objectsY) asSet
 ]
 
 { #category : #accessing }
 RTAbstractDSM >> objects: someObjects [
-	objects := someObjects
+	objectsX := someObjects.
+	objectsY := someObjects
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> objectsX [
+	^ objectsX
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> objectsX: anObject [
+	objectsX := anObject
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> objectsY [
+	^ objectsY
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> objectsY: anObject [
+	objectsY := anObject
 ]
 
 { #category : #hooks }
@@ -230,7 +256,7 @@ RTAbstractDSM >> rotation: anInteger [
 { #category : #accessing }
 RTAbstractDSM >> rowAt: aNumber [
 	"Return the elements located at a given row"
-	^ (1 to: self numberOfObjects) collect: [ :i | self elementAt: i @ aNumber ]
+	^ (1 to: objectsX size) collect: [ :i | self elementAt: i @ aNumber ]
 ]
 
 { #category : #accessing }
@@ -245,10 +271,24 @@ RTAbstractDSM >> text: aOneArgBlockOrSymbol [
 	text := aOneArgBlockOrSymbol
 ]
 
-{ #category : #configuration }
-RTAbstractDSM >> transparency [
-	"Alpha value for colors"
-	^ 0.4
+{ #category : #accessing }
+RTAbstractDSM >> transparencyWhenHighlighted [
+	^ transparencyWhenHighlighted
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> transparencyWhenHighlighted: anObject [
+	transparencyWhenHighlighted := anObject
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> transparencyWhenNonHighlighted [
+	^ transparencyWhenNonHighlighted
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> transparencyWhenNonHighlighted: anObject [
+	transparencyWhenNonHighlighted := anObject
 ]
 
 { #category : #UI }
@@ -258,7 +298,7 @@ RTAbstractDSM >> unhighlightColumn: aNumber [
 
 { #category : #UI }
 RTAbstractDSM >> unhighlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: 0.4) ]
+	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenNonHighlighted) ]
 ]
 
 { #category : #UI }
