@@ -20,6 +20,72 @@ Class {
 	#category : #'Roassal2-Builder-DSM'
 }
 
+{ #category : #examples }
+RTDSM class >> example01 [
+	"
+	self new example01
+	"
+	<script>
+	| dsm |
+	dsm := RTDSM new.
+	dsm objects: RTShape withAllSubclasses.
+	dsm dependency: #dependentClasses.
+	dsm inspect
+]
+
+{ #category : #examples }
+RTDSM class >> example02 [
+	"
+	self new example02
+	"
+	<script>
+	| dsm |
+	dsm := RTDSM new.
+	dsm objects: (1 to: 10).
+	dsm dependency: [ :aValue | aValue // 2 ].
+	dsm inspect
+]
+
+{ #category : #examples }
+RTDSM class >> example03 [
+	"
+	self new example03
+	"
+	<script>
+	| values b |
+	values := { 
+	1 -> {'A' . 'B' . 'C'} .
+	2 -> {'A' . 'C'} .
+	3 -> { 'B' }.
+	4 -> { }
+	 } asDictionary.
+
+	b := RTDSM new.
+	b objectsX: { 'A' . 'B' . 'C' } .
+	b objectsY: #(1 2 3 4).
+	b dependency: [ :v | values at: v ].
+	b inspect
+]
+
+{ #category : #examples }
+RTDSM class >> example04Authorship [
+	"
+	self new example03
+	"
+	<script>
+	| classes classesToAuthors authors authorsToClasses b |
+	classes := RTShape withAllSubclasses.
+	classesToAuthors := (classes collect: [ :cls | cls -> ((cls methods collect: #author) asSet sortedAs: #yourself ) ]) asDictionary.
+	authors := (classesToAuthors values flatCollect: #yourself )asSet sortedAs: #yourself.
+	authorsToClasses := (authors collect: [ :anAuthor | anAuthor -> (classesToAuthors associations select: [ :as | as value includes: anAuthor ] thenCollect: #key) ] ) asDictionary.
+
+	b := RTDSM new.
+	b objectsX: classes.
+	b objectsY: authors.
+	b dependency: [ :author | authorsToClasses at: author ].
+	b inspect
+]
+
 { #category : #UI }
 RTDSM >> colorForDependency [
 	^ colorForDependency
@@ -43,12 +109,12 @@ RTDSM >> defaultCellShape [
 
 { #category : #configuration }
 RTDSM >> defaultColorForDependency [
-	^ Color red alpha: self transparency
+	^ Color red alpha: self transparencyWhenNonHighlighted 
 ]
 
 { #category : #configuration }
 RTDSM >> defaultColorForNonDependency [
-	^ Color veryVeryLightGray alpha: self transparency
+	^ Color veryVeryLightGray alpha: self transparencyWhenNonHighlighted
 ]
 
 { #category : #accessing }
@@ -59,32 +125,6 @@ RTDSM >> dependency [
 { #category : #accessing }
 RTDSM >> dependency: aOneArgBlock [
 	dependency := aOneArgBlock
-]
-
-{ #category : #examples }
-RTDSM >> example01 [
-	"
-	self new example01
-	"
-	
-	| dsm |
-	dsm := RTDSM new.
-	dsm objects: RTShape withAllSubclasses.
-	dsm dependency: #dependentClasses.
-	^ dsm
-]
-
-{ #category : #examples }
-RTDSM >> example02 [
-	"
-	self new example02
-	"
-	
-	| dsm |
-	dsm := RTDSM new.
-	dsm objects: (1 to: 10).
-	dsm dependency: [ :aValue | aValue // 2 ].
-	^ dsm
 ]
 
 { #category : #initialization }
