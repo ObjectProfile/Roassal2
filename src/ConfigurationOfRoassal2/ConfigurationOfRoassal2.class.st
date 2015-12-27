@@ -823,13 +823,13 @@ ConfigurationOfRoassal2 >> version11: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version120: spec [
-	<version: '1.20' imports: #('1.9-baseline' )>
+	<version: '1.20' imports: #('1.8-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
 		spec description: 'Release'.
 		spec author: 'AlexandreBergel'.
-		spec project: 'Glamour' with: '3.3.0'.
+		spec project: 'GlamourCore' with: '3.1.4'.
 		spec project: 'Neo-JSON-Core' with: '10'.
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.345';
