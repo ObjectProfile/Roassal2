@@ -1467,7 +1467,7 @@ RTGeneralExample >> popupWithLegend [
 
 	| view |
 
-	view := RTMondrianViewBuilder new.
+	view := RTMondrian new.
 	view interaction noInteractions.
 
 	view interaction popup group: [ :group :el |
@@ -1510,7 +1510,7 @@ RTGeneralExample >> popupWithLegend [
 
 	view shape rectangle size: #yourself.
 	view nodes: (1 to:50).
-	view gridLayout.
+	view layout grid.
 	^ view
 ]
 
