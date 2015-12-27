@@ -829,14 +829,14 @@ ConfigurationOfRoassal2 >> version120: spec [
 		spec blessing: #'stable'.
 		spec description: 'Release'.
 		spec author: 'AlexandreBergel'.
-		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Glamour' with: '3.3.0'.
 		spec project: 'Neo-JSON-Core' with: '10'.
 		spec 
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.344';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1181';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.345';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1188';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Glamour-Tools' with: 'Glamour-Tools-AndreiChis.87';
-			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.30' ].
+			package: 'Roassal2GT' with: 'Roassal2GT-TudorGirba.31' ].
 
 ]
 
