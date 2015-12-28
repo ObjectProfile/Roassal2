@@ -1898,6 +1898,96 @@ UUkAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleCodeAuthorship [
+
+"Code authorship
+ Red dot = author, purple dot = class, edge = commit.
+"
+| classes classesToAuthors authors  authorsToClasses eb v classesElements authorsElements l |
+classes := RTShape withAllSubclasses.
+
+classesToAuthors := (classes collect: [ :cls | cls -> ((cls methods collect: #author) asSet sortedAs: #yourself ) ]) asDictionary.
+authors := (classesToAuthors values flatCollect: #yourself )asSet sortedAs: #yourself.
+authorsToClasses := (authors collect: [ :anAuthor | anAuthor -> (classesToAuthors associations select: [ :as | as value includes: anAuthor ] thenCollect: #key) ] ) asDictionary.
+
+v := RTView new.
+classesElements := RTEllipse new color: Color purple trans; size: 5; elementsOn: classes.
+v addAll: classesElements.
+classesElements @ RTPopup.
+
+authorsElements := RTEllipse new color: Color red; elementsOn: authors.
+v addAll: authorsElements.
+authorsElements @ RTPopup.
+
+eb := RTEdgeBuilder new.
+eb moveBehind.
+eb shape line color: (Color veryLightGray alpha: 0.2).
+eb view: v.
+eb fromElements:  authorsElements.
+eb toElements: classesElements.
+eb connectToAll: [ :a | authorsToClasses at: a ].
+
+RTMetricNormalizer new
+	view: v; 
+	objects: authors;
+	normalizeSize: [ :a | (authorsToClasses at: a) size ].
+
+
+RTCircleLayout on: authorsElements.
+RTForceBasedLayout on: classesElements.
+authorsElements translateTo: classesElements center.
+
+
+l := RTForceBasedLayout new.
+authorsElements do: [:ae | l fix: ae at: ae position ]. 
+l on: authorsElements, classesElements.
+^ v
+
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleCodeAuthorshipIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAHqElEQVR4XuWb224TVxSGLW64
+R+IZeAh4BJC4gdfgAUCCa96AXkDVigqk9iYFiahCprQQVWmhlBYrCSGQOIRJYpzEpzi2V+p/
+J7+7u5kZz3h8mPFa0sixZ2bPZH17HfdM7vBQv6RJcvpVoB+IftEPRD8Q/aIfiH4g+kU/EP1A
+9It+IPqB6Bf9QPSLfiD6gegX/UD0A9Ev+oHoB6Jf9APRD0S/6AeiX6YPiLx8KXLvnugHkiJp
+e55A9AMZ+p0MfivtdntqoKTKQvb390U7lFQBOTg4EChWM5TUxRAoVTOU1AFptVqCLSnUMChy
+4YLIiROiH0hE6XQ6iaHgfD8ogNW6fVua58/rBxJHmfhsNptDtRTEKI5fq9USuUZ1dQishEod
+hgu0xwEY/La3t6cLiJw7J9J1D4NmXGaMrgzqvgCVyqelEDR+bzQaktQKswVkZkbqT58O7B5s
+K4mbOUHh9jmE4lpKtVoVdS4LsxAKqVQqZlbGtRI7rkSJG0HHYp89JoCjGI1zT1MTQ1iFxwVD
+K4kS5G1lB41lWxvGw3d8pqV2yU2qNQIwUAR+C5v9rpL9lO4G7TDrsd0X02ts9XpdVGZZ7iyH
+grFBIUFWY1uJ7b7i1iv2sfjbtlobquTzcpjP60l7/VwPwdBq/OoH1/fHcTMuVN4H3RiAcEJI
+sSitpSVRVYcExQPOVgiUThhUqF9dETXYh10P49sWl7RTkMnCMCxI2z0tuDMkAu7xg7orFxS2
+5fkNA59ubFJBfuKVepTMKX/rtZm9OJZuJur5/ap9WuD7F5vC2oVj9svaprZ1EqRUu0pnZc19
++NsOyoMCseFiHFxn7u6CbCyURS0QPyj060FFpg0GLi1I6e1WJzTeuNd99u0b833xeXEirisx
+EHnwQOTMGdOCQIuEM7dR25f1NyWhj8bGwOkKf6diMQYzH85aOz2GEvGJ6+Fa2HB9NAu5n8dv
+LH2WrQ87Eif7whgM8OO2kqFYiBx3Tel/2aLY+VSJ9c9ELdBsJdrLvrSc/FevpfDzmgQlCX6u
+0f1OqEnW+VPrsjjTwtoUtusYpEVij4/vle1Gz3rce3Gv73c9ptawVj8rmroYwqwJioTrcf/p
+flCClITxXBcFpdoJAYBEaVxy8oyz+ZiqOsR1eWHuK8y3b3/oxpJK4wv/74KhG3v2TSFwLEyW
+lz++k1ZzPIXiRICEtciDsio/lxfmSjg+r2Uf67bc2eAMysZYmE4lEHfhaNA6BQqmq7OLRelI
+4NIvMy8bBBVNN+ZnebRcgFmZ3zxq3ddGk33lxhkzkvSHgmKKPfOhuPnvl8xMB6x+98K1ETv4
+swvsAn1+t2DGfPvbR/P769n3kuksaxgFVlCXODAdt2KS32Sw6xuOT1eG37aLO7LwS1Fc1zWs
+/2fsQJI8oBDXfcVJGvxck201OKa8uSds82Ob+27hKJ3uAqGbG8UDErlRWsWo8veFblujUWlK
+PysJa5lQ+VyDcddfCk/WjLX8MfPWgEIngGswpVLJ162lEgiD46uHo/Gxxsc7AZWLS3QlVHLY
+mksYJJ5n4ku9Kbu7u722DKwD4wOKuR5eGiqXJZVAGBBxw532cK2D7oMrikyH2RvjdVdefBJv
+pdwL2LwnKBMb1/L9Wvm2/Pp1wZz3cXHb9MMwNsCUu8oHlNqjR2LeaTne5OxZSVUvC/9smOuw
+H2pgTcHnpIL22WNE6SnterW+Qd99AK83gY7TZzZJDYCt6v/WSLAPG6DYMHpQrl2T1HR7GSxH
+8TpAlMQA137zZLUH2O0OMzjzaUXup5tyu9HNRqtrbZ45/u38uqwve/L5c7dzvLUlJc/zB3Lq
+lGS6dTKM2sWtsN3j3c5w3FjYqKN4rBp35XlHULwgIJcvTy+QfllaUDvd7zfOfPc4xiEAhcKx
+4TtjBVzWwtyaOffVwxWzb71Q6p7XdWOXLn0BRRYXpxNImFWErWscdN1M+WO1l2UxNsBVIS5w
+YyVP98VPuLegx49azSMrLBf/exZY7t8XuXhR5MoV5MKS+W6vnwQF77DVO+NeurP2/Z+eyYj+
++uld72lEbmyjM5b0e66Lq5nj/v9TAySoqg/rDHNFjy/grP29ZZRY3jjKhthux764ylX5XFaY
+0vluR5Cl0MUws8Pn6j+b4i2XpbRa6a3V229NRZ4cN27I4fXrh1MNZHN5V6IEb3c1z8626H5s
+IGHFnZ2BpfH1tYkCwcwNK9oIwg2qcD1UvF2lR7km64xRNQIzDYQK+f2HZcEikq0gGwQh0Pcz
+EMeNASzwJhULUg+EyrFfK2Naiu98zgo1ACAkfR7KPt9e79APxFK8vT7OzGhnZ8d8ujXAMOuY
+Yb3ROzVA2NLGBgtA6xpuaVQKClodzIL7GjkQOXnStBgAot+TG/W9phTyRRlVlc+4ohvI6dMi
+uZxEjTPDsMYw15n2OJKq1klSZUVJBNLycmcmgCTx8VF7T+07d0RmZ0U/kITuZhjWYcCN8cHp
+TANJEj+y0hbJFJBWgvXorFXj2bCQmzdFO4zUxZDYEB8/Frl6VT8Q/aIfiH4g+kU/EP2iH4h+
+IPpFPxD9QPSLfiD6gegX/UD0A9Ev+oHoF/1A9APRL/qB6AeiX/QD0Q9Ev+gHoh+Ifhm3/AvD
+zwneDyP69wAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleComposedLayout [
 
 | view es1 es2 es3 |
