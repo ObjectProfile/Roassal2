@@ -205,6 +205,11 @@ RTShapeBuilder >> horizontalAttachPoint [
 	
 ]
 
+{ #category : #'shape - edges' }
+RTShapeBuilder >> horizontalBezierLine [
+	self shape: RTBezierLine horizontal
+]
+
 { #category : #shapes }
 RTShapeBuilder >> if: conditionBlock borderColor: colorBlock [
 	"If conditionBlock is evaluated at true, then colorBlock is used to set the color of the node. Both conditionBlock and colorBlock are evaluated with the model value of the node."
@@ -419,6 +424,11 @@ RTShapeBuilder >> verticalAttachPoint [
 	self attachPoint: #withVerticallAttachPoint
 
 	
+]
+
+{ #category : #'shape - edges' }
+RTShapeBuilder >> verticalBezierLine [
+	self shape: RTBezierLine vertical
 ]
 
 { #category : #shapes }
