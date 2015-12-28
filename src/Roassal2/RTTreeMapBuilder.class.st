@@ -186,8 +186,7 @@ RTTreeMapBuilder >> rectangle: anObject [
 
 { #category : #hooks }
 RTTreeMapBuilder >> renderIn: aView [
-	self elements do: #updateShape.
-	aView addAll: self elements.
+	super renderIn: aView.
 	self layoutElements.
 	
 	
