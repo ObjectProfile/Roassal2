@@ -524,13 +524,6 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 				repository: 'http://www.smalltalkhub.com/mc/Moose/Glamour/main'.
 			].	
 		
-		spec project: 'GTInspectorCore' with: [ 
-			spec
-				className: 'ConfigurationOfGTInspectorCore'; 
-				version: #development;
-				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main'.
-			].	
-		
 		spec project: 'Neo-JSON-Core' with: [ 
 			spec
 				className: 'ConfigurationOfNeoJSON'; 
@@ -542,7 +535,7 @@ ConfigurationOfRoassal2 >> baseline19: spec [
 			package: 'Roassal2' with: [ 
 				spec requires: #('Trachel')];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour' 'GTInspectorCore') ]			
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'Glamour') ]			
 	]
 ]
 
@@ -823,19 +816,18 @@ ConfigurationOfRoassal2 >> version11: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version120: spec [
-	<version: '1.20' imports: #('1.8-baseline' )>
+	<version: '1.20' imports: #('1.9-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
 		spec description: 'Release'.
 		spec author: 'AlexandreBergel'.
-		spec project: 'GlamourCore' with: '3.1.4'.
+		spec project: 'Glamour' with: '3.3.2'.
 		spec project: 'Neo-JSON-Core' with: '10'.
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.345';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1188';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
-			package: 'Glamour-Tools' with: 'Glamour-Tools-AndreiChis.87';
 			package: 'Roassal2GT' with: 'Roassal2GT-TudorGirba.31' ].
 
 ]
