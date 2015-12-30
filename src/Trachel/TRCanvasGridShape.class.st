@@ -6,7 +6,8 @@ Class {
 	#superclass : #TRShape,
 	#instVars : [
 		'offset',
-		'spacing'
+		'spacing',
+		'dashes'
 	],
 	#category : #'Trachel-Shapes'
 }
@@ -35,17 +36,33 @@ TRCanvasGridShape >> computePath [
 					lineTo: i @ height ] ]
 ]
 
+{ #category : #accessing }
+TRCanvasGridShape >> dashes [
+	"Return the dash pattern associated"
+	^ dashes
+]
+
+{ #category : #accessing }
+TRCanvasGridShape >> dashes: integers [
+	"Set the dash pattern for the line. Could be #(1 20) for example"
+	dashes := integers
+]
+
 { #category : #drawing }
 TRCanvasGridShape >> drawOn: athensCanvas [
 	"The shape is first moved by offset, which will always center it on camera, then it is moved by moduled offset, so it will alway move only by at most the modulo"
-
+ 
+	| s |
 	athensCanvas pathTransform
 		restoreAfter:
 			[ athensCanvas pathTransform translateBy: offset.
 			athensCanvas pathTransform
 				translateBy: ((offset x % spacing) @ (offset y % spacing)) negated.
 			athensCanvas setShape: self path.
-			(athensCanvas setStrokePaint: self color) width: 1.
+			s := athensCanvas setStrokePaint: self color.
+			s width: 1.
+			dashes ifNotNil: [ 
+				s dashes: (Array with: 1 with: spacing - 1) offset: 0 ].
 			athensCanvas draw ]
 ]
 
