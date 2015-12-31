@@ -53,7 +53,7 @@ RTGridView class >> example02 [
 	| v es |
 	v := RTView new.
 	v @ RTDraggableView.
-	v @ (RTGridView new dashes: #(1 20); gridSize: 20; color: Color black trans).
+	v @ (RTGridView new dashes: #(1 19); gridSize: 20; color: Color black trans).
 	v @ RTZoomableView.
 	es := RTBox new
 		color: Color green;
