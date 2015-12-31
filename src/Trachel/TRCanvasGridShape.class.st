@@ -62,7 +62,7 @@ TRCanvasGridShape >> drawOn: athensCanvas [
 			s := athensCanvas setStrokePaint: self color.
 			s width: 1.
 			dashes ifNotNil: [ 
-				s dashes: (Array with: 1 with: spacing - 1) offset: 0 ].
+				 s dashes: dashes offset: spacing ].
 			athensCanvas draw ]
 ]
 
