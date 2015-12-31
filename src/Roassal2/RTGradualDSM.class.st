@@ -100,6 +100,12 @@ RTGradualDSM >> initialize [
 { #category : #hooks }
 RTGradualDSM >> renderIn: aView [
 	super renderIn: aView.
+	
+	"Make sure that if all the score is the same, then we paint with the maximum color. Maybe this is not the best behavior"
+"	((elements collect: #model) collect: score) asSet size = 1
+		ifTrue: [ elements do: [ :e | e trachelShape color: Color red ]. ^ self ].
+"	
+	
 	RTMetricNormalizer new
 		elements: elements;
 		normalizeColor: score using: (Array with: Color veryVeryLightGray with: Color red);
