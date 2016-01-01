@@ -63,12 +63,13 @@ RTComposer >> gap: anInteger [
 
 { #category : #'public-layout' }
 RTComposer >> group [
+	"Define a new group with the elements added to the view using a computed name"
 	^ self group: ('group', (mapping size asString)) asSymbol
 ]
 
 { #category : #'public-layout' }
 RTComposer >> group: aName [
-	"Compute the group of added objects"
+	"Define a new group with the elements added to the view"
 	| group |
 	group := self newElementsAsGroup.
 	groups add: group.
@@ -190,7 +191,11 @@ compo view
 
 { #category : #accessing }
 RTComposer >> newElementsAsGroup [
-	^ RTGroup withAll: (view elements copyWithoutAll: self allGroupedElements)
+	| es |
+	es := view elements select: [ :e | e hasNotAttribute: #AlreadyGrouped ].
+	es do: [ :e | e attributeAt: #AlreadyGrouped put: true ].
+	^ es 
+"	^ RTGroup withAll: (view elements copyWithoutAll: self allGroupedElements)"
 ]
 
 { #category : #'public-layout' }
