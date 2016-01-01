@@ -114,6 +114,13 @@ RTAnnounceableObject >> hasInteraction: anInteractionClass [
 ]
 
 { #category : #attributes }
+RTAnnounceableObject >> hasNotAttribute: aKey [ 
+	"Return false if attributes includes aKey"
+	
+	^ (self hasAttribute: aKey) not 
+]
+
+{ #category : #attributes }
 RTAnnounceableObject >> removeAttributeAt: aKey [
 	^ self attributes removeKey: aKey
 ]
