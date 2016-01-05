@@ -7,13 +7,13 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 RTOptimizedForceBasedLayout >> addEdges: someEdges [
 	"Probably something has to be done here"
 	super addEdges: someEdges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hook }
 RTOptimizedForceBasedLayout >> executeOnElements: elements [
 	"The argument is the set of Roassal elements"
 	mockElements := elements collect: [ :e | RTMockElement new realElement: e ].
@@ -21,13 +21,13 @@ RTOptimizedForceBasedLayout >> executeOnElements: elements [
 	mockElements do: #applyToRealElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTOptimizedForceBasedLayout >> prepareNodes: nodeElements [
 	"Probably something has to be done here"
 	super prepareNodes: nodeElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTOptimizedForceBasedLayout >> setEdgesFromElements: elements [ 
 	| view realElements realEdges mockEdges |
 	elements isEmpty ifTrue: [ ^ self ].
