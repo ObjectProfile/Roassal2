@@ -26,6 +26,12 @@ Class {
 }
 
 { #category : #accessing }
+RTMultiLinearColor >> colors [
+	"Return the set of colors used to do the fading"
+	^ colors
+]
+
+{ #category : #accessing }
 RTMultiLinearColor >> colors: anArrayOfColors [
 	colors := anArrayOfColors
 ]
