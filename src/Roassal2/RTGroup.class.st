@@ -164,6 +164,11 @@ RTGroup >> height: newHeight [
 	self extent: self extent x @ newHeight
 ]
 
+{ #category : #accessing }
+RTGroup >> incomingEdges [
+	^ self flatCollect: #incomingEdges
+]
+
 { #category : #public }
 RTGroup >> leftMostElement [
 	"Return the element located on the most left"
@@ -176,6 +181,11 @@ RTGroup >> leftMostElement [
 { #category : #accessing }
 RTGroup >> model [
 	^ 'group'
+]
+
+{ #category : #accessing }
+RTGroup >> outgoingEdges [
+	^ self flatCollect: #outgoingEdges
 ]
 
 { #category : #accessing }
