@@ -2,12 +2,16 @@ Class {
 	#name : #RTColorFadingLegendItem,
 	#superclass : #RTLegendItem,
 	#instVars : [
-		'startColor',
-		'endColor',
+		'colors',
 		'description'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
+
+{ #category : #accessing }
+RTColorFadingLegendItem >> colors: aCollectionOfColors [
+	colors := aCollectionOfColors
+]
 
 { #category : #accessing }
 RTColorFadingLegendItem >> description [
@@ -17,16 +21,6 @@ RTColorFadingLegendItem >> description [
 { #category : #accessing }
 RTColorFadingLegendItem >> description: anObject [
 	description := anObject
-]
-
-{ #category : #accessing }
-RTColorFadingLegendItem >> endColor [
-	^ endColor
-]
-
-{ #category : #accessing }
-RTColorFadingLegendItem >> endColor: anObject [
-	endColor := anObject
 ]
 
 { #category : #hooks }
@@ -41,7 +35,7 @@ RTColorFadingLegendItem >> execute [
 	
 	n := RTMetricNormalizer new.
 	n elements: es.
-	n normalizeColor: #yourself using: (Array with: startColor with: endColor).
+	n normalizeColor: #yourself using: colors.
 	
 	label := (self newLabelShape: description) element.
 	g add: label.
@@ -49,14 +43,4 @@ RTColorFadingLegendItem >> execute [
 	label translateBy: 20 @ 0.
 	
 	^ g
-]
-
-{ #category : #accessing }
-RTColorFadingLegendItem >> startColor [
-	^ startColor
-]
-
-{ #category : #accessing }
-RTColorFadingLegendItem >> startColor: anObject [
-	startColor := anObject
 ]

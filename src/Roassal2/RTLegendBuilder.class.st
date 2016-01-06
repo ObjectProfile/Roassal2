@@ -56,8 +56,16 @@ RTLegendBuilder >> addColor: aColor text: aText [
 
 { #category : #'public - convenient' }
 RTLegendBuilder >> addColorFadingFrom: startColor to: endColor text: description [
+	self addColorFadingUsing: (Array with: startColor with: endColor) text: description
+]
 
-	items add: (RTColorFadingLegendItem new startColor: startColor; endColor: endColor; description: description)
+{ #category : #'public - convenient' }
+RTLegendBuilder >> addColorFadingUsing: colors text: description [
+	items
+		add:
+			(RTColorFadingLegendItem new
+				colors: colors;
+				description: description)
 ]
 
 { #category : #'public - convenient' }

@@ -28,10 +28,23 @@ Class {
 	#name : #RTMultiLinearColorForIdentity,
 	#superclass : #RTMultiLinearColor,
 	#instVars : [
-		'objects'
+		'objects',
+		'defaultColor'
 	],
 	#category : #'Roassal2-ColorNormalizer'
 }
+
+{ #category : #accessing }
+RTMultiLinearColorForIdentity >> defaultColor [
+	"Return the color used in case the element to display is not part of the visualization"
+	^ defaultColor
+]
+
+{ #category : #accessing }
+RTMultiLinearColorForIdentity >> defaultColor: aColor [
+	"Set the color used in case the element to display is not part of the visualization"
+	defaultColor := aColor
+]
 
 { #category : #public }
 RTMultiLinearColorForIdentity >> elements: roassalElements [
@@ -42,7 +55,8 @@ RTMultiLinearColorForIdentity >> elements: roassalElements [
 RTMultiLinearColorForIdentity >> initialize [
 	super initialize.
 	self colors: (RTColorPalette qualitative colors: 12 scheme: 'Set3').
-	objects := #()
+	objects := #().
+	self defaultColor: Color veryLightGray
 ]
 
 { #category : #public }
@@ -57,5 +71,11 @@ RTMultiLinearColorForIdentity >> objects: someObjects [
 
 { #category : #accessing }
 RTMultiLinearColorForIdentity >> rtValue: anObject [
-	^ self level: (objects indexOf: (command rtValue: anObject)) - 1 / objects size
+	| index |
+	index := objects indexOf: (command rtValue: anObject).
+	
+	"If the object is not part of the range of objects to consider, then we use a default color"
+	index = 0 ifTrue: [ ^ self defaultColor ].
+	
+	^ self level: (index - 1 / objects size)
 ]
