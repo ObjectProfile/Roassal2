@@ -73,6 +73,93 @@ fBA/H8QH8fNBfBA/H+Q/9gEUtn5Gru2F5QAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTCalendarExample >> exampleCodeCommits [
+
+| classes dictByJulian dictByDate maxPerDays b |
+
+"Set your classes here:"
+classes := RTShape withAllSubclasses.
+"classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses."
+
+
+"Script"
+dictByJulian := (classes flatCollect: #methods) groupedBy: [ :m | m date julianDayNumber ].
+dictByDate := (classes flatCollect: #methods) groupedBy: [ :m | m date ].
+maxPerDays := (dictByJulian values collect: #size) max.
+
+b := RTCalendarBuilder new.
+b yearShape composite: [ :comp | 
+	comp add: (RTLabel new text: [ :d | d year ]; height: 20 ).
+	comp add: (RTBox new color: Color lightGray trans)].
+b yearLayout verticalLine.
+b dateShape rectangle 
+	size: 15; 
+	borderColor: Color lightGray;
+	color: Color lightGray;
+	if: [ :d| dictByJulian includesKey: d julianDayNumber ] color: [ :d| |i|
+		i := (dictByJulian at: d julianDayNumber) size / maxPerDays.
+		Color r: i g: 0 b: 0 ].
+b dateInteraction when: TRMouseClick do: [ :evt | 
+	(dictByJulian at: evt element model julianDayNumber ifAbsent: [ #() ]) inspect ].
+b dateInteraction popup text: [ :d | 
+	(dictByJulian at: d julianDayNumber ifAbsent: [ #() ]) size asString, ' Methods' ].
+b dates: (dictByDate keys min to: dictByDate keys max).
+^ b
+
+]
+
+{ #category : #icons }
+RTCalendarExample >> exampleCodeCommitsIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTCalendarExample >> exampleMonth [
 
 | b |
