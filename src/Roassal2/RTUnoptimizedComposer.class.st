@@ -4,12 +4,12 @@ Class {
 	#category : #'Roassal2-Builder-Composer'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-layout' }
 RTUnoptimizedComposer >> group [
 	^ self group: ('group', (mapping size asString)) asSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public-layout' }
 RTUnoptimizedComposer >> group: aName [
 	"Compute the group of added objects"
 	| group |
@@ -18,7 +18,7 @@ RTUnoptimizedComposer >> group: aName [
 	mapping at: aName put: group.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTUnoptimizedComposer >> newElementsAsGroup [
 	^ RTGroup withAll: (view elements copyWithoutAll: self allGroupedElements)
 ]
