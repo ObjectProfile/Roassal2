@@ -124,7 +124,7 @@ RTMetricNormalizer >> getElementNormalizedValues: metricBlock min: min max: max 
  	^ elements collect: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) ]
 ]
 
 { #category : #utility }
