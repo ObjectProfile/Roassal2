@@ -248,15 +248,8 @@ RTComposer >> propagateHighlight [
 
 { #category : #'public-interaction' }
 RTComposer >> propagateHighlightToAll [
-	"Highlight all the elements that have the same model"
-	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
-]
 
-{ #category : #'public-interaction' }
-RTComposer >> propagateHighlightUsing: aBlock [
-	"Highlight all the elements return by aBlock. 
-	 The aBlock variable is evaluated for a Roassal element"
-	mapping value do: [ :g | g @ (RTHighlightable new highlightElements: aBlock) ]
+	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
 ]
 
 { #category : #'public-background' }
