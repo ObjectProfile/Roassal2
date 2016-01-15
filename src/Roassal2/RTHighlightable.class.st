@@ -1,56 +1,6 @@
 "
 A RTHighlightable changes color of elements which should be highlighted.
 
-For example:
-
-[ [ [ 
-v := RTView new.
-es := RTEllipse elementsOn: (20 to: 70 by: 5) asArray shuffle.
-v addAll: es.
-es @ RTPopup.
-RTMetricNormalizer new
-	elements: es;
-	normalizeSize: #yourself;
-	normalizeColor: #yourself.
-RTFlowLayout on: es.
-
-es @ RTHighlightable.
-v
- ] ] ]
-
-Another example:
-
-[ [ [
-v := RTView new.
-es := RTEllipse elementsOn: (20 to: 70 by: 5) asArray shuffle.
-v addAll: es.
-es @ RTPopup.
-RTMetricNormalizer new
-	elements: es;
-	normalizeSize: #yourself;
-	normalizeColor: #yourself.
-RTFlowLayout on: es.
-
-es @ (RTHighlightable new highlight: [ :aNumber | aNumber to: 70 by: 5] ).
-v			 
- ] ] ]
-
-Here is a third example using highlightelements:
-[ [ [  
-v := RTView new.
-es := RTEllipse elementsOn: (20 to: 70 by: 5) asArray shuffle.
-v addAll: es.
-es @ RTPopup.
-RTMetricNormalizer new
-	elements: es;
-	normalizeSize: #yourself min: 5 max: 30;
-	normalizeColor: #yourself.
-RTFlowLayout on: es.
-
-es @ (RTHighlightable new highlightElements: [ :element | 
-	element view elements select: [ :e | e trachelShape height > 15 ] ] ).
-v
-] ] ]
 "
 Class {
 	#name : #RTHighlightable,
@@ -63,25 +13,12 @@ Class {
 
 { #category : #'reset shape' }
 RTHighlightable class >> highlightedColor [
-	"Default color for highlighting"
 	^ Color blue
 ]
 
 { #category : #visitor }
 RTHighlightable >> accept: aVisitor with: args [
 	aVisitor visitHightlightableInteraction: self with: args.
-]
-
-{ #category : #accessing }
-RTHighlightable >> color [
-	"Return the color used for the highlighting"
-	^ color
-]
-
-{ #category : #accessing }
-RTHighlightable >> color: aColor [
-	"Set the color used for the highlighting"
-	color := aColor
 ]
 
 { #category : #actions }
