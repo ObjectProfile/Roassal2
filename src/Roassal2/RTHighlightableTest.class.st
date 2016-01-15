@@ -50,6 +50,12 @@ RTHighlightableTest >> testBasicWithSVGShape [
 ]
 
 { #category : #tests }
+RTHighlightableTest >> testDefaultColor [
+
+	self assert: RTHighlightable new color equals: RTHighlightable highlightedColor
+]
+
+{ #category : #tests }
 RTHighlightableTest >> testHighlightAllSibblings [
 
 	| v e1 e2 e3 |
@@ -68,6 +74,28 @@ RTHighlightableTest >> testHighlightAllSibblings [
 	e1 announce: TRMouseEnter.
 	self assert: e1 trachelShape color ~~ Color gray.
 	self assert: e2 trachelShape color ~~ Color gray.
+	self assert: e3 trachelShape color == Color gray.
+]
+
+{ #category : #tests }
+RTHighlightableTest >> testHighlightAllSibblings02 [
+
+	| v e1 e2 e3 |
+	v := RTView new.
+	e1 := (RTBox new color: Color gray) element.
+	e2 := (RTEllipse new color: Color gray) element.
+	e3 := (RTBox new color: Color gray) element.
+	
+	v add: e1; add: e2; add: e3.
+	
+	e1 @ RTHighlightable allSibblings.
+	self assert: e1 trachelShape color == Color gray.
+	self assert: e2 trachelShape color == Color gray.
+	self assert: e3 trachelShape color == Color gray.
+	
+	e1 announce: TRMouseEnter.
+	self assert: e1 trachelShape color == Color gray.
+	self assert: e2 trachelShape color == Color gray.
 	self assert: e3 trachelShape color == Color gray.
 ]
 
@@ -107,4 +135,19 @@ RTHighlightableTest >> testMultipleElementsDoHighlight [
 	h doUnhighlight: box1.
 	self assert: box1 trachelShape color = Color green.
 	self assert: box2 trachelShape color = Color red
+]
+
+{ #category : #tests }
+RTHighlightableTest >> testSetColor [
+
+	| i |
+	i := RTHighlightable new.
+	i color: Color red.
+	self assert: Color red equals: i color
+]
+
+{ #category : #tests }
+RTHighlightableTest >> testhighlightElements [
+
+	self assert: RTHighlightable new highlightElements notNil
 ]
