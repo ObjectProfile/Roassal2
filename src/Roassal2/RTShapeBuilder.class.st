@@ -408,6 +408,15 @@ RTShapeBuilder >> shortestDistanceAttachPoint [
 	
 ]
 
+{ #category : #'shape - attach point on edges' }
+RTShapeBuilder >> shortestDistanceAttachPointWithJump [
+	"Set the vertical attach point for the edges to be built"
+	self attachPoint: #withShorterDistanceAttachPointWithJump
+
+
+	
+]
+
 { #category : #shapes }
 RTShapeBuilder >> styledLabel [
 	shape := RTStyledLabel new
