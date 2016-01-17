@@ -546,3 +546,15 @@ RTMondrianTest >> testSingleNodeForIt [
 	self assert: b view elements first position equals: 7.5 @ 7.5.
 	self assert: b view elements second position equals: 8.0 @ 8.0.
 ]
+
+{ #category : #'tests - edges' }
+RTMondrianTest >> testUseAssociationsWithError [
+
+	b := RTMondrian new.
+	b nodes: #(1 2 3).
+	b edges
+		useAssociation: 1 -> 5.
+	b build.
+	
+	self assert: b view numberOfEdges equals: 0
+]
