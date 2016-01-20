@@ -62,6 +62,11 @@ RTComposer >> gap: anInteger [
 ]
 
 { #category : #'public-layout' }
+RTComposer >> getGroup: groupId [
+	^mapping at: groupId.
+]
+
+{ #category : #'public-layout' }
 RTComposer >> group [
 	"Define a new group with the elements added to the view using a computed name"
 	^ self group: ('group', (mapping size asString)) asSymbol
@@ -257,6 +262,16 @@ RTComposer >> propagateHighlightUsing: aBlock [
 	"Highlight all the elements return by aBlock. 
 	 The aBlock variable is evaluated for a Roassal element"
 	mapping value do: [ :g | g @ (RTHighlightable new highlightElements: aBlock) ]
+]
+
+{ #category : #'public-layout' }
+RTComposer >> removeGroup: groupId [
+	"remove the mapping from the dictionary"
+	mapping removeKey: groupId.
+	
+	"regenerate the groups array"
+	groups removeAll.
+	mapping do: [ :groupElements | groups add: groupElements. ].
 ]
 
 { #category : #'public-background' }
