@@ -86,7 +86,8 @@ RTGradualDSM class >> example03AuthorshipByTime [
 { #category : #UI }
 RTGradualDSM >> defaultCellShape [
 	^ RTBox new
-		size: self cellSize
+		size: self cellSize;
+		color: RTBox defaultColor
 ]
 
 { #category : #initialization }

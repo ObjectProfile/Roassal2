@@ -296,7 +296,7 @@ RTData >> renderDotAndLinesIn: aView [
 
 	builder view addAll: elements.
 	interaction setUpElements: elements.
-
+	
 	RTMetricNormalizer new
 		elements: elements;
 		normalizeElementX: [ :anElement | x rtValue: anElement ]

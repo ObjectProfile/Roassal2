@@ -138,7 +138,7 @@ RTMetricNormalizer >> getNormalizedForLineWidthValues: metricBlock min: min max:
  	^ self edges collect: [ :edge | 
 			| tt t |
 			t := transformation rtValue: (metricBlock value: edge from model value: edge to model).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) ]
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
 ]
 
 { #category : #utility }
@@ -152,7 +152,7 @@ RTMetricNormalizer >> getNormalizedValues: metricBlock min: min max: max minValu
  	^ elements collect: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) ]
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger ]
 ]
 
 { #category : #utility }
@@ -316,7 +316,7 @@ RTMetricNormalizer >> normalizeElementX: metricBlock min: min max: max minValue:
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))).
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			translator translate: el to: el position + (tt @ 0) ] ] 
 ]
 
@@ -357,7 +357,7 @@ RTMetricNormalizer >> normalizeElementY: metricBlock min: min max: max minValue:
 		elements do: [ :el | 
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))).
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asInteger.
 			translator translate: el to: el position + (0 @ tt) ] ] 
 ]
 
