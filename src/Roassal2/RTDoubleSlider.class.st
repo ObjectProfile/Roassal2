@@ -1,3 +1,6 @@
+"
+Class implementing a slider with two cursors, useful for selection of intervals
+"
 Class {
 	#name : #RTDoubleSlider,
 	#superclass : #RTBuilder,
