@@ -25,7 +25,9 @@ Class {
 		'labelled',
 		'position',
 		'sliderElements',
-		'max'
+		'min',
+		'max',
+		'useIntegerLabel'
 	],
 	#category : #'Roassal2-Builder-UI-Slider'
 }
@@ -86,7 +88,9 @@ RTSlider >> initialize [
 	labelled := false.
 	callback := [ :aValue | ].
 	sliderElements := #().
-	max := 1.0
+	min := 0.0.
+	max := 1.0.
+	useIntegerLabel := false.
 ]
 
 { #category : #accessing }
@@ -101,7 +105,19 @@ RTSlider >> max [
 
 { #category : #accessing }
 RTSlider >> max: aNumber [
+	self assert: [ min <= aNumber ] description: 'Max value cant be smaller than the min value'.
 	max := aNumber
+]
+
+{ #category : #accessing }
+RTSlider >> min [
+	^ min
+]
+
+{ #category : #accessing }
+RTSlider >> min: aNumber [
+	self assert: [ aNumber <= max ] description: 'Min value cant be bigger than the max value'.
+	min := aNumber
 ]
 
 { #category : #public }
@@ -137,9 +153,9 @@ RTSlider >> renderIn: aView [
 	"We compute the slider value, and call the callback"
 	cursor when: TRMouseDragging do: [ :evt | 
 		aValue := (cursor position x - extremity1 position x) / (extremity2 position x - extremity1 position x).
-		aValue := aValue * max.
+		aValue := (aValue * (max - min)) + min.
 		callback rtValue: aValue.
-		labelled ifTrue: [ trachelShape text: (aValue asFloat round: 2) asString ] ].
+		labelled ifTrue: [ trachelShape text: (useIntegerLabel ifTrue: [ (aValue round: 0) asInteger ] ifFalse: [ aValue round: 2 ]) asString ] ].
 
 	"We keep track of the elements we add in the view"
 	sliderElements := RTGroup new.
@@ -147,4 +163,13 @@ RTSlider >> renderIn: aView [
 	sliderElements add: extremity1.
 	sliderElements add: extremity2.
 
+]
+
+{ #category : #accessing }
+RTSlider >> useIntegerLabel [
+	"sets the display of the slider's label using an integral value instead of a floating point one
+	ex:
+		slider useIntegerLabel
+	"
+	useIntegerLabel := true
 ]
