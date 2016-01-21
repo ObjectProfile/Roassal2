@@ -36,12 +36,6 @@ RTShape class >> color: aColor [
 	^ self new color: aColor
 ]
 
-{ #category : #'as yet unclassified' }
-RTShape class >> defaultColor [
-
-	^ Color veryVeryLightGray
-]
-
 { #category : #accessing }
 RTShape class >> element [
 
@@ -109,8 +103,8 @@ RTShape >> colorFor: anElement [
 
 { #category : #configuration }
 RTShape >> defaultColor [
-	"Return the color used by myself."
-	^ self class defaultColor
+
+	^ Color veryVeryLightGray
 ]
 
 { #category : #public }
