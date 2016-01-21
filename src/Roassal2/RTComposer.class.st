@@ -30,9 +30,7 @@ Class {
 		'view',
 		'gap',
 		'mapping',
-		'groups',
-		'backgrounds',
-		'names'
+		'groups'
 	],
 	#category : #'Roassal2-Builder-Composer'
 }
@@ -63,16 +61,6 @@ RTComposer >> gap: anInteger [
 	gap := anInteger
 ]
 
-{ #category : #accessing }
-RTComposer >> getGroup: groupId [
-	"returns the elements grouped under the given key
-	ex:
-	
-		composer getGroup: id
-	"
-	^mapping at: groupId.
-]
-
 { #category : #'public-layout' }
 RTComposer >> group [
 	"Define a new group with the elements added to the view using a computed name"
@@ -95,9 +83,7 @@ RTComposer >> initialize [
 	view @ RTDraggableView.
 	groups := OrderedCollection new.
 	mapping := Dictionary new.
-	gap := 20.
-	backgrounds := OrderedCollection new.
-	names := OrderedCollection new.
+	gap := 20
 ]
 
 { #category : #'public-layout' }
@@ -205,15 +191,39 @@ compo view
 
 { #category : #'public-naming' }
 RTComposer >> nameGroup: aName as: title [
-	| label |
-	label := (RTLabel new text: title) element.
-	TRConstraint move: label above: (mapping at: aName).
-	view add: label.
+	"Give a title to a group.
 	
-	"store a reference to the created element"
-	names add: label.
+	For example:
 	
-	^ label
+| compo |
+compo := RTComposer new.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 30).
+b layout grid.
+b build.
+compo group: #g1.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 30).
+b layout grid.
+b build.
+compo group: #g2. 
+
+compo layout: RTVerticalLineLayout new alignCenter.
+
+compo setBackgroundForGroup: #g1 color: Color red trans.
+compo nameGroup: #g1 as: 'Goup 1'.
+compo view
+
+	"
+	| lbl |
+	lbl := (RTLabel new text: title) element.
+	TRConstraint move: lbl above: (mapping at: aName).
+	view add: lbl.
+	^ lbl
 ]
 
 { #category : #accessing }
@@ -238,75 +248,59 @@ RTComposer >> propagateHighlight [
 
 { #category : #'public-interaction' }
 RTComposer >> propagateHighlightToAll [
-	"Highlight all the elements that have the same model"
+
 	mapping value do: [ :g | g @ RTHighlightable allSibblings ]
-]
-
-{ #category : #'public-interaction' }
-RTComposer >> propagateHighlightUsing: aBlock [
-	"Highlight all the elements return by aBlock. 
-	 The aBlock variable is evaluated for a Roassal element"
-	mapping value do: [ :g | g @ (RTHighlightable new highlightElements: aBlock) ]
-]
-
-{ #category : #'public-background' }
-RTComposer >> removeAllBackgrounds [
-	"removes all the backgrounds currently drawn for all the existing groups
-	ex:
-		composer removeAllBackgrounds
-	"
-	view canvas removeShapes: backgrounds.
-	backgrounds removeAll.
-]
-
-{ #category : #'public-naming' }
-RTComposer >> removeAllNames [
-	"removes all the names present in the current view
-	ex:
-	
-		composer removeAllNames
-	"
-	view removeElements: names.
-	names removeAll.
-]
-
-{ #category : #'public-layout' }
-RTComposer >> removeGroup: groupId [
-	| elements |
-	
-	elements := self getGroup: groupId.
-	view removeElements: elements.
-	
-	"remove the mapping from the dictionary"
-	mapping removeKey: groupId.
-	
-	"regenerate the groups array"
-	groups removeAll.
-	mapping do: [ :groupElements | groups add: groupElements. ].
-
 ]
 
 { #category : #'public-background' }
 RTComposer >> setBackgroundColor: aColor forGroup: aName [
+"
+Set a background for a visualization.
 
-	| backgroundBox g outterGap |
+Example:
+compo := RTComposer new.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 3).
+b build.
+compo group: #g1.
+
+b := RTMondrian new.
+b view: compo view.
+b nodes: (1 to: 4).
+b build.
+compo group: #g2.
+
+compo layout: RTVerticalLineLayout new alignCenter. 
+
+compo setBackgroundForGroup: #g1 color: Color red.
+compo view
+
+"
+
+
+	| box g outterGap |
 	outterGap := 5 @ 5.
-	
-	backgroundBox := TRRoundedBoxShape new.
-	backgroundBox color: aColor.
-	backgroundBox strokeWidth: 0.
-	backgroundBox borderRadius: 5.
-	
+	box := TRRoundedBoxShape new.
+	box color: aColor.
+	box strokeWidth: 0.
+	box borderRadius: 5.
 	g := mapping at: aName.
-	backgroundBox translateTo: g center.
-	backgroundBox extent: g extent + outterGap.
+	box translateTo: g center.
+	box extent: g extent + outterGap.
+	"RTNest new centerOnTrachelShape: box elements: g."
+	view canvas addShape: box.
+	box pushBack.
+	^ box
 	
-	view canvas addShape: backgroundBox.
-	backgroundBox pushBack.
-	
-	backgrounds add: backgroundBox.
-	
-	^ backgroundBox
+"	| box g |
+	box := RTBox element.
+	g := mapping at: aName.
+	RTNest new centerOn: box elements: g.
+	view add: box.
+	box pushBack.
+	^ box"
 ]
 
 { #category : #'public title' }
