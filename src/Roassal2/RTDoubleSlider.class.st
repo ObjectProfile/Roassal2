@@ -31,9 +31,10 @@ RTDoubleSlider >> callback [
 ]
 
 { #category : #accessing }
-RTDoubleSlider >> callback: aOneArgBlock [
-	"At each movement of the slider, the argument aOneArgBlock will be evaluated. The bloc takes as argument a float value, ranging between 0.0 and 1.0"
-	callback := aOneArgBlock
+RTDoubleSlider >> callback: aTwoArgBlock [
+	"everytime the slider is moved the aTwoArgBlock will be evaluated with 2 arguments which correspond 
+	to the position of the 2 cursors of the double slider, from the configured min value to the configured max value"
+	callback := aTwoArgBlock
 ]
 
 { #category : #hooks }
@@ -49,19 +50,33 @@ RTDoubleSlider >> createShapeBuilder [
 
 { #category : #examples }
 RTDoubleSlider >> example01 [
-
-	| v label slider |
+	| v label1 label2 doubleSlider composer |
 	v := RTView new.
-	label := RTLabel elementOn: 0.
-	v add: label.
 	
-	slider := RTSlider new.
-	slider view: v.
-	slider labelled.
-	slider callback: [ :aValue | label model: aValue * 100. label updateShape ].
-	slider moveBelow.
-	slider build.
+	composer := RTComposer new.
+	composer view: v.
 	
+	label1 := RTLabel elementOn: 0.
+	v add: label1.
+	composer group: label1.
+	
+	label2 := RTLabel elementOn: 0.
+	v add: label2.
+	composer group: label2.
+	
+	doubleSlider := RTDoubleSlider new.
+	doubleSlider view: v.
+	doubleSlider labelled.
+	doubleSlider callback: [ :cursor1 :cursor2 | 
+		label1 model: cursor1 * 100.
+		label1 updateShape.
+		label2 model: cursor2 * 100.
+		label2 updateShape. ].
+	doubleSlider moveBelow.
+	doubleSlider build.
+	composer group: doubleSlider.
+	
+	composer layout: (RTVerticalLineLayout new gapSize: 25; center).
 	v
 	 
 ]
@@ -70,11 +85,16 @@ RTDoubleSlider >> example01 [
 RTDoubleSlider >> initialize [
 	super initialize.
 	labelled := false.
-	callback := [ :aValue | ].
+	callback := [ :arg1 :arg2 | ].
 	sliderElements := #().
 	min := 0.0.
 	max := 1.0.
 	useIntegerLabel := false.
+]
+
+{ #category : #accessing }
+RTDoubleSlider >> isLabelled [
+	^labelled
 ]
 
 { #category : #accessing }
@@ -200,4 +220,9 @@ RTDoubleSlider >> useIntegerLabel [
 		slider useIntegerLabel
 	"
 	useIntegerLabel := true
+]
+
+{ #category : #accessing }
+RTDoubleSlider >> usingIntegerLabel [
+	^useIntegerLabel
 ]
