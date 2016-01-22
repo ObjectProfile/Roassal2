@@ -45,7 +45,7 @@ RTGridView class >> example [
 	es @ RTResizable.
 	es first translateTo: 70 negated @ 90 negated.
 	es second translateTo: 70 @ 110.
-	v inspect
+	^v
 ]
 
 { #category : #example }
@@ -64,7 +64,7 @@ RTGridView class >> example02 [
 	es @ RTResizable.
 	es first translateTo: 70 negated @ 90 negated.
 	es second translateTo: 70 @ 110.
-	v inspect
+	^ v
 ]
 
 { #category : #adding }

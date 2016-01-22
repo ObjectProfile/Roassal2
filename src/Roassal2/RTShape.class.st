@@ -36,30 +36,7 @@ RTShape class >> color: aColor [
 	^ self new color: aColor
 ]
 
-{ #category : #accessing }
-RTShape class >> compoundElement [
-
-	^ self instance compoundElement
-]
-
-{ #category : #public }
-RTShape class >> compoundElementOn: aModel [
-
-	^ self instance compoundElementOn: aModel
-]
-
-{ #category : #public }
-RTShape class >> compoundElementsOn: models [
-	"Return a group of elements, which is a kind of ordered collection"
-	| group aShape |
-	group := RTGroup new.
-	aShape := self instance.
-	models do: [ :m | 
-		group add: (aShape compoundElementOn: m) ].
-	^ group
-]
-
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTShape class >> defaultColor [
 
 	^ Color veryVeryLightGray
@@ -128,26 +105,6 @@ RTShape >> colorElement: aBlock [
 { #category : #rendering }
 RTShape >> colorFor: anElement [
 	^ color rtValue: anElement
-]
-
-{ #category : #public }
-RTShape >> compoundElement [
-
-	^ RTCompoundElement new addShape: self; yourself
-]
-
-{ #category : #public }
-RTShape >> compoundElementOn: aModel [
-
-	^ RTCompoundElement new model: aModel; addShape: self; yourself
-]
-
-{ #category : #public }
-RTShape >> compoundElementsOn: models [
-	| group |
-	group := RTGroup new.
-	models do: [ :m | group add: (self compoundElementOn: m) ].
-	^ group
 ]
 
 { #category : #configuration }

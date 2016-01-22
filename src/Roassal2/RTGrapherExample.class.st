@@ -2982,7 +2982,7 @@ ds
 b add: ds.
 b axisX. 
 b axisY title: 'alles Count'.
-b
+^ b
 ]
 
 { #category : #icons }

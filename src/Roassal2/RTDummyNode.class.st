@@ -32,11 +32,6 @@ RTDummyNode >> edge: anEdge [
 ]
 
 { #category : #accessing }
-RTDummyNode >> extent [
-	^ self height @ self width
-]
-
-{ #category : #accessing }
 RTDummyNode >> height [
 	
 	^0
