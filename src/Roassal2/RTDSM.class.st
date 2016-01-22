@@ -22,36 +22,27 @@ Class {
 
 { #category : #examples }
 RTDSM class >> example01 [
-	"
-	self new example01
-	"
-	<script>
+	<script: 'self example01 inspect'>
 	| dsm |
 	dsm := RTDSM new.
 	dsm objects: RTShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
-	dsm inspect
+	^ dsm
 ]
 
 { #category : #examples }
 RTDSM class >> example02 [
-	"
-	self new example02
-	"
-	<script>
+	<script: 'self example02 inspect'>
 	| dsm |
 	dsm := RTDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
-	dsm inspect
+	^ dsm
 ]
 
 { #category : #examples }
 RTDSM class >> example03 [
-	"
-	self new example03
-	"
-	<script>
+	<script: 'self example03 inspect'>
 	| values b |
 	values := { 
 	1 -> {'A' . 'B' . 'C'} .
@@ -64,15 +55,12 @@ RTDSM class >> example03 [
 	b objectsX: { 'A' . 'B' . 'C' } .
 	b objectsY: #(1 2 3 4).
 	b dependency: [ :v | values at: v ].
-	b inspect
+	^ b
 ]
 
 { #category : #examples }
 RTDSM class >> example04Authorship [
-	"
-	self new example03
-	"
-	<script>
+	<script: 'self example04Authorship inspect'>
 	| classes classesToAuthors authors authorsToClasses b |
 	classes := RTShape withAllSubclasses.
 	classesToAuthors := (classes collect: [ :cls | cls -> ((cls methods collect: #author) asSet sortedAs: #yourself ) ]) asDictionary.
@@ -83,7 +71,7 @@ RTDSM class >> example04Authorship [
 	b objectsX: classes.
 	b objectsY: authors.
 	b dependency: [ :author | authorsToClasses at: author ].
-	b inspect
+	^ b
 ]
 
 { #category : #UI }
