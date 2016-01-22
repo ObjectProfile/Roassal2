@@ -291,7 +291,7 @@ RTLayoutBuilder >> radialTree [
 
 { #category : #building }
 RTLayoutBuilder >> setUpElements: elements [
-	"Perform the layout on the provided elements"
+
 	self doActionsOnEdgesFor: elements.
 
 	dynamicForceBasedLayout ifTrue: [ ^ self doDynamicForceBasedLayoutOn: elements ].

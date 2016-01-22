@@ -172,11 +172,11 @@ RTSugiyamaLayout >> layoutAt: aPoint [
 			layer
 				do:
 					[:node | 
-					translator translateTopLeftOf: node to:  horizontalPosition @ verticalPosition.
+					translator translate: node to:  horizontalPosition @ verticalPosition.
 					
 					horizontalPosition := horizontalPosition + node width
-						+ self horizontalGap ].
-			verticalPosition := verticalPosition + layerHeight + self verticalGap ]
+						+ self horizontalGap].
+			verticalPosition := verticalPosition + layerHeight + self verticalGap]
 ]
 
 { #category : #private }

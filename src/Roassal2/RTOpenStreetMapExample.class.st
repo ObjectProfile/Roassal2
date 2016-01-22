@@ -1770,7 +1770,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarth [
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView.
-	v open.
+
 	^ v
 ]
 
@@ -1805,7 +1805,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthLive [
 	v canvas addMenu: 'In' callback: [ RTZoomInMove on: v ].
 	v canvas addMenu: 'Out' callback: [ RTZoomOutMove on: v ].
 	v @ RTDraggableView.
-	v open.
+
 	^ v
 ]
 
