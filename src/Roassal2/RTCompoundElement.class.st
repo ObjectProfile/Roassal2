@@ -65,15 +65,3 @@ RTCompoundElement >> renderOn: trachelCanvas [
 	super renderOn: trachelCanvas.
 	children do: [ :c | c renderOn: trachelCanvas ]
 ]
-
-{ #category : #'as yet unclassified' }
-RTCompoundElement >> translateBy: newPosition [
-	super translateBy: newPosition.
-	"children translateBy: newPosition"
-]
-
-{ #category : #'as yet unclassified' }
-RTCompoundElement >> translateTo: newPosition [
-	super translateTo: newPosition.
-	"children translateTo: newPosition"
-]
