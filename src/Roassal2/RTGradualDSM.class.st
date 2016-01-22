@@ -22,22 +22,19 @@ Class {
 
 { #category : #examples }
 RTGradualDSM class >> example01 [
-
-	<script>
-	
-
+	<script: 'self example01 inspect'>
 	| dsm values |
 	dsm := RTGradualDSM new.
 
 	values := { 1->#(2 3 1 5 6) . 2 -> #(1 2 1 1 1 1 4) . 3 -> #(1 2 5 3 2) . 4 -> #(2 5 1) . 5 -> #() . 6 -> #(4) } asDictionary.
 	dsm objects: (1 to: 6).
 	dsm score: [ :assoc | (values at: assoc key) occurrencesOf: assoc value ].
-	dsm inspect.
+	^ dsm
 ]
 
 { #category : #examples }
 RTGradualDSM class >> example02Authorship [
-	<script>
+	<script: 'self example02Authorship inspect'>
 	| classes classesToAuthors authors authorsToClasses b |
 	classes := RTShape withAllSubclasses.
 
@@ -49,12 +46,12 @@ RTGradualDSM class >> example02Authorship [
 	b objectsX: classes.
 	b objectsY: authors.
 	b score: [ :assoc | (assoc value methods collect: #author) occurrencesOf: assoc key ].
-	b inspect
+	^ b
 ]
 
 { #category : #examples }
 RTGradualDSM class >> example03AuthorshipByTime [
-	<script>
+	<script: 'self example03AuthorshipByTime inspect'>
 	| classes classesToAuthors authors authorsToClasses b intervalDays oldAge youngAge diff c |
 	classes := RTShape withAllSubclasses.
 	intervalDays := 100.
@@ -80,7 +77,7 @@ RTGradualDSM class >> example03AuthorshipByTime [
 	c layout: (RTGridLayout new gapSize: 30).
 	youngAge to: oldAge by: intervalDays do: [ :t |  
 		c nameGroup: t asString asSymbol as: 'Time ', t asString ].
-	c view inspect
+	^ c view
 ]
 
 { #category : #UI }
