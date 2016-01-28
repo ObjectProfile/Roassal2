@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'world menu' }
 RTAbstractPlugin class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	((aBuilder item: #RoassalPlugin; parent: #Roassal) icon: RTIcon smallRoassal)
