@@ -1,6 +1,35 @@
 "
 I am shape which builds closed path following ordered collection of vertices.
 
+Here is an example:
+[ [ [ 
+c := TRCanvas new.
+
+s :=  TRPolygonShape new.
+s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
+c addShape: s.
+c			
+			 ] ] ]
+
+Here is an example with an empty polygon:
+
+[ [ [ 
+c := TRCanvas new.
+
+s :=  TRPolygonShape new.
+s color: nil.
+s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
+c addShape: s.
+s translateBy: 3 @ 3.
+
+s :=  TRPolygonShape new.
+s color: nil.
+s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
+c addShape: s.
+
+
+c			
+			 ] ] ]
 "
 Class {
 	#name : #TRPolygonShape,
@@ -19,12 +48,17 @@ TRPolygonShape >> accept: aVisitor [
 
 { #category : #accessing }
 TRPolygonShape >> center [
+	"Return the center of the polygon. The center is determined as the center of encompassing rectangle, which may be different from the exact center of the shape (e.g., the value returned by this method may be actually outside the shape itself)."
 	^ self encompassingRectangle center
 ]
 
 { #category : #private }
 TRPolygonShape >> computePath [
 	canvas ifNil: [ ^ self ].
+	self numberOfVertices = 0 ifTrue: [ 
+		path := self athensCanvas
+		createPath: [ :builder | ].
+		^ self ].
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
@@ -59,10 +93,12 @@ TRPolygonShape >> drawOn: athensCanvas [
 
 { #category : #accessing }
 TRPolygonShape >> encompassingRectangle [
+	"Return the bounding box of all the vertices."
+	self numberOfVertices = 0 ifTrue: [ ^ (0 @ 0) corner: (0 @ 0) ].
 	^ vertices min corner: vertices max
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TRPolygonShape >> extent [
 	^ self encompassingRectangle extent
 ]
@@ -80,7 +116,14 @@ TRPolygonShape >> includesPoint: point [
 { #category : #initialization }
 TRPolygonShape >> initialize [
 	super initialize.
-	strokeWidth := 1.0
+	strokeWidth := 1.0.
+	self vertices: #()
+]
+
+{ #category : #accessing }
+TRPolygonShape >> numberOfVertices [
+	"Return the number of vertices contained in the polygon"
+	^ vertices size
 ]
 
 { #category : #accessing }
@@ -90,6 +133,7 @@ TRPolygonShape >> strokeWidth [
 
 { #category : #accessing }
 TRPolygonShape >> strokeWidth: aWidth [
+	"Set the size of the stroke (i.e., line width)"
 	strokeWidth := aWidth
 ]
 
