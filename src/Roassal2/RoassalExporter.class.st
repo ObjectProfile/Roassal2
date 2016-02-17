@@ -12,10 +12,21 @@ Class {
 		'packagesInfo',
 		'classes',
 		'methods',
-		'stream'
+		'stream',
+		'blacklist'
 	],
 	#category : #'Roassal2-ExporterVW'
 }
+
+{ #category : #accesing }
+RoassalExporter >> blacklist [
+	^ blacklist ifNil: [ blacklist := #() ].
+]
+
+{ #category : #accesing }
+RoassalExporter >> blacklist: list [
+	blacklist := list
+]
 
 { #category : #accesing }
 RoassalExporter >> categoryForMethod: method [
@@ -166,6 +177,7 @@ RoassalExporter >> fileOutMethodBody: aMethodReference [
 		methodString := methodString
 				copyReplaceTokens: className 
 				with: self environment , '.' , className].
+	methodString := self removeDeprecated: methodString.
 	stream
 		nextPutAll: '<body package="';
 		nextPutAll: (self packageNameForMethod: aMethodReference);
@@ -178,7 +190,9 @@ RoassalExporter >> fileOutMethodBody: aMethodReference [
 { #category : #export }
 RoassalExporter >> fileOutMethods [
 	self methods
-		do: [:ea | self fileOutMethod: ea]
+		do: [:ea |
+			(self blacklist includes: ea) 
+				ifFalse: [ self fileOutMethod: ea] ]
 		displayingProgress: 'Filing out methods...'
 ]
 
@@ -354,6 +368,24 @@ RoassalExporter >> prettyPrint: aString [
 											previousChar := c]]]].
 		
 
+]
+
+{ #category : #export }
+RoassalExporter >> removeDeprecated: 	methodString [
+	| index res word index2 |
+	word := 'self deprecated:'.
+	index := methodString indexOfSubCollection: word.
+	index = 0 ifTrue: [ ^ methodString ].
+	index2 := methodString 
+		indexOfSubCollection: '''.' 
+		startingAt: index+word size 
+		ifAbsent: [ self halt. ].
+	res := (methodString copyFrom: 1 to: index - 1), 
+		'"', (methodString copyFrom: index to: index2), '"',
+		(methodString copyFrom: index2+1 to: methodString size).
+	
+	^ res
+	
 ]
 
 { #category : #tags }
