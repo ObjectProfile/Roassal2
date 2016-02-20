@@ -43,18 +43,6 @@ RTView >> openWithToolbarEntitled: aTitle [
 ]
 
 { #category : #'*Roassal2GT-Spotter' }
-RTView >> spotterElementsFor: aStep [
-	<spotterOrder: 10>
-	^ aStep listProcessor
-		title: 'Elements';
-		candidatesLimit: 100;
-		allCandidates: [ self elements ];
-		itemName: [ :each | each model gtDisplayString ];
-		filter: GTFilterSubstring;
-		wantsToDisplayOnEmptyQuery: true
-]
-
-{ #category : #'*Roassal2GT-Spotter' }
 RTView >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	
@@ -62,4 +50,31 @@ RTView >> spotterPreviewIn: aComposite [
 	aComposite addBrickBack: self view setUpCanvas buildMorph
 
 	
+]
+
+{ #category : #'*Roassal2GT-Spotter' }
+RTView >> spotterShapesFor: aStep [
+	<spotterOrder: 15>
+	^ aStep listProcessor
+		title: 'Shapes';
+		candidatesLimit: 5;
+		allCandidates: [ self elements asOrderedCollection ];
+		itemName: [ :each | 
+			each gtDisplayString, 
+			' [', each shape class name, '] - ', 
+			each model gtDisplayString ];
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: true
+]
+
+{ #category : #'*Roassal2GT-Spotter' }
+RTView >> spotterShapesModelsFor: aStep [
+	<spotterOrder: 10>
+	^ aStep listProcessor
+		title: 'Model objects';
+		candidatesLimit: 5;
+		allCandidates: [ ((self elements collectAsSet: #model) reject: #isNil) asOrderedCollection ];
+		itemName: [ :each | each gtDisplayString ];
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: true
 ]
