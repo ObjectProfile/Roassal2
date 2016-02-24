@@ -1,35 +1,6 @@
 "
 I am shape which builds closed path following ordered collection of vertices.
 
-Here is an example:
-[ [ [ 
-c := TRCanvas new.
-
-s :=  TRPolygonShape new.
-s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
-c addShape: s.
-c			
-			 ] ] ]
-
-Here is an example with an empty polygon:
-
-[ [ [ 
-c := TRCanvas new.
-
-s :=  TRPolygonShape new.
-s color: nil.
-s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
-c addShape: s.
-s translateBy: 3 @ 3.
-
-s :=  TRPolygonShape new.
-s color: nil.
-s vertices: { 10 @ 10 . 0 @ 0 . 10 @ 0 }.
-c addShape: s.
-
-
-c			
-			 ] ] ]
 "
 Class {
 	#name : #TRPolygonShape,

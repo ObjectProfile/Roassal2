@@ -190,11 +190,13 @@ TRCanvas >> clean [
 
 { #category : #accessing }
 TRCanvas >> color [
+	"Return the color used as background" 
 	^ color
 ]
 
 { #category : #accessing }
 TRCanvas >> color: aColor [
+	"Set the color used as background"
 	color := aColor.
 	self signalUpdate
 ]
