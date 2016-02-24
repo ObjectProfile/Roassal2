@@ -1729,7 +1729,6 @@ b := RTGrapher new.
 d := RTData new.
 d points: #(3 4 3.5).
 d barShape.
-d noAlignmentOffset.
 b add: d.
 
 d := RTData new.
