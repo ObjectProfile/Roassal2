@@ -17,17 +17,11 @@ RTLineHead >> trachelShapeFor: anEdge [
 	| fromPoint |
 	fromPoint := attachPoint startingPointOf: anEdge.
 	line
-		ifNotNil:
-			[ | lineShape |
+		ifNotNil: [ 
+			| lineShape |
 			lineShape := line trachelShapeFor: anEdge.
 			lineShape class = TRBezierShape
 				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
-	anEdge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
-		ifTrue:
-			[ fromPoint := attachPoint
-				attachPointFor: anEdge
-				from: (anEdge to encompassingRectangle expandBy: 10)
-				to: anEdge to encompassingRectangle ].
 	^ self trachelShapeFor: anEdge from: fromPoint
 ]
 
@@ -46,12 +40,6 @@ RTLineHead >> updateFor: edge trachelShape: trachelShape [
 			lineShape := edge trachelShape shape1.
 			lineShape class = TRBezierShape
 				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
-	edge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
-		ifTrue:
-			[ fromPoint := attachPoint
-				attachPointFor: edge
-				from: (edge to encompassingRectangle expandBy: 1)
-				to: edge to encompassingRectangle ].
 	self updateFor: edge trachelShape: trachelShape from: fromPoint
 ]
 
