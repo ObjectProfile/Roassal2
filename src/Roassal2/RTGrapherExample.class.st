@@ -2262,6 +2262,44 @@ Pog/H+Qb9wNAW4BOOD56cQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleOccurrencesInBag [
+
+	| b ds v |
+	b := Bag new.
+	b add: 1 withOccurrences: 5.
+	b add: 3 withOccurrences: 4.
+	b add: 6.
+
+	v := RTGrapher new.
+	ds:=RTData new.
+	ds interaction popup.
+	ds points: b valuesAndCounts keys.
+	ds y:[:c|b valuesAndCounts at: c].
+	ds x: [ :c | c ].
+	ds barShape color: Color red.
+	v add: ds.
+	v axisX numberOfLabels: 6.
+	^ v
+]
+
+{ #category : #sources }
+RTGrapherExample >> exampleOccurrencesInBagIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACc0lEQVR4XuXcy2rqUBQGYN+4
+j+ArCb6BE0EFLwMFRZ2IN7zNVNBtu4UOTm1MkFNN+/2wKehqQvMlO64msXC5+MlTCv4m8EH8
++CA+iB8fxAfx44P4IH58EB/Ejw/ixwfxQfz4ID6IHx/EB/Hjg/ggfnwQPz6ID+LHB/FB/Pgg
+Poif/IMsFotwOBzC8XgM/mZ8Mcj5fA6DwSD0+/3Q6/X+AQkfGQ6HN0jx9UuxeEkboVgMPsiD
+KEnvjUajW5BYX/hYXcoIhYIP8r/jg/ggPogP4oP4ID7ILwLZbreJfYgP8mSQ+XweqtVqYh/S
+brefA5Khr7kOf8p60hGSYXnX4YP4ID6ID+KD+CA+iA/yK0DiR9t710N8kBccIePxOLEP6XQ6
+PsizQXJxPcQH8c8hPogP4oP4ID6ID/Ln+pDlcun3IXk6QuI1Eb8P8acsH8QH8UF8EB/EB/FB
+fJA/DrLb7fw+JE8gsdf4rg/5fO9Pg/zg/WD+lPXQVvu59fogPogP4oP4ID6ID6KDxH+/s31I
+3kCm0+n1Rrl7fch6vb4ZXz+nb97ewnfPqX/9vfjc+6PLiyPr8h5d7zZhvU89Qk6nU+KevNls
+Mu3lr6qLT3+9ou5l5xA/OQJpNBrXvaVer9/da7rdbqa6+BUeWeri9JmlbjKZZKqLU3KWungu
+jXdxfv7duQOpVCphv9+H+PNeXalUylRXLpcz1dVqtUx1zWYzzGaz1Lp47/JqtUqtiztCq9VK
+rfOnLH/K8uOD+CB+fBAfxI8P4scH8UH8+CA+iB8fxAfx44P4IH58ED8+iA/ixwfxQfz4ID6I
+Hx/EB/Hjg/jxQXwQPyl5B0m1OSYuUujxAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherExample >> examplePointAspects [
 	| b ds |
 	b := RTGrapher new.

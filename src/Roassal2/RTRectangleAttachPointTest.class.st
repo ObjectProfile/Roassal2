@@ -1,5 +1,5 @@
 "
-A RTRectangleAttachPointTest is a test class for testing the behavior of RTRectangleAttachPoint
+A DCRTRectangleAttachPointTest is a test class for testing the behavior of DCRTRectangleAttachPoint
 "
 Class {
 	#name : #RTRectangleAttachPointTest,
