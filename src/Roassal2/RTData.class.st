@@ -173,9 +173,7 @@ RTData >> initialize [
 	self resetInteractionBuilder.
 	shouldConnect := false.
 	shouldHaveBars := false.
-	
-	"This offset is used when a stacked bar chart is used. This alignmentOffset may be removed in case the barchart has to be aligned with other data sets, such as line charts."
-	alignmentOffset := 1
+
 ]
 
 { #category : #accessing }
@@ -194,7 +192,7 @@ RTData >> lineShape [
 	^ lineBuilder
 ]
 
-{ #category : #'public - bar shape' }
+{ #category : #obsolete }
 RTData >> noAlignmentOffset [
 
 	"This offset is used when a stacked bar chart is used. This alignmentOffset may be removed in case the barchart has to be aligned with other data sets, such as line charts."
@@ -215,7 +213,7 @@ b add: d.
 
 b
 	"
-	alignmentOffset := 0
+	"alignmentOffset := 0"
 ]
 
 { #category : #'public - dots' }
@@ -257,8 +255,8 @@ RTData >> renderBarChartIn: aView [
 			min: 0
 			max: builder extent x
 			minValue: minX
-			maxValue: maxX + alignmentOffset.
-	"We have 'maxX + 1' because we do not want the last bar on the extremity of the X-Axis"
+			maxValue: maxX.
+
 
 	"We treat the element with a positive value"
 	positiveElements := elements select: [ :el | (y rtValue: el) >= 0 ].
