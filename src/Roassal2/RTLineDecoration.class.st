@@ -68,9 +68,15 @@ RTLineDecoration >> trachelShapeClass [
 RTLineDecoration >> trachelShapeFor: anEdge [
 	| f shape |
 	f := attachPoint startingPointOf: anEdge.
+	anEdge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
+		ifTrue:
+			[ f := attachPoint
+				attachPointFor: anEdge
+				from: (anEdge to encompassingRectangle expandBy: 1)
+				to: anEdge to encompassingRectangle ].
 	line ~= nil
-		ifTrue: [ 
-			| tShape |
+		ifTrue:
+			[ | tShape |
 			tShape := line trachelShapeFor: anEdge.
 			tShape class = TRBezierShape
 				ifTrue: [ f := tShape points allButLast last ] ].
@@ -88,18 +94,24 @@ RTLineDecoration >> trachelShapeFor: anEdge [
 { #category : #hooks }
 RTLineDecoration >> updateFor: edge trachelShape: trachelShape [
 	| f |
-	f := (attachPoint startingPointOf: edge).
-	(line ~= nil)
-		ifTrue: [ | tShape |
+	f := attachPoint startingPointOf: edge.
+	edge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
+		ifTrue:
+			[ f := attachPoint
+				attachPointFor: edge
+				from: (edge to encompassingRectangle expandBy: 1)
+				to: edge to encompassingRectangle ].
+	line ~= nil
+		ifTrue:
+			[ | tShape |
 			tShape := edge trachelShape shapes first.
-			tShape class = TRBezierShape 
-				ifTrue: [	f := tShape points allButLast last ] ].
+			tShape class = TRBezierShape
+				ifTrue: [ f := tShape points allButLast last ] ].
 	trachelShape from: f.
 	trachelShape to: (attachPoint endingPointOf: edge).
 	trachelShape color: (self colorFor: edge).
 	trachelShape width: (self widthFor: edge).
-	trachelShape resetPath.
-
+	trachelShape resetPath
 ]
 
 { #category : #accessing }
