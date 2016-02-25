@@ -88,20 +88,27 @@ RTAbstractElasticBoxInteraction >> initializeElement: anElement [
 	view removeInteractionIfPresent: RTDraggableView.
 	draggingView := false.
 	view canvas when: events first do: [ :e | draggingView := true ].
-	view canvas when: events second do: [ :e | 
-		draggingView := false.
-		self selectionStart. ].
-	
-	view canvas when: TRMouseDragging do: [ :e |
-		draggingView
-			ifTrue: [ self dragViewWithEvent: e ]
-			ifFalse: [ self updateSelectableShapeWithEvent: e. ]. ].
-	
-	view canvas when: TRMouseDragEnd do: [ :e | 
-		draggingView
-			ifTrue: [ draggingView := false.  ]
-			ifFalse: [ self selectionEnd ] ].
-	
+	view canvas
+		when: events second
+		do: [ :e | 
+			draggingView := false.
+			self selectionStartFromEvent: e ].
+
+	view canvas
+		when: TRMouseDragging
+		do:
+			[ :e | 
+			draggingView
+				ifTrue: [ self dragViewWithEvent: e ]
+				ifFalse: [ self updateSelectableShapeWithEvent: e ] ].
+
+	view canvas
+		when: TRMouseDragEnd
+		do:
+			[ :e | 
+			draggingView
+				ifTrue: [ draggingView := false ]
+				ifFalse: [ self selectionEndFromEvent: e ] ]
 ]
 
 { #category : #accessing }
@@ -140,18 +147,18 @@ RTAbstractElasticBoxInteraction >> rightLeft [
 ]
 
 { #category : #'selection events' }
-RTAbstractElasticBoxInteraction >> selectionEnd [
+RTAbstractElasticBoxInteraction >> selectionEndFromEvent: aTrachelEvent [
 	| evt |
-	evt := RTSelectionEnd new.
+	evt := RTSelectionEnd newFrom: aTrachelEvent.
 	evt group: group.
 	evt shape: self removeShape.
-	self announcer announce: evt.
+	self announcer announce: evt
 ]
 
 { #category : #'selection events' }
-RTAbstractElasticBoxInteraction >> selectionStart [
+RTAbstractElasticBoxInteraction >> selectionStartFromEvent: aTrachelEvent [
 	| evt |
-	evt := RTSelectionStart new.
+	evt := RTSelectionStart newFrom: aTrachelEvent.
 	group := RTGroup new.
 	evt group: group.
 	evt shape: self getOrCreateShapeForView.
@@ -175,7 +182,7 @@ RTAbstractElasticBoxInteraction >> updateSelectableShapeWithEvent: event [
 	group = newgroup ifFalse: [ | evt |
 		self removeSelection: group.
 		group := newgroup.
-		evt := RTSelectionChange new.
+		evt := RTSelectionChange newFrom: event.
 		evt shape: s.
 		evt group: group.
 		self announcer announce: evt. ].
