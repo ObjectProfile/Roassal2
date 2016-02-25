@@ -160,6 +160,22 @@ RTAbstractLine >> withShorterDistanceAttachPointWithJump [
 ]
 
 { #category : #'attach point' }
+RTAbstractLine >> withShorterHorizontalAttachPoint [
+	| ap |
+	ap := RTShorterHorizontalDistanceAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
+RTAbstractLine >> withShorterVerticalAttachPoint [
+	| ap |
+	ap := RTShorterVerticalDistanceAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
 RTAbstractLine >> withVerticallAttachPoint [
 	| ap |
 	ap := RTVerticalAttachPoint new.
