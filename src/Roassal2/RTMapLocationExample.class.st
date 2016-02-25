@@ -24,21 +24,21 @@ Class {
 
 { #category : #sources }
 RTMapLocationExample >> exampleAirports [
+	<noTest>
+	| tab b ask |
+	ask := UIManager default confirm: 'This script takes about 1 minutes to execute. Do you want to continue?'.
+	ask ifFalse: [ ^ self ].
 
-| tab b ask |
-ask := UIManager default confirm: 'This script takes about 1 minutes to execute. Do you want to continue?'.
-ask ifFalse: [ ^ self ].
-
-tab := RTTabTable new input: (ZnEasy get:
-'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat')
-entity contents asString usingDelimiter:$,.
-tab convertColumnsAsFloat: #(7 8).
-b := RTMapLocationBuilder new.
-b shape circle
-size: 1;
-color: (Color red).
-tab values do: [ :row | b addPoint: row seventh @ row eighth value: row second].
-^ b
+	tab := RTTabTable new input: (ZnEasy get:
+	'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat')
+	entity contents asString usingDelimiter:$,.
+	tab convertColumnsAsFloat: #(7 8).
+	b := RTMapLocationBuilder new.
+	b shape circle
+	size: 1;
+	color: (Color red).
+	tab values do: [ :row | b addPoint: row seventh @ row eighth value: row second].
+	^ b
 ]
 
 { #category : #icons }
