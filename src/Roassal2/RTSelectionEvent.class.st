@@ -3,10 +3,9 @@ I am an event for RTSelectableView
 "
 Class {
 	#name : #RTSelectionEvent,
-	#superclass : #Announcement,
+	#superclass : #TRUserInputEvent,
 	#instVars : [
-		'group',
-		'shape'
+		'group'
 	],
 	#category : #'Roassal2-Selection'
 }
@@ -19,14 +18,4 @@ RTSelectionEvent >> group [
 { #category : #accessing }
 RTSelectionEvent >> group: g [
 	group := g
-]
-
-{ #category : #accessing }
-RTSelectionEvent >> shape [
-	^ shape
-]
-
-{ #category : #accessing }
-RTSelectionEvent >> shape: s [
-	shape := s.
 ]

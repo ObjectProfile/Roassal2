@@ -24,7 +24,8 @@ RTAbstractData >> addedInBuilder: aBuilder [
 { #category : #public }
 RTAbstractData >> barChartUsing: barLabelFactory [
 	"Draw an histogram with title"
-	self barShape.
+	| v |
+	v := self barShape.
 	elementActions add: [ :someElements | 
 		| lbl |
 		self selectElementsForAddingBarTitle doWithIndex: [ :e :index |
@@ -35,7 +36,7 @@ RTAbstractData >> barChartUsing: barLabelFactory [
 			lbl translateBy: (lbl width / -2 @ 0) + (5 @ 0).
 			elements anyOne view add: lbl.
 		] ].
-	 
+	 ^ v
 ]
 
 { #category : #public }
@@ -64,14 +65,14 @@ RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol color: aColor [
 { #category : #public }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol [
 	"Draw a barChart with title"
-	self barChartWithBarTitle: aBlockOrSymbol rotation: -45
+	^ self barChartWithBarTitle: aBlockOrSymbol rotation: -45
 ]
 
 { #category : #public }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
 	"Draw an histogram with title"
 
-	self barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: self defaultLabelColor
+	^ self barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: self defaultLabelColor
 ]
 
 { #category : #public }
