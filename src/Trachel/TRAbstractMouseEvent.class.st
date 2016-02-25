@@ -1,6 +1,6 @@
 Class {
 	#name : #TRAbstractMouseEvent,
-	#superclass : #TRShapeEvent,
+	#superclass : #TRUserInputEvent,
 	#category : #'Trachel-Events'
 }
 

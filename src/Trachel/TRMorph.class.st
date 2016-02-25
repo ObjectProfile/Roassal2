@@ -89,49 +89,65 @@ v canvas buildMorph drawOnMockCanvas
 	self drawOn: (FormCanvas extent: 500 @ 500)
 ]
 
+{ #category : #'event-processed' }
+TRMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
+	| relativePosition trEvent shape |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
+
+	trEvent := anEventClass fromEvent: aMorphicEvent.
+	trEvent
+		morph: self;
+		canvas: trachelCanvas;
+		shape: shape;
+		position: relativePosition.
+	^ trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> eventOfClass: anEventClass from: aMorphicEvent [
+	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
+]
+
 { #category : #accessing }
 TRMorph >> eventOverseer [
 	^ trachelCanvas eventOverseer
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'event handling' }
 TRMorph >> handleKeystroke: anEvent [
 	
-	self rtKeyStroke: anEvent.
+	self trKeyDown: anEvent.
 ]
 
 { #category : #'events-processing' }
 TRMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
-	self rtMouseMoving: anEvent.
+	self trMouseMove: anEvent
 ]
 
 { #category : #'events-processing' }
-TRMorph >> handleMouseOver: anEvent [
+TRMorph >> handleMouseOver: aMorphicEvent [
+	| currentElement trEvent |
+	aMorphicEvent wasHandled
+		ifTrue: [ ^ self ].	"Do nothing if it was already handled"
+	self isDragging
+		ifTrue: [ ^ self ].	"Do nothing if we are dragging"
 
-	| currentElement event |
-	anEvent wasHandled ifTrue:[ ^ self ]. "not interested"
-	"Do nothing if we are dragging"
-	self isDragging ifTrue: [ ^ self ].
-	 
-	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: anEvent ].
-	
-	currentElement := self shapeForEvent: anEvent.
-	(currentElement ~~ shapeBeingPointed)
-		ifTrue: [ 
-			event := TRMouseLeave new.
-			event morph: self.
-			event canvas: trachelCanvas.
-			event position: (self relativePositionFor: anEvent).
-			event shape: shapeBeingPointed.
+	shapeBeingPointed ifNil: [ shapeBeingPointed := self shapeForEvent: aMorphicEvent ].
+	currentElement := self shapeForEvent: aMorphicEvent.
+	currentElement == shapeBeingPointed
+		ifTrue: [ ^ self ].
 
-			shapeBeingPointed announce: event.
-			shapeBeingPointed := currentElement.
-			self rtMouseEnter: anEvent ].
+	trEvent := self eventOfClass: TRMouseLeave from: aMorphicEvent.
+	trEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: trEvent.
+	shapeBeingPointed := currentElement.
 
+	self trMouseEnter: aMorphicEvent
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'event handling' }
 TRMorph >> handlesKeyboard: evt [
 
 	^true
@@ -139,12 +155,10 @@ TRMorph >> handlesKeyboard: evt [
 
 { #category : #'event handling' }
 TRMorph >> handlesMouseDown: anEvent [
-	anEvent wasHandled ifTrue:[ ^ false ]. "not interested"
-
-	^ true
+	^ anEvent wasHandled not	"not interested if handled"
 ]
 
-{ #category : #morphic }
+{ #category : #'event handling' }
 TRMorph >> handlesMouseOver: evt [
 	^ true
 ]
@@ -169,7 +183,7 @@ TRMorph >> isDragging [
 	^ eventBeginingDragging notNil
 ]
 
-{ #category : #morphic }
+{ #category : #recategorized }
 TRMorph >> layoutChanged [ 
 	"react on morph resize"
 	super layoutChanged.
@@ -184,64 +198,64 @@ TRMorph >> layoutChanged [
 
 { #category : #'event handling' }
 TRMorph >> mouseDown: evt [
+	eventBeginingDragging
+		ifNil:
+			[ evt hand
+				waitForClicksOrDrag: self
+				event: evt
+				selectors: {#trMouseClick:. #trMouseDoubleClick:. nil. #trMouseDragStart:. }
+				threshold: 5.
+			^ self ].
 
-	eventBeginingDragging ifNil: [
-		evt hand 
-					waitForClicksOrDrag: self 
-					event: evt 
-					selectors: { #rtMouseClick:. #rtMouseDoubleClick:. nil. #rtMouseDragBegin: }
-					threshold: 5.
-		^ self ].
-	
-	evt anyButtonPressed ifTrue: [
-		self rtMouseDragging: evt.
-	].
-	evt wasHandled: true.
-	^ true
+	evt anyButtonPressed
+		ifTrue: [ self trMouseDragging: evt ].
+	evt wasHandled: true
 ]
 
 { #category : #'event handling' }
 TRMorph >> mouseEnter: evt [
-	evt anyButtonPressed ifFalse: [
-		self rtMouseEnter: evt.
-	].
-	evt wasHandled: true.
-	^ true
+	evt anyButtonPressed
+		ifFalse: [ self trMouseEnter: evt ].
+	evt wasHandled: true
+]
+
+{ #category : #'event-processed' }
+TRMorph >> mouseEventOfClass: defaultClass ifLeftButton: leftButtonClass ifRightButton: rightButtonClass from: aMorphicEvent [
+	| trEventClass |
+	trEventClass := defaultClass.
+	aMorphicEvent redButtonChanged
+		ifTrue: [ trEventClass := leftButtonClass ].
+	aMorphicEvent yellowButtonChanged
+		ifTrue: [ trEventClass := rightButtonClass ].
+	^ self eventOfClass: trEventClass actionClass: defaultClass from: aMorphicEvent
 ]
 
 { #category : #'event handling' }
 TRMorph >> mouseLeave: evt [
-	
-	evt anyButtonPressed ifFalse: [
-		self rtMouseLeave: evt.
-	].
-	evt wasHandled: true.
-	^ true
+	evt anyButtonPressed
+		ifFalse: [ self trMouseLeave: evt ].
+	evt wasHandled: true
 ]
 
 { #category : #'event handling' }
 TRMorph >> mouseMove: evt [
-	
 	evt anyButtonPressed
-		ifTrue: [ self rtMouseDragging: evt ] 
-		ifFalse: [ self rtMouseMoving: evt ].
-	evt wasHandled: true.
-	^ true
+		ifTrue: [ self trMouseDragging: evt ]
+		ifFalse: [ self trMouseMove: evt ].
+	evt wasHandled: true
 ]
 
 { #category : #'event handling' }
 TRMorph >> mouseUp: evt [
-	self isDragging ifTrue: 
-		[self rtMouseDragEnd: evt ].
-	evt wasHandled: true.
+	self isDragging
+		ifTrue: [ self trMouseDragEnd: evt ].
+	evt wasHandled: true
 ]
 
 { #category : #'event handling' }
 TRMorph >> mouseWheel: evt [
-
-	self rtMouseWheel: evt.
-	evt wasHandled: true.
-	^ true
+	self trMouseWheel: evt.
+	evt wasHandled: true
 ]
 
 { #category : #'events-roassal' }
@@ -249,207 +263,6 @@ TRMorph >> relativePositionFor: evt [
 	"Return the position within the window"
 	^ evt position - self bounds origin
 	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtKeyStroke: evt [
-	| relativePosition ev  shape |
-	
-	(evt commandKeyPressed and: [ evt keyCharacter = $w ]) ifTrue: [ self owner delete ].
-	relativePosition := self relativePositionFor: evt.
-	
-	ev := TRKeyDown new 
-				keyValue: evt keyValue;
-				keyCombination: evt asKeyCombination;
-				yourself.
-	shape := self shapeWithAction: TRKeyDown forPositionInPixels: relativePosition.
-
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
-
-	shape announce: ev.
-
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseClick: evt [
-	| relativePosition ev  shape |
-	relativePosition := self relativePositionFor: evt.	
-	evt yellowButtonChanged
-		ifTrue: [ ev := TRMouseRightClick new ].
-	evt redButtonChanged
-		ifTrue: [ ev := TRMouseLeftClick new ].
-	evt blueButtonChanged
-		ifTrue: [ ev := TRMouseClick new ].
-
-	shape := self shapeWithAction: TRMouseClick forPositionInPixels: relativePosition.
-	ev commandKeyPressed: evt commandKeyPressed.
-	ev controlKeyPressed: evt controlKeyPressed.
-	ev shiftKeyPressed: evt shiftPressed.
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
-	shape announce: ev.
-	self announceToEventOverseer: ev
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseDoubleClick: evt [
-	| relativePosition ev  shape |
-	relativePosition := self relativePositionFor: evt.	
-	evt yellowButtonChanged
-		ifTrue: [ ev := TRMouseDoubleRightClick new ].
-	evt redButtonChanged
-		ifTrue: [ ev := TRMouseDoubleLeftClick new ].
-	evt blueButtonChanged
-		ifTrue: [ ev := TRMouseDoubleClick new ].
-
-	shape := self shapeWithAction: TRMouseDoubleClick forPositionInPixels: relativePosition.
-	ev commandKeyPressed: evt commandKeyPressed.
-	ev controlKeyPressed: evt controlKeyPressed.
-	ev shiftKeyPressed: evt shiftPressed.
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	ev position: (trachelCanvas camera fromPixelToSpace: relativePosition).
-	shape announce: ev.
-	self announceToEventOverseer: ev
-	
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseDragBegin: evt [
-	| relativePosition ee |
-	eventBeginingDragging := evt copy.
-	relativePosition := self relativePositionFor: evt.
-	shapeBeingPointed := self shapeWithAction: TRMouseDragging forPositionInPixels: relativePosition.
-
-	evt yellowButtonChanged
-		ifTrue: [ ee := TRMouseRightDragStart new ].
-	evt redButtonChanged
-		ifTrue: [ ee := TRMouseLeftDragStart new ].
-	evt blueButtonChanged
-		ifTrue: [ ee := TRMouseDragStart new ].
-		
-	ee shape: shapeBeingPointed.
-	ee position: relativePosition.
-	ee canvas: trachelCanvas.
-	ee morph: self.
-	shapeBeingPointed announce: ee.
-	self announceToEventOverseer: ee
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseDragEnd: evt [
-
-	| ee relativePosition |
-	relativePosition := self relativePositionFor: evt.
-	ee := TRMouseDragEnd new.
-	ee shape: shapeBeingPointed.
-	ee canvas: trachelCanvas.
-	ee morph: self.
-	ee position: relativePosition.
-	shapeBeingPointed announce: ee.
-	self announceToEventOverseer: ee.
-	
-	eventBeginingDragging := nil.
-	shapeBeingPointed := nil
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseDragging: evt [
-	| step relativePosition event  |
-	eventBeginingDragging ifNil: [ ^ self ].
-	relativePosition := self relativePositionFor: evt.
-	step := evt position - eventBeginingDragging position.
-
-	shapeBeingPointed ifNil: [  
-			shapeBeingPointed := self shapeWithAction: TRMouseDragging forPositionInPixels: relativePosition ].
-	"If the element was removed during the drag then cancel the event"
-	shapeBeingPointed canvas ifNil: [
-		eventBeginingDragging := nil.
-		shapeBeingPointed := nil.
-		^ self
-	].
-	
-	event := TRMouseDragging new 
-				morph: self;
-				shape: shapeBeingPointed;
-				step: step; 
-				yourself.
-
-"	event commandKeyPressed: evt commandKeyPressed.
-	event controlKeyPressed: evt controlKeyPressed.
-	event shiftKeyPressed: evt shiftPressed.				
-"
-	event position: relativePosition.
-	event canvas: trachelCanvas.
-	event morph: self.
-	shapeBeingPointed announce: event.
-	self announceToEventOverseer: event.
-	eventBeginingDragging := evt copy.
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseEnter: evt [
-	| relativePosition ev shape |
-	
-	relativePosition := self relativePositionFor: evt.
-
-	shape := self shapeWithAction: TRMouseEnter forPositionInPixels: relativePosition.
-
-	ev := TRMouseEnter new.
-	ev position: relativePosition.
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	shape announce: ev.
-	self announceToEventOverseer: ev
-
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseLeave: evt [
-	| position ev shape |
-	
-	position := self relativePositionFor: evt.
-	shape := self shapeWithAction: TRMouseLeave forPositionInPixels: position.
-	ev := TRMouseLeave new.
-	ev position: position.
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	shape announce: ev.
-	self announceToEventOverseer: ev
-
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseMoving: evt [
-
-	| relativePosition ev shape |
-	relativePosition := self relativePositionFor: evt.	
-	shape := self shapeWithAction: TRMouseMove forPositionInPixels: relativePosition.
-
-	ev := TRMouseMove new.
-	ev position: relativePosition.
-	ev shape: shape.
-	ev morph: self.
-	ev canvas: trachelCanvas.
-	shape announce: ev.
-	self announceToEventOverseer: ev
-]
-
-{ #category : #'event-processed' }
-TRMorph >> rtMouseWheel: evt [
-	trachelCanvas
-		announce:
-			(TRMouseWheelEvent
-				fromDirection: evt direction
-				position: (trachelCanvas camera fromPixelToSpace: (self relativePositionFor: evt)))
 ]
 
 { #category : #'event-processed' }
@@ -503,6 +316,131 @@ TRMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^ true
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trKeyDown: aMorphicEvent [
+	| trEvent |
+	(aMorphicEvent commandKeyPressed and: [ aMorphicEvent keyCharacter = $w ])
+		ifTrue: [ self owner delete ].
+
+	trEvent := self eventOfClass: TRKeyDown from: aMorphicEvent.
+	trEvent
+		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
+		keyValue: aMorphicEvent keyValue;
+		keyCombination: aMorphicEvent asKeyCombination.
+	trEvent shape announce: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseClick: aMorphicEvent [
+	| trEvent |
+	trEvent := self
+		mouseEventOfClass: TRMouseClick
+		ifLeftButton: TRMouseLeftClick
+		ifRightButton: TRMouseRightClick
+		from: aMorphicEvent.
+	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseDoubleClick: aMorphicEvent [
+	| trEvent |
+	trEvent := self
+		mouseEventOfClass: TRMouseDoubleClick
+		ifLeftButton: TRMouseDoubleLeftClick
+		ifRightButton: TRMouseDoubleRightClick
+		from: aMorphicEvent.
+	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseDragEnd: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRMouseDragEnd from: aMorphicEvent.
+	trEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: trEvent.
+	self announceToEventOverseer: trEvent.
+	eventBeginingDragging := nil.
+	shapeBeingPointed := nil
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseDragStart: aMorphicEvent [
+	| trEvent trEventClass |
+	eventBeginingDragging := aMorphicEvent copy.
+	
+	trEventClass := TRMouseDragStart.
+	aMorphicEvent redButtonChanged
+		ifTrue: [ trEventClass := TRMouseLeftDragStart ].
+	aMorphicEvent yellowButtonChanged
+		ifTrue: [ trEventClass := TRMouseRightDragStart ].
+	trEvent := self eventOfClass: trEventClass actionClass: TRMouseDragging from: aMorphicEvent.
+
+	shapeBeingPointed := trEvent shape.
+	shapeBeingPointed announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseDragging: aMorphicEvent [
+	| trEvent step |
+	eventBeginingDragging ifNil: [ ^ self ].
+	step := aMorphicEvent position - eventBeginingDragging position.
+
+	trEvent := self eventOfClass: TRMouseDragging from: aMorphicEvent.
+	trEvent step: step.
+
+	shapeBeingPointed ifNil: [ shapeBeingPointed := trEvent shape ].
+	"If the element was removed during the drag then cancel the event"
+	shapeBeingPointed canvas
+		ifNil: [ eventBeginingDragging := nil.
+			shapeBeingPointed := nil.
+			^ self ].
+
+	trEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: trEvent.
+	self announceToEventOverseer: trEvent.
+	eventBeginingDragging := aMorphicEvent copy
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseEnter: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRMouseEnter from: aMorphicEvent.
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseLeave: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRMouseLeave from: aMorphicEvent.
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseMove: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRMouseMove from: aMorphicEvent.
+	trEvent position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trMouseWheel: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRMouseWheelEvent from: aMorphicEvent.
+	trEvent
+		direction: aMorphicEvent direction;
+		position: (trachelCanvas camera fromPixelToSpace: trEvent position).
+	trachelCanvas announce: trEvent
 ]
 
 { #category : #accessing }

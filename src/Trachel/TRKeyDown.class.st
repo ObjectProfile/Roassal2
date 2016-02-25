@@ -20,7 +20,7 @@ v open
 "
 Class {
 	#name : #TRKeyDown,
-	#superclass : #TRShapeEvent,
+	#superclass : #TRUserInputEvent,
 	#instVars : [
 		'keyValue',
 		'keyCombination'
