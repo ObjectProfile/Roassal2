@@ -1,3 +1,34 @@
+"
+I describe a compound element. Note that this is preliminary work. This class is not completed.
+
+-=-=-=
+classes := RTShape withAllSubclasses.
+v := RTView new.
+v @ RTDraggableView.
+
+es := classes asGroup collect: [ :c |
+	b := RTPieBuilder new.
+	b objects: (Array with: (c instVarNames size) with: (c methods size)).
+	b slice: #yourself.
+	b build.
+	b view asElementOn: c. 
+].
+
+v addAll: es.
+es @ RTPopup @ RTDraggable.
+
+eb := RTEdgeBuilder new.
+eb shape line width: 3; color: Color red; withShorterDistanceAttachPoint.
+eb view: v.
+eb elements: es.
+eb moveBehind.
+eb connectToAll: #dependentClasses.
+
+RTOptimizedForceBasedLayout new
+	charge: -8000; length: 1000; on: es.
+v
+-=-=-=
+"
 Class {
 	#name : #RTCompoundElement,
 	#superclass : #RTElement,
