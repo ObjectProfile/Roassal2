@@ -119,6 +119,22 @@ RTView >> announce: anEvent [
 	super announce: anEvent
 ]
 
+{ #category : #convertion }
+RTView >> asElement [
+	| e |
+	e := RTBox compoundElement.
+	e addAll: self elements.
+	^ e
+]
+
+{ #category : #convertion }
+RTView >> asElementOn: aModel [
+	| e |
+	e := RTBox compoundElementOn: aModel.
+	e addAll: self elements.
+	^ e
+]
+
 { #category : #opening }
 RTView >> build [
 	"do nothing. This method is used polymorphically with builders"
