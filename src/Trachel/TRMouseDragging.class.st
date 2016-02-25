@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #public }
+TRMouseDragging class >> shape: aShape step: aStepAsPoint [
+	^ (self shape: aShape)
+		step: aStepAsPoint;
+		yourself
+]
+
+{ #category : #public }
 TRMouseDragging class >> step: aStepAsPoint [
 	^ self new step: aStepAsPoint
 ]
