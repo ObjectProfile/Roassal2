@@ -59,6 +59,7 @@ Qfj5A7cfNxrUTXl/AAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSpectrographExample >> exampleRoassalVisualization [
+	<noTest>
 	| b now |
 	now := TRPlatform current dateAndTime now.
 	b := RTSpectrograph new.
@@ -70,8 +71,8 @@ RTSpectrographExample >> exampleRoassalVisualization [
 	b popupText: [ :cls :age | cls name, '  ', age printString , ' days old' ].
 	b lineBlock: [ :cls | 0 to: cls livingInDays ].
 	
-b build.
-^ b view
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
