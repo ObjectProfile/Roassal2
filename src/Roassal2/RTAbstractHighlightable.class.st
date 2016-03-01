@@ -70,7 +70,7 @@ RTAbstractHighlightable >> attributeIdentificator [
 { #category : #actions }
 RTAbstractHighlightable >> doHighlight: element [
 	| elements |
-	"self unhighlightRecordedElements."
+	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
 	elements := elements copyWithout: nil.
 	elements do: [ :eachElement | self doHighlightElement: eachElement ].
@@ -118,6 +118,12 @@ RTAbstractHighlightable >> highlightElements [
 RTAbstractHighlightable >> highlightElements: aBlock [
 	"aBlock return an element or a list of elements to highlight"
 	highlightElements := aBlock
+]
+
+{ #category : #public }
+RTAbstractHighlightable >> highlightObject: aBlock [
+	"aBlock returns an object to highlight"
+	self highlight: [ :oo | Array with: (aBlock rtValue: oo) ]
 ]
 
 { #category : #initialize }
