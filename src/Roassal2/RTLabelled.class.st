@@ -276,6 +276,12 @@ RTLabelled >> text: aValueOrAOneArgBlock [
 ]
 
 { #category : #accessing }
+RTLabelled >> textElement [
+	"Return the string value, symbol, or block that is evaluated, using rtValue: against an element"
+	^ text
+]
+
+{ #category : #accessing }
 RTLabelled >> textElement: aTextOrBlock [
 	text := aTextOrBlock
 ]

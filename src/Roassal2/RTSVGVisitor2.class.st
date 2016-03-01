@@ -96,7 +96,7 @@ RTSVGVisitor2 >> initialize [
 	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView
 	#RTFocusElement).
 	exportFixedShapes := true.
-
+	stream := WriteStream on: String new. 
 ]
 
 { #category : #helpers }
