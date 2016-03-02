@@ -214,7 +214,7 @@ RTPopup >> textColor: aValueOrABlockOrASymbol [
 RTPopup >> textElement: aOneArgBlock [
 	self group: [ :group :element | 
 		| backRectangle lbl |
-		backRectangle := (RTBox new color: backgroundColor; borderColor: borderColor) element.
+		backRectangle := (RTBox new color: (backgroundColor alpha: self alphaPopupBackground); borderColor: borderColor) element.
 		
 		lbl := (RTLabel new 
 				color: textColor;
