@@ -22,6 +22,53 @@ es @ (RTPopup new
 RTHorizontalLineLayout on: es.
 v open
 -=-=-=-=-=-=-=-=-=-=-=-=
+
+
+Another example may be:
+-=-=-=-=-=-=-=-=-=-=-=-=
+v := RTView new.
+
+labels := RTLabel elementsOn: (1 to: 10).
+
+popup := RTPopup new.
+popup group: [ :aGroup :element | 
+	| es |
+	es := (RTEllipse new size: 10; color: Color red) elementsOn: (1 to: element model).
+	aGroup addAll: es.
+	RTGridLayout on: es.
+	].
+labels @ popup.
+v addAll: labels.
+RTGridLayout on: labels.
+v
+-=-=-=-=-=-=-=-=-=-=-=-=
+
+Using edges:
+-=-=-=-=-=-=-=-=-=-=-=-=
+v := RTView new.
+
+es := RTLabel elementsOn: (5 to: 100 by: 5).
+
+v addAll: es.
+
+es @ (RTPopup new 
+	background: Color blue
+	group: [ :group :el |  
+ 		| elements |
+		elements := RTEllipse elementsOn: (1 to: el model).
+		group addAll: elements.
+		RTEdgeBuilder new
+			view: group;
+			elements: elements;
+			connectFrom: [ :aNumber | aNumber // 2 ]. 
+		RTClusterLayout new 
+			verticalGap: 0; 
+			on: elements.
+		]).
+
+RTCellLayout on: es.
+v
+-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTPopup,
@@ -118,7 +165,7 @@ RTPopup >> createAndShowPopupFor: element event: event [
 
 ]
 
-{ #category : #public }
+{ #category : #private }
 RTPopup >> createBackgroundElement: aColor [
 	^ (RTBox new color: (aColor alpha: self alphaPopupBackground)) element
 ]
@@ -197,6 +244,8 @@ RTPopup >> simpleText: aOneArgBlock [
 
 { #category : #public }
 RTPopup >> text: aOneArgBlock [
+	"Set the text of the popup"
+	"The argument, when evaluated with an object return an object, to which #asString is sent to"
 	self textElement: [ :el | aOneArgBlock rtValue: el model ]
 ]
 
