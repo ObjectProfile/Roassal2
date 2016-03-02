@@ -879,6 +879,25 @@ ConfigurationOfRoassal2 >> version122: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfRoassal2 >> version123: spec [
+	<version: '1.23' imports: #('1.10-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.23'.
+		spec author: 'YuriyTymchuk'.
+		spec timestamp: '3/2/2016 13:03'.
+		
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.352';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1238';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.33';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.1'. ].
+
+]
+
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version12: spec [
 	<version: '1.2' imports: #('1.1-baseline' )>
 
