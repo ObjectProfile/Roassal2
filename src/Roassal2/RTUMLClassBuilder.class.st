@@ -18,8 +18,7 @@ Class {
 		'attributeShape',
 		'lineShape',
 		'boxShape',
-		'classNameShape',
-		'edgeActions'
+		'classNameShape'
 	],
 	#category : #'Roassal2-Builder-UML'
 }
@@ -87,15 +86,6 @@ RTUMLClassBuilder >> buildEdges [
 	eb objects: classes.
 	eb shape shape: lineShape shape.
 	eb connectFrom: self superclass.
-	
-	eb := RTEdgeBuilder new.
-	eb view: view.
-	eb elements: view elements.
-	
-	self edges do: [ :asso |
-		eb shape shape: asso key.
-		asso value value: eb.
-		 ].
 ]
 
 { #category : #public }
@@ -195,19 +185,6 @@ RTUMLClassBuilder >> classname: aSelector [
 { #category : #public }
 RTUMLClassBuilder >> createView [
 	^ super createView @ RTDraggableView
-]
-
-{ #category : #edges }
-RTUMLClassBuilder >> edges [
-	edgeActions ifNil: [ edgeActions := OrderedCollection new ].
-	^ edgeActions.
-]
-
-{ #category : #edges }
-RTUMLClassBuilder >> edgesDo: aBlock [
-	| s |
-	s := self shape current copy.
-	self edges add: s->aBlock.
 ]
 
 { #category : #examples }
@@ -376,8 +353,7 @@ RTUMLClassBuilder >> initialize [
 		borderColor: Color gray.
 	self interaction draggable.
 	self prepare: self methodShape selector: #methodselector.
-	self prepare: self attributeShape selector: #attributeselector.
-	
+	self prepare: self attributeShape selector: #attributeselector
 ]
 
 { #category : #initialization }
@@ -468,7 +444,7 @@ RTUMLClassBuilder >> prepare: builder selector: selector [
 RTUMLClassBuilder >> renderIn: aView [
 	self buildSchema: aView.
 	self buildEdges.
-	self applyLayout.
+	self applyLayout
 ]
 
 { #category : #accessing }
