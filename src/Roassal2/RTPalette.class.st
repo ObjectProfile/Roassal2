@@ -7,139 +7,139 @@ Class {
 { #category : #palettes }
 RTPalette class >> c1 [
 	^ Array 
-		with: (Color r: 225 g: 206 b: 122 range: 255) 
-		with: (Color r: 251 g: 255 b: 185 range: 255)
-		with: (Color r: 253 g: 214 b: 146 range: 255)
-		with: (Color r: 236 g: 115 b: 87 range: 255)
-		with: (Color r: 117 g: 79 b: 68 range: 255)
+		with: (Color red: 225 green: 206 blue: 122) 
+		with: (Color red: 251 green: 255 blue: 185)
+		with: (Color red: 253 green: 214 blue: 146)
+		with: (Color red: 236 green: 115 blue: 87)
+		with: (Color red: 117 green: 79 blue: 68)
 ]
 
 { #category : #palettes }
 RTPalette class >> c10 [
 	^ Array
-		with: (Color r: 51 g: 92 b: 103 range: 255)
-		with: (Color r: 255 g: 243 b: 176 range: 255)
-		with: (Color r: 224 g: 159 b: 62 range: 255)
-		with: (Color r: 158 g: 42 b: 43 range: 255)
-		with: (Color r: 84 g: 11 b: 14 range: 255)
+		with: (Color red: 51 green: 92 blue: 103)
+		with: (Color red: 255 green: 243 blue: 176)
+		with: (Color red: 224 green: 159 blue: 62)
+		with: (Color red: 158 green: 42 blue: 43)
+		with: (Color red: 84 green: 11 blue: 14)
 ]
 
 { #category : #palettes }
 RTPalette class >> c11 [
 	^ Array
-		with: (Color r: 30 g: 21 b: 42 range: 255)
-		with: (Color r: 78 g: 103 b: 102 range: 255)
-		with: (Color r: 90 g: 177 b: 187 range: 255)
-		with: (Color r: 165 g: 200 b: 130 range: 255)
-		with: (Color r: 247 g: 221 b: 114 range: 255)
+		with: (Color red: 30 green: 21 blue: 42)
+		with: (Color red: 78 green: 103 blue: 102)
+		with: (Color red: 90 green: 177 blue: 187)
+		with: (Color red: 165 green: 200 blue: 130)
+		with: (Color red: 247 green: 221 blue: 114)
 ]
 
 { #category : #palettes }
 RTPalette class >> c12 [
 	^ Array
-		with: (Color r: 204 g: 88 b: 3 range: 255)
-		with: (Color r: 226 g: 113 b: 29 range: 255)
-		with: (Color r: 255 g: 149 b: 5 range: 255)
-		with: (Color r: 255 g: 182 b: 39 range: 255)
-		with: (Color r: 255 g: 201 b: 113 range: 255)
+		with: (Color red: 204 green: 88 blue: 3)
+		with: (Color red: 226 green: 113 blue: 29)
+		with: (Color red: 255 green: 149 blue: 5)
+		with: (Color red: 255 green: 182 blue: 39)
+		with: (Color red: 255 green: 201 blue: 113)
 ]
 
 { #category : #palettes }
 RTPalette class >> c13 [
 	^ Array
-		with: (Color r: 123 g: 223 b: 242 range: 255)
-		with: (Color r: 178 g: 247 b: 239 range: 255)
-		with: (Color r: 239 g: 247 b: 246 range: 255)
-		with: (Color r: 247 g: 214 b: 224 range: 255)
-		with: (Color r: 242 g: 181 b: 212 range: 255)
+		with: (Color red: 123 green: 223 blue: 242)
+		with: (Color red: 178 green: 247 blue: 239)
+		with: (Color red: 239 green: 247 blue: 246)
+		with: (Color red: 247 green: 214 blue: 224)
+		with: (Color red: 242 green: 181 blue: 212)
 ]
 
 { #category : #palettes }
 RTPalette class >> c14 [
 	^ Array
-		with: (Color r: 254 g: 147 b: 140 range: 255)
-		with: (Color r: 237 g: 175 b: 151 range: 255)
-		with: (Color r: 196 g: 151 b: 146 range: 255)
-		with: (Color r: 173 g: 145 b: 163 range: 255)
-		with: (Color r: 157 g: 145 b: 163 range: 255)
+		with: (Color red: 254 green: 147 blue: 140)
+		with: (Color red: 237 green: 175 blue: 151)
+		with: (Color red: 196 green: 151 blue: 146)
+		with: (Color red: 173 green: 145 blue: 163)
+		with: (Color red: 157 green: 145 blue: 163)
 ]
 
 { #category : #palettes }
 RTPalette class >> c2 [
 	^ Array
-		with: (Color r: 58 g: 96 b: 110 range: 255)
-		with: (Color r: 96 g: 123 b: 125 range: 255)
-		with: (Color r: 130 g: 142 b: 130 range: 255)
-		with: (Color r: 170 g: 174 b: 142 range: 255)
-		with: (Color r: 224 g: 224 b: 224 range: 255)
+		with: (Color red: 58 green: 96 blue: 110)
+		with: (Color red: 96 green: 123 blue: 125)
+		with: (Color red: 130 green: 142 blue: 130)
+		with: (Color red: 170 green: 174 blue: 142)
+		with: (Color red: 224 green: 224 blue: 224)
 ]
 
 { #category : #palettes }
 RTPalette class >> c3 [
 	^ Array
-		with: (Color r: 239 g: 217 b: 206 range: 255)
-		with: (Color r: 222 g: 192 b: 241 range: 255)
-		with: (Color r: 183 g: 156 b: 237 range: 255)
-		with: (Color r: 149 g: 127 b: 239 range: 255)
-		with: (Color r: 113 g: 97 b: 239 range: 255)
+		with: (Color red: 239 green: 217 blue: 206)
+		with: (Color red: 222 green: 192 blue: 241)
+		with: (Color red: 183 green: 156 blue: 237)
+		with: (Color red: 149 green: 127 blue: 239)
+		with: (Color red: 113 green: 97 blue: 239)
 ]
 
 { #category : #palettes }
 RTPalette class >> c4 [
 	^ Array
-		with: (Color r: 36 g: 123 b: 160 range: 255)
-		with: (Color r: 112 g: 193 b: 179 range: 255)
-		with: (Color r: 178 g: 219 b: 191 range: 255)
-		with: (Color r: 243 g: 255 b: 189 range: 255)
-		with: (Color r: 255 g: 22 b: 84 range: 255)
+		with: (Color red: 36 green: 123 blue: 160)
+		with: (Color red: 112 green: 193 blue: 179)
+		with: (Color red: 178 green: 219 blue: 191)
+		with: (Color red: 243 green: 255 blue: 189)
+		with: (Color red: 255 green: 22 blue: 84)
 ]
 
 { #category : #palettes }
 RTPalette class >> c5 [
 	^ Array
-		with: (Color r: 220 g: 220 b: 221 range: 255)
-		with: (Color r: 197 g: 195 b: 198 range: 255)
-		with: (Color r: 70 g: 73 b: 76 range: 255)
-		with: (Color r: 76 g: 92 b: 104 range: 255)
-		with: (Color r: 25 g: 133 b: 161 range: 255)
+		with: (Color red: 220 green: 220 blue: 221)
+		with: (Color red: 197 green: 195 blue: 198)
+		with: (Color red: 70 green: 73 blue: 76)
+		with: (Color red: 76 green: 92 blue: 104)
+		with: (Color red: 25 green: 133 blue: 161)
 ]
 
 { #category : #palettes }
 RTPalette class >> c6 [
 	^ Array
-		with: (Color r: 216 g: 226 b: 220 range: 255)
-		with: (Color r: 255 g: 229 b: 217 range: 255)
-		with: (Color r: 255 g: 202 b: 212 range: 255)
-		with: (Color r: 244 g: 172 b: 183 range: 255)
-		with: (Color r: 157 g: 129 b: 137 range: 255)
+		with: (Color red: 216 green: 226 blue: 220)
+		with: (Color red: 255 green: 229 blue: 217)
+		with: (Color red: 255 green: 202 blue: 212)
+		with: (Color red: 244 green: 172 blue: 183)
+		with: (Color red: 157 green: 129 blue: 137)
 ]
 
 { #category : #palettes }
 RTPalette class >> c7 [
 	^ Array
-		with: (Color r: 224 g: 251 b: 252 range: 255)
-		with: (Color r: 194 g: 223 b: 227 range: 255)
-		with: (Color r: 157 g: 180 b: 192 range: 255)
-		with: (Color r: 92 g: 107 b: 115 range: 255)
-		with: (Color r: 37 g: 50 b: 55 range: 255)
+		with: (Color red: 224 green: 251 blue: 252)
+		with: (Color red: 194 green: 223 blue: 227)
+		with: (Color red: 157 green: 180 blue: 192)
+		with: (Color red: 92 green: 107 blue: 115)
+		with: (Color red: 37 green: 50 blue: 55)
 ]
 
 { #category : #palettes }
 RTPalette class >> c8 [
 	^ Array
-		with: (Color r: 151 g: 249 b: 249 range: 255)
-		with: (Color r: 164 g: 222 b: 249 range: 255)
-		with: (Color r: 193 g: 224 b: 247 range: 255)
-		with: (Color r: 207 g: 186 b: 225 range: 255)
-		with: (Color r: 197 g: 159 b: 201 range: 255)
+		with: (Color red: 151 green: 249 blue: 249)
+		with: (Color red: 164 green: 222 blue: 249)
+		with: (Color red: 193 green: 224 blue: 247)
+		with: (Color red: 207 green: 186 blue: 225)
+		with: (Color red: 197 green: 159 blue: 201)
 ]
 
 { #category : #palettes }
 RTPalette class >> c9 [
 	^ Array
-		with: (Color r: 237 g: 238 b: 201 range: 255)
-		with: (Color r: 221 g: 231 b: 199 range: 255)
-		with: (Color r: 191 g: 216 b: 189 range: 255)
-		with: (Color r: 152 g: 201 b: 163 range: 255)
-		with: (Color r: 119 g: 191 b: 163 range: 255)
+		with: (Color red: 237 green: 238 blue: 201)
+		with: (Color red: 221 green: 231 blue: 199)
+		with: (Color red: 191 green: 216 blue: 189)
+		with: (Color red: 152 green: 201 blue: 163)
+		with: (Color red: 119 green: 191 blue: 163)
 ]

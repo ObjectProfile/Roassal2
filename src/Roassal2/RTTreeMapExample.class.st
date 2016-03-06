@@ -202,6 +202,38 @@ t8ikZv69CObLev7v8xf4CZ+Dg4PRguCXeAo+CD4IfsEHwQfBL/gg+CD4BR8EHwS/xF3+A8ir
 +VLeOJwSAAAAAElFTkSuQmCC'
 ]
 
+{ #category : #sources }
+RTTreeMapExample >> exampleSimple [
+
+| b labels |
+b := RTTreeMapBuilder new.
+  labels := #('uno' 'dos' 'tres' 'cuatro' 'cinco' 'cent mille').
+  b shape fillColor: Color veryLightGray.
+  b from: labels using: [#()].
+  b weight: [:n | n size ].
+  b build.
+b view elements @ (RTLabelled new color: Color black; center).
+  ^ b view.
+]
+
+{ #category : #icons }
+RTTreeMapExample >> exampleSimpleIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACoklEQVR4XuXdyWoCQRCA4bya
+D+ADeFMPnrwr4i6CuC8oihviqAiiIoiC26NVqAZzkhxMYo/5D2VPe7Cb+ehpmKkpPxzHke12
+ay3m87nV8R/FeDy2NvaHftxuN2ux2+2sjv8olsultbH5IHwQPggfhA/CB+GD8EH4IHwQPggf
+hA/CB+GD8EH4IHwQBMh6vZZWqyWdTkf2+z0fxCbI9XqVXC4n5XJZ/H6/5PN5PohNkOPx+HV8
+Op34lyz+HsIH4YPwQfggfBA+CB+ED8IH4YPwQfgg9kHa7bY1kF6vxwYJBoOm1Vs3ejIymYyE
+w2GJRCISCAQkm82+DETnkkgkJJVKSa1WM/1n5/C2IOfzWZLJpIRCIVmtVuZkdLtdGQ6Hcrlc
+JJ1OvwykUqlIsViUyWQis9nM9PU3npkDfw/h7yF8kG9BHMvZ7/pMhQ/CXyF8ED4IH4QPwgfh
+g/BB+CB8ED4IH4QPwgfhg/BB+CB8ED4IH8QWSCwWM22hUDBP7DabDR/EFsj9JN6z3huNhnl0
+yQdxQfb74XDgZ7/z9xA+CB+ED8IH4YPwQfggrgPRJDdFcVMsFgtrY/NXiMuCD8IH4YPwQfgg
+fBA+CB+ED3LjZ7/zVwh/hfBB+CB8ED4IH4QPwgfhg/BB+CB8ED4IH4QPwgfhg/BB+CB8ED4I
+H+QNQB7d/vf5fKYgGR/kRWN5vV6Jx+PmuNlsmlYB9PUKDY/HY/para7f7/NB/jK0/F61WjXV
+37SvlekUZTQaSb1eN++5lEolk704nU7Nd3wQ/h7CB/kXIPc/ddHqm88ubT7IL4Fo5U1to9Go
+DAYD854hH4R/yeKD8EH4IHwQPggfhB98ED4IH4QPwgfhg/BB+CB8ED4IH4QPwgfhBx+ED8IH
+4YPwQfggP4lPMH/VCMYIisUAAAAASUVORK5CYII='
+]
+
 { #category : #accessing }
 RTTreeMapExample >> label [
 	^ 'Tree map'
