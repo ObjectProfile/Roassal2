@@ -2256,8 +2256,8 @@ b edges
 	moveBehind;
 	connectToAll: [ :value | 
 	(value \\ 30 = 0) 
-		ifTrue: [ { value + 30 } ]
-		ifFalse: [ { value + 1  . value + 30} ]
+		ifTrue: [ Array with: (value + 30) ]
+		ifFalse: [ Array with: (value + 1) with: (value + 30) ]
 	 ].
 b layout grid lineItemsCount: 30.
 b build.
