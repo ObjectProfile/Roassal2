@@ -91,15 +91,12 @@ RTResizable >> addCursorEventsOn: anElement corner: aCorner [
 
 { #category : #hooks }
 RTResizable >> attachHandle: aHandle toCorner: aCorner [
-	"Make sure constraint is setup BEFORE resize callback is attached, otherwise it triggers very expensive resize updates."
-
+	aHandle addCallback: (TRTranslationCallback block: [ :shape :step | self callbackFor: aHandle corner: aCorner ]).
+	self addCursorEventsOn: aHandle corner: aCorner.
 	(RTConstraint on: aHandle background: element)
 		perform: aCorner;
 		border;
-		stick.
-	aHandle
-		addCallback: (TRTranslationCallback block: [ :shape :step | self callbackFor: aHandle corner: aCorner ]).
-	self addCursorEventsOn: aHandle corner: aCorner
+		stick
 ]
 
 { #category : #hooks }
