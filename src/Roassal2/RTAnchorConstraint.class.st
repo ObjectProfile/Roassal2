@@ -258,11 +258,11 @@ RTAnchorConstraint >> moveElement [
 
 { #category : #accessing }
 RTAnchorConstraint >> segments [
-	(edge shape isKindOf: DCRTConnection)
-		ifTrue: [ ^ DCRTPolyLineSegment withAll: (self connectionSegmentsFor: edge) ].
+	(edge shape className = #DCRTConnection)
+		ifTrue: [ ^ RTPolyLineSegment withAll: (self connectionSegmentsFor: edge) ].
 	(edge shape isKindOf: RTBezierLine)
 		ifTrue: [ ^ self notYetImplemented ].
-	^ DCRTPolyLineSegment with: (self lineSegmentFor: edge)
+	^ RTPolyLineSegment with: (self lineSegmentFor: edge)
 ]
 
 { #category : #updating }

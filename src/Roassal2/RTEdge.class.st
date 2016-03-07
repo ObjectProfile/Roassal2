@@ -386,6 +386,13 @@ RTEdge >> isUsedInLayout [
 	^ shouldBeUsedInLayout
 ]
 
+{ #category : #accessing }
+RTEdge >> lineSegments [
+	^ {(RTLineSegment
+		from: (self shape startingPointOf: self)
+		to: (self shape endingPointOf: self))}
+]
+
 { #category : #actions }
 RTEdge >> moveBehind: elements [
 	self trachelShape pushBehindAll: (elements collect: [:each | each trachelShape])
