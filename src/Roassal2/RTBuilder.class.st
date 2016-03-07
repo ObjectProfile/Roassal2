@@ -123,11 +123,6 @@ RTBuilder >> interactionBuilder: anRTInteractionBuilder [
 ]
 
 { #category : #accessing }
-RTBuilder >> metricNormalizerClass [
-	^ RTMetricNormalizer
-]
-
-{ #category : #accessing }
 RTBuilder >> nestedElementsAttribute [
 	^ self class nestedElementsAttribute
 ]
@@ -136,14 +131,11 @@ RTBuilder >> nestedElementsAttribute [
 RTBuilder >> normalizer [
 	"
 	:: Void->RTMetricNormalizer
-	
-	This metric normalizer assumes that elements have been already created. Which may not be the case...
 	"
-
-	metricNormalizer
-		ifNil: [ metricNormalizer := self metricNormalizerClass new.
-			metricNormalizer view: self view.
-			metricNormalizer elements: self view elements ].
+	metricNormalizer ifNil: [ 
+		metricNormalizer := RTMetricNormalizer new. 
+		metricNormalizer view: self view.
+		metricNormalizer elements: self view elements ].
 	^ metricNormalizer
 ]
 
