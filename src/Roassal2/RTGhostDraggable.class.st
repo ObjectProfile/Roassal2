@@ -20,7 +20,7 @@ RTGhostDraggable class >> example [
 	| v e |
 	v := RTView new.
 	e := RTBox new
-		color: Color navy;
+		color: Color blue muchDarker;
 		width: 200;
 		height: 300;
 		elementOn: 'drag me'.
