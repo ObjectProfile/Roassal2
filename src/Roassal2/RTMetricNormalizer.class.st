@@ -520,6 +520,12 @@ RTMetricNormalizer >> normalizePosition: metricBlock min: min max: max using: tr
 ]
 
 { #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeSize [
+	"Normalize the size of each element. It also assume that each model is a numerical value"
+	self normalizeSize: #yourself
+]
+
+{ #category : #'public normalize size' }
 RTMetricNormalizer >> normalizeSize: metricBlock [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"

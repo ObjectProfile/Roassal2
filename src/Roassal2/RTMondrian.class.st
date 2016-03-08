@@ -192,6 +192,11 @@ RTMondrian >> layout [
 	^ layoutBuilder 
 ]
 
+{ #category : #hooks }
+RTMondrian >> metricNormalizerClass [
+	^ RTMetricNormalizer
+]
+
 { #category : #'public - nodes' }
 RTMondrian >> node: anObject [
 	"Add a new node to the view"
