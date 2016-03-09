@@ -46,7 +46,7 @@ RTDynamicStackedGrapher >> add: anObject [
 	
 	textBelow ifNotNil: [ 
 		| l |
-		l := RTLabelled new text: textBelow.
+		l := RTLabeled new text: textBelow.
 		yValue > 0 ifTrue: [ l below ].
 		el @ l ].
 	

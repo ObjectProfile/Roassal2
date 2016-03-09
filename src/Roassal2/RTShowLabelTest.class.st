@@ -94,7 +94,7 @@ RTShowLabelTest >> testBasic03 [
 RTShowLabelTest >> testSetLabelledInteraction [
 	| lbl |
 	lbl := RTShowLabel new.
-	lbl labelledInteraction: RTLabelled new
+	lbl labelledInteraction: RTLabeled new
 ]
 
 { #category : #tests }

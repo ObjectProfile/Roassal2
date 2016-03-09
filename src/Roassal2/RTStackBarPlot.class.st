@@ -31,7 +31,7 @@ RTStackBarPlot >> addLabelToBarIfNecessary [
 	labelBlock ifNil: [ ^ self ].
 	view elements do: [ :e | 
 		(labelConditionalBlock rtValue: e model)
-			ifTrue: [ e @ (RTLabelled new center; color: labelColor; text: labelBlock) ] ].
+			ifTrue: [ e @ (RTLabeled new center; color: labelColor; text: labelBlock) ] ].
 ]
 
 { #category : #'public - configuration' }

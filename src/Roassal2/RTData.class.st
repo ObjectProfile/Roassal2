@@ -137,7 +137,7 @@ RTData >> highlightIf: aOneArgBlock using: secondOneArgBlock [
 	elementActions add: [ :elems |
 		elems do: [ :element |
 		(aOneArgBlock rtValue: element model) ifTrue: [ 
-			element @ (RTLabelled new text: [ :model | secondOneArgBlock rtValue: model ]; setAsHighlightable).
+			element @ (RTLabeled new text: [ :model | secondOneArgBlock rtValue: model ]; setAsHighlightable).
 		] ] ]
 ]
 

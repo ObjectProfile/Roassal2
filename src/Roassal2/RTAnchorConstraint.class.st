@@ -44,7 +44,7 @@ RTAnchorConstraint class >> example [
 		addAll: lbls;
 		addAll: es.
 	es @ RTDraggable.
-	es @ RTLabelled.
+	es @ RTLabeled.
 	e1 := RTArrowedLine new
 		withContinuousCircleAttachPoint;
 		color: Color black;

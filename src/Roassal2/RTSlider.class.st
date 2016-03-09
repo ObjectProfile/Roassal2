@@ -147,7 +147,7 @@ RTSlider >> renderIn: aView [
 	
 	"We prepare a label if necessary"
 	labelled ifTrue: [ 
-		cursor @ (RTLabelled new text: 0).
+		cursor @ (RTLabeled new text: 0).
 		trachelShape := cursor attributeAt: #RTLabelledLabel ].
 	
 	"We compute the slider value, and call the callback"

@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 RTLabelledTest >> testConstruction [
 
-	RTLabelled above; below; center
+	RTLabeled above; below; center
 ]
 
 { #category : #tests }
@@ -18,7 +18,7 @@ RTLabelledTest >> testDefault [
 	el := (RTBox new size: 30) elementOn: 'hello world'.
 	v add: el.
 	
-	el @ RTLabelled.
+	el @ RTLabeled.
 	self assert: v numberOfElements = 1.
 	self assert: v canvas numberOfShapes = 2.
 	
@@ -35,7 +35,7 @@ RTLabelledTest >> testDefaultFromNumber [
 	el := (RTBox new size: 30) elementOn: 5.
 	v add: el.
 	
-	el @ RTLabelled.
+	el @ RTLabeled.
 	self assert: v numberOfElements = 1.
 	self assert: v canvas numberOfShapes = 2.
 	
@@ -53,7 +53,7 @@ RTLabelledTest >> testDefaultWithNoLabel [
 	el := (RTBox new size: 30) element.
 	v add: el.
 	
-	el @ RTLabelled.
+	el @ RTLabeled.
 	self assert: v numberOfElements = 1.
 	
 	"No label since there is no object behind the el"
@@ -69,7 +69,7 @@ RTLabelledTest >> testRemovingLabelledElement [
 	el := (RTBox new size: 30) elementOn: 'hello world'.
 	v add: el.
 	
-	el @ RTLabelled.
+	el @ RTLabeled.
 	self assert: v numberOfElements = 1.
 	self assert: v canvas numberOfShapes = 2.
 	

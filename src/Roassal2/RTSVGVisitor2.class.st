@@ -93,7 +93,7 @@ RTSVGVisitor2 >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
-	#RTHighlightable #RTLabelled #RTShowEdge #RTShowLabel #RTZoomableView
+	#RTHighlightable #RTLabeled #RTShowEdge #RTShowLabel #RTZoomableView
 	#RTFocusElement).
 	exportFixedShapes := true.
 	stream := WriteStream on: String new. 

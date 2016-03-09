@@ -257,7 +257,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 		 ].
 
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
-		e @ (RTShowLabel new labelledInteraction: (RTLabelled new text: [ :el | el kiviatNode named])).
+		e @ (RTShowLabel new labelledInteraction: (RTLabeled new text: [ :el | el kiviatNode named])).
 		].
 	
 	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup)  when: TRMouseEnter do: [  :evt | 

@@ -570,7 +570,7 @@ elems := shape elementsOn: (1 to: 10).
 view addAll: elems.
 elems @ RTHighlightable.
 
-label := RTLabelled new text: #yourself.
+label := RTLabeled new text: #yourself.
 label bottomLeft.
 elems @ label.
 
@@ -719,11 +719,11 @@ l + (RTSimpleArrowHead new color: Color red).
 e2 translateBy: 60 @ 80.
 v addAll: (Array with: e1 with: e2 with: l ).
 
-e1 @ RTLabelled.
-e2 @ RTLabelled.
+e1 @ RTLabeled.
+e2 @ RTLabeled.
 
 "Note that the RTLabelled interaction has to be set after having added the element in the view"
-l @ (RTLabelled new text: 'lining up!').
+l @ (RTLabeled new text: 'lining up!').
 
 	^ v
 ]
@@ -1122,7 +1122,7 @@ centralPoint translateTo: es encompassingRectangle center.
 v add: centralPoint.
 centralPoint @ RTDraggable.
 
-es @ RTLabelled.
+es @ RTLabeled.
 
 eb := RTEdgeBuilder new.
 eb view: v.
@@ -2432,7 +2432,7 @@ values do: [ :aValue |
 		v add: el
 	].
 	RTVerticalLineLayout on: g.
-	g last  @ (RTLabelled new 
+	g last  @ (RTLabeled new 
 					below; 
 					text: aValue;
 					color: Color orange).
@@ -3363,7 +3363,7 @@ s := RTShapeBuilder new
 es := s elementsOn: RTShape withAllSubclasses.
 v add: es.
 
-es @ RTPopup @ (RTLabelled new setAsHighlightable).
+es @ RTPopup @ (RTLabeled new setAsHighlightable).
 
 expand := (RTExpandable new
 				group: [ :group :element | 
@@ -3677,7 +3677,7 @@ shape := RTEllipse new size: #yourself.
 es := shape elementsOn: vv.
 
 v addAll: es.
-es @ (RTLabelled new fontSize: #yourself).
+es @ (RTLabeled new fontSize: #yourself).
 RTCircleLayout new radius: 250; on: es.
 ^ v
 ]
@@ -4571,10 +4571,10 @@ e4 := (RTEllipse new color: (Color green alpha: 0.4); size: 20) elementOn: 'Buen
 vista add: e1; add: e2; add: e3; add: e4.
 
 "Decimos que los elementos antes definidos se podrán arrastrar"
-e1 @ RTDraggable @ RTLabelled.
-e2 @ RTDraggable @ RTLabelled.
-e3 @ RTDraggable @ RTLabelled.
-e4 @ RTDraggable @ RTLabelled.
+e1 @ RTDraggable @ RTLabeled.
+e2 @ RTDraggable @ RTLabeled.
+e3 @ RTDraggable @ RTLabeled.
+e4 @ RTDraggable @ RTLabeled.
 
 
 "Decimos qué propiedades va a tener la línea que los conecta los elementos"
@@ -4630,7 +4630,7 @@ v @ RTDraggableView.
 es := (RTEllipse new size: #numberOfMethods) elementsOn: RTObject withAllSubclasses.
 v addAll: es.
 
-es @ RTPopup @ RTLabelled @ RTDraggable.
+es @ RTPopup @ RTLabeled @ RTDraggable.
 RTFlowLayout new maxWidth: 900; gapSize: 50; on: es.
 
 

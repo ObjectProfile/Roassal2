@@ -54,7 +54,7 @@ RTShapeBuilderTest >> testBezierLine01 [
 	centralPoint translateTo: es encompassingRectangle center.
 	v add: centralPoint.
 
-	es @ RTLabelled.
+	es @ RTLabeled.
 
 	eb := RTEdgeBuilder new.
 	eb view: v.
