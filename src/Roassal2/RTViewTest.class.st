@@ -105,7 +105,7 @@ RTViewTest >> testCleaningView [
 	v := RTView new.
 	e := (RTBox new size: 80) elementOn: 'Hello World'.
 	v add: e.
-	e @ RTLabelled.
+	e @ RTLabeled.
 
 	v cleanAll.
 	self assert: v numberOfElements equals: 0.

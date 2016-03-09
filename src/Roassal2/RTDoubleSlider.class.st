@@ -170,9 +170,9 @@ RTDoubleSlider >> renderIn: aView [
 		positionMax := (positionMax * (max - min)) + min.
 		positionMax := useIntegerLabel ifTrue: [ (positionMax round: 0) asInteger ] ifFalse: [ positionMax round: 2 ].
 
-		cursorMin @ (RTLabelled new text: positionMin).
+		cursorMin @ (RTLabeled new text: positionMin).
 		labelMin := cursorMin attributeAt: #RTLabelledLabel. 
-		cursorMax @ (RTLabelled new text: positionMax).
+		cursorMax @ (RTLabeled new text: positionMax).
 		labelMax := cursorMax attributeAt: #RTLabelledLabel ].
 
 	"compute the cursors values and call callbacks"

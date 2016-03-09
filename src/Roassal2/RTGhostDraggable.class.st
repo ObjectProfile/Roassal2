@@ -28,7 +28,7 @@ RTGhostDraggable class >> example [
 	e @ RTGhostDraggable.
 	e
 		@
-			(RTLabelled new
+			(RTLabeled new
 				center;
 				color: Color white).
 	v open

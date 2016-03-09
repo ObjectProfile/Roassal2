@@ -212,7 +212,7 @@ b := RTTreeMapBuilder new.
   b from: labels using: [#()].
   b weight: [:n | n size ].
   b build.
-b view elements @ (RTLabelled new color: Color black; center).
+b view elements @ (RTLabeled new color: Color black; center).
   ^ b view.
 ]
 

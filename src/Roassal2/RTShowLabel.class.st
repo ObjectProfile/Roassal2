@@ -42,7 +42,7 @@ RTShowLabel >> doesNotUnderstand: aMessage [
 { #category : #initialize }
 RTShowLabel >> initialize [
 	super initialize.
-	labelledInteraction := RTLabelled new.
+	labelledInteraction := RTLabeled new.
 ]
 
 { #category : #accessing }

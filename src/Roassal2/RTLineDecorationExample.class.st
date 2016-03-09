@@ -137,7 +137,7 @@ addHead := [ :aHeadName :anOffset |
 	e1 translateBy: -110 @ anOffset.
 	e2 translateBy: 110 @ anOffset.
 
-	l1 @ (RTLabelled new color: Color black) ].
+	l1 @ (RTLabeled new color: Color black) ].
 
 heads := (RTStyledMultiLine rtmethods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
 offset := 0.
@@ -170,7 +170,7 @@ addStyle := [ :aStyleName |
 	l1 model: aStyleName.
 	view addAll: (Array with: e1 with: e2 with: l1).
 
-	l1 @ (RTLabelled new color: Color black).
+	l1 @ (RTLabeled new color: Color black).
 ].
 
 styles := (RTStyledMultiLine rtmethods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
