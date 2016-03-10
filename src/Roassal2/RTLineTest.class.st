@@ -17,3 +17,14 @@ RTLineTest >> testBasic [
 
 	self assert: edge trachelShape width equals: 5
 ]
+
+{ #category : #tests }
+RTLineTest >> testBasicError [
+
+	| arrow |
+	arrow := RTArrowedLine new
+			color: Color red;
+			edgeFrom: RTElement new to: RTElement new;
+			withOffsetIfMultiple.
+	self should: [ arrow element ] raise: Error
+]

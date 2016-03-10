@@ -22,6 +22,21 @@ RTAbstractLine class >> edgesFrom: element toAll: someElements [
 ]
 
 { #category : #public }
+RTAbstractLine class >> element [
+	self error: 'You cannot send #element to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #public }
+RTAbstractLine class >> elementOn: v [
+	self error: 'You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #public }
+RTAbstractLine class >> elementsOn: v [
+	self error: 'You cannot send #elementsOn: to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #public }
 RTAbstractLine >> + anotherShape [
 	"Compose this shape with another shape"
 	anotherShape line: self.
@@ -65,6 +80,21 @@ RTAbstractLine >> edgeFrom: el1 to: el2 [
 RTAbstractLine >> edgesFrom: element toAll: someElements [
 	"Return a set of edges, with myself as shape. The parameter 'element' is an instance of RTElement, and someElements is simply an ordered collection of RTElement"
 	^ (RTEdge from: element toAll: someElements) addShape: self
+]
+
+{ #category : #'error handling' }
+RTAbstractLine >> element [
+	self error: 'You cannot send #element to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #'error handling' }
+RTAbstractLine >> elementOn: v [
+	self error: 'You cannot send #elementOn: to a line. Create an edge using #edgeFrom:to:'
+]
+
+{ #category : #'error handling' }
+RTAbstractLine >> elementsOn: v [
+	self error: 'You cannot send #elementsOn: to a line. Create an edge using #edgeFrom:to:'
 ]
 
 { #category : #'attach point' }
