@@ -71,9 +71,17 @@ RTSpringLayoutStepping >> layout [
 RTSpringLayoutStepping >> layout: aForceBasedLayout [
 	"Set an instance of the class RTForceBasedLayout. 
 	This is useful in case the layout is initialized from outside"
-	layout := aForceBasedLayout.
+	self layoutWithoutPreparing: aForceBasedLayout.
 	view ifNotNil: 
 		[ self prepareLayoutFor: view ]
+]
+
+{ #category : #accessing }
+RTSpringLayoutStepping >> layoutWithoutPreparing: aForceBasedLayout [
+	"Set an instance of the class RTForceBasedLayout. 
+	This is useful in case the layout is initialized from outside"
+	layout := aForceBasedLayout.
+
 ]
 
 { #category : #accessing }
