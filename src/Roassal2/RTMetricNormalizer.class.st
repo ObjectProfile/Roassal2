@@ -978,6 +978,6 @@ RTMetricNormalizer >> view [
 ]
 
 { #category : #accessing }
-RTMetricNormalizer >> view: anObject [
-	view := anObject
+RTMetricNormalizer >> view: aViewOrAGroup [
+	view := aViewOrAGroup
 ]
