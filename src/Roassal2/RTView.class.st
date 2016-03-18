@@ -213,8 +213,8 @@ RTView >> elementsFromModels: objects [
 	| answer t |
 	answer := RTGroup new.
 	objects do: [ :o |
-		t := self elementFromModel: o.
-		t notNil ifTrue: [ answer add: t ] ].
+		t := self elementsFromModel: o.
+		t notNil ifTrue: [ answer addAll: t ] ].
 	^ answer
 ]
 
