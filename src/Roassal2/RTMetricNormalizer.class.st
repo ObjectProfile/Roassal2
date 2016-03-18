@@ -104,6 +104,12 @@ RTMetricNormalizer >> edges [
 ]
 
 { #category : #accessing }
+RTMetricNormalizer >> elements [
+	"Elements on which the normalization will occur"
+	^ elements
+]
+
+{ #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
 	elements := someElements
 ]
