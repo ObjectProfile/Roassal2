@@ -28,6 +28,12 @@ RTBuilder >> addElementOn: anObject [
 	^ element
 ]
 
+{ #category : #conversion }
+RTBuilder >> asElement [
+	"Return a compound element for all the elements of my view"
+	^ self view asElement
+]
+
 { #category : #public }
 RTBuilder >> build [
 	"Simply render the view"
