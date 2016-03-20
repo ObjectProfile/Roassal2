@@ -128,7 +128,7 @@ RTBuilder >> interactionBuilder: anRTInteractionBuilder [
 	interactionBuilder := anRTInteractionBuilder
 ]
 
-{ #category : #accessing }
+{ #category : #hooks }
 RTBuilder >> metricNormalizerClass [
 	"Return the class used for the metric normalization"
 	^ RTLazyMetricNormalizer
