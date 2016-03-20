@@ -11,7 +11,6 @@ Class {
 { #category : #building }
 RTLazyMetricNormalizer >> build [
 	messages do: [ :m | m sendTo: realNormalizer ].
-	self resetMessages
 ]
 
 { #category : #'reflective operations' }
