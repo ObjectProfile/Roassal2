@@ -8,30 +8,35 @@ Class {
 	#category : #'Roassal2-ColorNormalizer'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTLazyMetricNormalizer >> build [
 	messages do: [ :m | m sendTo: realNormalizer ].
 	self resetMessages
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'reflective operations' }
 RTLazyMetricNormalizer >> doesNotUnderstand: message [
 	messages add: message
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTLazyMetricNormalizer >> elements: someElements [
 	realNormalizer elements: someElements
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTLazyMetricNormalizer >> initialize [
 	super initialize.
 	realNormalizer := RTMetricNormalizer new.
 	self resetMessages
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #metrics }
+RTLazyMetricNormalizer >> numberOfReceivedMessages [
+	^ messages size
+]
+
+{ #category : #actions }
 RTLazyMetricNormalizer >> resetMessages [
 	messages := OrderedCollection new
 ]

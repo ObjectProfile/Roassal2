@@ -9,6 +9,6 @@ Class {
 
 { #category : #'instance creation' }
 RTLabelled class >> new [
-	self deprecated: 'RTLabelled is deprecated. Please use RTLabeled'.
+	self error: 'RTLabelled is deprecated. Please use RTLabeled'.
 	^ super new
 ]
