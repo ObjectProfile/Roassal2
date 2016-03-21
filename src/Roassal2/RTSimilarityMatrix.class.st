@@ -117,15 +117,12 @@ RTSimilarityMatrix >> defaultExtent [
 { #category : #visualization }
 RTSimilarityMatrix >> elementOn: pair For: view [
 	| elt |
-	elt := (RTElement on: pair).
+	elt := RTElement on: pair.
 	elt + (RTBox new
 		color: (self colorForElement: elt);
-		extent: self defaultExtent
-	).
-	self flag: #todo.
+		extent: self defaultExtent).
 	elt @ (RTPopup new text: [self popupTextFor: elt]).
 	elt when: TRMouseClick do: [:event | self action: pair ].
-	"elt forward: ROMouseDragging."
 	^ elt
 ]
 
@@ -153,7 +150,7 @@ RTSimilarityMatrix >> gridSize [
 RTSimilarityMatrix >> gridView [
 	| view |
 	view := RTView new.
-	view addAll: (pairs collect: [ : pair | self elementOn: pair For: view ]).
+	view addAll: (pairs collect: [ :pair | self elementOn: pair For: view ]).
 	RTGridLayout new 
 		gapSize: 0;
 		lineItemsCount: self gridSize;
@@ -208,7 +205,7 @@ RTSimilarityMatrix >> viewMatrix [
 	view := RTView new.
 	view @ RTDraggableView.
 	view addAll:
-		(pairs collect: [ : pair |
+		(pairs collect: [ : pair | 
 			self
 				elementOn: pair 
 				For: view ]).
