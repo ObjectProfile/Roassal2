@@ -230,10 +230,14 @@ TRCanvas >> extent [
 ]
 
 { #category : #accessing }
-TRCanvas >> extent: aPoint [
+TRCanvas >> extent: newExtentAsPoint [
 	"Set of the size of the canvas. Useful, for example, when the window is resized"
-	extent := aPoint.
-	self announce: TRResizeCanvasEvent
+	| evt |
+	evt := TRResizeCanvasEvent new.
+	evt oldExtent: extent.
+	evt newExtent: newExtentAsPoint.
+	extent := newExtentAsPoint.
+	self announce: evt
 ]
 
 { #category : #actions }
