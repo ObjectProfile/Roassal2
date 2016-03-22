@@ -152,13 +152,13 @@ RTDoubleSlider >> renderIn: aView [
 	draggableMin rectangle: [ :someElement | extremity1 position corner: extremity2 position ].
 	cursorMin @ draggableMin.
 	aView add: cursorMin.
-	cursorMin translateTo: 50 @ 0.
+	cursorMin translateTo: 0 @ 0.
 
 	draggableMax := RTConstrainedDraggable new.
 	draggableMax rectangle: [ :someElement | extremity1 position corner: extremity2 position ].
 	cursorMax @ draggableMax.
 	aView add: cursorMax.
-	cursorMax translateTo: 150 @ 0.
+	cursorMax translateTo: 200 @ 0.
 		
 	"set labels if necessary"
 	labelled ifTrue: [
