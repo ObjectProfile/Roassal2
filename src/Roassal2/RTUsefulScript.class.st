@@ -1,11 +1,11 @@
 Class {
-	#name : #RTAbstractPlugin,
+	#name : #RTUsefulScript,
 	#superclass : #RTAbstractMenuEntry,
 	#category : #'Roassal2-Plugins'
 }
 
 { #category : #'as yet unclassified' }
-RTAbstractPlugin class >> menuCommandOn: aBuilder [
+RTUsefulScript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	((aBuilder
 		item: self menuConfigurationSymbol;
@@ -22,23 +22,23 @@ RTAbstractPlugin class >> menuCommandOn: aBuilder [
 								action: [ cls new run ] ] ]
 ]
 
-{ #category : #'world menu' }
-RTAbstractPlugin class >> menuConfigurationEntryTitle [
-	^ #'Plugin: '
+{ #category : #'as yet unclassified' }
+RTUsefulScript class >> menuConfigurationEntryTitle [
+	^ #'Script: '
 ]
 
-{ #category : #'world menu' }
-RTAbstractPlugin class >> menuConfigurationSymbol [
-	^ #RoassalPlugin
+{ #category : #'as yet unclassified' }
+RTUsefulScript class >> menuConfigurationSymbol [
+	^ #RoassalScript
 ]
 
-{ #category : #public }
-RTAbstractPlugin >> configurationMessage [
-	^ 'Do you want to load plugin '
+{ #category : #'as yet unclassified' }
+RTUsefulScript >> configurationMessage [
+	^ 'Do you want to execute the script?'
 ]
 
-{ #category : #hooks }
-RTAbstractPlugin >> description [
+{ #category : #'as yet unclassified' }
+RTUsefulScript >> description [
 	"description of the of the plugin"
 	^ 'Need to be described'
 ]
