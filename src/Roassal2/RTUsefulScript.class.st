@@ -32,12 +32,12 @@ RTUsefulScript class >> menuConfigurationSymbol [
 	^ #RoassalScript
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTUsefulScript >> configurationMessage [
 	^ 'Do you want to execute the script?'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTUsefulScript >> description [
 	"description of the of the plugin"
 	^ 'Need to be described'

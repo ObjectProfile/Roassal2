@@ -14,12 +14,12 @@ RTAbstractMenuEntry class >> menuConfigurationSymbol [
 	^ #RoassalPlugin
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTAbstractMenuEntry >> configurationMessage [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAbstractMenuEntry >> description [
 	^ self subclassResponsibility 
 ]

@@ -4,14 +4,14 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTViewFolderScript >> description [
 	^ 
 'Let you select a directory and see its content. 
 A color is given to each file based on its extension.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTViewFolderScript >> execute [
 	
 	| fr allChildren b |
@@ -38,7 +38,7 @@ RTViewFolderScript >> execute [
 	b inspect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTViewFolderScript >> label [
 	^ 'Visualizing Folder'
 ]
