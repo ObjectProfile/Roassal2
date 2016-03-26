@@ -3,7 +3,12 @@ Class {
 	#superclass : #RTUsefulScript,
 	#instVars : [
 		'dic',
-		'view'
+		'view',
+		'scale',
+		'sortX',
+		'sortY',
+		'objectsY',
+		'objectsX'
 	],
 	#category : #'Roassal2-Plugins'
 }
@@ -13,16 +18,59 @@ RTSmallMultipleSingleScript >> buildMatrix [
 	| b |
 	b := RTGradualDSM new.
 	b view: view.
-	b objectsY: (dic keys collect: #key) asSet sorted asArray.
-	b objectsX: (dic keys collect: #value) asSet sorted asArray.
-	b score: [ :assoc | dic at: assoc ifAbsent: [ 0 ] ].
-	b build
+
+	"objectsX and objectsY refers to a dictionary in which the key is the string contained in a column,
+	and values is an array containing the connections"
+	objectsY := dic associations groupedBy: [ :ass | ass key key ].
+	objectsX := dic associations groupedBy: [ :ass | ass key value ].
+	
+	b objectsY: ((objectsY associations sortedAs: sortX) asArray collect: #key).
+	b objectsX: ((objectsX associations sortedAs: sortY) asArray collect: #key).
+	
+	b score: [ :assoc | scale rtValue: (dic at: assoc ifAbsent: [ 0 ]) ].
+	b build.
+	view signalUpdate 
+]
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> buildMenu [
+
+	| mb |
+	mb := RTMenuBuilder new.
+	mb view: view.
+	
+	mb menu: 'scale' submenu: 'linear' background: Color red trans
+			callback: [ scale := #yourself. self clearView. self buildMatrix ].
+			
+	mb menu: 'scale' submenu: 'sqrt' background: Color red trans
+			callback: [ scale := #sqrt. self clearView. self buildMatrix ].
+
+	mb menu: 'scale' submenu: 'log' background: Color red trans
+			callback: [ scale := [ :value | (value + 1) log * 5 ] . self clearView. self buildMatrix ].
+
+	mb menu: 'sorting' submenu: 'X-Name' background: Color red trans
+			callback: [ sortX := [ :assoc | assoc key ]. self clearView. self buildMatrix ].
+	mb menu: 'sorting' submenu: 'Y-Name' background: Color red trans
+			callback: [ sortY := [ :assoc | assoc key ]. self clearView. self buildMatrix ].
+
+	mb menu: 'sorting' submenu: 'X-amount of connections' background: Color red trans
+			callback: [ sortX := [ :assoc | assoc value size ]. self clearView. self buildMatrix ].
+	mb menu: 'sorting' submenu: 'Y-amount of connections' background: Color red trans
+			callback: [ sortY := [ :assoc | assoc value size ]. self clearView. self buildMatrix ].
+		
+	mb build.
 ]
 
 { #category : #hooks }
 RTSmallMultipleSingleScript >> buildView [
 	view := RTView new.
 	view @ RTDraggableView @ RTDoubleScrollBar
+]
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> clearView [
+
+	(view elements select: [ :e | e isFixed not ]) remove
 ]
 
 { #category : #accessing }
@@ -41,7 +89,16 @@ RTSmallMultipleSingleScript >> execute [
 	dic := self loadData.
 	self buildView.
 	self buildMatrix.
+	self buildMenu.
 	self inspectView
+]
+
+{ #category : #initialization }
+RTSmallMultipleSingleScript >> initialize [
+	super initialize.
+	scale := #yourself.
+	sortX := [ :assoc | assoc key ].
+	sortY := [ :assoc | assoc key ]
 ]
 
 { #category : #hooks }
