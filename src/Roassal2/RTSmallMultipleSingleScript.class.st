@@ -1,8 +1,29 @@
 Class {
 	#name : #RTSmallMultipleSingleScript,
 	#superclass : #RTUsefulScript,
+	#instVars : [
+		'dic',
+		'view'
+	],
 	#category : #'Roassal2-Plugins'
 }
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> buildMatrix [
+	| b |
+	b := RTGradualDSM new.
+	b view: view.
+	b objectsY: (dic keys collect: #key) asSet sorted asArray.
+	b objectsX: (dic keys collect: #value) asSet sorted asArray.
+	b score: [ :assoc | dic at: assoc ifAbsent: [ 0 ] ].
+	b build
+]
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> buildView [
+	view := RTView new.
+	view @ RTDraggableView @ RTDoubleScrollBar
+]
 
 { #category : #accessing }
 RTSmallMultipleSingleScript >> description [
@@ -16,8 +37,27 @@ weight is a float value.'
 
 { #category : #hooks }
 RTSmallMultipleSingleScript >> execute [
-	<script: ' RTSmallMultipleSingleScript new execute'>
-	| dic b | 
+	<script: 'RTSmallMultipleSingleScript new execute'>
+	dic := self loadData.
+	self buildView.
+	self buildMatrix.
+	self inspectView
+]
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> inspectView [
+	view inspect
+]
+
+{ #category : #hooks }
+RTSmallMultipleSingleScript >> label [
+	^ 'CSV as Small Multiple (All time slices in one)'
+]
+
+{ #category : #util }
+RTSmallMultipleSingleScript >> loadData [
+
+	| dic |
 	dic := Dictionary new.
 	RTCVSImporterTMP new
 		blockToExecute: [ :line | 
@@ -27,17 +67,5 @@ RTSmallMultipleSingleScript >> execute [
 			dic at: a put: (dic at: a) + 1.
 			];
 		importFile.
-
-	b := RTGradualDSM new.
-	b objectsY: (dic keys collect: #key) asSet sorted asArray.
-	b objectsX: (dic keys collect: #value) asSet sorted asArray.
-	b score: [ :assoc |
-		(dic at: assoc ifAbsent: [ 0 ]) ].
-	b view @ RTDraggableView @ RTDoubleScrollBar.
-	b inspect
-]
-
-{ #category : #hooks }
-RTSmallMultipleSingleScript >> label [
-	^ 'CSV as Small Multiple (All time slices in one)'
+	^ dic
 ]
