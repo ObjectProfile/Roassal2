@@ -57,6 +57,11 @@ RTSmallMultipleSingleScript >> buildMenu [
 			callback: [ sortX := [ :assoc | assoc value size ]. self clearView. self buildMatrix ].
 	mb menu: 'sorting' submenu: 'Y-amount of connections' background: Color red trans
 			callback: [ sortY := [ :assoc | assoc value size ]. self clearView. self buildMatrix ].
+
+	mb menu: 'sorting' submenu: 'X-sum weight' background: Color red trans
+			callback: [ sortX := [ :assoc | (assoc value collect: [ :as | as value value ]) sum ]. self clearView. self buildMatrix ].
+	mb menu: 'sorting' submenu: 'Y-sum weight' background: Color red trans
+			callback: [ sortY := [ :assoc | (assoc value collect: [ :as | as value value ]) sum ]. self clearView. self buildMatrix ].
 		
 	mb build.
 ]
