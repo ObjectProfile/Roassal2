@@ -4,14 +4,14 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTPackageLife >> description [
 	^ 
 'Let you select one or more packages and see their evolution. 
 The produced curve indicate the amount of methods modified during a week period time.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPackageLife >> execute [
 	| packageNamePattern packages methods oldestMethod byWeeks b ds lb |
 	packageNamePattern := UIManager default
@@ -53,7 +53,7 @@ RTPackageLife >> execute [
 	b view inspect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTPackageLife >> label [
 	^ 'Package evolution'
 ]
