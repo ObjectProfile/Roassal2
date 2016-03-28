@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'objects',
 		'values',
-		'sum'
+		'sum',
+		'elements'
 	],
 	#category : #'Roassal2-Builder-PieChart'
 }
@@ -15,7 +16,7 @@ RTPieBuilder >> emphasize: object by: anIntegerOrASymbolOrABlock [
 	"Move the pie to a given offset"
 	"anIntegerOrASymbolOrABlock is the distance for which object has to be moved away"
 	| element trachelShape delta v |
-	element := view elementFromModel: object.
+	element := elements elementFromModel: object.
 	trachelShape := element trachelShape.
 	
 	v := (anIntegerOrASymbolOrABlock rtValue: object).
@@ -58,10 +59,14 @@ RTPieBuilder >> innerAngleOf: object [
 { #category : #'private - utility' }
 RTPieBuilder >> label: aBlock withObject: anObject [
 	"Private method"
-	| element trachelShape labelPosition lbl |
-	element := view elementFromModel: anObject.
+	| element trachelShape labelPosition lbl off |
+	element := elements elementFromModel: anObject.
 	trachelShape := element trachelShape.
-	labelPosition := (trachelShape position + ((trachelShape externalRadius + 30)@ 0)) 
+	
+	off := (trachelShape class == TRArcShape) 
+				ifTrue: [ trachelShape externalRadius + 30 ] 
+				ifFalse: [ 0 ].
+	labelPosition := (trachelShape position + (off @ 0)) 
 						rotateBy: ((trachelShape betaAngle - trachelShape alphaAngle) / 2 + trachelShape alphaAngle) * 3.1415 / 180
 						about: trachelShape position.
 
@@ -95,8 +100,8 @@ RTPieBuilder >> labelledIf: aBlock withBlock: aBlockLabel [
 ]
 
 { #category : #'public - pies' }
-RTPieBuilder >> objects: aSetOfObjects [
-	objects := aSetOfObjects
+RTPieBuilder >> objects: someObjects [
+	objects := someObjects
 ]
 
 { #category : #'private - utility' }
@@ -115,10 +120,9 @@ RTPieBuilder >> ratioOf: anObject [
 
 { #category : #'public - pies' }
 RTPieBuilder >> slice: aBlockOrASymbol [
-	| es |
 	values := objects collect: aBlockOrASymbol.
 	sum := values sum.
-	es := self elementsOn: objects.
-	view addAll: es.
-	^ es
+	elements := self elementsOn: objects.
+	view addAll: elements.
+	^ elements
 ]
