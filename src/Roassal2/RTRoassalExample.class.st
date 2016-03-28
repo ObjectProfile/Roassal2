@@ -6642,7 +6642,8 @@ YII='
 { #category : #sources }
 RTRoassalExample >> exampleSelfCalls [
 	" The RTNest class offer simple methods to encapsulate some elements into a composing elements. Consider for example the following visualization that shows the shape hierarchy in Roassal. Each purple square is a class. Classes are linked with to represent class inheritance. Gray boxes are methods. Relation between methods indicates a possible invocation path between methods within the same class."
-
+	<gtExamle>
+	<noTest> " -> image crash "
 	| v classes classElement classElements shapeBuilder methods methodElements |
 	v := RTView new.
 	v @ RTDraggableView.
