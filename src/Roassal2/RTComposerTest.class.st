@@ -171,12 +171,51 @@ RTComposerTest >> testOnTheRightOf [
 ]
 
 { #category : #tests }
+RTComposerTest >> testPropagate [
+
+	| classesToAnalyze c b2 ds es |
+	classesToAnalyze := TRShape withAllSubclasses.
+	c := RTComposer new.
+	c gap: 35.
+
+	"-------"
+	b2 := RTGrapher new.
+	b2 view: c view.
+	b2 extent: 200 @ 150.
+	ds := RTData new.
+	ds interaction popup.
+	ds points: #(1 2 3).
+	b2 add: ds.
+	b2 build.
+	c group: #stat.
+
+	"-------"
+
+	b2 := RTGrapher new.
+	b2 view: c view.
+	b2 extent: 200 @ 150.
+	ds := RTData new.
+	ds interaction popup.
+	ds points: #(1 2 3).
+	b2 add: ds.
+	b2 build.
+	c group: #pie.
+
+	"-------"
+	c layout: RTGridLayout new.
+	c propagateHighlightToAll.
+
+	es := c view elementsFromModel: 1.
+	self assert: es size equals: 2.
+	self assert: (es collect: [ :e | e position y ]) asSet size equals: 1
+]
+
+{ #category : #tests }
 RTComposerTest >> testPropagateHighlight [
 
 	| e1 e2 e3 |
 	e1 := (RTBox new color: Color gray) elementOn: 1.
 	composer view add: e1.
-	composer propagateHighlight. 
 	composer group: #first.
 	
 	e2 := (RTEllipse new color: Color gray) elementOn: 1.
@@ -185,10 +224,9 @@ RTComposerTest >> testPropagateHighlight [
 	
 	e3 := (RTBox new color: Color gray) elementOn: 1.
 	composer view add: e3.
-	composer propagateHighlight.
 	composer group: #third.
 	
-	
+	composer propagateHighlightToAll.
 	composer move: #second onTheRightOf: #first.
 	composer move: #third onTheRightOf: #second.
 	
@@ -209,9 +247,9 @@ RTComposerTest >> testPropagateHighlight [
 	e3 announce: TRMouseLeave.
 
 	e2 announce: TRMouseEnter.
-	self assert: e1 trachelShape color == Color gray.
-	self assert: e2 trachelShape color == Color gray.
-	self assert: e3 trachelShape color == Color gray.
+	self assert: e1 trachelShape color ~~ Color gray.
+	self assert: e2 trachelShape color ~~ Color gray.
+	self assert: e3 trachelShape color ~~ Color gray.
 	e2 announce: TRMouseLeave.
 
 ]

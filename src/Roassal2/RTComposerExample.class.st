@@ -108,7 +108,6 @@ b edges connectFrom: #superclass.
 b normalizer normalizeSize: #numberOfLinesOfCode min: 5 max: 15 using: #sqrt.
 b layout tree.
 b build.
-c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
@@ -127,7 +126,6 @@ b2 add: ds.
 b2 axisX; axisYWithNumberOfTicks: 4.
 b2 build.
 
-c propagateHighlight.
 c group: #stat.
 "-------"
 
@@ -140,7 +138,6 @@ b3 normalizer
 		elements: es;
 		distinctColor.
 b3 build.
-c propagateHighlight.
 c group: #pie.
 
 "-------"
@@ -159,7 +156,6 @@ b4 add: ds.
 
 "b4 axisXWithNumberOfTicks: 3.
 b4 axisYWithNumberOfTicks: 4."
-c propagateHighlight.
 c group: #plot.
 
 "-------"
@@ -171,7 +167,7 @@ c nameGroup: #hierarchy as: 'class hierarchy'.
 c nameGroup: #stat as: '#methods'.
 "c nameGroup: #pie as: '#LOC'."
 c nameGroup: #plot as: 'NOM x NOA x LOC'.
-
+c propagateHighlightToAll.
 ^ c view
 ]
 
@@ -194,7 +190,6 @@ b edges connectFrom: #superclass.
 b normalizer normalizeSize: #numberOfLinesOfCode min: 5 max: 15 using: #sqrt.
 b layout tree.
 b build.
-c propagateHighlight.
 c group: #hierarchy.
 
 "-------"
@@ -212,7 +207,6 @@ b2 add: ds.
 "
 b2 build.
 
-c propagateHighlight.
 c group: #stat.
 "-------"
 
@@ -225,7 +219,6 @@ b3 normalizer
 		elements: es;
 		distinctColor.
 b3 build.
-c propagateHighlight.
 c group: #pie.
 
 "-------"
@@ -246,7 +239,6 @@ b4 add: ds.
 b4 axisYWithNumberOfTicks: 4.
 "
 b4 build.
-c propagateHighlight.
 c group: #plot.
 
 "-------"
@@ -258,6 +250,7 @@ c nameGroup: #hierarchy as: 'class hierarchy'.
 c nameGroup: #stat as: '#methods'.
 "c nameGroup: #pie as: '#LOC'."
 c nameGroup: #plot as: 'NOM x NOA x LOC'.
+c propagateHighlightToAll.
 ^ c view
 ]
 
