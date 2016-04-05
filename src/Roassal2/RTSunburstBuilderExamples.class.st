@@ -70,7 +70,7 @@ RTSunburstBuilderExamples >> basic11 [
 	b layout sunburstWithRadius: 100.
 	b strategy radialSpacing:10.
 	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
+		(cls inheritsFrom: TREvent)
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ Color blue ] ].
 	b
@@ -91,7 +91,7 @@ RTSunburstBuilderExamples >> basic12 [
 	b layout sunburstWithRadius: 100.
 	b strategy radialSpacing:10.
 	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
+		(cls inheritsFrom: TREvent)
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ Color blue ] ].
 	b
@@ -234,7 +234,7 @@ RTSunburstBuilderExamples >> basic5 [
 	b := RTSunburstBuilder new.
 	b strategy radialSpacing:10.
 	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
+		(cls inheritsFrom: TREvent)
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ Color blue ] ].
 	b
@@ -253,7 +253,7 @@ RTSunburstBuilderExamples >> basic6 [
 	b := RTSunburstBuilder new.
 	b strategy radialSpacing:10.
 	b shape current color: [ :cls | 
-		(cls new isKindOf: TREvent)
+		(cls inheritsFrom: TREvent)
 			ifTrue: [ Color lightGray ]
 			ifFalse: [ Color blue ] ].
 	b
