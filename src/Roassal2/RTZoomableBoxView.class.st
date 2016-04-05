@@ -25,6 +25,7 @@ RTZoomableBoxView >> updateScale: evt [
 		ifTrue: [ view canvas focusOnCenterScaled ]
 		ifFalse: [ 
 			r := s encompassingRectangle.
+			(r extent x isZero or: [ r extent y isZero ]) ifTrue: [ ^ self ].
 			sc := (view canvas extent * 0.9) / r extent.
 			sc := (sc x < sc y) ifTrue: [sc x] ifFalse: [ sc y ].
 			view canvas camera 
