@@ -43,7 +43,7 @@ TRBitmapShape >> drawOn: athensCanvas [
 		athensCanvas setShape: self form boundingBox.
 		athensCanvas pathTransform 
 			multiplyBy: matrix asFloatTransform;
-			translateBy: rectangle corner negated.
+			translateBy: self basicEncompassingRectangle corner negated.
 		self form ifNotNil: [ 
 			 paint := (athensCanvas cacheAt: self form
                              	ifAbsentPut: [ (self form asAthensPaintOn: athensCanvas) ]).
