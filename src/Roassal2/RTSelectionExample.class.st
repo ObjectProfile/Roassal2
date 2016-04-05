@@ -18,13 +18,13 @@ Class {
 { #category : #sources }
 RTSelectionExample >> exampleDifferentSelectionColor [
 
-| int v |
-v := RTComposerExample new exampleClassAnalysis2.
-int := RTSelectableView new.
-int color: [ :e | e color = Color red ifTrue: [Color green] ifFalse: [ Color red ] ].
+	| int v |
+	v := RTComposerExample new exampleClassAnalysis2.
+	int := RTSelectableView new.
+	int color: [ :e | e color = Color red ifTrue: [Color green] ifFalse: [ Color red ] ].
 
-v @ int.
-^v
+	v @ int.
+	^ v
 
 
 ]
@@ -94,10 +94,10 @@ R3uZn+EN39kpfuMfoPwflK1GDgc822sAAAAASUVORK5CYII='
 { #category : #sources }
 RTSelectionExample >> exampleElasticBoxZoom [
 
-| v |
-v := RTGrapherExample new exampleDeviation.
-v @ RTZoomableBoxView.
-^ v
+	| v |
+	v := RTGrapherExample new exampleDeviation.
+	v @ RTZoomableBoxView.
+	^ v
 
 ]
 
@@ -235,10 +235,10 @@ R3uZn+EN39kpfuMfoPwflK1GDgc822sAAAAASUVORK5CYII='
 { #category : #sources }
 RTSelectionExample >> exampleSimple [
 
-| v |
-v := RTComposerExample new exampleClassAnalysis2.
-v @ RTSelectableView.
-^ v
+	| v |
+	v := RTComposerExample new exampleClassAnalysis2.
+	v @ RTSelectableView.
+	^ v
 
 ]
 

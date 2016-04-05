@@ -20,3 +20,14 @@ RTSelectionEvent >> group [
 RTSelectionEvent >> group: g [
 	group := g
 ]
+
+{ #category : #accessing }
+RTSelectionEvent >> shape [
+	^ shape
+]
+
+{ #category : #accessing }
+RTSelectionEvent >> shape: anObject [
+	"Not sure whether the argument is a roassal element or not"
+	shape := anObject
+]
