@@ -238,6 +238,78 @@ rkJggg=='
 ]
 
 { #category : #sources }
+RTPieExample >> exampleRefreshPie [
+
+| view fillView |
+"We create an empty view. The view will contain the button and the pie."
+view := RTView new.
+
+"fillView is block that: 
+	(i) remove all the elements in the view (except the button); 
+	(ii) create a new pie with totally random data
+	(iii) force a screen refresh with #signalUpdate"
+fillView := 
+[
+	| b |
+	view clean.
+	b := RTPieBuilder new.
+	
+	"The RTPieBuilder will create the pie in the view"
+	b view: view.
+	b interaction popup.
+	b objects: ((1 to: 10 atRandom) collect: [ :i | 30 atRandom ]).
+	b slice: [ :aNumber | aNumber ].
+	b normalizer distinctColor.
+	b labelled.
+	b build.
+	view signalUpdate
+].
+
+"Add a button menu to the view"
+view addMenu: 'Generate new data' callback: [ fillView value ].
+
+"We want some data when opening the view"
+fillView value.
+^ view
+
+]
+
+{ #category : #icons }
+RTPieExample >> exampleRefreshPieIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAGPklEQVR4XuXdbUidZRwG8Gfq
+bEGB9EUoYq31JQgKHLFRUysW6wU2wqAF+W3GIBpEFNbimFFfks2WgU6XW1PsNMSX5UpJj0dd
+bjtOt7V5puj0zOMst+G7O7p5nZ77cR7Py+PzcszTcdclfxTPi8+5f9zPfZ/73Mcjeb38iaZI
+/E3AD8IfLRCbzYba2lroXbG1tRVG7rCoqAhmb8MfPxDRaDU1Nairq0N7ezusVivKy8vR0tKC
+4uJinDp1Sqnc3FxkZGSgtLRUuU5DQwMqKiqQl5eHbdu2Kd+zs7MhQPxvU19fz49iBmRqago5
+OTno7u6G3W5HZ2cnenp6lMYVP4seNDAwgP379yuN63Q6fdc5cuSI0thjY2OYnJzE9PQ08vPz
+A24j7pu/mfnHEH4Q/vCD8IPwhx+EH4Q//CD84QfhB+EPPwg/CH/4QfhB+MMPwg/CH34Q/vCD
+8IPwhx+EH4Q//CD8ICub8fHxiOxS6e3tRX9/P5qbm8EPopGmpqaINZDYkya2LPGDqKSvr897
+9epViEYS+7tW+u+JvyX2knV1dfGDRCoeD8A/hqxQcOMccOJl4LqxU9rgICDJjy4+HjhwYPXA
+RD0IJt1AeRK8BfKhyoX6dw01rsUiPzjJv4DKyuiHiWoQnP/WBxFQBpKQMN9DgislJbpRohYE
+1anqGKKXdJfqNqoaxkLFxgJud3TCRCUIKl9YEkMBEZdr5PBh9d4RXPJEC/wgehgnXtLEMHLa
+Sk83BrJmDT+IZvIB2KpTDIHg4ncI53QVXMmbPZzPQwbleejc3BzkJ4CqDTAiY0j3DuiDnp91
+UVD6hPr9jBjrHaJ2xlZD/IBDh0AH4pZHUfFdrB+pXb7VD0TU8zcv4O6hOO2xZO4u9Ke76mWT
+UgN/oZGhoSHcdyBiSUQsj4gKjisIw1fy75s0TmFo+zKkoRITtXtIstSoegEsFmgs60C89Y9m
+DHlvKZB7ta+zUBUFhx+CmfHjWFw6NK+gsr4mVoUjuQApRct5U6+2DDuAAikEBrdv+RrLalXv
+Hetjr+GfmEToncdgt4N+ltWh0zuCT2F/VicHoODMZ75G3LMnFOT92EIYnXIhM5MfxGIUw6++
+uZi7uLYleo3q6QqwS8kwMwfG2rX8IDvM9BC/enGoZRFlpAszM4u9I1VqMAVhdLZFAbIBbyAG
++2QUizcWX+Fx1GEdJg0hxcmYjip5wty0B1lZ8yAnpdfCx+AHEQeg/xUjkz2JzXgYHytwoh6F
+FY/ArcAdPJeNtze2wSPFLw+DH8QYiN7XWzdfwZmjNmRIBd7lFj1IPOKxHIyv3XvhbXR42wos
+3tnbd5H1zC/gB1lGtmN72CDVXd8rGKJK31xc2/oxvQH8IGFPey1hYdRfyPdhiCpICnwozj/c
+plH2JhTzT3ub0Wy6h9g6AjE8dXYIkDF3b0CDTo968PnGMsMw5Z+e5gcxO7CfaT8agCFq4KdC
+BUSMI2r5YcfvhlD6zg7zgCxsEVXbBJeGNEO95NrZ30IwRHVkfaiAlO18askGvVw7ALPjx8TE
+BPyP/b4CcTgcyn+hU3s9xAmnJsiDc+vgaTmtiqHMsDJ3K2NI8DgS0sA3buOTx46pwlR94VBt
+9CtXrig7HO8rEPGASkpKlFcLl9q6uQmbVFE2zqwHGh1LYgSDTAy5dBvv4OsnYWR2JY5ZbDkV
+/1+SagwRccEVArJl4jlNiIVq+WgXFkCWGkeCc76634diy7vE9xKuoSkwLD6UlNEkQxiiKnYl
++UCsaU8bbtybfePIffVX/s3WWtmKrUgdMY4hqmjLAz4QvXEk2hOdG+Ucl0yB+GOImhweBD/I
+f43S7kS4IEbHEX4Qsyjd/QgH5Pg7z/L3kBVDmZgCWi/ADMhqHkdW0Rt2RoCzf4XAzDWchhrI
+1K2/wQ8SCRgR13Xgco+CM3zcGgJStTsFg202/h7CH34QfpBIZXR0VBkDIrWnlh9EJx7P/Ps2
+2D6lJ2pBysrKlA+FEZ/8ww+yCrPwIpJ4L8fMzAz/E8P/O3fu3IEol8uF2dlZfhD+8IPwg/CH
+H4QfhD/8IPzhB+EH4Q8/CD8If/hB+EH4ww/CD8IffhD+8IPwg/CHH4QfhD/8IPwg/OEH4Qfh
+Dz8If/hB+EH4ww+y2vIvwbhd6S5RRvwAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTPieExample >> exampleRingChart [
 
 | b |
