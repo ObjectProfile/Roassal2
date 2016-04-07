@@ -86,7 +86,6 @@ RTEditableLabel >> showTextMorphFor: anElement [
 	shape := anElement shape.
 	rect := anElement encompassingRectangle.
 	anElement trachelShape class = TRCompositeShape ifTrue: [ 
-		"trachelShape := anElement trachelShape shapes first."
 		trachelShape := (anElement trachelShape shapesInstancesOf: TRLabelShape) first.
 		clazz := RubEditingArea ]
 	ifFalse: [ 
@@ -111,9 +110,7 @@ RTEditableLabel >> showTextMorphFor: anElement [
 
 	posBlock value.
 	editLabelShape ifFalse: [ 
-		fieldArea minimumWidth: rect width.
-		fieldArea updateTextWith: ''.
-		 ].
+		fieldArea updateTextWith: ''. ].
 	
 	events do: [ :evt | fieldArea announcer subscribe: evt key send: #value to: 
 		[ evt value value: fieldArea text asString ] ] .
