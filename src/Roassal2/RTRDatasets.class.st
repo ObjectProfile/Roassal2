@@ -11,19 +11,19 @@ Class {
 	#category : #'Roassal2-Table'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTRDatasets class >> from: aPackage [
 	rDataSets isNil
 		ifTrue: [ self loadRDatasets ].
 	^ (rDataSets values select: [ :row | row first = aPackage ]) collect:[:each | each at:2]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 RTRDatasets class >> initialize [
 	rDataSets := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTRDatasets class >> listOfRDatasets [
 	"Return the list of data sets availables
 	self listOfRDatasets
@@ -32,7 +32,7 @@ RTRDatasets class >> listOfRDatasets [
 	^ rDataSets
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTRDatasets class >> load: aDataSet from: aPackage [
 	"Return a RTTabTable corresponding to a dataset name and a dataset package.
 	The list of packages and dataset available is given by executing the expression: self listOfRDatasets
@@ -52,7 +52,7 @@ RTRDatasets class >> load: aDataSet from: aPackage [
 	^ RTTabTable new input: (dataSet at: 4) asUrl retrieveContents usingDelimiter: $,
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #util }
 RTRDatasets class >> loadRDatasets [
 	"Load the list of data sets and packages"
 	rDataSets  := RTTabTable new
