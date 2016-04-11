@@ -254,8 +254,9 @@ RTData >> renderBarChartIn: aView [
 		normalizeElementX: [ :anElement | x rtValue: anElement ]
 			min: 0
 			max: builder extent x
-			minValue: minX
-			maxValue: maxX.
+			minValue: (xScale rtValue: minX)
+			maxValue: (xScale rtValue: maxX)
+			using: xScale.
 
 
 	"We treat the element with a positive value"
@@ -268,7 +269,8 @@ RTData >> renderBarChartIn: aView [
 					min: 0
 					max: builder extent y + centralDot position y
 					minValue: 0
-					maxValue: maxY ].
+					maxValue: (yScale rtValue: maxY)
+					using: yScale ].
 
 	RTAlignment new elements: positiveElements; fixedElement: centralDot; bottom.
 	"TRConstraint use: centralDot alignFromBottom: positiveElements.	"
@@ -282,10 +284,13 @@ RTData >> renderBarChartIn: aView [
 				normalizeElementHeight: [ :anElement | y rtValue: anElement ]
 					min: centralDot position y negated 
 					max: 0
-					minValue: minY
-					maxValue: 0.
+					minValue: (yScale rtValue: minY)
+					maxValue: 0
+					using: yScale.
 			RTAlignment new elements: negativeElements; fixedElement: centralDot; top.
-			"TRConstraint use: centralDot alignFromTop: negativeElements "].	"We set the actions, if any"
+			"TRConstraint use: centralDot alignFromTop: negativeElements "].	
+	
+	"We set the actions, if any"
 	elementActions do: [ :act | act rtValue: elements ]
 ]
 
@@ -300,16 +305,18 @@ RTData >> renderDotAndLinesIn: aView [
 		normalizeElementX: [ :anElement | x rtValue: anElement ]
 			min: 0
 			max: builder extent x
-			minValue: minX
-			maxValue: maxX.
+			minValue: (xScale rtValue: minX)
+			maxValue: (xScale rtValue: maxX)
+			using: xScale.
 			
 	RTMetricNormalizer new
 		elements: elements;
 		normalizeElementY: [ :anElement | y rtValue: anElement ]
 			min: 0
 			max: builder extent y negated
-			minValue: minY
-			maxValue: maxY.
+			minValue: (yScale rtValue: minY)
+			maxValue: (yScale rtValue: maxY)
+			using: yScale.
 			
 	elementActions do: [ :act | act rtValue: elements ].
 			

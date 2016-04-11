@@ -111,6 +111,74 @@ RTGrapherTest >> testRender [
 	b renderIn: v
 ]
 
+{ #category : #'test - scaling' }
+RTGrapherTest >> testScaling01 [
+
+	| ds1 |
+	b := RTGrapher new.
+	ds1 := RTData new.
+	ds1 points: (1 to: 10).
+	ds1 yLog.
+	b add: ds1.
+
+	self assert: b yScale equals: ds1 yScale
+]
+
+{ #category : #'test - scaling' }
+RTGrapherTest >> testScaling02 [
+
+	| ds1 ds2 |
+	b := RTGrapher new.
+	ds1 := RTData new.
+	ds1 points: (1 to: 10).
+	ds1 yLog.
+	b add: ds1.
+
+	ds2 := RTData new.
+	ds2 points: (1 to: 10).
+	ds2 yLog.
+	b add: ds2.
+	
+	self assert: b yScale equals: ds1 yScale
+]
+
+{ #category : #'test - scaling' }
+RTGrapherTest >> testScaling03 [
+
+	| ds1 ds2 |
+	b := RTGrapher new.
+	ds1 := RTData new.
+	ds1 points: (1 to: 10).
+	ds1 yLog.
+	b add: ds1.
+
+	ds2 := RTData new.
+	ds2 points: (1 to: 10).
+	ds2 yLinear.
+	b add: ds2.
+	
+	self should: [ b yScale ] raise: Error
+]
+
+{ #category : #'test - scaling' }
+RTGrapherTest >> testScaling04 [
+
+	| ds1 ds2 |
+	b := RTGrapher new.
+	ds1 := RTData new.
+	ds1 points: (1 to: 10).
+	ds1 xLog.
+	b add: ds1.
+
+	ds2 := RTData new.
+	ds2 points: (1 to: 10).
+	ds2 xLinear.
+	b add: ds2.
+	
+	self should: [ b xScale ] raise: Error.
+	self shouldnt: [ b yScale ] raise: Error
+]
+
 { #category : #tests }
 RTGrapherTest >> testSimple [
 

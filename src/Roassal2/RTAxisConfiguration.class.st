@@ -23,7 +23,8 @@ Class {
 		'maxValueManuallySet',
 		'minValueManuallySet',
 		'ticksCentered',
-		'labelFontHeight'
+		'labelFontHeight',
+		'scaleTransformation'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -116,8 +117,8 @@ RTAxisConfiguration >> fromPoint [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> fromPoint: anObject [
-	fromPoint := anObject
+RTAxisConfiguration >> fromPoint: aPoint [
+	fromPoint := aPoint
 ]
 
 { #category : #action }
@@ -154,7 +155,8 @@ RTAxisConfiguration >> initialize [
 	color := self defaultColor.
 	titlePosition := self defaultTitlePosition.
 	self doNotRotateLabels.
-	ticksCentered := false
+	ticksCentered := false.
+	scaleTransformation := #yourself
 ]
 
 { #category : #accessing }
@@ -328,6 +330,16 @@ RTAxisConfiguration >> privateMinValue: aMinValue [
 RTAxisConfiguration >> rotateLabels [
 	"Rotate the labels"
 	labelRotation := -45
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> scaleTransformation [
+	^ scaleTransformation
+]
+
+{ #category : #accessing }
+RTAxisConfiguration >> scaleTransformation: anObject [
+	scaleTransformation := anObject
 ]
 
 { #category : #configuration }

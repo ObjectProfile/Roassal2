@@ -11,7 +11,9 @@ Class {
 		'y',
 		'elements',
 		'barBuilder',
-		'elementActions'
+		'elementActions',
+		'xScale',
+		'yScale'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -201,6 +203,19 @@ RTAbstractData >> getPositionFromPixelPosition: aPoint [
 RTAbstractData >> initialize [
 	super initialize.
 	elementActions := OrderedCollection new.
+	self linear
+]
+
+{ #category : #scale }
+RTAbstractData >> linear [
+	self xLinear.
+	self yLinear
+]
+
+{ #category : #scale }
+RTAbstractData >> log [
+	self xLog.
+	self yLog
 ]
 
 { #category : #accessing }
@@ -267,4 +282,60 @@ RTAbstractData >> resetShapeBuilderForBar [
 RTAbstractData >> selectElementsForAddingBarTitle [
 	"This method has to be overriden to provide the elements that deserve to receive a title"
 	self subclassResponsibility
+]
+
+{ #category : #scale }
+RTAbstractData >> sqrt [
+	self xSqrt.
+	self ySqrt
+]
+
+{ #category : #scale }
+RTAbstractData >> xLinear [
+	xScale := RTLinearTransformation instance
+]
+
+{ #category : #scale }
+RTAbstractData >> xLog [
+	xScale := RTLogTransformation instance
+]
+
+{ #category : #accessing }
+RTAbstractData >> xScale [
+	^ xScale
+]
+
+{ #category : #accessing }
+RTAbstractData >> xScale: oneArgBlockOrSymbol [
+	xScale := oneArgBlockOrSymbol
+]
+
+{ #category : #scale }
+RTAbstractData >> xSqrt [
+	xScale := RTSqrtTransformation instance
+]
+
+{ #category : #scale }
+RTAbstractData >> yLinear [
+	yScale := RTLinearTransformation instance
+]
+
+{ #category : #scale }
+RTAbstractData >> yLog [
+	yScale := RTLogTransformation instance
+]
+
+{ #category : #accessing }
+RTAbstractData >> yScale [
+	^ yScale
+]
+
+{ #category : #accessing }
+RTAbstractData >> yScale: oneArgBlockOrSymbol [
+	yScale := oneArgBlockOrSymbol
+]
+
+{ #category : #scale }
+RTAbstractData >> ySqrt [
+	yScale := RTSqrtTransformation instance
 ]
