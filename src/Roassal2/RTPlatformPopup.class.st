@@ -8,7 +8,7 @@ Class {
 		'background',
 		'text'
 	],
-	#category : #'Roassal2-MorphSpecific'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #'as yet unclassified' }
