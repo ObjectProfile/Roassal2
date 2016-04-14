@@ -9,7 +9,7 @@ Class {
 
 { #category : #accesing }
 Roassal2VW >> blacklist [
-	^ { RTGeneralExample>>#combiningRoassalAndMorphic }
+	^ { RTGeneralExample>>#combiningRoassalAndMorphic. RTElementTest >> #testPlatformPopup. RTRoassalExample >> #examplePlatformPoup }
 ]
 
 { #category : #importing }
