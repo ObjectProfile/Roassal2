@@ -254,3 +254,13 @@ RTBoxPlotDataSet >> showMean [
 RTBoxPlotDataSet >> showMean: aBool [
 	showMean := aBool
 ]
+
+{ #category : #accessing }
+RTBoxPlotDataSet >> xScale [
+	^ RTLinearTransformation instance
+]
+
+{ #category : #accessing }
+RTBoxPlotDataSet >> yScale [
+	^ RTLinearTransformation instance
+]
