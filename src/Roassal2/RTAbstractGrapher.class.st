@@ -35,6 +35,7 @@ RTAbstractGrapher >> axisX [
 		axisConfigurationX := self createAxisConfiguration ].
 	axisConfigurationX
 		tickLabelOffset: 0 @ 15.
+	axisConfigurationX scaleTransformation: self xScale.
 	^ axisConfigurationX
 ]
 
@@ -57,6 +58,7 @@ RTAbstractGrapher >> axisY [
 		axisConfigurationY := self createAxisConfiguration ].
 	axisConfigurationY
 		tickLabelOffset: -30 @ 0.
+	axisConfigurationY scaleTransformation: self yScale.
 	^ axisConfigurationY
 ]
 
