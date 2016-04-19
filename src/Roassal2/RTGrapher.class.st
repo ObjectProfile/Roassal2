@@ -32,11 +32,8 @@ RTGrapher >> add: aDataSet [
 
 { #category : #'public-axis' }
 RTGrapher >> axisX [
-	| s |
 	self checkIfDataSetHaveBeenAdded.
-	s := super axisX.
-	s scaleTransformation: self xScale.
-	^ s
+	^ super axisX
 ]
 
 { #category : #'public-axis' }
@@ -47,11 +44,8 @@ RTGrapher >> axisXWithNumberOfTicks: aNumber [
 
 { #category : #'public-axis' }
 RTGrapher >> axisY [
-	| s |
 	self checkIfDataSetHaveBeenAdded.
-	s := super axisY.
-	s scaleTransformation: self yScale.
-	^ s
+	^ super axisY
 ]
 
 { #category : #'public-axis' }

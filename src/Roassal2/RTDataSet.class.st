@@ -55,13 +55,3 @@ Class {
 RTDataSet >> OBSOLETE [
 	"This class is obsolete. Consider using RTData instead"
 ]
-
-{ #category : #OBSOLETE }
-RTDataSet >> xScale [
-
-]
-
-{ #category : #OBSOLETE }
-RTDataSet >> yScale [
-
-]
