@@ -2349,7 +2349,7 @@ CF8IH74QvhA+fCF8+EL4QvjwhfCF8OEL4QvhwxdC5g9sF+trm6wBMAAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTGrapherExample >> examplePopulationUSA [
-
+<noTest>
 | b  tab |
 tab := RTTabTable new input: (TRPlatform current download: 'https://www.census.gov/popest/data/state/asrh/2013/files/SCPRC-EST2013-18+POP-RES.csv') contents usingDelimiter: $,.
 tab removeFirstRow.
@@ -3583,7 +3583,7 @@ ds x: #yourself.
 ds connectColor: Color green.
 b add: ds.
 
-ds := RTDataSet new.
+ds := RTData new.
 ds points: xValues.
 ds y: f.
 ds x: #yourself.
