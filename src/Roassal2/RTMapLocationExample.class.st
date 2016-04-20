@@ -158,7 +158,7 @@ KyT7Csn+yr5Csq+Q7K/sKyT7Csn+yr5Csq+Q7K8+rP8Drbypxq3y6pAAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTMapLocationExample >> exampleSeismOnEarth [
-
+<noTest>
 | b tab |
 "tab := RTTabTable new input:  RTMapLocationBuilder new seismData2 usingDelimiter: $,."
 tab := RTTabTable new input:  'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv' asUrl retrieveContents  usingDelimiter: $,.
