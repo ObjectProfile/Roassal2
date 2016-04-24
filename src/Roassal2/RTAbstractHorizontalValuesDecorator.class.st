@@ -18,8 +18,7 @@ RTAbstractHorizontalValuesDecorator >> render [
 		self shape line color: Color gray.
 		e := self lineFrom: position to: position + (0 @ tickSize).
 		TRConstraint move: lb below: e.
-		labelRotation = 0 ifFalse: [ "translate only if rotated"
-			lb translateBy: (lb width / -2 @ 0) + (5 @ 0) ].
+		lb translateBy: (lb width / -2 @ 0) + (5 @ 0).
 		 ]
 		
 ]
