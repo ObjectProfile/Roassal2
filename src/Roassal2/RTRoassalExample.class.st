@@ -1484,6 +1484,64 @@ RZSQNAAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleChangingCargeInForceLayout [
+
+
+| v es setSizeAndColor |
+v := RTView new.
+v @ RTDraggableView.
+es := RTEllipse elementsOn: (1 to: 30).
+es @ RTDraggable.
+v addAll: es.
+RTEdgeBuilder new
+	view: v;
+	moveBehind;
+	connectFrom: [ :vv | vv // 2 ].
+	
+setSizeAndColor value.
+
+s := RTSpringLayoutStepping new view: v.
+layout := RTForceBasedLayout new.
+s layout: layout.
+v addAnimation: s.
+
+setSizeAndColor := [ 
+		RTMetricNormalizer new
+			elements: es;
+			normalizeSize: #yourself;
+			normalizeColor: #yourself;
+			alphaColor: 0.5.
+		es do: [ :e | layout set: e charge: e model negated * 5 ].
+	 ].
+
+v addMenu: 'Change Weight' callback: [ 
+	es do: [ :e | e model: 30 atRandom ]. 
+	setSizeAndColor value.
+	v signalUpdate.
+	].
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleChangingCargeInForceLayoutIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACoklEQVR4XuXcu4oiQRiG4bls
+UwMDQcFAwUQwUMFAvALRREUx0RtQQcXz+Xz4e/iKaZNld4Nhmx3eF5pqtCepZ6rKqD88j9//
+1Ad/Cvgg/P4EUqvVrFKpWKFQsL89nM/nrVgsWqlUcs92Oh03+n/bbDaNP6XfBGk0Gu9JTaVS
+bxzda+JzuZyVy2VbLpfWarWsXq9bKBSyaDTqnovH4+/nE4kEH+S7IMfj0dLptPV6PdN/fCwW
+e98LIhKJWDabdRNdrVa9brdrz+fTMpmMey4cDlsymXTPt9ttu91ufBT+GcIH4ccH4YPw44Pw
+44PwQfjxQfgg/PggfBB+fBA+CD8+CB+EHx+EHx+ED8KPD8IH4ccH4YPw44PwQfjxQfjxQfgg
+/PggfBB+fBA+CD8+CB+EHx+EHx+ED8KPD8IH4ccH4YPw44P8vuFwaLvdzmazmbvm87kbx+Ox
+jUYj0/f6TPd8kAA7nU6m63K52H6/d2+R0P35fLbX62X3+50PEtQK0aRvNhvbbrd2OBxstVrZ
+dDp1IF+Xp+8UHySABKDVIZTJZOJgtG0JR+9v8a+f9u6VHwmiSdYZIQTBaFwsFu5cEdBgMHBb
+mO6v1ysfJKgVIgh/21qv127U9Xg8HILOEf4ZEkB6d5cgtCK0LWm1CMQ/S/zDXSDa1vgg/zj/
+15O2pa+D3BOAYPSdVokgBKLDnw8SQP1+34HoXqtFoyAEo9WibUsriP8rK8B8CE28Rm1Z/srR
+KBz+GcKPD8IH4ccH4YPw44Pw44PwQfjxQfgg/PggfBB+fBA+CD8+CB+EPwV8EH58ED4IPz4I
+H4QfH4QPwo8Pwgfhxwfhxwfhg/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz4IH4QfH4QPwo8P
+wgfhxwfh92ufH5Zw558V2rYAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleCircleCould [
 
 | v |
