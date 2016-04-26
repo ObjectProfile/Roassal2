@@ -11,7 +11,7 @@ Class {
 	#category : #'Roassal2-Animation'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RTAbstractZoomMove class >> on: aView [
 	aView addAnimation: (self new on: aView)
 ]
