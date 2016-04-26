@@ -43,7 +43,13 @@ RTDuplicationBetweenPackages >> execute [
 		(a1 intersection: a2) size >= 5 "((a1 size min: a2 size) - 1)" ].
 	m horizontal: methods1.
 	m vertical: methods2.
-	m inspect
+	m build.
+	RTMetricNormalizer new
+		view: m view;
+		elements: m view elements;
+		distinctColorUsing: [ :assoc | assoc key methodClass ].
+	"m normalizer view: m view; elements: m view elements; distinctColorUsing: [ :assoc | assoc key methodClass ]. "
+	m view inspect
 ]
 
 { #category : #hooks }
