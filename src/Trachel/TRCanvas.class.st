@@ -263,7 +263,7 @@ TRCanvas >> fixedShapes [
 
 { #category : #actions }
 TRCanvas >> focusOnCenterScaled [	
-	self camera focusOnCenterScaled: self extent * 0.9
+	^ self camera focusOnCenterScaled: self extent * 0.9
 ]
 
 { #category : #animations }
@@ -390,6 +390,16 @@ TRCanvas >> privateAdd: shape atIndex: index [
 { #category : #private }
 TRCanvas >> privateIndexInCanvasOf: aShape [
 	^ shapes indexOf: aShape
+]
+
+{ #category : #private }
+TRCanvas >> privateShapes [
+	^ shapes
+]
+
+{ #category : #private }
+TRCanvas >> privateShapes: aCollection [
+	shapes	 := aCollection
 ]
 
 { #category : #actions }
