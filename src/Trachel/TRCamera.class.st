@@ -107,7 +107,7 @@ TRCamera >> focusOnCenter [
 
 { #category : #actions }
 TRCamera >> focusOnCenterScaled [
-	self focusOnCenterScaled: 500@500.
+	^ self focusOnCenterScaled: 500@500.
 	
 	
 ]
@@ -121,6 +121,7 @@ TRCamera >> focusOnCenterScaled: aFactor [
 	sc := aFactor / ((rec extent) max: 1 @ 1).
 	sc := (sc x < sc y) ifTrue: [sc x] ifFalse: [ sc y ].
 	self scale: sc.
+	^ sc
 ]
 
 { #category : #convertion }
