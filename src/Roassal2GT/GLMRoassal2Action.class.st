@@ -18,18 +18,14 @@ GLMRoassal2Action class >> initializePresentation: aRoassal2Presentation [
 	instances := self allLeafSubclasses collect: #new.
 	orderedInstances := instances sortedAs: #order.
 	orderedInstances
-		do:
-			[ :inst | 
-			inst roassalPresentation: aRoassal2Presentation.
+		do: [ :inst | 
 			inst icon notNil
-				ifTrue:
-					[ aRoassal2Presentation
-						act: [ :r | inst execute ]
+				ifTrue: [ aRoassal2Presentation
+						act: [ :r | inst executeOn: r ]
 						icon: inst icon
 						entitled: inst title ]
-				ifFalse:
-					[ aRoassal2Presentation
-						act: [ :r | inst execute ]
+				ifFalse: [ aRoassal2Presentation
+						act: [ :r | inst executeOn: r ]
 						entitled: inst title ] ]
 ]
 
@@ -41,7 +37,13 @@ GLMRoassal2Action class >> isLeaf [
 { #category : #hooks }
 GLMRoassal2Action >> execute [
 	"Override please"
-	self subclassReponsibility
+	self subclassResponsibility
+]
+
+{ #category : #hooks }
+GLMRoassal2Action >> executeOn: aPresentation [
+	self roassalPresentation: aPresentation.
+	self execute
 ]
 
 { #category : #hooks }
