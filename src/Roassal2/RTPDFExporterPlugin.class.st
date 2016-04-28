@@ -20,5 +20,5 @@ RTPDFExporterPlugin >> execute [
 
 { #category : #hooks }
 RTPDFExporterPlugin >> label [
-	^ 'PDF Exporter'
+	^ 'Install PDF Exporter'
 ]

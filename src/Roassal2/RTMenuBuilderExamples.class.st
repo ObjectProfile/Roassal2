@@ -6,7 +6,7 @@ Class {
 
 { #category : #examples }
 RTMenuBuilderExamples >> example01 [
-
+	<script: 'self new example01 inspect'>
 	"
 	self new example01
 	"
@@ -35,7 +35,7 @@ RTMenuBuilderExamples >> example01 [
 
 { #category : #examples }
 RTMenuBuilderExamples >> example02 [
-
+	<script: 'self new example02 inspect'>
 	"
 	self new example02
 	"
@@ -72,6 +72,7 @@ RTMenuBuilderExamples >> example02 [
 
 { #category : #examples }
 RTMenuBuilderExamples >> example03 [
+	<script: 'self new example03 inspect'>
 
 	"
 	self new example03
@@ -109,7 +110,7 @@ RTMenuBuilderExamples >> example03 [
 
 { #category : #examples }
 RTMenuBuilderExamples >> example04 [
-
+	<script: 'self new example04 inspect'>
 	"
 	self new example04
 	"
@@ -155,7 +156,7 @@ RTMenuBuilderExamples >> example04 [
 
 { #category : #examples }
 RTMenuBuilderExamples >> example05 [
-
+	<script: 'self new example05 inspect'>
 	"
 	self new example05
 	"
@@ -184,6 +185,7 @@ RTMenuBuilderExamples >> example05 [
 
 { #category : #examples }
 RTMenuBuilderExamples >> example06 [
+	<script: 'self new example06 inspect'>
 	"
 	self new example06
 	"
