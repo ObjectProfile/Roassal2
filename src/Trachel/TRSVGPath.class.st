@@ -135,7 +135,10 @@ TRSVGPath >> computeCurves [
 		token = 't' ifTrue: [ 
 			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := p + (nextPoint value).
 			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
-		
+		(NumberParser isNumber: token) ifTrue: [ 
+			t := p + (token asNumber @ stream next asNumber).
+			answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil
+		].
 		initialPoint ifNil: [ initialPoint := p ].
  	].
 	curves := answer asArray
