@@ -73,8 +73,9 @@ TRMorph >> drawOn: aCanvas [
 	"aCanvas translucentImage: surface asForm at: self bounds origin."
 	"asForm creates a new Form, which is likely to be expensive. This can be cached"
 	f := surface asForm.
-	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil and: [ aCanvas invariant ] ])
-		ifTrue: [ aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34 ]
+"	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil and: [ aCanvas invariant ] ])
+		ifTrue: [ aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34 ]"
+	aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34
 ]
 
 { #category : #drawing }
