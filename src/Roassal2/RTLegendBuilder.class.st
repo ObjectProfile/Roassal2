@@ -29,8 +29,7 @@ Class {
 		'legendElement',
 		'offset',
 		'position',
-		'isOnDemand',
-		'textSize'
+		'isOnDemand'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -46,8 +45,7 @@ RTLegendBuilder class >> on: aView [
 { #category : #'public - convenient' }
 RTLegendBuilder >> addColor: aColor object: anObject text: aBlockOrSelector [
 	"Associate a color with a text"
-	items add: (RTColorLegendItem new color: aColor; model: anObject; text: aBlockOrSelector;
-	textSize: self textSize)
+	items add: (RTColorLegendItem new color: aColor; model: anObject; text: aBlockOrSelector)
 ]
 
 { #category : #'public - convenient' }
@@ -72,7 +70,7 @@ RTLegendBuilder >> addColorFadingUsing: colors text: description [
 
 { #category : #'public - convenient' }
 RTLegendBuilder >> addColoredObject: anObject text: aTextOrSymbolOrBlock color: aColor [
-	items add: (RTLabelLegendItem new model: anObject; text: aTextOrSymbolOrBlock; color: aColor; textSize: self textSize)
+	items add: (RTLabelLegendItem new model: anObject; text: aTextOrSymbolOrBlock; color: aColor)
 ]
 
 { #category : #'public - convenient' }
@@ -84,7 +82,7 @@ RTLegendBuilder >> addColoredText: aText color: aColor [
 { #category : #'public - convenient' }
 RTLegendBuilder >> addLineColor: aColor text: aText [
 	"Associate a color with a text"
-	items add: (RTLineLegendItem new color: aColor; text: aText; textSize: self textSize)
+	items add: (RTLineLegendItem new color: aColor; text: aText)
 ]
 
 { #category : #'public - convenient' }
@@ -99,8 +97,7 @@ RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightD
 	items add: (RTPolymorphicBoxLegendItem new 
 						widthDescription: widthDescription;
 						heightDescription: heightDescription;
-						boxDescription: boxDescription;
-						textSize: self textSize)
+						boxDescription: boxDescription)
 ]
 
 { #category : #'public - convenient' }
@@ -137,7 +134,6 @@ RTLegendBuilder >> initialize [
 	offset := self defaultOffset.
 	position := #below.
 	isOnDemand := false.
-	textSize := 12.
 	items := OrderedCollection new.
 ]
 
@@ -249,14 +245,4 @@ RTLegendBuilder >> right [
 { #category : #configuration }
 RTLegendBuilder >> textColor [
 	^ Color lightGray
-]
-
-{ #category : #accessing }
-RTLegendBuilder >> textSize [
-	^ textSize
-]
-
-{ #category : #accessing }
-RTLegendBuilder >> textSize: anObject [
-	textSize := anObject
 ]

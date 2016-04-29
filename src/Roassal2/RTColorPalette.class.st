@@ -63,7 +63,7 @@ RTColorPalette class >> paletteFor: aColorScheme [
 RTColorPalette class >> paletteName [
 	|clsName|
 	clsName := self asString. 
-	^ clsName copyFrom: 5 to: clsName size. 
+	^ clsName copyFrom: 3 to: clsName size. 
 ]
 
 { #category : #palettes }
@@ -186,9 +186,7 @@ RTColorPalette >> drawSubPallete: rawColors named: subPaletteName on: view [
 	
 	label := (RTLabel new text: subPaletteName) element.	
 	label @ RTHighlightable.
-	label when: TRMouseClick do: [:evt | 
-		Smalltalk tools workspaceTool 
-			openContents: 'RTColorPalette ',(self class paletteName asLowercase),' colors: anInteger scheme:','''',subPaletteName,'''' ].	
+	label when: TRMouseClick do: [:evt | Workspace new contents: 'ColorPalette ',(self class paletteName asLowercase),' colors: anInteger scheme:','''',subPaletteName,''''; open ].	
 	view add: label.
 	TRConstraint stick: label trachelShape onTheLeftOf: group first trachelShape. 
 	
