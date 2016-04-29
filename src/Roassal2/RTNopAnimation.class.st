@@ -32,7 +32,7 @@ RTNopAnimation >> hasCompleted [
 	^ animatedValue hasCompleted
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTNopAnimation >> initialize [
 	super initialize.
 	blockToExecute := [  ]
@@ -42,11 +42,6 @@ RTNopAnimation >> initialize [
 RTNopAnimation >> refresh [
 	animatedValue value.
 	trachelCanvas signalUpdate
-]
-
-{ #category : #actions }
-RTNopAnimation >> repeat [
-	animatedValue timer repeat.
 ]
 
 { #category : #'waiting-specific' }
