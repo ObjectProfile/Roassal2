@@ -24,7 +24,7 @@ RTLineLegendItem >> execute [
 	| g |
 	g := RTGroup new.
 	g add: (RTBox new height: self textSize*0.3; width: self textSize; color: color) element.
-	g add: (self newLabelShape: text).
+	g add: ((self newLabelShape: text) elementOn: text).
 	RTHorizontalLineLayout new alignCenter; on: g.
 	^ g
 ]
