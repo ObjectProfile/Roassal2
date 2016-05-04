@@ -10,7 +10,7 @@ ds dotShape color: Color red.
 ds points: #(5 1 20 8).
 b add: ds.
 b addDecorator: (RTHorizontalAverageDecorator new withLabel; labelConvertion: [ :aValue | 'average = ', aValue asFloat asString ]).
-b build.
+b.
 -=-=-=-=
 "
 Class {

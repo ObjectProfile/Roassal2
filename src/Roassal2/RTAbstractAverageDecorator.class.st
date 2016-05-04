@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTAbstractGrapherDecorator,
 	#instVars : [
 		'shouldHaveLabel',
-		'labelConvertion'
+		'labelConvertion',
+		'lineColor'
 	],
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
@@ -12,7 +13,8 @@ Class {
 RTAbstractAverageDecorator >> initialize [
 	super initialize.
 	self noLabel.
-	labelConvertion := #yourself
+	labelConvertion := #yourself.
+
 ]
 
 { #category : #accessing }
@@ -27,7 +29,13 @@ RTAbstractAverageDecorator >> labelConvertion: aBlockOrSymbol [
 	labelConvertion := aBlockOrSymbol
 ]
 
-{ #category : #initialization }
+{ #category : #configuration }
+RTAbstractAverageDecorator >> lineColor: aColor [
+	"Set the color of the line"
+	shapeBuilder line color: aColor
+]
+
+{ #category : #configuration }
 RTAbstractAverageDecorator >> noLabel [
 	shouldHaveLabel := false
 ]
