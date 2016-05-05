@@ -989,9 +989,8 @@ mAAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTExperimentalExample >> exampleStackExpand [
- 
-	^ RTExperimentalExample new helper: #expand colorA: Color yellow colorB: Color orange
-	
+ "Temporaly disable"
+	"^ RTExperimentalExample new helper: #expand colorA: Color yellow colorB: Color orange"
 ]
 
 { #category : #icons }
