@@ -381,7 +381,7 @@ RTMondrianTest >> testNormalizer [
 	b build.
 	
 	self assert: b view elements first trachelShape width equals: 5.
-	self assert: b view elements second trachelShape width equals: 17.0.
+	self assert: b view elements second trachelShape width equals: 17.5.
 	self assert: b view elements third trachelShape width equals: 30.
 ]
 
@@ -395,7 +395,7 @@ RTMondrianTest >> testNormalizer02 [
 	b build.
 	
 	self assert: b view elements first trachelShape width equals: 5.
-	self assert: b view elements second trachelShape width equals: 17.0.
+	self assert: b view elements second trachelShape width equals: 17.5.
 	self assert: b view elements third trachelShape width equals: 30.
 ]
 
