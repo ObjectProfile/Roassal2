@@ -48,7 +48,7 @@ TRVIManagedTimeExample >> example02 [
 	
 	slider := RTSlider new.
 	slider view: v.
-	slider labelled.
+	slider labeled.
 	slider callback: [ :aValue | timer value: aValue  ].
 	slider build.
 	
