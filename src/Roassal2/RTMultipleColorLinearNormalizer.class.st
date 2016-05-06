@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'normalizers'
 	],
-	#category : #'Roassal2-ColorNormalizerOBSOLETE'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #'instance creation' }

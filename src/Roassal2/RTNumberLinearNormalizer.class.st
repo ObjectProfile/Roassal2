@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'scale'
 	],
-	#category : #'Roassal2-ColorNormalizerOBSOLETE'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #initialization }
