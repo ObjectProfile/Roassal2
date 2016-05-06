@@ -1,11 +1,11 @@
 "
-A RTLabelled  adds a label above an element. The label may be particularized using #text: in the default string representation is not sufficient. Consider:
+A RTLabeled  adds a label above an element. The label may be particularized using #text: in the default string representation is not sufficient. Consider:
 
 E.g., 
 v := RTView new.
 e := (RTEllipse new size: 30) elementOn: 42.
 v add: e.
-e @ (RTLabelled new text: [ :value | 'My value is ', value asString ]).
+e @ (RTLabeled new text: [ :value | 'My value is ', value asString ]).
 v
 
 Instance Variables

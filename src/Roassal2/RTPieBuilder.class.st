@@ -77,26 +77,46 @@ RTPieBuilder >> label: aBlock withObject: anObject [
 ]
 
 { #category : #'public - shapes' }
-RTPieBuilder >> labelled [
+RTPieBuilder >> labeled [
 	"Make each pie having a label"
-	self labelledIf: true
+	self labeledIf: true
 ]
 
 { #category : #'public - shapes' }
-RTPieBuilder >> labelled: aBlockLabel [
-	"Make each pie having a label that respect the aBlockLabel"
-	self labelledIf: true withBlock: aBlockLabel
+RTPieBuilder >> labeledIf: aBlock [
+	self labeledIf: aBlock withBlock: [ :o | o ]
 ]
 
 { #category : #'public - shapes' }
-RTPieBuilder >> labelledIf: aBlock [
-	self labelledIf: aBlock withBlock: [ :o | o ]
-]
-
-{ #category : #'public - shapes' }
-RTPieBuilder >> labelledIf: aBlock withBlock: aBlockLabel [
+RTPieBuilder >> labeledIf: aBlock withBlock: aBlockLabel [
 	objects do: [ :object |
 		(aBlock rtValue: object) ifTrue: [ self label: aBlockLabel withObject: object ] ]
+]
+
+{ #category : #obsolete }
+RTPieBuilder >> labelled [
+	"Make each pie having a label"
+	self deprecated: 'Please, use #labeled instead'.
+	self labeled
+]
+
+{ #category : #obsolete }
+RTPieBuilder >> labelled: aBlockLabel [
+	"Make each pie having a label that respect the aBlockLabel"
+	self deprecated: 'Please, use #labelled: instead'.
+	self labeledIf: true withBlock: aBlockLabel
+]
+
+{ #category : #obsolete }
+RTPieBuilder >> labelledIf: aBlock [
+	self deprecated: 'Please, use #labeledIf: instead'.
+	self labeledIf: aBlock
+]
+
+{ #category : #obsolete }
+RTPieBuilder >> labelledIf: aBlock withBlock: aBlockLabel [
+	self deprecated: 'Please, use #labeledIf:withBlock: instead'.
+	self labeledIf: aBlock withBlock: aBlockLabel
 ]
 
 { #category : #'public - pies' }
