@@ -66,7 +66,7 @@ RTDoubleSlider >> example01 [
 	
 	doubleSlider := RTDoubleSlider new.
 	doubleSlider view: v.
-	doubleSlider labeled.
+	doubleSlider labelled.
 	doubleSlider callback: [ :cursor1 :cursor2 | 
 		label1 model: cursor1 * 100.
 		label1 updateShape.
@@ -98,13 +98,8 @@ RTDoubleSlider >> isLabelled [
 ]
 
 { #category : #accessing }
-RTDoubleSlider >> labeled [
-	labelled := true
-]
-
-{ #category : #accessing }
 RTDoubleSlider >> labelled [
-	self labeled
+	labelled := true
 ]
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ RTPieBuilderTest >> testExample [
 	b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 	es := b slice: #numberOfMethods.
 	b normalizer distinctColor.	
-	b labeled.
+	b labelled.
 	b emphasize: Set by: 20.
 	b emphasize: Dictionary by: 20.
 	b build.
@@ -49,7 +49,7 @@ RTPieBuilderTest >> testExample02 [
 	b objects: data.
 	b slice: #yourself.
 	b normalizer distinctColor.	
-	b labeled.
+	b labelled.
 	b build.
 	c group: #pie.
 
