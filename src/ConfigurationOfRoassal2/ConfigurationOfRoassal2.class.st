@@ -604,7 +604,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.23'.
+	spec for: #'pharo5.x' version: '1.25'.
 ]
 
 { #category : #versions }
@@ -910,6 +910,25 @@ ConfigurationOfRoassal2 >> version124: spec [
 		spec 
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.360';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1300';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.33';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version125: spec [
+	<version: '1.25' imports: #('1.10-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.25'.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '5/6/2016'.
+		
+		spec 
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.361';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1303';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.33';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
