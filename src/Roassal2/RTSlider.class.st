@@ -73,7 +73,7 @@ RTSlider >> example01 [
 	
 	slider := RTSlider new.
 	slider view: v.
-	slider labeled.
+	slider labelled.
 	slider callback: [ :aValue | label model: aValue * 100. label updateShape ].
 	slider moveBelow.
 	slider build.
@@ -94,14 +94,8 @@ RTSlider >> initialize [
 ]
 
 { #category : #accessing }
-RTSlider >> labeled [
-	labelled := true
-]
-
-{ #category : #accessing }
 RTSlider >> labelled [
-	self deprecated: 'Please, use #labeled instead'.
-	self labeled
+	labelled := true
 ]
 
 { #category : #accessing }

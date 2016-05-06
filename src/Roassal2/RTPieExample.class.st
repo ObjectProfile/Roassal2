@@ -20,7 +20,7 @@ b interaction popup.
 b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 b slice: #numberOfMethods.
 b normalizer distinctColor.	
-b labeled.
+b labelled.
 b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
 b build.
@@ -68,7 +68,7 @@ b interaction popup.
 b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection).
 b slice: #numberOfMethods.
 b normalizer distinctColor.	
-b labeled.
+b labelled.
 b build.
 ^ b view
 ]
@@ -115,7 +115,7 @@ RTPieExample >> exampleLabelledIf [
 	b objects: RTShape withAllSubclasses.
 	b slice: #numberOfMethods.
 	b normalizer distinctColor.	
-	b labeledIf: [ :c | c numberOfMethods > 18 ].
+	b labelledIf: [ :c | c numberOfMethods > 18 ].
 	b build.
 	^ b view
 ]
@@ -171,7 +171,7 @@ b interaction popup.
 b objects: myClasses.
 b slice: #numberOfMethods.
 b normalizer distinctColor.	
-b labeled.
+b labelled.
 b emphasize: Set by: 20.
 b emphasize: Dictionary by: 20.
 
@@ -260,7 +260,7 @@ fillView :=
 	b objects: ((1 to: 10 atRandom) collect: [ :i | 30 atRandom ]).
 	b slice: [ :aNumber | aNumber ].
 	b normalizer distinctColor.
-	b labeled.
+	b labelled.
 	b build.
 	view signalUpdate
 ].
@@ -361,7 +361,7 @@ b interaction popup.
 b objects: #(10 4 1 2 5).
 b slice: [ :aNumber | aNumber ].
 b normalizer distinctColor.
-b labeled.
+b labelled.
 b build.
 ^ b view
 ]

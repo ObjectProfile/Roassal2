@@ -24,7 +24,7 @@ RTDoubleSliderTest >> testLabelled [
 	
 	slider := RTDoubleSlider new.
 	self assert: slider isLabelled equals: false.
-	slider labeled.
+	slider labelled.
 	self assert: slider isLabelled equals: true.
 ]
 
