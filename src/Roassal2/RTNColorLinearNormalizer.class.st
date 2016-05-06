@@ -29,7 +29,7 @@ Class {
 		'lowColor',
 		'highColor'
 	],
-	#category : #'Roassal2-ColorNormalizerOBSOLETE'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #'instance creation' }

@@ -344,3 +344,9 @@ RTLayoutBuilder >> verticalLine [
 	layout := RTVerticalLineLayout new.
 	^ layout
 ]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> weightedCircle [
+	layout := RTWeightedCircleLayout new.
+	^ layout
+]

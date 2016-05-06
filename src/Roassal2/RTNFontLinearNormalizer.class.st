@@ -5,7 +5,7 @@ A RONFontLinearNormalizer is xxxxxxxxx.
 Class {
 	#name : #RTNFontLinearNormalizer,
 	#superclass : #RTNLinearNormalizer,
-	#category : #'Roassal2-ColorNormalizerOBSOLETE'
+	#category : #'Roassal2-ColorNormalizer'
 }
 
 { #category : #accessing }
