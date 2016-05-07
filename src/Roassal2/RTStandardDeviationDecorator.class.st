@@ -18,7 +18,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'drawing-hooks' }
 RTStandardDeviationDecorator >> render [
 	| values average stdev from to |
 	values := self datasetValues.
