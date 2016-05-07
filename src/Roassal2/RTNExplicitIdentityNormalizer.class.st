@@ -19,7 +19,7 @@ Class {
 		'colors',
 		'defaultColor'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : #'Roassal2-ColorNormalizerOBSOLETE'
 }
 
 { #category : #'instance creation' }
