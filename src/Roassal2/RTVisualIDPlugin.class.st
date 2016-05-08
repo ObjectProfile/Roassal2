@@ -13,10 +13,16 @@ respective objects are.'
 
 { #category : #hooks }
 RTVisualIDPlugin >> execute [
-	Gofer new
+	Metacello new
+	  baseline: 'VisualID';
+	  repository: 'github://bergel/VisualID:master';
+	  load. 
+
+	"Gofer new
 		smalltalkhubUser: 'IgnacioFernandez' project: 'VisualiDs';
 		configurationOf: 'VisualID';
 		loadBleedingEdge.
+		"
 		
 "	Gofer new
 		smalltalkhubUser: 'IgnacioFernandez' project: 'VisualiDs';
