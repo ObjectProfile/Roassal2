@@ -87,7 +87,6 @@ RTUMLClassBuilder >> buildEdges [
 	eb objects: classes.
 	eb shape shape: lineShape shape.
 	eb connectFrom: self superclass.
-	"eb connectFrom: self superclass to: #yourself."
 	
 	eb := RTEdgeBuilder new.
 	eb view: view.
