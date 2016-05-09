@@ -10,7 +10,8 @@ Class {
 		'eventBeginingDragging',
 		'shapeBeingPointed',
 		'shouldRefresh',
-		'session'
+		'session',
+		'isDrawing'
 	],
 	#category : #'Trachel-MorphSpecific'
 }
@@ -46,6 +47,9 @@ TRMorph >> drawOn: aCanvas [
 	"aCanvas is a FormCanvas"
 	
 	| f |
+	"drawOn: cannot be reintrant"
+	isDrawing ifTrue: [ ^ self ].
+	isDrawing := true. 
 	self checkSession.
 	
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
@@ -74,10 +78,12 @@ TRMorph >> drawOn: aCanvas [
 	"asForm creates a new Form, which is likely to be expensive. This can be cached"
 	surface hasBeenFreed ifTrue: [ self createSurface ].
 	f := surface asForm.
-	aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34
+	aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
 	
 "	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil and: [ aCanvas invariant ] ])
 		ifTrue: [ aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34 ]"
+		
+	isDrawing := false.
 ]
 
 { #category : #drawing }
@@ -182,11 +188,17 @@ TRMorph >> initialize [
 	self createSurface.
 	shouldRefresh := false.
 	session := Smalltalk session.
+	isDrawing := false.
 ]
 
 { #category : #testing }
 TRMorph >> isDragging [
 	^ eventBeginingDragging notNil
+]
+
+{ #category : #accessing }
+TRMorph >> isDrawing [
+	^ isDrawing
 ]
 
 { #category : #recategorized }
