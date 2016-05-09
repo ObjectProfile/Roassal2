@@ -41,8 +41,7 @@ RTEdgeBuilder >> allowRepetition [
 
 { #category : #public }
 RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
-	^ self connectFrom: aBlockOrASymbol to: #yourself
-"	| fromElement aModel |
+	| fromElement aModel |
 	self resetCreatedEdges.
 	self toElements copy
 		do: [ :e | 
@@ -50,7 +49,7 @@ RTEdgeBuilder >> connectFrom: aBlockOrASymbol [
 			fromElement := self fromElements elementFromModel: aModel.
 			fromElement ifNotNil: [ self createEdgeIfNecessaryFrom: fromElement to: e ] ].
 	self moveBehindIfNecessary: createdEdges.
-	^ createdEdges"
+	^ createdEdges
 ]
 
 { #category : #public }
@@ -98,16 +97,15 @@ RTEdgeBuilder >> connectFromAll: aFromBlockOrSymbol to: aBlockOrASymbol [
 
 { #category : #public }
 RTEdgeBuilder >> connectTo: aBlockOrASymbol [
-	^ self connectFrom: #yourself to: aBlockOrASymbol
-
-"	| toElement |
+	"Should this method use connectFrom:To: ?????"
+	| toElement |
 	self resetCreatedEdges.
 	self fromElements copy do: [ :e | 
 		toElement := self toElements elementFromModel: (aBlockOrASymbol rtValue: e model).
 		toElement ifNotNil: [ 
 			self createEdgeIfNecessaryFrom: e to: toElement ] ].
 	self moveBehindIfNecessary: createdEdges.
-	^ createdEdges"
+	^ createdEdges
 ]
 
 { #category : #public }

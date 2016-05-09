@@ -6,8 +6,7 @@ Class {
 
 { #category : #hooks }
 RTNeoPlugin >> description [
-	^ 
-'Neo offers a JSON and CSV parsers. Both parsers are highly stable, fast, and well supported.'
+	^ 'Neo offers a JSON and CSV parsers. Both parsers are highly stable, fast, and well supported.'
 ]
 
 { #category : #hooks }
@@ -25,5 +24,5 @@ RTNeoPlugin >> execute [
 
 { #category : #hooks }
 RTNeoPlugin >> label [
-	^ 'Neo JSON and CSV parser'
+	^ 'Loading Neo JSON and CSV parser'
 ]
