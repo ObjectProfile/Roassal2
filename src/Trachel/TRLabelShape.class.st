@@ -5,7 +5,9 @@ Class {
 		'text',
 		'font',
 		'fontSize',
-		'fontName'
+		'fontName',
+		'cachedWidth',
+		'cachedHeight'
 	],
 	#category : #'Trachel-Shapes'
 }
@@ -135,6 +137,7 @@ TRLabelShape >> fontName: aFontName [
 	to know the different font installed on the system"
 	fontName := aFontName.
 	font := self getFontNamed: fontName ForSize: fontSize.
+	self resetCache
 ]
 
 { #category : #accessing }
@@ -145,7 +148,8 @@ TRLabelShape >> fontSize [
 { #category : #accessing }
 TRLabelShape >> fontSize: aNumber [
 	font := self getFontNamed: fontName ForSize: aNumber.
-	fontSize := aNumber
+	fontSize := aNumber.
+	self resetCache
 ]
 
 { #category : #'managing font' }
@@ -178,6 +182,12 @@ TRLabelShape >> initialize [
 	self fontSize: self defaultFontSize
 ]
 
+{ #category : #initialization }
+TRLabelShape >> resetCache [
+	cachedWidth := nil.
+	cachedHeight := nil
+]
+
 { #category : #accessing }
 TRLabelShape >> text [
 	^ text
@@ -188,6 +198,7 @@ TRLabelShape >> text: aText [
 	| oldExtent newExtent |
 	oldExtent := self extent.
 	text := aText.
+	self resetCache.
 	newExtent := self extent.
 	(newExtent ~= oldExtent) ifTrue: [ 
 		self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ].
@@ -203,13 +214,14 @@ TRLabelShape >> text: aText on: aPosition [
 { #category : #private }
 TRLabelShape >> textHeight [
 	"without any transformation"
-	^ font height
+	^ cachedHeight ifNil: [ cachedHeight := font height ]
 ]
 
 { #category : #private }
 TRLabelShape >> textWidth [
 	"without any transformation"
-	^ (font widthOfString: text)
+	"font widthOfString: is a really expensive operation, so we cache it"
+	^ cachedWidth ifNil: [ cachedWidth := font widthOfString: text ]
 ]
 
 { #category : #public }
