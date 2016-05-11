@@ -1,8 +1,10 @@
 "
-A RTCircle is a circle described by its 'center' and 'radius'.
+I represent a circle described by its 'center ' and a 'radius'.
+
+I am NOT a Roassal shape, for that use RTEllipse. Instead I am using in some circle-related gemetric computations.
 "
 Class {
-	#name : #RTCircle,
+	#name : #RTCircleGeometry,
 	#superclass : #RTObject,
 	#instVars : [
 		'center',
@@ -12,27 +14,27 @@ Class {
 }
 
 { #category : #'instance creation' }
-RTCircle class >> center: aPoint radius: aRadius [
+RTCircleGeometry class >> center: aPoint radius: aRadius [
 	^ self basicNew setCenter: aPoint radius: aRadius
 ]
 
 { #category : #'instance creation' }
-RTCircle class >> new [
+RTCircleGeometry class >> new [
 	^ self error: 'Use #center:radius: instead.'
 ]
 
 { #category : #accessing }
-RTCircle >> center [
+RTCircleGeometry >> center [
 	^ center
 ]
 
 { #category : #testing }
-RTCircle >> includesPoint: aPoint [
+RTCircleGeometry >> includesPoint: aPoint [
 	^ (center dist: aPoint) <= radius
 ]
 
 { #category : #comparing }
-RTCircle >> intersectCircle: aCircle [
+RTCircleGeometry >> intersectCircle: aCircle [
 	| radii a h d p2 x1 y1 x2 y2 |
 	d := self center dist: aCircle center.
 	radii := self radius + aCircle radius.
@@ -54,7 +56,7 @@ RTCircle >> intersectCircle: aCircle [
 ]
 
 { #category : #printing }
-RTCircle >> printOn: aStream [
+RTCircleGeometry >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	center printOn: aStream.
@@ -64,12 +66,12 @@ RTCircle >> printOn: aStream [
 ]
 
 { #category : #accessing }
-RTCircle >> radius [
+RTCircleGeometry >> radius [
 	^ radius
 ]
 
 { #category : #initialization }
-RTCircle >> setCenter: aCenter radius: aRadius [
+RTCircleGeometry >> setCenter: aCenter radius: aRadius [
 	center := aCenter.
 	radius := aRadius
 ]
