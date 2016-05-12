@@ -151,6 +151,7 @@ RTShapedObject >> setAsNotFixed [
 
 { #category : #accessing }
 RTShapedObject >> shape [
+	"Return the shape of the element. Note that modifying the return roassal shape __will not__ modify the visual appearance of the element. If you wish to do so, you need to work directly on the trachel shape."
 	^ shape
 ]
 
@@ -169,6 +170,7 @@ RTShapedObject >> testCaseAnnounce: evt [
 
 { #category : #accessing }
 RTShapedObject >> trachelShape [
+	"Return the Trachel shape of the element, which has been generated from the Roassal shape and the model. Note that modifying the return Trachel shape __modifies__ the visual appearance of the element. You may want to update the view by sending #signalUpdate to it"
 	^ trachelShape
 ]
 
