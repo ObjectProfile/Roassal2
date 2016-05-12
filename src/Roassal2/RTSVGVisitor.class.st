@@ -51,19 +51,19 @@ RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectang
 { #category : #interactions }
 RTSVGVisitor >> addContainedInteractions: id element: element [
 	| aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
 	(interactions at: element ifAbsent: [OrderedCollection new]) 
-		do: [ :i |	 i contained = true
+		do: [ :i | i contained
 			ifTrue: [ i addEventHandlers: stream id: id  element: element center: aNumber] ]
 ]
 
 { #category : #interactions }
 RTSVGVisitor >> addEmbeddingInteractions: id element: element [
 	|closings aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
 	closings := OrderedCollection new.
 	(interactions at: element ifAbsent: [OrderedCollection new]) 
-		do: [ :i |	 (i external = false and: i contained = false)
+		do: [ :i | (i external = false and: [i contained = false])
 			ifTrue: [ closings add: (i addEventHandlers: stream id: id  element: element center: aNumber)] ].
 	^(closings reverse)
 ]
@@ -71,7 +71,7 @@ RTSVGVisitor >> addEmbeddingInteractions: id element: element [
 { #category : #interactions }
 RTSVGVisitor >> addExternalInteractions: id element: element [
 	| aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [aNumber := 0].
+	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
 	(interactions at: element ifAbsent: [OrderedCollection new]) 
 		do: [ :i |	 i external = true
 			ifTrue: [ self afterStream add: [:e | i addEventHandlers: stream id: id  element: element center: aNumber] ]]
