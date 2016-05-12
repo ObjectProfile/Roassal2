@@ -211,6 +211,34 @@ ConfigurationOfRoassal2 >> baseline110: spec [
 ]
 
 { #category : #baselines }
+ConfigurationOfRoassal2 >> baseline111: spec [
+	<version: '1.11-baseline'>
+
+	spec for: #common do: [
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+		
+		spec project: 'GlamourCore' with: [
+			spec
+				className: #ConfigurationOfGlamourCore;
+				version: #stable;
+				repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main/' ].
+		
+		spec project: 'Neo-JSON-Core' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+				
+		spec 
+			package: 'Trachel';
+			package: 'Roassal2' with: [ spec requires: #('Trachel') ];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore') ];
+			package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ] ].
+
+]
+
+{ #category : #baselines }
 ConfigurationOfRoassal2 >> baseline11: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -604,7 +632,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.26'.
+	spec for: #'pharo5.x' version: '1.27'.
 ]
 
 { #category : #versions }
@@ -950,6 +978,26 @@ ConfigurationOfRoassal2 >> version126: spec [
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1307';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.33';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version127: spec [
+	<version: '1.27' imports: #('1.11-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 1.27. Improved the support of SVG, and many more'.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '5/12/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-akevalion.367';
+			package: 'Roassal2' with: 'Roassal2-akevalion.1314';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-TudorGirba.34';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
