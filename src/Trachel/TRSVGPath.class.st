@@ -65,111 +65,26 @@ TRSVGPath >> computeCurves [
 	
 	The description of SVG path, says that M and m may accept more than one coordinates. In practices, this is rarely the case. 	
 	"
-	| p initialPoint answer tokens stream token t pathWithSpaceBeforeMinus cp1 cp2 nextPoint|
-	p := 0 @ 0.
-	initialPoint := nil.
-	answer := OrderedCollection new.
-	
-	pathWithSpaceBeforeMinus := pathString copyReplaceAll: '-' with: ' -' asTokens: false.
-	tokens := pathWithSpaceBeforeMinus findTokens: 'AaMmLlZzCcSsQqTtHhVv, ' keep: 'AaMmLlZzCcSsQqTtHhVv'.
-	
-	stream := ReadStream on: tokens.
-	nextPoint := [ (Float readFrom: stream next) @ (Float readFrom: stream next) ].
-	
-	[ stream atEnd ] whileFalse: [ 
-		token := stream next.
-		token = 'M' ifTrue: [ p := nextPoint value. answer add: #m -> (Array with: p). initialPoint := nil. cp1 := nil. cp2 := nil ].
-		token = 'm' ifTrue: [ p := p + (nextPoint value). answer add: #m -> (Array with: p). initialPoint := nil. cp1 := nil. cp2 := nil ].
-
-		(token = 'Z' or: [ token = 'z' ]) ifTrue: [ answer add: #l -> (Array with: initialPoint). initialPoint := nil ].
-
-		token = 'L' ifTrue: [ t := nextPoint value. answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		token = 'l' ifTrue: [ t := p + (nextPoint value). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		
-		token = 'V' ifTrue: [ t := (p x) @ (Float readFrom: stream next). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		token = 'v' ifTrue: [ t := p + (0 @ (Float readFrom: stream next)). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		
-		token = 'H' ifTrue: [ t := (Float readFrom: stream next) @ (p y). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		token = 'h' ifTrue: [ t := p + ((Float readFrom: stream next) @ 0). answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil ].
-		
-		token = 'C' ifTrue: [
-			cp1 := nextPoint value. cp2 := nextPoint value.
-			t := nextPoint value.
-			answer add: #c -> (Array with: t with: cp1 with: cp2). p := t. cp1 := nil ].
-		token = 'c' ifTrue: [ 
-			cp1 := p + (nextPoint value). cp2 := p + (nextPoint value).
-			t := p + (nextPoint value).
-			answer add: #c -> (Array with: t with: cp1 with: cp2). p := t. cp1 := nil ].
-		
-		token = 'S' ifTrue: [ 
-			cp1 := (cp2 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp2) ]). cp2 := nextPoint value.
-			t := nextPoint value.
-			answer add: #c -> (Array with: t with: cp1 with: cp2). p:= t. cp1 := nil ].
-		token = 's' ifTrue: [ 
-			cp1 := (cp2 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp2) ]). cp2 := p + nextPoint value.
-			t := p + nextPoint value.
-			answer add: #c -> (Array with: t with: cp1 with: cp2 ). p:= t. cp1 := nil ].
-		
-		token = 'Q' ifTrue: [
-			cp1 := nextPoint value. t := nextPoint value.
-			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
-		token = 'q' ifTrue: [ 
-			cp1 := p + (nextPoint value). t := p + (nextPoint value).
-			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
-		
-		token = 'A' ifTrue: [ self halt. ].
-		token = 'a' ifTrue: [ | r xAxisRot largeArcFlag sweepFlag angle flag |
-			r := nextPoint value.
-			xAxisRot := (Float readFrom: stream next).
-			largeArcFlag := (Float readFrom: stream next).
-			sweepFlag := (Float readFrom: stream next).
-			t := p + (nextPoint value).
-			angle := 10.
-			flag := false.
-			answer add: #a -> (Array with: t with: angle with: flag).
-			p := t. cp2 := nil. cp1 := nil. ].
-		
-		token = 'T' ifTrue: [
-			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := nextPoint value.
-			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
-		token = 't' ifTrue: [ 
-			cp1 := (cp1 isNil ifTrue: [ p ] ifFalse: [ p + (p - cp1) ]). t := p + (nextPoint value).
-			answer add: #q -> (Array with: t with: cp1). p := t. cp2 := nil ].
-		(NumberParser isNumber: token) ifTrue: [ 
-			t := p + (token asNumber @ stream next asNumber).
-			answer add: #l -> (Array with: t). p := t. cp1 := nil. cp2 := nil
-		].
-		initialPoint ifNil: [ initialPoint := p ].
- 	].
-	curves := answer asArray
+	| pathData |
+	pathData := ASPathConverter new stream: pathString readStream.
+	curves := pathData convertPathData.
 ]
 
 { #category : #hooks }
 TRSVGPath >> computePath [
+
 	path := (self athensCanvas createPath: [ :builder |
-			builder absolute.
-			curves do: [ :c |
-				c key = #m ifTrue: [ builder moveTo: (c value at: 1) ].
-				c key = #l ifTrue: [ builder lineTo: (c value at: 1) ].
-				c key = #c ifTrue: [ builder curveVia: (c value at: 2) and: (c value at: 3) to: (c value at: 1) ].
-				c key = #q ifTrue: [ builder curveVia: (c value at: 2) to: (c value at: 1) ]. ]
+		curves do: [ :each | 
+			builder perform: each first withArguments: each second ]
 		])
+	
 ]
 
 { #category : #private }
 TRSVGPath >> computePolygons [
 	| separatedPaths |
 	separatedPaths := self separateSubPaths.
-	polygons := OrderedCollection new.
-	separatedPaths
-		do: [ :eachPath | 
-			| eachPolygon |
-			eachPolygon := OrderedCollection new.
-			eachPath
-				do: [ :curve | 
-					curve key = 'm'
-						ifFalse: [ eachPolygon add: curve value first ] ].
-			polygons add: eachPolygon ].	
+	polygons := separatedPaths.
 ]
 
 { #category : #private }
@@ -187,7 +102,7 @@ TRSVGPath >> correctCurvesAndPolygonsToZero [
 	self computeRectangle.
 	originalPosition := rectangle center.
 	curves
-		do: [ :eachCurve | eachCurve value doWithIndex: [ :eachPoint :index | eachCurve value at: index put: eachPoint - originalPosition ] ].
+		do: [ :eachCurve | eachCurve second doWithIndex: [ :eachPoint :index | eachCurve second at: index put: eachPoint - originalPosition ] ].
 	polygons
 		do: [ :eachPolygon | eachPolygon doWithIndex: [ :eachPoint :index | eachPolygon at: index put: eachPoint - originalPosition ] ].
 	self computeRectangle.
@@ -279,15 +194,45 @@ TRSVGPath >> reset [
 
 { #category : #private }
 TRSVGPath >> separateSubPaths [
-	| separatedPaths subPath |
+	| separatedPaths subPath absolute p point key args |
 	separatedPaths := OrderedCollection new.
 	subPath := OrderedCollection new.
-	
+	absolute := true.
+	p := 0@0.
+
+	point := [:da | p := absolute 
+		ifTrue:[ da ] 
+		ifFalse: [ p + da ].
+		subPath add: p ].
 	curves do: [ :c |
-		c key = 'm' ifTrue: [ 
+		key := c first.
+		args := c second.
+		key = #absolute ifTrue: [ absolute := true ].
+		key = #relative ifTrue: [ absolute := false ].
+		key = #moveTo: ifTrue: [ 
 			subPath ifNotEmpty: [ separatedPaths add: subPath ]. 
-			subPath:= OrderedCollection new ].
-		subPath add: c.
+			subPath:= OrderedCollection new.
+			point value: args first ].
+		key = #curveVia:and:to: ifTrue: [ 
+			point value: args third ].
+		key = #curveVia:to: ifTrue: [ 
+			point value: args second ].
+		key = #ellipticalArc:xrot:large:sweep:to: ifTrue: [ 
+			point value: args fifth ].
+		key = #lineTo: ifTrue: [ 
+			point value: args first ].
+		key = #reflectedCurveVia:to: ifTrue: [ 
+			point value: args second ].
+		key = #hLineTo: ifTrue: [
+			p := absolute
+				ifTrue: [ args first @ p y ]
+				ifFalse: [ p + (args first @ 0) ].
+			subPath add: p ].
+		key = #vLineTo: ifTrue: [ 
+			p := absolute
+				ifTrue: [ p x @ args first ]
+				ifFalse: [ p + (0 @ args first) ].
+			subPath add: p ].
 	].
 	separatedPaths add: subPath.
 	^ separatedPaths
