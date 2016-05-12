@@ -13,7 +13,8 @@ Class {
 		'width',
 		'open',
 		'type',
-		'baseSize'
+		'baseSize',
+		'percentage'
 	],
 	#category : #'Trachel-ShapesForArrow'
 }
@@ -129,6 +130,7 @@ TRAbstractLineDecoratorShape >> initialize [
 	strokePaint := self defaultColor.
 	width := 1.
 	open := false.
+	percentage := 1.
 
 ]
 
@@ -140,6 +142,17 @@ TRAbstractLineDecoratorShape >> isOpen [
 { #category : #accessing }
 TRAbstractLineDecoratorShape >> mySize [
 	^ size
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> percentage [
+	^ percentage
+]
+
+{ #category : #accessing }
+TRAbstractLineDecoratorShape >> percentage: aNumber [
+	self assert: (aNumber between: 0 and: 1).
+	percentage := aNumber.
 ]
 
 { #category : #accessing }

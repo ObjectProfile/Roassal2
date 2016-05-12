@@ -54,14 +54,15 @@ TRPharoPlatform >> computeArcPathFor: aShape [
 
 { #category : #'drawing - helpers' }
 TRPharoPlatform >> computeCircleHeadPathFor: shape [
-	| vector r unit radius center |
+	| vector r unit radius center endPoint |
 	vector := shape to - shape from.
 	r := vector r.
 	r = 0
 		ifTrue: [ ^ false ].
 	unit := vector / r.
 	radius := unit / 2 * shape mySize.
-	center := shape to - radius.
+	endPoint := shape to - (vector * (1-shape percentage)).
+	center := endPoint - radius.
 	^  shape athensCanvas
 		createPath: [ :builder | 
 			builder
