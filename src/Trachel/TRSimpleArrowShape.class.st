@@ -11,12 +11,13 @@ TRSimpleArrowShape >> accept: aVisitor [
 
 { #category : #hooks }
 TRSimpleArrowShape >> computePath [
-	| vector u unit middle |
+	| vector u unit middle endPoint |
 	self shouldBeDrawn ifFalse: [ ^ self ].
 	vector := self to - self from. 
 	u := vector normal.
 	unit := vector / vector r.
-	middle := self to - (unit * size). 
+	endPoint := self to - (vector * (1-percentage)).
+	middle := endPoint - (unit * size). 
 	left :=  middle - (u * baseSize / 2).
 	right := middle + (u * baseSize / 2).
 	path := self athensCanvas
@@ -24,7 +25,7 @@ TRSimpleArrowShape >> computePath [
 			builder
 				absolute;
 				moveTo: left;
-				lineTo: self to;
+				lineTo: endPoint;
 				lineTo: right. ]
 ]
 
