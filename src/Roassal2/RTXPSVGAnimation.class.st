@@ -1,3 +1,6 @@
+"
+I am a simple animation for the example stacks examples in RTExperimentalExample
+"
 Class {
 	#name : #RTXPSVGAnimation,
 	#superclass : #RTAnimation,
@@ -9,7 +12,7 @@ Class {
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTXPSVGAnimation >> curvesFor: index [
 	| t res acurves bcurves c2 |
 	t := animatedValue value.
@@ -19,17 +22,19 @@ RTXPSVGAnimation >> curvesFor: index [
 	
 	acurves doWithIndex: [ :c1 :i | 
 		c2 := bcurves at: i.
-		res at: i put: c1 key -> (Array with: (c1 value first interpolateTo: c2 value first at: t))  ].
+		res at: i put: (Array with: c1 first with: 
+			(c1 second collect: [:point | point interpolateTo: c2 second first at: t]) )
+		].
 	
 	^ res
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTXPSVGAnimation >> hasCompleted [
 	^ animatedValue hasCompleted
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTXPSVGAnimation >> on: elements during: seconds path: aBlock [
 	
 	| time |
@@ -46,7 +51,7 @@ RTXPSVGAnimation >> on: elements during: seconds path: aBlock [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refreshing }
 RTXPSVGAnimation >> refresh [
 	element doWithIndex: [ :e :i |
 		e trachelShape
@@ -58,7 +63,7 @@ RTXPSVGAnimation >> refresh [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RTXPSVGAnimation >> start [
 	animatedValue start
 ]

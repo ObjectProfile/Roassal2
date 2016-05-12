@@ -24,7 +24,7 @@ RTPathAnimation class >> on: element path: aString seconds: seconds [
 { #category : #refreshing }
 RTPathAnimation >> cubic: prev to: current at: t [
 	| c0 c1 c2 c3 cp cx cy bx by ax ay tSquared tCubed x y|
-	cp := (curves at: index) value.
+	cp := (curves at: index) second.
 	c0 := prev.
 	c1 := cp second.
 	c2 := cp third.
@@ -73,39 +73,66 @@ RTPathAnimation >> linear: prev to: current at: t [
 
 { #category : #accessing }
 RTPathAnimation >> path: aString [
-	
+	| answer absolute key args p cp1 cp2 point abso |
 	curves := TRSVGPath new path: aString; curves.
+	answer := OrderedCollection new.
+	absolute := true.
+	p := 0@0.
+	abso := [ :da | absolute 
+		ifTrue: [ da ]
+		ifFalse: [ p + da ] ].
+	point := [ :da | p := absolute
+		ifTrue: [ da ]
+		ifFalse: [ p + da ].
+		args at: 1 put: p. ].
+	curves do: [ :curve |
+		key := curve first.
+		args := curve second.
+		key = #absolute ifTrue: [ absolute := true ].
+		key = #relative ifTrue: [ absolute := false ].
+		key = #moveTo: ifTrue: [ point value: args first. answer add: curve. ].
+		key = #lineTo: ifTrue: [ point value: args first. answer add: curve. ].
+		key = #curveVia:and:to: ifTrue: [ 
+			cp1 := abso value: args first.
+			cp2 := abso value: args second.
+			p := abso value: args third.
+			args at: 1 put: p.
+			args at: 2 put: cp1.
+			args at: 3 put: cp2.
+			answer add: curve ] ].
+	curves := answer.
 	
 ]
 
 { #category : #accessing }
 RTPathAnimation >> position: i [
 	| r |
-	r := (curves at: i) value.
+	r := (curves at: i) second.
 	^ r first.
 ]
 
 { #category : #refreshing }
 RTPathAnimation >> refresh [
 	| t prev current key position |
+	
 	curves ifEmpty: [ ^ self ].
 	t := animatedValue value.
 	index := (t * curves size) ceiling.
-	index <= 0 ifTrue: [ index := 1 ].
+	index < 1 ifTrue: [ index := 1 ].
 	current := self position: index.
 	t := (t  - ((index - 1) / curves size)) / (1 / curves size).
-	index = 1
-		ifTrue: [ prev := element attributes at: #op  ]
-		ifFalse: [ prev := self position: index- 1 ].
-	key := (curves at: index) key.
+	prev := index = 1
+		ifTrue: [ element attributes at: #op  ]
+		ifFalse: [ (curves at: index-1) second first ].
+	key := (curves at: index) first.
 	position := nil.
-	((key = #m) or: [ key = #l. ])
+	((key = #moveTo:) or: [ key = #lineTo: ])
 		ifTrue: [ 
 			position := self
 				linear: prev
 				to: current
 				at: t ].
-	key = #c
+	key = #curveVia:and:to:
 		ifTrue: [ position := self 
 			cubic: prev 
 			to: current
