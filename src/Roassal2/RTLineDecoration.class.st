@@ -9,7 +9,8 @@ Class {
 		'size',
 		'attachPoint',
 		'line',
-		'baseSize'
+		'baseSize',
+		'percentage'
 	],
 	#category : #'Roassal2-LineDecorations'
 }
@@ -40,7 +41,8 @@ RTLineDecoration >> defaultBaseSize [
 RTLineDecoration >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
-	baseSize := self defaultBaseSize
+	baseSize := self defaultBaseSize.
+	self percentage: 1.
 ]
 
 { #category : #accessing }
@@ -49,8 +51,24 @@ RTLineDecoration >> line: aRTLine [
 ]
 
 { #category : #accessing }
+RTLineDecoration >> mid [
+	self percentage: 0.5.
+]
+
+{ #category : #accessing }
 RTLineDecoration >> mySize [
 	^size
+]
+
+{ #category : #accessing }
+RTLineDecoration >> percentage: aNumberOrBlockOrIdentifier [
+	percentage := [ :e | aNumberOrBlockOrIdentifier rtValue: e ].
+	
+]
+
+{ #category : #hooks }
+RTLineDecoration >> percentageFor: anElement [
+	^ percentage rtValue: anElement
 ]
 
 { #category : #accessing }
@@ -87,7 +105,9 @@ RTLineDecoration >> trachelShapeFor: anEdge [
 		size: (self mySize rtValue: anEdge)
 		color: (self colorFor: anEdge)
 		stroke: (self colorFor: anEdge).
-	shape baseSize: (baseSize rtValue: anEdge).
+	shape 
+		baseSize: (baseSize rtValue: anEdge);
+		percentage: (self percentageFor: anEdge).
 	^ shape
 ]
 
@@ -111,7 +131,8 @@ RTLineDecoration >> updateFor: edge trachelShape: trachelShape [
 	trachelShape to: (attachPoint endingPointOf: edge).
 	trachelShape color: (self colorFor: edge).
 	trachelShape width: (self widthFor: edge).
-	trachelShape resetPath
+	trachelShape percentage: (self percentageFor: edge).
+	trachelShape resetPath.
 ]
 
 { #category : #accessing }
