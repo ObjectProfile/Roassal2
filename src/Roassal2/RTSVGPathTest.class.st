@@ -24,12 +24,15 @@ RTSVGPathTest >> testIncludesPointBasic [
 { #category : #tests }
 RTSVGPathTest >> testParseSimple [
 	|res p1 |
-	res := (Array 
-		with: (Array with: #absolute with: #() )
-		with: (Array with: #moveTo: with: (Array with: 100.0@100.0) )
-		with: (Array with: #lineTo: with: (Array with: 300.0@100.0) )
-		with: (Array with: #lineTo: with: (Array with: 200.0@300.0) )
-		with: (Array with: #close with: #())) asOrderedCollection.
+	res := OrderedCollection new.
+	res
+		add: (Array with: #absolute with: #() );
+		add: (Array with: #moveTo: with: (Array with: 100.0@100.0) );
+		add: (Array with: #absolute with: #() );
+		add: (Array with: #lineTo: with: (Array with: 300.0@100.0) );
+		add: (Array with: #absolute with: #() );
+		add: (Array with: #lineTo: with: (Array with: 200.0@300.0) );
+		add: (Array with: #close with: #()).
 	p1 := (TRSVGPath new path: 'M 100 100 L 300 100 L 200 300 z') curves.
 	self assert: p1 = res.
 	
