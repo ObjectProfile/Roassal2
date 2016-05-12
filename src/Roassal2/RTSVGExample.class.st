@@ -121,7 +121,9 @@ RTSVGExample >> diamond [
 
 	s color: Color black.
 	elements := s elementsOn: (1 to: 40).
-
+	elements when: TRMouseEnter do: [ :evt |
+		evt shape color: Color red.
+		evt signalUpdate].
 	v addAll: elements.
 
 	RTGridLayout on: elements.
@@ -340,6 +342,9 @@ RTSVGExample >> icon1 [
 		scale: 8;
 		fillColor: Color black) element.
 	element @ RTDraggable.
+	element when: TRMouseEnter do: [ :evt |
+		evt shape color: Color red.
+		evt signalUpdate].
 	view add: element.
 	^ view
 ]
