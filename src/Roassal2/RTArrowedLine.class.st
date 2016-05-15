@@ -60,6 +60,12 @@ RTArrowedLine >> head: aLineDecorationShape [
 	head := aLineDecorationShape
 ]
 
+{ #category : #accessing }
+RTArrowedLine >> headOffset: aFloat [
+	"aFloat is value between 0.0 and 1.0 indicating where the arrow is located between the two extremities"
+	head percentage: aFloat
+]
+
 { #category : #initialization }
 RTArrowedLine >> initialize [
 	super initialize.
@@ -92,4 +98,9 @@ RTArrowedLine >> trachelShapeFor: anEdge [
 RTArrowedLine >> updateFor: edge trachelShape: trachelShape [
 	line updateFor: edge trachelShape: edge trachelShape shapes first.
 	head updateFor: edge trachelShape: edge trachelShape shapes second
+]
+
+{ #category : #accessing }
+RTArrowedLine >> withOffset [
+	self headOffset: 0.7
 ]
