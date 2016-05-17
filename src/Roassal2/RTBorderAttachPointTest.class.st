@@ -25,16 +25,6 @@ RTBorderAttachPointTest >> testBoxBorderPoint [
 ]
 
 { #category : #tests }
-RTBorderAttachPointTest >> testEllipseBorderPoint [
-	| from to via |
-	from := GEllipse center: 10 @ 5 a: 5 b: 2.5.
-	to := GEllipse center: 15 @ 35 a: 5 b: 5.
-	via := GLineSegment from: from center to: to center.
-	self assert: (attachPoint borderPointFrom: from to: to via: via) equals: (65 / 6) @ 10.
-	self assert: (attachPoint borderPointFrom: to to: from via: via) equals: (85 / 6) @ 30
-]
-
-{ #category : #tests }
 RTBorderAttachPointTest >> testGeometryBox [
 	el := RTBox new
 		width: 20;
