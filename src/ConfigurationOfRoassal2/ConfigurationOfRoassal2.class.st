@@ -1094,6 +1094,26 @@ ConfigurationOfRoassal2 >> version128: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfRoassal2 >> version129: spec [
+	<version: '1.29' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Added geometry package'.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '5/17/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-PeterUhnak.368';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1319';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-TudorGirba.34';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version12: spec [
 	<version: '1.2' imports: #('1.1-baseline' )>
 
