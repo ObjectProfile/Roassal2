@@ -702,8 +702,8 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.28'.
-	spec for: #'pharo6.x' version: '1.28'.
+	spec for: #'pharo5.x' version: '1.29'.
+	spec for: #'pharo6.x' version: '1.29'.
 ]
 
 { #category : #versions }
