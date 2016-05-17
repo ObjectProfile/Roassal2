@@ -901,6 +901,70 @@ Dwek5Kyq+eWvAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleAttachPoint [
+
+|v ellipse box e1 e2 l1 l2 l3 ap|
+v := RTView new.
+v canvas color: Color black.
+
+ellipse := RTEllipse new
+    width: 100;
+    height: 50;
+    color: Color veryVeryDarkGray;
+    borderColor: Color purple.
+
+box := RTBox new
+    width: 100;
+    height: 50;
+    color: Color veryVeryDarkGray;
+    borderColor: Color purple.
+
+e1 := ellipse element.
+e2 := box width: 50; height: 100; element.
+e2 translateBy: 100 @ 0.
+
+v add: e1; add: e2.
+
+ap := RTBorderAttachPoint new offset: 10.
+
+l1 := RTDoubleArrowedLine new
+    headStart: RTFilledNarrowArrow asHead;
+    headEnd: RTSimpleArrow asTail;
+    attachPoint: ap;
+    color: Color magenta muchDarker;
+    edgeFrom: e1 to: e2.
+
+l2 := RTDoubleArrowedLine new
+    headStart: RTFilledNarrowArrow asHead;
+    headEnd: RTSimpleArrow asTail;
+    attachPoint: ap;
+    color: Color magenta;
+    edgeFrom: e2 to: e1.
+    
+l3 := RTDoubleArrowedLine new
+    headStart: RTNoDecorationShape asHead;
+    headEnd: RTNoDecorationShape asTail;
+    attachPoint: ap;
+    color: Color magenta muchLighter;
+    edgeFrom: e2 to: e1.
+    
+v add: l1; add: l2; add: l3.
+    
+v elements @ RTDraggable.
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleAttachPointIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABAklEQVR4XuXRAQ0AAAgCQfuX
+VmMwju0LcPNbv6j8E3wQPx/EB/HzQXwQPx/EB/HzQXwQPx/EzwfxQfx8EB/EzwfxQfx8EB/E
+zwfx80F8ED8fxAfx80F8ED8fxAfx80H8fBAfxM8H8UH8fBAfxM8H8UH8fBA/H8QH8fNBfBA/
+H8QH8fNBfBA/H8TPB/FB/HwQH8TPB/FB/HwQH8TPB/HzQXwQPx/EB/HzQXwQPx/EB/HzQfx8
+EB/EzwfxQfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80F8ED8fxM8/wAfx80F8ED8fxAfx
+80F8ED8fxAfx80H8fBAfxM8H8UH8fJDuDpK06ys7QL90AAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleBezier [
 | v shape  edge els |
 v := RTView new.
