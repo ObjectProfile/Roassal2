@@ -13,10 +13,15 @@ respective objects are.'
 
 { #category : #hooks }
 RTVisualIDPlugin >> execute [
-	Metacello new
+	Gofer new
+		smalltalkhubUser: 'abergel' project: 'VisualIDGlyph';
+		package: 'VisualIDGlyph';
+		load.
+		
+"	Metacello new
 	  baseline: 'VisualID';
 	  repository: 'github://bergel/VisualID:master';
-	  load. 
+	  load. "
 
 	"Gofer new
 		smalltalkhubUser: 'IgnacioFernandez' project: 'VisualiDs';
