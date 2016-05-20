@@ -702,8 +702,8 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.29'.
-	spec for: #'pharo6.x' version: '1.29'.
+	spec for: #'pharo5.x' version: '1.30'.
+	spec for: #'pharo6.x' version: '1.30'.
 ]
 
 { #category : #versions }
@@ -1125,6 +1125,26 @@ ConfigurationOfRoassal2 >> version12: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.237';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.600';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version130: spec [
+	<version: '1.30' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Added geometry package'.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '5/20/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.370';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1323';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-TudorGirba.34';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
 
