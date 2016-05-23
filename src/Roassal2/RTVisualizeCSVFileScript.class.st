@@ -4,18 +4,18 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTVisualizeCSVFileScript >> description [
 	^ 
 'Let you select a csv file and open a Grapher visualization'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTVisualizeCSVFileScript >> execute [
 	FileSystem disk inspect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTVisualizeCSVFileScript >> label [
 	^ 'Browse and visualize CSV file'
 ]
