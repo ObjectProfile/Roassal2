@@ -11,48 +11,51 @@ Class {
 }
 
 { #category : #adding }
-RTSVGBezierLine >> addCurves: stream [
-	| rPoints |
-	rPoints := self points allButFirst.
-	rPoints size >= 3
-		ifTrue: [
-			stream
-				nextPut: $S.
-			(1 to: rPoints size - 1) do: [ :i | |p1 p2|
-					p1 := (rPoints at: i).
-					p2 := ((rPoints at: i) + (rPoints at: i + 1) / 2 ).
-					stream
-						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p1 x rounded with: p1 y rounded);
-						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p2 x rounded with: p2 y rounded) 		
-				].
-			stream
-				nextPutAll: ('L<1p>,<2p>" ' expandMacrosWith: rPoints last x rounded with: rPoints last y rounded).
-			]
-		ifFalse: [		
-			rPoints size == 2
-				ifTrue: [  
-					stream
-						nextPutAll: ('Q<1p>,<2p> ' expandMacrosWith: rPoints first x rounded with: rPoints first y rounded);
-						nextPutAll: ('<1p>,<2p>" ' expandMacrosWith: rPoints second x rounded with: rPoints second y rounded) 
-					] .			
-			rPoints size == 3
-				ifTrue: [  
-					stream
-						nextPutAll: ('C<1p>,<2p> ' expandMacrosWith: rPoints first x rounded with: rPoints first y rounded);
-						nextPutAll: ('<1p>,<2p> ' expandMacrosWith: rPoints second x rounded with: rPoints second y rounded);
-						nextPutAll: ('<1p>,<2p>" ' expandMacrosWith: rPoints last x rounded with: rPoints last y rounded) 
-					] ]
+RTSVGBezierLine >> addCurves: stream with: visitor [
+	| p1 p2 |
+	p1 := points first.
+	stream
+		nextPutAll: 'd="M';
+		nextPutAll: (visitor number: p1 x);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: p1 y).
+	2 to: points size - 2 do: [ :i | 
+		p1 := points at: i.
+		p2 := (p1 + (points at: i + 1)) / 2.
+		stream
+			nextPutAll: 'Q';
+			nextPutAll: (visitor number: p1 x);
+			nextPutAll: ',';
+			nextPutAll: (visitor number: p1 y);
+			nextPutAll: ' ';
+			nextPutAll: (visitor number: p2 x);
+			nextPutAll: ',';
+			nextPutAll: (visitor number: p2 y) ].
+	p1 := points at: points size - 1.
+	p2 := points last.
+	stream
+		nextPutAll: 'Q';
+		nextPutAll: (visitor number: p1 x);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: p1 y);
+		nextPutAll: ' ';
+		nextPutAll: (visitor number: p2 x);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: p2 y);
+		nextPutAll: '" '
 ]
 
 { #category : #adding }
 RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
-	| closings from to|
-	from := aSVGVisitor names at: self element from.
-	to := aSVGVisitor names at: self element to.
+	| closings from to shape el |
+	shape := self element.
+	el := shape element.
+	from := aSVGVisitor names at: el from trachelShape.
+	to := aSVGVisitor names at: el to trachelShape.
 	self id: from , '_' , to.
 	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
-	self addPath: stream.
+	self addPath: stream with: aSVGVisitor.
 	self startStyle: stream.
 	self addFillColor: stream.
 	self addStrokeColor: stream.
@@ -69,11 +72,9 @@ RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
 ]
 
 { #category : #adding }
-RTSVGBezierLine >> addPath: stream [
-	stream
-		nextPutAll: 'name="bezier[]" ';
-		nextPutAll: ('d="M<1p>,<2p> ' expandMacrosWith: (self points at: 1) x rounded with: (self points at: 1) y rounded).
-		self addCurves: stream.
+RTSVGBezierLine >> addPath: stream with: visitor [
+	stream nextPutAll: 'name="bezier[]" '.
+	self addCurves: stream with: visitor
 ]
 
 { #category : #accessing }

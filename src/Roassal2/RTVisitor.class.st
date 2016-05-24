@@ -34,9 +34,17 @@ RTVisitor >> nameFor: anElement [
 
 { #category : #helpers }
 RTVisitor >> number: n [
+	
+	| f |
 	^ n isNaN 
 		ifTrue: ['NaN']
-		ifFalse: [ n asFloat asString ]
+		ifFalse: [ n isInteger 
+			ifTrue: [ n asString ]
+			ifFalse: [ f := n asFloat.
+				f fractionPart isZero 
+					ifTrue: [ f rounded asString ]
+					ifFalse: [ f asString ] ]  ]
+		
 ]
 
 { #category : #visitor }

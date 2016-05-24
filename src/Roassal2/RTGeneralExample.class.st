@@ -1438,16 +1438,16 @@ RTGeneralExample >> popupView1 [
 	v := RTView new.
 	v @ RTDraggableView.
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
-	els + RTLabel.
 	
 	els @ (RTPopup new group: [ :group :el |
 		el model timesRepeat: [
 			group add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element ].
 		RTGridLayout on: group. ]).
 	
-	els @ RTDraggable.
+	
 	
 	v addAll: els.
+	els @ RTDraggable @ RTLabeled.
 	RTGridLayout on: els.
 	^ v
 ]
@@ -1463,7 +1463,6 @@ RTGeneralExample >> popupView2 [
 	v := RTView new.
 	v @ RTDraggableView.
 	els := (RTBox new size: 20) elementsOn: (1 to: 100).
-	els + RTLabel.
 	
 	els @ (RTPopup new group: [ :group :el |
 		el model timesRepeat: [
@@ -1475,9 +1474,8 @@ RTGeneralExample >> popupView2 [
 		group add: background.	
 		 ]).
 	
-	els @ RTDraggable.
-	
 	v addAll: els.
+	els @ RTDraggable@RTLabeled.
 	RTGridLayout on: els.
 	^ v
 ]
