@@ -17,7 +17,7 @@ FileReference >> grapherVisualizationFromFileName: aFileName [
 		d := RTData new.
 		d noDot.
 		d connectColor: (normalizer level: (dataIndex / tab numberOfColumns)) trans. 
-		d points: ((tab valuesOfColumn: s asInteger) select: [ :ss | ss notNil and: [ ss ~= 'nil' and: [ ss notEmpty ] ] ] thenCollect: [ :ss | Float readFrom: ss ]).
+		d points: ((tab cleanedValuesOfColumn: s asInteger) collect: [ :ss | Float readFrom: ss ]).
 		g add: d.
 	].
 	^ g
