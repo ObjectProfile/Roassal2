@@ -254,6 +254,12 @@ RTTabTable >> breakDown: l usingDelimiters: delimitersAsCharacter [
 
 ]
 
+{ #category : #accessing }
+RTTabTable >> cleanedValuesOfColumn: indexAsNumberOfString [
+	"Return the values stored in the column. No nil values may be returned (this happens if a column is has less elements than other columns"
+	^ (self valuesOfColumn: indexAsNumberOfString) select: [ :ss | ss notNil and: [ ss ~= 'nil' and: [ ss notEmpty ] ] ]
+]
+
 { #category : #converting }
 RTTabTable >> convertColumn: index to: blockForConvertion [
 	"Convert a column of the table"
@@ -454,5 +460,6 @@ RTTabTable >> values [
 
 { #category : #accessing }
 RTTabTable >> valuesOfColumn: indexAsNumberOfString [
+	"Return the values stored in the column. Note that these values may not be cleaned, ie. nil values may be contained"
 	^ values collect: [ :row | row at: (self convertFromNameToIndexIfNecessary: indexAsNumberOfString) ]
 ]
