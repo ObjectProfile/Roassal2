@@ -2,7 +2,7 @@
 I am a class to visit all the nodes of one RTView
 "
 Class {
-	#name : #RTSVGVisitor2,
+	#name : #RTJavascriptVisitor,
 	#superclass : #RTVisitor,
 	#instVars : [
 		'view',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #helpers }
-RTSVGVisitor2 >> addBorderColor: c [
+RTJavascriptVisitor >> addBorderColor: c [
 	c ifNil: [ ^ self].
 	
 	stream nextPutAll: ('bordercolor: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
@@ -24,14 +24,13 @@ RTSVGVisitor2 >> addBorderColor: c [
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addBorderWidth: aShape [
+RTJavascriptVisitor >> addBorderWidth: aShape [
 	(aShape strokePaint isNil or: [ aShape strokeWidth < 0 ]) ifTrue: [ ^ self ].
-	stream nextPutAll: 'sw: ', aShape strokeWidth asString, ','.
-	
+	stream nextPutAll: 'sw: ', (self number: aShape strokeWidth), ','.
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addColor: c [
+RTJavascriptVisitor >> addColor: c [
 	stream nextPutAll: 'color: '.
 	self addColorBase: c.
 	stream nextPutAll: ', '.
@@ -39,14 +38,14 @@ RTSVGVisitor2 >> addColor: c [
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addColorBase: c [
+RTJavascriptVisitor >> addColorBase: c [
 	stream nextPutAll: ('{r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
 	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}' ]
-	ifFalse: [ stream nextPutAll: (', a: <1p>}' expandMacrosWith: c alpha) ]
+	ifFalse: [ stream nextPutAll: ', a: ', (self number: c alpha),'}' ]
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addInteractions: aShape [
+RTJavascriptVisitor >> addInteractions: aShape [
 	aShape isNil ifTrue: [ ^ self ].
 	(aShape isKindOf: RTAnnounceableObject) ifFalse: [ ^ self ].
 	stream nextPutAll: 'ints: '.
@@ -55,7 +54,7 @@ RTSVGVisitor2 >> addInteractions: aShape [
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addMatrix: m [
+RTJavascriptVisitor >> addMatrix: m [
 	stream nextPutAll: 'matrix:{shx: ', (self number: m shx), 
 		', shy: ',  (self number: m shy), 
 		', sx: ', (self number: m sx), 
@@ -65,7 +64,7 @@ RTSVGVisitor2 >> addMatrix: m [
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> addStringWithFont: aLabel [
+RTJavascriptVisitor >> addStringWithFont: aLabel [
 	| converter fn |
 	converter := RTSVGStringConverter new.
 	fn := aLabel fontName.
@@ -79,81 +78,77 @@ RTSVGVisitor2 >> addStringWithFont: aLabel [
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> exportFixedShapes [
+RTJavascriptVisitor >> exportFixedShapes [
 	^ exportFixedShapes
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> exportFixedShapes: aBool [
+RTJavascriptVisitor >> exportFixedShapes: aBool [
 	exportFixedShapes := aBool
 ]
 
 { #category : #initialization }
-RTSVGVisitor2 >> initialize [
+RTJavascriptVisitor >> initialize [
 	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
 	#RTHighlightable #RTLabeled #RTShowEdge #RTShowLabel #RTZoomableView
 	#RTFocusElement).
-	exportFixedShapes := true.
-	stream := WriteStream on: String new. 
+	self exportFixedShapes: true.
+	self stream: (WriteStream on: String new).
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> pointToString: point [
-	^ '{x:',point x asFloat asString, ',y:',point y asFloat asString,'}'
+RTJavascriptVisitor >> pointToString: point [
+	^ '{x:', (self number: point x), ',y:', (self number: point y),'}'
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> stream [
+RTJavascriptVisitor >> stream [
 
 	^stream
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> stream: aStream [
+RTJavascriptVisitor >> stream: aStream [
 
 	stream := aStream.
 ]
 
 { #category : #helpers }
-RTSVGVisitor2 >> validInteractions [
+RTJavascriptVisitor >> validInteractions [
 	^ validInteractions
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> view [
+RTJavascriptVisitor >> view [
 
 	^view
 ]
 
 { #category : #accessing }
-RTSVGVisitor2 >> view: aView [
+RTJavascriptVisitor >> view: aView [
 
 	view := aView.
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitAbstractLine: anAbstractLine [
+RTJavascriptVisitor >> visitAbstractLine: anAbstractLine [
 	"anAbstractLine accept: anAbstractLine
 	"
 	"TODO"
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitArcShape: aShape [
+RTJavascriptVisitor >> visitArcShape: aShape [
 	aShape topLeft ifNil: [ aShape computeRectangle ].
 	stream nextPutAll: '
 		{type: "arc", id: "';
 		nextPutAll: (self nameFor: aShape);
-		nextPutAll: ('", ir: <1p>, er: <2p>,' expandMacrosWith: aShape innerRadius 
-			with: aShape externalRadius );
-		nextPutAll: (' aAngle: <1p>, bAngle: <2p>,' expandMacrosWith: aShape alphaAngle
-			with: aShape betaAngle );
-		nextPutAll: (' o: {x: <1p>, y: <2p>},' expandMacrosWith: aShape topLeft x
-			 with: aShape topLeft y);
-		nextPutAll: (' c: {x: <1p>, y: <2p>},' expandMacrosWith: aShape bottomRight x
-			 with: aShape bottomRight y).
+		nextPutAll: '", ir: ',(self number: aShape innerRadius),', er: ',(self number: aShape externalRadius),',';
+		nextPutAll: ' aAngle: ',(self number: aShape alphaAngle),', bAngle: ',(self number: aShape betaAngle),',';
+		nextPutAll: ' o: {x: ',(self number: aShape topLeft x),', y: ',(self number: aShape topLeft y),'},';
+		nextPutAll: ' c: {x: ',(self number: aShape bottomRight x),', y: ',(self number: aShape bottomRight y ),'},'.
 	self addColor: aShape color.
 	self addInteractions: aShape element.
 	self addMatrix: aShape matrix.
@@ -161,7 +156,7 @@ RTSVGVisitor2 >> visitArcShape: aShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
+RTJavascriptVisitor >> visitArrowHeadShape: arrowShape [
 	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
@@ -182,7 +177,7 @@ RTSVGVisitor2 >> visitArrowHeadShape: arrowShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitArrowShape: arrowShape [
+RTJavascriptVisitor >> visitArrowShape: arrowShape [
 	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
@@ -191,16 +186,16 @@ RTSVGVisitor2 >> visitArrowShape: arrowShape [
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape strokePaint.
-	stream nextPutAll: ' width: ', arrowShape width asString;
-		nextPutAll: ', size: ', arrowShape mySize asString.
+	stream nextPutAll: ' width: ', (self number: arrowShape width);
+		nextPutAll: ', size: ', (self number: arrowShape mySize).
 	self visitAttachPoint: e.
-	stream nextPutAll: ', base: ', arrowShape baseSize asString;
+	stream nextPutAll: ', base: ', (self number: arrowShape baseSize);
 		nextPutAll: '},'.
 	
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitAttachPoint: element [
+RTJavascriptVisitor >> visitAttachPoint: element [
 	| ap |
 	element ifNil: [ 
 		^ stream nextPutAll: ',ap:RTCenteredAttachPoint' ].
@@ -214,7 +209,7 @@ RTSVGVisitor2 >> visitAttachPoint: element [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitBezierShape: aBezierShape [
+RTJavascriptVisitor >> visitBezierShape: aBezierShape [
 	| e shape |
 	e := aBezierShape element.
 	shape := (e shape class = RTCompositeShape) ifTrue: [ shape := e shape allShapes first ] ifFalse: [ e shape ].
@@ -226,18 +221,20 @@ RTSVGVisitor2 >> visitBezierShape: aBezierShape [
 	self addColor: aBezierShape strokePaint.
 	
 	shape class = RTBezierLine ifTrue: [ 
-		stream nextPutAll:  'ides: ['.
-		(shape controllingElements rtValue:e) do: [ :el | 
+		stream nextPutAll:  'tension: ',(self number: shape tension),', ides: ['.
+		shape follow ifNotNil: [ shape setControllingElementsFromFollowFor: e ].
+		(shape controllingElements rtValue: e) do: [ :el | 
 			stream nextPutAll: '"', (self nameFor: el trachelShape), '", '] ].
 	
-	stream nextPutAll: '], width: ', aBezierShape width asString.
+	stream nextPutAll: '], width: ';
+		nextPutAll: (self number: aBezierShape width).
 	self visitAttachPoint: e.
 	stream nextPutAll: '},'.
 	
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitBitMapShape: aBitmapShape [
+RTJavascriptVisitor >> visitBitMapShape: aBitmapShape [
 	| s icon64 |
 	s := WriteStream on: ByteArray new.
 	
@@ -260,14 +257,14 @@ RTSVGVisitor2 >> visitBitMapShape: aBitmapShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitBoxShape: aBox [
+RTJavascriptVisitor >> visitBoxShape: aBox [
 	
 	| box |
 	box := aBox basicEncompassingRectangle.
 	stream nextPutAll: '
 		{type: "box", id: "';
 		nextPutAll: (self nameFor: aBox);
-		nextPutAll: ('", w: <1p>, h: <2p>, ' expandMacrosWith:  box width with: box height ).
+		nextPutAll: '", w: ', (self number: box width),', h: ',(self number: box height),', '.
 	self addBorderColor: aBox strokePaint.
 	self addBorderWidth: aBox.
 	self addColor: aBox color.
@@ -276,7 +273,7 @@ RTSVGVisitor2 >> visitBoxShape: aBox [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitCanvas: aCanvas [
+RTJavascriptVisitor >> visitCanvas: aCanvas [
 	self exportFixedShapes ifFalse: [ ^ self ].
 	aCanvas fixedShapes ifEmpty: [ ^ self ].
 	stream nextPutAll:'	shapes = ['.
@@ -291,7 +288,7 @@ RTSVGVisitor2 >> visitCanvas: aCanvas [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitDiamondShape: diamondShape [
+RTJavascriptVisitor >> visitDiamondShape: diamondShape [
 	"Looks like to be broken"
 	| aid color bColor w s |
 	aid := self getDecorationId: diamondShape.
@@ -303,7 +300,7 @@ RTSVGVisitor2 >> visitDiamondShape: diamondShape [
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
+RTJavascriptVisitor >> visitDraggableInteraction: anInteraction with: anObject [
 	| list trachelBlock |
 	list := OrderedCollection new.
 	(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
@@ -330,24 +327,24 @@ RTSVGVisitor2 >> visitDraggableInteraction: anInteraction with: anObject [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitEdge: edge [
+RTJavascriptVisitor >> visitEdge: edge [
 	edge trachelShape accept: self.
 	
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitElement: e [
+RTJavascriptVisitor >> visitElement: e [
 	e trachelShape accept: self
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitEllipseShape: anEllipse [	
+RTJavascriptVisitor >> visitEllipseShape: anEllipse [	
 	| box |
 	box := anEllipse basicEncompassingRectangle.
 	stream nextPutAll: '
 		{type: "ellipse", id: "';
 		nextPutAll: (self nameFor: anEllipse);
-		nextPutAll: ('", rx: <1p>, ry: <2p>,' expandMacrosWith:  (box width / 2) rounded with: (box height/2) rounded ).
+		nextPutAll: ('", rx: ',(self number: box width / 2),', ry: ',(self number: box height/2),',').
 	self addBorderColor: anEllipse strokePaint.
 	self addBorderWidth: anEllipse.
 	self addColor: anEllipse color.
@@ -356,12 +353,12 @@ RTSVGVisitor2 >> visitEllipseShape: anEllipse [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitGroup: aRTGroup [
+RTJavascriptVisitor >> visitGroup: aRTGroup [
 	aRTGroup accept: self.
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitHightlightableInteraction: anInt with: el [
+RTJavascriptVisitor >> visitHightlightableInteraction: anInt with: el [
 	stream nextPutAll: 'new RTHighlightable({'.
 	self addColor: anInt highlightedColor.
 	stream nextPutAll: 'ides: ['.
@@ -372,19 +369,19 @@ RTSVGVisitor2 >> visitHightlightableInteraction: anInt with: el [
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitInteraction: interaction with: anObject [
+RTJavascriptVisitor >> visitInteraction: interaction with: anObject [
 	stream nextPutAll: interaction class name.
 	
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitInteractions: anObject [
+RTJavascriptVisitor >> visitInteractions: anObject [
 	TRPlatform current visitInteractionsFor: self and: anObject.
 
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitLabelShape: aLabel [
+RTJavascriptVisitor >> visitLabelShape: aLabel [
 	| box |
 	box := aLabel basicEncompassingRectangle.
 	stream nextPutAll: '
@@ -400,7 +397,7 @@ RTSVGVisitor2 >> visitLabelShape: aLabel [
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitLabelledInteraction: anInt with: el [
+RTJavascriptVisitor >> visitLabelledInteraction: anInt with: el [
 	stream nextPutAll: 'new RTLabelled({'.
 		self addColor: anInt color.
 		stream nextPutAll: 'low'.
@@ -411,7 +408,7 @@ RTSVGVisitor2 >> visitLabelledInteraction: anInt with: el [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitLineShape: aLine [
+RTJavascriptVisitor >> visitLineShape: aLine [
 	
 	| e fromTo |
 	e := aLine element.
@@ -433,7 +430,7 @@ RTSVGVisitor2 >> visitLineShape: aLine [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
+RTJavascriptVisitor >> visitMultiCompositeShape: aShape [
 	stream nextPutAll: '
 		{id: "';
 		nextPutAll: (self nameFor: aShape);
@@ -441,8 +438,7 @@ RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 	aShape shapes do: [ :s| s accept: self].
 	stream nextPutAll: '], offsets: ['.
 	aShape offsets do: [ :o | 
-		stream nextPutAll: ('{x: <1p>, y: <2p>},' 
-			expandMacrosWith: o x with: o y) ].
+		stream nextPutAll: '{x: ',(self number: o x),', y: ',(self number: o y),',' ].
 	
 	stream nextPutAll: ']'.
 
@@ -452,12 +448,12 @@ RTSVGVisitor2 >> visitMultiCompositeShape: aShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitNoShape: aNoShape [
+RTJavascriptVisitor >> visitNoShape: aNoShape [
 	"Do nothing"
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitPolygonShape: aPolygon [
+RTJavascriptVisitor >> visitPolygonShape: aPolygon [
 	| r c |
 	r := aPolygon encompassingRectangle.
 	c := aPolygon color.
@@ -466,12 +462,11 @@ RTSVGVisitor2 >> visitPolygonShape: aPolygon [
 	stream nextPutAll: '
 		{type: "polygon", id: "';
 		nextPutAll: (self nameFor: aPolygon);
-		nextPutAll: ('", o: {x: <1p>, y: <2p>}' expandMacrosWith: r origin x with: r origin y);
-		nextPutAll: (', c: {x: <1p>, y: <2p>}, p: "' expandMacrosWith: r corner x with: r corner y).
+		nextPutAll: ('", o: {x: ',(self number: r origin x),', y: ',(self number: r origin y),'}');
+		nextPutAll: (', c: {x: ',(self number: r corner x),', y: ',(self number: r corner y),'}, p: "').
 	
 	aPolygon vertices do: [ :p |
-		stream nextPutAll: ('<1p>,<2p> ' expandMacrosWith: p x with: p y).
-		 ].
+		stream nextPutAll: (self number: p x),',',(self number: p y),' '. ].
 	stream nextPutAll: '",'.
 	self addBorderColor: aPolygon strokePaint.
 	self addBorderWidth: aPolygon.
@@ -481,7 +476,7 @@ RTSVGVisitor2 >> visitPolygonShape: aPolygon [
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitPopupInteraction: anInt with: el [
+RTJavascriptVisitor >> visitPopupInteraction: anInt with: el [
 	| elements |
 	[elements := anInt createPopupFor: el] 
 		on: Error do: [ ^ self ].
@@ -494,12 +489,12 @@ RTSVGVisitor2 >> visitPopupInteraction: anInt with: el [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitRotatedLabelShape: aRotatedLabel [
+RTJavascriptVisitor >> visitRotatedLabelShape: aRotatedLabel [
 	self visitLabelShape: aRotatedLabel
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitSVGPath: aSVGPath [
+RTJavascriptVisitor >> visitSVGPath: aSVGPath [
 	| r c |
 	r := aSVGPath basicEncompassingRectangle.
 	c := aSVGPath color.
@@ -509,8 +504,8 @@ RTSVGVisitor2 >> visitSVGPath: aSVGPath [
 		nextPutAll: (self nameFor: aSVGPath);
 		nextPutAll: '", d:"';
 		nextPutAll: aSVGPath pathString;
-		nextPutAll: ('", o: {x: <1p>, y: <2p>}' expandMacrosWith: r origin x with: r origin y);
-		nextPutAll: (', c: {x: <1p>, y: <2p>},' expandMacrosWith: r corner x with: r corner y).
+		nextPutAll: '", o: {x: ',(self number: r origin x),', y: ',(self number: r origin y),'}' ;
+		nextPutAll: ', c: {x: ',(self number: r corner x),', y: ',(self number: r corner y),'},'.
 	
 	self addBorderColor: aSVGPath strokePaint.
 	self addBorderWidth: aSVGPath.
@@ -521,12 +516,12 @@ RTSVGVisitor2 >> visitSVGPath: aSVGPath [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitShape: aShape [
+RTJavascriptVisitor >> visitShape: aShape [
 	aShape accept: self 
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitShowEdgeInteraction: anInt with: el [
+RTJavascriptVisitor >> visitShowEdgeInteraction: anInt with: el [
 	|edges t |
 	t := (anInt connectToElements rtValue: el).
 	t := t copyWithout: nil.
@@ -539,7 +534,7 @@ RTSVGVisitor2 >> visitShowEdgeInteraction: anInt with: el [
 ]
 
 { #category : #'visitor-interactions' }
-RTSVGVisitor2 >> visitShowLabelInteraction: anInt with: el [
+RTJavascriptVisitor >> visitShowLabelInteraction: anInt with: el [
 	
 	stream nextPutAll: 'new RTShowLabel(['.
 	((anInt instVarNamed: #highlightElements) rtValue: el) do: [:ele |
@@ -550,7 +545,7 @@ RTSVGVisitor2 >> visitShowLabelInteraction: anInt with: el [
 ]
 
 { #category : #visitor }
-RTSVGVisitor2 >> visitView: aView [
+RTJavascriptVisitor >> visitView: aView [
 	| elements |
 	stream nextPutAll: 'mamani.color('.
 	self addColorBase: aView canvas color.

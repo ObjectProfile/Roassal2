@@ -468,7 +468,7 @@ lb addText: 'Circle = classes, size = number of methods; gray links = inheritanc
 lb addText: 'blue links = dependencies; layout = force based layout on the inheritance links'.
 lb build.
 
-^ b view
+^ b view @ RTZoomableView.
 ]
 
 { #category : #sources }
