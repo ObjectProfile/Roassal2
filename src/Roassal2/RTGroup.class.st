@@ -156,6 +156,7 @@ RTGroup >> hasAttributes [
 
 { #category : #public }
 RTGroup >> height [
+	"Return the height of the encompassing rectangle of all the elements"
 	^ self encompassingRectangle height
 ]
 
@@ -185,6 +186,7 @@ RTGroup >> model [
 
 { #category : #accessing }
 RTGroup >> outgoingEdges [
+	"Return the list of outgoing edges from that group"
 	^ self flatCollect: #outgoingEdges
 ]
 
@@ -205,6 +207,7 @@ RTGroup >> pushFront [
 
 { #category : #public }
 RTGroup >> remove [
+	"Remove all the elements contained in myself from the view"
 	self view removeElements: self
 ]
 
