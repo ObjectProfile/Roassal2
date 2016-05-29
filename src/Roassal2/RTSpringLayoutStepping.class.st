@@ -55,12 +55,6 @@ RTSpringLayoutStepping >> hasCompleted [
 	^ false
 ]
 
-{ #category : #public }
-RTSpringLayoutStepping >> inView: aView [
-	self view: aView.
-	super inView: aView
-]
-
 { #category : #initialization }
 RTSpringLayoutStepping >> initialize [
 	super initialize.
@@ -126,12 +120,6 @@ RTSpringLayoutStepping >> removeAllEdges [
 { #category : #actions }
 RTSpringLayoutStepping >> start [
 	view canvas signalUpdate
-]
-
-{ #category : #actions }
-RTSpringLayoutStepping >> stopAndRemove [
-	"Stop and remove the animation. Doing a start afterward does not resume"
-	view canvas removeAnimation: self
 ]
 
 { #category : #accessing }

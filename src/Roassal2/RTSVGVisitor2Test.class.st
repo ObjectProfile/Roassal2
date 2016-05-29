@@ -19,7 +19,7 @@ RTSVGVisitor2Test >> setUp [
 
 { #category : #tests }
 RTSVGVisitor2Test >> testAddInteractions [
-	| element background |
+	| element |
 	element := RTBox new borderColor: Color black; elementOn: 1.
 	element @ RTDraggable.
 	visitor addInteractions: element.
@@ -30,9 +30,9 @@ RTSVGVisitor2Test >> testAddInteractions [
 RTSVGVisitor2Test >> testAddMatrix [
 	| el |
 	el := RTBox new element.
-	el translateTo: Float nan @ Float nan.
+	el translateTo: 0 @ 0.5.
 	visitor addMatrix: el trachelShape matrix.
-	self assert: visitor stream contents equals: 'matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: NaN, y: NaN}}, '
+	self assert: visitor stream contents equals: 'matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0.5}}, '
 ]
 
 { #category : #tests }
@@ -41,17 +41,15 @@ RTSVGVisitor2Test >> testAddPopup [
 	element := RTBox new borderColor: Color black; elementOn: 1.
 	element @ (RTPopup new group: [ :group :el |
 		el model timesRepeat: [
-			group add: (RTBox new size: 10; color: (Color purple alpha: 0.5)) element ].
-		RTGridLayout on: group.		
-		background := (RTBox new color: (Color white alpha: 0.5)) element.
-	
-		RTNest new centerOn: background elements: group.
-		group add: background.	
-		 ]).
+			group add: (RTBox new size: 10; color: Color blue) element ].
+			RTGridLayout on: group.
+			background := (RTBox new color: (Color black)) element.
+			RTNest new centerOn: background elements: group.
+			group add: background. ]).
 	visitor addInteractions: element.
 	self assert: visitor stream contents equals: 'ints: [new RTPopup([
-		{type: "box", id: "0", w: 10, h: 10, color: {r: 102, g: 0, b:153, a: 0.4980392156862745}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, 
-		{type: "box", id: "1", w: 20, h: 20, color: {r: 255, g: 255, b:255, a: 0.4980392156862745}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, ]) ], '
+		{type: "box", id: "0", w: 10, h: 10, color: {r: 0, g: 0, b:255}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, 
+		{type: "box", id: "1", w: 20, h: 20, color: {r: 0, g: 0, b:0}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, ]) ], '
 ]
 
 { #category : #tests }
@@ -81,10 +79,10 @@ RTSVGVisitor2Test >> testBorderWidth [
 { #category : #tests }
 RTSVGVisitor2Test >> testVisitArcShape [
 	| el |
-	el := RTArc new element.
+	el := (RTArc new  betaAngle: 0; innerRadius: 30; externalRadius: 30) element.
 	visitor visitElement: el.
 	self assert: visitor stream contents equals: '
-		{type: "arc", id: "0", ir: 30, er: 50, aAngle: 0, bAngle: 35, o: {x: 24.574561328669752, y: -28.678821817552304}, c: {x: 50, y: 0},color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '
+		{type: "arc", id: "0", ir: 30, er: 30, aAngle: 0, bAngle: 0, o: {x: 30, y: 0}, c: {x: 30, y: 0},color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '
 ]
 
 { #category : #tests }

@@ -1550,7 +1550,6 @@ RZSQNAAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleChangingCargeInForceLayout [
 
-
 | v es setSizeAndColor s layout |
 v := RTView new.
 v @ RTDraggableView.
@@ -1559,7 +1558,7 @@ es @ RTDraggable.
 v addAll: es.
 RTEdgeBuilder new
 	view: v;
-	moveBehind; 
+	moveBehind;
 	connectFrom: [ :vv | vv // 2 ].
 	
 setSizeAndColor value.
@@ -7061,7 +7060,7 @@ DwQfCL7wgeADwRc+EHwg+CHAB4IvfCD4QPCFD8QM/QGnQh9WCjgVcwAAAABJRU5ErkJggg=='
 RTRoassalExample >> exampleSpiralViz [
 
 "Simple visualization in which each class is a curve. How the curve varies indicates variations in the methods set"
-| classes v angle |
+| classes v angle shape incr |
 classes := RTShape withAllSubclasses.
 classes := classes select: [ :c | c methods size > 1 ].
 

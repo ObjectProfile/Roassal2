@@ -12,12 +12,6 @@ Class {
 	#category : #'Roassal2-ExampleBrowser'
 }
 
-{ #category : #initialization }
-RTExampleOpeningEvent >> initialize [
-	super initialize.
-	time := DateAndTime now
-]
-
 { #category : #accessing }
 RTExampleOpeningEvent >> theClass [
 	^ theClass
