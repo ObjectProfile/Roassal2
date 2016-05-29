@@ -72,12 +72,8 @@ TRSVGPath >> computeCurves [
 
 { #category : #hooks }
 TRSVGPath >> computePath [
+	path := TRPlatform current computeSVGPathFor: self.
 
-	path := (self athensCanvas createPath: [ :builder |
-		curves do: [ :each | 
-			builder perform: each first withArguments: each second ]
-		])
-	
 ]
 
 { #category : #private }
