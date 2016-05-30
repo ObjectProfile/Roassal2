@@ -1079,7 +1079,8 @@ RTSunburstBuilderExamples >> exampleRTMatrixRing [
 	<iconSelectorBase64: #exampleRTMatrixRingIcon>
 	| dataPlace table b answer |
 	answer := UIManager default confirm: 'This example downloads small cvs data from the web. Do you want to continue?'.
-	answer ifFalse: [ ^ self ].
+	"answer can be nil in tests"
+	answer = false ifTrue: [ ^self ].
 dataPlace := 'http://mutabit.com/repos.fossil/epidemiologia/doc/tip/DataAndVisuals/enoxaparina-data-sunburst.csv'.
 table := RTTabTable new input: dataPlace asUrl retrieveContents  usingDelimiter: $;.
 table removeColumn: 1.
