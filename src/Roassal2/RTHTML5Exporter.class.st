@@ -236,7 +236,7 @@ RTHTML5Exporter >> exportFixedShapes: aBool [
 RTHTML5Exporter >> exportSVG: aView [
 	| visitor |
 
-	visitor := RTJavascriptVisitor new.
+	visitor := RTSVGVisitor2 new.
 	visitor exportFixedShapes: self exportFixedShapes.
 	visitor stream: stream.
 	visitor visitView: aView.
@@ -1879,14 +1879,12 @@ var TRLineShape = TRAbstractBoxShape.extend({
 
 var TRBezierShape = TRLineShape.extend({
 	ides: null,
-	tension: null,
 	init: function (obj){
 		this.id = obj.id;
 		this.fromid = obj.fromid;
 		this.toid = obj.toid;
 		this.path = createSVG("path");
 		this.ides = obj.ides;
-		this.tension = obj.tension;
 		$(this.path).attr("id", obj.id);
 		$(this.path).css("fill","none");
 		this.setWidth(obj.width);
@@ -1897,37 +1895,16 @@ var TRBezierShape = TRLineShape.extend({
 		var from = this.from();
 		var to = this.to();
 		if(from == null || to == null ) return;
-		var list = [];
-		list[0] = this.attachPoint.startingPointOf(this);
-		for(var k = 0; k < this.ides.length; k++) list[list.length] = this.getP(this.ides[k]);
-		list[list.length] = this.attachPoint.endingPointOf(this);
-		this.applyTension(list);
-		this.buildPath(list);
-	},
-	buildPath: function(points){
-		var p1 = points[0],p2,
-		d = "M"+ p1.x+" "+p1.y;
-		for(var k = 1; k< points.length-2; k++){
-			p1 = points[k];
-			p2 = points[k+1];
-			d += "Q"+p1.x+" "+p1.y+" "+((p1.x+p2.x)/2)+" "+((p1.y+p2.y)/2);
+		from = this.attachPoint.startingPointOf(this);
+		to = this.attachPoint.endingPointOf(this);
+		var d = "M "+from.x+" "+from.y;
+		for(var k = 1; k<this.ides.length-1; k++){
+			var p1 = this.getP(this.ides[k]);
+			var p2 = this.getP(this.ides[k+1]);
+			d +=" Q "+p1.x+" "+p1.y+" "+((p1.x+p2.x)/2)+" "+((p1.y+p2.y)/2);
 		}
-		p1 = points[points.length-2];
-		p2 = points[points.length-1];
-		d += "Q"+p1.x+" "+p1.y+" "+p2.x+" "+p2.y;
-		$(this.path).attr("d", d);
-	},
-	applyTension: function(points){
-		var tension = this.tension,
-		n = points.length-1,
-		p1 = points[0],
-		dp = minus(points[n],p1),
-		p,t;
-		for(var k = 1; k< n; k++){
-			p = points[k];
-			t = k/n;
-			points[k] = plus(product(p,tension), product( plus(p1, product(dp, t)),1-tension));
-		}
+		d += "L "+to.x+" "+to.y;
+		$(this.path).attr("d",d);
 	},
 	getP: function(id){
 		return this.canvas.getShapeById(id).position();

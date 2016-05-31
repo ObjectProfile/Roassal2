@@ -108,7 +108,7 @@ RTShowLabelTest >> testVisit [
 	e := (RTBox elementOn: 3).
 	v := RTView new.
 	v add: e.
-	int accept: RTJavascriptVisitor new with: e
+	int accept: RTSVGVisitor2 new with: e
 ]
 
 { #category : #tests }
