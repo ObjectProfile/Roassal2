@@ -1551,7 +1551,7 @@ RZSQNAAAAABJRU5ErkJggg=='
 RTRoassalExample >> exampleChangingCargeInForceLayout [
 
 
-| v es setSizeAndColor s layout |
+| v es setSizeAndColor |
 v := RTView new.
 v @ RTDraggableView.
 es := RTEllipse elementsOn: (1 to: 30).
@@ -1559,7 +1559,7 @@ es @ RTDraggable.
 v addAll: es.
 RTEdgeBuilder new
 	view: v;
-	moveBehind; 
+	moveBehind;
 	connectFrom: [ :vv | vv // 2 ].
 	
 setSizeAndColor value.
