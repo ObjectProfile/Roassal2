@@ -90,7 +90,7 @@ RTAbstractGrapher >> createView [
 	^ RTView new @ RTDraggableView
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RTAbstractGrapher >> decorators [
 	^ decorators
 ]
@@ -103,28 +103,28 @@ RTAbstractGrapher >> defineAxesIfNecessary [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> extent: aPoint [
 	"Set the size of the graph"
 	extent := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RTAbstractGrapher >> getAxisX [
 	^ axisConfigurationX
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RTAbstractGrapher >> getAxisY [
 	^ axisConfigurationY 
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RTAbstractGrapher >> getPixelPositionOf: aPoint [
 	"Return the position in the Roassal view of a point"
 
@@ -137,7 +137,7 @@ RTAbstractGrapher >> getPixelPositionOf: aPoint [
 	^ anX @ anY
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 RTAbstractGrapher >> getPositionFromPixelPosition: aPoint [
 	"Return the position in the graph from a position in the Roassal view of a point"
 
@@ -176,44 +176,108 @@ RTAbstractGrapher >> isYAxisDefined [
 	^ axisConfigurationY notNil
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> maxX [
 	^ maxX
 ]
 
-{ #category : #accessing }
-RTAbstractGrapher >> maxX: aValue [
-	maxX := aValue
+{ #category : #'public - accessing' }
+RTAbstractGrapher >> maxX: aNumber [
+	"
+	Set the maximum value for the X-axis.
+	Here is an example:
+	| b ds |
+	b := RTGrapher new.
+	ds := RTData new.
+	ds points: #(2 3 4).
+	b add: ds.
+	b maxX: 10.
+	b
+	
+	Note that the provided argument should be greater than 0. This is because the 0 @ 0 point is always in the graph. 
+
+	If you want to excluse the 0 @ 0 from the produced graph, we suggest you to read Section 6 (Translating the Y axis), in 
+	https://dl.dropboxusercontent.com/u/31543901/AgileVisualization/Grapher/0203-Grapher.html
+	"
+	maxX := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> maxY [
 	^ maxY
 ]
 
-{ #category : #accessing }
-RTAbstractGrapher >> maxY: aValue [
-	maxY := aValue
+{ #category : #'public - accessing' }
+RTAbstractGrapher >> maxY: aNumber [
+	"
+	Set the maximum value for the Y-axis.
+	Here is an example:
+	| b ds |
+	b := RTGrapher new.
+	ds := RTData new.
+	ds points: #(2 3 4).
+	b add: ds.
+	b maxY: 10.
+	b
+	
+	Note that the provided argument should be greater than 0. This is because the 0 @ 0 point is always in the graph. 
+
+	If you want to excluse the 0 @ 0 from the produced graph, we suggest you to read Section 6 (Translating the Y axis), in 
+	https://dl.dropboxusercontent.com/u/31543901/AgileVisualization/Grapher/0203-Grapher.html
+	"
+	maxY := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> minX [
 	^ minX
 ]
 
-{ #category : #accessing }
-RTAbstractGrapher >> minX: aValue [
-	minX := aValue
+{ #category : #'public - accessing' }
+RTAbstractGrapher >> minX: aNumber [
+	"
+	Set the minimym value for the X-axis.
+	Here is an example:
+	| b ds |
+	b := RTGrapher new.
+	ds := RTData new.
+	ds points: #(2 3 4).
+	b add: ds.
+	b minX: -10.
+	b
+	
+	Note that the provided argument should be lesser than 0. This is because the 0 @ 0 point is always in the graph. 
+
+	If you want to excluse the 0 @ 0 from the produced graph, we suggest you to read Section 6 (Translating the Y axis), in 
+	https://dl.dropboxusercontent.com/u/31543901/AgileVisualization/Grapher/0203-Grapher.html
+	"
+	minX := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'public - accessing' }
 RTAbstractGrapher >> minY [
 	^ minY
 ]
 
-{ #category : #accessing }
-RTAbstractGrapher >> minY: aValue [
-	minY := aValue
+{ #category : #'public - accessing' }
+RTAbstractGrapher >> minY: aNumber [
+	"
+	Set the minimym value for the Y-axis.
+	Here is an example:
+	| b ds |
+	b := RTGrapher new.
+	ds := RTData new.
+	ds points: #(2 3 4).
+	b add: ds.
+	b minY: -10.
+	b
+	
+	Note that the provided argument should be lesser than 0. This is because the 0 @ 0 point is always in the graph. 
+
+	If you want to excluse the 0 @ 0 from the produced graph, we suggest you to read Section 6 (Translating the Y axis), in 
+	https://dl.dropboxusercontent.com/u/31543901/AgileVisualization/Grapher/0203-Grapher.html
+	"
+	minY := aNumber
 ]
 
 { #category : #utility }

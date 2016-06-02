@@ -119,6 +119,11 @@ RTBezierLine >> controllingElements: listOfElementsOrOneArgBlock [
 ]
 
 { #category : #accessing }
+RTBezierLine >> follow [
+	^ follow
+]
+
+{ #category : #accessing }
 RTBezierLine >> follow: aBlockOrASymbol [
 	"Make the bezier follow the path specified as the argument"
 	
@@ -191,17 +196,17 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 		[ self setControllingElementsFromFollowFor: anEdge ].
 	
 	realControllingElements := controllingElements rtValue: anEdge.
-	realControllingElements ~= #() ifTrue: 
-		[ | cElements |
-			cElements := realControllingElements collect: #position.
-			cElements isNotEmpty ifTrue: [ 
-				(cElements first = anEdge from position and: [ cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButFirst ].
-				(cElements last = anEdge to position and: [ cElements size  > 1 ])
-					ifTrue: [ cElements := cElements allButLast ] ].
-			listOfPoints addAll: cElements
-		].
-		
+	realControllingElements ~= #() ifTrue: [ | cElements |
+		cElements := realControllingElements collect: #position.
+		cElements isNotEmpty ifTrue: [ 
+			
+			(cElements first = anEdge from position and: [ cElements size  > 1 ])
+				ifTrue: [ cElements := cElements allButFirst ].
+			(cElements last = anEdge to position and: [ cElements size  > 1 ])
+				ifTrue: [ cElements := cElements allButLast ] ].
+		listOfPoints addAll: cElements
+	].
+
 	"We add the last point of the edge"
 	listOfPoints add: (attachPoint endingPointOf: anEdge).
 	^ self applyTension: listOfPoints
@@ -292,7 +297,7 @@ RTBezierLine >> tension [
 
 { #category : #accessing }
 RTBezierLine >> tension: aNumber [
-	"this is a number between 0 and 1"
+	self assert: (aNumber between: 0 and: 1 ).
 	tension := aNumber
 ]
 

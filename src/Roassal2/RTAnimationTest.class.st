@@ -34,3 +34,18 @@ RTAnimationTest >> testExclusiveAnimations2 [
 	
 	self assert: v animations size = 2
 ]
+
+{ #category : #tests }
+RTAnimationTest >> testStopAndRemove [
+
+	| v a |
+	v := RTView new.
+	self assert: v animations size equals: 0.
+	
+	a := RTSpringLayoutStepping new.
+	a inView: v.
+	self assert: v animations size equals: 1.
+	
+	a stopAndRemove.
+	self assert: v animations size equals: 0.
+]
