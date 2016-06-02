@@ -18,18 +18,6 @@ CompiledMethod >> ageInDaysRounded [
 ]
 
 { #category : #'*roassal2' }
-CompiledMethod >> complexity [
-	"Return the number of tab character in the code. This is known to be correlated with the complexity of the method"
-	
-	"
-	(self >> #complexity) complexity
-	self methods collect: [ :m | { m . m complexity } ] 
-	"
-	
-	^ (self getSource lines collect: [ :line | line occurrencesOf: Character tab ]) max
-]
-
-{ #category : #'*roassal2' }
 CompiledMethod >> computeDate [
 	"Return the DateAndTime associated to this method"
 	| s nbOfSpaces |
