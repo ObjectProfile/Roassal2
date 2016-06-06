@@ -150,7 +150,6 @@ b normalizer
 	normalizeSize: #numberOfMethods using: #sqrt;
 	normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red) using: #sqrt.
 b layout cluster.
-b build.
 ^ b
 ]
 
