@@ -16,7 +16,8 @@ Class {
 		'datasets',
 		'generator',
 		'shouldUseNiceLabelsForX',
-		'shouldUseNiceLabelsForY'
+		'shouldUseNiceLabelsForY',
+		'legendBuilder'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -58,6 +59,17 @@ RTGrapher >> axisY [
 RTGrapher >> axisYWithNumberOfTicks: aNumber [
 	self axisY numberOfTicks: aNumber
 
+]
+
+{ #category : #public }
+RTGrapher >> build [
+	super build.
+	legendBuilder
+		ifNotNil: [ self legend view: self view.
+			datasets
+				do:
+					[ :each | self legend addColor: (each lineShape color rtValue: RTElement new) text: each label ].
+			self legend build ]
 ]
 
 { #category : #utility }
@@ -147,7 +159,14 @@ RTGrapher >> initialize [
 	datasets := OrderedCollection new.
 	
 	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
-	self shouldUseNiceLabels: true.
+	self shouldUseNiceLabels: true
+]
+
+{ #category : #accessing }
+RTGrapher >> legend [
+	^ legendBuilder
+		ifNil: [ self resetLegend.
+			legendBuilder ]
 ]
 
 { #category : #accessing }
@@ -223,6 +242,11 @@ RTGrapher >> renderIn: aView [
 	self renderAllDecoratorsInFront.
 	self renderDataSetsIn: aView.
 	self renderAllDecoratorsBehind
+]
+
+{ #category : #resetting }
+RTGrapher >> resetLegend [
+	legendBuilder := self createLegendBuilder
 ]
 
 { #category : #accessing }
