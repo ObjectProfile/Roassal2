@@ -86,6 +86,11 @@ RTAbstractGrapher >> createAxisConfiguration [
 ]
 
 { #category : #hooks }
+RTAbstractGrapher >> createLegendBuilder [
+	^ RTLegendBuilder new
+]
+
+{ #category : #hooks }
 RTAbstractGrapher >> createView [
 	^ RTView new @ RTDraggableView
 ]
@@ -160,8 +165,7 @@ RTAbstractGrapher >> initialize [
 	maxY := 0.
 	
 	"Collection of decorators"
-	decorators := OrderedCollection new.
-
+	decorators := OrderedCollection new
 ]
 
 { #category : #testing }

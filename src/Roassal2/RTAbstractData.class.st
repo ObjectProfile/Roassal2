@@ -13,7 +13,8 @@ Class {
 		'barBuilder',
 		'elementActions',
 		'xScale',
-		'yScale'
+		'yScale',
+		'label'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -204,6 +205,16 @@ RTAbstractData >> initialize [
 	super initialize.
 	elementActions := OrderedCollection new.
 	self linear
+]
+
+{ #category : #accessing }
+RTAbstractData >> label [
+	^ label ifNil: [ '' ]
+]
+
+{ #category : #accessing }
+RTAbstractData >> label: aString [
+	label := aString
 ]
 
 { #category : #scale }
