@@ -129,9 +129,9 @@ TRPharoPlatform >> computeRoundBoxPathFor: aShape [
 ]
 
 { #category : #'drawing - helpers' }
-TRPharoPlatform >> computeSVGPathFor: shape [
-	^ shape athensCanvas createPath: [ :builder |
-		shape curves do: [ :each | 
+TRPharoPlatform >> computeSVGPathFor: aShape [
+	^ aShape athensCanvas createPath: [ :builder |
+		aShape curves do: [ :each | 
 			builder perform: each first withArguments: each second ]
 		]
 	
