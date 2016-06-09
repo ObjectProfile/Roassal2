@@ -6861,7 +6861,7 @@ RTRoassalExample >> exampleSliderAndCubeHelix [
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | helix gamma: 5 * aValue. elements updateShape ].
-	slider moveBelow.
+	slider move: #below.
 	slider build.
 
 	"Set the rotation value"
@@ -6869,7 +6869,7 @@ RTRoassalExample >> exampleSliderAndCubeHelix [
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | helix rotations: 5 * aValue. elements updateShape ].
-	slider moveBelow.
+	slider move: #below.
 	slider build.
 
 	^ v
