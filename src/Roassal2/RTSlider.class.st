@@ -125,9 +125,9 @@ RTSlider >> min: aNumber [
 	min := aNumber
 ]
 
-{ #category : #public }
-RTSlider >> moveBelow [
-	self move: #below
+{ #category : #accessing }
+RTSlider >> move: aSymbol [
+	position := aSymbol
 ]
 
 { #category : #hooks }

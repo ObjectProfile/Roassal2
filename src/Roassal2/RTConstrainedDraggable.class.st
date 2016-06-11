@@ -11,6 +11,16 @@ Class {
 	#category : #'Roassal2-Interactions'
 }
 
+{ #category : #accessing }
+RTConstrainedDraggable >> afterBlock [
+	^ after
+]
+
+{ #category : #accessing }
+RTConstrainedDraggable >> afterBlock: aBlock [
+	after := aBlock
+]
+
 { #category : #hooks }
 RTConstrainedDraggable >> constraintIfNecessary: anElement [
 	| rec e deltaX deltaY |
