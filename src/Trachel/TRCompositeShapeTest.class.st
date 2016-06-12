@@ -275,14 +275,14 @@ TRCompositeShapeTest >> testPositionWithOffset [
 	s addShape: box2 translateBy: 5 @ 4.
 	canvas addShape: s.
 	
-	self assert: box1 position equals: ( (-5@ -4)).
-	self assert: box2 position equals: ( (0@0)).
+	self assert: box1 position equals: 0 @ 0.
+	self assert: box2 position equals: 5 @ 4.
 
 	s translateTo: 10 @ 5.
 	self assert: s position equals: 10 @ 5.
 	
-	self assert: box1 position equals:  (5@1).
-	self assert: box2 position equals:  (10@5)
+	self assert: box1 position equals: 5 @ 1.
+	self assert: box2 position equals: 10 @ 5
 
 
 ]
@@ -296,13 +296,13 @@ TRCompositeShapeTest >> testPositionWithOffsetTranslationBy [
 	s addShape: box2 translateBy: 5 @ 4.
 	canvas addShape: s.
 	
-	self assert: box1 position equals: ( (-5@ -4)).
-	self assert: box2 position equals: ( (0@0)).
+	self assert: box1 position equals: 0 @ 0.
+	self assert: box2 position equals: 5 @ 4.
 	
 	s translateBy: 10 @ 5.
-	self assert: s position equals: 10 @ 5.
-	self assert: box1 position equals:  (5@1).
-	self assert: box2 position equals:  (10@5)
+	self assert: s position equals: 15 @ 9.
+	self assert: box1 position equals:  10 @ 5.
+	self assert: box2 position equals:  15 @ 9
 
 ]
 
@@ -434,8 +434,8 @@ TRCompositeShapeTest >> testVerticalLayout [
 	self assert: (multiShape offsetOf: box1) equals: 0 @ 0.
 	self assert: (multiShape offsetOf: box2) equals: 0 @ 25.
 
-	self assert: box1 position equals: 0 @ -15.
-	self assert: box2 position equals: 0 @ 10
+	self assert: box1 position equals: 0 @ 0.
+	self assert: box2 position equals: 0 @ 25
 	
 	
 
