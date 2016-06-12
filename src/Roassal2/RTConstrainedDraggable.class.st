@@ -5,10 +5,21 @@ Class {
 	#name : #RTConstrainedDraggable,
 	#superclass : #RTAbstractDraggable,
 	#instVars : [
-		'rectangle'
+		'rectangle',
+		'after'
 	],
 	#category : #'Roassal2-Interactions'
 }
+
+{ #category : #accessing }
+RTConstrainedDraggable >> afterBlock [
+	^ after
+]
+
+{ #category : #accessing }
+RTConstrainedDraggable >> afterBlock: aBlock [
+	after := aBlock
+]
 
 { #category : #hooks }
 RTConstrainedDraggable >> constraintIfNecessary: anElement [
@@ -32,7 +43,7 @@ RTConstrainedDraggable >> constraintIfNecessary: anElement [
 	"In case the constraining rectangle is larger than the encompassing rectangle of the constrained element"
 	(rec height <= e height) ifTrue: [ anElement translateTo: anElement position x @ rec center y ].
 	(rec width <= e width) ifTrue: [ anElement translateTo: rec center x @ anElement position y].
-	
+	after ifNotNil: [ after rtValue: anElement ].
 	
 
 ]
