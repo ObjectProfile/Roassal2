@@ -160,7 +160,8 @@ RTAbstractGrapher >> initialize [
 	maxY := 0.
 	
 	"Collection of decorators"
-	decorators := OrderedCollection new
+	decorators := OrderedCollection new.
+
 ]
 
 { #category : #testing }

@@ -26,10 +26,10 @@ Class {
 RTMapLocationExample >> exampleAirports [
 	<noTest>
 	| tab b ask |
-	ask := TRPlatform current dialogConfirm: 'This script takes about 1 minutes to execute. Do you want to continue?'.
+	ask := UIManager default confirm: 'This script takes about 1 minutes to execute. Do you want to continue?'.
 	ask ifFalse: [ ^ self ].
 
-	tab := RTTabTable new input: (TRPlatform current httpClientRequestClass get:
+	tab := RTTabTable new input: (ZnEasy get:
 	'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat')
 	entity contents asString usingDelimiter:$,.
 	tab convertColumnsAsFloat: #(7 8).

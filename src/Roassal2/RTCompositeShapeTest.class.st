@@ -5,6 +5,38 @@ Class {
 }
 
 { #category : #tests }
+RTCompositeShapeTest >> testAddingAfterLayout [
+
+	| v s es |
+	v := RTView new.
+	s := RTCompositeShape new.
+	s add: RTBox new.
+	"s := RTEllipse new."
+	es := s elementsOn: (1 to: 2).
+	RTGridLayout on: es.
+	v add: es first.
+	v add: es second.
+
+	self assert: (es collect: [ :e | e position asIntegerPoint ]) asArray equals: (Array with: (2@2) with: (12@2))
+]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testAddingAfterLayout02 [
+
+	| v s es |
+	v := RTView new.
+	s := RTCompositeShape new.
+	s add: RTBox new.
+	"s := RTEllipse new."
+	es := s elementsOn: (1 to: 2).
+	v add: es first.
+	v add: es second.
+	RTGridLayout on: es.
+
+	self assert: (es collect: [ :e | e position asIntegerPoint ]) asArray equals: (Array with: (2@2) with: (12@2))
+]
+
+{ #category : #tests }
 RTCompositeShapeTest >> testAttachPoint [
 
 	| c l head attachPoint |
@@ -82,8 +114,9 @@ RTCompositeShapeTest >> testCenter2 [
 	es := shape elementsOn: #(0 50 100).
 	v addAll: es.
 	
-	self assert: es first position equals: 0 @ 0.
-	self assert: es second position equals: 0 @ 0.
+	"Ideally, we should have 0 @ 0"
+	self assert: es first position equals: 50 @ 0.
+	self assert: es second position equals: 25 @ 0.
 	self assert: es third position equals: 0 @ 0.
 
 ]
@@ -101,9 +134,9 @@ RTCompositeShapeTest >> testCenter2AndTranslation [
 	v addAll: es.
 	es translateTo: 10 @ 10.
 	
-	self assert: es first position equals: 10 @ 10.
+	self assert: es first position equals: 35 @ 10.
 	self assert: es second position equals: 10 @ 10.
-	self assert: es third position equals: 10 @ 10.
+	self assert: es third position equals: -15 @ 10.
 
 ]
 
@@ -119,9 +152,9 @@ RTCompositeShapeTest >> testCenter3 [
 	es := shape elementsOn: #(0 50 100).
 	v addAll: es.
 	
-	self assert: es first position equals: 0 @ 0.
-	self assert: es second position equals: 0 @ 0.
-	self assert: es third position equals: 0 @ 0.
+	self assert: es first position equals: 0 @ 5.
+	self assert: es second position equals: 0 @ 5.
+	self assert: es third position equals: 0 @ 5.
 
 ]
 
@@ -242,4 +275,37 @@ RTCompositeShapeTest >> testRemoving [
 	
 	e remove.
 	self assert: v numberOfElements equals: 0.
+]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testSimpleCompositionWithTranslation [
+
+	| v c b |
+	v := RTView new.
+	c := RTCompositeShape new.
+	c add: (RTBox new size: 10).
+	c add: (RTEllipse new size: 10) translateBy: 5 @ 5.
+	b := c element.
+	b @ RTPopup.
+	b translateBy: 5 @ 5.
+	v add: b.
+	self assert: v canvas shapes first position equals: 5 @ 5.
+	self assert: v canvas shapes second position equals: 10 @ 10
+]
+
+{ #category : #tests }
+RTCompositeShapeTest >> testSimpleCompositionWithTranslation02 [
+
+	| v c b |
+	v := RTView new.
+	c := RTCompositeShape new.
+	c add: (RTBox new size: 10).
+	c add: (RTEllipse new size: 10).
+	c vertical.
+	b := c element.
+	b @ RTPopup.
+	b translateBy: 5 @ 5.
+	v add: b.
+	self assert: v canvas shapes first position equals: 5 @ 5.
+	self assert: v canvas shapes second position equals: 5 @ 15
 ]

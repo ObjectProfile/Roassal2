@@ -23,24 +23,6 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
-RTExampleBrowser >> checkSendingData [
-	| result |
-	Privacy sendDiagnosticsAndUsageData ifTrue: [ ^ self ].
-	result := UIManager default questionWithoutCancel: 'Please, do you want to let us know how you use the Roassal example browser? 
-
-Roassal is free to use, but you can retribute to it by letting us know which examples 
-interest you the most. 
-
-By pressing YES, you will send to our server the name of the example you have pressed on later on.  
-Note that answering YES will also activate other monitoring mechanism, such as Spotter.
-
-__ All the data is sent anonymously__
-	' title: 'Send Us Usage Data'. 
-	result ifNil: [ ^ self ].
-	result ifTrue: [ Privacy sendDiagnosticsAndUsageData: true ]
-]
-
-{ #category : #'instance creation' }
 RTExampleBrowser >> examples [
 	| es |
 	es := RTAbstractExample allSubclasses collect: #new.
@@ -50,10 +32,9 @@ RTExampleBrowser >> examples [
 { #category : #'instance creation' }
 RTExampleBrowser >> open [
 	| pager |
-	self checkSendingData.
 	pager := GLMPager new.
 	pager title: 'Roassal examples browser'.
-	pager showFirst: [ :a | a list format: #label. ].
+	pager showFirst: [ :a | a list format: #label ].
 	pager
 		show: [ :a :each | 
 			a title: [ GTInspector new printObjectAsAnItem: each ].

@@ -9,21 +9,13 @@ Class {
 
 { #category : #tests }
 RTDoubleSliderTest >> testCallback [
-	| slider block t |
+	| slider block |
 	
 	slider := RTDoubleSlider new.
-	slider build.
-	t := 0.
-	block := [ :arg1 :arg2 | t := t+1 ].
+	block := [ :arg1 :arg2 | Transcript show: 'hello' ].
 
 	slider callback: block.
 	self assert: slider callback equals: block.
-	slider eventForCursorMin: true.
-	self assert: t equals: 1.
-	slider eventForCursorMax: true.
-	self assert: t equals: 2.
-	slider eventForLineCursor.
-	self assert: t equals: 3.
 ]
 
 { #category : #tests }

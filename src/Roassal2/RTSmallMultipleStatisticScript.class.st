@@ -20,21 +20,21 @@ A textual description is provided.'
 RTSmallMultipleStatisticScript >> execute [
 	<script: 'RTSmallMultipleManyScript new execute'>
 
-	| times n1 n2 weights nbDataPoints c tab |
+	| times n1 n2 weights nbDataPoints c |
 	times := Set new.
 	n1 := Set new.
 	n2 := Set new.
 	weights := Set new.
 	nbDataPoints := 0.
-	
-	tab := RTTabTable openTSVfile.
-	tab ifNil: [ ^ self ].
-	tab values do: [ :line |
-		nbDataPoints := nbDataPoints + 1.
-		times add: line first.
-		n1 add: line second.
-		n2 add: line third.
-		weights add: line fourth ].
+	RTCVSImporterTMP new
+		blockToExecute: [ :line | 
+			nbDataPoints := nbDataPoints + 1.
+			times add: line first.
+			n1 add: line second.
+			n2 add: line third.
+			weights add: line fourth.
+			];
+		importFile.
 	c := (WriteStream on: String new)
 			nextPutAll: 'Number of data points ';
 			nextPutAll: nbDataPoints asString; cr;

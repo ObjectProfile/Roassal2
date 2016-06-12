@@ -222,7 +222,7 @@ b lineShape color: Color black.
 b boxShape borderColor: Color black.
 
 b
-    addObjects: (Array with: RTView with: TRCanvas);
+    addObjects: { Compiler . CompilationContext };
     treeLayout.
 
 b shape arrowedLine
@@ -230,7 +230,7 @@ b shape arrowedLine
         withHorizontalAttachPoint.
 
 b edgesDo: [ :edges|
-	edges connectFrom: 'trCanvas' to: TRCanvas. ].        
+	edges connectFrom: 'compilationContext' to: CompilationContext. ].        
 ^ b
 ]
 
