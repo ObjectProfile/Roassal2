@@ -461,7 +461,8 @@ TRMorph >> trMouseWheel: aMorphicEvent [
 	trEvent
 		direction: aMorphicEvent direction;
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position).
-	trachelCanvas announce: trEvent
+	trEvent shape announce: trEvent.
+	self announceToEventOverseer: trEvent
 ]
 
 { #category : #accessing }

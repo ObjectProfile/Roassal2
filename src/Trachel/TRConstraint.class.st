@@ -256,6 +256,12 @@ TRConstraint class >> move: aShape onTheTopRightOf: anotherShape withWidthPaddin
 ]
 
 { #category : #'public - moving' }
+TRConstraint class >> move: els1 to: aSymbol and: els2 [
+	aSymbol ifNil: [ ^ self ].
+	self perform: ('move:', aSymbol,':') asSymbol withArguments: (Array with: els1 with: els2)
+]
+
+{ #category : #'public - moving' }
 TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
 
 	| windowSize |
