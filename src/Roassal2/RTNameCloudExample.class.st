@@ -30,8 +30,7 @@ RTNameCloudExample >> exampleRoassalCode [
 	b := RTNameCloud new.
 	RTObject withAllSubclasses do: [ :c | 
 		b addStrings: (c rtmethods collect: #getSource) ].
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -118,8 +117,7 @@ b := RTNameCloud new
 		v addAll: (shape elementsOn: table associations).
 		RTFlowLayout on: v elements.
 		v open'.
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }

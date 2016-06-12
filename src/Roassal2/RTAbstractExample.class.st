@@ -172,6 +172,7 @@ RTAbstractExample >> openOn: v [
 
 	RTGridLayout new on: v elements.
 	
+	v canvas addMenu: 'back' callback: [ self pressedBackButtonOn: v ].
 	helpBar := TRLabelShape new text: ' Left to run / Right for code'.
 	v canvas addFixedShape: helpBar.
 	TRConstraint stickAtTheBottomOfTheWindow: helpBar.

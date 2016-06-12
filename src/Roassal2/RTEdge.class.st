@@ -388,9 +388,9 @@ RTEdge >> isUsedInLayout [
 
 { #category : #accessing }
 RTEdge >> lineSegments [
-	^ Array with: (RTLineSegment
+	^ {(RTLineSegment
 		from: (self shape startingPointOf: self)
-		to: (self shape endingPointOf: self))
+		to: (self shape endingPointOf: self))}
 ]
 
 { #category : #actions }

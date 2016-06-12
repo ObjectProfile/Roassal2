@@ -21,8 +21,7 @@ Class {
 		'referenceView',
 		'translator',
 		'referenceModels',
-		'afterAllTranslationsBlocks',
-		'afterAllTranslationsBlock'
+		'afterAllTranslationsBlocks'
 	],
 	#category : #'Roassal2-Utility'
 }

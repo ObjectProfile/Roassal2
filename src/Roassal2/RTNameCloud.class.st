@@ -191,6 +191,18 @@ RTNameCloud >> maxHeight: anObject [
 ]
 
 { #category : #accessing }
+RTNameCloud >> maxWords [
+	"Return the number of words to be displayed"
+	^ maxWords
+]
+
+{ #category : #accessing }
+RTNameCloud >> maxWords: anInteger [
+	"Set the number of words to be displayed"
+	maxWords := anInteger
+]
+
+{ #category : #accessing }
 RTNameCloud >> minFrequency [
 	^ tableFrequency values min
 ]

@@ -43,7 +43,7 @@ RTLineHead >> updateFor: edge trachelShape: trachelShape [
 	line
 		ifNotNil: [ 
 			| lineShape |
-			lineShape := edge trachelShape.
+			lineShape := edge trachelShape shape1.
 			lineShape class = TRBezierShape
 				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
 	edge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)

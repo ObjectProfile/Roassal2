@@ -20,17 +20,19 @@ Each time slice is represented as a matrix.'
 RTSmallMultipleManyScript >> execute [
 	<script: 'RTSmallMultipleManyScript new execute'>
 	
-	| b times c tab |
+	| b times c |
 	times := OrderedCollection new.
-	tab := RTTabTable openTSVfile.
-	tab ifNil: [ ^ self ].
-	tab values do: [ :line | | k dic a |
-		k := line first max: 1.
-		times at: k ifAbsentPut: [ Dictionary new ].
-		dic := times at: k.
-		a := line third -> line second.
-		dic at: a ifAbsentPut: [ 0 ].
-		dic at: a put: (dic at: a)+1. ].
+	RTCVSImporterTMP new
+		blockToExecute: [ :line | 
+			| a dic |
+			times at: (line first max: 1) ifAbsentPut: [ Dictionary new ].
+			dic := times at: (line first max: 1).
+			
+			a := line third -> line second.
+			dic at: a ifAbsentPut: [ 0 ].
+			dic at: a put: (dic at: a) + 1.
+			];
+		importFile.
 
 	c := RTComposer new.
 	times doWithIndex: [ :dic :index |

@@ -51,10 +51,8 @@ RTCircleGeometry >> intersectCircle: aCircle [
 	y1 := p2 y - (h * (aCircle center x - self center x) / d).
 	x2 := p2 x - (h * (aCircle center y - self center y) / d).
 	y2 := p2 y + (h * (aCircle center x - self center x) / d).
-	(x1@y1) = (x2 @ y2) 
-		ifTrue: [ ^ Array with: x1@y1 ]
-		ifFalse: [ ^ Array with: x1 @ y1 with: x2 @ y2 ].
-	
+	^ {(x1 @ y1).
+	(x2 @ y2)} asSet asArray
 ]
 
 { #category : #printing }

@@ -1408,7 +1408,6 @@ RTGrapherExample >> exampleFunctions [
 	
 	(Array with: Color red with: Color blue with: Color green with: Color yellow) doWithIndex: [ :color :i |
 		ds := RTData new.
-		ds label: 'x^', i asString.
 		ds dotShape ellipse size: 0.
 		ds points: (0.0 to: 10.0 by: 0.1).
 		ds connectColor: color.
@@ -1419,7 +1418,6 @@ RTGrapherExample >> exampleFunctions [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-b legend right.
 b build.
 
 ^ b view
@@ -3780,7 +3778,6 @@ b := RTGrapher new.
 b extent: 400 @ 400.
 
 ds := RTData new.
-ds label: 'sine'.
 ds dotShape rectangle size: 0.
 ds points: (-3 to: 3.1415 * 5 by: 0.01).
 ds y: [ :v | v sin ].
@@ -3789,14 +3786,13 @@ ds connectColor: (Color red alpha: 0.4).
 b add: ds.
 
 ds := RTData new.
-ds label: 'cosine'.
 ds dotShape rectangle size: 0.
 ds points: (0 to: 3.1415 * 5 by: 0.01).
 ds y: [ :v | v cos ].
 ds x: #yourself.
 ds connectColor: (Color blue alpha: 0.4).
 b add: ds.
-b legend.
+
 b build.
 ^ b view
 ]

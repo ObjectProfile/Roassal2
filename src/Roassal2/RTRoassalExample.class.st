@@ -1550,6 +1550,7 @@ RZSQNAAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleChangingCargeInForceLayout [
 
+
 | v es setSizeAndColor s layout |
 v := RTView new.
 v @ RTDraggableView.
@@ -1558,7 +1559,7 @@ es @ RTDraggable.
 v addAll: es.
 RTEdgeBuilder new
 	view: v;
-	moveBehind;
+	moveBehind; 
 	connectFrom: [ :vv | vv // 2 ].
 	
 setSizeAndColor value.
@@ -6861,7 +6862,7 @@ RTRoassalExample >> exampleSliderAndCubeHelix [
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | helix gamma: 5 * aValue. elements updateShape ].
-	slider move: #below.
+	slider moveBelow.
 	slider build.
 
 	"Set the rotation value"
@@ -6869,7 +6870,7 @@ RTRoassalExample >> exampleSliderAndCubeHelix [
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | helix rotations: 5 * aValue. elements updateShape ].
-	slider move: #below.
+	slider moveBelow.
 	slider build.
 
 	^ v
@@ -7060,7 +7061,7 @@ DwQfCL7wgeADwRc+EHwg+CHAB4IvfCD4QPCFD8QM/QGnQh9WCjgVcwAAAABJRU5ErkJggg=='
 RTRoassalExample >> exampleSpiralViz [
 
 "Simple visualization in which each class is a curve. How the curve varies indicates variations in the methods set"
-| classes v angle shape incr |
+| classes v angle |
 classes := RTShape withAllSubclasses.
 classes := classes select: [ :c | c methods size > 1 ].
 
@@ -7623,19 +7624,12 @@ hNsTaxN+e3srWwkPDw9u9djLWxm2WlqtljvOnnbbZyvBVoB9tmN+QNlLd3d37jw71sa2ibfr
 
 { #category : #sources }
 RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
-	"
-	self new exampleVisualizingSoftwareWithBeziers
-	"
-	| v inheritanceEdges shape helpBar1 helpBar2 elements eb classes |
-	
-	"The variable classes contains the Pharo classes that will be represented"
-	classes := Collection withAllSubclasses.
-	
+	| v inheritanceEdges shape helpBar1 helpBar2 elements eb |
 	v := RTView new.
 	shape := RTEllipse new
 		color: (Color red alpha: 0.4);
 		size: [ :e | e numberOfMethods / 5 max: 5 ].
-	elements := shape elementsOn: classes.
+	elements := shape elementsOn: Collection withAllSubclasses.
 	elements @ RTPopup @ RTDraggable.
 	v addAll: elements.
 
@@ -7647,16 +7641,30 @@ RTRoassalExample >> exampleVisualizingSoftwareWithBeziers [
 
 	"Layout the whole thing"
 	RTForceBasedLayout new on: v elements edges: inheritanceEdges.
+	"userDefinedEdges: inheritanceEdges;"
 
 	"Defining edges from dependencies"
-	eb := RTEdgeBuilder new.
-	eb view: v.
-	eb objects: classes.
-	eb shape
-		bezierLineFollowing: #superclass;
-		color: (Color blue alpha: 0.1).
-	eb connectFrom: #yourself toAll: #dependentClasses.
-										
+	Collection withAllSubclasses
+		do:
+			[ :cls | 
+			cls rtmethods
+				do:
+					[ :cm | 
+					((cm literals
+						select: [ :l | l class == Association and: [ l value notNil ] ])
+						collect: #value)
+						do:
+							[ :depClass | 
+							(cls ~~ depClass
+								and: [ Collection withAllSubclasses includes: depClass ])
+								ifTrue:
+									[ 
+									eb := RTEdgeBuilder new.
+									eb view: v.
+									eb shape
+										bezierLineFollowing: #superclass;
+										color: (Color blue alpha: 0.1).
+									eb useAssociations: (Array with: cls -> depClass) ] ] ] ].
 	helpBar1 := TRLabelShape new
 		text:
 			'Circle = classes, size = number of methods; gray links = inheritance;'.

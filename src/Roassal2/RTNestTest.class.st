@@ -29,8 +29,8 @@ RTNestTest >> testAutomaticLayout [
 		layout: RTFlowLayout new;
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: (bigElement position closeTo: (-12.0@0)).
-	self assert: (bigElement2 position closeTo: (13.0@0)).
+	self assert: (bigElement position closeTo: (-12.0@2)).
+	self assert: (bigElement2 position closeTo: (13.0@2)).
 ]
 
 { #category : #tests }
@@ -277,7 +277,7 @@ RTNestTest >> testInnerElement1 [
 	RTNest new
 		onTrachelShape: e trachelShape shapes second nest: (Array with: innerElement).  
 
-	self assert: innerElement position equals: 0 @ 10
+	self assert: innerElement position equals: 0 @ 20
 ]
 
 { #category : #'composed shape' }
@@ -301,7 +301,7 @@ RTNestTest >> testInnerElement2 [
 	RTNest new
 		onTrachelShape: e trachelShape shapes second nest: innerElements.  
 
-	self assert: (innerElements collect: #position) asArray equals: (Array with: (-7.0@10.0) with: (8.0@10.0))
+	self assert: (innerElements collect: #position) asArray equals: (Array with: (-7.0@20.0) with: (8.0@20.0))
 ]
 
 { #category : #'composed shape' }
@@ -330,7 +330,7 @@ RTNestTest >> testInnerElement3 [
 	v add: e.
 	v addAll: innerElements.
 	
-	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 0.0) with: (0 @ 20.0))
+	self assert: (innerElements collect: #position) asArray equals: (Array with: (0 @ 20.0) with: (0 @ 40.0))
 ]
 
 { #category : #'composed shape' }
@@ -454,8 +454,8 @@ RTNestTest >> testLayout [
 	RTNest new 
 		on: e nest: (Array with: bigElement with: bigElement2).
 
-	self assert: (bigElement position = (-12.0@0)).
-	self assert: (bigElement2 position = (13.0@0)).
+	self assert: bigElement position equals: (-12.0@2).
+	self assert: bigElement2 position equals: (13.0@2).
 ]
 
 { #category : #'multi line' }
@@ -542,6 +542,38 @@ RTNestTest >> testMultiline04 [
 	
 	self assert: (RTNest new encompassingRectangleOf: (Array with: e)) extent equals: e encompassingRectangle extent.
 	"self assert: (b encompassingRectangle extent) equals: (e encompassingRectangle extent + (10 @ 10)) "
+]
+
+{ #category : #'tests - nesting' }
+RTNestTest >> testNestingComposite [
+	| v element compShape elements ellipses |
+	v := RTView new.
+
+	element := RTBox element.
+	v add: element.
+
+	compShape := RTCompositeShape new.
+	compShape
+	  add: (RTBox new
+	     color: Color blue;
+	     height: 0);
+	  add: ((RTEllipse new
+	    size: 25;
+	    color: Color red));
+	  vertical.  
+"	compShape := (RTEllipse new
+	    size: 25;
+	    color: Color red)."
+	 elements := compShape elementsOn: (1 to: 2).
+
+	RTNest new for: (Array with: element) add: [ :group :model |
+		group addAll: elements.
+		RTGridLayout on: group.].
+	
+	"Testing"
+	ellipses := v canvas shapes select: [ :t | t class == TREllipseShape ].
+	self assert: ellipses size equals: 2.
+	self assert: (ellipses collect: [ :s | s position asIntegerPoint ]) equals: (Array with: (-15@0) with: (15@0)).
 ]
 
 { #category : #tests }
