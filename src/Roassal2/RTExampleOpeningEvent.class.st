@@ -6,7 +6,8 @@ Class {
 	#superclass : #Announcement,
 	#instVars : [
 		'theClass',
-		'theSelector'
+		'theSelector',
+		'time'
 	],
 	#category : #'Roassal2-ExampleBrowser'
 }

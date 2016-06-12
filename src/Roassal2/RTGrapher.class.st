@@ -16,7 +16,8 @@ Class {
 		'datasets',
 		'generator',
 		'shouldUseNiceLabelsForX',
-		'shouldUseNiceLabelsForY'
+		'shouldUseNiceLabelsForY',
+		'legendBuilder'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -147,7 +148,7 @@ RTGrapher >> initialize [
 	datasets := OrderedCollection new.
 	
 	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
-	self shouldUseNiceLabels: true.
+	self shouldUseNiceLabels: true
 ]
 
 { #category : #accessing }

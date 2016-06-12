@@ -37,7 +37,7 @@ RTSlider >> build [
 	| allElements res |
 	allElements := view elements.
 	res := super build.
-	TRConstraint move: sliderElements below: allElements.
+	TRConstraint move: sliderElements to: position and: allElements.
 	^ res
 ]
 
@@ -70,12 +70,11 @@ RTSlider >> example01 [
 	v := RTView new.
 	label := RTLabel elementOn: 0.
 	v add: label.
-	
 	slider := RTSlider new.
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | label model: aValue * 100. label updateShape ].
-	slider moveBelow.
+	slider move: #above.
 	slider build.
 	
 	v
@@ -126,15 +125,15 @@ RTSlider >> min: aNumber [
 	min := aNumber
 ]
 
-{ #category : #public }
-RTSlider >> moveBelow [
-	position := #moveBelow
+{ #category : #accessing }
+RTSlider >> move: aSymbol [
+	position := aSymbol
 ]
 
 { #category : #hooks }
 RTSlider >> renderIn: aView [
 
-	| extremity1 extremity2 line cursor dragAndConstraint trachelShape aValue | 
+	| extremity1 extremity2 line cursor dragAndConstraint trachelShape aValue w2 | 
 	extremity1 := (RTBox new width: 5; height: 10) element.
 	extremity2 := (RTBox new width: 5; height: 10) element.
 	line := (RTLine new width: 5) edgeFrom: extremity1 to: extremity2.
@@ -144,9 +143,19 @@ RTSlider >> renderIn: aView [
 	extremity2 translateTo: 200 @ 0.
 	
 	cursor := self elementOn: nil.
-	
 	dragAndConstraint := RTConstrainedDraggable new.
-	dragAndConstraint rectangle: [ :someElement | extremity1 position corner: extremity2 position ].
+	dragAndConstraint rectangle: [ 
+		w2 := (cursor encompassingRectangle width/2)@0.
+		(extremity1 position - w2) corner: (extremity2 position + w2 )].
+
+	"We compute the slider value, and call the callback"
+	dragAndConstraint afterBlock: [ 
+		aValue := (cursor position x - extremity1 position x) / (extremity2 position x - extremity1 position x).
+		aValue := (aValue * (max - min)) + min.
+		aValue := (aValue max: min) min: max.
+		callback rtValue: aValue.
+		labelled ifTrue: [ trachelShape text: (useIntegerLabel ifTrue: [ (aValue round: 0) asInteger ] ifFalse: [ aValue round: 2 ]) asString ]
+		 ].
 	cursor @ dragAndConstraint.
 	aView add: cursor.
 	cursor translateTo: 100 @ 0.
@@ -155,13 +164,6 @@ RTSlider >> renderIn: aView [
 	labelled ifTrue: [ 
 		cursor @ (RTLabeled new text: 0).
 		trachelShape := cursor attributeAt: #RTLabelledLabel ].
-	
-	"We compute the slider value, and call the callback"
-	cursor when: TRMouseDragging do: [ :evt | 
-		aValue := (cursor position x - extremity1 position x) / (extremity2 position x - extremity1 position x).
-		aValue := (aValue * (max - min)) + min.
-		callback rtValue: aValue.
-		labelled ifTrue: [ trachelShape text: (useIntegerLabel ifTrue: [ (aValue round: 0) asInteger ] ifFalse: [ aValue round: 2 ]) asString ] ].
 
 	"We keep track of the elements we add in the view"
 	sliderElements := RTGroup new.

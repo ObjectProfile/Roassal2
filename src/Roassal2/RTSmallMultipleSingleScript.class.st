@@ -119,15 +119,16 @@ RTSmallMultipleSingleScript >> label [
 { #category : #util }
 RTSmallMultipleSingleScript >> loadData [
 
-	| dic |
-	dic := Dictionary new.
-	RTCVSImporterTMP new
-		blockToExecute: [ :line | 
-			| a |
-			a := line third -> line second.
-			dic at: a ifAbsentPut: [ 0 ].
-			dic at: a put: (dic at: a) + 1.
-			];
-		importFile.
-	^ dic
+	| dc tab |
+	dc := Dictionary new.
+	tab := RTTabTable openTSVfile.
+	tab ifNil: [ ^ self ].
+	
+	tab values do: [ :line|
+		| a |
+		a := line third -> line second.
+		dc at: a ifAbsentPut: [ 0 ].
+		dc at: a put: (dc at: a) + 1 ].
+	
+	^ dc
 ]

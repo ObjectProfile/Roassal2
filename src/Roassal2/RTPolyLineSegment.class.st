@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 RTPolyLineSegment class >> with: aSegment [
 	^ self new
-		segments: {aSegment};
+		segments: (Array with: aSegment);
 		yourself
 ]
 
@@ -78,8 +78,7 @@ RTPolyLineSegment >> segmentWithPointFor: aNumber [
 			newSum := sum + each length.
 			(balance between: sum and: newSum)
 				ifTrue: [ 
-					^ {each.
-					(each pointForBalance: balance - sum)} ].
+					^ Array with: each with:	(each pointForBalance: balance - sum) ].
 			sum := newSum ].
 	self error: 'failed to find a segment'
 ]

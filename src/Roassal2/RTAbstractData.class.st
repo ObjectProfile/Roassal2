@@ -13,7 +13,8 @@ Class {
 		'barBuilder',
 		'elementActions',
 		'xScale',
-		'yScale'
+		'yScale',
+		'label'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
