@@ -42,15 +42,12 @@ TRVIManagedTimeExample >> example02 [
 
 	v add: e.
 	e translateTo: t @ t.
-
-	"label := RTLabel elementOn: 0.
-	v add: label."
 	
 	slider := RTSlider new.
 	slider view: v.
 	slider labeled.
 	slider callback: [ :aValue | timer value: aValue  ].
 	slider build.
-	
-	v
+	slider move: #above.
+	^ v
 ]

@@ -72,12 +72,8 @@ TRSVGPath >> computeCurves [
 
 { #category : #hooks }
 TRSVGPath >> computePath [
+	path := TRPlatform current computeSVGPathFor: self.
 
-	path := (self athensCanvas createPath: [ :builder |
-		curves do: [ :each | 
-			builder perform: each first withArguments: each second ]
-		])
-	
 ]
 
 { #category : #private }
@@ -98,11 +94,19 @@ TRSVGPath >> computeRectangle [
 { #category : #private }
 TRSVGPath >> correctCurvesAndPolygonsToZero [
 	"Center of polygons is stored in originalPosition and the center is moved to 0@0."
-	| originalPosition |
+	| originalPosition absolute key args|
 	self computeRectangle.
 	originalPosition := rectangle center.
-	curves
-		do: [ :eachCurve | eachCurve second doWithIndex: [ :eachPoint :index | eachCurve second at: index put: eachPoint - originalPosition ] ].
+	absolute := true.
+	curves do: [ :curve |
+		key := curve first.
+		args := curve second.
+		key =#absolute ifTrue: [ absolute :=true ].
+		key =#relative ifTrue: [ absolute :=false ].
+		absolute ifTrue: [ 
+			args doWithIndex: [ :eachPoint :index| 
+				args at: index put: eachPoint - originalPosition] ].
+		].
 	polygons
 		do: [ :eachPolygon | eachPolygon doWithIndex: [ :eachPoint :index | eachPolygon at: index put: eachPoint - originalPosition ] ].
 	self computeRectangle.

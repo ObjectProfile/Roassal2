@@ -128,6 +128,15 @@ TRPharoPlatform >> computeRoundBoxPathFor: aShape [
 				closePath ]
 ]
 
+{ #category : #'drawing - helpers' }
+TRPharoPlatform >> computeSVGPathFor: aShape [
+	^ aShape athensCanvas createPath: [ :builder |
+		aShape curves do: [ :each | 
+			builder perform: each first withArguments: each second ]
+		]
+	
+]
+
 { #category : #public }
 TRPharoPlatform >> createPopupFor: aMorph in: aPoint background: aColor string: aString [
 	| popup tm vertices xdelta ydelta world position |
@@ -193,6 +202,11 @@ TRPharoPlatform >> deletePopup: popup [
 { #category : #public }
 TRPharoPlatform >> dialogChooseFrom: options values: values [
 	^ UIManager default chooseFrom: options values: values.
+]
+
+{ #category : #windows }
+TRPharoPlatform >> dialogConfirm: question [
+	^ UIManager default confirm: question
 ]
 
 { #category : #public }
