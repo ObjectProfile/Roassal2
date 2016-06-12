@@ -64,12 +64,15 @@ TRArcLineShape >> drawOn: athensCanvas [
 
 { #category : #accessing }
 TRArcLineShape >> encompassingRectangle [
-	| mid v |
+	| mid v normal |
 	mid := line pointForBalance: 0.5.
 	v := line vector.
 	normal := RTLineSegment from: mid to: mid + (distance * v normal).
 	^ Rectangle
-		encompassing: (Array with: line from with: line to with: normal to)
+		encompassing:
+			{line from.
+			line to.
+			normal to}
 ]
 
 { #category : #testing }

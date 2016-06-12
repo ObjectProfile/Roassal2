@@ -403,7 +403,7 @@ TRShape >> transformedEncompassingRectangle [
 	| basicRectangle rotatedRectangle topLeft topRight bottomRight bottomLeft p1 p2 p3 p4 |
 	basicRectangle := self basicEncompassingRectangle.
 	(matrix sx = 1) & (matrix sy = 1) & (matrix shx = 0) & (matrix shy = 0) ifTrue: [
-		 ^ basicRectangle translateBy: (matrix x value@ matrix y value)
+		 ^ basicRectangle translateBy: (matrix x @ matrix y)
 	].
 	topLeft := matrix transform: basicRectangle topLeft.
 	topRight := matrix transform: basicRectangle topRight.
