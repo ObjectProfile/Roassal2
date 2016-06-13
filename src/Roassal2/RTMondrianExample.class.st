@@ -975,7 +975,6 @@ b layout
 	for: [ :c | c inheritsFrom: RTBuilder ] use: RTForceBasedLayout new;
 	for: [ :c | '*Example*' match: c name] use: RTForceBasedLayout new;
 	circleWithRadius: 250.
-b build.
 ^ b
 ]
 
@@ -1319,7 +1318,6 @@ b normalizer
 	normalizeColor: [ :c | c dependentClasses size ] 
 		using: (Array with: Color green with: Color  red ) using: #log;
 	alphaColor: 0.4.
-b build.
 ^ b
 ]
 
