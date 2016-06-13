@@ -61,6 +61,17 @@ RTGrapher >> axisYWithNumberOfTicks: aNumber [
 
 ]
 
+{ #category : #public }
+RTGrapher >> build [
+	super build.
+	legendBuilder
+		ifNotNil: [ self legend view: self view.
+			datasets
+				do:
+					[ :each | self legend addColor: (each lineShape color rtValue: RTElement new) text: each label ].
+			self legend build ]
+]
+
 { #category : #utility }
 RTGrapher >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
@@ -152,6 +163,13 @@ RTGrapher >> initialize [
 ]
 
 { #category : #accessing }
+RTGrapher >> legend [
+	^ legendBuilder
+		ifNil: [ self resetLegend.
+			legendBuilder ]
+]
+
+{ #category : #accessing }
 RTGrapher >> maxX [
 	^ self hasDataSet 
 		ifTrue: [ maxX max: self maxXFromDataSets ]
@@ -224,6 +242,11 @@ RTGrapher >> renderIn: aView [
 	self renderAllDecoratorsInFront.
 	self renderDataSetsIn: aView.
 	self renderAllDecoratorsBehind
+]
+
+{ #category : #resetting }
+RTGrapher >> resetLegend [
+	legendBuilder := self createLegendBuilder
 ]
 
 { #category : #accessing }

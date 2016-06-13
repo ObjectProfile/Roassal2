@@ -207,6 +207,16 @@ RTAbstractData >> initialize [
 	self linear
 ]
 
+{ #category : #accessing }
+RTAbstractData >> label [
+	^ label ifNil: [ '' ]
+]
+
+{ #category : #accessing }
+RTAbstractData >> label: aString [
+	label := aString
+]
+
 { #category : #scale }
 RTAbstractData >> linear [
 	self xLinear.
