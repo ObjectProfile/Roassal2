@@ -21,16 +21,15 @@ Class {
 		'referenceView',
 		'translator',
 		'referenceModels',
-		'afterAllTranslationsBlocks',
-		'afterAllTranslationsBlock'
+		'afterAllTranslationsBlocks'
 	],
-	#category : #'Roassal2-Utility'
+	#category : #'Roassal2-Interactions-MorphingView'
 }
 
 { #category : #utility }
 RTMorphingView >> afterTranslationDoActionOn: aView [
 
-	afterAllTranslationsBlock rtValue: aView.
+	afterAllTranslationsBlocks do: [ :action | action rtValue: aView ].
 	aView signalUpdate.
 ]
 
@@ -73,6 +72,14 @@ RTMorphingView >> moveApartSingleElements [
 		TRConstraint move: singleElements onTheRightOf: notSingleElements ]
 ]
 
+{ #category : #configuration }
+RTMorphingView >> pushAllElementsToFront [
+
+	afterAllTranslationsBlocks add: [ :view | 
+		view elements do: #pushFront
+	]
+]
+
 { #category : #accessing }
 RTMorphingView >> referenceView [
 	^ referenceView
@@ -86,6 +93,11 @@ RTMorphingView >> referenceView: anObject [
 { #category : #configuration }
 RTMorphingView >> smoothTransition [
 	translator := RTSmoothLayoutTranslator new
+]
+
+{ #category : #configuration }
+RTMorphingView >> smoothTransition: aDuration [
+	translator := RTSmoothLayoutTranslator new nbCycles: aDuration
 ]
 
 { #category : #utility }
