@@ -53,7 +53,7 @@ RTSimilarityMatrix class >> comparingWordsBetweenText [
 		gridView
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSimilarityMatrix class >> demo1 [
 	^ RTSimilarityMatrix new
 		on: (1 to: 50)
@@ -65,7 +65,7 @@ RTSimilarityMatrix class >> demo1 [
 		viewMatrix
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSimilarityMatrix class >> demo2 [
 	"show which Collection subclasses have a similar number of methods"
 	^ RTSimilarityMatrix new
@@ -81,7 +81,7 @@ RTSimilarityMatrix class >> demo2 [
 		viewMatrix
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 RTSimilarityMatrix class >> demo3 [
 	"methods are similar if they send the same messages; large methods are top-left"
 	^ RTSimilarityMatrix new
@@ -190,12 +190,6 @@ RTSimilarityMatrix >> popupTextFor: elt [
 	^ elt model lhs printString, String cr,
 		elt model rhs printString, String cr,
 		'similarity = ', elt model similarity printString
-]
-
-{ #category : #'as yet unclassified' }
-RTSimilarityMatrix >> printOn: aStream [
-	"why can't I delete this method?"
-	super printOn: aStream
 ]
 
 { #category : #visualization }
