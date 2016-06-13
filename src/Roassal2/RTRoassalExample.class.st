@@ -3154,9 +3154,7 @@ b normalizer
 	normalizeSize: #numberOfMethods min: 5 max: 35 using: #sqrt;
 	normalizeColor: #numberOfLinesOfCode using: (Array with: Color blue with: Color red ).
 
-b view restoreCamera.
-b build.
-^ b view
+^ b
 ]
 
 { #category : #icons }
