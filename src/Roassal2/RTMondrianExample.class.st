@@ -3863,7 +3863,6 @@ b edges
 	connectToAll: #dependentClasses.
 	
 b layout tree.
-b build.
 ^ b
 ]
 
