@@ -86,6 +86,11 @@ RTAbstractGrapher >> createAxisConfiguration [
 ]
 
 { #category : #hooks }
+RTAbstractGrapher >> createLegendBuilder [
+	^ RTLegendBuilder new
+]
+
+{ #category : #hooks }
 RTAbstractGrapher >> createView [
 	^ RTView new @ RTDraggableView
 ]
