@@ -116,11 +116,22 @@ RTAbstractLine >> startingPointOf: anEdge [
 
 { #category : #rendering }
 RTAbstractLine >> updateFor: edge trachelShape: trachelShape [
-	trachelShape from: (attachPoint startingPointOf: edge) to: (attachPoint endingPointOf: edge).
+	self updateFromToFor: edge trachelShape: trachelShape.
 	trachelShape color: (self colorFor: edge).
 	trachelShape width: (self widthFor: edge).
 	trachelShape resetPath
+]
 
+{ #category : #updating }
+RTAbstractLine >> updateFromToFor: edge [
+	self updateFromToFor: edge trachelShape: edge trachelShape
+]
+
+{ #category : #rendering }
+RTAbstractLine >> updateFromToFor: edge trachelShape: trachelShape [
+	trachelShape
+		from: (attachPoint startingPointOf: edge)
+		to: (attachPoint endingPointOf: edge)
 ]
 
 { #category : #public }

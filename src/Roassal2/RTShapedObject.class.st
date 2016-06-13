@@ -178,7 +178,7 @@ RTShapedObject >> trachelShape [
 RTShapedObject >> update [
 	"Update the trachel shape and reset the path. This has the effect of moving the visual widget"
 
-	shape updateFor: self.
+	self updateShape.
 	self updatePosition
 ]
 
@@ -189,7 +189,7 @@ RTShapedObject >> updatePosition [
 
 { #category : #rendering }
 RTShapedObject >> updateShape [
-	shape updateFor: self.
+	shape updateFor: self
 ]
 
 { #category : #accessing }
