@@ -13,7 +13,7 @@ Class {
 
 { #category : #examples }
 RTAdvancedMorphingView class >> exampleForceBasedLayout [
-
+	<noTest>
 	| randomView view lay |
 	
 	lay := RTForceBasedLayout new.
@@ -42,12 +42,12 @@ RTAdvancedMorphingView class >> exampleForceBasedLayout [
 		]
 	].
 
-	view open.
+	^ view inspect
 ]
 
 { #category : #examples }
 RTAdvancedMorphingView class >> exampleSimple [
-	
+	<noTest>
 	| v1 v2 |
 	v1 := RTView new.
 	v1 addAll: ((RTEllipse new color: Color green trans; size: 10) elementsOn: #(1 2)).
@@ -69,12 +69,12 @@ RTAdvancedMorphingView class >> exampleSimple [
 		v2 signalUpdate.
 	].
 
-	v2 open
+	^ v2 inspect
 ]
 
 { #category : #examples }
 RTAdvancedMorphingView class >> exampleWithVaryingEdgeSize [
-	
+	<noTest>
 	| v1 v2 eb |
 	v1 := RTView new.
 	v1 addAll: ((RTEllipse new color: Color green trans; size: 10) elementsOn: #(1 2 3)).
@@ -82,7 +82,7 @@ RTAdvancedMorphingView class >> exampleWithVaryingEdgeSize [
 		view: v1.
 	eb shape line width: [ :ee | 10 atRandom ] ; color: [ :ee | Color random ].
 	eb
-		useAssociations: {1 -> 2 . 2 -> 3}.
+		useAssociations: (Array with: 1 -> 2 with: 2 -> 3 ).
 	RTHorizontalLineLayout on: v1 elements.
 
 	"---"
@@ -93,7 +93,7 @@ RTAdvancedMorphingView class >> exampleWithVaryingEdgeSize [
 		view: v2.
 	eb shape line width: [ :ee | 10 atRandom ] ; color: [ :ee | Color random ].
 	eb
-		useAssociations: {1 -> 2 . 2 -> 3}.
+		useAssociations: (Array with: 1 -> 2 with: 2 -> 3).
 	RTHorizontalLineLayout on: v2 elements.
 	"---"
 	v2 addMenu: 'animate' callback:  [ 
@@ -101,7 +101,7 @@ RTAdvancedMorphingView class >> exampleWithVaryingEdgeSize [
 	].
 	v2 canvas camera scale: 10.
 
-	v2 open
+	^ v2 inspect
 ]
 
 { #category : #initialization }

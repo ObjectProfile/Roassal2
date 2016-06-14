@@ -122,18 +122,6 @@ RTAbstractLine >> updateFor: edge trachelShape: trachelShape [
 	trachelShape resetPath
 ]
 
-{ #category : #updating }
-RTAbstractLine >> updateFromToFor: edge [
-	self updateFromToFor: edge trachelShape: edge trachelShape
-]
-
-{ #category : #rendering }
-RTAbstractLine >> updateFromToFor: edge trachelShape: trachelShape [
-	trachelShape
-		from: (attachPoint startingPointOf: edge)
-		to: (attachPoint endingPointOf: edge)
-]
-
 { #category : #public }
 RTAbstractLine >> width: aBlockOrValue [
 	"Set the width of the shape"

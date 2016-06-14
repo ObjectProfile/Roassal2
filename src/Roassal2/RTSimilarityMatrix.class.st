@@ -192,6 +192,11 @@ RTSimilarityMatrix >> popupTextFor: elt [
 		'similarity = ', elt model similarity printString
 ]
 
+{ #category : #defaults }
+RTSimilarityMatrix >> printOn: stream [
+	super printOn: stream.
+]
+
 { #category : #visualization }
 RTSimilarityMatrix >> viewMatrix [
 	"display the matrix view"
