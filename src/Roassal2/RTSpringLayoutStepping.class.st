@@ -55,6 +55,12 @@ RTSpringLayoutStepping >> hasCompleted [
 	^ false
 ]
 
+{ #category : #accessing }
+RTSpringLayoutStepping >> inView: aView [
+	self view: aView.
+	super inView: aView
+]
+
 { #category : #initialization }
 RTSpringLayoutStepping >> initialize [
 	super initialize.
@@ -120,6 +126,11 @@ RTSpringLayoutStepping >> removeAllEdges [
 { #category : #actions }
 RTSpringLayoutStepping >> start [
 	view canvas signalUpdate
+]
+
+{ #category : #actions }
+RTSpringLayoutStepping >> stopAndRemove [
+	view removeAnimation: self
 ]
 
 { #category : #accessing }

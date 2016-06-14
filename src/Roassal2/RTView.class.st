@@ -308,6 +308,11 @@ RTView >> removeAllElements [
 
 ]
 
+{ #category : #'adding - removing' }
+RTView >> removeAnimation: animation [
+	trCanvas removeAnimation: animation
+]
+
 { #category : #actions }
 RTView >> removeEdge: anEdge [
 	"Remove an edge from the view"
