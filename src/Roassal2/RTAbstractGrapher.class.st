@@ -9,7 +9,8 @@ Class {
 		'minX',
 		'minY',
 		'extent',
-		'decorators'
+		'decorators',
+		'withOrigin'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -163,6 +164,7 @@ RTAbstractGrapher >> initialize [
 	minY := 0.
 	maxX := 0.
 	maxY := 0.
+	self withOrigin.
 	
 	"Collection of decorators"
 	decorators := OrderedCollection new
@@ -298,15 +300,34 @@ RTAbstractGrapher >> renderAllDecoratorsInFront [
 RTAbstractGrapher >> renderAxis [
 	| centralPoint |
 	centralPoint := self centralPoint.
-"	shouldUseOptimalTicksAndLabelsForY ifTrue: 
+	"	shouldUseOptimalTicksAndLabelsForY ifTrue: 
 	[ 
 		| t |
 		t := self optimalNumberOfTicksForMin: self minY max: self maxY wishedNumberOfTicks: self getAxisY numberOfTicks.
 		self getAxisY numberOfTicks: t; numberOfLabels: t
 	 ].
 "
-	self adjustXAxisIfNecessary.
 
-	self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated.
-	self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y.
+	self adjustXAxisIfNecessary.
+	withOrigin
+		ifTrue: [ self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated.
+			self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y ]
+		ifFalse: [ (0 between: minX and: maxX)
+				ifTrue: [ self axisYFrom: centralPoint x @ 0 to: centralPoint x @ extent y negated ]
+				ifFalse: [ self axisYFrom: 0 @ 0 to: 0 @ extent y negated ].
+			(0 between: minY and: maxY)
+				ifTrue: [ self axisXFrom: 0 @ centralPoint y to: extent x @ centralPoint y ]
+				ifFalse: [ self axisXFrom: 0 @ 0 to: extent x @ 0 ] ].
+]
+
+{ #category : #public }
+RTAbstractGrapher >> withOrigin [
+	"The axes will always meet at 0@0"
+	withOrigin := true
+]
+
+{ #category : #public }
+RTAbstractGrapher >> withoutOrigin [
+	"If you have points far away from 0@0 it may be better to let the axes meet at a more closer place than 0@0."
+	withOrigin := false
 ]
