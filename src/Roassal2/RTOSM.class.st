@@ -10,7 +10,8 @@ Class {
 	#superclass : #RTAbstractElementShape,
 	#instVars : [
 		'rectangle',
-		'ratio'
+		'ratio',
+		'onload'
 	],
 	#category : #'Roassal2-OpenStreetMap'
 }
@@ -2925,34 +2926,23 @@ out skel qt;';
 RTOSM class >> downloadCityCoordinatesFor: aCityName [
 	"Retrieving some data from FreeBase. We do only capitals for the time being."
 
-	"self downloadCityCoordinatesFor: 'Dili'"
+	"
+	self downloadCityCoordinatesFor: 'Dili'
+	"
 
 	^ (((TRPlatform current httpClientRequestClass new
-		url: 'https://www.googleapis.com/freebase/v1/mqlread';
-		queryAt: 'query'
-			put:
-				('
-[{
-	"limit" : 1,
-	"type" : "/location/country",
-	"/location/country/capital": [{
-		"name" : "' , aCityName
-						,
-							'",
-		"/location/location/geolocation" : [{
-			"longitude" : null,
-			"latitude" : null
-		}]
-	}]
-}]'
-						copyWithoutAll:
+		url: 'http://api.geonames.org/searchJSON';
+		queryAt: 'q'
+		put: (aCityName copyWithoutAll:
 							' 	
-');
+');		queryAt: 'maxRows'
+		put: '1';
+		queryAt: 'username'
+		put: 'demo';
 		contentReader: [ :entity | TRPlatform current jsonReaderClass fromString: entity contents ];
-		get) at: 'result') first at: '/location/country/capital') first
-		in: [ :cap | 
-			^ ((cap at: '/location/location/geolocation') first at: 'latitude')
-				@ ((cap at: '/location/location/geolocation') first at: 'longitude') ]
+		get) at: 'geonames') first )
+		in: [ :city | 
+			^ (city at: 'lat')	asNumber@ (city at: 'lng') asNumber ]
 ]
 
 { #category : #resources }
@@ -3300,6 +3290,16 @@ RTOSM >> minLatitude [
 ]
 
 { #category : #accessing }
+RTOSM >> onload [
+	^ onload
+]
+
+{ #category : #accessing }
+RTOSM >> onload: aBlock [
+	onload := aBlock
+]
+
+{ #category : #accessing }
 RTOSM >> pixelLength [
 	"Pixel length at equator at highest zoom factor. "
 
@@ -3338,5 +3338,6 @@ RTOSM >> updateFor: anElement trachelShape: trachelShape [
 	trachelShape isNil
 		ifTrue: [ ^ self ].
 	rectangle ifNotNil: [ trachelShape rectangle: rectangle ].
-	ratio ifNotNil: [ trachelShape ratio: ratio ]
+	ratio ifNotNil: [ trachelShape ratio: ratio ].
+	trachelShape onload: onload.
 ]

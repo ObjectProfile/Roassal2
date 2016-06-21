@@ -63,7 +63,8 @@ Class {
 		'emptyTile',
 		'semaphore',
 		'copyright',
-		'ratio'
+		'ratio',
+		'onload'
 	],
 	#classVars : [
 		'EmptyTile'
@@ -75,6 +76,16 @@ Class {
 TROSMShape class >> emptyTile [
 	^ EmptyTile
 		ifNil: [ EmptyTile := ((StringMorph contents: 'Loading...') center: 127 @ 127) imageFormForRectangle: (0 @ 0 extent: 256 @ 256) ]
+]
+
+{ #category : #private }
+TROSMShape >> checkCallback [
+	| call |
+	onload ifNil: [ ^ self ].
+	call := true.
+	tiles keys do: [ :k | 
+		(tiles at: k) = self class emptyTile ifTrue: [ call:= false] ].
+	call ifTrue: [ onload fork ].
 ]
 
 { #category : #private }
@@ -256,6 +267,17 @@ TROSMShape >> maxLatitude [
 { #category : #private }
 TROSMShape >> minLatitude [
 	^ RTOSM minLatitude
+]
+
+{ #category : #accessing }
+TROSMShape >> onload [
+	^ onload
+]
+
+{ #category : #accessing }
+TROSMShape >> onload: aBlock [
+	aBlock ifNil: [ onload := nil ].
+	aBlock isBlock ifTrue: [ onload := aBlock ].
 ]
 
 { #category : #private }
