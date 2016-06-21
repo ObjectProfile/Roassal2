@@ -1,3 +1,6 @@
+"
+I am a simple to expand boxes from a simple view using the mouse in that interaction.
+"
 Class {
 	#name : #RTFisheye,
 	#superclass : #RTInteraction,
