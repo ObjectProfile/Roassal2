@@ -103,7 +103,7 @@ RTGridLayout on: es.
 v canvas buildMorph drawOnMockCanvas
 
 	"
-	self drawOn: (FormCanvas extent: 500 @ 500)
+	self drawOn: (FormCanvas extent: self extent)
 ]
 
 { #category : #'event-processed' }

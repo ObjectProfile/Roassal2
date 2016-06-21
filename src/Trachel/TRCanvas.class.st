@@ -262,7 +262,7 @@ TRCanvas >> fixedShapes [
 ]
 
 { #category : #actions }
-TRCanvas >> focusOnCenterScaled [	
+TRCanvas >> focusOnCenterScaled [
 	^ self camera focusOnCenterScaled: self extent * 0.9
 ]
 
