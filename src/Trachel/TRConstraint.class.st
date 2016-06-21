@@ -263,20 +263,21 @@ TRConstraint class >> move: els1 to: aSymbol and: els2 [
 
 { #category : #'public - moving' }
 TRConstraint class >> moveAtTheBottomOfTheWindow: trachelShape [
-
+	"Worked only for fixed shape"
 	| windowSize |
 	trachelShape canvas ifNil: [ ^ self ].
 	windowSize := trachelShape canvas extent.
-	trachelShape translateTo: ((trachelShape width / 2) @ (windowSize y - (trachelShape height / 2)))
+	trachelShape translateTo: (trachelShape width / 2) @ (windowSize y - (trachelShape height / 2))
 ]
 
 { #category : #'public - moving' }
 TRConstraint class >> moveAtTheBottomRightOfTheWindow: trachelShape [
-
+	"Worked only for fixed shape"
 	| windowSize |
 	trachelShape canvas ifNil: [ ^ self ].
 	windowSize := trachelShape canvas extent.
-	trachelShape translateTo: ((windowSize x - (trachelShape width / 2)) @ (windowSize y negated - (trachelShape height / 2)))
+	trachelShape
+		translateTo: (windowSize x - (trachelShape width / 2)) @ (windowSize y - (trachelShape height / 2))
 ]
 
 { #category : #'public - camera' }

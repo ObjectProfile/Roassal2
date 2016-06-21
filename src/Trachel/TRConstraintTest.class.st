@@ -114,6 +114,84 @@ TRConstraintTest >> testKeepingExtent [
 	self assert: conformingShape extent = (5 @ 0)
 ]
 
+{ #category : #moving }
+TRConstraintTest >> testMovingAtTheBottom [
+
+	| v lbl1 window |
+	v := RTView new.
+	lbl1 := RTBox element.
+	lbl1 setAsFixed.
+	v add: lbl1.
+	TRConstraint moveAtTheBottomOfTheWindow: lbl1 trachelShape.
+
+	window := v open.
+	window delete.
+	self assert: window extent equals: 500 @ 500.
+	self assert: lbl1 position asIntegerPoint equals: 2 @ 497
+]
+
+{ #category : #moving }
+TRConstraintTest >> testMovingAtTheBottomIfNotFixed [
+
+	| v lbl1 window |
+	v := RTView new.
+	lbl1 := RTBox element.
+	v add: lbl1.
+	TRConstraint moveAtTheBottomOfTheWindow: lbl1 trachelShape.
+
+	window := v open.
+	window delete.
+	self assert: window extent equals: 500 @ 500.
+	self assert: lbl1 position asIntegerPoint equals: 2 @ 497
+]
+
+{ #category : #moving }
+TRConstraintTest >> testMovingAtTheBottomOfTheWindow [
+
+	| v lbl1 window |
+	v := RTView new.
+	lbl1 := RTBox element.
+	lbl1 setAsFixed.
+	v add: lbl1.
+	TRConstraint moveAtTheBottomOfTheWindow: lbl1 trachelShape.
+
+	window := v open.
+	window delete.
+	self assert: window extent equals: 500 @ 500.
+	self assert: lbl1 position asIntegerPoint equals: 2 @ 497
+]
+
+{ #category : #moving }
+TRConstraintTest >> testMovingAtTheBottomOfTheWindowNonFixed [
+
+	| v lbl1 window |
+	v := RTView new.
+	lbl1 := RTBox element.
+	v add: lbl1.
+	TRConstraint moveAtTheBottomOfTheWindow: lbl1 trachelShape.
+
+	window := v open.
+	window delete.
+	self assert: window extent equals: 500 @ 500.
+	self assert: lbl1 position asIntegerPoint equals: 2 @ 497
+]
+
+{ #category : #moving }
+TRConstraintTest >> testMovingAtTheBottomRight [
+
+	| v lbl1 window |
+	v := RTView new.
+	lbl1 := RTBox element.
+	lbl1 setAsFixed.
+	v add: lbl1.
+	TRConstraint moveAtTheBottomRightOfTheWindow: lbl1 trachelShape.
+
+	window := v open.
+	window delete.
+	self assert: window extent equals: 500 @ 500.
+	self assert: lbl1 position asIntegerPoint equals: 497 @ 497
+]
+
 { #category : #resizing }
 TRConstraintTest >> testResizingHeight [
 
