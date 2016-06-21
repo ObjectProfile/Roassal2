@@ -1,3 +1,8 @@
+"
+I am a base Interpolator, my sbuclasses are
+	RTColorInterpolator, and RTNumberInterpolator
+	
+"
 Class {
 	#name : #RTInterpolator,
 	#superclass : #RTObject,
@@ -35,17 +40,17 @@ RTInterpolator class >> interpolatorFor: b [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTInterpolator >> interpolate: anObject [
 	self subclassResponsibility 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTInterpolator >> start: anObject [
 	start := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTInterpolator >> stop: anObject [
 	stop := anObject
 ]
