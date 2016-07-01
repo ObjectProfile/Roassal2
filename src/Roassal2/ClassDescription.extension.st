@@ -15,17 +15,6 @@ ClassDescription >> ageInDaysRounded [
 ]
 
 { #category : #'*roassal2' }
-ClassDescription >> classReferences [
-	"Return the list of class references all my methods contains. The result also contains my superclass."
-	| references |
-	references := OrderedCollection new.
-	self methodDict valuesDo: [ :compiledMethod |
-			references addAll: compiledMethod classReferences ].
-	references add: self superclass.
-	^ references removeDuplicates
-]
-
-{ #category : #'*roassal2' }
 ClassDescription >> commonSuperclassWith: aClass [
 	"
 	Metaclass commonSuperclassWith: Class
