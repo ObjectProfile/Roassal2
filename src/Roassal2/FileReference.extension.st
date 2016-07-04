@@ -36,11 +36,3 @@ FileReference >> gtInspectorActionVisualizeCSVFile [
 		condition: [ self isFile and: [ self extension = 'csv' ] ];
 		title: 'Visualize data'
 ]
-
-{ #category : #'*Roassal2-Table' }
-FileReference >> gtInspectorCsvIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	(self isFile and: [ self extension = 'csv' ])
-		ifFalse: [ ^ self ].
-	^ (RTTabTable new input: self contents usingDelimiter: $,) gtInspectorTableIn: composite
-]
