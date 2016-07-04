@@ -89,6 +89,22 @@ RTTabTableTest >> testConvertAsInteger [
 ]
 
 { #category : #tests }
+RTTabTableTest >> testDictionaryValues [
+	tab
+		input:
+			'
+	m1	m2	m3
+A	1	2
+B	4	9'.
+	tab removeFirstRow.
+	self
+		assert: tab dictionaryValues
+		equals:
+			{OrderedDictionary with: #m1 -> 'A' with: #m2 -> '1' with: 'm3' -> '2'.
+			OrderedDictionary with: #m1 -> 'B' with: #m2 -> '4' with: 'm3' -> '9'}
+]
+
+{ #category : #tests }
 RTTabTableTest >> testEmptyAndReplaceColumn [
 
 	tab input: ',,' usingDelimiter: $,.
@@ -148,6 +164,34 @@ RTTabTableTest >> testGathering [
 	tab convertColumn: 1 to: #asInteger.
 	tab gather: 2 using: [ :row1 :row2 | Array with: row1 first + row2 first with: row1 second ].
 	self assert: (tab values asArray = #( #(3 'A') #(7 'B')))
+]
+
+{ #category : #tests }
+RTTabTableTest >> testGrouped [
+	tab
+		input:
+			'
+	m1	m2	m3
+A	1	2
+A	3	7
+B	2	5
+B	4	9'.
+	tab removeFirstRow.
+	tab convertColumnsAsInteger: #(m2 m3).
+	self
+		assert: (tab valuesGroupedBy: #m1)
+		equals:
+			{'A'
+				->
+					(Array
+						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 1 with: #m3 -> 2)
+						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 3 with: #m3 -> 7)).
+			'B'
+				->
+					(Array
+						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 2 with: #m3 -> 5)
+						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 4 with: #m3 -> 9))}
+				asDictionary
 ]
 
 { #category : #tests }
