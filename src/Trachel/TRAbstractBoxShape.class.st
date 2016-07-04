@@ -176,6 +176,11 @@ TRAbstractBoxShape >> leftPosition: aPosition [
 ]
 
 { #category : #geometry }
+TRAbstractBoxShape >> rectangle [
+	^ rectangle
+]
+
+{ #category : #geometry }
 TRAbstractBoxShape >> rectangle: aRectangle [
 	rectangle := aRectangle.
 	self resetPath.
