@@ -400,7 +400,13 @@ RTData >> stack [
 
 { #category : #accessing }
 RTData >> x: blockOrSymbol [
-	self xElement: [ :anElement | blockOrSymbol rtValue: anElement model ]
+	blockOrSymbol isSymbol
+		ifTrue: [ self
+				xElement: [ :anElement | 
+					anElement model isDictionary
+						ifTrue: [ anElement model at: blockOrSymbol ]
+						ifFalse: [ blockOrSymbol rtValue: anElement model ] ] ]
+		ifFalse: [ self xElement: [ :anElement | blockOrSymbol rtValue: anElement model ] ]
 ]
 
 { #category : #accessing }
@@ -415,7 +421,13 @@ RTData >> y [
 
 { #category : #accessing }
 RTData >> y: blockOrSymbol [
-	self yElement: [ :anElement | blockOrSymbol rtValue: anElement model ]
+	blockOrSymbol isSymbol
+		ifTrue: [ self
+				yElement: [ :anElement | 
+					anElement model isDictionary
+						ifTrue: [ anElement model at: blockOrSymbol ]
+						ifFalse: [ blockOrSymbol rtValue: anElement model ] ] ]
+		ifFalse: [ self yElement: [ :anElement | blockOrSymbol rtValue: anElement model ] ]
 ]
 
 { #category : #accessing }
