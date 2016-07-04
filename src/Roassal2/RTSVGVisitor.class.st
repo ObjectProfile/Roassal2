@@ -123,7 +123,6 @@ RTSVGVisitor >> alignRectangle: aRectangle [
 
 { #category : #accessing }
 RTSVGVisitor >> canvas [
-
 	^canvas
 ]
 
@@ -312,11 +311,15 @@ RTSVGVisitor >> visitArrowShape: arrowShape [
 
 { #category : #visitor }
 RTSVGVisitor >> visitBezierShape: aBezierShape [
-	|points svgE|
-	points:= aBezierShape points.
-	points := points collect: [ :p | self alignPoint: p].
-	svgE := RTSVGBezierLine new element: (aBezierShape) points: points width: (aBezierShape width) color: (aBezierShape strokePaint).
-	svgE addOn: stream using: self. 
+	| points svgE |
+	points := aBezierShape points.
+	points := points collect: [ :p | self alignPoint: p ].
+	svgE := RTSVGBezierLine new
+		element: aBezierShape
+		points: points
+		width: aBezierShape width
+		color: aBezierShape strokePaint.
+	svgE addOn: stream using: self
 ]
 
 { #category : #visitor }
