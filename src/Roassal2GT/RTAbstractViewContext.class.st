@@ -71,6 +71,15 @@ RTAbstractViewContext >> presentation: aPresentation [
 	presentation := aPresentation
 ]
 
+{ #category : #documentation }
+RTAbstractViewContext >> readme [
+"
+RTAbstractViewContext is the root class of the view contexts. A view context bridges Roassal with GT. 
+You need to create a subclass of RTAbstractViewContext if you want to define a particular operation involving GT 
+
+"
+]
+
 { #category : #public }
 RTAbstractViewContext >> registerCallbacks [
 	"Register the different interactions on the view"
