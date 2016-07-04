@@ -24,6 +24,11 @@ RTAbstractGrapherDecorator >> builder: aGraphBuilder [
 	builder := aGraphBuilder
 ]
 
+{ #category : #testing }
+RTAbstractGrapherDecorator >> convertPointForGraph: p [
+	^ p x @ p y negated
+]
+
 { #category : #accessing }
 RTAbstractGrapherDecorator >> datasetValues [
 	"Return the list of Y values for all the datasets"
@@ -34,6 +39,11 @@ RTAbstractGrapherDecorator >> datasetValues [
 RTAbstractGrapherDecorator >> datasetValuesX [
 	"Return the list of X values for all the datasets"
 	^ builder datasets flatCollect: #getValuesX
+]
+
+{ #category : #'accessing - computed' }
+RTAbstractGrapherDecorator >> elementsWithModel [
+	^ self view elements select: [ :e | e model notNil ]
 ]
 
 { #category : #initialization }
@@ -52,6 +62,17 @@ RTAbstractGrapherDecorator >> isBehind [
 { #category : #configuration }
 RTAbstractGrapherDecorator >> isInFront [
 	^ placedInFront = true
+]
+
+{ #category : #testing }
+RTAbstractGrapherDecorator >> isPointOverTheBuilder: aPoint [
+	"Return true of false on whether the provided point is above the builder.
+	Note that the point is translated from the camera"
+	| pp |
+	pp := self convertPointForGraph: aPoint.
+	
+	"Humm... I am not sure this is the best way to do this. What happens if the view is embedded?"
+	^ pp >= (0 @ 0) and: [ pp <= builder extent ]
 ]
 
 { #category : #utility }
@@ -109,4 +130,14 @@ RTAbstractGrapherDecorator >> render [
 { #category : #accessing }
 RTAbstractGrapherDecorator >> shape [
 	^ shapeBuilder
+]
+
+{ #category : #signalling }
+RTAbstractGrapherDecorator >> signalUpdate [
+	^ self view signalUpdate
+]
+
+{ #category : #accessing }
+RTAbstractGrapherDecorator >> view [
+	^ builder view
 ]

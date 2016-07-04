@@ -40,11 +40,6 @@ RTCursorFollower >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #testing }
-RTCursorFollower >> convertPointForGraph: p [
-	^ p x @ p y negated
-]
-
 { #category : #createLinesAndLabels }
 RTCursorFollower >> createLinesAndLabelsIfNecessary [
 	lineH
@@ -90,17 +85,6 @@ RTCursorFollower >> initialize [
 	labelXTextConvertion := [ :v | v round: 2 ].
 	labelYTextConvertion := [ :v | v round: 2 ].
 	color := self defaultColor
-]
-
-{ #category : #testing }
-RTCursorFollower >> isPointOverTheBuilder: aPoint [
-	"Return true of false on whether the provided point is above the builder.
-	Note that the point is translated from the camera"
-	| pp |
-	pp := self convertPointForGraph: aPoint.
-	
-	"Humm... I am not sure this is the best way to do this. What happens if the view is embedded?"
-	^ pp >= (0 @ 0) and: [ pp <= builder extent ]
 ]
 
 { #category : #accessing }

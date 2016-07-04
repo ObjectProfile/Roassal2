@@ -322,14 +322,6 @@ RTTabTable >> convertFromNameToIndexIfNecessary: anObject [
 ]
 
 { #category : #accessing }
-RTTabTable >> dictionaryValues [
-	^ self values
-		collect: [ :row | 
-			(row withIndexCollect: [ :each :i | (firstRow at: i) asSymbol -> each ])
-				asOrderedDictionary ]
-]
-
-{ #category : #accessing }
 RTTabTable >> firstColumn [
 	^ self valuesOfColumn: 1
 ]
@@ -344,22 +336,6 @@ RTTabTable >> gather: columnIndex using: twoArgBlock [
 			ifTrue: [ d at: key put: (twoArgBlock value: (d at: key) value: row) ]
 			ifFalse: [ d at: key put: row ] ].
 	values := d values
-]
-
-{ #category : #'gt-inspector-extension' }
-RTTabTable >> gtInspectorTableIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	| tbl titles |
-	(tbl := composite table)
-		title: 'CSV';
-		display: [ firstRow ifNil: [ self values allButFirst ] ifNotNil: [ self values ] ].
-	titles := firstRow ifNil: [ self values first ].
-	titles
-		withIndexDo: [ :heading :i | 
-			tbl
-				column: heading
-				evaluated: [ :each | GTObjectPrinter new asTruncatedTextFrom: (each at: i) ] ].
-	^ tbl
 ]
 
 { #category : #converting }
@@ -480,11 +456,6 @@ RTTabTable >> replaceZeroWithCumulativeValuesInColumns: columns [
 { #category : #accessing }
 RTTabTable >> values [
 	^ values
-]
-
-{ #category : #accessing }
-RTTabTable >> valuesGroupedBy: aSymbol [
-	^ (self dictionaryValues groupedBy: [ :each | each at: aSymbol ]) asDictionary
 ]
 
 { #category : #accessing }
