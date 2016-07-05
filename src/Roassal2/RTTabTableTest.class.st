@@ -2,7 +2,8 @@ Class {
 	#name : #RTTabTableTest,
 	#superclass : #RTTest,
 	#instVars : [
-		'tab'
+		'tab',
+		'data'
 	],
 	#category : #'Roassal2-Table'
 }
@@ -20,8 +21,7 @@ RTTabTableTest >> setUp [
 { #category : #tests }
 RTTabTableTest >> testAccessing [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 A	1	2	5
 B	2	5	4
 C	1	7	4'.
@@ -33,8 +33,7 @@ C	1	7	4'.
 { #category : #tests }
 RTTabTableTest >> testAccessing2 [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 
 A	1	2	5
 
@@ -86,6 +85,48 @@ RTTabTableTest >> testConvertAsInteger [
 	tab input: '5.4,1.2,0,hello world' usingDelimiter: $,.
 	tab convertColumnsAsInteger: #(1 2 3).
 	self assert: tab values first equals: #(5 1 0 'hello world')
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter [
+	data := 'm1	m2	m3
+1	2	5
+2	5	4
+1	7	4'.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter1 [
+	data := 'm1	m2	m3'.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter2 [
+	data := 'm1,m2,m3'.
+	self assert: (tab detectDelimiterIn: data) equals: $,
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter3 [
+	data := ''.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDictionaryValues [
+	tab
+		input:
+			'm1	m2	m3
+A	1	2
+B	4	9'.
+	tab removeFirstRow.
+	self
+		assert: tab dictionaryValues
+		equals:
+			{OrderedDictionary with: #m1 -> 'A' with: #m2 -> '1' with: 'm3' -> '2'.
+			OrderedDictionary with: #m1 -> 'B' with: #m2 -> '4' with: 'm3' -> '9'}
 ]
 
 { #category : #tests }
@@ -151,10 +192,36 @@ RTTabTableTest >> testGathering [
 ]
 
 { #category : #tests }
+RTTabTableTest >> testGrouped [
+	tab
+		input:
+			'm1	m2	m3
+A	1	2
+A	3	7
+B	2	5
+B	4	9'.
+	tab removeFirstRow.
+	tab convertColumnsAsInteger: #(m2 m3).
+	self
+		assert: (tab valuesGroupedBy: #m1)
+		equals:
+			{'A'
+				->
+					(Array
+						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 1 with: #m3 -> 2)
+						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 3 with: #m3 -> 7)).
+			'B'
+				->
+					(Array
+						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 2 with: #m3 -> 5)
+						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 4 with: #m3 -> 9))}
+				asDictionary
+]
+
+{ #category : #tests }
 RTTabTableTest >> testMassiveConversion [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 A	1	2	5
 B	2	5	4
 C	1	7	4	'.
@@ -212,11 +279,15 @@ Germany	80
 
 { #category : #tests }
 RTTabTableTest >> testRemovingColumn [
-
-	tab input: 'France	20	toremove
+	tab
+		input:
+			'Country	number	toremove
+France	20	toremove
 Germany	80	toremove'.
+	tab removeFirstRow.
 	tab removeColumn: 3.
-	self assert: (tab values = #( #('France' '20') #('Germany' '80')))
+	self assert: tab values equals: #(#('France' '20') #('Germany' '80')).
+	self assert: tab firstRow equals: #('Country' 'number')
 ]
 
 { #category : #tests }
