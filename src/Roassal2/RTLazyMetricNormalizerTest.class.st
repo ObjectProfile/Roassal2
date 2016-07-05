@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'n'
 	],
-	#category : #'Roassal2-ColorNormalizer'
+	#category : #'Roassal2-ColorNormalizer-Tests'
 }
 
 { #category : #running }
