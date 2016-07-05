@@ -321,6 +321,23 @@ RTTabTable >> convertFromNameToIndexIfNecessary: anObject [
 			self indexOfName: anObject ]
 ]
 
+{ #category : #'private-utility' }
+RTTabTable >> detectDelimiterIn: aString [
+	| options first second |
+	aString lines size = 0
+		ifTrue: [ ^ Character tab ].
+	options := Array with: Character tab with: $; with: $,.
+	first := (options collect: [ :each | each -> (aString lines first occurrencesOf: each) ])
+		asDictionary.
+	second := first.
+	aString lines size > 1
+		ifTrue: [ second := (options
+				collect: [ :each | each -> (aString lines second occurrencesOf: each) ]) asDictionary ].
+	^ (options
+		detect: [ :each | (first at: each) > 0 and: [ (first at: each) = (second at: each) ] ])
+		value
+]
+
 { #category : #accessing }
 RTTabTable >> dictionaryValues [
 	^ self values
@@ -371,7 +388,7 @@ RTTabTable >> indexOfName: aString [
 { #category : #updating }
 RTTabTable >> input: txt [
 	"txt is a large string in which we have one entry per line"
-	^ self input: txt usingDelimiter: Character tab
+	^ self input: txt usingDelimiter: (self detectDelimiterIn: txt)
 ]
 
 { #category : #updating }

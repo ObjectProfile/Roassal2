@@ -2,7 +2,8 @@ Class {
 	#name : #RTTabTableTest,
 	#superclass : #RTTest,
 	#instVars : [
-		'tab'
+		'tab',
+		'data'
 	],
 	#category : #'Roassal2-Table'
 }
@@ -86,6 +87,33 @@ RTTabTableTest >> testConvertAsInteger [
 	tab input: '5.4,1.2,0,hello world' usingDelimiter: $,.
 	tab convertColumnsAsInteger: #(1 2 3).
 	self assert: tab values first equals: #(5 1 0 'hello world')
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter [
+	data := 'm1	m2	m3
+1	2	5
+2	5	4
+1	7	4'.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter1 [
+	data := 'm1	m2	m3'.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter2 [
+	data := 'm1,m2,m3'.
+	self assert: (tab detectDelimiterIn: data) equals: $,
+]
+
+{ #category : #tests }
+RTTabTableTest >> testDetectDelimiter3 [
+	data := ''.
+	self assert: (tab detectDelimiterIn: data) equals: Character tab
 ]
 
 { #category : #tests }
