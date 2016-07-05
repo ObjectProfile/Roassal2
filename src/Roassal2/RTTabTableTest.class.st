@@ -21,8 +21,7 @@ RTTabTableTest >> setUp [
 { #category : #tests }
 RTTabTableTest >> testAccessing [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 A	1	2	5
 B	2	5	4
 C	1	7	4'.
@@ -34,8 +33,7 @@ C	1	7	4'.
 { #category : #tests }
 RTTabTableTest >> testAccessing2 [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 
 A	1	2	5
 
@@ -120,8 +118,7 @@ RTTabTableTest >> testDetectDelimiter3 [
 RTTabTableTest >> testDictionaryValues [
 	tab
 		input:
-			'
-	m1	m2	m3
+			'm1	m2	m3
 A	1	2
 B	4	9'.
 	tab removeFirstRow.
@@ -198,8 +195,7 @@ RTTabTableTest >> testGathering [
 RTTabTableTest >> testGrouped [
 	tab
 		input:
-			'
-	m1	m2	m3
+			'm1	m2	m3
 A	1	2
 A	3	7
 B	2	5
@@ -225,8 +221,7 @@ B	4	9'.
 { #category : #tests }
 RTTabTableTest >> testMassiveConversion [
 
-	tab input: '
-	m1	m2	m3
+	tab input: 'key	m1	m2	m3
 A	1	2	5
 B	2	5	4
 C	1	7	4	'.
@@ -284,11 +279,15 @@ Germany	80
 
 { #category : #tests }
 RTTabTableTest >> testRemovingColumn [
-
-	tab input: 'France	20	toremove
+	tab
+		input:
+			'Country	number	toremove
+France	20	toremove
 Germany	80	toremove'.
+	tab removeFirstRow.
 	tab removeColumn: 3.
-	self assert: (tab values = #( #('France' '20') #('Germany' '80')))
+	self assert: tab values equals: #(#('France' '20') #('Germany' '80')).
+	self assert: tab firstRow equals: #('Country' 'number')
 ]
 
 { #category : #tests }
