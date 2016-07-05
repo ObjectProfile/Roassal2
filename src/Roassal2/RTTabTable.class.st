@@ -321,35 +321,9 @@ RTTabTable >> convertFromNameToIndexIfNecessary: anObject [
 			self indexOfName: anObject ]
 ]
 
-{ #category : #'private-utility' }
-RTTabTable >> detectDelimiterIn: aString [
-	| options first second |
-	aString lines size = 0
-		ifTrue: [ ^ Character tab ].
-	options := Array with: Character tab with: $; with: $,.
-	first := (options collect: [ :each | each -> (aString lines first occurrencesOf: each) ]) asDictionary.
-	second := first.
-	aString lines size > 1
-		ifTrue: [ second := (options collect: [ :each | each -> (aString lines second occurrencesOf: each) ]) asDictionary ].
-	^ (options detect: [ :each | (first at: each) > 0 and: [ (first at: each) = (second at: each) ] ] ifNone: [ Character tab ]) value
-]
-
-{ #category : #accessing }
-RTTabTable >> dictionaryValues [
-	^ self values
-		collect: [ :row | 
-			(row withIndexCollect: [ :each :i | (firstRow at: i) asSymbol -> each ])
-				asOrderedDictionary ]
-]
-
 { #category : #accessing }
 RTTabTable >> firstColumn [
 	^ self valuesOfColumn: 1
-]
-
-{ #category : #accessing }
-RTTabTable >> firstRow [
-	^ firstRow ifNil: [ self values first ]
 ]
 
 { #category : #converting }
@@ -364,22 +338,6 @@ RTTabTable >> gather: columnIndex using: twoArgBlock [
 	values := d values
 ]
 
-{ #category : #'gt-inspector-extension' }
-RTTabTable >> gtInspectorTableIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	| tbl titles |
-	(tbl := composite table)
-		title: 'CSV';
-		display: [ firstRow ifNil: [ self values allButFirst ] ifNotNil: [ self values ] ].
-	titles := firstRow ifNil: [ self values first ].
-	titles
-		withIndexDo: [ :heading :i | 
-			tbl
-				column: heading
-				evaluated: [ :each | GTObjectPrinter new asTruncatedTextFrom: (each at: i) ] ].
-	^ tbl
-]
-
 { #category : #converting }
 RTTabTable >> indexOfName: aString [
 	"Return the index of the column named aString"
@@ -389,7 +347,7 @@ RTTabTable >> indexOfName: aString [
 { #category : #updating }
 RTTabTable >> input: txt [
 	"txt is a large string in which we have one entry per line"
-	^ self input: txt usingDelimiter: (self detectDelimiterIn: txt)
+	^ self input: txt usingDelimiter: Character tab
 ]
 
 { #category : #updating }
@@ -466,8 +424,8 @@ RTTabTable >> rejectRow: aBlock [
 
 { #category : #updating }
 RTTabTable >> removeColumn: aNumber [
-	values := values collect: [ :v | v copyWithoutIndex: aNumber ].
-	firstRow ifNotNil: [ firstRow := firstRow copyWithoutIndex: aNumber ]
+
+	values := values collect: [ :v | v copyWithoutIndex: aNumber ]
 ]
 
 { #category : #accessing }
@@ -498,11 +456,6 @@ RTTabTable >> replaceZeroWithCumulativeValuesInColumns: columns [
 { #category : #accessing }
 RTTabTable >> values [
 	^ values
-]
-
-{ #category : #accessing }
-RTTabTable >> valuesGroupedBy: aSymbol [
-	^ (self dictionaryValues groupedBy: [ :each | each at: aSymbol ]) asDictionary
 ]
 
 { #category : #accessing }
