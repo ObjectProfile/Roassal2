@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMultiLinearColorTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-ColorNormalizer'
+	#category : #'Roassal2-ColorNormalizer-Tests'
 }
 
 { #category : #tests }
