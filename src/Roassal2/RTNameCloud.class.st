@@ -226,7 +226,7 @@ RTNameCloud >> prepareWord: word [
 RTNameCloud >> renderIn: aView [
 	| shape es |
 	shape := RTLabel new
-		height: [ :assoc | (assoc value - self minFrequency) * maxHeight / (self maxFrequency - self minFrequency max: 1) + minHeight ];
+		height: [ :assoc | (assoc value size - self minFrequency) * maxHeight / (self maxFrequency - self minFrequency max: 1) + minHeight ];
 		text: #key.
 	es := shape elementsOn: self sortedAssociationsBounded.
 	aView addAll: es.
@@ -241,14 +241,20 @@ RTNameCloud >> renderIn: aView [
 
 { #category : #accessing }
 RTNameCloud >> sortedAssociations [
-
-	^ tableFrequency associations reverseSortedAs: #value
+	^ self tableObjects associations reverseSortedAs: [ :assoc | assoc value size ]
+	"^ tableFrequency associations reverseSortedAs: #value"
 ]
 
 { #category : #accessing }
 RTNameCloud >> sortedAssociationsBounded [
 
 	^ self sortedAssociations copyFrom: 1 to: (self sortedAssociations size min: maxWords)
+]
+
+{ #category : #accessing }
+RTNameCloud >> tableObjects [
+	"Return a dictionary for which keys are words, and values are set of objects related to the word"
+	^ tableObjects
 ]
 
 { #category : #dictionaries }
