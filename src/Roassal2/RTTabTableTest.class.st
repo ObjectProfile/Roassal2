@@ -8,10 +8,6 @@ Class {
 	#category : #'Roassal2-Table'
 }
 
-{ #category : #'as yet unclassified' }
-RTTabTableTest >> dateTimeStringExample [
-]
-
 { #category : #running }
 RTTabTableTest >> setUp [
 	super setUp.
