@@ -125,8 +125,8 @@ B	4	9'.
 	self
 		assert: tab dictionaryValues
 		equals:
-			{OrderedDictionary with: #m1 -> 'A' with: #m2 -> '1' with: 'm3' -> '2'.
-			OrderedDictionary with: #m1 -> 'B' with: #m2 -> '4' with: 'm3' -> '9'}
+			(Array with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> '1' with: 'm3' -> '2') with: 
+			(OrderedDictionary with: #m1 -> 'B' with: #m2 -> '4' with: 'm3' -> '9'))
 ]
 
 { #category : #tests }
