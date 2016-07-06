@@ -205,16 +205,16 @@ B	4	9'.
 	self
 		assert: (tab valuesGroupedBy: #m1)
 		equals:
-			{'A'
+			(Array with: ('A'
 				->
 					(Array
 						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 1 with: #m3 -> 2)
-						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 3 with: #m3 -> 7)).
-			'B'
+						with: (OrderedDictionary with: #m1 -> 'A' with: #m2 -> 3 with: #m3 -> 7)))
+			with: ('B'
 				->
 					(Array
 						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 2 with: #m3 -> 5)
-						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 4 with: #m3 -> 9))}
+						with: (OrderedDictionary with: #m1 -> 'B' with: #m2 -> 4 with: #m3 -> 9))))
 				asDictionary
 ]
 
