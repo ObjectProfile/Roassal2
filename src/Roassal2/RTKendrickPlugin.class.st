@@ -18,9 +18,19 @@ We recommand to use the Moose distribution of Pharo.'
 { #category : #hooks }
 RTKendrickPlugin >> execute [
 	Gofer new
-	   url: 'http://smalltalkhub.com/mc/UMMISCO/Kendrick/main';
-	   configurationOf:'Kendrick';
-	   loadVersion:'0.33'
+	   url: 'http://smalltalkhub.com/mc/SergeStinckwich/SciSmalltalk/main/';
+	   configurationOf:'SciSmalltalk';
+	   loadDevelopment.
+	
+	Gofer new
+	   url: 'http://ss3.gemstone.com/ss/STON';
+	   configurationOf:'Ston';
+	   loadStable.
+	
+	Gofer new
+		url: 'http://smalltalkhub.com/mc/UMMISCO/Kendrick/main/';
+		package: 'Kendrick';
+		load
 ]
 
 { #category : #hooks }
