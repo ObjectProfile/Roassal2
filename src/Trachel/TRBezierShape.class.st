@@ -19,6 +19,7 @@ TRBezierShape >> accept: aVisitor with: decoration [
 
 { #category : #hooks }
 TRBezierShape >> computePath [
+	
 	path := self athensCanvas
 		createPath: [ :builder | 
 			builder
@@ -27,13 +28,15 @@ TRBezierShape >> computePath [
 			
 			(2 to: (listOfPoints size -2)) do: [ :index |
 				builder 
-					curveVia: (listOfPoints at: index) 
+					curveVia: (listOfPoints at: index) asFloatPoint
 					to: (((listOfPoints at: index) + (listOfPoints at: (index + 1))) / 2) asFloatPoint.
 			].
 			builder 
 				curveVia: (listOfPoints at: (listOfPoints size -1) )
-				to: (listOfPoints at: (listOfPoints size) ) .
+				to: (listOfPoints at: (listOfPoints size) ) asFloatPoint.
+		
 		]
+	
 ]
 
 { #category : #drawing }
