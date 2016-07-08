@@ -51,7 +51,9 @@ TRMorph >> drawOn: aCanvas [
 	isDrawing ifTrue: [ ^ self ].
 	isDrawing := true. 
 	self checkSession.
-	
+
+	self recreateSurfaceIfNecessary.
+		
 	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	trachelCanvas playAnimations.
 	
@@ -210,7 +212,7 @@ TRMorph >> layoutChanged [
 
 	super layoutChanged.
 	self checkSession.
-	self recreateSurfaceIfNecessary
+	
 ]
 
 { #category : #'event handling' }
