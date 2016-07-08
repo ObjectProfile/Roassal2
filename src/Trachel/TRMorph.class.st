@@ -205,16 +205,12 @@ TRMorph >> isDrawing [
 ]
 
 { #category : #recategorized }
-TRMorph >> layoutChanged [ 
+TRMorph >> layoutChanged [
 	"react on morph resize"
+
 	super layoutChanged.
 	self checkSession.
-	surface ifNotNil: [  
-		self extent asIntegerPoint ~= surface extent ifTrue: [ 
-			self createSurface.
-			trachelCanvas extent: self extent ]
-	].
-	
+	self recreateSurfaceIfNecessary
 ]
 
 { #category : #'event handling' }
@@ -277,6 +273,14 @@ TRMorph >> mouseUp: evt [
 TRMorph >> mouseWheel: evt [
 	self trMouseWheel: evt.
 	evt wasHandled: true
+]
+
+{ #category : #recategorized }
+TRMorph >> recreateSurfaceIfNecessary [
+	surface
+		ifNotNil: [ self extent asIntegerPoint ~= surface extent
+				ifTrue: [ self createSurface.
+					trachelCanvas extent: self extent ] ]
 ]
 
 { #category : #'events-roassal' }
