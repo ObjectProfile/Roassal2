@@ -19,6 +19,7 @@ TRTextShape >> basicEncompassingRectangle [
 TRTextShape >> drawOn: athensCanvas [
 	| spacing |
 	spacing := self fontMetrics fontHeight.
+	"self drawEncompassingRectangleOn: athensCanvas."
 	athensCanvas pathTransform
 		restoreAfter: [ | e |
 			e := self extent.
@@ -83,6 +84,11 @@ TRTextShape >> fontName: aFamilyName [
 { #category : #accessing }
 TRTextShape >> fontSize: aNumber [
 	font := TRPlatform current fontFamilyName: font familyName pointSize: aNumber
+]
+
+{ #category : #testing }
+TRTextShape >> includesPoint: aPoint [
+	^ self encompassingRectangle containsPoint: aPoint
 ]
 
 { #category : #accessing }
