@@ -17,6 +17,12 @@ We recommand to use the Moose distribution of Pharo.'
 
 { #category : #hooks }
 RTKendrickPlugin >> execute [
+	"We manually load that package before of a problem in the configuration of SciSmalltalk"
+	Gofer new
+		url: 'http://smalltalkhub.com/mc/SergeStinckwich/SciSmalltalk/main/';
+		package: 'Math-Tests-KDTree';
+		load.
+	
 	Gofer new
 	   url: 'http://smalltalkhub.com/mc/SergeStinckwich/SciSmalltalk/main/';
 	   configurationOf:'SciSmalltalk';
