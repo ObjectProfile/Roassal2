@@ -199,6 +199,7 @@ ConfigurationOfRoassal2 >> baseline110: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
+					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 				
 		spec 
@@ -227,6 +228,7 @@ ConfigurationOfRoassal2 >> baseline111: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
+					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 				
 		spec 
@@ -255,6 +257,7 @@ ConfigurationOfRoassal2 >> baseline112: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
+					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 
 	spec
@@ -291,6 +294,7 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
+					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 
 	spec
