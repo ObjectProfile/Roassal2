@@ -199,7 +199,6 @@ ConfigurationOfRoassal2 >> baseline110: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
-					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 				
 		spec 
@@ -228,7 +227,6 @@ ConfigurationOfRoassal2 >> baseline111: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
-					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 				
 		spec 
@@ -257,7 +255,6 @@ ConfigurationOfRoassal2 >> baseline112: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
-					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 
 	spec
@@ -294,7 +291,6 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 		spec project: 'Neo-JSON-Core' with: [
 				spec
 					className: #ConfigurationOfNeoJSON;
-					version: #stable;
 					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
 
 	spec
@@ -1188,6 +1184,26 @@ ConfigurationOfRoassal2 >> version132: spec [
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1335';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.35';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version133: spec [
+	<version: '1.33' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '15/07/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-PeterUhnak.386';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1378';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.37';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
