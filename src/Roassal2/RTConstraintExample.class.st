@@ -73,12 +73,12 @@ RTConstraintExample >> exampleAnchorConstraint [
 	es @ RTDraggable.
 	es @ RTLabeled.
 	e1 := RTArrowedLine new
-		withContinuousCircleAttachPoint;
+		withBorderAttachPoint;
 		color: Color black;
 		edgeFrom: es first to: es second.
 	v add: e1.
 	e2 := RTArrowedLine new
-		withContinuousCircleAttachPoint;
+		withBorderAttachPoint;
 		color: Color black;
 		edgeFrom: es second to: es first.
 	v add: e2.

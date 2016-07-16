@@ -7337,7 +7337,7 @@ secondElements translateBy: 100 @ 0.
 eb := RTEdgeBuilder new.
 eb view: v.
 eb shape arrowedLine
-	withContinuousRectangleAttachPoint.
+	withBorderAttachPoint.
 eb useAssociations: associations.
 
 ^ v
@@ -7404,7 +7404,7 @@ secondElements translateBy: 100 @ 0.
 eb := RTEdgeBuilder new.
 eb view: v.
 eb shape arrowedLine
-	withContinuousRectangleAttachPoint.
+	withBorderAttachPoint.
 eb useAssociations: associations.
 
 ^ v
