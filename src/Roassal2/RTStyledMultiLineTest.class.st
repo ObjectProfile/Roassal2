@@ -20,7 +20,7 @@ RTStyledMultiLineTest >> testBasic [
 
 	shape := RTStyledMultiLine new.
 	shape filledArrowHead; arrowTail; dashdotLine; orthoVertical.
-	shape attachPoint: (RTRectangleAttachPoint new).
+	shape attachPoint: (RTBorderAttachPoint new).
 	lines := shape edgesFrom: es first toAll: es allButFirst.
 	v addAll: lines.
 
