@@ -45,3 +45,18 @@ RTBorderAttachPointTest >> testGeometryEllipse [
 	el translateTo: 20 @ 30.
 	self assert: (attachPoint geometryFor: el) equals: (GEllipse center: 20 @ 30 a: 10 b: 15)
 ]
+
+{ #category : #tests }
+RTBorderAttachPointTest >> testGeometryRoundedBox [
+	el := RTRoundedBox new
+		width: 80;
+		height: 40;
+		borderRadius: 10;
+		element.
+	self
+		assert: (attachPoint geometryFor: el)
+		equals:
+			(GRoundedRectangle
+				rectangle: (GRectangle origin: -40 @ -20 corner: 40 @ 20)
+				borderRadius: 10)
+]
