@@ -59,7 +59,7 @@ RTResizable class >> example [
 
 	edge := RTLine new
 		color: Color black;
-		attachPoint: RTBorderAttachPoint new;
+		attachPoint: RTRectangleAttachPoint new;
 		edgeFrom: g first to: el.
 
 	v addAll: g.
