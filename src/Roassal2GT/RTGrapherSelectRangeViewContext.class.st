@@ -23,7 +23,7 @@ Class {
 	#category : #'Roassal2GT-Glamour-Roassal-Interaction'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGrapherSelectRangeViewContext class >> onGrapher: aGrapher [
 
 	"We need to make sure that the view knows about the grapher"
@@ -31,7 +31,7 @@ RTGrapherSelectRangeViewContext class >> onGrapher: aGrapher [
 	aGrapher addDecorator: (RTRangeSelector new)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTGrapherSelectRangeViewContext class >> onGrapher: aGrapher callback: aOneArgBlock [
 	self setOnView: aGrapher view.
 	"We need to make sure that the view knows about the grapher"
@@ -41,5 +41,5 @@ RTGrapherSelectRangeViewContext class >> onGrapher: aGrapher callback: aOneArgBl
 
 { #category : #hooks }
 RTGrapherSelectRangeViewContext >> interactionsToBeRegistered [
-	^ Array with: RTGrapherSelectRangeContextInteraction "with: RTSelectableElementsContextInteraction" "with: RTResizeableViewContextInteraction"
+	^ Array with: RTGrapherSelectRangeContextInteraction with: RTResizeableViewContextInteraction "with: RTSelectableElementsContextInteraction" 
 ]
