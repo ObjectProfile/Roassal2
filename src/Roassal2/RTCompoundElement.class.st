@@ -8,17 +8,17 @@ Class {
 	#category : #'Roassal2-Core'
 }
 
-{ #category : #adding }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> add: anElement [
 	children add: anElement.
 ]
 
-{ #category : #adding }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> addAll: someElements [
 	children addAll: someElements
 ]
 
-{ #category : #adding }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> addedIn: aView [
 	super addedIn: aView.
 	"aView addAll: children."
@@ -28,7 +28,7 @@ RTCompoundElement >> addedIn: aView [
 	self doNesting
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> children [
 	"Defensive copy"
 	^ children copy
@@ -46,21 +46,21 @@ RTCompoundElement >> doNesting [
 	RTNest new on: self nest: children
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> initialize [
 	super initialize.
 	children := RTGroup new.
 	
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> layout [
 	"We do a lazy initialization"
 	layoutBuilder := RTLayoutBuilder new.
 	^ layoutBuilder
 ]
 
-{ #category : #rendering }
+{ #category : #'as yet unclassified' }
 RTCompoundElement >> renderOn: trachelCanvas [
 	super renderOn: trachelCanvas.
 	children do: [ :c | c renderOn: trachelCanvas ]

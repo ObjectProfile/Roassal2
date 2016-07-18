@@ -57,19 +57,17 @@ RTLegendBuilder >> addColor: aColor text: aText [
 ]
 
 { #category : #'public - convenient' }
-RTLegendBuilder >> addColorFadingFrom: startColor to: endColor text: textualDescription [
-	"Add a fading between startColor and endColor. A textualDescription is provided"
-	self addColorFadingUsing: (Array with: startColor with: endColor) text: textualDescription
+RTLegendBuilder >> addColorFadingFrom: startColor to: endColor text: description [
+	self addColorFadingUsing: (Array with: startColor with: endColor) text: description
 ]
 
 { #category : #'public - convenient' }
-RTLegendBuilder >> addColorFadingUsing: colors text: textualDescription [
-	"Specify a description of a fading using a provided set of colors"
+RTLegendBuilder >> addColorFadingUsing: colors text: description [
 	items
 		add:
 			(RTColorFadingLegendItem new
 				colors: colors;
-				description: textualDescription)
+				description: description)
 ]
 
 { #category : #'public - convenient' }
@@ -107,13 +105,7 @@ RTLegendBuilder >> addRectanglePolymetricWidth: widthDescription height: heightD
 
 { #category : #'public - convenient' }
 RTLegendBuilder >> addText: aText [
-	"Add a text to the legend, simply"
 	self addColoredText: aText color: self textColor
-]
-
-{ #category : #configuration }
-RTLegendBuilder >> backgroundTransparencyOnDemand [
-	^ 0.9
 ]
 
 { #category : #'public - positioning' }
@@ -232,19 +224,21 @@ RTLegendBuilder >> renderOnDemandIn: aView [
 	| label myGroup |
 	super renderIn: aView.
 	RTVerticalLineLayout on: group.
+
 	label := (RTLabel new color: Color red) elementOn: '?'.
 	label setAsFixed.
 	label @ RTHighlightable.
 	aView add: label.
 	label translateTo: label extent / 2.
-	label
-		@
-			(RTPopup new
-				alphaPopupBackground: self backgroundTransparencyOnDemand;
-				background: Color white
+	label @ (RTPopup new
+					alphaPopupBackground: 0.8;
+					background: Color white
 					group: [ :gg :el | 
-					myGroup := self group.
-					gg addAll: (myGroup flatCollect: #yourself) ])
+					 	 	myGroup := self group.
+							
+							gg addAll: (myGroup flatCollect: #yourself).
+					]).
+	
 ]
 
 { #category : #'public - positioning' }

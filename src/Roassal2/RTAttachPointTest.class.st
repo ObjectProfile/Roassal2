@@ -30,7 +30,7 @@ RTAttachPointTest >> setUp [
 
 { #category : #tests }
 RTAttachPointTest >> testContinuousCircleAttachPoint [
-	shape withBorderAttachPoint.
+	shape withContinuousCircleAttachPoint.
 	self 
 		assert: (shape startingPointOf: edge) 
 		equals: (el1 encompassingRectangle topRight 
@@ -43,7 +43,7 @@ RTAttachPointTest >> testContinuousCircleAttachPoint [
 
 { #category : #tests }
 RTAttachPointTest >> testContinuousRectangleAttachPoint [
-	shape withBorderAttachPoint.
+	shape withContinuousRectangleAttachPoint.
 	self 
 		assert: (shape startingPointOf: edge) 
 		equals: (el1 encompassingRectangle topRight 

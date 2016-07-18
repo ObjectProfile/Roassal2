@@ -3,20 +3,18 @@ I am an attach point that will end the line on the border of the end shapes.
 
 Unline ContinuousAttachPoint & co. you don't need to care about what the end shape is, as long as it is one of the basic shapes.
 
-Supported shapes:
-	- Box
-	-RoundedBox
-	- Ellipse/Circle
+!! Supported shapes
 
-Todo:
-	- Polygon
+Box: todo
+Ellipse/Circle: todo
+Polygon: todo
+RoundedBox: todo
 
-Supported lines:
-	- Line (straight line)
+!! Supported lines
 
-Todo:
-	- MultiLine
-	- BezierLine
+Line (straight line): todo
+MultiLine: todo
+BezierLine: todo
 "
 Class {
 	#name : #RTBorderAttachPoint,
@@ -61,17 +59,7 @@ RTBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 { #category : #accessing }
 RTBorderAttachPoint >> geometryFor: anElement [
 	(anElement shape isKindOf: RTEllipse)
-		ifTrue: [ ^ GEllipse
-				center: anElement position
-				a: anElement width / 2
-				b: anElement height / 2 ].
-	(anElement shape isKindOf: RTRoundedBox)
-		ifTrue: [ | rect r |
-			r := anElement shape borderRadiusFor: anElement.
-			rect := GRectangle
-				origin: anElement encompassingRectangle origin
-				corner: anElement encompassingRectangle corner.
-			^ GRoundedRectangle rectangle: rect borderRadius: r ].
+		ifTrue: [ ^ GEllipse center: anElement position a: anElement width / 2 b: anElement height / 2 ].
 	^ GRectangle
 		origin: anElement encompassingRectangle origin
 		corner: anElement encompassingRectangle corner
