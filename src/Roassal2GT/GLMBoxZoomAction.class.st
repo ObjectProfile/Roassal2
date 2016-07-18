@@ -4,14 +4,14 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMBoxZoomAction >> execute [
 	| int |
 	int := RTZoomableBoxView new.
 	self roassalView @ int.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 GLMBoxZoomAction >> title [
 	^ 'Add Box zoom'
 ]
