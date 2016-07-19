@@ -20,7 +20,7 @@ RTKendrickPlugin >> execute [
 	Gofer new
 	   url: 'http://smalltalkhub.com/mc/SergeStinckwich/SciSmalltalk/main/';
 	   configurationOf:'SciSmalltalk';
-	   loadDevelopment.
+	   loadVersion: '0.28-baseline'.
 	
 	Gofer new
 	   url: 'http://ss3.gemstone.com/ss/STON';
