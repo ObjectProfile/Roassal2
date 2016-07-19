@@ -3,18 +3,20 @@ I am an attach point that will end the line on the border of the end shapes.
 
 Unline ContinuousAttachPoint & co. you don't need to care about what the end shape is, as long as it is one of the basic shapes.
 
-!! Supported shapes
+Supported shapes:
+	- Box
+	- Ellipse/Circle
 
-Box: todo
-Ellipse/Circle: todo
-Polygon: todo
-RoundedBox: todo
+Todo:
+	- Polygon
+	- RoundedBox
 
-!! Supported lines
+Supported lines:
+	- Line (straight line)
 
-Line (straight line): todo
-MultiLine: todo
-BezierLine: todo
+Todo:
+	- MultiLine
+	- BezierLine
 "
 Class {
 	#name : #RTBorderAttachPoint,
