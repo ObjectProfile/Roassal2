@@ -7857,6 +7857,110 @@ SUVORK5CYII='
 ]
 
 { #category : #sources }
+RTRoassalExample >> exampleWrappingText [
+| v el str t block lb |
+v := RTView new.
+el := RTBox new
+	width: 200;
+	height: 300;
+	borderColor: Color black;
+	element.
+
+v add: el.
+
+str := String loremIpsum.
+
+t := RTText new
+	width: 180;
+	text: str;
+	element.
+
+v add: t.
+
+(RTConstraint on: t background: el)
+	stick.
+
+block := [ :aShape :step |
+	t shape width: aShape width - 20.
+	t update.
+].
+
+el addCallback: (TRTranslationCallback block: block).
+el addCallback: (TRExtentCallback block: block).
+
+el @ RTDraggable @ RTResizable.
+
+lb := RTLegendBuilder new.
+lb view: v.
+
+lb addText: 'Try resizing the rectangle by clicking near the border.'.
+lb build.
+
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleWrappingTextIcon [
+	^ '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
+rkJggg=='
+]
+
+{ #category : #sources }
 RTRoassalExample >> exampleforAddWithEdges [
 
 | v es elements edges |
