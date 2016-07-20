@@ -43,10 +43,13 @@ RTPolygon >> trachelShapeClass [
 RTPolygon >> updateFor: anElement trachelShape: trachelShape [
 
 	trachelShape isNil ifTrue: [ ^ self ].
-	trachelShape color: (self colorFor: anElement).
-	trachelShape strokeWidth: (self borderWidthFor: anElement).
-	trachelShape strokePaint: (self borderColorFor: anElement).
-	trachelShape vertices: (self verticesFor: anElement).
+	trachelShape
+		color: (self colorFor: anElement);
+		strokeWidth: (self borderWidthFor: anElement);
+		strokePaint: (self borderColorFor: anElement);
+		vertices: (self verticesFor: anElement);
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement)
 ]
 
 { #category : #accessing }

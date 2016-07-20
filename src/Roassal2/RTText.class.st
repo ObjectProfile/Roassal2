@@ -67,6 +67,8 @@ RTText >> updateFor: anElement trachelShape: trachelShape [
 		fontSize: (self fontSizeFor: anElement);
 		color: (self colorFor: anElement);
 		position: anElement position;
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement);
 		yourself
 ]
 

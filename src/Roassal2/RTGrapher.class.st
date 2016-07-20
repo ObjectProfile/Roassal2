@@ -67,8 +67,12 @@ RTGrapher >> build [
 	legendBuilder
 		ifNotNil: [ self legend view: self view.
 			datasets
-				do:
-					[ :each | self legend addColor: (each lineShape color rtValue: RTElement new) text: each label ].
+				do: [ :each | 
+					| color |
+					color := each shouldConnect
+						ifTrue: [ each lineShape color rtValue: RTElement new ]
+						ifFalse: [ each dotShape color rtValue: RTElement new ].
+					self legend addColor: color text: each label ].
 			self legend build ]
 ]
 

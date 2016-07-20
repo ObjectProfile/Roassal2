@@ -11,8 +11,3 @@ Class {
 RTClipBox >> trachelShapeClass [
 	^ TRClipBoxShape
 ]
-
-{ #category : #rendering }
-RTClipBox >> updateFor: anElement trachelShape: trachelShape [
-	super updateFor: anElement trachelShape: trachelShape
-]

@@ -86,7 +86,7 @@ RTLineDecoration >> trachelShapeClass [
 RTLineDecoration >> trachelShapeFor: anEdge [
 	| f shape |
 	f := attachPoint startingPointOf: anEdge.
-	anEdge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
+	anEdge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint)
 		ifTrue:
 			[ f := attachPoint
 				attachPointFor: anEdge
@@ -115,7 +115,7 @@ RTLineDecoration >> trachelShapeFor: anEdge [
 RTLineDecoration >> updateFor: edge trachelShape: trachelShape [
 	| f |
 	f := attachPoint startingPointOf: edge.
-	edge shape class = RTArcLine & (attachPoint class = RTCircleAttachPoint)
+	edge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint)
 		ifTrue:
 			[ f := attachPoint
 				attachPointFor: edge

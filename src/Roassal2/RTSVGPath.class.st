@@ -41,8 +41,6 @@ Class {
 		'borderWidth',
 		'borderColor',
 		'curves',
-		'scale',
-		'rotation',
 		'keepInOriginalPosition'
 	],
 	#category : #'Roassal2-Shapes'
@@ -1028,21 +1026,6 @@ RTSVGPath >> path: aPathAsString [
 	path := aPathAsString.
 ]
 
-{ #category : #accessing }
-RTSVGPath >> rotate: anAngle [
-	rotation := anAngle.
-]
-
-{ #category : #accessing }
-RTSVGPath >> scale: aNumberOrBlock [
-	scale := aNumberOrBlock
-]
-
-{ #category : #hooks }
-RTSVGPath >> scaleFor: anElement [
-	^ scale rtValue: anElement
-]
-
 { #category : #hooks }
 RTSVGPath >> trachelShapeFor: anElement [
 	| shape |
@@ -1055,14 +1038,15 @@ RTSVGPath >> trachelShapeFor: anElement [
 RTSVGPath >> updateFor: anElement trachelShape: trShape [
 	trShape isNil
 		ifTrue: [ ^ self ].
-	trShape strokePaint: (borderColor rtValue: anElement).
-	trShape borderWidth: (borderWidth rtValue: anElement).
-	trShape fillColor: (self fillColor rtValue: anElement).
+	trShape
+		strokePaint: (borderColor rtValue: anElement);
+		borderWidth: (borderWidth rtValue: anElement);
+		fillColor: (self fillColor rtValue: anElement);
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement).
+		
 	keepInOriginalPosition
 		ifTrue: [ trShape path: (path rtValue: anElement) ]
 		ifFalse: [ trShape centeredPath: (path rtValue: anElement) ].
-	trShape scaleBy: (self scaleFor: anElement).
-	rotation isNil
-		ifFalse: [ trShape rotateByDegrees: rotation ].
 	trShape resetPath
 ]
