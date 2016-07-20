@@ -94,9 +94,7 @@ TRBitmapShape >> form: aForm [
 
 { #category : #accessing }
 TRBitmapShape >> height [
-
-	self form isNil ifTrue: [ ^ 0 ].
-	^ self form height
+	^ super height
 ]
 
 { #category : #testing }
@@ -108,7 +106,5 @@ TRBitmapShape >> includesPoint: aPoint [
 
 { #category : #accessing }
 TRBitmapShape >> width [
-
-	self form isNil ifTrue: [ ^ 5 ].
-	^ self form width
+	^ super width
 ]
