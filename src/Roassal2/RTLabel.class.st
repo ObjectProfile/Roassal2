@@ -169,12 +169,14 @@ RTLabel >> updateFor: anElement trachelShape: trachelShape [
 	trachelShape isNil ifTrue: [ ^ self ].
 	s := nil.
 	c := self colorFor: anElement.
-	 trachelShape 
-				color: c;
-				position: anElement position.
-
+	trachelShape 
+		color: c;
+		position: anElement position.
 	txt := self textFor: anElement.
-	trachelShape text: txt on: anElement position
+	trachelShape 
+		text: txt on: anElement position;
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement)
 ]
 
 { #category : #rendering }

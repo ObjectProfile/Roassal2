@@ -13,7 +13,8 @@ Class {
 { #category : #initialization }
 RTContinuousAttachPoint >> initialize [
 	super initialize.
-	offset := 5.
+	self deprecated: 'Use class RTBorderAttachPoint instead.'.
+	offset := 5
 ]
 
 { #category : #accessing }

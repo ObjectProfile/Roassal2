@@ -38,9 +38,12 @@ RTEllipse >> updateFor: anElement trachelShape: trachelShape [
 	ex := (self widthFor: anElement) @ (self heightFor: anElement).
 	rec := (anElement position - (ex / 2)) extent: ex.
 	
-	trachelShape fromRectangle: rec color: (self colorFor: anElement).
-	trachelShape strokeWidth: (self borderWidthFor: anElement).
-	trachelShape strokePaint: (self borderColorFor: anElement).
+	trachelShape 
+		fromRectangle: rec color: (self colorFor: anElement);
+		strokeWidth: (self borderWidthFor: anElement);
+		strokePaint: (self borderColorFor: anElement);
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement).
 	^ trachelShape
 	
 ]

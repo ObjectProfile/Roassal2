@@ -21,7 +21,9 @@ Class {
 	#name : #RTShape,
 	#superclass : #RTObject,
 	#instVars : [
-		'color'
+		'color',
+		'scale',
+		'rotation'
 	],
 	#category : #'Roassal2-Shapes'
 }
@@ -194,12 +196,54 @@ RTShape >> fillColorElement: arg [
 { #category : #initialization }
 RTShape >> initialize [
 	super initialize.
-	color := self defaultColor
+	color := self defaultColor.
+	rotation := 0. 
+	scale := 1.
 ]
 
 { #category : #accessing }
 RTShape >> instance [
 	^ self
+]
+
+{ #category : #accessing }
+RTShape >> rotation [
+	^ rotation
+]
+
+{ #category : #accessing }
+RTShape >> rotation: aValueOrAOneArgBlock [
+	self rotationElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTShape >> rotationElement: aBlock [
+	rotation := aBlock
+]
+
+{ #category : #rendering }
+RTShape >> rotationFor: anElement [
+	^ rotation rtValue: anElement
+]
+
+{ #category : #accessing }
+RTShape >> scale [
+	^ scale
+]
+
+{ #category : #accessing }
+RTShape >> scale: aValueOrAOneArgBlock [
+	self scaleElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #accessing }
+RTShape >> scaleElement: aBlock [
+	scale := aBlock
+]
+
+{ #category : #rendering }
+RTShape >> scaleFor: anElement [
+	^ scale rtValue: anElement
 ]
 
 { #category : #hooks }

@@ -110,7 +110,9 @@ RTStyledLabel >> updateFor: anElement trachelShape: trachelShape [
 		fontName: (self fontNameFor: anElement);
 		emphasis: (self emphasisFor: anElement);
 		position: anElement position;
-		text: (self textFor: anElement) on: anElement position
+		text: (self textFor: anElement) on: anElement position;
+		rotateByDegrees: (self rotationFor: anElement);
+		scaleBy: (self scaleFor: anElement)
 ]
 
 { #category : #rendering }

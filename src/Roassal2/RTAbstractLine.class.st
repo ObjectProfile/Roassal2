@@ -147,6 +147,14 @@ RTAbstractLine >> widthFor: anElement [
 ]
 
 { #category : #'attach point' }
+RTAbstractLine >> withBorderAttachPoint [
+	| ap |
+	ap := RTBorderAttachPoint new.
+	self attachPoint: ap.
+	^ ap
+]
+
+{ #category : #'attach point' }
 RTAbstractLine >> withCenteredAttachPoint [
 	| ap |
 	ap := RTCenteredAttachPoint new.
@@ -156,18 +164,14 @@ RTAbstractLine >> withCenteredAttachPoint [
 
 { #category : #'attach point' }
 RTAbstractLine >> withContinuousCircleAttachPoint [
-	| ap |
-	ap := RTCircleAttachPoint new.
-	self attachPoint: ap.
-	^ ap
+	self deprecated: 'Use #withBorderAttachPoint instead.'.
+	^ self withBorderAttachPoint
 ]
 
 { #category : #'attach point' }
 RTAbstractLine >> withContinuousRectangleAttachPoint [
-	| ap |
-	ap := RTRectangleAttachPoint new.
-	self attachPoint: ap.
-	^ ap
+	self deprecated: 'Use #withBorderAttachPoint instead.'.
+	^ self withBorderAttachPoint
 ]
 
 { #category : #'attach point' }
@@ -187,7 +191,7 @@ RTAbstractLine >> withOffsetIfMultiple [
 { #category : #'attach point' }
 RTAbstractLine >> withShorterDistanceAttachPoint [
 	| ap |
-	ap := RTCircleAttachPoint new.
+	ap := RTBorderAttachPoint new.
 	self attachPoint: ap.
 	^ ap.
 ]

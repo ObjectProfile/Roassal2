@@ -50,10 +50,10 @@ RTLineDecorationExample >> exampleCool [
 		translateTo: 400 @ 0;
 		@ RTDraggable.
 	edges := OrderedCollection new.
-	edges add: ((RTArrowedLine new head: RTFilledDiamond asHead; color: Color black; width: 2; attachPoint: (RTRectangleAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
-	edges add: ((RTDecoratedLine new color: Color blue; width: 2; attachPoint: (RTRectangleAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
-	edges add: ((RTDecoratedLine new filledDiamondHead; color: Color green; width: 2; attachPoint: (RTRectangleAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
-	edges add: ((RTDecoratedLine new filledDiamondHead; emptyCircleTail; color: Color red; width: 2; attachPoint: (RTRectangleAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
+	edges add: ((RTArrowedLine new head: RTFilledDiamond asHead; color: Color black; width: 2; attachPoint: (RTBorderAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
+	edges add: ((RTDecoratedLine new color: Color blue; width: 2; attachPoint: (RTBorderAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
+	edges add: ((RTDecoratedLine new filledDiamondHead; color: Color green; width: 2; attachPoint: (RTBorderAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
+	edges add: ((RTDecoratedLine new filledDiamondHead; emptyCircleTail; color: Color red; width: 2; attachPoint: (RTBorderAttachPoint new offset: 15)) edgeFrom: b1 to: b2).
 
 
 v := RTView new
