@@ -5,7 +5,7 @@ If you need just a simple label, use RTLabel instead.
 "
 Class {
 	#name : #RTText,
-	#superclass : #RTShape,
+	#superclass : #RTAbstractElementShape,
 	#instVars : [
 		'text',
 		'font',
@@ -60,9 +60,8 @@ RTText >> trachelShapeClass [
 
 { #category : #hooks }
 RTText >> updateFor: anElement trachelShape: trachelShape [
-	self logCr: anElement position.
 	^ trachelShape
-		text: (self textFor: anElement);
+		text: (self wrap: (self textFor: anElement) to: (self widthFor: anElement));
 		font: (self fontFor: anElement);
 		fontSize: (self fontSizeFor: anElement);
 		color: (self colorFor: anElement);
@@ -75,4 +74,32 @@ RTText >> updateFor: anElement trachelShape: trachelShape [
 { #category : #accessing }
 RTText >> valueRetrieverOn: aValueOrAOneArgBlock [
 	^ [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
+]
+
+{ #category : #wrapping }
+RTText >> wrap: aText to: maxWidth [
+	"This is a naive brute-force implementation of line-wrapping algorithm.
+
+	There is also TxAthensCharacterWrappingStrategy that is more advanced, but requires the use of 	TxModel/Spans, etc."
+
+	| string words lineWidth lines line ww |
+	string := aText copyReplaceAll: String cr with: ' '.
+	words := string splitOn: ' '.
+	lineWidth := 0.
+	lines := OrderedCollection new.
+	line := OrderedCollection new.
+	lines add: line.
+	words
+		do: [ :word | 
+			ww := font widthOfString: word.
+			lineWidth = 0
+				ifTrue: [ line add: word.
+					lineWidth := lineWidth + ww ]
+				ifFalse: [ ww + lineWidth > maxWidth
+						ifTrue: [ lineWidth := 0.
+							line := OrderedCollection new.
+							lines add: line ].
+					line add: word.
+					lineWidth := lineWidth + ww ] ].
+	^ (lines collect: [ :each | each joinUsing: ' ' ]) joinUsing: String cr
 ]
