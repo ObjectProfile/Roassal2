@@ -9,10 +9,16 @@ Class {
 	#instVars : [
 		'text',
 		'font',
-		'fontSize'
+		'fontSize',
+		'shouldWrap'
 	],
 	#category : #'Roassal2-Shapes'
 }
+
+{ #category : #accessing }
+RTText >> doNotWrapText [
+	shouldWrap := false
+]
 
 { #category : #accessing }
 RTText >> font: aValueOrOneArgBlock [
@@ -38,6 +44,7 @@ RTText >> fontSizeFor: anElement [
 RTText >> initialize [
 	super initialize.
 	self text: [ :model | model asString ].
+	shouldWrap := false.
 	font := RTTheme current textFont.
 	fontSize := RTTheme current textSize.
 	color := RTTheme current textColor
@@ -83,6 +90,8 @@ RTText >> wrap: aText to: maxWidth [
 	There is also TxAthensCharacterWrappingStrategy that is more advanced, but requires the use of 	TxModel/Spans, etc."
 
 	| string words lineWidth lines line ww |
+	shouldWrap
+		ifFalse: [ ^ aText ].
 	string := aText copyReplaceAll: String cr with: ' '.
 	words := string splitOn: ' '.
 	lineWidth := 0.
@@ -102,4 +111,9 @@ RTText >> wrap: aText to: maxWidth [
 					line add: word.
 					lineWidth := lineWidth + ww ] ].
 	^ (lines collect: [ :each | each joinUsing: ' ' ]) joinUsing: String cr
+]
+
+{ #category : #accessing }
+RTText >> wrapText [
+	shouldWrap := true
 ]

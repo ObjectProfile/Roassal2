@@ -18,6 +18,11 @@ RTAbstractMultiElement >> addAll: someElements [
 	ownedElements addAll: someElements
 ]
 
+{ #category : #adding }
+RTAbstractMultiElement >> addFirst: anElement [
+	ownedElements addFirst: anElement
+]
+
 { #category : #rendering }
 RTAbstractMultiElement >> addInteractions [
 	"no interactions by default"
