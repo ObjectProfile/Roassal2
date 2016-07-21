@@ -7873,6 +7873,7 @@ str := String loremIpsum.
 t := RTText new
 	width: 180;
 	text: str;
+	wrapText;
 	element.
 
 v add: t.
