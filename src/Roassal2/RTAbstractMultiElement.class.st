@@ -87,7 +87,8 @@ RTAbstractMultiElement >> renderOn: trachelCanvas [
 { #category : #'as yet unclassified' }
 RTAbstractMultiElement >> show: anElement if: aConditionBlock [
 	(anElement view isNil and: aConditionBlock)
-		ifTrue: [ self view add: anElement ].
+		ifTrue: [ self add: anElement.
+			self view add: anElement ].
 	(anElement view isNotNil and: [ aConditionBlock value not ])
 		ifTrue: [ anElement remove ]
 ]
