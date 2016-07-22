@@ -42,7 +42,6 @@ RTBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
 	shift := line vector normal * shift.
 	anEdge from = toElement
 		ifTrue: [ shift := shift * -1 ].
-	self logCr: shift.
 	line := GLineSegment from: source center + shift to: target center + shift.
 	^ self borderPointFrom: source to: target via: line
 ]
