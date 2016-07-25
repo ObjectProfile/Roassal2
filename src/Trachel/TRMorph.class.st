@@ -83,11 +83,11 @@ TRMorph >> drawOn: aCanvas [
 "
 	aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34.
 "
-	surface displayOnMorphicCanvas: aCanvas at: self position.
+	"surface displayOnMorphicCanvas: aCanvas at: self position."
 	"We insert plenty of guards. This is all part of a major bug tracking..."
-"	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil ])
+	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil ])
 		ifTrue: [ aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34 ].
-"		
+		
 " This guard is too restrictive. Moving a window change the content to white.
 	(((surface extent x > 0 and: [ surface extent y > 0 ]) and: [ self bounds origin class == Point ]) and: [ f notNil and: [ aCanvas invariant ] ])
 		ifTrue: [ aCanvas image: f at: self bounds origin sourceRect: (0 @ 0 extent: surface extent) rule: 34 ]."
