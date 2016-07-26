@@ -129,6 +129,11 @@ RTElement >> isDirectlyConnectedTo: anElement [
 ]
 
 { #category : #testing }
+RTElement >> isElement [
+	^ true
+]
+
+{ #category : #testing }
 RTElement >> isNotConnected [
 	"Return false if the element is connected to at least one element (which would be itself)"
 	"An element is connected if it has at least one incoming or outgoing edge"

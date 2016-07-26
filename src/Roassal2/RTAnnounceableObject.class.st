@@ -120,6 +120,21 @@ RTAnnounceableObject >> hasNotAttribute: aKey [
 	^ (self hasAttribute: aKey) not 
 ]
 
+{ #category : #testing }
+RTAnnounceableObject >> isEdge [
+	^ false
+]
+
+{ #category : #testing }
+RTAnnounceableObject >> isElement [
+	^ false
+]
+
+{ #category : #testing }
+RTAnnounceableObject >> isView [
+	^ false
+]
+
 { #category : #attributes }
 RTAnnounceableObject >> removeAttributeAt: aKey [
 	^ self attributes removeKey: aKey
