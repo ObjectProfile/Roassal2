@@ -59,22 +59,21 @@ RTBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 
 { #category : #accessing }
 RTBorderAttachPoint >> geometryFor: anElement [
-	"using double dispatch to retrieve the geometry"
-	^ anElement geometry
-	"anElement isMultiElement
-		ifTrue: [ ^ anElement geometryFor: anElement ].
-	(anElement shape isKindOf: RTEllipse)
-		ifTrue: [ ^ GEllipse center: anElement position a: anElement width / 2 b: anElement height / 2 ].
-	(anElement shape isKindOf: RTRoundedBox)
-		ifTrue: [ | rect r |
-			r := anElement shape borderRadiusFor: anElement.
-			rect := GRectangle
-				origin: anElement encompassingRectangle origin
-				corner: anElement encompassingRectangle corner.
-			^ GRoundedRectangle rectangle: rect borderRadius: r ].
-	^ GRectangle
-		origin: anElement encompassingRectangle origin
-		corner: anElement encompassingRectangle corner"
+	| shape rect |
+	shape := anElement trachelShape.
+	shape class = TRCompositeShape
+		ifTrue: [ shape := shape shapes first ].
+	shape class = TREllipseShape ifTrue: [ 
+		rect := shape encompassingRectangle.
+		^ GEllipse center: anElement position a: rect width*0.5 b: rect height*0.5 ].
+	shape class = TRRoundedBoxShape ifTrue: [ 
+		rect := shape encompassingRectangle.
+		rect := GRectangle origin: rect origin corner: rect corner.
+		^ GRoundedRectangle rectangle: rect borderRadius: shape borderRadius ].
+	shape class = TRPolygonShape ifTrue: [ 
+		^ GPolygon newVertices: shape vertices ].
+	rect := shape encompassingRectangle.
+	^ GRectangle origin: rect origin corner: rect corner
 ]
 
 { #category : #initialization }

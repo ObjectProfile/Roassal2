@@ -1,41 +1,76 @@
+"
+I am class to handle a lot of elements and draw
+
+I am still growing, if you find a best answer to cache elements, please let me to to akevalion@gmail.co
+"
 Class {
 	#name : #RTCache,
 	#superclass : #RTObject,
+	#instVars : [
+		'trachelShapes',
+		'shapeBeingPointed',
+		'canvas'
+	],
 	#category : #'Roassal2-Cachetor'
 }
 
-{ #category : #'as yet unclassified' }
-RTCache >> cacheElements: someElements [
-	"This method is assuming all the elements belong to the same view"
-	| view newElement group position |
-	group := someElements asGroup.
-	view := someElements anyOne view.
-	newElement := (RTBitmap new form: (self getFormElements: group)) element.
-	position := group position.
-	newElement translateTo: position.
-	group remove.
-	view add: newElement.
+{ #category : #private }
+RTCache >> addEvents: bitmap [
+	bitmap when: TRMouseMove do: [ :evt| self processMouseMove: evt. ].
+	bitmap when: TRMouseDragging do: [ :evt | self processMouseDrag: evt ].
+	bitmap when: TRMouseClick do: [ :evt | self processMouseClick: evt ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+RTCache >> cacheElements: someElements [
+	^ self cacheElements: someElements edges: #().
+	
+]
+
+{ #category : #private }
 RTCache >> cacheElements: someElements edges: someEdges [
 	"This method is assuming all the elements belong to the same view"
-	| view newElement group position |
-	group := someElements asGroup.
+	| view newElement elements position edges |
+	
+	elements := someElements asGroup.
+	edges := someEdges asGroup.
 	view := someElements anyOne view.
-	newElement := (RTBitmap new form: (self getFormElements: group, someEdges asGroup)) element.
-	position := group position.
-	newElement translateTo: position.
-	group remove.
+	canvas := view canvas.
+	trachelShapes := canvas shapes.
+	newElement := (RTBitmap new form: (self getFormElements: elements, edges)) element.
+	self addEvents: newElement.
+	newElement translateTo: canvas encompassingRectangle center.
+	view removeAllElements.
 	view add: newElement.
+	^ newElement.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTCache >> cacheView: aView [
 	self cacheElements: aView elements edges: aView edges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+RTCache >> eventOfClass: anEventClass actionClass: anActionClass from: event [
+	| relativePosition trEvent shape |
+	relativePosition := canvas camera fromSpaceToPixel: event position.
+	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
+
+	trEvent := anEventClass fromEvent: event.
+	trEvent
+		morph: self;
+		canvas: canvas;
+		shape: shape;
+		position: relativePosition.
+	^ trEvent
+]
+
+{ #category : #private }
+RTCache >> eventOfClass: anEventClass from: aMorphicEvent [
+	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
+]
+
+{ #category : #private }
 RTCache >> getFormElements: someElements [
 	"Return a form contains the graphical representation of the elements"
 	
@@ -61,4 +96,63 @@ RTCache >> getFormElements: someElements [
 		sourceRect: (0 @ 0 extent: surface extent)
 		rule: 34.
 	^ formCanvas form
+]
+
+{ #category : #private }
+RTCache >> processMouseClick: evt [
+]
+
+{ #category : #private }
+RTCache >> processMouseDrag: evt [
+	| shape relativePosition |
+	relativePosition := canvas camera fromSpaceToPixel: evt position.
+	shape := self shapeWithAction: evt class forPositionInPixels: relativePosition.
+	evt shape: shape.
+	evt shape announce: evt.
+	evt position: relativePosition.
+]
+
+{ #category : #private }
+RTCache >> processMouseMove: evt [
+	| currentElement trEvent |
+	shapeBeingPointed 
+		ifNil: [ 
+			trEvent := self eventOfClass: TRMouseEnter from: evt.
+			shapeBeingPointed := trEvent shape.
+			trEvent shape announce: trEvent.
+			^ self ].
+	currentElement := self shapeForEvent: evt.
+	currentElement == shapeBeingPointed
+		ifTrue: [ ^ self ].
+	trEvent := self eventOfClass: TRMouseLeave from: evt.
+	trEvent shape: shapeBeingPointed.
+	shapeBeingPointed announce: trEvent.
+	shapeBeingPointed := currentElement.
+	trEvent := self eventOfClass: TRMouseEnter from: evt.
+	trEvent shape announce: trEvent.
+]
+
+{ #category : #private }
+RTCache >> shapeForEvent: evt [
+	^ self shapeWithActionForPositionInPixels: (canvas camera fromSpaceToPixel: evt position).
+]
+
+{ #category : #private }
+RTCache >> shapeWithAction: eventClass forPositionInPixels: position [
+	| pos |
+	pos := canvas camera fromPixelToSpace: position.
+	trachelShapes reverseDo: [ :s| 
+		((s includesPoint: pos) 
+			and: [ s announcer handleEventClass: eventClass ]) ifTrue: [ ^ s ] ].
+	^ canvas
+]
+
+{ #category : #private }
+RTCache >> shapeWithActionForPositionInPixels: position [
+	| pos |
+	pos := canvas camera fromPixelToSpace: position.
+	trachelShapes reverseDo: [ :s| 
+		((s includesPoint: pos) 
+			and: [ s hasEventCallback ]) ifTrue: [ ^ s ] ].
+	^ canvas
 ]

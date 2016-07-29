@@ -66,12 +66,13 @@ RTSVGEntity >> addOn: aStream using: aSVGVisitor [
 
 { #category : #adding }
 RTSVGEntity >> addPoints: anArrayOfPoints into: stream [
-	| s |
-	s := ((anArrayOfPoints asString copyReplaceAll: '@' with: ',') copyReplaceAll: '.' with: ' ') replaceAllRegex: '[(){}]' with: '' .
+	stream nextPutAll: 'points="'.
 	
-	stream
-		nextPutAll:
-				('points="', s,'" ').
+	anArrayOfPoints do: [ :p| 
+		stream 
+			print: p x asFloat; space; 
+			print: p y asFloat; space. ].
+	stream nextPutAll: '" '.
 ]
 
 { #category : #adding }
