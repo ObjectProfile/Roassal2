@@ -155,7 +155,7 @@ TRShape >> element: anObject [
 
 { #category : #accessing }
 TRShape >> encompassingRectangle [
-	self subclassReponsibility
+	self subclassResponsibility
 ]
 
 { #category : #actions }

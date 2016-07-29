@@ -18,6 +18,15 @@ TRPolygonShape >> accept: aVisitor [
 ]
 
 { #category : #accessing }
+TRPolygonShape >> basicEncompassingRectangle [
+	"Return the bounding box of all the vertices."
+
+	self numberOfVertices = 0
+		ifTrue: [ ^ 0 @ 0 corner: 0 @ 0 ].
+	^ vertices min corner: vertices max
+]
+
+{ #category : #accessing }
 TRPolygonShape >> center [
 	"Return the center of the polygon. The center is determined as the center of encompassing rectangle, which may be different from the exact center of the shape (e.g., the value returned by this method may be actually outside the shape itself)."
 	^ self encompassingRectangle center
@@ -64,9 +73,7 @@ TRPolygonShape >> drawOn: athensCanvas [
 
 { #category : #accessing }
 TRPolygonShape >> encompassingRectangle [
-	"Return the bounding box of all the vertices."
-	self numberOfVertices = 0 ifTrue: [ ^ (0 @ 0) corner: (0 @ 0) ].
-	^ vertices min corner: vertices max
+	^ self transformedEncompassingRectangle
 ]
 
 { #category : #accessing }
@@ -75,8 +82,29 @@ TRPolygonShape >> extent [
 ]
 
 { #category : #accessing }
+TRPolygonShape >> extent: newExtent [
+	| oldExtent min max sx sy |
+	oldExtent := self basicEncompassingRectangle extent.
+	newExtent = oldExtent
+		ifTrue: [ ^ self ].
+	min := vertices min.
+	max := vertices max.
+	sx := newExtent x / (max x - min x).
+	sy := newExtent y / (max y - min y).
+	vertices := vertices collect: [ :p | (p x * sx) @ (p y * sy) ].
+	self resetPath.
+	oldExtent = (0@0)
+		ifFalse: [ self triggerCallbacksForNewExtent: newExtent oldExtent: oldExtent ]
+]
+
+{ #category : #accessing }
 TRPolygonShape >> height [
 	^ self encompassingRectangle height 
+]
+
+{ #category : #accessing }
+TRPolygonShape >> height: newHeight [
+	self extent: self basicEncompassingRectangle width @ newHeight
 ]
 
 { #category : #testing }
@@ -135,4 +163,9 @@ TRPolygonShape >> vertices: aCollection [
 { #category : #accessing }
 TRPolygonShape >> width [
 	^ self encompassingRectangle width
+]
+
+{ #category : #accessing }
+TRPolygonShape >> width: newWidth [
+	self extent: newWidth @ self basicEncompassingRectangle
 ]
