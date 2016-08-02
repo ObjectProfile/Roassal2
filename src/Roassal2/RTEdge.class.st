@@ -381,11 +381,6 @@ RTEdge >> initialize [
 ]
 
 { #category : #testing }
-RTEdge >> isEdge [
-	^ true
-]
-
-{ #category : #testing }
 RTEdge >> isUsedInLayout [
 	"If return true, then it is considered in the layout"
 	^ shouldBeUsedInLayout

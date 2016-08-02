@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #hooks }
-RTExtensibleLabel >> trachelShapeClass [
-	^ TRExtensibleLabelShape
-]
-
-{ #category : #hooks }
 RTExtensibleLabel >> trachelShapeFor: anElement [
 	|  shape |	
 	shape := TRExtensibleLabelShape new.
