@@ -49,23 +49,6 @@ RTBezier3Line >> controlElement: anElement [
 	controlElement := anElement
 ]
 
-{ #category : #private }
-RTBezier3Line >> controlPointFor: cp1 and: cp3 [
-	| mid dx dy l vector vectorNorm vectorNormInverse distanceFromMidPoint |
-	mid := (cp1 + cp3)/2.
-	dx := cp3 x - cp1 x.
-	dy := cp3 y - cp1 y.
-	l := ((dx*dx) + (dy* dy)) sqrt.
-	vector := dx @ dy.
-	vectorNorm := vector/l.
-	
-	vectorNormInverse := vectorNorm y negated @ vectorNorm x.
-	"distanceFromMidpoint :=  (0.5 - pairEdges.length / 2 + i) * stepSize."
-	distanceFromMidPoint := -20.
-	^ (mid x + (vectorNormInverse x * distanceFromMidPoint))@
-	(mid y + (vectorNormInverse y * distanceFromMidPoint))
-]
-
 { #category : #hooks }
 RTBezier3Line >> trachelShapeClass [
 	^ TRBezier3Shape

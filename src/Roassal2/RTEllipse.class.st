@@ -18,11 +18,6 @@ RTEllipse >> accept: aVisitor [
 	aVisitor visitEllipse: self
 ]
 
-{ #category : #accessing }
-RTEllipse >> geometryFor: anElement [
-	^ GEllipse center: anElement position a: anElement width / 2 b: anElement height / 2
-]
-
 { #category : #initialization }
 RTEllipse >> initialize [
 	super initialize.

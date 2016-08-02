@@ -142,12 +142,6 @@ RTAbstractLine >> width: aBlockOrValue [
 ]
 
 { #category : #public }
-RTAbstractLine >> widthElement: aBlockOrValue [
-	"Set the width of the shape"
-	width := aBlockOrValue
-]
-
-{ #category : #public }
 RTAbstractLine >> widthFor: anElement [
 	"Return the width for the provided element"
 	^ width rtValue: anElement

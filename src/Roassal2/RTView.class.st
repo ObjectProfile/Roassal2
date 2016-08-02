@@ -231,11 +231,6 @@ RTView >> initializeContent [
 	edges := OrderedCollection new
 ]
 
-{ #category : #testing }
-RTView >> isView [
-	^ true
-]
-
 { #category : #'accessing-computed' }
 RTView >> numberOfEdges [
 	"Return the number of edges containde in the view"

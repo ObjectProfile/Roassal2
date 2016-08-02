@@ -42,11 +42,6 @@ RTRotatedLabel >> initialize [
 ]
 
 { #category : #hooks }
-RTRotatedLabel >> trachelShapeClass [
-	^ TRRotatedLabelShape
-]
-
-{ #category : #hooks }
 RTRotatedLabel >> trachelShapeFor: anElement [
 	| shape |
 	shape := super trachelShapeFor: anElement.

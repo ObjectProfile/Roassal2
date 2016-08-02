@@ -25,7 +25,7 @@ RTBundleBuilder >> bezier [
 	^ bezier
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> createBezierIfNecessary: aView [
 	| ebuilder   |
 	connectBezierBlock ifNil: [ ^ self ].
@@ -53,7 +53,7 @@ RTBundleBuilder >> createElements: obj using: ablock depth: depth [
 	^ e
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> createLabelFor: e view: aView [
 	| lbl |
 	lbl := label elementOn: e model.
@@ -70,7 +70,7 @@ RTBundleBuilder >> createLabelFor: e view: aView [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> createSliderIfNecessary: aView [
 	| bedges slider |
 	sliderShape ifNil: [ ^ self ].
@@ -183,7 +183,7 @@ RTBundleBuilder >> labelShape [
 	^ label
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> parentOf: model view: aView [
 	| element |
 	element := view elementFromModel: model.
@@ -220,7 +220,7 @@ RTBundleBuilder >> sliderShape: aShape [
 	sliderShape := aShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 RTBundleBuilder >> useBezierlineWith: ablock [
 	connectBezierBlock := ablock
 	

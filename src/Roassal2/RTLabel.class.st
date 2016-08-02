@@ -104,11 +104,6 @@ RTLabel >> textFor: element [
 ]
 
 { #category : #hooks }
-RTLabel >> trachelShapeClass [
-	^ TRLabelShape
-]
-
-{ #category : #hooks }
 RTLabel >> trachelShapeFor: anElement [
 	| c txt lines    |
 
