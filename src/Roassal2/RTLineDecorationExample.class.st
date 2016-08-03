@@ -44,7 +44,7 @@ RTLineDecorationExample >> exampleCool [
 		element)
 		translateTo: 0 @ 0;
 		@ RTDraggable.
-	b2 := (RTEllipse new
+	b2 := (RTBox new
 		size: 100;
 		element)
 		translateTo: 400 @ 0;

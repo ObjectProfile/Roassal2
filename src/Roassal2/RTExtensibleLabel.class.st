@@ -1,6 +1,3 @@
-"
-My instances can create Text in roassal uses a rectangle to fit.
-"
 Class {
 	#name : #RTExtensibleLabel,
 	#superclass : #RTLabel,
