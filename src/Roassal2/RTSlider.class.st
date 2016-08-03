@@ -27,7 +27,10 @@ Class {
 		'sliderElements',
 		'min',
 		'max',
-		'useIntegerLabel'
+		'useIntegerLabel',
+		'value',
+		'orientation',
+		'size'
 	],
 	#category : #'Roassal2-Builder-UI-Slider'
 }
@@ -81,15 +84,28 @@ RTSlider >> example01 [
 	 
 ]
 
+{ #category : #accessing }
+RTSlider >> horizontal [
+	orientation := #horizontal
+]
+
 { #category : #initialization }
 RTSlider >> initialize [
 	super initialize.
 	labelled := false.
-	callback := [ :aValue | ].
+	callback := [ :aValue |  ].
 	sliderElements := #().
 	min := 0.0.
 	max := 1.0.
+	value := 0.5.
 	useIntegerLabel := false.
+	size := 200.
+	self horizontal
+]
+
+{ #category : #testing }
+RTSlider >> isHorizontal [
+	^ orientation = #horizontal
 ]
 
 { #category : #accessing }
@@ -130,47 +146,86 @@ RTSlider >> move: aSymbol [
 	position := aSymbol
 ]
 
+{ #category : #accessing }
+RTSlider >> progress [
+	^ (value - min) / (max - min)
+]
+
+{ #category : #accessing }
+RTSlider >> progress: aFloat [
+	self
+		assert: [ aFloat between: 0 and: 1 ]
+		description: 'A progress must be a float between 0 and 1'.
+	self value: min + ((max - min) * aFloat)
+]
+
 { #category : #hooks }
 RTSlider >> renderIn: aView [
-
-	| extremity1 extremity2 line cursor dragAndConstraint trachelShape aValue w2 | 
-	extremity1 := (RTBox new width: 5; height: 10) element.
-	extremity2 := (RTBox new width: 5; height: 10) element.
+	| extremity1 extremity2 line cursor dragAndConstraint trachelShape aValue w2 sliderSize |
+	sliderSize := self isHorizontal
+		ifTrue: [ size @ 0 ]
+		ifFalse: [ 0 @ size ].
+	extremity1 := (RTBox new
+		width: 5;
+		height: 10) element.
+	extremity2 := (RTBox new
+		width: 5;
+		height: 10) element.
 	line := (RTLine new width: 5) edgeFrom: extremity1 to: extremity2.
 	aView add: extremity1.
 	aView add: extremity2.
 	aView add: line.
-	extremity2 translateTo: 200 @ 0.
-	
+	extremity2 translateTo: sliderSize.
 	cursor := self elementOn: nil.
 	dragAndConstraint := RTConstrainedDraggable new.
-	dragAndConstraint rectangle: [ 
-		w2 := (cursor encompassingRectangle width/2)@0.
-		(extremity1 position - w2) corner: (extremity2 position + w2 )].
+	dragAndConstraint
+		rectangle: [ w2 := (cursor encompassingRectangle width / 2)
+				@ (cursor encompassingRectangle height / 2).
+			w2 := w2
+				*
+					(self isHorizontal
+						ifTrue: [ 1 @ 0 ]
+						ifFalse: [ 0 @ 1 ]).
+			extremity1 position - w2 corner: extremity2 position + w2 ].
 
 	"We compute the slider value, and call the callback"
-	dragAndConstraint afterBlock: [ 
-		aValue := (cursor position x - extremity1 position x) / (extremity2 position x - extremity1 position x).
-		aValue := (aValue * (max - min)) + min.
-		aValue := (aValue max: min) min: max.
-		callback rtValue: aValue.
-		labelled ifTrue: [ trachelShape text: (useIntegerLabel ifTrue: [ (aValue round: 0) asInteger ] ifFalse: [ aValue round: 2 ]) asString ]
-		 ].
+	dragAndConstraint
+		afterBlock: [ self isHorizontal
+				ifTrue: [ aValue := (cursor position x - extremity1 position x)
+						/ (extremity2 position x - extremity1 position x) ]
+				ifFalse: [ aValue := (cursor position y - extremity1 position y)
+						/ (extremity2 position y - extremity1 position y) ].
+			aValue := aValue * (max - min) + min.
+			aValue := (aValue max: min) min: max.
+			callback rtValue: aValue.
+			labelled
+				ifTrue: [ trachelShape
+						text:
+							(useIntegerLabel
+								ifTrue: [ (aValue round: 0) asInteger ]
+								ifFalse: [ aValue round: 2 ]) asString ] ].
 	cursor @ dragAndConstraint.
 	aView add: cursor.
-	cursor translateTo: 100 @ 0.
-	
+	cursor translateTo: sliderSize * self progress.
+
 	"We prepare a label if necessary"
-	labelled ifTrue: [ 
-		cursor @ (RTLabeled new text: 0).
-		trachelShape := cursor attributeAt: #RTLabelledLabel ].
+	labelled
+		ifTrue: [ cursor @ (RTLabeled new text: self value).
+			trachelShape := cursor attributeAt: #RTLabelledLabel ].
 
 	"We keep track of the elements we add in the view"
 	sliderElements := RTGroup new.
 	sliderElements add: cursor.
 	sliderElements add: extremity1.
 	sliderElements add: extremity2.
+	sliderElements setAsFixed
+]
 
+{ #category : #accessing }
+RTSlider >> size: aNumber [
+	"Size of the slider (it's width or height)"
+
+	size := aNumber
 ]
 
 { #category : #accessing }
@@ -180,4 +235,22 @@ RTSlider >> useIntegerLabel [
 		slider useIntegerLabel
 	"
 	useIntegerLabel := true
+]
+
+{ #category : #accessing }
+RTSlider >> value [
+	^ value
+]
+
+{ #category : #accessing }
+RTSlider >> value: aNumber [
+	self
+		assert: [ aNumber between: min and: max ]
+		description: 'Value must be between min and max.'.
+	value := aNumber
+]
+
+{ #category : #accessing }
+RTSlider >> vertical [
+	orientation := #vertical
 ]

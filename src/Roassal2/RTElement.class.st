@@ -87,6 +87,13 @@ RTElement >> extent: aPoint [
 ]
 
 { #category : #accessing }
+RTElement >> geometry [
+	"Return a geometric representation of the shape. A geometric representation is used for computing intersections, overlapping, etc."
+
+	^ self shape geometryFor: self
+]
+
+{ #category : #accessing }
 RTElement >> height [
 	^ trachelShape height
 ]
@@ -126,6 +133,11 @@ RTElement >> isConnectedTo: anElement [
 RTElement >> isDirectlyConnectedTo: anElement [
 	connectedEdges ifNil: [ ^ false ].
 	^ connectedEdges anySatisfy: [ :edge | edge to == anElement ]
+]
+
+{ #category : #testing }
+RTElement >> isElement [
+	^ true
 ]
 
 { #category : #testing }

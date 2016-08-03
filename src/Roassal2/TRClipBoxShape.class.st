@@ -1,6 +1,3 @@
-"
-I am experimental shape to draw elements with a condition
-"
 Class {
 	#name : #TRClipBoxShape,
 	#superclass : #TRBoxShape,
