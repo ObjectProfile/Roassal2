@@ -96,6 +96,11 @@ RTAbstractData >> barShape [
 ]
 
 { #category : #accessing }
+RTAbstractData >> builder [
+	^ builder
+]
+
+{ #category : #accessing }
 RTAbstractData >> builder: aBuilder [
 	builder := aBuilder 
 ]

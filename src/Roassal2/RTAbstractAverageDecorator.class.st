@@ -3,8 +3,9 @@ Class {
 	#superclass : #RTAbstractGrapherDecorator,
 	#instVars : [
 		'shouldHaveLabel',
-		'labelConvertion',
-		'lineColor'
+		'lineColor',
+		'shapes',
+		'labelBlock'
 	],
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
@@ -13,20 +14,23 @@ Class {
 RTAbstractAverageDecorator >> initialize [
 	super initialize.
 	self noLabel.
-	labelConvertion := #yourself.
-
+	labelBlock := #yourself.
+	shapes := OrderedCollection new
 ]
 
-{ #category : #accessing }
-RTAbstractAverageDecorator >> labelConvertion [
-	^ labelConvertion
+{ #category : #utility }
+RTAbstractAverageDecorator >> label: aString on: position color: aColor [
+	| e |
+	e := super label: aString on: position color: aColor.
+	shapes add: e.
+	^ e
 ]
 
 { #category : #accessing }
 RTAbstractAverageDecorator >> labelConvertion: aBlockOrSymbol [
-	"This method is used to set how to convert the average value"
-	"Take as argument the average value, as a number and the block has to return a value or a string"
-	labelConvertion := aBlockOrSymbol
+	self
+		deprecated: 'use #withLabel: instead (also #withLabel is implied when using #withLabel:)'.
+	self withLabel: aBlockOrSymbol
 ]
 
 { #category : #configuration }
@@ -35,9 +39,28 @@ RTAbstractAverageDecorator >> lineColor: aColor [
 	shapeBuilder line color: aColor
 ]
 
+{ #category : #utility }
+RTAbstractAverageDecorator >> lineFrom: fromPoint to: toPoint [
+	| l |
+	l := super lineFrom: fromPoint to: toPoint.
+	shapes
+		add: l from;
+		add: l to;
+		add: l.
+	^ l
+]
+
 { #category : #configuration }
 RTAbstractAverageDecorator >> noLabel [
 	shouldHaveLabel := false
+]
+
+{ #category : #accessing }
+RTAbstractAverageDecorator >> remove [
+	[ shapes isNotEmpty ]
+		whileTrue: [ shapes first view ifNotNil: [ shapes first remove ].
+			shapes removeFirst ].
+	builder view signalUpdate
 ]
 
 { #category : #'drawing-hooks' }
@@ -48,4 +71,13 @@ RTAbstractAverageDecorator >> render [
 { #category : #configuration }
 RTAbstractAverageDecorator >> withLabel [
 	shouldHaveLabel := true
+]
+
+{ #category : #accessing }
+RTAbstractAverageDecorator >> withLabel: aBlockOrSymbol [
+	"This method is used to set how to convert the decorator's value.
+	Take as argument the decorator's value, as a number and the block has to return a value or a string"
+
+	self withLabel.
+	labelBlock := aBlockOrSymbol
 ]
