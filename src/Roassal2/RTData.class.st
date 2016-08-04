@@ -352,7 +352,8 @@ RTData >> renderLinesFor: elems in: aView [
 
 { #category : #initialization }
 RTData >> resetInteractionBuilder [
-	interaction := RTInteractionBuilder new.
+	interaction := RTDataInteractionBuilder new.
+	interaction dataSet: self.
 	interaction popup
 ]
 

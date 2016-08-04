@@ -29,6 +29,6 @@ RTHorizontalAverageDecorator >> render [
 	self lineFrom: from to: to.
 	
 	shouldHaveLabel ifTrue: [ 
-		self label: ((labelConvertion rtValue: average) asString) above: to.
+		self label: ((labelBlock rtValue: average) asString) above: to.
 	]
 ]

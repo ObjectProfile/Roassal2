@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'builder',
 		'shapeBuilder',
-		'placedInFront'
+		'placedInFront',
+		'datasets'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -30,20 +31,42 @@ RTAbstractGrapherDecorator >> convertPointForGraph: p [
 ]
 
 { #category : #accessing }
+RTAbstractGrapherDecorator >> dataset: aDataset [
+	self datasets: (Array with: aDataset)
+]
+
+{ #category : #accessing }
 RTAbstractGrapherDecorator >> datasetValues [
 	"Return the list of Y values for all the datasets"
-	^ builder datasets flatCollect: #getValuesY
+
+	^ self datasets flatCollect: #getValuesY
 ]
 
 { #category : #accessing }
 RTAbstractGrapherDecorator >> datasetValuesX [
 	"Return the list of X values for all the datasets"
-	^ builder datasets flatCollect: #getValuesX
+
+	^ self datasets flatCollect: #getValuesX
+]
+
+{ #category : #accessing }
+RTAbstractGrapherDecorator >> datasets [
+	^ datasets ifNil: [ builder datasets ]
+]
+
+{ #category : #accessing }
+RTAbstractGrapherDecorator >> datasets: aCollection [
+	datasets := aCollection
 ]
 
 { #category : #'accessing - computed' }
 RTAbstractGrapherDecorator >> elementsWithModel [
 	^ self view elements select: [ :e | e model notNil ]
+]
+
+{ #category : #testing }
+RTAbstractGrapherDecorator >> hasDatasets [
+	^ datasets isNotNil and: [ datasets isNotEmpty ]
 ]
 
 { #category : #initialization }
