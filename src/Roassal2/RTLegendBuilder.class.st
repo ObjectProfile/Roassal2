@@ -30,7 +30,8 @@ Class {
 		'offset',
 		'position',
 		'isOnDemand',
-		'textSize'
+		'textSize',
+		'gapSize'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -127,12 +128,24 @@ RTLegendBuilder >> defaultOffset [
 ]
 
 { #category : #accessing }
+RTLegendBuilder >> gapSize [
+	^ gapSize
+]
+
+{ #category : #accessing }
+RTLegendBuilder >> gapSize: aNumber [
+	gapSize := aNumber
+]
+
+{ #category : #accessing }
 RTLegendBuilder >> group [
 	"Return all the elements"
 	| myGroup |
 	myGroup := RTGroup new.
 	items do: [ :item | myGroup add: item execute ].
-	RTVerticalLineLayout on: myGroup.
+	RTVerticalLineLayout new
+		gapSize: gapSize;
+		on: myGroup.
 	^ myGroup
 ]
 
@@ -146,6 +159,7 @@ RTLegendBuilder >> initialize [
 	position := #below.
 	isOnDemand := false.
 	textSize := 12.
+	gapSize := 10.
 	items := OrderedCollection new.
 ]
 
