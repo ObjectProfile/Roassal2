@@ -25,7 +25,7 @@ RTNameCloud >> addObjects: objects description: aBlockOrSymbol [
 
 { #category : #adding }
 RTNameCloud >> addString: string [
-	 string substrings do: [ :w | self addWord: w ]
+	 string substrings do: [ :w | self addWord: w ].
 ]
 
 { #category : #adding }
@@ -226,7 +226,11 @@ RTNameCloud >> prepareWord: word [
 RTNameCloud >> renderIn: aView [
 	| shape es |
 	shape := RTLabel new
-		height: [ :assoc | (assoc value size - self minFrequency) * maxHeight / (self maxFrequency - self minFrequency max: 1) + minHeight ];
+		height: [ :assoc | | temp |
+			temp := assoc value isNumber 
+				ifTrue: [ assoc value ] 
+				ifFalse: [ assoc value size ].
+			(temp - self minFrequency) * maxHeight / (self maxFrequency - self minFrequency max: 1) + minHeight ];
 		text: #key.
 	es := shape elementsOn: self sortedAssociationsBounded.
 	aView addAll: es.
@@ -241,8 +245,9 @@ RTNameCloud >> renderIn: aView [
 
 { #category : #accessing }
 RTNameCloud >> sortedAssociations [
-	^ self tableObjects associations reverseSortedAs: [ :assoc | assoc value size ]
-	"^ tableFrequency associations reverseSortedAs: #value"
+	^ self tableObjects 
+		ifEmpty: [ tableFrequency associations reverseSortedAs: #value ]
+		ifNotEmpty: [ self tableObjects associations reverseSortedAs: [ :assoc | assoc value size ] ].
 ]
 
 { #category : #accessing }
