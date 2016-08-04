@@ -147,7 +147,7 @@ RTDataTest >> testInteraction [
 
 	| ds |
 	ds := RTData new.
-	self assert: ds interaction class equals: RTInteractionBuilder
+	self assert: ds interaction class equals: RTDataInteractionBuilder
 ]
 
 { #category : #tests }
