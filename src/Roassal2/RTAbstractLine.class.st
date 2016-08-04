@@ -137,6 +137,13 @@ RTAbstractLine >> updateFromToFor: edge trachelShape: trachelShape [
 { #category : #public }
 RTAbstractLine >> width: aBlockOrValue [
 	"Set the width of the shape"
+	self widthElement: [ :e | aBlockOrValue rtValue: e model ].
+
+]
+
+{ #category : #public }
+RTAbstractLine >> widthElement: aBlockOrValue [
+	"Set the width of the shape"
 	width := aBlockOrValue
 ]
 
