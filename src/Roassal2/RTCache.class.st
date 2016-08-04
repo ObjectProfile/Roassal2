@@ -1,41 +1,49 @@
+"
+I am class to handle a lot of elements and draw
+
+I am still growing, if you find a best answer to cache elements, please let me to to akevalion@gmail.co
+"
 Class {
 	#name : #RTCache,
 	#superclass : #RTObject,
+	#instVars : [
+		'canvas',
+		'trachelShapes',
+		'shapeBeingPointed'
+	],
 	#category : #'Roassal2-Cachetor'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RTCache >> cacheElements: someElements [
-	"This method is assuming all the elements belong to the same view"
-	| view newElement group position |
-	group := someElements asGroup.
-	view := someElements anyOne view.
-	newElement := (RTBitmap new form: (self getFormElements: group)) element.
-	position := group position.
-	newElement translateTo: position.
-	group remove.
-	view add: newElement.
+	^ self cacheElements: someElements edges: #().
+	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RTCache >> cacheElements: someElements edges: someEdges [
 	"This method is assuming all the elements belong to the same view"
-	| view newElement group position |
-	group := someElements asGroup.
+	| view newElement elements edges |
+	
+	elements := someElements asGroup.
+	edges := someEdges asGroup.
 	view := someElements anyOne view.
-	newElement := (RTBitmap new form: (self getFormElements: group, someEdges asGroup)) element.
-	position := group position.
-	newElement translateTo: position.
-	group remove.
+	canvas := view canvas.
+	trachelShapes := canvas shapes.
+	newElement := (RTBitmap new form: (self getFormElements: elements, edges)) element.
+	self addEvents: newElement.
+	newElement translateTo: canvas encompassingRectangle center.
+	view removeAllElements.
 	view add: newElement.
+	^ newElement.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #public }
 RTCache >> cacheView: aView [
 	self cacheElements: aView elements edges: aView edges
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 RTCache >> getFormElements: someElements [
 	"Return a form contains the graphical representation of the elements"
 	
