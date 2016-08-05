@@ -495,21 +495,17 @@ AElFTkSuQmCC'
 
 { #category : #sources }
 RTGrapherExample >> exampleCrosses [
- 
-
-| b ds |
-b := RTGrapher new.
-b extent: 300 @ 300.
-
-ds := RTData new.
-ds dotShape cross color: (Color red alpha: 0.3).
-ds points: (RTShape withAllSubclasses flatCollect: #rtmethods).
-ds x: #numberOfLinesOfCode.
-ds y: [ :m | m getSource size ].
-b add: ds.
-
-b build.
-^ b view
+	| b ds |
+	b := RTGrapher new.
+	b extent: 300 @ 300.
+	ds := RTData new.
+	ds dotShape cross color: (Color red alpha: 0.3).
+	ds points: (RTShape withAllSubclasses flatCollect: #rtmethods).
+	ds x: #numberOfLinesOfCode.
+	ds y: [ :m | m sourceCode size ].
+	b add: ds.
+	b build.
+	^ b view
 ]
 
 { #category : #icons }
@@ -1939,12 +1935,9 @@ igib9zQAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTGrapherExample >> exampleMethods [
-
-
 	| methods trachelMethods b ds |
 	methods := Collection withAllSubclasses flatCollect: #rtmethods.
 	trachelMethods := TRObject withAllSubclasses flatCollect: #rtmethods.
-
 	b := RTGrapher new.
 	b extent: 200 @ 200.
 
@@ -1954,7 +1947,7 @@ RTGrapherExample >> exampleMethods [
 	ds dotShape circle color: (Color red alpha: 0.3).
 	ds points: methods.
 	ds x: #numberOfLinesOfCode.
-	ds y: [ :m | m getSource size ].
+	ds y: [ :m | m sourceCode size ].
 	b add: ds.
 
 	"Data set 2"
@@ -1963,13 +1956,15 @@ RTGrapherExample >> exampleMethods [
 	ds dotShape circle color: (Color blue alpha: 0.3).
 	ds points: trachelMethods.
 	ds x: #numberOfLinesOfCode.
-	ds y: [ :m | m getSource size ].
+	ds y: [ :m | m sourceCode size ].
 	b add: ds.
-
-	b axisX withThousandsSeparator; title: 'LOC'.
-	b axisY noDecimal; title: 'Size'.
+	b axisX
+		withThousandsSeparator;
+		title: 'LOC'.
+	b axisY
+		noDecimal;
+		title: 'Size'.
 	b build.
-
 	^ b view
 ]
 

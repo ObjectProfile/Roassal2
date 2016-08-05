@@ -182,9 +182,10 @@ hola mundo'.
 { #category : #tests }
 RTTextBuilderTest >> testOpeningOnMultilineText3 [
 	| text |
-	text := (RTTextBuilderTest >> #testOpeningOnMultilineText3) getSource.
+	text := (RTTextBuilderTest >> #testOpeningOnMultilineText3)
+		sourceCode.
 	builder addText: text.
-	builder open close.
+	builder open close
 ]
 
 { #category : #tests }
