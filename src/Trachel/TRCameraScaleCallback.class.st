@@ -1,3 +1,8 @@
+"
+I am triggered when the Camera scale (zoom) has changed.
+
+I should be atteched to TRCamera (`aView canvas camera addCallback:`)
+"
 Class {
 	#name : #TRCameraScaleCallback,
 	#superclass : #TRCallback,
@@ -11,5 +16,5 @@ TRCameraScaleCallback >> isCameraScaleCallback [
 
 { #category : #action }
 TRCameraScaleCallback >> scaleChanged: aScaleFactorAsInteger [
-	^ block cull: self cull: aScaleFactorAsInteger
+	^ block cull: aScaleFactorAsInteger
 ]
