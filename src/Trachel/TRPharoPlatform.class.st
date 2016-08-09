@@ -199,6 +199,11 @@ TRPharoPlatform >> deletePopup: popup [
 	popup delete.
 ]
 
+{ #category : #windows }
+TRPharoPlatform >> dialogChooseFile: pattern label: title [
+	^ UIManager default chooseFullFileNameMatching: pattern label: title.
+]
+
 { #category : #public }
 TRPharoPlatform >> dialogChooseFrom: options values: values [
 	^ UIManager default chooseFrom: options values: values.
