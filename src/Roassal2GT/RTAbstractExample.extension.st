@@ -34,7 +34,8 @@ RTAbstractExample class >> gtInspectorPreviewIn: composite [
 { #category : #'*Roassal2GT-Inspector' }
 RTAbstractExample >> gtOpenOn: v [
 	| icon64Mime form element |
-	self gtExamples
+	(self gtExamples
+		sorted: [ :a :b | a method selector asLowercase < b method selector asLowercase ])
 		do: [ :anExample | 
 			[ icon64Mime := self perform: (anExample method selector , #Icon) asSymbol.
 			form := TRPlatform current formClass
