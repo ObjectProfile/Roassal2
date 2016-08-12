@@ -1505,6 +1505,70 @@ z+etDZDv7Pl5nHMIP3wQPgg/fBA+CD98ED4IP3wQfvggfBB++CB8EH74IHwQfvggfBB++CD8
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleHighlightDataset [
+
+| b data colors ds ds1 ds2 |
+b := RTGrapher new.
+
+data := Array
+	with: (Array with: 0->0 with: 1->1 with: 2->3 with: 3->5 with: 4->7)
+	with: (Array with: 0->0 with: 1->2 with: 2->4 with: 3->16 with: 4->32).
+
+colors := Array with: Color blue with: Color red.
+
+data withIndexDo: [ :each :i | |c|
+	c := colors at: i.
+	ds := RTData new.
+	ds label: c.
+	ds connectColor: (c alpha: 0.5).
+	ds dotShape ellipse color: (c alpha: 0.5).
+	ds points: each.
+	ds x: #key.
+	ds y: #value.
+	
+	ds interaction noInteractions.
+	ds interaction highlightDataset: c.
+
+	b add: ds.
+].
+
+b legend below.
+b legend addText: 'Hover over one of the lines or legend entries'.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleHighlightDatasetIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAFLklEQVR4XuXdW3PaRhQH8Hzw
+PuQxnyGeyUOn7Uwz02kfmmk6SYwdDA7FXAQGhIS4GNCFu4AABnNOhVSUuGNnYi72iv+Z0QDW
+7iL2p9XRIsDPmPFDpHiG3wX4IPiBD4IPgh/4IPgg+IEPgg+CH/gg+CD4gQ+CH/gg+CD48egg
+pmHSeLqk1f1LtULonUmdDj0piK6bZLcaNP48IlU6vbUxi8WCTk5OoJDo5Uui+ZyEPWQlk0kY
+EGo2SfgcggJC4zGRbeODHNrowAfZBUYsRoE57T10kF2ODHwQgfIGPoigowMfRJC8sbuZum7Q
+cMr3ztQPEWRfI2MnIB/TMtkThpmp7ytv4B+yBB0d+CCC5A18EAFHBj6IQHkDH0TQ0YEPIkje
+wAcRcGTggwiUN3YGksxFaTbsEi+XdCgz9dV18acaHduDxH4lozWisVm9c6YeCoWCB3J0tPV1
+cfxD1q4w4vEn3158EIEw8EEEw8AHEQwDHkQ0DGgQETFgQUTFgAQRGWNrkCUx3SyWpNUqVK2V
+hJ+pi46xNUh7yNQoKVRyZukfknmhZ+pBwIA5ZO0bo1olymSIXr1y33XB/zrCY2GsO340otWl
+ktUbwvifXNw3hiQRPUbHQ4FQt0vfg3FXx2saEX4O2RZgOvV6tN0mKhaJXr8mck4qHvNQAwly
+q+MVhSh/+8xu3fGrSxrRqAfAAQshQWgyIXrxgsiyvtnxQdjjAwXyrT3+qZNrYGfqkxndO1NP
+vPtEX3f8pN6m4huFwkc5kmWi4ZCo3yfK5YjOzryEen3tdXqpRJDfe98KxBgsaWm3752pv/vh
+R6qU6tRsNh+8HB8fb1TvKevu4tP++D+tgZRD8EMgkEb+2B2+byXtwcN49fGiTeuW6vrGdXWz
+s3FdVa5sXPdRQOI5jRbzBVXyiQdvYDTyceO64XB447qR2MXGdccz3rgu/iELP4fgBz4IPgh+
+CAdi2zbPZjOopVAoiPvjM6PRCG6PVlU1GCCqWtr5i5ekgveWjdnjS9W+te7/j++L7y33dSzn
+vWCDpFIpTlyEvc6rK2y2TVYbBpczaW8CZnc5k6+z7qw7jsQ5l8lwJ5/xyo/n7jp3ctlpcmNg
+s+S016vlWcqW3b+nMxpniz3OX5ncsiy/o3tOG7Ws5NdTy2W/zdPf/vLLnUciXNE0lrMXflmv
+Pct/Lesyq5i2im7b7k7hbMtqexU5H6wRYhgGp9Pei7DaYy4rMk9apvt42O84e7nlliFackHR
+/HUlOfelvX6Xzf/KqOUrNi1vT5UvJba6M27bc5bSaf/5Vm0MLdOvl05n/TbX7a/KGXqT2x3d
+GXGSX3bdXjaveOWcMp3+0L1PdMNV5zm9+972qkEDwc8h+CD4IPgg+CD4IPggAQfRdeZQyFvW
+sZh+5k5vcG+9caOGD7IvkGSS+flzb1nHxcdT9/bkPM5XxpivqhWOhE45ITec6/LXrP39BzfK
+MpcvYpz6dM6NlsWKbuGD7AuknD5nrVLlD5EzrtUHHJeLfPb+PUdTXXd95vdfuKYWWJaz/Obn
+n7jcqHKtWsUHwc8h+CD4IPgg+CD4IPgg+CBfQAbOfEOWvQUfRACQO857E8mYe6soJR4vljwb
+mM59xZmT6Dy7IZYTKe6aV84pcZvrjTo+yL5BIudRNvojlqsGp4pXfPlPmNVM1J+HWLEzDr39
+07lgpfFo2MMHwc8hBwrS7Xa53+9DLc5Vx+D8yyP8wAfBB8EPfBB8EPzAB8EHwQ98EPzAB8EH
+wQ98EHwQ/MAHOdz4F6JT5DYsMEvIAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleHistogram2 [
 	| b ds |
 	b := RTGrapher new.
@@ -2416,6 +2480,7 @@ XcWjA7UAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTGrapherExample >> examplePopupDecorators [
+
 | b ds1 ds2 |
 b := RTGrapher new.
 
@@ -2451,18 +2516,33 @@ ds2 interaction popupDecorator: [ :model |
 		dataset: ds2
 ].
 
-
+b build.
 ^ b view
 ]
 
 { #category : #icons }
 RTGrapherExample >> examplePopupDecoratorsIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAA8klEQVR4XuXRAQkAAADCMPuX
-1hrCHuFL6/dU/AU+iJ8P4oP4+SA+iJ8P4oP4+SA+iJ8P4ueD+CB+PogP4ueD+CB+PogP4ueD
-+PkgPoifD+KD+PkgPoifD+KD+Pkgfj6ID+Lng/ggfj6ID+Lng/ggfj6Inw/ig/j5ID6Inw/i
-g/j5ID6Inw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P4oP4+SA+iJ8P4oP4+SB+PogP
-4ueD+CB+PogP4ueD+CB+PoifD+KD+PkgPoifD+KD+PkgPoifD+Lng/ggfj6ID+Lng/ggfj6I
-D+Lng/ggfk8N2ftVr85sz2wAAAAASUVORK5CYII='
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAAEKElEQVR4XuXcW08aQRwFcL9j
+P5K+mPTFS3yojbcmXhIfaiqEVGvrHRWwaksJsoAgl6XiSrgKerY7izTeahVYduScxKQvW2bn
+t/xnZme0R9f5I1N6+LuAH4Q//CD8IPzhB+EH4Q8/CD8If/hB+EH4ww/CH34QfhD+8IPwg/CH
+H4QfhD/8IPwg/OEH4Q8/CD8If/hBqEHCkQh0AJlkAP7TFPi7U9cLhQJsAQkGg9jb28W3lSXE
+lAACSvhOQ6LRKDweDxUSzs6gxeOQtmT5fD4ukNlZSD2GMIHAqBgi/CAyYBweAltbkH6WRQOy
+u4tXMe1lAGnHuMEP0i6MzU28qoVhN4PA6wWqVX4QaUA2NiDXSh3XiJ8EkUmoUE4iiJ6EwALS
+7nGjLSC5zClyWh5qTkfoYBVffP4HK/WdnR3wjxv8JcvaccNYc/CDyIBxfAwkk5bfDz/Ic0Fc
+ro7cCz/IczDa9FqEH6QdGLGY5eMGP8izZ/bXwP5+R++BH+QpEBs22PhB/oXhcNjS9qZBshd5
+s8GJxCmKl8bGzGWpa1bqYvHXjs2mjoJcFHVkjFV6KnSEdGAVrqO7e+pis/817qlXVBWF5WXb
+2t1yybq+qqFbShY0DVa9NOQfQ14hBj/IbYxwWIq20oOIb4UsGPQgJobx7ZCpTbQgMmLQgsiK
+QQki0wBOD2L11PZCjdp7lHT+04LZANeB8qAhsu2pd2Kd4VzftBfEc/ALtWoNEb8XMn9DOrno
+01ocm7q+ZFmFkc0Cg4OAogDGqy/MzACXxkvWcrnMD2IlRjwOvH8PhELAwkL9h39Q78AKXHT4
+wACgqlXDUdNFxzeeev5ZVisQqRSqU1MopR7/ncftbWB0FBAlp1IBpqetf+opQETHY3gYSKfN
+z8DKCjAxARj7MLlcDk5nxSw14gkXHS8QBIYueaQFaQyOODoCxsZELYF56GBxEZib+7ujd7uu
+i6deIHg85ZYHV3oQY9ECjIyYTzhqNVTGx4G1NfP6RmkRs5n7Mxy9y9JxELO03DzhovPL7ybg
+HnJjaKjusbdneiASiaAx0IqZjk6SlkC8u/Up5Ve3+0GHiT314OxHhHs/YKQ3jaU3b5H4vG54
+ZNHfn0VfXxYORxaxWNYYYLvnp1Qq2bcOiYT9opI/+KMBjSiKAjtWvK1OJs7Pz9GVJYs/koCI
+c1pqOolEKv3oea3/vpa4OfMl/o+XXptR69cU88UXX3tmfO5VOV9vd4v3LhWIOKfV+Pf981rP
+iTjzFf2tQ9defmNapn7N5Pzki68V5df743tTn32cSOGn22meUWum3ZaXLHFeq3Z13XTDaldV
+PHXmy8rY2W7+MYRpHcIffhB+EP7wg/CD8IcfhB+EP/wg/OEH4QfhDz8IPwh/+EH4QfjDD8IP
+wh9+EP7wg/CD8IcfhB+EP/wgXZo/l//Z8HRVBGQAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
