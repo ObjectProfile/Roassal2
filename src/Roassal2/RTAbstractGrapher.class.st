@@ -156,6 +156,11 @@ RTAbstractGrapher >> getPositionFromPixelPosition: aPoint [
 	^ anX @ anY negated
 ]
 
+{ #category : #testing }
+RTAbstractGrapher >> hasOrigin [
+	^ withOrigin
+]
+
 { #category : #initialization }
 RTAbstractGrapher >> initialize [
 	super initialize.
