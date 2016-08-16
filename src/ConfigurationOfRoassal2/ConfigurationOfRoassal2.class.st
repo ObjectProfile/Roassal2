@@ -312,6 +312,43 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 ]
 
 { #category : #baselines }
+ConfigurationOfRoassal2 >> baseline114: spec [
+	<version: '1.14-baseline'>
+
+	spec for: #common do: [
+		spec blessing: #baseline.
+		spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+		
+		spec project: 'GlamourCore' with: [
+			spec
+				className: #ConfigurationOfGlamourCore;
+				version: #development;
+				repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main/' ].
+
+		spec baseline: 'Geometry' with: [
+			spec repository: 'github://peteruhnak/geometry/repository' ].
+
+		spec project: 'Neo-JSON-Core' with: [
+				spec
+					className: #ConfigurationOfNeoJSON;
+					version: #stable;
+					repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+
+	spec
+		package: 'Athens-SVG' with: [ 
+			spec
+				repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+				
+		spec 
+			package: 'Trachel';
+			package: 'Roassal2' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
+			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore') ];
+			package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ] ].
+
+]
+
+{ #category : #baselines }
 ConfigurationOfRoassal2 >> baseline11: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -683,7 +720,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	spec for: #'common' version: '1.4-baseline'.
 	spec for: #'pharo4.x' version: '1.5-baseline'.
 	spec for: #'pharo5.x' version: '1.13-baseline'.
-	spec for: #'pharo6.x' version: '1.13-baseline'.
+	spec for: #'pharo6.x' version: '1.14-baseline'.
 ]
 
 { #category : #accessing }
