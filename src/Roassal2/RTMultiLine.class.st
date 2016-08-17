@@ -90,7 +90,7 @@ RTMultiLine >> trachelShapeFor: anEdge [
 	multiShape := TRCompositeShape new.
 	2 to: path size do: [ :i |
 		shape := TRLineShape new.
-		shape width: (self widthFor: anEdge).
+		shape width: width.
 		shape from: (path at: i - 1) to: (path at: i).
 		shape color: col.
 
@@ -110,7 +110,7 @@ RTMultiLine >> updateFor: anEdge trachelShape: trachelShape [
 	
 	2 to: path size do: [ :i |
 		shape := trachelShape shapes at: i - 1.
-		shape width: (self widthFor: anEdge).
+		shape width: width.
 		shape from: (path at: i - 1) to: (path at: i).
 		shape color: col.
 	].

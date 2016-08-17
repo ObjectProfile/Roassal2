@@ -61,6 +61,21 @@ RTGrapher >> axisYWithNumberOfTicks: aNumber [
 
 ]
 
+{ #category : #public }
+RTGrapher >> build [
+	super build.
+	legendBuilder
+		ifNotNil: [ self legend view: self view.
+			datasets
+				do: [ :each | 
+					| color |
+					color := each shouldConnect
+						ifTrue: [ each lineShape color rtValue: RTElement new ]
+						ifFalse: [ each dotShape color rtValue: RTElement new ].
+					self legend addColor: color text: each label ].
+			self legend build ]
+]
+
 { #category : #utility }
 RTGrapher >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
@@ -223,15 +238,6 @@ RTGrapher >> renderDataSetsIn: aView [
 ]
 
 { #category : #hooks }
-RTGrapher >> renderDataset: aDataset inLegend: aLegend [
-	| color |
-	color := aDataset shouldConnect
-		ifTrue: [ aDataset lineShape color rtValue: RTElement new ]
-		ifFalse: [ aDataset dotShape color rtValue: RTElement new ].
-	aLegend addColor: color object: aDataset text: #label
-]
-
-{ #category : #hooks }
 RTGrapher >> renderIn: aView [
 	self datasetComputeMinAndMax.
 	self defineAxesIfNecessary.
@@ -239,25 +245,7 @@ RTGrapher >> renderIn: aView [
 	self renderAxis.
 	self renderAllDecoratorsInFront.
 	self renderDataSetsIn: aView.
-	self renderAllDecoratorsBehind.
-	legendBuilder ifNotNil: [ self renderLegend ]
-]
-
-{ #category : #hooks }
-RTGrapher >> renderLegend [
-	self legend view: self view.
-	datasets do: [ :each | self renderDataset: each inLegend: self legend ].
-	self legend build.
-	datasets
-		select: [ :each | each interaction hasInteractionOfType: RTDataHighlightInteraction ]
-		thenDo: [ :each | 
-			(self legend legendElement attributeAt: #nestedElements)
-				select: [ :grp | grp size > 1 and: [ grp second model = each ] ]
-				thenDo: [ :grp | 
-					| int |
-					int := each interaction interactionOfType: RTDataHighlightInteraction.
-					int legendElements: grp.
-					grp @ int ] ]
+	self renderAllDecoratorsBehind
 ]
 
 { #category : #resetting }
