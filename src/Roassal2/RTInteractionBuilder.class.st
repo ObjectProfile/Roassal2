@@ -71,6 +71,12 @@ RTInteractionBuilder >> fixedPopupText: aBlock [
 ]
 
 { #category : #public }
+RTInteractionBuilder >> hasInteractionOfType: cls [
+	^ interactions
+		anySatisfy: [ :anInt | anInt class == cls or: [ anInt class inheritsFrom: cls ] ]
+]
+
+{ #category : #public }
 RTInteractionBuilder >> highlight [
 	self highlightColored: Color blue
 ]
@@ -117,6 +123,13 @@ RTInteractionBuilder >> initialize [
 { #category : #initialization }
 RTInteractionBuilder >> initializeInteractions [
 	interactions := OrderedCollection new
+]
+
+{ #category : #'as yet unclassified' }
+RTInteractionBuilder >> interactionOfType: cls [
+	^ interactions
+		detect: [ :anInt | anInt class == cls or: [ anInt class inheritsFrom: cls ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #public }
