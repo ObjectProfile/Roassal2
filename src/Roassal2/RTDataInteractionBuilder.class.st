@@ -27,15 +27,6 @@ RTDataInteractionBuilder >> dataSet: aData [
 ]
 
 { #category : #'public - events-registering' }
-RTDataInteractionBuilder >> highlightDataset: aColor [
-	self
-		addInteraction:
-			(RTDataHighlightInteraction new
-				color: aColor;
-				dataset: dataSet)
-]
-
-{ #category : #'public - events-registering' }
 RTDataInteractionBuilder >> popupDecorator: aOneArgBlock [
 	| deco |
 	self

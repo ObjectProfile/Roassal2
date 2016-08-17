@@ -224,7 +224,7 @@ RTStyledMultiLine >> trachelShapeFor: anEdge [
 			addShape:
 				(TRStyledLineShape new
 					dashes: dashes;
-					width: (self widthFor: anEdge);
+					width: width;
 					from: (path at: i - 1) to: (path at: i);
 					color: (self colorFor: anEdge)) ].
 	multiShape
@@ -241,7 +241,7 @@ RTStyledMultiLine >> updateFor: anEdge trachelShape: trachelShape [
 	2 to: path size do: [ :i | 
 		shape := trachelShape shapes at: i - 1.
 		shape
-			width: (self widthFor: anEdge);
+			width: width;
 			from: (path at: i - 1) to: (path at: i);
 			color: col ].
 	head updateFor: anEdge trachelShape: trachelShape shapes allButLast last from: path allButLast last.

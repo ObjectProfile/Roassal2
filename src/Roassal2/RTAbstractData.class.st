@@ -127,10 +127,7 @@ RTAbstractData >> computeMinAndMaxForX [
 	maxX := computed max.
 
 	(minX < 0 and: [ maxX < 0 ]) ifTrue: [ maxX := 0 ].
-	"Only set the minX if we want to include the origin."
-	self builder hasOrigin ifTrue: [
-		(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ]
-	].
+	(minX > 0 and: [ maxX > 0 ]) ifTrue: [ minX := 0 ].
 	
 	"We do this to make sure that the bar on the right hand side is not on the right axisX extremity"
 	"(self dataSets anySatisfy: #shouldHaveBars) ifTrue: [ maxX := maxX + 1 ]"

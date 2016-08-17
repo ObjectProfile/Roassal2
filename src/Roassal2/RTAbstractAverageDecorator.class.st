@@ -3,34 +3,19 @@ Class {
 	#superclass : #RTAbstractGrapherDecorator,
 	#instVars : [
 		'shouldHaveLabel',
-		'color',
+		'lineColor',
 		'shapes',
 		'labelBlock'
 	],
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
 
-{ #category : #accessing }
-RTAbstractAverageDecorator >> color: aColor [
-	"Set the color of the line and the label."
-
-	color := aColor.
-	self lineColor: aColor
-]
-
 { #category : #initialization }
 RTAbstractAverageDecorator >> initialize [
 	super initialize.
 	self noLabel.
 	labelBlock := #yourself.
-	shapes := OrderedCollection new.
-	color := RTLabel defaultColor
-]
-
-{ #category : #utility }
-RTAbstractAverageDecorator >> label: aString on: position [
-	"Add a label in the view"
-	^ self label: aString on: position color: color
+	shapes := OrderedCollection new
 ]
 
 { #category : #utility }
