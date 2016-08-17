@@ -235,6 +235,22 @@ RTTabTable class >> euCountries [
 	^  #('Russia' 'Ukraine' 'France' 'Spain' 'Sweden' 'Norway' 'Germany' 'Finland' 'Poland' 'Italy' 'United' 'Romania' 'Belarus' 'Kazakhstan' 'Greece' 'Bulgaria' 'Iceland' 'Hungary' 'Portugal' 'Austria' 'Czech' 'Serbia' 'Republic' 'Lithuania' 'Latvia' 'Croatia' 'Bosnia' 'Slovakia' 'Estonia' 'Denmark' 'Netherlands' 'Switzerland' 'Moldova' 'Belgium' 'Albania' 'Republic' 'Turkey' 'Slovenia' 'Montenegro' 'Cyprus' 'Azerbaijan' 'Luxembourg' 'Georgia' 'Andorra' 'Malta' 'Liechtenstein' 'San Marino' 'Monaco')
 ]
 
+{ #category : #'instance creation' }
+RTTabTable class >> openTSVfile [
+	| fileName tab stream |
+	fileName := TRPlatform current dialogChooseFile:  #('*.csv') label: 'Pick a CSV file'.
+	fileName ifNil: [ ^ nil ].
+	stream := fileName asFileReference readStream.
+
+	[ tab := self new.
+	tab input: stream contents usingDelimiter: Character tab. ]
+	ensure: [ stream close ].
+	self assert: [tab values first size = 3] description: 'Wrong CSV structure'.
+	tab convertColumnsAsInteger: #(1).
+	
+	^ tab
+]
+
 { #category : #data }
 RTTabTable class >> southAmericanCountries [ 
 
