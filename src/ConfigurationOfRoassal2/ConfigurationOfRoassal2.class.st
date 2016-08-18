@@ -287,7 +287,13 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 				className: #ConfigurationOfGlamourCore;
 				version: #stable;
 				repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main/' ].
-
+		
+		spec project: 'GTExamples' with: [
+			spec
+				className: #ConfigurationOfGTExamples;
+				version: #development;
+				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main/' ].
+			
 		spec baseline: 'Geometry' with: [
 			spec repository: 'github://peteruhnak/geometry/repository' ].
 
@@ -324,7 +330,13 @@ ConfigurationOfRoassal2 >> baseline114: spec [
 				className: #ConfigurationOfGlamourCore;
 				version: #development;
 				repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main/' ].
-
+			
+		spec project: 'GTExamples' with: [
+			spec
+				className: #ConfigurationOfGTExamples;
+				version: #development;
+				repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main/' ].
+		
 		spec baseline: 'Geometry' with: [
 			spec repository: 'github://peteruhnak/geometry/repository' ].
 
