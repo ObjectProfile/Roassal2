@@ -1,7 +1,7 @@
 Class {
 	#name : #RTExampleTestCase,
 	#superclass : #GTExampleTestCase,
-	#category : #'Roassal2GT-Tests'
+	#category : #'Roassal2GT-Tests-Examples'
 }
 
 { #category : #configuration }

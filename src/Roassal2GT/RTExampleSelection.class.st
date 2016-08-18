@@ -1,7 +1,7 @@
 Class {
 	#name : #RTExampleSelection,
 	#superclass : #GTExample,
-	#category : #'Roassal2GT-Inspector'
+	#category : #'Roassal2GT-Examples'
 }
 
 { #category : #examples }
@@ -72,7 +72,7 @@ RTExampleSelection >> gtInspectorViewIn: composite [
 	^ self gtInspectorRoassalViewIn: composite
 ]
 
-{ #category : #'*Roassal2GT-Spotter' }
+{ #category : #'as yet unclassified' }
 RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	<spotterPreview: 10>
 	(self icon notNil or: [ self provider class canPerform: (self selector, 'Icon') asSymbol ])
@@ -84,39 +84,7 @@ RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	
 ]
 
-{ #category : #accessing }
-RTExampleSelection >> icon [
-	form ifNil: [ self initializeIcon ].
-	^ form
-]
-
-{ #category : #public }
-RTExampleSelection >> iconForm [
-	self deprecated: 'Please use #icon'.
-	^ self icon
-]
-
-{ #category : #testing }
-RTExampleSelection >> ignoreCache [
-	^ true
-]
-
-{ #category : #public }
-RTExampleSelection >> initializeIcon [
-	| icon64Mime iconSelector |
-	form ifNotNil: [ ^ self ].
-	iconSelector := (self method selector, 'Icon') asSymbol.
-	(self provider class canPerform: iconSelector) ifFalse: [ ^ self ].
-	icon64Mime := [ self provider perform: iconSelector ]
-		on: Error
-		do: [ ^ self ].
-	form := [ TRPlatform current formClass fromBinaryStream: 
-			(TRPlatform current mimeDecodeToBytes: icon64Mime readStream) ]
-		on: Error
-		do: [ ^ self ].
-]
-
-{ #category : #'*Roassal2GT-Spotter' }
+{ #category : #'as yet unclassified' }
 RTExampleSelection >> matchesQuery: aSetOfNames [
 	| sourceCode |
 	
@@ -136,11 +104,4 @@ RTExampleSelection >> playgroundSourceCode [
 	sourceCodeWithoutFirstLine := sourceCode copyFrom: firstLine size + 1 to: sourceCode size.
 	^ sourceCodeWithoutFirstLine 
 	"
-]
-
-{ #category : #'*Roassal2GT-Spotter' }
-RTExampleSelection >> spotterPreviewExampleIn: aComposite [
-	self deprecated: 'Please use #gtSpotterPreviewIconIn: instead'>
-	self gtSpotterPreviewIconIn: aComposite
-	
 ]

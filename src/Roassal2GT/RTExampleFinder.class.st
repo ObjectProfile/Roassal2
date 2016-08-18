@@ -1,6 +1,6 @@
 Class {
 	#name : #RTExampleFinder,
-	#superclass : #GTExampleFinder,
+	#superclass : #AnObsoleteGTExampleFinder,
 	#category : #'Roassal2GT-Inspector'
 }
 
