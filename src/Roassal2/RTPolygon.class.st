@@ -193,7 +193,8 @@ RTPolygon class >> vee [
 { #category : #initialization }
 RTPolygon >> initialize [
 	super initialize.
-	self vertices: #()
+	self vertices: #().
+	width := height := nil.
 ]
 
 { #category : #hooks }
@@ -212,7 +213,11 @@ RTPolygon >> updateFor: anElement trachelShape: trachelShape [
 		strokePaint: (self borderColorFor: anElement);
 		vertices: (self verticesFor: anElement);
 		rotateByDegrees: (self rotationFor: anElement);
-		scaleBy: (self scaleFor: anElement)
+		scaleBy: (self scaleFor: anElement).
+		
+	(width notNil and: [height notNil])
+		ifTrue: [ trachelShape extent: (self widthFor: anElement) @ (self heightFor: anElement) ]
+	
 ]
 
 { #category : #accessing }

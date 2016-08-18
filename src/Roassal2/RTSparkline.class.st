@@ -42,18 +42,18 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	x := p x.
 	y := p y.
 	ny := vs first - min * stepVertical.
-	path := 'M', x asInteger asString, ',', (y - ny) asInteger asString.
+	path := 'M', x asFloat asString, ',', (y - ny) asFloat asString.
 	
 	vs size = 1
 		ifTrue: [ 
 			x := x + stepHorizontal.
-			path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString ]
+			path := path, 'L', x asFloat asString, ',', (y - ny) asFloat asString ]
 	
 		ifFalse: [
 			vs allButFirstDo: [ :v |
 				x := x + stepHorizontal.
 				ny := (v - min * stepVertical).
-				path := path, 'L', x asInteger asString, ',', (y - ny) asInteger asString.
+				path := path, 'L', x asFloat asString, ',', (y - ny) asFloat asString.
 			] ].
 	trachelShape resetPath.
 	trachelShape path: path.
