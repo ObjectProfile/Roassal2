@@ -2,9 +2,9 @@ Class {
 	#name : #RTDevVarDecorator,
 	#superclass : #RTAbstractGrapherDecorator,
 	#instVars : [
-		'desviation',
 		'color',
-		'points'
+		'points',
+		'deviation'
 	],
 	#category : #'Roassal2-Builder-Grapher-Decorators'
 }
@@ -21,12 +21,12 @@ RTDevVarDecorator >> color: aColor [
 
 { #category : #accessing }
 RTDevVarDecorator >> deviation [
-	^ desviation
+	^ deviation
 ]
 
 { #category : #accessing }
 RTDevVarDecorator >> deviation: aNumber [
-	desviation := aNumber
+	deviation := aNumber
 ]
 
 { #category : #initialization }
@@ -49,7 +49,7 @@ RTDevVarDecorator >> points: pts [
 { #category : #drawing }
 RTDevVarDecorator >> render [
 	| dev svg k str index offset |
-	dev := points collectWithIndex: [ :p :i | p + (desviation*i). ].
+	dev := points collectWithIndex: [ :p :i | p + (deviation*i). ].
 	
 	svg := TRSVGPath new.
 	svg color: color.
@@ -61,7 +61,7 @@ RTDevVarDecorator >> render [
 		k := builder getPixelPositionOf: (i+offset)@p.
 		str := str, 'L', k x asString,' ', k y asString.
 		].
-	dev := (points collectWithIndex:[:p :i | p - (desviation*i)] ).
+	dev := (points collectWithIndex:[:p :i | p - (deviation*i)] ).
 	(1 to: dev size) do: [ :i | | p |
 		index := dev size - i +1.
 		p := dev at: index.
