@@ -3,7 +3,7 @@ I highlight the whole dataset when I any of my elements are hovered over.
 "
 Class {
 	#name : #RTDataHighlightInteraction,
-	#superclass : #RTInteraction,
+	#superclass : #RTGrapherInteraction,
 	#instVars : [
 		'dataset',
 		'color',

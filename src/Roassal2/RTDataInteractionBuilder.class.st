@@ -54,3 +54,8 @@ RTDataInteractionBuilder >> popupDecorator: aOneArgBlock [
 			deco remove.
 			self builder decorators remove: deco ]
 ]
+
+{ #category : #'public - events-registering' }
+RTDataInteractionBuilder >> toggleDataset [
+	self addInteraction: (RTDataToggleInteraction new dataset: dataSet)
+]

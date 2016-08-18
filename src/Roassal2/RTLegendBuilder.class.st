@@ -31,8 +31,7 @@ Class {
 		'position',
 		'isOnDemand',
 		'textSize',
-		'gapSize',
-		'isFixed'
+		'gapSize'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -162,7 +161,6 @@ RTLegendBuilder >> initialize [
 	textSize := 12.
 	gapSize := 10.
 	items := OrderedCollection new.
-	isFixed := false
 ]
 
 { #category : #'public - positioning' }
@@ -240,13 +238,7 @@ RTLegendBuilder >> renderIn: aView [
 		TRConstraint move: legendElement onTheLeftOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
 		legendElement translateBy: offset @ 0. ].
 	
-	legendElement @ RTDraggable.
-	isFixed ifTrue: [ 
-		| els |
-		els := aView elements copyWithoutAll: elementsInTheViewWithoutTheLegend.
-		els do: [ :e | e trachelShape setAsFixed ].
-		TRConstraint stickAtTheBottomOfTheWindow: legendElement trachelShape.
-		 ]
+	legendElement @ RTDraggable
 ]
 
 { #category : #hooks }
@@ -272,14 +264,6 @@ RTLegendBuilder >> renderOnDemandIn: aView [
 { #category : #'public - positioning' }
 RTLegendBuilder >> right [
 	position := #right
-]
-
-{ #category : #configuration }
-RTLegendBuilder >> setAsFixed [
-
-	"The legend is fixed, therefore not subject to the camera movement.
-	This is handy if the visualization is very large (ie. if not fixed, then the legend may appear very small"
-	isFixed := true
 ]
 
 { #category : #configuration }
