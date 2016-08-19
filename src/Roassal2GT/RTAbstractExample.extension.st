@@ -8,11 +8,6 @@ RTAbstractExample >> gtDisplayExamplesIn: aComposite [
 ]
 
 { #category : #'*Roassal2GT-Inspector' }
-RTAbstractExample class >> gtExamplesProvider [
-	^ self new
-]
-
-{ #category : #'*Roassal2GT-Inspector' }
 RTAbstractExample >> gtInspectorPreviewIn: composite [
 	<gtInspectorPresentationOrder: 4>
 	^ composite roassal2
