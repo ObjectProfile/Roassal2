@@ -312,7 +312,7 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 			package: 'Trachel';
 			package: 'Roassal2' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore') ];
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore' 'GTExamples') ];
 			package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ] ].
 
 ]
@@ -355,7 +355,7 @@ ConfigurationOfRoassal2 >> baseline114: spec [
 			package: 'Trachel';
 			package: 'Roassal2' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
 			package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
-			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore') ];
+			package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore' 'GTExamples') ];
 			package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ] ].
 
 ]
@@ -1296,7 +1296,7 @@ ConfigurationOfRoassal2 >> version135: spec [
 			package: 'Trachel' with: 'Trachel-akevalion.388';
 			package: 'Roassal2' with: 'Roassal2-akevalion.1402';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
-			package: 'Roassal2GT' with: 'Roassal2GT-PeterUhnak.39';
+			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.42';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
