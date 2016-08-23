@@ -68,14 +68,14 @@ RTMenu >> executeTextHighlight [
 	self label color: Color blue.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'hide entries' }
 RTMenu >> hideAll [
 	view canvas fixedShapes do: [ :s |
 		
 		(s element isKindOf: RTMenu) ifTrue: [ s element hideItems ]. ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'hide entries' }
 RTMenu >> hideItems [
 	self isOpen ifFalse: [ ^ self ].
 	self isOpen: false.
