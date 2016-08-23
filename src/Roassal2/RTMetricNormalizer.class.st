@@ -201,7 +201,7 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
 	
-	| min max normalizer |
+	| min max |
 	"We get the min and the max of the metric for all the elements"
 	min := transformation rtValue: (metricBlock rtValue: elements anyOne model).
 	max := min.
