@@ -1,6 +1,6 @@
 Class {
 	#name : #RTMenuItem,
-	#superclass : #Object,
+	#superclass : #RTObject,
 	#instVars : [
 		'name',
 		'callback',
