@@ -150,7 +150,7 @@ b add: #(5 3 2 0).
 
 b barWidth: 150 height: 20.
 
-b
+^ b
 ]
 
 { #category : #examples }
@@ -170,7 +170,7 @@ RTStackBarPlot >> example03 [
 
 	b addLabelToBars: #key.
 
-	b
+	^ b
 ]
 
 { #category : #examples }
@@ -189,14 +189,13 @@ RTStackBarPlot >> example04 [
 	b barWidth: 150 height: 20.
 
 	b addLabelToBars: #key if: [ :assoc | assoc key > 10 ].
-	b
+	^ b
 ]
 
 { #category : #examples }
 RTStackBarPlot >> example05 [
 		
-	| b |
-		
+	| b |		
 	b := RTStackBarPlot new.
 	b interaction popupText.
 	b colorPalette colors: (Array with: Color blue with: Color lightBlue ).
@@ -209,9 +208,8 @@ RTStackBarPlot >> example05 [
 	b barWidth: 260 height: 20.
 
 	b addLabelToBars: [ :assoc | (assoc key  / b totalSum * 100) asInteger asString, '%' ] if: [:assoc | assoc key > 5 ] color: Color white.
-
-	b build.
-
+	
+	^ b
 ]
 
 { #category : #accessing }
