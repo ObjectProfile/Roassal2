@@ -1491,7 +1491,7 @@ rH+dCf+KeXxZKtog+L4ZbZCzTeoWX07/D0I/I0c+pwKjAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTExperimentalExample >> exampleStackOnRoassal [
-
+ 
 | s classes extent layers x y color area maxY dates |
 
 classes := (RTShape withAllSubclasses reverseSortedAs: #ageInDaysRounded ) select: #hasMethods.

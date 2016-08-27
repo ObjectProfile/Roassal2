@@ -15,8 +15,7 @@ Class {
 	#name : #RTGradualDSM,
 	#superclass : #RTAbstractDSM,
 	#instVars : [
-		'score',
-		'selectElement'
+		'score'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -98,17 +97,21 @@ RTGradualDSM >> defaultCellShape [
 RTGradualDSM >> initialize [
 	super initialize.
 	score := [ :association | 0 ].
-	self selectElement: [ :e | true ].
 	transparencyWhenNonHighlighted := 0.9.
 	transparencyWhenHighlighted := 0.4
 ]
 
 { #category : #hooks }
 RTGradualDSM >> renderIn: aView [
-	super renderIn: aView.	
+	super renderIn: aView.
+	
+	"Make sure that if all the score is the same, then we paint with the maximum color. Maybe this is not the best behavior"
+"	((elements collect: #model) collect: score) asSet size = 1
+		ifTrue: [ elements do: [ :e | e trachelShape color: Color red ]. ^ self ].
+"	
 	
 	RTMetricNormalizer new
-		elements: (elements select: [ :e | selectElement rtValue: e ]);
+		elements: elements;
 		normalizeColor: score using: (Array with: Color veryVeryLightGray with: Color red);
 		alphaColor: self transparencyWhenNonHighlighted.
 	^ aView
@@ -124,14 +127,4 @@ RTGradualDSM >> score: oneArgBlock [
 	"The argument is a one arg block that takes an association as parameter.
 	The block has to return a numerical value. No predefined bounds is required"
 	score := oneArgBlock
-]
-
-{ #category : #accessing }
-RTGradualDSM >> selectElement [
-	 ^ selectElement 
-]
-
-{ #category : #accessing }
-RTGradualDSM >> selectElement: aBlock [
-	selectElement := aBlock
 ]

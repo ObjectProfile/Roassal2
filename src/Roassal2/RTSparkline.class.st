@@ -29,21 +29,15 @@ RTSparkline >> trachelShapeFor: anElement [
 { #category : #hooks }
 RTSparkline >> updateFor: element trachelShape: trachelShape [
 
-	| vs p path x y stepHorizontal stepVertical w h min max ny vsnil |
+	| vs p path x y stepHorizontal stepVertical w h min max ny |
 	vs := self valuesFor: element.
-	vsnil := false.
-	vs isNil ifTrue: [ 
-		vs := #(0 1 2).
-		vsnil := true ].
 	w := self widthFor: element.
 	h := self heightFor: element.
 	stepHorizontal := w / vs size.
 	min := vs min.
 	max := vs max.
+	stepVertical := h / (max - min + 1).
 	
-	stepVertical := max = min 
-		ifTrue: [ h ]
-		ifFalse: [ h / (max - min) ].
 	p := (element position - ((w / 2) @ (h negated / 2))).
 	x := p x.
 	y := p y.
@@ -65,11 +59,7 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	trachelShape path: path.
 	
 	"We manually specify the extent of the shape. If we do not do it, then the path will be used to determine the encompassing rectangle"
-	max = min ifTrue: [ h := 1 ].
-	trachelShape setExtent: w @ h.
-	vsnil ifTrue: [ 
-		trachelShape fillColor: Color transparent; strokePaint: Color transparent ]
-	
+	trachelShape setExtent: w @ h
 	
 	
 ]
