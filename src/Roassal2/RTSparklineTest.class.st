@@ -43,9 +43,9 @@ RTSparklineTest >> testWithOneValueAndExtent [
 	
 	self assert: (shape heightFor: e) equals: 20.
 	self assert: (shape widthFor: e) equals: 30.
-	"because all the values are the same"
-	self assert: e trachelShape basicEncompassingRectangle extent equals: 30 @ 1.
-	self assert: e trachelShape encompassingRectangle extent equals: 30 @ 1.
-	self assert: e extent equals: 30 @ 1.
+
+	self assert: e trachelShape basicEncompassingRectangle extent equals: 30 @ 20.
+	self assert: e trachelShape encompassingRectangle extent equals: 30 @ 20.
+	self assert: e extent equals: 30 @ 20.
 	
 ]
