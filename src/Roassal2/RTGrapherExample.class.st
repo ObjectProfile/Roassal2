@@ -2176,6 +2176,89 @@ EH7uOr8Ao4yOPnBNaKAAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleMultiGrapher [
+|g g1 g2 ds1 ds2|
+g := RTMultiGrapher new.
+
+g1 := RTGrapher new.
+ds1 := RTData new.
+ds1 label: 'Red'.
+ds1 dotShape color: Color red.
+ds1 connectColor: Color red.
+ds1 points: ((1 to: 10) collect: [ :each | 20 atRandom ]).
+ds1 interaction highlightDataset: Color black.
+g1 add: ds1.
+
+g2 := RTGrapher new.
+ds2 := RTData new.
+ds2 label: 'Blue'.
+ds2 dotShape color: Color blue.
+ds2 connectColor: Color blue.
+ds2 points: ((1 to: 10) collect: [ :each | 1000 atRandom ]).
+ds2 interaction highlightDataset: Color purple.
+g2 add: ds2.
+
+g1 axisY
+	title: 'y 1';
+	color: Color red.
+	
+g2 axisY
+	title: 'y 2';
+	color: Color blue.
+
+g add: g1.
+g add: g2.
+g legend.
+
+^ g
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleMultiGrapherIcon [
+	^ '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
+SDMMAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleMultipleCurvesStacking [
 
 | b points1 points2 minY maxY ds1 ds2 |
