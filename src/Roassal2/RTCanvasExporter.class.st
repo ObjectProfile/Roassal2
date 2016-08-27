@@ -67,7 +67,6 @@ RTCanvasExporter >> defaultScale [
 
 { #category : #example }
 RTCanvasExporter >> example01 [
-	<noTest>
 	| b view |
 	b := RTMondrian new.
 	b nodes: RTShape withAllSubclasses.

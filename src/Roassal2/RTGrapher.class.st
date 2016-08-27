@@ -140,6 +140,34 @@ RTGrapher >> homogenizeMinAndMax [
 			ds maxY: tmaxY ]
 ]
 
+{ #category : #hooks }
+RTGrapher >> inferLegendInteractions [
+	datasets
+		select:
+			[ :each | each interaction hasInteractionOfType: RTDataHighlightInteraction ]
+		thenDo: [ :each | 
+			(self legend legendElement attributeAt: #nestedElements)
+				select: [ :grp | grp size > 1 and: [ grp second model = each ] ]
+				thenDo: [ :grp | 
+					| int |
+					int := each interaction
+						interactionOfType: RTDataHighlightInteraction.
+					int legendElements: grp.
+					grp @ int ] ].
+	datasets
+		select:
+			[ :each | each interaction hasInteractionOfType: RTDataToggleInteraction ]
+		thenDo: [ :each | 
+			(self legend legendElement attributeAt: #nestedElements)
+				select: [ :grp | grp size > 1 and: [ grp second model = each ] ]
+				thenDo: [ :grp | 
+					| int |
+					int := each interaction
+						interactionOfType: RTDataToggleInteraction.
+					int legendElements: grp.
+					grp @ int ] ]
+]
+
 { #category : #initialization }
 RTGrapher >> initialize [
 	super initialize.
@@ -156,6 +184,11 @@ RTGrapher >> legend [
 	^ legendBuilder
 		ifNil: [ self resetLegend.
 			legendBuilder ]
+]
+
+{ #category : #accessing }
+RTGrapher >> legend: aLegendBuilder [
+	legendBuilder := aLegendBuilder
 ]
 
 { #category : #accessing }
@@ -246,28 +279,10 @@ RTGrapher >> renderIn: aView [
 { #category : #hooks }
 RTGrapher >> renderLegend [
 	self legend view: self view.
-	datasets do: [ :each | self renderDataset: each inLegend: self legend ].
+	datasets
+		do: [ :each | self renderDataset: each inLegend: self legend ].
 	self legend build.
-	datasets
-		select: [ :each | each interaction hasInteractionOfType: RTDataHighlightInteraction ]
-		thenDo: [ :each | 
-			(self legend legendElement attributeAt: #nestedElements)
-				select: [ :grp | grp size > 1 and: [ grp second model = each ] ]
-				thenDo: [ :grp | 
-					| int |
-					int := each interaction interactionOfType: RTDataHighlightInteraction.
-					int legendElements: grp.
-					grp @ int ] ].
-	datasets
-		select: [ :each | each interaction hasInteractionOfType: RTDataToggleInteraction ]
-		thenDo: [ :each | 
-			(self legend legendElement attributeAt: #nestedElements)
-				select: [ :grp | grp size > 1 and: [ grp second model = each ] ]
-				thenDo: [ :grp | 
-					| int |
-					int := each interaction interactionOfType: RTDataToggleInteraction.
-					int legendElements: grp.
-					grp @ int ] ]
+	self inferLegendInteractions
 ]
 
 { #category : #resetting }

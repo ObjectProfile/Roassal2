@@ -2,7 +2,6 @@ Class {
 	#name : #RTExploraNodeLazy,
 	#superclass : #RTExploraNode,
 	#instVars : [
-		'isExpanded',
 		'block'
 	],
 	#category : #'Roassal2-Builder-Explora'
@@ -63,12 +62,5 @@ RTExploraNodeLazy >> exploreOnDirection: aDirection [
 		(aDirection value = #From)
 			ifTrue: [ self connectTo: el with: builder lineShape ]
 			ifFalse: [ el connectTo: self with: builder lineShape ] ].
-
-]
-
-{ #category : #'as yet unclassified' }
-RTExploraNodeLazy >> initialize [
-	super initialize.
-	isExpanded := False.
 
 ]

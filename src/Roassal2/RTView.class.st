@@ -80,6 +80,13 @@ RTView >> addFindMenu [
 			ifTrue: [ self canvas camera translateTo: element position. RTBlink on: element ] ].
 ]
 
+{ #category : #'adding - removing' }
+RTView >> addFromView: aView [
+	"Add all the elements and edges from aView to self"
+
+	self addAll: aView elements , aView edges
+]
+
 { #category : #menu }
 RTView >> addLayoutMenu [
 	"Simply add some useful menu
