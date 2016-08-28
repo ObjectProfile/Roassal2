@@ -159,9 +159,14 @@ RTSVGVisitor >> fixedEncompassingRectangle [
 { #category : #utils }
 RTSVGVisitor >> getCorrespondingLine: decorator from: lines [
 	lines do: [ :l |
-		^(l class = TRBezierShape) 
-			ifTrue: [ decorator to = l points last ifTrue: [ lines remove: l. Array with: l with: decorator ] ]
-			ifFalse: [ decorator to = l to ifTrue: [ lines remove: l. Array with: l with: decorator ] ].
+		(l class = TRBezierShape) 
+			ifTrue: [ decorator to = l points last 
+				ifTrue: [
+					lines remove: l. 
+					^ Array with: l with: decorator ] ]
+			ifFalse: [ decorator to = l to ifTrue: [ 
+					lines remove: l. 
+					^ Array with: l with: decorator ] ].
 		 ].
 	^nil
 ]
@@ -209,10 +214,11 @@ RTSVGVisitor >> names: anObject [
 
 { #category : #utils }
 RTSVGVisitor >> separateDecorated: lines decorations: decorations [
-	|decorated|
+	|decorated temp |
 	decorated := OrderedCollection new.
 	decorations do: [ :d | 
-		decorated add: (self getCorrespondingLine: d from: lines).
+		temp := (self getCorrespondingLine: d from: lines).
+		decorated add: temp.
 		].
 	^decorated
 ]
