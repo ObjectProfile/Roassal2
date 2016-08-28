@@ -438,7 +438,11 @@ RTJavascriptVisitor >> visitMultiCompositeShape: aShape [
 	aShape shapes do: [ :s| s accept: self].
 	stream nextPutAll: '], offsets: ['.
 	aShape offsets do: [ :o | 
-		stream nextPutAll: '{x: ',(self number: o x),', y: ',(self number: o y),',' ].
+		stream nextPutAll: '{x: ';
+			nextPutAll: (self number: o x);
+			nextPutAll: ', y: ';
+			nextPutAll: (self number: o y);
+			nextPutAll: '},' ].
 	
 	stream nextPutAll: ']'.
 
