@@ -28,9 +28,9 @@ RTKendrickPlugin >> execute [
 	   loadStable.
 	
 	Gofer new
-		url: 'http://smalltalkhub.com/mc/UMMISCO/Kendrick/main/';
-		package: 'Kendrick';
-		load
+	   url: 'http://smalltalkhub.com/mc/UMMISCO/Kendrick/main';
+	   configurationOf:'Kendrick';
+	   loadVersion:'0.35'
 ]
 
 { #category : #hooks }
