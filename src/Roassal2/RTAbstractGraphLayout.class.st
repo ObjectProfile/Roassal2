@@ -125,18 +125,6 @@ RTAbstractGraphLayout >> clear [
 	cachedParentsWithHighestNestings := nil
 ]
 
-{ #category : #'default values' }
-RTAbstractGraphLayout >> defaultFromPositions [
-	
-	^#(#bottomCenter)
-]
-
-{ #category : #'default values' }
-RTAbstractGraphLayout >> defaultToPositions [
-	
-	^#(#topCenter)
-]
-
 { #category : #hook }
 RTAbstractGraphLayout >> doInitialize: elements [ 
 	super doInitialize: elements.

@@ -181,6 +181,13 @@ RTLayoutBuilder >> horizontalLine [
 ]
 
 { #category : #'public - layout' }
+RTLayoutBuilder >> horizontalReversedTree [
+	actionOnEdges add: [ :edge | edge shape withShorterHorizontalAttachPoint ].
+	layout :=  RTReversedHorizontalTreeLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
 RTLayoutBuilder >> horizontalTree [
 	actionOnEdges add: [ :edge | edge shape withHorizontalAttachPoint ].
 	layout := RTHorizontalTreeLayout new.
@@ -336,6 +343,13 @@ RTLayoutBuilder >> sunburstWithRadius: radius [
 RTLayoutBuilder >> tree [
 	actionOnEdges add: [ :edge | edge shape withVerticallAttachPoint ].
 	layout := RTTreeLayout new.
+	^ layout
+]
+
+{ #category : #'public - layout' }
+RTLayoutBuilder >> treeReversed [
+	actionOnEdges add: [ :edge | edge shape withShorterVerticalAttachPoint ].
+	layout := RTReversedTreeLayout new.
 	^ layout
 ]
 
