@@ -155,12 +155,6 @@ RTEdgeDrivenLayout >> executeOnElements: elements [
 	super executeOnElements: elements
 ]
 
-{ #category : #private }
-RTEdgeDrivenLayout >> fromPositions [
-	
-	^fromPositions ifNil: [fromPositions := self defaultFromPositions]
-]
-
 { #category : #accessing }
 RTEdgeDrivenLayout >> fromPositions: anArray [
 	
@@ -200,12 +194,6 @@ RTEdgeDrivenLayout >> setEdgesFromElements: elements [
 RTEdgeDrivenLayout >> shouldSetDefaultAttachPoint [
 	"Return true if an attach point has to be added to edges. False else"
 	^ shouldSetDefaultAttachPoint
-]
-
-{ #category : #private }
-RTEdgeDrivenLayout >> toPositions [
-	
-	^toPositions ifNil: [toPositions := self defaultToPositions]
 ]
 
 { #category : #accessing }
