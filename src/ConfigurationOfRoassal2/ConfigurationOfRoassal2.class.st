@@ -755,8 +755,8 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.35'.
-	spec for: #'pharo6.x' version: '1.35'.
+	spec for: #'pharo5.x' version: '1.37'.
+	spec for: #'pharo6.x' version: '1.37'.
 ]
 
 { #category : #versions }
@@ -1297,6 +1297,46 @@ ConfigurationOfRoassal2 >> version135: spec [
 			package: 'Roassal2' with: 'Roassal2-akevalion.1402';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.42';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version136: spec [
+	<version: '1.36' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '29/08/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-akevalion.390';
+			package: 'Roassal2' with: 'Roassal2-akevalion.1417';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.43';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version137: spec [
+	<version: '1.37' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'Update of Kendrick'.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '29/08/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-akevalion.390';
+			package: 'Roassal2' with: 'Roassal2-akevalion.1418';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.43';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
