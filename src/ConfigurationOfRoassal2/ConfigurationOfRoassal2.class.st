@@ -1334,7 +1334,7 @@ ConfigurationOfRoassal2 >> version137: spec [
 		spec 
 			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
 			package: 'Trachel' with: 'Trachel-akevalion.390';
-			package: 'Roassal2' with: 'Roassal2-akevalion.1418';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1419';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.43';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
