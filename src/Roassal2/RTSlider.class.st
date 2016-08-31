@@ -1,28 +1,13 @@
 "
-Create a slider on a view. A callback may be set when it is moved
+Create a slider on a view.
 
-[ [ [ 
-	| v label slider |
-	v := RTView new.
-	label := RTLabel elementOn: 0.
-	v add: label.
-	
-	slider := RTSlider new.
-	slider view: v.
-	slider labelled.
-	slider callback: [ :aValue | label model: aValue * 100. label updateShape ].
-	slider moveBelow.
-	slider build.
-	
-	v
- ] ] ]
+A `#callback:`can be set to view the `#progress` (as float between 0 and 1).
 "
 Class {
 	#name : #RTSlider,
 	#superclass : #RTBuilder,
 	#instVars : [
 		'callback',
-		'labelled',
 		'position',
 		'sliderElements',
 		'min',
@@ -30,7 +15,8 @@ Class {
 		'useIntegerLabel',
 		'value',
 		'orientation',
-		'size'
+		'size',
+		'hasLabel'
 	],
 	#category : #'Roassal2-Builder-UI-Slider'
 }
@@ -51,7 +37,8 @@ RTSlider >> callback [
 
 { #category : #accessing }
 RTSlider >> callback: aOneArgBlock [
-	"At each movement of the slider, the argument aOneArgBlock will be evaluated. The bloc takes as argument a float value, ranging between 0.0 and 1.0"
+	"aOneArgBlock will be called with the current #progress (float between 0.0 and 1.0)."
+
 	callback := aOneArgBlock
 ]
 
@@ -74,7 +61,7 @@ RTSlider >> horizontal [
 { #category : #initialization }
 RTSlider >> initialize [
 	super initialize.
-	labelled := false.
+	hasLabel := false.
 	callback := [ :aValue |  ].
 	sliderElements := #().
 	min := 0.0.
@@ -92,7 +79,7 @@ RTSlider >> isHorizontal [
 
 { #category : #accessing }
 RTSlider >> labeled [
-	labelled := true
+	hasLabel := true
 ]
 
 { #category : #accessing }
@@ -121,6 +108,13 @@ RTSlider >> min [
 RTSlider >> min: aNumber [
 	self assert: [ aNumber <= max ] description: 'Min value cant be bigger than the max value'.
 	min := aNumber
+]
+
+{ #category : #accessing }
+RTSlider >> min: aMin max: aMax [
+	self assert: [ aMin <= aMax ] description: 'Min value cant be bigger than the max value'.
+	min := aMin.
+	max := aMax
 ]
 
 { #category : #accessing }
@@ -180,7 +174,7 @@ RTSlider >> renderIn: aView [
 			aValue := aValue * (max - min) + min.
 			aValue := (aValue max: min) min: max.
 			callback rtValue: aValue.
-			labelled
+			hasLabel
 				ifTrue: [ trachelShape
 						text:
 							(useIntegerLabel
@@ -191,7 +185,7 @@ RTSlider >> renderIn: aView [
 	cursor translateTo: sliderSize * self progress.
 
 	"We prepare a label if necessary"
-	labelled
+	hasLabel
 		ifTrue: [ cursor @ (RTLabeled new text: self value).
 			trachelShape := cursor attributeAt: #RTLabelledLabel ].
 
