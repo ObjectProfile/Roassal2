@@ -17,7 +17,7 @@ b view addMenu: ''+ 1'' callback: [ b add: 400 atRandom - 200 ].
 Class {
 	#name : #RTDynamicStackerGrapherExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Grapher-Core'
+	#category : #'Roassal2-Builder-Grapher-Examples'
 }
 
 { #category : #sources }
