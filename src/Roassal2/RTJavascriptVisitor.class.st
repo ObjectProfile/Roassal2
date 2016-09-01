@@ -18,7 +18,7 @@ RTJavascriptVisitor >> addBorderColor: c [
 	c ifNil: [ ^ self].
 	
 	stream nextPutAll: ('bordercolor: {r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
-	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}, ' ]
+	c alpha = 1 ifTrue: [ stream nextPutAll: '}, ' ]
 	ifFalse: [ stream nextPutAll: (', a: <1p>}, ' expandMacrosWith: c alpha) ]
 	
 ]
@@ -26,7 +26,10 @@ RTJavascriptVisitor >> addBorderColor: c [
 { #category : #helpers }
 RTJavascriptVisitor >> addBorderWidth: aShape [
 	(aShape strokePaint isNil or: [ aShape strokeWidth < 0 ]) ifTrue: [ ^ self ].
-	stream nextPutAll: 'sw: ', (self number: aShape strokeWidth), ','.
+	stream 
+		nextPutAll: 'sw: ';
+		nextPutAll: (self number: aShape strokeWidth);
+		nextPutAll: ','.
 ]
 
 { #category : #helpers }
@@ -39,9 +42,18 @@ RTJavascriptVisitor >> addColor: c [
 
 { #category : #helpers }
 RTJavascriptVisitor >> addColorBase: c [
-	stream nextPutAll: ('{r: <1p>, g: <2p>, b:<3p>' expandMacrosWith: (c red*255) rounded with: (c green*255) rounded with:  (c blue*255) rounded ).
-	c alpha = 1.0 ifTrue: [ stream nextPutAll: '}' ]
-	ifFalse: [ stream nextPutAll: ', a: ', (self number: c alpha),'}' ]
+	stream 
+		nextPutAll: '{r:';
+		nextPutAll: (self number: (c red*255) rounded);
+		nextPutAll: ',g:';
+		nextPutAll: (self number: (c green*255) rounded);
+		nextPutAll: ',b:';
+		nextPutAll: (self number: (c blue*255) rounded).
+	c alpha = 1 ifTrue: [ stream nextPutAll: '}' ]
+	ifFalse: [ stream 
+		nextPutAll: ',a:';
+		nextPutAll: (self number: c alpha);
+		nextPutAll: '}' ]
 ]
 
 { #category : #helpers }
@@ -55,11 +67,20 @@ RTJavascriptVisitor >> addInteractions: aShape [
 
 { #category : #helpers }
 RTJavascriptVisitor >> addMatrix: m [
-	stream nextPutAll: 'matrix:{shx: ', (self number: m shx), 
-		', shy: ',  (self number: m shy), 
-		', sx: ', (self number: m sx), 
-		', sy: ', (self number: m sy), 
-		', x: ', (self number: m x), ', y: ', (self number: m y), '}}, '.
+	stream 
+		nextPutAll: 'matrix:{shx: ';
+		nextPutAll: (self number: m shx);
+		nextPutAll: 	',shy: ';
+		nextPutAll: (self number: m shy);
+		nextPutAll: 	',sx: ';
+		nextPutAll: (self number: m sx);
+		nextPutAll: 	',sy: ';
+		nextPutAll: (self number: m sy);
+		nextPutAll: 	',x: ';
+		nextPutAll: (self number: m x);
+		nextPutAll: ',y: ';
+		nextPutAll: (self number: m y);
+		nextPutAll: '}}, '.
 	
 ]
 
@@ -73,7 +94,8 @@ RTJavascriptVisitor >> addStringWithFont: aLabel [
 		nextPutAll: (converter convertString: aLabel text);
 		nextPutAll: '", font: {n: "';
 		nextPutAll: fn;
-		nextPutAll: '", s: ', aLabel fontSize asString;
+		nextPutAll: '", s: ';
+		nextPutAll: (self number: aLabel fontSize);
 		nextPutAll: '},'
 ]
 
@@ -145,10 +167,23 @@ RTJavascriptVisitor >> visitArcShape: aShape [
 	stream nextPutAll: '
 		{type: "arc", id: "';
 		nextPutAll: (self nameFor: aShape);
-		nextPutAll: '", ir: ',(self number: aShape innerRadius),', er: ',(self number: aShape externalRadius),',';
-		nextPutAll: ' aAngle: ',(self number: aShape alphaAngle),', bAngle: ',(self number: aShape betaAngle),',';
-		nextPutAll: ' o: {x: ',(self number: aShape topLeft x),', y: ',(self number: aShape topLeft y),'},';
-		nextPutAll: ' c: {x: ',(self number: aShape bottomRight x),', y: ',(self number: aShape bottomRight y ),'},'.
+		nextPutAll: '", ir: ';
+		nextPutAll: (self number: aShape innerRadius);
+		nextPutAll: ', er: ';
+		nextPutAll: (self number: aShape externalRadius);
+		nextPutAll:', aAngle: ';
+		nextPutAll: (self number: aShape alphaAngle);
+		nextPutAll: ', bAngle: ';
+		nextPutAll: (self number: aShape betaAngle);
+		nextPutAll: ', o: {x: ';
+		nextPutAll: (self number: aShape topLeft x);
+		nextPutAll: ', y: ';
+		nextPutAll: (self number: aShape topLeft y);
+		nextPutAll: '}, c: {x: ';
+		nextPutAll: (self number: aShape bottomRight x);
+		nextPutAll: ', y: ';
+		nextPutAll: (self number: aShape bottomRight y );
+		nextPutAll: '},'.
 	self addColor: aShape color.
 	self addInteractions: aShape element.
 	self addMatrix: aShape matrix.
@@ -167,10 +202,15 @@ RTJavascriptVisitor >> visitArrowHeadShape: arrowShape [
 	self addColor: arrowShape color.
 	self addBorderColor: arrowShape strokePaint.
 	
-	stream nextPutAll: ' width: ', arrowShape width asString;
-		nextPutAll: ', size: ', arrowShape mySize asString.
+	stream 
+		nextPutAll: ' width: ';
+		nextPutAll: (self number: arrowShape width);
+		nextPutAll: ', size: ';
+		nextPutAll: (self number: arrowShape mySize).
 	self visitAttachPoint: e.
-	stream nextPutAll: ', base: ', arrowShape baseSize asString;
+	stream 
+		nextPutAll: ', base: ';
+		nextPutAll: (self number: arrowShape baseSize);
 		nextPutAll: '},'.
 	
 	
@@ -186,10 +226,15 @@ RTJavascriptVisitor >> visitArrowShape: arrowShape [
 		nextPutAll: ('", fromid: <1p>, toid: <2p>,' 
 		expandMacrosWith:  (self nameFor: e from trachelShape) with: (self nameFor: e to trachelShape) ).
 	self addColor: arrowShape strokePaint.
-	stream nextPutAll: ' width: ', (self number: arrowShape width);
-		nextPutAll: ', size: ', (self number: arrowShape mySize).
+	stream
+		nextPutAll: ' width: ';
+		nextPutAll: (self number: arrowShape width);
+		nextPutAll: ', size: ';
+		nextPutAll: (self number: arrowShape mySize).
 	self visitAttachPoint: e.
-	stream nextPutAll: ', base: ', (self number: arrowShape baseSize);
+	stream 
+		nextPutAll: ', base: ';
+	 	nextPutAll: (self number: arrowShape baseSize);
 		nextPutAll: '},'.
 	
 ]
@@ -204,7 +249,9 @@ RTJavascriptVisitor >> visitAttachPoint: element [
 		ifFalse: [ element shape ].
 	stream nextPutAll: ',ap: new ';
 		nextPutAll: ap attachPoint class name;
-		nextPutAll: '(', ap attachPoint isInverted asString, ')'.
+		nextPutAll: '(';
+		nextPutAll: ap attachPoint isInverted asString;
+		nextPutAll: ')'.
 	
 ]
 
@@ -221,10 +268,16 @@ RTJavascriptVisitor >> visitBezierShape: aBezierShape [
 	self addColor: aBezierShape strokePaint.
 	
 	shape class = RTBezierLine ifTrue: [ 
-		stream nextPutAll:  'tension: ',(self number: shape tension),', ides: ['.
+		stream 
+			nextPutAll:  'tension: ';
+			nextPutAll: (self number: shape tension);
+			nextPutAll: ', ides: ['.
 		shape follow ifNotNil: [ shape setControllingElementsFromFollowFor: e ].
 		(shape controllingElements rtValue: e) do: [ :el | 
-			stream nextPutAll: '"', (self nameFor: el trachelShape), '", '] ].
+			stream 
+				nextPutAll: '"';
+				nextPutAll: (self nameFor: el trachelShape);
+				nextPutAll: '", '] ].
 	
 	stream nextPutAll: '], width: ';
 		nextPutAll: (self number: aBezierShape width).
@@ -247,9 +300,9 @@ RTJavascriptVisitor >> visitBitMapShape: aBitmapShape [
 		nextPutAll: '", base64: "';
 		nextPutAll: icon64;
 		nextPutAll: '", w: ';
-		nextPutAll: aBitmapShape width asString;
+		nextPutAll: (self number: aBitmapShape width);
 		nextPutAll: ', h: ';
-		nextPutAll: aBitmapShape height asString;
+		nextPutAll: (self number: aBitmapShape height);
 		nextPutAll: ', '.
 	self addInteractions: aBitmapShape element.
 	self addMatrix: aBitmapShape matrix.
@@ -264,7 +317,11 @@ RTJavascriptVisitor >> visitBoxShape: aBox [
 	stream nextPutAll: '
 		{type: "box", id: "';
 		nextPutAll: (self nameFor: aBox);
-		nextPutAll: '", w: ', (self number: box width),', h: ',(self number: box height),', '.
+		nextPutAll: '", w: ';
+		nextPutAll: (self number: box width);
+		nextPutAll: ', h: ';
+		nextPutAll: (self number: box height);
+		nextPutAll: ', '.
 	self addBorderColor: aBox strokePaint.
 	self addBorderWidth: aBox.
 	self addColor: aBox color.
@@ -289,13 +346,7 @@ RTJavascriptVisitor >> visitCanvas: aCanvas [
 
 { #category : #visitor }
 RTJavascriptVisitor >> visitDiamondShape: diamondShape [
-	"Looks like to be broken"
-	| aid color bColor w s |
-	aid := self getDecorationId: diamondShape.
-	color := diamondShape color.
-	bColor := diamondShape strokePaint.
-	w := diamondShape width.
-	s := diamondShape mySize.
+	"TODO"
 
 ]
 
@@ -344,7 +395,11 @@ RTJavascriptVisitor >> visitEllipseShape: anEllipse [
 	stream nextPutAll: '
 		{type: "ellipse", id: "';
 		nextPutAll: (self nameFor: anEllipse);
-		nextPutAll: ('", rx: ',(self number: box width / 2),', ry: ',(self number: box height/2),',').
+		nextPutAll: '", rx: ';
+		nextPutAll: (self number: box width / 2);
+		nextPutAll: ', ry: ';
+		nextPutAll: (self number: box height/2);
+		nextPutAll: ','.
 	self addBorderColor: anEllipse strokePaint.
 	self addBorderWidth: anEllipse.
 	self addColor: anEllipse color.
@@ -364,7 +419,10 @@ RTJavascriptVisitor >> visitHightlightableInteraction: anInt with: el [
 	stream nextPutAll: 'ides: ['.
 		((anInt highlightElements) rtValue: el) 
 		do: [ :e |
-			stream nextPutAll: '"', (self nameFor: e trachelShape), '",' ].
+			stream 
+				nextPutAll: '"';
+				nextPutAll: (self nameFor: e trachelShape);
+				nextPutAll: '",' ].
 		stream nextPutAll: ']})'.
 ]
 
@@ -387,8 +445,15 @@ RTJavascriptVisitor >> visitLabelShape: aLabel [
 	stream nextPutAll: '
 		{type: "label", id: "';
 		nextPutAll: (self nameFor: aLabel);
-		nextPutAll: ('",o: {x: <1p>, y: <2p>},' expandMacrosWith: box origin x with: box origin y);
-		nextPutAll: ('c: {x: <1p>, y: <2p>},' expandMacrosWith: box corner x with: box corner y).
+		nextPutAll: '",o: {x: ';
+		nextPutAll: (self number: box origin x);
+		nextPutAll: ', y: ';
+		nextPutAll: (self number: box origin y);
+		nextPutAll: '},c: {x: ';
+		nextPutAll: (self number: box corner x);
+		nextPutAll: ', y: ';
+		nextPutAll: (self number: box corner y);
+		nextPutAll: '},'.
 	self addColor: aLabel color.
 	self addStringWithFont: aLabel.
 	self addInteractions: aLabel element.
@@ -402,9 +467,11 @@ RTJavascriptVisitor >> visitLabelledInteraction: anInt with: el [
 		self addColor: anInt color.
 		stream nextPutAll: 'low'.
 		self addColor: anInt lowColor.
-		stream nextPutAll: 'lbl: '.
-		stream nextPutAll: '"',(self nameFor: anInt lbl),'"'.
-		stream nextPutAll: '})'.
+		stream 
+			nextPutAll: 'lbl: ';
+			nextPutAll: '"';
+			nextPutAll: (self nameFor: anInt lbl);
+			nextPutAll: '"})'.
 ]
 
 { #category : #visitor }
@@ -412,18 +479,19 @@ RTJavascriptVisitor >> visitLineShape: aLine [
 	
 	| e fromTo |
 	e := aLine element.
-	e ~= nil ifTrue: [ 
-		fromTo := '",fromid:<1p>,toid:<2p>,' 
+	fromTo := e 
+		ifNil: [ '", fromid: ',(self pointToString: aLine from),',toid:',(self pointToString: aLine to),',' ]
+		ifNotNil: [ '",fromid:<1p>,toid:<2p>,' 
 			expandMacrosWith: (self nameFor: e from trachelShape)
-			with: (self nameFor: e to trachelShape) .] ifFalse: [
-		fromTo := '", fromid: ',(self pointToString: aLine from),',toid:',(self pointToString: aLine to),','.].
+			with: (self nameFor: e to trachelShape) ].
 	
 	stream nextPutAll: '
 		{type: "line", id: "';
 		nextPutAll: (self nameFor: aLine);
 		nextPutAll: fromTo.
 	self addColor: aLine color.
-	stream nextPutAll: ' width: ', aLine width asString.
+	stream nextPutAll: ' width: ';
+		nextPutAll: (self number: aLine width).
 	self visitAttachPoint: e.
 	stream nextPutAll: '},'.
 	
