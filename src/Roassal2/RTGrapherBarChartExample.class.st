@@ -98,7 +98,7 @@ nyl0D2EbJtl25f3U1FlA1/vJ+EtOhcS/CeIPJP4SfyDxBxJ/iT+Q+AOJv8QfSPyBxF9yLP8D
 DqzquEBjAy0AAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGrapherBarChartExample >> exampleBarChart2 [
 	| b ds |
 	b := RTGrapher new.
@@ -129,7 +129,7 @@ RTGrapherBarChartExample >> exampleBarChart2 [
 	^ b
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGrapherBarChartExample >> exampleBarChart2Icon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADI0lEQVR4XuXaP2vqUBjHcd9J
 +5bcS/sGCu1soVXRqUPfQTsoOLjpVL3+nVxKNyU4xEEEwUVxULSPzZOQS0yDt71Nau79/uCQ
@@ -149,7 +149,7 @@ TCZlMplIuVyWWq0WGUipVLLbNgxDtETRx2AwkOVyKYVCQdrtdvgg2WxWut2uNK3vlPl8PpJB
 B+GHD8IH4YcPwg8fhA/CDx+ED8IPH4QPwg8fBJF3z7uGtXujWGMAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGrapherBarChartExample >> exampleBarChartWithNegativeValues [
 
 	| data b ds |
@@ -170,7 +170,7 @@ RTGrapherBarChartExample >> exampleBarChartWithNegativeValues [
 	^ b view
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGrapherBarChartExample >> exampleBarChartWithNegativeValuesIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD+0lEQVR4XuXbzU7iUBiHcW/O
 W/EOXJmIH9GFC5fGRHeuTFyocWEgiooGiRkM+B1HUwwgxAQDOpqoeZm+xympTtFSqQPz/Jum
@@ -194,7 +194,7 @@ o+58n1Xnp/P7EH74IHwQfvggfBB++CB8EH74IPzwQfgg/PBB+CD88EH4IPzwQfgg/PBB+OGD
 8EH44YPwQfjhg/BB+OGD8EH44YPwwwfhg/DjK78B7gqeCFF7BtEAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #sources }
 RTGrapherBarChartExample >> exampleBarchart [
 
 	| grapher dataSet |
@@ -221,7 +221,7 @@ RTGrapherBarChartExample >> exampleBarchart [
 	^ grapher
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #icons }
 RTGrapherBarChartExample >> exampleBarchartIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADa0lEQVR4XuXb3UtiQRzG8f5a
 /4aEIIjAy7rpMuquojJ6EyIKjS4qgl6oFCpfWozdCzUVKiIe9/xmnbAyazc12+8Dw8Rh6Bzm
@@ -393,7 +393,7 @@ ID7Is0Da7XaMx+Po9XpRSZAi7f/7BZPJJJrNZtRqtTSu3luv15GGP80FnyEJ4ng8Rr/f9ye/
 80F8ED8fxM8H8UH87uoTt/3tJ829VVMAAAAASUVORK5CYII='
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTGrapherBarChartExample >> label [
 	^ 'Grapher - Bar charts'
 ]
