@@ -32,7 +32,7 @@ RTSVGVisitor2Test >> testAddMatrix [
 	el := RTBox new element.
 	el translateTo: 0 @ 0.5.
 	visitor addMatrix: el trachelShape matrix.
-	self assert: visitor stream contents equals: 'matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0.5}}, '
+	self assert: visitor stream contents equals: 'matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0.5}}, '
 ]
 
 { #category : #tests }
@@ -48,8 +48,8 @@ RTSVGVisitor2Test >> testAddPopup [
 			group add: background. ]).
 	visitor addInteractions: element.
 	self assert: visitor stream contents equals: 'ints: [new RTPopup([
-		{type: "box", id: "0", w: 10, h: 10, color: {r: 0, g: 0, b:255}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, 
-		{type: "box", id: "1", w: 20, h: 20, color: {r: 0, g: 0, b:0}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, ]) ], '
+		{type: "box", id: "0", w: 10, h: 10, color: {r:0,g:0,b:255}, ints: [], matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, 
+		{type: "box", id: "1", w: 20, h: 20, color: {r:0,g:0,b:0}, ints: [], matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, ]) ], '
 ]
 
 { #category : #tests }
@@ -82,7 +82,7 @@ RTSVGVisitor2Test >> testVisitArcShape [
 	el := (RTArc new  betaAngle: 0; innerRadius: 30; externalRadius: 30) element.
 	visitor visitElement: el.
 	self assert: visitor stream contents equals: '
-		{type: "arc", id: "0", ir: 30, er: 30, aAngle: 0, bAngle: 0, o: {x: 30, y: 0}, c: {x: 30, y: 0},color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '
+		{type: "arc", id: "0", ir: 30, er: 30, aAngle: 0, bAngle: 0, o: {x: 30, y: 0}, c: {x: 30, y: 0},color: {r:223,g:223,b:223}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
 
 { #category : #tests }
@@ -95,14 +95,14 @@ RTSVGVisitor2Test >> testVisitArrowShape [
 	shape := RTArrowedLine edgeFrom: e1 to: e2.
 	view add: e1; add: e2; add: shape.
 	visitor visitView: view.
-	self assert: visitor stream contents equals:'mamani.color({r: 255, g: 255, b:255});
+	self assert: visitor stream contents equals:'mamani.color({r:255,g:255,b:255});
 	mamani.camera.setScale(1.0001);
 	var shapes = [
-		{type: "box", id: "0", w: 5, h: 5, color: {r: 223, g: 223, b:223}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, 
-		{type: "box", id: "1", w: 5, h: 5, color: {r: 223, g: 223, b:223}, ints: [], matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, 
+		{type: "box", id: "0", w: 5, h: 5, color: {r:223,g:223,b:223}, ints: [], matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, 
+		{type: "box", id: "1", w: 5, h: 5, color: {r:223,g:223,b:223}, ints: [], matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, 
 		{id: "2", type:"multi", shapes:[
-		{type: "line", id: "3",fromid:''0'',toid:''1'',color: {r: 223, g: 223, b:223},  width: 1,ap: new RTCenteredAttachPoint(false)},
-		{type: "simplearrow", id: "4", fromid: ''0'', toid: ''1'',color: {r: 223, g: 223, b:223},  width: 1, size: 10,ap: new RTCenteredAttachPoint(false), base: 10},], offsets: [{x: 0, y: 0},{x: 0, y: 0},]},
+		{type: "line", id: "3",fromid:''0'',toid:''1'',color: {r:223,g:223,b:223},  width: 1,ap: new RTCenteredAttachPoint(false)},
+		{type: "simplearrow", id: "4", fromid: ''0'', toid: ''1'',color: {r:223,g:223,b:223},  width: 1, size: 10,ap: new RTCenteredAttachPoint(false), base: 10},], offsets: [{x: 0, y: 0},{x: 0, y: 0},]},
 	];
 	mamani.addShapes(shapes);
 '
@@ -114,7 +114,7 @@ RTSVGVisitor2Test >> testVisitBoxShape [
 	box := RTBox new size: 1/2; elementOn: 'foo'.
 	visitor visitElement: box.
 	self assert: visitor stream contents equals: '
-		{type: "box", id: "0", w: 0.5, h: 0.5, color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '.
+		{type: "box", id: "0", w: 0.5, h: 0.5, color: {r:223,g:223,b:223}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
 
 { #category : #tests }
@@ -123,7 +123,7 @@ RTSVGVisitor2Test >> testVisitEllipseShape [
 	ellipse := RTEllipse new size: 1/2; elementOn: 'foo'.
 	visitor visitElement: ellipse.
 	self assert: visitor stream contents equals:'
-		{type: "ellipse", id: "0", rx: 0.25, ry: 0.25,color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '.
+		{type: "ellipse", id: "0", rx: 0.25, ry: 0.25,color: {r:223,g:223,b:223}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
 
 { #category : #tests }
@@ -133,7 +133,7 @@ RTSVGVisitor2Test >> testVisitGroup [
 	group add: RTBox element.
 	visitor visitGroup: group.
 	self assert: visitor stream contents equals: '
-		{type: "box", id: "0", w: 5, h: 5, color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '
+		{type: "box", id: "0", w: 5, h: 5, color: {r:223,g:223,b:223}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
 
 { #category : #tests }
@@ -145,7 +145,7 @@ RTSVGVisitor2Test >> testVisitLineShape [
 	shape := RTLine edgeFrom: e1 to: e2.
 	visitor visitEdge: shape.
 	self assert: visitor stream contents equals: '
-		{type: "line", id: "0", fromid: {x:0,y:0},toid:{x:0,y:0},color: {r: 223, g: 223, b:223},  width: 1,ap:RTCenteredAttachPoint},'.
+		{type: "line", id: "0", fromid: {x:0,y:0},toid:{x:0,y:0},color: {r:223,g:223,b:223},  width: 1,ap:RTCenteredAttachPoint},'
 ]
 
 { #category : #tests }
@@ -155,7 +155,7 @@ RTSVGVisitor2Test >> testVisitPolygonShape [
 		vertices: (Array with: 0@0 with: 1@0 with: 1@1); elementOn: 'foo'.
 	visitor visitElement: shape.
 	self assert: visitor stream contents equals: '
-		{type: "polygon", id: "0", o: {x: 0, y: 0}, c: {x: 1, y: 1}, p: "0,0 1,0 1,1 ",color: {r: 223, g: 223, b:223}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '.
+		{type: "polygon", id: "0", o: {x: 0, y: 0}, c: {x: 1, y: 1}, p: "0,0 1,0 1,1 ",color: {r:223,g:223,b:223}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
 
 { #category : #tests }
@@ -165,5 +165,5 @@ RTSVGVisitor2Test >> testVisitSVGPath [
 	
 	visitor visitElement: shape.
 	self assert: visitor stream contents equals: '
-		{type: "path", id: "0", d:"M 100 100 L 300 100 L 200 300 z", o: {x: 100, y: 100}, c: {x: 300, y: 300},bordercolor: {r: 0, g: 0, b:0}, sw: 1,color: {r: 0, g: 0, b:0, a: 0}, matrix:{shx: 0, shy: 0, sx: 1, sy: 1, x: 0, y: 0}}, '
+		{type: "path", id: "0", d:"M 100 100 L 300 100 L 200 300 z", o: {x: 100, y: 100}, c: {x: 300, y: 300},bordercolor: {r: 0, g: 0, b:0}, sw: 1,color: {r:0,g:0,b:0,a:0}, matrix:{shx: 0,shy: 0,sx: 1,sy: 1,x: 0,y: 0}}, '
 ]
