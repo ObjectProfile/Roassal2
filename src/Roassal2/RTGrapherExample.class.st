@@ -60,6 +60,80 @@ Ebola2.30,POINT (30.217636 12.862807),1976-01-01T00:00:00,-0002-12-29T00:00:00,S
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleAdjustedAxes [
+| c b1 ds1 b2 ds2 b3 ds3 |
+c := RTComposer new.
+c gap: 35.
+
+"-------"
+b1 := RTGrapher new.
+b1 view: c view.
+ds1 := RTData new.
+ds1 dotShape color: Color red.
+ds1 points: #(3 -3).
+b1 add: ds1.
+b1 build.
+c group: #regular.
+"-------"
+b2 := RTGrapher new.
+b2 view: c view.
+b2 minX: 1.
+b2 maxX: 3.
+b2 withoutOrigin.
+ds2 := RTData new.
+ds2 dotShape color: Color red.
+ds2 points: #(3 -3).
+b2 add: ds2.
+b2 build.
+c group: #withoutOrigin.
+"-------"
+b3 := RTGrapher new.
+b3 view: c view.
+b3 yOffset: 30.
+ds3 := RTData new.
+ds3 dotShape color: Color red.
+ds3 points: #(3 -3).
+b3 add: ds3.
+b3 build.
+c group: #offset.
+"-------"
+
+c move: #withoutOrigin below: #regular.
+c move: #offset below: #withoutOrigin.
+c nameGroup: #regular as: 'Regular'.
+c nameGroup: #withoutOrigin as: '#Without origin (0@0)'.
+c nameGroup: #offset as: 'Y axis offset'.
+^ c view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleAdjustedAxesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEb0lEQVR4XuWdx07kQBCGOfI4
+HHhEnoQLJxAHDiBEEjnnnHMSQeQw1Cx/S82yWnul6WHt9nwlWcN4XNPgz11d3VVd1JXL/09m
+Z2etzJeKpK4a5YODA9Oxs7Njz8/PxgeSM5CtrS1bW1uzjY0Ne3x8/OvmDw4OWh69a2ZmJhfd
+6elpyxUI32RF1kP4QAoEZH193QRkZWXFQnT9GFWp7sLCgtMJadfrhrR7fHwc3G4mQJaXl21i
+YsJWV1ctRFdOggdTiYyMjDjdkHa9bki7Gi9D2+WbrFo2Wbu7u3Z7e2uXl5d/3Hz7lGo8Fj6Q
+QJG7e3d3Z6+vr/x5CN/L4gPhA+ED4QPhAykyED+JOjs74w/qeQO5ubmxubk5Ozk5sfPzc77b
+G4vJ+vj4sFKpxO8h/DGED4QPhA+ED4QPpMhABgYGXPh2b28PP6hbe7vl7vb29PTY0tKSbW5u
+4nuDNTXFHVPnCx8IHwhf+ED4QLIUhYP39/ftMzTsskCOjo4SPbgkUeQy6by+Y3x83H2mtTc5
+I2rj6enJ+ED+IRcXF85jUyakFiuVBdLf328C09vba0NDQy61SBmTiuXL3V5cXHTZLd3d3S7l
+SO8VTlYWoc8AEQCd03fOz8+78319fWUdISk/GCB6wnXoJqlXaElfN16vynvSofc6dJ3Sbg4P
+D00gdY1e1Rt0nX6+urpyN/vh4eFLT9CkoxXq6+vrxFwAPpAflNie+MwnhrLFelIl/CE5ZyBv
+b2/Ovss0aDD+/plMQqmxkQ8pJpPFX1zkA+ED4QPhA+ED4QMpCBB5Vpo18zd9RgJEIDT7Tdv0
+yQfCN1l8IHwgfCB8IHwgfCB8INXI6empiz98P6fFxdbWVj6QLIH48KrfNM/vIXyTxQfCB8IH
+wgfCB1JQIC8vLy5rI2nDJx9IDkC0qKgcp6RNnzrX3Nz8lf9U6dHS0lI43Y6Ojjiy35M2fEqm
+pqaCf8H7+/tg3bQMxph1+WMIbVBXGqiATE5OBhUSCwW6vb3tdELa9boh7fo9+SHtZgJEA73+
+MAWwQnQlIbqq25WHrhycUF2+yaplkyXvSsKPqUcARLm96uZaXFQmOR8If6bOB8IHwgfCB8IH
+wgfCl58Cog2XSYWU+TH1nIAIBL+QMt9k8YHwgfCB8IHwgdQAEL/czC+kHAEQLS4qIJMWU88L
+iDU0GLaHvL+/W1ohZb5ENobwhQ+ED4QvfCC/B++ECkQqhOPrZPGB/EdR4TFtClKo2Bc403uf
+uqOiZKodrIVOFSzTdX7bdtKWbT6QKmV0dNTdVP3TSf1D5M7OTlcdTums8vDGxsa+3GyVjerq
+6rLh4WEHrki1vPhjCB8IX34UiCaBqviZtNFTpkEz9KgG/vp6q2kgysHyVUKTPlddXP5zHpHJ
+4gPhA+ED4QPhA+EDSRPNhDXxStvoyQeSMRC5tvKw0oJSbW1tfCB5mKy0gBS/h/DHED4QPhA+
+ED4QPpCCAFGWiV7TiifzgWQMxFeRSyuezAfCN1l8IHwgfCAY+QXk7fC9SDW0HQAAAABJRU5E
+rkJggg=='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleAverage [
 	| b ds |
 	b := RTGrapher new.
