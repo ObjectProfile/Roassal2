@@ -304,16 +304,19 @@ RTAbstractGrapher >> renderAllDecoratorsInFront [
 
 { #category : #utility }
 RTAbstractGrapher >> renderAxis [
-	| center xVector yVector yOffsetVector |
+	| center yPlus yStart xStart |
 	center := self centralPoint.
-	xVector := extent x @ 0.
-	yVector := 0 @ extent y negated.
-	yOffsetVector := (yOffset ifNil: [ 0 ]) negated @ 0.
 	self adjustXAxisIfNecessary.
+	yStart := center x @ 0.
+	xStart := 0 @ center y.
 	withOrigin
-		ifFalse: [ center := 0 @ 0 ].
-	self axisYFrom: center + yOffsetVector to: center + yVector + yOffsetVector.
-	self axisXFrom: center to: center + xVector
+		ifFalse: [ (0 between: minX and: maxX)
+				ifFalse: [ yStart := 0 @ 0 ].
+			(0 between: minY and: maxY)
+				ifFalse: [ xStart := 0 @ 0 ] ].
+	yPlus := (yOffset ifNil: [ 0 ]) negated @ 0.
+	self axisYFrom: yStart + yPlus to: yStart + (0 @ extent y negated) + yPlus.
+	self axisXFrom: xStart to: xStart + (extent x @ 0)
 ]
 
 { #category : #public }
