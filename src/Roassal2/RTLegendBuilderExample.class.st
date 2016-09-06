@@ -117,7 +117,7 @@ RTLegendBuilderExample >> exampleOnDemand [
 	b build.
 
 	lb := RTLegendBuilder new.
-	lb onDemand.
+	lb onDemand: '+Info'.
 	lb view: b view.
 
 	lb addText: 'System complexity view'.

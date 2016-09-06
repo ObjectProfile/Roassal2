@@ -21,8 +21,8 @@ RTSliderTest >> testDefault [
 
 { #category : #tests }
 RTSliderTest >> testOutsideRange [
-	self should: [ slider value: 10 ] raise: AssertionFailure.
-	self should: [ slider value: -5 ] raise: AssertionFailure
+	self should: [ slider value: 10 ] raise: Error.
+	self should: [ slider value: -5 ] raise: Error.
 ]
 
 { #category : #tests }

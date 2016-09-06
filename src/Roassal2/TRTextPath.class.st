@@ -13,24 +13,7 @@ Class {
 
 { #category : #drawing }
 TRTextPath >> drawOn: athensCanvas [
-	| f |
-	athensCanvas pathTransform restoreAfter: [ 
-		athensCanvas pathTransform
-			multiplyBy: matrix asFloatTransform;
-			translateBy: ((self textWidth / -2) @ (self textHeight/2)) asFloatPoint;
-			translateBy: (0 @ self descent negated) asFloatPoint.
-		athensCanvas setFont: font.
-		f := CairoScaledFont fromFreetypeFont: font realFont.
-		f lock.
-		color loadOnCairoCanvas: athensCanvas.
-		athensCanvas setPathMatrix;
-			setScaledFont: f.
-		athensCanvas textPath: text.
-		athensCanvas fillPreserve.
-		outlineColor loadOnCairoCanvas: athensCanvas.
-		athensCanvas primSetLineWidth: outlineWidth asFloat.
-		athensCanvas stroke.
-		f unlock ]
+	TRPlatform current drawTextPathFor: self canvas: athensCanvas
 ]
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTTextTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Core-Tests'
+	#category : #'Roassal2-MorphSpecific'
 }
 
 { #category : #'as yet unclassified' }

@@ -12,7 +12,9 @@ Roassal2VW >> blacklist [
 	^ { RTGeneralExample>>#combiningRoassalAndMorphic. 
 	RTElementTest >> #testPlatformPopup. 
 	RTRoassalExample >> #examplePlatformPoup.
-	RTAbstractExample class >> #createIcon }
+	RTAbstractExample class >> #createIcon.
+	FileReference >> #gtInspectorCsvIn:.
+	RTTabTable >> #gtInspectorTableIn: }
 ]
 
 { #category : #importing }

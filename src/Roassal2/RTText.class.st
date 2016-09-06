@@ -12,7 +12,7 @@ Class {
 		'fontSize',
 		'shouldWrap'
 	],
-	#category : #'Roassal2-Shapes'
+	#category : #'Roassal2-MorphSpecific'
 }
 
 { #category : #accessing }

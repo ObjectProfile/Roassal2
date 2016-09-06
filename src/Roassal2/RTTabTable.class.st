@@ -401,7 +401,10 @@ RTTabTable >> gtInspectorTableIn: composite [
 { #category : #converting }
 RTTabTable >> indexOfName: aString [
 	"Return the index of the column named aString"
-	^ firstRow indexOf: aString
+	| s |
+	s := aString asSymbol.
+	firstRow doWithIndex: [ :e :i | e asSymbol = s ifTrue: [ ^ i ] ].
+	^ 0
 ]
 
 { #category : #updating }
