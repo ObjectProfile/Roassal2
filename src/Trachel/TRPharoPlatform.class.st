@@ -241,6 +241,28 @@ TRPharoPlatform >> downloadPng: aUrl [
 	^ ZnEasy getPng: aUrl
 ]
 
+{ #category : #'drawing - helpers' }
+TRPharoPlatform >> drawTextPathFor: shape canvas: canvas [
+	| f |
+	canvas pathTransform restoreAfter: [ 
+		canvas pathTransform
+			multiplyBy: shape matrix asFloatTransform;
+			translateBy: ((shape textWidth / -2) @ (shape textHeight/2)) asFloatPoint;
+			translateBy: (0 @ shape descent negated) asFloatPoint.
+		canvas setFont: shape font.
+		f := CairoScaledFont fromFreetypeFont: shape font realFont.
+		f lock.
+		shape color loadOnCairoCanvas: canvas.
+		canvas setPathMatrix;
+			setScaledFont: f.
+		canvas textPath: shape text.
+		canvas fillPreserve.
+		shape outlineColor loadOnCairoCanvas: canvas.
+		canvas primSetLineWidth: shape outlineWidth asFloat.
+		canvas stroke.
+		f unlock ]
+]
+
 { #category : #'accessing-classes' }
 TRPharoPlatform >> exampleSelectionClass [
 	^ RTExampleSelection
@@ -260,6 +282,11 @@ TRPharoPlatform >> fontFamilyName: name size: number [
 { #category : #public }
 TRPharoPlatform >> fontListStrings [
 	^ FontChooser new fontListStrings.
+]
+
+{ #category : #'accessing-classes' }
+TRPharoPlatform >> fontMetricsClass [
+	^ CairoFontMetricsProvider
 ]
 
 { #category : #'accessing-classes' }
