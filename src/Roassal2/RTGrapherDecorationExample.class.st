@@ -142,7 +142,6 @@ RTGrapherDecorationExample >> exampleDeviation [
 b := RTGrapher new.
 colors := Array with: Color red with: Color blue.
 points := OrderedCollection new.
-
 colors do: [ :c |
 	ds := RTData new.
 	pts := ((1 to: 100) collect: [ :i | 50 atRandom - 25 ]) cumsum.
@@ -166,7 +165,7 @@ lb view: b view.
 colors doWithIndex: [ :c :i | 
 	lb addColor: c text: 'Series  ', i printString ].
 lb build.
-b view @ RTZoomableView.
+b view @ RTZoomableView @ RTZoomableBoxView.
 ^ b view
 ]
 

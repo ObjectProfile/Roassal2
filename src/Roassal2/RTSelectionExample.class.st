@@ -95,7 +95,7 @@ R3uZn+EN39kpfuMfoPwflK1GDgc822sAAAAASUVORK5CYII='
 RTSelectionExample >> exampleElasticBoxZoom [
 
 	| v |
-	v := RTGrapherExample new exampleDeviation.
+	v := RTGrapherDecorationExample new exampleDeviation.
 	v @ RTZoomableBoxView.
 	^ v
 
