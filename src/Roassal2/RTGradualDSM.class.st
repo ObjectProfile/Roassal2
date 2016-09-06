@@ -15,8 +15,7 @@ Class {
 	#name : #RTGradualDSM,
 	#superclass : #RTAbstractDSM,
 	#instVars : [
-		'score',
-		'selectElement'
+		'score'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -98,7 +97,6 @@ RTGradualDSM >> defaultCellShape [
 RTGradualDSM >> initialize [
 	super initialize.
 	score := [ :association | 0 ].
-	self selectElement: [ :e | true ].
 	transparencyWhenNonHighlighted := 0.9.
 	transparencyWhenHighlighted := 0.4
 ]

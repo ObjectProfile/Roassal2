@@ -39,7 +39,9 @@ RTBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
 	target := self geometryFor: toElement.
 	shift := self offsetNormalFor: anEdge.
 	line := GLineSegment from: source center to: target center.
-	shift := line vector normal * shift.
+	shift := (line vector = (0@0) 
+		ifTrue: [ -1 @ 0]
+		ifFalse: [ line vector normal ]) * shift.
 	anEdge from = toElement
 		ifTrue: [ shift := shift * -1 ].
 	line := GLineSegment from: source center + shift to: target center + shift.

@@ -7874,7 +7874,7 @@ v add: el.
 
 str := String loremIpsum.
 
-t := RTText new
+t := (Smalltalk at: #RTText) new "This line is for compatibility with VisualWorks"
 	width: 180;
 	text: str;
 	wrapText;

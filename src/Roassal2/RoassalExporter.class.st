@@ -363,7 +363,7 @@ RoassalExporter >> prettyPrint: aString [
 													and: [withinQuotes not
 															and: [withinComments not
 																	and: [(#($$ $' ) includes: previousChar) not]]])
-												ifTrue: [s nextPutAll: ':=']
+												ifTrue: [s nextPutAll: '_']
 												ifFalse: [s nextPut: c].
 											previousChar := c]]]].
 		

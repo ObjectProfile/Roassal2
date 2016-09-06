@@ -10,7 +10,9 @@ Class {
 		'text',
 		'rotation',
 		'transparencyWhenNonHighlighted',
-		'transparencyWhenHighlighted'
+		'transparencyWhenHighlighted',
+		'creationBlock',
+		'selectElement'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -48,24 +50,31 @@ RTAbstractDSM >> addLabelsLeft [
 
 { #category : #UI }
 RTAbstractDSM >> addLabelsTop [
-	| es lblShape theModel lbl |
+	| es lblShape theModel lbl labels deltaY |
 	es := self rowAt: 1.
 	lblShape := self labelShape.
+	labels := OrderedCollection new.
+	deltaY := Float fmax.
 	es
 		do:
 			[ :e | 
 			theModel := e model value.
 			lbl := lblShape elementOn: theModel.
+			labels add: lbl.
 			view add: lbl.
 			lbl rotateByDegrees: rotation.
 			RTConstraint new
 				fix: e;
 				movable: lbl;
 				outer;
-				right;
+				middle;
 				top;
 				move.
-			lbl translateBy: self cellSize negated @ 0 ]
+			lbl translateBy: self cellSize negated @ 0.
+			deltaY := deltaY min: lbl position y ].
+	labels do: [ :l | 
+		l translateTo: l position x @ deltaY ].
+		
 ]
 
 { #category : #UI }
@@ -101,7 +110,7 @@ RTAbstractDSM >> createElements [
 			objectsX copy
 				doWithIndex:
 					[ :anObject2 :index2 | 
-					e := self elementOn: anObject1 -> anObject2.
+					e := self elementOn: (self createObjectBlock value: anObject1 -> anObject2).
 					e @ RTPopup.
 					e when: TRMouseEnter do: [ :evt | 
 						self highlightColumn: (evt element attributeAt: #matrixIndex) x.
@@ -115,6 +124,16 @@ RTAbstractDSM >> createElements [
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> createObjectBlock [
+	^ creationBlock
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> createObjectBlock: aBlock [
+	creationBlock := aBlock
 ]
 
 { #category : #hooks }
@@ -153,7 +172,12 @@ RTAbstractDSM >> highlightColumn: aNumber [
 
 { #category : #UI }
 RTAbstractDSM >> highlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenHighlighted) ]
+	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | | shape |
+		shape := e trachelShape class = TRCompositeShape 
+			ifTrue: [ e trachelShape firstShape ]
+			ifFalse: [ e trachelShape ].
+		shape
+			color: (e trachelShape color alpha: self transparencyWhenHighlighted) ]
 ]
 
 { #category : #UI }
@@ -168,6 +192,9 @@ RTAbstractDSM >> initialize [
 	"
 	super initialize.
 	self objects: #().
+	self createObjectBlock: [ :assoc| assoc ].
+	self selectElement: [ :e | true ].
+	self interaction popup.
 	rotation := self defaultTopLabelRotation.
 	wantsLabel := true.
 	text := #yourself.
@@ -260,6 +287,16 @@ RTAbstractDSM >> rowAt: aNumber [
 ]
 
 { #category : #accessing }
+RTAbstractDSM >> selectElement [
+	 ^ selectElement 
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> selectElement: aBlock [
+	selectElement := aBlock
+]
+
+{ #category : #accessing }
 RTAbstractDSM >> text [
 	"Return the text used for labelling"
 	^ text
@@ -298,7 +335,7 @@ RTAbstractDSM >> unhighlightColumn: aNumber [
 
 { #category : #UI }
 RTAbstractDSM >> unhighlightElements: someElements [
-	someElements do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenNonHighlighted) ]
+	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenNonHighlighted) ]
 ]
 
 { #category : #UI }

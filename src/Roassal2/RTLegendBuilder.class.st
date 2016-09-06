@@ -32,7 +32,8 @@ Class {
 		'isOnDemand',
 		'textSize',
 		'gapSize',
-		'isFixed'
+		'isFixed',
+		'onDemandText'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -209,7 +210,8 @@ RTLegendBuilder >> offset: aDistanceInPixel [
 { #category : #'public - ondemand' }
 RTLegendBuilder >> onDemand [
 	"Make the legend appear if the user move the mouse on a particular icon in the visualization"
-	isOnDemand := true
+	isOnDemand := true.
+	onDemandText := '?'.
 ]
 
 { #category : #hooks }
@@ -254,7 +256,7 @@ RTLegendBuilder >> renderOnDemandIn: aView [
 	| label myGroup |
 	super renderIn: aView.
 	RTVerticalLineLayout on: group.
-	label := (RTLabel new color: Color red) elementOn: '?'.
+	label := (RTLabel new color: Color red) elementOn: onDemandText.
 	label setAsFixed.
 	label @ RTHighlightable.
 	aView add: label.

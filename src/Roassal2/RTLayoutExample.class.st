@@ -703,7 +703,7 @@ b edges connectFrom: [ :v | v // 2 ].
 b layout horizontalReversedTree.
 b 
 "
-| v es |
+| v es eb |
 v := RTView new.
 es := RTBox new size: 10; elementsOn: (1 to: 100).
 v addAll: es.
