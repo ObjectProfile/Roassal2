@@ -5,7 +5,7 @@ Class {
 		'text',
 		'font'
 	],
-	#category : #'Trachel-Shapes'
+	#category : #'Trachel-MorphSpecific'
 }
 
 { #category : #private }
@@ -71,7 +71,7 @@ TRTextShape >> font: aFont [
 
 { #category : #accessing }
 TRTextShape >> fontMetrics [
-	^ CairoFontMetricsProvider new
+	^ TRPlatform current fontMetricsClass new
 		font: self font;
 		yourself
 ]
