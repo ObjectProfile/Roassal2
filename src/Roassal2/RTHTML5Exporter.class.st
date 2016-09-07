@@ -30,7 +30,8 @@ Class {
 		'exportFixedShapes',
 		'roassalJSfile',
 		'marginScale',
-		'jsrefenrece'
+		'jsrefenrece',
+		'shouldCreateJS'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -212,8 +213,7 @@ RTHTML5Exporter >> export: aView [
 RTHTML5Exporter >> export: aView toStream: aStream [
 
 	self assert: [ aStream isStream ].
-	
-	self createJS.
+	self shouldCreateJS ifTrue: [ self createJS. ].
 	stream := aStream.
 	[
 		self addStart: aView.
@@ -271,6 +271,7 @@ RTHTML5Exporter >> getIFrameDefFromView: aView label: aLabelAsString directory: 
 RTHTML5Exporter >> initialize [
 	super initialize.
 	self exportFixedShapes: true.
+	self shouldCreateJS: true.
 	self jsreference: 'roassal.js'.
 	self defaultMarginScale.
 ]
@@ -678,6 +679,19 @@ var RTDraggableView = TRInteraction.extend({
 		canvas.whenDo(TRMouseDragging, function(e){
 			var s = canvas.camera.scale;
 			canvas.camera.translateBy({x: e.step.x/s, y: e.step.y/s});
+		});
+	}
+});
+
+var RTLinkView = TRInteraction.extend({
+	link: null,
+	init: function(o){
+		this.link = o;
+	},
+	initOn: function(s){
+		var link = this.link;
+		s.whenDo(TRMouseClick, function(e){
+			window.open(link+".html", "_blank");
 		});
 	}
 });
