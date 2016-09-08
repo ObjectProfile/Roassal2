@@ -2203,6 +2203,16 @@ RTHTML5Exporter >> roassalJSfile: string [
 ]
 
 { #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS [
+	^ shouldCreateJS 
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS: aBool [
+	shouldCreateJS := aBool 
+]
+
+{ #category : #accessing }
 RTHTML5Exporter >> title [
 	^ title ifNil: [ title := self defaultTitle ]
 ]
