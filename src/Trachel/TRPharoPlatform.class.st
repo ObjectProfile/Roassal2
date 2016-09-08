@@ -236,6 +236,11 @@ TRPharoPlatform >> download: aString [
 	^ ZnEasy get: aString.
 ]
 
+{ #category : #'http requests' }
+TRPharoPlatform >> downloadContent: aString [
+	^ aString asUrl retrieveContents
+]
+
 { #category : #public }
 TRPharoPlatform >> downloadPng: aUrl [
 	^ ZnEasy getPng: aUrl
