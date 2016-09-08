@@ -205,7 +205,9 @@ gfAD4Rc/EH4g/OIHwg+EX/xA+IHwyy/6DSC1D9R8yJyVAAAAAElFTkSuQmCC'
 RTCalendarExample >> exampleVisualizationCSV [
 
 | b tab colors dictionary |
-tab := RTTabTable new input: 'http://bl.ocks.org/mbostock/raw/4063318/dji.csv' asUrl retrieveContents usingDelimiter: $,.
+tab := RTTabTable new 
+	input: (TRPlatform current downloadContent: 'http://bl.ocks.org/mbostock/raw/4063318/dji.csv')
+	usingDelimiter: $,.
 tab removeFirstRow.
 
 dictionary := Dictionary new.
@@ -231,7 +233,7 @@ b yearLayout horizontalLine.
 b dateShape if: [ :d | dictionary includesKey: d ] color: 
 	[ :d | | value index |
 	value := (dictionary at: d)+0.05.
-	index := (value * 11/ 0.1)+1.
+	index := ((value * 11/ 0.1)+1) asInteger.
 	index < 1 ifTrue: [ index := 1 ].
 	index > 11 ifTrue: [ index := 11 ].
 	colors at: index. ].

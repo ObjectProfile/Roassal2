@@ -497,6 +497,21 @@ RTJavascriptVisitor >> visitLineShape: aLine [
 	
 ]
 
+{ #category : #'visitor-interactions' }
+RTJavascriptVisitor >> visitLinkView: anInt with: el [
+	| eview name |
+	eview := anInt viewFor: el.
+	name := self nameFor: el.
+	RTHTML5Exporter new 
+		fileName: name, '.html';
+		shouldCreateJS: false;
+		export: eview. 
+	stream 
+		nextPutAll: 'new RTLinkView("';
+		nextPutAll: name;
+			nextPutAll: '")'.
+]
+
 { #category : #visitor }
 RTJavascriptVisitor >> visitMultiCompositeShape: aShape [
 	stream nextPutAll: '
