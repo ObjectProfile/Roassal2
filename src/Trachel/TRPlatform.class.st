@@ -116,6 +116,12 @@ TRPlatform >> download: aString [
 ]
 
 { #category : #'http requests' }
+TRPlatform >> downloadContent: aString [
+	"returns the http web content from a direction like url"
+	self subclassResponsibility
+]
+
+{ #category : #'http requests' }
 TRPlatform >> downloadPng: aUrl [
 	"return the content of a url, the content is an image"
 	self subclassResponsibility
