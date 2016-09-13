@@ -144,6 +144,11 @@ RTAbstractDSM >> createShapeBuilder [
 	^ sb
 ]
 
+{ #category : #hooks }
+RTAbstractDSM >> createView [
+	^ super createView @ RTDraggableView @ RTZoomableView
+]
+
 { #category : #UI }
 RTAbstractDSM >> defaultTopLabelRotation [
 	^ -55
