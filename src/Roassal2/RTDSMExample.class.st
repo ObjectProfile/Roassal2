@@ -416,6 +416,93 @@ YII='
 ]
 
 { #category : #sources }
+RTDSMExample >> exampleCountriesEvolution [
+<noTest>
+| b data countries |
+
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
+
+data := RTTabTable new 
+	input: (TRPlatform current 
+		downloadContent: 'https://numeracy.co/projects/4Q1bOe2IuH7/countries?format=csv')
+	usingDelimiter: #,.
+countries := Dictionary new.
+data removeFirstRow.
+data values do: [ :line | | country timeline |
+	country := countries at: line first 
+		ifAbsentPut: [ RTEvolutionLine new 
+			xvalue: line first;
+			yvalue: 'Population' ].
+	country timeline 
+		ifNil: [ country timeline: OrderedCollection new. ].
+	timeline := country timeline.
+	timeline add: line third -> line fourth asNumber. ].
+data := RTTabTable new.
+b := RTEvolutionDSM new.
+b objectsY: countries keys sorted.
+b objectsX: #(Population).
+b createObjectBlock: [ :assoc | | country |
+	country := countries at: assoc key.
+	country timeline: country timeline. ].
+b labelShape height: 30; color: Color purple.
+b shape shape allShapes first size: 100.
+b shape shape allShapes second
+	size: 100;
+	values: [ :country |	country timeline collect: #value ].
+b view @ RTZoomableBoxView.
+b score: [ :assoc | assoc score ].
+^ b
+
+]
+
+{ #category : #icons }
+RTDSMExample >> exampleCountriesEvolutionIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAIgklEQVR4XuWdaUxVRxTHbZN+
+6AcVQas0qUltTa1tk6ZLmmiirbb6oZYaG2Oapk2bWpfaxhpLsVqQulsVtS64FhdQQURAWUVF
+UFlkc3kiUECQVTYFWUQ49v3PY64XfAJ9Et+V809u5s7MfRcyvzcz990z50yf+/flSynzZBGF
+Lk65T2YhX1fRwPniK1WcP7nxEqlrC9MruS73fBmXlWbWcL4i7zbV3mygGxmVVJ59i+siV6fT
+tGnTyNnZucujj3wMT0bdATJw4ED5QIwCpH///vJ7iBGADBo0iBwdHeUPWfYG4uTkRAMGDJA/
+hxgBiDUQ8oHYCYiaK+QDsbO8vb3Jzc2N3N3dOz3kAzHQY6/8HiIfiHwg8oHIByJftgJxcHCQ
+D8QoQPBDUX4PMQiQIUOG9F4gMesvaq/Io9c9OO+uFr1ygDrLdxRe2T8uELzl7bVzyKZPw7mB
+Vo8OptaWVj6vvF5LZ7aZ+PxOVSPBhoED5yiL9TZRTfEd0gOoLqyjpjvNhDw+nxKQqzX82d2Z
+XHa7rJ62fRFNpZnVXPfvuVJKP5rP57CJQLh3aws90h6ih9FrgXhPiaITXg96R0ZIPpVeq6Hg
+P5Lpbv09bsxl7x4haiWK35nJDef5ZoAGBNd4jT+m5S9HFJqNTxcoN6GMjVD11U10OayA6mua
+6J9vTlFteQOVmY1RMFIlH8yhRN9sStiXRVs+j6Q75ms3TgyzCqRfv369/ykLQEzRN7jBVRlA
++M2Oox3TTnDZJXNjXjE3Mg85MUW088sYWjs2VBuiFr168KEegx518u/LVJB6k/586zClBeVx
++YE58ZyiN/r9GE/+884zNAC5HF7AdfOc9pC1t70iHnvVkFVVUEe+M+N4qMo+U8JlAIKGW//x
+cQ3WunGWnuA7K04DAC1/74hVIGoYRMMj9fn2NKeAAGEY6w6QjkNVrwWS5JetNXbc9qs8LO36
+6iSFr0ijlMO5dO10MTceDoCKWJlG+6bHUkZwfju7OeowtKk85pS8xHLuWZtdIiliVTqXB7om
+8FBYkFbB5bgP/kZnNnX83pD/w9Agj71666B8IAYA0plxSj6QJwzkURO5fCDygcgXgAwePFg+
+EKPIxcVF/ut3I2n06NE0fPjwLg/5QJ7wU5b8HiIfiHzJByIfiHzJByIfiHzJB2Ig6V/jH1+S
+SvKB2FnK0LV1ciQVm6rlAzECkKQDORS+PE2DATs7rIb7Z1qsi24v+dIxzxSa57jHbNqtIBjE
+UL7wZYvV8YhbIsE4FfVXhnynz54A4v/LOVo4zGLCjTQ36sGfz7J5dv4Le9uZbdd/YjEJe4zw
+ZxDmcs5fDL1OQQuS2GYvH0gPDVlZsSW8lAcrSTJCrrcbuhSQDRPDuDxsWSqbdluaWyndbMpN
+DczTbPnygfQQEAhrvJBiWQ8WNcRuNZE1IJCr8z4+x6qVxSP9ae/3sSQfiJ2Un1xOcTuukq2T
+Otzd5APpIWGh3OktV8jWpyxla5cPxAA/DPXLguQDsTOQjstJ5QOxExCsXLS26EE+EDsAkb9y
+0QCaOnUqr1rsauWJfCAGmNTlA5EPRL7kA5EPRL7kA5EPRL7kA3lCgketOlfu0mHL0tq9LMyO
+K6Gcs6XsVJqXVN4ts+69pha6GlMk//X7/5WybcC5E5ZBnJe1+QgqNTe20L27LaR36OzqflBV
+Qa18ILYAQaCANWNCtYZe+UEQn//z9Sna/FmEBgLpqlHBFPhbIu021+GaDRPC6OjCZDo09xy1
+3Gslj9f9ac93Dzx05QOxAcjStwPJ842Ah4AsGOrLqR6I6iGbJkVo18fvyqQZfbbzufJflw/k
+MYAgggMiPsDVWQ9EpdaAKPPtuo8s/u7ygfTwHAJtnRzF4TU6A7LvhzMU4nGB9k6P5bo1Y0LY
+X93Veb/lgWBpKql7ygfylD729u3bVz4QIwDBK3kVUEA+EDsDgdVQbyORD8ROQDoG4ZcPxI5A
+sOQHYf3kT+oGACI/1olBBJu6/NAaBpKPjw95enp2ecgHYqDfIfJ7iHwg8oHIByIfiHzJByIf
+iHx1pbKsGpIP5DGl/AoRs/fYkhSbfdPh9KmC9B+ebwm4LB+IjUDqKhpJWf+ghP2WiA5wbcaq
+k6zYYs4fXZSsRbaGYD+HCzX8DNXnEA0C5t8Q92T5ixxsBQK7uveU6HbmV0h51wb9nsQWw4C2
+UOPwslXXNje1cPx3/eeUKVc+EBuBYLjBahLsdGANyK/m1G92PPutl5ivgdct4r2jV5Xn3NIC
+/ssH0oNzCOQx4hCfr/0wlBt/wVA/raFVaI0Zz2znNDUwl7fHOL8n6yEgi0cGMCj5QHpIt8sb
+qK6yscsJHoH3Efi/Y3nDrbt0q7RePhD5v0Pk67GAwCsXh3wgdgaCBQ56K6J8IHYEYs09Wj4Q
+OwDBihMxe1AZHQjmCQCRP6nbWZMmTWIQw4YN6/SQD0T+Y698IPKByAciX/KByAciX/KBGEiV
++bXUnbJeAUTZJbAnude4Y9TT95/57HbaMOE4ub92iG7m3rbp/nqfRH0Ztuu2Fp20VwBZ8b7F
+2RJ7l6u6iJXpvPmvOkpM1aQ2G8Z1KINUqupUHprz/K6HTLQx6y9pTprYWBix3JFXNnJsbNzx
+vqaoQlLeu/p7qWtMUTe4Hv/jUw9k9ahg9mpF/mr0Dd7puS2uuqUxzGWom+vgo0WdRqr8zJe9
+82A/dexw0FTXrOVnPbeTznibeHN6NOrpzVeoML2C6/E3YTNX33LXF/dr4cL1jY606FIVly1v
+++Lo62AlPPCTJSJEY+1deqqdPgGkMK2CtrhEcigLlCHcN7bgRuwQ/XDhNf44YZP6NWMtERhC
+3C8wOCxGaPu2UvLBnHZDCHoIbOeIzoA8/NLVkeiX3c4PXZlrrQFRUr7p+joc8Hnv7pClXjb+
+BzTAtjsSm7qlAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTDSMExample >> exampleEvolutionDSM [
 	<noTest>
 	| b option data labels input other |
