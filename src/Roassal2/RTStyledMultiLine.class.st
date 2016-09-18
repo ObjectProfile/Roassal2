@@ -25,7 +25,8 @@ Class {
 	#instVars : [
 		'head',
 		'tail',
-		'dashes'
+		'dashes',
+		'capStyle'
 	],
 	#category : #'Roassal2-Shapes'
 }
@@ -45,6 +46,21 @@ RTStyledMultiLine >> attachPoint: anAttachPoint [
 	tail attachPoint: anAttachPoint.
 	head attachPoint: anAttachPoint.
 	attachPoint := anAttachPoint
+]
+
+{ #category : #'line styles' }
+RTStyledMultiLine >> capButt [
+	capStyle := #capButt
+]
+
+{ #category : #'line styles' }
+RTStyledMultiLine >> capRound [
+	capStyle := #capRound
+]
+
+{ #category : #'line styles' }
+RTStyledMultiLine >> capSquare [
+	capStyle := #capSquare
 ]
 
 { #category : #accessing }
@@ -67,6 +83,11 @@ RTStyledMultiLine >> dashedLine [
 { #category : #accessing }
 RTStyledMultiLine >> dashes [
 	^ dashes
+]
+
+{ #category : #'line styles' }
+RTStyledMultiLine >> dashes: anArray [
+	dashes := anArray
 ]
 
 { #category : #'line styles' }
@@ -224,6 +245,7 @@ RTStyledMultiLine >> trachelShapeFor: anEdge [
 			addShape:
 				(TRStyledLineShape new
 					dashes: dashes;
+					capStyle: capStyle;
 					width: (self widthFor: anEdge);
 					from: (path at: i - 1) to: (path at: i);
 					color: (self colorFor: anEdge)) ].
