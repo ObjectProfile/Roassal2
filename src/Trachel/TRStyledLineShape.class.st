@@ -10,10 +10,22 @@ Class {
 	#name : #TRStyledLineShape,
 	#superclass : #TRLineShape,
 	#instVars : [
-		'dashes'
+		'dashes',
+		'capStyle'
 	],
 	#category : #'Trachel-Shapes'
 }
+
+{ #category : #drawing }
+TRStyledLineShape >> capStyle [
+	^ capStyle ifNil: [ #capButt ]
+]
+
+{ #category : #drawing }
+TRStyledLineShape >> capStyle: aStyle [
+	self assert: [ aStyle isNil or: [ #(capRound capButt capSquare) includes: aStyle ] ].
+	capStyle := aStyle
+]
 
 { #category : #drawing }
 TRStyledLineShape >> dashes: anArrayOfNumeric [
@@ -23,10 +35,10 @@ TRStyledLineShape >> dashes: anArrayOfNumeric [
 { #category : #drawing }
 TRStyledLineShape >> drawOn: athensCanvas [
 	athensCanvas pathTransform
-		restoreAfter: [ 
-			athensCanvas setShape: self path.
+		restoreAfter: [ athensCanvas setShape: self path.
 			(athensCanvas setStrokePaint: color)
 				width: width;
+				perform: self capStyle;
 				dashes: dashes offset: 0.
 			athensCanvas draw ]
 ]
