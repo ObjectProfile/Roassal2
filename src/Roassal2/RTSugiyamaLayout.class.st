@@ -158,7 +158,7 @@ RTSugiyamaLayout >> layoutAt: aPoint [
 	treeWidth := layers values
 		inject: self maxFloat negated
 		into:
-			[:max :e | max max: (e sum: #width) + ((e size - 1) * self horizontalGap)].
+			[:max :e | max max: (e sumNumbers: #width) + ((e size - 1) * self horizontalGap)].
 	verticalPosition := self horizontalGap.	"For visual reasons NOT: self class verticalGap"
 	layerKeys := layers keys asSortedCollection reverse.
 	layerKeys
