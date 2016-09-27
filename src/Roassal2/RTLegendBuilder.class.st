@@ -207,8 +207,8 @@ RTLegendBuilder >> offset: aDistanceInPixel [
 	offset := aDistanceInPixel 
 ]
 
-{ #category : #'public - ondemand' }
-RTLegendBuilder >> onDemand [ 
+{ #category : #accessing }
+RTLegendBuilder >> onDemand [
 	"Make the legend appear if the user move the mouse on a particular icon in the visualization"
 	isOnDemand := true.
 	onDemandText := '?'.

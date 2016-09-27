@@ -132,7 +132,8 @@ c5sY+gfEv/gHxL/4B8Q/IP7FPyD+AfEv/gHxD4h/aUb+Ac60UX9EAJ28AAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTMondrianExample >> exampleBezier [
-
+	<gtExample> 
+	<noTest>
 | classes b |
 (TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].
@@ -671,6 +672,8 @@ SUVORK5CYII='
 
 { #category : #sources }
 RTMondrianExample >> exampleClassDependencies [
+<gtExample> 
+<noTest>
 | b |
 (TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].
@@ -956,6 +959,8 @@ b build.
 
 { #category : #sources }
 RTMondrianExample >> exampleClusterLayout02 [
+<gtExample> 
+<noTest>
 | b |
 (TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].
@@ -1306,6 +1311,8 @@ jR5UpCbnuExjR7be8EoEiDXh6dGl/3EsWSTyv+jJ9V7/Zm7NAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTMondrianExample >> exampleColorInGraph [
+<gtExample> 
+<noTest>
 | b |
 (TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].
@@ -2128,6 +2135,8 @@ RTMondrianExample >> exampleForce [
 
 { #category : #sources }
 RTMondrianExample >> exampleForceAndNested [
+	<gtExample> 
+	<noTest>
 	| b |
 	(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].

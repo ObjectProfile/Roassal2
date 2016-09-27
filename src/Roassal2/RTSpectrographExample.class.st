@@ -59,6 +59,7 @@ Qfj5A7cfNxrUTXl/AAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTSpectrographExample >> exampleRoassalVisualization [
+	<gtExample> 
 	<noTest>
 	| b |
 	(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')

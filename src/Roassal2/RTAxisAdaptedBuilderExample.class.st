@@ -340,7 +340,7 @@ yEp9QlJflkH+H8RhkxEE0SGTAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTAxisAdaptedBuilderExample >> withMondrian2 [
 	<gtExample>
-
+	<noTest>
 	"RTAxisAdaptedBuilderExample new withMondrian2"
 	| c b |
 	c := RTMondrianExample new exampleBezier  .
