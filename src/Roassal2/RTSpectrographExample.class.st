@@ -60,8 +60,9 @@ Qfj5A7cfNxrUTXl/AAAAAElFTkSuQmCC'
 { #category : #sources }
 RTSpectrographExample >> exampleRoassalVisualization [
 	<noTest>
-	| b now |
-	now := TRPlatform current dateAndTime now.
+	| b |
+	(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 	b := RTSpectrograph new.
 	b objects: ((RTObject withAllSubclasses , TRObject withAllSubclasses) reverseSortedAs: #livingInDays).
 
