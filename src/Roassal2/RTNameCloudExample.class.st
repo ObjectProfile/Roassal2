@@ -25,7 +25,8 @@ Class {
 
 { #category : #sources }
 RTNameCloudExample >> exampleRoassalCode [
-
+	<gtExample> 
+	<noTest>
 	| b |
 	(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
 	ifFalse: [ ^ self ].

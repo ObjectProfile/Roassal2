@@ -24,6 +24,7 @@ Class {
 
 { #category : #sources }
 RTMapLocationExample >> exampleAirports [
+	<gtExample> 
 	<noTest>
 	| tab b ask |
 	ask := TRPlatform current dialogConfirm: 'This script takes about 1 minutes to execute. Do you want to continue?'.

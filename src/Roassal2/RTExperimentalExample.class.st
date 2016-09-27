@@ -1491,7 +1491,8 @@ rH+dCf+KeXxZKtog+L4ZbZCzTeoWX07/D0I/I0c+pwKjAAAAAElFTkSuQmCC'
 
 { #category : #sources }
 RTExperimentalExample >> exampleStackOnRoassal [
-
+<gtExample> 
+<noTest>
 | s classes extent layers x y color area maxY dates |
 
 (TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
