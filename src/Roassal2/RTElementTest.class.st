@@ -47,7 +47,7 @@ RTElementTest >> testAddingInteraction [
 	e @ RTDraggable.
 	self assert: e announcer numberOfSubscriptions equals: 1.
 	e @ RTPopup.
-	self assert: e announcer numberOfSubscriptions equals: 4.
+	self assert: e announcer numberOfSubscriptions equals: 5.
 ]
 
 { #category : #attributes }

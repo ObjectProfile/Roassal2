@@ -113,7 +113,12 @@ RTAbstractPopup >> getNewPopupFor: element [
 
 { #category : #hooks }
 RTAbstractPopup >> initializeElement: element [
-
+	element
+		when: TRMouseClick
+		do: [ :event | 
+			self removeLastPopup.
+			element trachelShape signalUpdate ].
+		
 	element
 		when: TRMouseEnter
 		do: [ :event | 
