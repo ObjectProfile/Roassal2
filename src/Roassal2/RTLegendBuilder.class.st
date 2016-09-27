@@ -214,12 +214,6 @@ RTLegendBuilder >> onDemand [
 	onDemandText := '?'.
 ]
 
-{ #category : #'public - ondemand' }
-RTLegendBuilder >> onDemand: text [
-	self onDemand.
-	onDemandText := text 
-]
-
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
 	| myGroup elementsInTheViewWithoutTheLegend |

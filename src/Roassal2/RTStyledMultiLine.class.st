@@ -48,21 +48,6 @@ RTStyledMultiLine >> attachPoint: anAttachPoint [
 	attachPoint := anAttachPoint
 ]
 
-{ #category : #'line styles' }
-RTStyledMultiLine >> capButt [
-	capStyle := #capButt
-]
-
-{ #category : #'line styles' }
-RTStyledMultiLine >> capRound [
-	capStyle := #capRound
-]
-
-{ #category : #'line styles' }
-RTStyledMultiLine >> capSquare [
-	capStyle := #capSquare
-]
-
 { #category : #accessing }
 RTStyledMultiLine >> color: aColor [
 	tail color: aColor.
@@ -83,11 +68,6 @@ RTStyledMultiLine >> dashedLine [
 { #category : #accessing }
 RTStyledMultiLine >> dashes [
 	^ dashes
-]
-
-{ #category : #'line styles' }
-RTStyledMultiLine >> dashes: anArray [
-	dashes := anArray
 ]
 
 { #category : #'line styles' }
