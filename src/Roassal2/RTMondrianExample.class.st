@@ -134,6 +134,8 @@ c5sY+gfEv/gHxL/4B8Q/IP7FPyD+AfEv/gHxD4h/aUb+Ac60UX9EAJ28AAAAAElFTkSuQmCC'
 RTMondrianExample >> exampleBezier [
 
 | classes b |
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 classes := RTObject withAllSubclasses, RTTest withAllSubclasses.
 
 b := RTMondrian new.
@@ -670,6 +672,8 @@ SUVORK5CYII='
 { #category : #sources }
 RTMondrianExample >> exampleClassDependencies [
 | b |
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 b := RTMondrian new.
 b shape circle size: 8.
 b nodes: RTObject withAllSubclasses.
@@ -953,6 +957,8 @@ b build.
 { #category : #sources }
 RTMondrianExample >> exampleClusterLayout02 [
 | b |
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 b := RTMondrian new.
 b shape circle
 	size: 8;
@@ -1301,6 +1307,8 @@ jR5UpCbnuExjR7be8EoEiDXh6dGl/3EsWSTyv+jJ9V7/Zm7NAAAAAElFTkSuQmCC'
 { #category : #sources }
 RTMondrianExample >> exampleColorInGraph [
 | b |
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 b := RTMondrian new.
 
 b shape circle.
@@ -2121,6 +2129,8 @@ RTMondrianExample >> exampleForce [
 { #category : #sources }
 RTMondrianExample >> exampleForceAndNested [
 	| b |
+	(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
 	b := RTMondrian new.
 	b nodes: RTShape withAllSubclasses forEach: [ :cls |
 		b shape rectangle color: Color blue.

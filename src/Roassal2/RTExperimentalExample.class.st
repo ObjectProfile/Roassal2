@@ -1494,6 +1494,9 @@ RTExperimentalExample >> exampleStackOnRoassal [
 
 | s classes extent layers x y color area maxY dates |
 
+(TRPlatform current dialogConfirm: 'This example takes a long time to load, execute?')
+	ifFalse: [ ^ self ].
+
 classes := (RTShape withAllSubclasses reverseSortedAs: #ageInDaysRounded ) select: #hasMethods.
 dates := (classes flatCollect: [ :cls | cls rtmethods collect: #date ]) 
 	asSet asSortedCollection.
