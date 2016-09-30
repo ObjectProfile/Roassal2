@@ -12,6 +12,76 @@ Class {
 }
 
 { #category : #sources }
+RTInteractionExample >> exampleDragAndDrop [
+
+| v drops drags |
+v := RTView new.
+
+drops := RTBox new
+	size: 250;
+	borderColor: Color black;
+	borderWidth: 10;
+	color: #yourself;
+	elementsOn: { Color blue muchDarker. Color red muchDarker }.
+
+v addAll: drops.
+RTVerticalLineLayout on: drops.
+drops translateBy: 300 @ 0.
+
+drags := RTEllipse new
+	size: 50;
+	color: #yourself;
+	borderColor: Color black;
+	elementsOn: {Color red . Color blue}.
+
+v addAll: drags.
+RTVerticalLineLayout on: drags.
+drags @ RTDraggable.
+drops @ RTDraggable.
+drops when: TRMouseDragging do: [ :evt |
+	evt element outgoingEdges do: [ :each |
+		each to translateBy: (v canvas camera distanceFromPixelToSpace: evt step).
+	]
+].
+
+
+drops when: TRMouseDragEnter do: [ :evt |
+	self logCr: evt.
+	(evt draggedElement model muchDarker = evt element color) ifTrue: [
+		evt shape strokePaint: Color green.
+	] ifFalse: [ 
+		evt shape strokePaint: Color red.
+	 ]
+].
+
+drops when: TRMouseDragLeave do: [ :evt |
+	evt shape strokePaint: Color black.
+	evt element signalUpdate.
+].
+
+drops when: TRMouseDragDrop do: [ :evt |
+	evt shape strokePaint: Color black.
+	evt shape signalUpdate.
+	evt draggedElement model muchDarker = evt element color ifTrue: [
+		v add: (RTLine new color: Color transparent; edgeFrom: evt element to: evt draggedElement).
+	] ifFalse: [
+		(evt draggedElement connectedEdges do: #remove).
+		v signalUpdate.
+	]
+].
+
+v when: TRMouseDragDrop do: [ :evt |
+	(drags includes: evt draggedElement)
+		ifTrue: [
+			(evt draggedElement connectedEdges do: #remove).
+			v signalUpdate.
+		]
+].
+
+^v
+]
+
+{ #category : #sources }
 RTInteractionExample >> exampleDragAndDrop01 [
 
 | v e1 e2 |
@@ -50,6 +120,20 @@ Iad1jCkf5EIdb8Y3Rl37I+vUhuGNUlXJtvkgfj6ID+Lng/j5ID6IHw0yjmOmadqT+3yN/xrk
 wPBBLlRe+SPLzwfxQfx8EB/EzwfxQfx8ED8fxAfx80F8ED8fxAfx80F8ED8fxM8H8UH8fBAf
 xM8H8UH8fBAfxM8H8fNBfBA/H8QH8fNBfBA/H8QH8fNB/HwQH8TPB/FB/HwQH8TPBxF7ALBq
 biDM8YpuAAAAAElFTkSuQmCC'
+]
+
+{ #category : #icons }
+RTInteractionExample >> exampleDragAndDropIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABw0lEQVR4XuXYMWqEQBQG4MH7
+bK29p7JyT7BnSSHL5giCd3AJeAL7mbiQYlOlCjzne/AztXw4b/hTSamUn9z6PpdKJqWUjxzn
+eOR6npQ3kFcew5B9kEAgX8eH+CCBQF7Zti37IIFAlmXxQSKB+FdWIJCpbf0dEgVkbpq877sP
+EgHk3nXVYJwaZJ7nahDq+EMqndOCNM2UL5ePPE2f2QeJkLdHVt/f/B0SCeSVYXj4r6xIICk9
+fZBYIMXvsqKB+F1WMBD/ygoE0raTv0OigDTN7HdZUUC67u53WX6X5YP4XZYP4oP4ID6ID+KD
++CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP4oP4ID6ID+KD+CA+iA/ig/ggPogP
+4oP4ID7IP4KcLLWCjOPog0SadV19EP/K8kH+BBmPXE8UH8QH8UF8EB/EB/FBfBAfxAfxQXwQ
+H8QH8UF8EB/EB/FBfBAfxAfxQXwQH8QH8UF8EB/EB/FBfBAfxAfxQXwQH8QH8UF8EB/EB/FB
+fBAfxAfxQXwQH8QH8UF8EB/EB/FBfBAfxAfxQXwQH8QH8UF8EB/EB/FBfBAfxAfxQXwQH+RX
+vgFJn5CrPtNrdgAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
