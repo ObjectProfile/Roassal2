@@ -22,7 +22,7 @@ drops := RTBox new
 	borderColor: Color black;
 	borderWidth: 10;
 	color: #yourself;
-	elementsOn: { Color blue muchDarker. Color red muchDarker }.
+	elementsOn: (Array with: Color blue muchDarker with: Color red muchDarker ).
 
 v addAll: drops.
 RTVerticalLineLayout on: drops.
