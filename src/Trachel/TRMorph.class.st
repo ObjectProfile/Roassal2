@@ -11,7 +11,8 @@ Class {
 		'shapeBeingPointed',
 		'shouldRefresh',
 		'session',
-		'isDrawing'
+		'isDrawing',
+		'shapeUnderDrag'
 	],
 	#category : #'Trachel-MorphSpecific'
 }
@@ -122,8 +123,38 @@ TRMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicE
 ]
 
 { #category : #'event-processed' }
+TRMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent under: aShape [
+	| relativePosition shape |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	shape := self
+		shapeWithAction: anActionClass
+		forPositionInPixels: relativePosition
+		under: aShape.
+	^ (anEventClass fromEvent: aMorphicEvent)
+		morph: self;
+		canvas: trachelCanvas;
+		shape: shape;
+		position: relativePosition;
+		yourself
+]
+
+{ #category : #'event-processed' }
 TRMorph >> eventOfClass: anEventClass from: aMorphicEvent [
 	^ self eventOfClass: anEventClass actionClass: anEventClass from: aMorphicEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> eventOfClass: anEventClass shape: aShape from: aMorphicEvent [
+	| relativePosition trEvent |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+
+	trEvent := anEventClass fromEvent: aMorphicEvent.
+	trEvent
+		morph: self;
+		canvas: trachelCanvas;
+		shape: aShape;
+		position: relativePosition.
+	^ trEvent
 ]
 
 { #category : #accessing }
@@ -308,6 +339,12 @@ TRMorph >> shapeWithAction: eventClass forPositionInPixels: position [
 ]
 
 { #category : #accessing }
+TRMorph >> shapeWithAction: eventClass forPositionInPixels: position under: aShape [
+	"Return the shape with event handler located that contains point"
+	 ^ trachelCanvas shapeWithAction: eventClass forPositionInPixels: position under: aShape
+]
+
+{ #category : #accessing }
 TRMorph >> shapeWithActionForPositionInPixels: point [
 	"Return the shape with event handler located that contains point"
 	 ^ trachelCanvas shapeWithActionForPositionInPixels: point
@@ -385,18 +422,27 @@ TRMorph >> trMouseDoubleClick: aMorphicEvent [
 
 { #category : #'event-processed' }
 TRMorph >> trMouseDragEnd: aMorphicEvent [
-	| trEvent |
+	| trEvent dropEvent |
 	trEvent := self eventOfClass: TRMouseDragEnd from: aMorphicEvent.
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
 	self announceToEventOverseer: trEvent.
+
+	(shapeBeingPointed isKindOf: TRCanvas) ifFalse: [
+		dropEvent := self eventOfClass: TRMouseDragDrop shape: shapeUnderDrag from: aMorphicEvent.
+		dropEvent draggedShape: shapeBeingPointed.
+		shapeUnderDrag announce: dropEvent.
+		self announceToEventOverseer: dropEvent.
+	].
+	
 	eventBeginingDragging := nil.
-	shapeBeingPointed := nil
+	shapeBeingPointed := nil.
+	shapeUnderDrag := nil.
 ]
 
 { #category : #'event-processed' }
 TRMorph >> trMouseDragStart: aMorphicEvent [
-	| trEvent trEventClass |
+	| trEvent trEventClass trUnderDragEvent |
 	eventBeginingDragging := aMorphicEvent copy.
 	
 	trEventClass := TRMouseDragStart.
@@ -408,12 +454,21 @@ TRMorph >> trMouseDragStart: aMorphicEvent [
 
 	shapeBeingPointed := trEvent shape.
 	shapeBeingPointed announce: trEvent.
-	self announceToEventOverseer: trEvent
+	self announceToEventOverseer: trEvent.
+	
+	(shapeBeingPointed isKindOf: TRCanvas)
+		ifTrue: [ ^self ].
+	
+	trUnderDragEvent := self eventOfClass: TRMouseAbstractDrop actionClass: TRMouseAbstractDrop from:  aMorphicEvent under: shapeBeingPointed.
+	
+	shapeUnderDrag := trUnderDragEvent shape
+	
+	
 ]
 
 { #category : #'event-processed' }
 TRMorph >> trMouseDragging: aMorphicEvent [
-	| trEvent step |
+	| trEvent step underShape trUnderDragEvent overEvent |
 	eventBeginingDragging ifNil: [ ^ self ].
 	step := aMorphicEvent position - eventBeginingDragging position.
 
@@ -430,7 +485,30 @@ TRMorph >> trMouseDragging: aMorphicEvent [
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
 	self announceToEventOverseer: trEvent.
-	eventBeginingDragging := aMorphicEvent copy
+	eventBeginingDragging := aMorphicEvent copy.
+	
+	(shapeBeingPointed isKindOf: TRCanvas) ifTrue: [ ^self ].
+	
+	trUnderDragEvent := self eventOfClass: TRMouseAbstractDrop actionClass: TRMouseAbstractDrop from:  aMorphicEvent under: shapeBeingPointed.
+	trUnderDragEvent draggedShape: shapeBeingPointed.
+	underShape := trUnderDragEvent shape.
+	self logCr: underShape.
+	underShape = shapeUnderDrag ifFalse: [ |leaveEvent enterEvent|
+		leaveEvent := self eventOfClass: TRMouseDragLeave shape: shapeUnderDrag from: aMorphicEvent.
+		leaveEvent draggedShape: shapeBeingPointed.
+		shapeUnderDrag announce: leaveEvent.
+		self announceToEventOverseer: leaveEvent.
+		enterEvent := self eventOfClass: TRMouseDragEnter shape: underShape from: aMorphicEvent.
+		enterEvent draggedShape: shapeBeingPointed.
+		underShape announce: enterEvent.
+		self announceToEventOverseer: enterEvent.
+		shapeUnderDrag := underShape.
+	].
+	
+	overEvent := self eventOfClass: TRMouseDragOver shape: shapeUnderDrag from: aMorphicEvent.
+	overEvent draggedShape: shapeBeingPointed.
+	shapeUnderDrag announce: overEvent.
+	self announceToEventOverseer: overEvent.
 ]
 
 { #category : #'event-processed' }
