@@ -35,8 +35,7 @@ RTTreeMapExample >> example08 [
 	
 	b from: (1 to: 5) using: [#()].
 	b weight: #yourself.
-	b build.
-	^ b view
+	^ b 
 ]
 
 { #category : #icons }
