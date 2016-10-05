@@ -126,6 +126,16 @@ RTAbstractDSM >> createElements [
 
 ]
 
+{ #category : #accessing }
+RTAbstractDSM >> createObjectBlock [
+	^ creationBlock
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> createObjectBlock: aBlock [
+	creationBlock := aBlock
+]
+
 { #category : #hooks }
 RTAbstractDSM >> createShapeBuilder [
 	| sb |
@@ -274,6 +284,16 @@ RTAbstractDSM >> rotation: anInteger [
 RTAbstractDSM >> rowAt: aNumber [
 	"Return the elements located at a given row"
 	^ (1 to: objectsX size) collect: [ :i | self elementAt: i @ aNumber ]
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> selectElement [
+	 ^ selectElement
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> selectElement: aBlock [
+	selectElement := aBlock
 ]
 
 { #category : #accessing }
