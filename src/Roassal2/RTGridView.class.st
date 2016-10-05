@@ -133,6 +133,11 @@ RTGridView >> initializeElement: aView [
 	self registerMovementEvents: aView canvas
 ]
 
+{ #category : #actions }
+RTGridView >> pushBack [
+	gridShape pushBack
+]
+
 { #category : #hooks }
 RTGridView >> registerMovementEvents: aCanvas [
 	aCanvas camera
