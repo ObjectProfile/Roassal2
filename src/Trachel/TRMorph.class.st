@@ -162,6 +162,12 @@ TRMorph >> eventOverseer [
 	^ trachelCanvas eventOverseer
 ]
 
+{ #category : #'as yet unclassified' }
+TRMorph >> handleKeyUp: anEvent [
+	super handleKeyUp: anEvent.
+	self trKeyUp: anEvent
+]
+
 { #category : #'event handling' }
 TRMorph >> handleKeystroke: anEvent [
 	
@@ -387,6 +393,17 @@ TRMorph >> trKeyDown: aMorphicEvent [
 		ifTrue: [ self owner delete ].
 
 	trEvent := self eventOfClass: TRKeyDown from: aMorphicEvent.
+	trEvent
+		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
+		keyValue: aMorphicEvent keyValue;
+		keyCombination: aMorphicEvent asKeyCombination.
+	trEvent shape announce: trEvent
+]
+
+{ #category : #'event-processed' }
+TRMorph >> trKeyUp: aMorphicEvent [
+	| trEvent |
+	trEvent := self eventOfClass: TRKeyUp from: aMorphicEvent.
 	trEvent
 		position: (trachelCanvas camera fromPixelToSpace: trEvent position);
 		keyValue: aMorphicEvent keyValue;
