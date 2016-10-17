@@ -200,33 +200,6 @@ RTElementTest >> testIsConnected03 [
 ]
 
 { #category : #tests }
-RTElementTest >> testMatrixKeepTheSameAfterupdate [
-	| v m m1 m2 |
-	v := RTView new.
-
-	m := RTBox new
-	    color: Color black;
-	    width: 20;
-	    height: 150;
-	    element.
-
-	v add: m.
-
-	m1 := m trachelShape matrix copy.
-	m update.
-	m update.
-	m2 :=  m trachelShape matrix.
-
-	self assert: m1 shx equals: m2 shx.
-	self assert: m1 shy equals: m2 shy.
-	self assert: m1 sx equals: m2 sx.
-	self assert: m1 sy equals: m2 sy.
-	self assert: m1 x equals: m2 x.
-	self assert: m1 y equals: m2 y.
-	
-]
-
-{ #category : #tests }
 RTElementTest >> testModel [
 	self assert: (RTElement on: 10) model = 10
 ]

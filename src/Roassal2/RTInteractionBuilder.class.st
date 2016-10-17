@@ -212,26 +212,6 @@ RTInteractionBuilder >> removeInteractionOfType: cls [
 			interactions := interactions copyWithout: int ]"
 ]
 
-{ #category : #public }
-RTInteractionBuilder >> setEdgeAlpha [
-	
-	"
-	Interaction for nodes. E.g.,
-	
-	b := RTMondrian new.
-	b interaction setEdgeAlpha.
-	b nodes: (1 to: 100).
-	b shape line color: (Color red alpha: 0.1). 
-	b edges connectToAll: [ :nb | (1 to: 3 atRandom) collect: [ :i | 100 atRandom ] ].
-	b layout force.
-	b"
-
-	| i |
-	i := RTSetEdgeAlpha new.
-	interactions add: i. 
-	^ i
-]
-
 { #category : #building }
 RTInteractionBuilder >> setUpElement: elementOrGroup [
 	"elements is an RTGroup, that contains RTElement or RTEdges"
