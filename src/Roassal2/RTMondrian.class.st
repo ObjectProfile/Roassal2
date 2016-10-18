@@ -199,17 +199,60 @@ RTMondrian >> metricNormalizerClass [
 
 { #category : #'public - nodes' }
 RTMondrian >> node: anObject [
-	"Add a new node to the view"
+	"Add a new node represengint an object to the view
+	
+	For example:
+	b := RTMondrian new.
+	b node: 10.
+	b node: 20.
+	b open
+	"
 	^ (self nodes: (Array with: anObject)) first
 ]
 
 { #category : #'public - nodes' }
 RTMondrian >> node: anObject forIt: aBlock [
+	"Add a new node represengint an object to the view. The node is a container for other objects.
+	
+	For example:
+	b := RTMondrian new.
+	b node: 10 forIt: [ b nodes: (1 to: 5) ].
+	b node: 20 forIt: [ b nodes: (1 to: 5) ].
+	b open
+	"
 	^ (self nodes: (Array with: anObject) forEach: [ :each | aBlock value ]) first
 ]
 
 { #category : #'public - nodes' }
 RTMondrian >> nodes: objects [
+	"Add a new node represengint an object to the view. The node is a container for other objects.
+	
+	For example:
+	b := RTMondrian new.
+	b nodes: (1 to: 10).
+	b layout force.
+	b open
+	
+	
+	Another example:
+	b := RTMondrian new.
+	b shape box size: #numberOfMethods.
+	b nodes: Collection withAllSubclasses.
+	b layout flow.
+	b open
+	
+	Another example:
+	b := RTMondrian new.
+	b shape box size: #numberOfMethods.
+	b nodes: Collection withAllSubclasses.
+	b edges connectFrom: #superclass.
+	b normalizer 
+		normalizeSize: #numberOfMethods;
+		normalizeColor: #numberOfMethods.
+	b layout cluster.
+	b open
+	"
+	
 	| els |
 	els := self elementsOn: objects.
 	self currentFrame addElements: els.
@@ -222,6 +265,27 @@ RTMondrian >> nodes: objects [
 
 { #category : #'public - nodes' }
 RTMondrian >> nodes: objects forEach: aOneArgBlock [
+	"Add new nodes representing for each object to the view. Each node is a container for other objects.
+	
+	For example:
+	b := RTMondrian new.
+	b nodes: (1 to: 10) forEach: [ :valueBetween1And10 | 
+		b nodes: (1 to: valueBetween1And10).
+		b layout grid ].
+	b layout grid.
+	b open
+
+	
+	Another example:
+	b := RTMondrian new.
+	b shape box size: #numberOfMethods.
+	b nodes: Collection withAllSubclasses forEach: [ :cls |
+		b nodes: cls methods.
+		b layout grid. ].
+	b edges connectFrom: #superclass.
+	b layout tree.
+	b open
+	"
 	| result |
 	result := self nodes: objects.
 	
