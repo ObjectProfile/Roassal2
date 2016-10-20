@@ -8,6 +8,11 @@ Class {
 	#category : #'Trachel-MorphSpecific'
 }
 
+{ #category : #visitor }
+TRTextShape >> accept: aVisitor [
+	aVisitor visitTextShape: self
+]
+
 { #category : #private }
 TRTextShape >> basicEncompassingRectangle [
 	| wh |
