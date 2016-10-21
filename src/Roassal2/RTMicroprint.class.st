@@ -15,7 +15,8 @@ RTMicroprint >> createView [
 
 { #category : #'as yet unclassified' }
 RTMicroprint >> example01 [
-
+	<gtExample>
+	<noTest>
 	| b |
 	b := RTMicroprint new.
 	b lineMatching: '*view*' color: Color red trans.

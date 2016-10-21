@@ -78,6 +78,11 @@ TROSMShape class >> emptyTile [
 		ifNil: [ EmptyTile := ((StringMorph contents: 'Loading...') center: 127 @ 127) imageFormForRectangle: (0 @ 0 extent: 256 @ 256) ]
 ]
 
+{ #category : #visitor }
+TROSMShape >> accept: aVisitor [
+	aVisitor visitOSMShape: self
+]
+
 { #category : #private }
 TROSMShape >> checkCallback [
 	| call |
