@@ -8,7 +8,8 @@ Class {
 		'view',
 		'stream',
 		'validInteractions',
-		'exportFixedShapes'
+		'exportFixedShapes',
+		'maxSize'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -91,7 +92,7 @@ RTJavascriptVisitor >> addStringWithFont: aLabel [
 	fn := aLabel fontName.
 	fn = 'Source Sans Pro' ifTrue: [ fn := 'Verdana, Geneva, sans-serif' ].
 	stream nextPutAll: ' text: "';
-		nextPutAll: (converter convertString: aLabel text);
+		nextPutAll: (converter convertString: (aLabel text truncateTo: maxSize));
 		nextPutAll: '", font: {n: "';
 		nextPutAll: fn;
 		nextPutAll: '", s: ';
@@ -111,13 +112,23 @@ RTJavascriptVisitor >> exportFixedShapes: aBool [
 
 { #category : #initialization }
 RTJavascriptVisitor >> initialize [
-	
 	names := Dictionary new.
 	validInteractions := #(#RTDraggableView #RTDraggable #RTPopup 
 	#RTHighlightable #RTLabeled #RTShowEdge #RTShowLabel #RTZoomableView
 	#RTFocusElement #RTLinkView).
 	self exportFixedShapes: true.
 	self stream: (WriteStream on: String new).
+	self maxSize: 500.
+]
+
+{ #category : #accessing }
+RTJavascriptVisitor >> maxSize [
+	^ maxSize
+]
+
+{ #category : #accessing }
+RTJavascriptVisitor >> maxSize: size [
+	maxSize := size.
 ]
 
 { #category : #helpers }
@@ -352,16 +363,21 @@ RTJavascriptVisitor >> visitDiamondShape: diamondShape [
 
 { #category : #'visitor-interactions' }
 RTJavascriptVisitor >> visitDraggableInteraction: anInteraction with: anObject [
-	| list trachelBlock |
+	| list trachelBlock nest |
 	list := OrderedCollection new.
 	(anObject attributes includesKey: #RTLabelledLabel) ifTrue: [  
 		list add: (anObject attributes at: #RTLabelledLabel).
 	].
-	(anObject attributes includesKey: #nestedElements) ifTrue: [ 
-		(anObject attributes at: #nestedElements) do: [ :e |
-			e isCollection ifTrue: [ list addAll: (e collect: [:x | x trachelShape ]) ]
-			ifFalse: [ list add: e trachelShape ] ].
-	].
+	nest := nil.
+	nest := [ :ob | 
+		(ob attributes includesKey: #nestedElements) ifTrue: [ 
+			(ob attributes at: #nestedElements) do: [ :e|
+				e isCollection 
+					ifTrue: [ list addAll: (e collect: [:x | nest value: x. x trachelShape ]) ]
+					ifFalse: [ nest value: e. list add: e trachelShape ] ] ].
+		].
+	nest value: anObject.
+	
 	trachelBlock := [ :e|	(e isKindOf: TRShape) ifTrue: [ e ] ifFalse: [ e trachelShape ] ].
 	list addAll: (anInteraction groupToDrag collect: trachelBlock).
 	anInteraction element ifNotNil: [ :e | list add: (trachelBlock value: e) ].
@@ -495,6 +511,30 @@ RTJavascriptVisitor >> visitLineShape: aLine [
 	self visitAttachPoint: e.
 	stream nextPutAll: '},'.
 	
+]
+
+{ #category : #'visitor-interactions' }
+RTJavascriptVisitor >> visitLinkView: anInt with: el [
+	| eview name st exporter |
+	eview := anInt viewFor: el.
+	name := anInt nameFor: el.
+	name ifNil: [ name := self nameFor: el ].
+	
+	[ 
+	eview ifNotNil: [ 
+		exporter := RTHTML5Exporter new 
+			fileName: name, '.html';
+			shouldCreateJS: false.
+		exporter createStream.
+		st := exporter stream.
+		exporter export: eview toStream: st] 
+	] on: Error do: [ :ex |
+	st close.
+	exporter export: anInt errorView ].
+	stream 
+		nextPutAll: 'new RTLinkView("';
+		nextPutAll: name;
+			nextPutAll: '")'.
 ]
 
 { #category : #visitor }

@@ -31,7 +31,8 @@ Class {
 		'roassalJSfile',
 		'marginScale',
 		'jsrefenrece',
-		'shouldCreateJS'
+		'shouldCreateJS',
+		'maxSizeForString'
 	],
 	#category : #'Roassal2-Exporter-HTML5'
 }
@@ -237,6 +238,7 @@ RTHTML5Exporter >> exportSVG: aView [
 	| visitor |
 
 	visitor := RTJavascriptVisitor new.
+	visitor maxSize: self maxSizeForString.
 	visitor exportFixedShapes: self exportFixedShapes.
 	visitor stream: stream.
 	visitor visitView: aView.
@@ -273,6 +275,7 @@ RTHTML5Exporter >> initialize [
 	self exportFixedShapes: true.
 	self shouldCreateJS: true.
 	self jsreference: 'roassal.js'.
+	self maxSizeForString: 500.
 	self defaultMarginScale.
 ]
 
@@ -347,6 +350,16 @@ RTHTML5Exporter >> marginScale [
 { #category : #'Pillar utility' }
 RTHTML5Exporter >> marginScale: aScale [
 	marginScale := aScale
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> maxSizeForString [
+	^ maxSizeForString
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> maxSizeForString: size [
+	maxSizeForString := size.
 ]
 
 { #category : #dependencies }
@@ -1718,7 +1731,7 @@ var TRBitmapShape = TRShape.extend({
 		var h = obj.h;
 		this.path.setAttributeNS("http://www.w3.org/1999/xlink","href","data:image/png;base64,"+obj.base64);
 		this.matrix = new MatrixTransform(obj.matrix);
-		var o = {x: -w/2, y: -h/2, width: w, height: h};
+		var o = {x: -w/2, y: -h/2, width: w, height: h, id: obj.id};
 		this.rectangle = new Rectangle(o, {x: w/2, y: h/2});
 		$(this.path).attr(o);
 	},
@@ -2200,6 +2213,21 @@ RTHTML5Exporter >> roassalJSfile [
 { #category : #accessing }
 RTHTML5Exporter >> roassalJSfile: string [
 	roassalJSfile := string
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS [
+	^ shouldCreateJS
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS: aBool [
+	shouldCreateJS := aBool
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> stream [
+	^ stream
 ]
 
 { #category : #accessing }
