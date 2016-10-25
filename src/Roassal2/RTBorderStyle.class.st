@@ -16,28 +16,6 @@ v add: box element.
 v
 -=-=-=
 
-Another example
--=-=-=
-v := RTView new.
-
-strings := #('Hello' 'World' 'Bonjour').
-
-label := RTLabel new.
-box := RTBox new.
-box color: Color transparent.
-box borderStyle dash.
-box borderColor: Color red.
-composite := RTCompositeShape new.
-composite add: box.
-composite add: label.
-composite allOfSameSizeWithPadding.
-es := composite elementsOn: strings.
-
-v addAll: es.
-es @ RTDraggable.
-RTHorizontalLineLayout on: es.
-v
--=-=-=
 "
 Class {
 	#name : #RTBorderStyle,
