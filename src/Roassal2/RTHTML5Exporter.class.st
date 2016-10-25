@@ -352,6 +352,16 @@ RTHTML5Exporter >> marginScale: aScale [
 	marginScale := aScale
 ]
 
+{ #category : #accessing }
+RTHTML5Exporter >> maxSizeForString [
+	^ maxSizeForString
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> maxSizeForString: size [
+	maxSizeForString := size.
+]
+
 { #category : #dependencies }
 RTHTML5Exporter >> roassalJSContent [
 	^ '
@@ -2203,6 +2213,21 @@ RTHTML5Exporter >> roassalJSfile [
 { #category : #accessing }
 RTHTML5Exporter >> roassalJSfile: string [
 	roassalJSfile := string
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS [
+	^ shouldCreateJS
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> shouldCreateJS: aBool [
+	shouldCreateJS := aBool
+]
+
+{ #category : #accessing }
+RTHTML5Exporter >> stream [
+	^ stream
 ]
 
 { #category : #accessing }

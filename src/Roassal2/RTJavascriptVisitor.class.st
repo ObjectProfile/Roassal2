@@ -121,6 +121,16 @@ RTJavascriptVisitor >> initialize [
 	self maxSize: 500.
 ]
 
+{ #category : #accessing }
+RTJavascriptVisitor >> maxSize [
+	^ maxSize
+]
+
+{ #category : #accessing }
+RTJavascriptVisitor >> maxSize: size [
+	maxSize := size.
+]
+
 { #category : #helpers }
 RTJavascriptVisitor >> pointToString: point [
 	^ '{x:', (self number: point x), ',y:', (self number: point y),'}'
@@ -501,6 +511,30 @@ RTJavascriptVisitor >> visitLineShape: aLine [
 	self visitAttachPoint: e.
 	stream nextPutAll: '},'.
 	
+]
+
+{ #category : #'visitor-interactions' }
+RTJavascriptVisitor >> visitLinkView: anInt with: el [
+	| eview name st exporter |
+	eview := anInt viewFor: el.
+	name := anInt nameFor: el.
+	name ifNil: [ name := self nameFor: el ].
+	
+	[ 
+	eview ifNotNil: [ 
+		exporter := RTHTML5Exporter new 
+			fileName: name, '.html';
+			shouldCreateJS: false.
+		exporter createStream.
+		st := exporter stream.
+		exporter export: eview toStream: st] 
+	] on: Error do: [ :ex |
+	st close.
+	exporter export: anInt errorView ].
+	stream 
+		nextPutAll: 'new RTLinkView("';
+		nextPutAll: name;
+			nextPutAll: '")'.
 ]
 
 { #category : #visitor }

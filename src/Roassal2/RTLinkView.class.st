@@ -17,6 +17,14 @@ RTLinkView >> accept: aVisitor with: args [
 	aVisitor visitLinkView: self with: args
 ]
 
+{ #category : #accessing }
+RTLinkView >> errorView [
+	| v |
+	v := RTView new.
+	v add: (RTLabel elementOn: 'Error exporting this view').
+	^ v
+]
+
 { #category : #initialization }
 RTLinkView >> initialize [
 	super initialize.
@@ -27,6 +35,26 @@ RTLinkView >> initialize [
 RTLinkView >> initializeElement: element [
 	element when: TRMouseLeftClick do: [ 
 		showView ifTrue: [ (self viewFor: element) inspect ]. ].
+]
+
+{ #category : #accessing }
+RTLinkView >> name: aBlock [
+	self nameElement: [ :e | aBlock rtValue: e model ].
+]
+
+{ #category : #accessing }
+RTLinkView >> nameBlock [
+	^ nameBlock
+]
+
+{ #category : #accessing }
+RTLinkView >> nameElement: block [
+	nameBlock := block 
+]
+
+{ #category : #accessing }
+RTLinkView >> nameFor: e [
+	^ nameBlock rtValue: e
 ]
 
 { #category : #accessing }
