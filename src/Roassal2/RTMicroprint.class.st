@@ -23,7 +23,7 @@ RTMicroprint >> example01 [
 	b lineMatching: '*roassal*' color: Color green trans.
 	b lineMatching: '*shape*' color: Color blue trans.
 	b texts: (RTBuilder methods collect: #getSource).
-	b open
+	^ b
 ]
 
 { #category : #'as yet unclassified' }
