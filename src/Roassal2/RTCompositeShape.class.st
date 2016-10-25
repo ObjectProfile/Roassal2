@@ -66,6 +66,7 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'shapes',
+		'shapeFraming',
 		'layout',
 		'automaticallyUpdateLayout'
 	],
@@ -92,17 +93,31 @@ RTCompositeShape >> add: aRTShape translateBy: aPoint [
 
 { #category : #'public - layout' }
 RTCompositeShape >> alignRight [
-	layout := #alignRight
+	shapeFraming := #alignRight
 ]
 
 { #category : #'public - layout' }
 RTCompositeShape >> allOfSameSize [
-	layout := #allOfSameSize
+	"Can be called before or after adding the shapes
+	
+	Example:
+	
+	box1 := RTBox new color: Color blue trans; size: 20.
+	box2 := RTBox new color: Color red trans; size: 10.
+
+	combo:= RTCompositeShape new allOfSameSize; add: box1; add: box2.
+
+	RTView new
+	    add: combo element. 
+
+
+	"
+	shapeFraming := #allOfSameSize
 ]
 
 { #category : #'public - layout' }
 RTCompositeShape >> allOfSameSizeWithPadding [
-	layout := #allOfSameSizeWithPadding
+	shapeFraming := #allOfSameSizeWithPadding
 ]
 
 { #category : #accessing }
@@ -171,8 +186,9 @@ RTCompositeShape >> horizontal [
 RTCompositeShape >> initialize [
 	super initialize.
 	shapes := OrderedCollection new.
+	shapeFraming := #yourself.
 	layout := #noLayout.
-	
+
 	"If one of the shape changes its size, should we relayout. By default no"
 	automaticallyUpdateLayout := false
 ]
@@ -218,6 +234,7 @@ RTCompositeShape >> textFor: anElement [
 RTCompositeShape >> trachelShapeFor: anElement [
 "	^ self updateFor: anElement trachelShape: TRMultiCompositeShape new"
 	
+
 	| ss trachelShape |
 	trachelShape := TRCompositeShape new.
 	ss := shapes
@@ -226,6 +243,7 @@ RTCompositeShape >> trachelShapeFor: anElement [
 			s := tupple first trachelShapeFor: anElement.
 			Array with: s with: tupple second ].
 	trachelShape setShapes: ss.
+	trachelShape perform: shapeFraming.
 	trachelShape perform: layout.
 	self setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape.
 	^ trachelShape
@@ -243,6 +261,8 @@ RTCompositeShape >> updateFor: anElement trachelShape: trachelShape [
 			s := anElement trachelShape shapes at: shapeIndex.
 			Array with: s with: tupple second ].
 	trachelShape setShapes: ss.
+	 
+	trachelShape perform: shapeFraming.
 	trachelShape perform: layout.
 	self setAutomaticUpdateLayoutIfNecessaryFor: ss and: trachelShape.
 	^ trachelShape
