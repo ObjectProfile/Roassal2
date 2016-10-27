@@ -14,7 +14,7 @@ RTAboutRoassal class >> menuCommandOn: aBuilder [
 			order: 0.001; 
 			parent: #Roassal;
 			label: 'About Roassal';
-			icon: (SugsSuggestionFactory iconNamed: #smallLanguageIcon);
+			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
 			action: [ self new open ]
 ]
 
