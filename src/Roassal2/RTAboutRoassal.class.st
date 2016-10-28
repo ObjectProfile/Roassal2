@@ -21,7 +21,7 @@ RTAboutRoassal class >> menuCommandOn: aBuilder [
 { #category : #'instance creation' }
 RTAboutRoassal >> open [
 
-	| v labels |
+	| v labels e |
 	v := RTView new.
 
 	v add: (RTBitmap new form: TRPlatform current roassalIcon) element.
@@ -48,6 +48,17 @@ RTAboutRoassal >> open [
 	RTVerticalLineLayout on: labels.
 
 	TRConstraint move: v elements first onTheLeftOf: labels.
+	
+	
+	"Adding animation"
+	v when: TRMouseClick do: [ :event | v clean ].
+	v when: TRMouseMove do: [ :event |
+		e := (RTBox new color: (Color red alpha: 0.2); size: 20 atRandom + 5) element.
+		e translateTo: event position.
+		v add: e.
+		v addAnimation: (RTAccelerationMove to: 
+			event position + ((150 atRandom - 75) @ (150 atRandom - 75)) during: 5 on: e)
+	].
 
 	v openTitled: 'Roassal Visualization Engine'
 ]
