@@ -82,6 +82,12 @@ RTPieBuilder >> labeled [
 	self labeledIf: true
 ]
 
+{ #category : #obsolete }
+RTPieBuilder >> labeled: aBlockLabel [
+	"Make each pie having a label that respect the aBlockLabel"	
+	self labeledIf: true withBlock: aBlockLabel
+]
+
 { #category : #'public - shapes' }
 RTPieBuilder >> labeledIf: aBlock [
 	self labeledIf: aBlock withBlock: [ :o | o ]
@@ -103,7 +109,7 @@ RTPieBuilder >> labelled [
 { #category : #obsolete }
 RTPieBuilder >> labelled: aBlockLabel [
 	"Make each pie having a label that respect the aBlockLabel"
-	self deprecated: 'Please, use #labelled: instead'.
+	self deprecated: 'Please, use #labeled: instead'.
 	self labeledIf: true withBlock: aBlockLabel
 ]
 
