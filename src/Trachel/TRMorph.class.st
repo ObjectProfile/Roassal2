@@ -509,7 +509,7 @@ TRMorph >> trMouseDragging: aMorphicEvent [
 	trUnderDragEvent := self eventOfClass: TRMouseAbstractDrop actionClass: TRMouseAbstractDrop from:  aMorphicEvent under: shapeBeingPointed.
 	trUnderDragEvent draggedShape: shapeBeingPointed.
 	underShape := trUnderDragEvent shape.
-	self logCr: underShape.
+	
 	underShape = shapeUnderDrag ifFalse: [ |leaveEvent enterEvent|
 		leaveEvent := self eventOfClass: TRMouseDragLeave shape: shapeUnderDrag from: aMorphicEvent.
 		leaveEvent draggedShape: shapeBeingPointed.
