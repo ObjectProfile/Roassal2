@@ -278,8 +278,16 @@ b edges
 b layout force.
 b
 	"
-	| assocs |
-	assocs := objects collect: [ :o | (fromblock rtValue: o) -> (toBlock rtValue: o) ].
+	| assocs allObjects |
+	allObjects := Set new.
+	
+	assocs := objects collect: [ :o | 
+		| f t |
+		f := fromblock rtValue: o.
+		t := toBlock rtValue: o.
+		allObjects add: f; add: t.
+		f -> t ].
+	self objects: allObjects asArray.
 	^ self useAssociations: assocs
 ]
 
@@ -306,11 +314,18 @@ b edges
 b layout force.
 b
 	"
-	| assocs |
+	| assocs allObjects |
+	allObjects := Set new.
+
 	assocs := objects flatCollect: [ :o | 
 		| cc |
 		cc := toBlock rtValue: o.
-		cc collect: [ :ccc | (fromblock rtValue: o) -> ccc ] ].
+		cc collect: [ :ccc | 
+			| t |
+			t := fromblock rtValue: o.
+			allObjects add: t; add: ccc.
+			t -> ccc ] ].
+	self objects: allObjects asArray.
 	^ self useAssociations: assocs
 ]
 
@@ -337,11 +352,18 @@ b edges
 b layout force.
 b
 	"
-	| assocs |
+	| assocs allObjects |
+	allObjects := Set new.
+
 	assocs := objects flatCollect: [ :o | 
 		| cc |
 		cc := fromBlock rtValue: o.
-		cc collect: [ :ccc | ccc -> (toBlock rtValue: o) ] ].
+		cc collect: [ :ccc | 
+			| t |
+			t := toBlock rtValue: o.
+			allObjects add: ccc; add: t.
+			ccc -> t ] ].
+	self objects: allObjects asArray.
 	^ self useAssociations: assocs
 ]
 
