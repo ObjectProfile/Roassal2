@@ -547,6 +547,39 @@ RTMondrianTest >> testSingleNodeForIt [
 	self assert: b view elements second position equals: 8.0 @ 8.0.
 ]
 
+{ #category : #'tests - source' }
+RTMondrianTest >> testSourceConnectFromAllTo [
+
+	b nodes: (1 to: 2) forEach: [ :each |
+		b node: each * 10 ].
+	b edges source: (Array with: (Array with: 10) -> 20) connectFromAll: #key to: #value.
+	b build.
+	
+	self assert: b view edges size equals: 1
+]
+
+{ #category : #'tests - source' }
+RTMondrianTest >> testSourceConnectFromTo [
+
+	b nodes: (1 to: 2) forEach: [ :each |
+		b node: each * 10 ].
+	b edges source: (Array with: 10 -> 20) connectFrom: #key to: #value.
+	b build.
+	
+	self assert: b view edges size equals: 1
+]
+
+{ #category : #'tests - source' }
+RTMondrianTest >> testSourceConnectFromToAll [
+
+	b nodes: (1 to: 2) forEach: [ :each |
+		b node: each * 10 ].
+	b edges source: (Array with: 10 -> (Array with: 20)) connectFrom: #key toAll: #value.
+	b build.
+	
+	self assert: b view edges size equals: 1
+]
+
 { #category : #'tests - edges' }
 RTMondrianTest >> testUseAssociationsWithError [
 
