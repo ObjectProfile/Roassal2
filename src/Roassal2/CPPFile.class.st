@@ -36,6 +36,11 @@ CPPFile >> baseFilenameWithoutExtension [
 ]
 
 { #category : #accessing }
+CPPFile >> fileReference [
+	^ fileReference
+]
+
+{ #category : #accessing }
 CPPFile >> filename [
 	^ filename
 ]
