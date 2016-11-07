@@ -1,6 +1,6 @@
 Class {
 	#name : #CPPFile,
-	#superclass : #RTObject,
+	#superclass : #CPPAbstractFile,
 	#instVars : [
 		'filename',
 		'includedNames',
@@ -37,6 +37,7 @@ CPPFile >> baseFilenameWithoutExtension [
 
 { #category : #accessing }
 CPPFile >> fileReference [
+	"Return the file reference"
 	^ fileReference
 ]
 
@@ -59,22 +60,16 @@ CPPFile >> gtInspectorContentsIn: composite [
 
 { #category : #accessing }
 CPPFile >> includedNames [
+	"Return the list of names specified in the includes.
+	For example, if the file contains #include <foo.h>
+	Then the collection returned by includedName contains 'foo.h'"
 	^ includedNames
 ]
 
 { #category : #accessing }
-CPPFile >> includedNames: anObject [
-	includedNames := anObject
-]
-
-{ #category : #accessing }
 CPPFile >> incomingHeaders [
+	"Return the list of headers included by me"
 	^ incomingHeaders
-]
-
-{ #category : #accessing }
-CPPFile >> incomingHeaders: anObject [
-	incomingHeaders := anObject
 ]
 
 { #category : #initialization }
@@ -83,6 +78,8 @@ CPPFile >> initialize [
 	outgoingHeaders := OrderedCollection new.
 	incomingHeaders := OrderedCollection new.
 	includedNames := OrderedCollection new.
+	self filename: 'UNAMED'.
+	self loc: -1.
 ]
 
 { #category : #initialization }
@@ -100,11 +97,13 @@ CPPFile >> initializeFromContentAsString: string [
 
 { #category : #accessing }
 CPPFile >> loc [
+	"Return the number of lines of code of the file"
 	^ loc
 ]
 
 { #category : #accessing }
 CPPFile >> loc: anInteger [
+	"Set the number of lines of code of the file"
 	loc := anInteger
 ]
 
