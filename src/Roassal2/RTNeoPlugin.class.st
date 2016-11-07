@@ -24,5 +24,5 @@ RTNeoPlugin >> execute [
 
 { #category : #hooks }
 RTNeoPlugin >> label [
-	^ 'Loading Neo JSON and CSV parser'
+	^ 'Load the Neo JSON and CSV parser'
 ]
