@@ -2,7 +2,6 @@ Class {
 	#name : #CPPFile,
 	#superclass : #CPPAbstractFile,
 	#instVars : [
-		'filename',
 		'includedNames',
 		'incomingHeaders',
 		'outgoingHeaders',
@@ -14,11 +13,13 @@ Class {
 
 { #category : #adding }
 CPPFile >> addIncomingHeader: h [ 
+	"Add a header that references me"
 	incomingHeaders add: h
 ]
 
 { #category : #adding }
 CPPFile >> addOutgoingHeader: h [
+	"Add a header that is referenced by me"
 	outgoingHeaders add: h
 ]
 
@@ -33,23 +34,6 @@ CPPFile >> baseFilenameWithoutExtension [
 	| ts |
 	ts := filename findTokens: '/.'.
 	^ ts at: (ts size - 1)
-]
-
-{ #category : #accessing }
-CPPFile >> fileReference [
-	"Return the file reference"
-	^ fileReference
-]
-
-{ #category : #accessing }
-CPPFile >> filename [
-	^ filename
-]
-
-{ #category : #accessing }
-CPPFile >> filename: afileName [
-	filename := afileName.
-	fileReference := afileName asFileReference
 ]
 
 { #category : #'gt inspector' }
