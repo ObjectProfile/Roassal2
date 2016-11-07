@@ -56,6 +56,7 @@ CPPProcessor >> numberOfModules [
 CPPProcessor >> processDirectories: listOfDirectories [
 
 	"TODO"
+	"Hum... Not sure whether we will keep the folders..."
 ]
 
 { #category : #processing }
