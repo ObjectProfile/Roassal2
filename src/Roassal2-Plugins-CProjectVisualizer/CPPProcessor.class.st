@@ -3,7 +3,8 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'headers',
-		'modules'
+		'modules',
+		'directories'
 	],
 	#category : #'Roassal2-Plugins-CProjectVisualizer'
 }
@@ -22,7 +23,8 @@ CPPProcessor >> headers [
 CPPProcessor >> initialize [
 	super initialize.
 	headers := OrderedCollection new.
-	modules := OrderedCollection new
+	modules := OrderedCollection new.
+	directories := OrderedCollection new
 ]
 
 { #category : #processing }
@@ -36,6 +38,11 @@ CPPProcessor >> modules [
 ]
 
 { #category : #metrics }
+CPPProcessor >> numberOfDirectories [
+	^ directories size
+]
+
+{ #category : #metrics }
 CPPProcessor >> numberOfHeaders [
 	^ headers size
 ]
@@ -43,6 +50,12 @@ CPPProcessor >> numberOfHeaders [
 { #category : #metrics }
 CPPProcessor >> numberOfModules [
 	^ modules size
+]
+
+{ #category : #'resolving dependencies' }
+CPPProcessor >> processDirectories: listOfDirectories [
+
+	"TODO"
 ]
 
 { #category : #processing }
@@ -77,8 +90,11 @@ CPPProcessor >> processModuleAsString: fileContentAsString named: filename [
 { #category : #processing }
 CPPProcessor >> processRootFolder: aFileReference [
 
-	| relevantFiles |
-	relevantFiles := aFileReference allChildren select: [ :f | #('c' 'h' 'cpp') includes: f extension ].
+	| relevantFiles allFiles allDirectories |
+	allFiles := aFileReference allChildren.
+	allDirectories := allFiles select: #isDirectory.
+	self processDirectories: allDirectories.
+	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp') includes: f extension ].
 	relevantFiles do: [ :f | 
 			| r |
 			r := f readStream.
