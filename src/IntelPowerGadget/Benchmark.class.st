@@ -67,7 +67,7 @@ Benchmark >> exportBenchmarkSourceAsFile [
 	(self allSubclasses reject: #hasSubclasses) do: [ :cls |
 		| source |
 		source := String lf join: (cls >> #execute) getSource lines allButFirst.
-		source := source, String lf, 'Smalltalk quitPrimitive'.
+		source := source, String lf, '.', String lf, 'Smalltalk quitPrimitive'.
 		(cls name, '.st') asFileReference writeStream
 			nextPutAll: source; close   ]
 	
