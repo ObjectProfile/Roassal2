@@ -138,7 +138,7 @@ RTInteractionBuilder >> initializeInteractions [
 	interactions := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - computed' }
 RTInteractionBuilder >> interactionOfType: cls [
 	^ interactions
 		detect: [ :anInt | anInt class == cls or: [ anInt class inheritsFrom: cls ] ]
