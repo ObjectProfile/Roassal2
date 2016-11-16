@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #accessing }
+CPPModule >> dependOn: aRegExp [
+	^ self dependentModules anySatisfy: [ :m | aRegExp match: m filename ]
+]
+
+{ #category : #accessing }
 CPPModule >> dependentModules [
 	^ dependentModules
 ]
