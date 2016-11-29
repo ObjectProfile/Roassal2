@@ -1343,13 +1343,33 @@ ConfigurationOfRoassal2 >> version137: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version138: spec [
-	<version: '1.39' imports: #('1.13-baseline' )>
+	<version: '1.38' imports: #('1.13-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
 		spec description: 'Solved an important bug in Grapher'.
 		spec author: 'AlexandreBergel'.
 		spec timestamp: '01/09/2016'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-akevalion.390';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1425';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-StefanReichhart.43';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version139: spec [
+	<version: '1.39' imports: #('1.13-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '28/11/2016'.
 		
 		spec 
 			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
