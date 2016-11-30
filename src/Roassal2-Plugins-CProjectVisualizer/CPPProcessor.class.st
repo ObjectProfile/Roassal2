@@ -62,10 +62,10 @@ CPPProcessor >> processDirectories: listOfDirectories [
 { #category : #processing }
 CPPProcessor >> processFileAsString: fileContentAsString named: filename [
 
-	(filename endsWith: '.c') 
+	((filename endsWith: '.c') or: [ filename endsWith: '.cpp' ])
 		ifTrue: [ ^ self processModuleAsString: fileContentAsString named: filename ].
 
-	(filename endsWith: '.h') 
+	((filename endsWith: '.h') or: [ filename endsWith: '.hpp' ])
 		ifTrue: [ ^ self processHeaderAsString: fileContentAsString named: filename ].
 		
 ]
@@ -109,18 +109,22 @@ CPPProcessor >> resolveDependencies [
 
 	self resolveDependenciesBetweenHeaderAndModule.
 	self resolveDependenciesBetweenHeaders.
+	self resolveDependenciesBetweenModulesAndHeaders.
 	self resolveDependenciesBetweenModules
 ]
 
 { #category : #'resolving dependencies' }
 CPPProcessor >> resolveDependenciesBetweenHeaderAndModule [
-
-	
 	| m |
 	"We link header to modules, and modules to header"
 	headers do: [ :h |
+		"We first look for a module whose name ends with .c"
 		m := self moduleNamed: h baseFilenameWithoutExtension, '.c'.
-		m ifNotNil: [ m header: h. h module: m ]
+		"If not found, we look for a module ending with .cpp"
+		m ifNil: [ m := self moduleNamed: h baseFilenameWithoutExtension, '.cpp' ].
+		m ifNotNil: [ 
+			m header: h. 
+			h module: m ]
 	].
 ]
 
@@ -130,17 +134,33 @@ CPPProcessor >> resolveDependenciesBetweenHeaders [
 		h includedNames do: [ :name |
 			| hh |
 			hh := self headerNamed: name.
-			hh ifNotNil: [ hh addIncomingHeader: h. h addOutgoingHeader: hh ] ]
+			hh ifNotNil: [ 
+				hh addIncomingHeader: h. 
+				h addOutgoingHeader: hh ] ]
 	]
 ]
 
 { #category : #'resolving dependencies' }
 CPPProcessor >> resolveDependenciesBetweenModules [
 	modules copy do: [ :m |
+		"We first use the header to extract the dependencies between the modules"
 		m hasHeader ifTrue: [ 
 			| oh |
-			oh := m header outgoingHeaders. 
+			oh := m header outgoingHeaders, m outgoingHeaders. 
 			oh := oh select: #hasModule thenCollect: #module.
-			m dependentModules addAll: oh ]
-	]
+			m addDependentModules: oh. ].
+	].
+
+]
+
+{ #category : #'resolving dependencies' }
+CPPProcessor >> resolveDependenciesBetweenModulesAndHeaders [
+	modules copy do: [ :m |
+		m includedNames do: [ :name | 
+			| hh |
+			hh := self headerNamed: name.
+			hh ifNotNil: [ 
+				m addOutgoingHeader: hh ] ]
+	].
+
 ]

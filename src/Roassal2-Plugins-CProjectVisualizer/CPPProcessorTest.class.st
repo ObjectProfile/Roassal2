@@ -181,3 +181,65 @@ CPPProcessorTest >> testDefault [
 	self assert: p numberOfHeaders equals: 0.
 	self assert: p numberOfModules equals: 0.
 ]
+
+{ #category : #tests }
+CPPProcessorTest >> testDependencies [
+
+	| m1C |
+	p processFileAsString: 
+'#include "m1.h"
+#include "m3.h"
+' named: 'm1.c'.
+	p processFileAsString: '#include "m2.h"' named: 'm1.h'.
+
+	p processFileAsString: '// m2.h' 			  named: 'm2.h'.
+	p processFileAsString: '#include "m2.h"' named: 'm2.c'.
+
+	p processFileAsString: '// m3.h' 			  named: 'm3.h'.
+	p processFileAsString: '#include "m3.h"' named: 'm3.c'.
+	p resolveDependencies.
+	
+	self assert: p modules size equals: 3.
+
+	self assert: (p modules allSatisfy: #hasHeader).
+	
+	self assert: ((p headerNamed: 'm1.h') outgoingHeaders includes: (p headerNamed: 'm2.h')).
+	
+	m1C := p moduleNamed: 'm1.c'.
+	self assert: (m1C outgoingHeaders includes: (p headerNamed: 'm3.h')).
+	self assert: m1C dependentModules size equals: 2.
+	
+	
+
+]
+
+{ #category : #tests }
+CPPProcessorTest >> testDependenciesAndCpp [
+
+	| m1C |
+	p processFileAsString: 
+'#include "m1.hpp"
+#include "m3.hpp"
+' named: 'm1.cpp'.
+	p processFileAsString: '#include "m2.hpp"' named: 'm1.hpp'.
+
+	p processFileAsString: '// m2.hpp' 			  named: 'm2.hpp'.
+	p processFileAsString: '#include "m2.hpp"' named: 'm2.cpp'.
+
+	p processFileAsString: '// m3.hpp' 			  named: 'm3.hpp'.
+	p processFileAsString: '#include "m3.hpp"' named: 'm3.cpp'.
+	p resolveDependencies.
+	
+	self assert: p modules size equals: 3.
+
+	self assert: (p modules allSatisfy: #hasHeader).
+	
+	self assert: ((p headerNamed: 'm1.hpp') outgoingHeaders includes: (p headerNamed: 'm2.hpp')).
+	
+	m1C := p moduleNamed: 'm1.cpp'.
+	self assert: (m1C outgoingHeaders includes: (p headerNamed: 'm3.hpp')).
+	self assert: m1C dependentModules size equals: 2.
+	
+	
+
+]
