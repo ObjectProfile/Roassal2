@@ -238,6 +238,18 @@ b.
 
 { #category : #'public - condition' }
 RTLayoutBuilder >> ifNotConnectedThen: thenLayout [
+	"
+	Select a layout for elements that are not connected. 
+	Here is an example
+
+b := RTMondrian new.
+b nodes: RTShape allSubclasses.
+b edges connectFrom: #superclass.
+b layout
+	tree;
+	ifNotConnectedThen: RTGridLayout new.
+b
+	"
 	^ self ifElement: #isNotConnected then: thenLayout
 ]
 
