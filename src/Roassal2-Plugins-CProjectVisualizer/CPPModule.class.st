@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : #accessing }
+CPPModule >> addDependentModules: someModules [
+	self assert: [ someModules allSatisfy: [ :m | m class == self class ] ].
+	dependentModules addAll: (someModules copyWithout: self).
+	dependentModules removeDuplicates 
+]
+
+{ #category : #accessing }
 CPPModule >> dependOn: aRegExp [
 	^ self dependentModules anySatisfy: [ :m | aRegExp match: m filename ]
 ]

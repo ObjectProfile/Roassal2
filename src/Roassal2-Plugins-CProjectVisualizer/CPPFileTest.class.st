@@ -11,6 +11,19 @@ CPPFileTest >> testFileReference [
 ]
 
 { #category : #tests }
+CPPFileTest >> testFileReference02 [
+	| f1 f2 |
+	f1 := CPPFile new.
+	f1 filename: '/tmp/foo.c'.
+	self assert: f1 fileReference notNil.
+	
+	f2 := CPPFile new.
+	f2 filename: '/tmp/foo.c'.
+	self assert: f2 fileReference notNil.
+	self assert: f2 fileReference ~~ f1 fileReference.
+]
+
+{ #category : #tests }
 CPPFileTest >> testFilename [
 	self assert: CPPFile new filename equals: 'UNAMED'.
 	self assert: (CPPFile new filename: 'foo.h'; filename) equals: 'foo.h'.
