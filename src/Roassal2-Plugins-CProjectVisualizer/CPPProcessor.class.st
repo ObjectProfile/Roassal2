@@ -11,30 +11,32 @@ Class {
 
 { #category : #processing }
 CPPProcessor >> headerNamed: afileName [
-	^ headers detect: [ :h | h baseFilename = afileName ] ifNone: [ nil ]
+	^ headers at: afileName ifAbsent: [ nil ]
+	"^ headers detect: [ :h | h baseFilename = afileName ] ifNone: [ nil ]"
 ]
 
 { #category : #accessing }
 CPPProcessor >> headers [
-	^ headers
+	^ headers values
 ]
 
 { #category : #initialization }
 CPPProcessor >> initialize [
 	super initialize.
-	headers := OrderedCollection new.
-	modules := OrderedCollection new.
+	headers := Dictionary new.
+	modules := Dictionary new.
 	directories := OrderedCollection new
 ]
 
 { #category : #processing }
 CPPProcessor >> moduleNamed: afileName [
-	^ modules detect: [ :m | m baseFilename = afileName ] ifNone: [ nil ]
+	^ modules at: afileName ifAbsent: [ nil ]
+	"^ modules detect: [ :m | m baseFilename = afileName ] ifNone: [ nil ]"
 ]
 
 { #category : #accessing }
 CPPProcessor >> modules [
-	^ modules
+	^ modules values
 ]
 
 { #category : #metrics }
@@ -76,7 +78,8 @@ CPPProcessor >> processHeaderAsString: fileContentAsString named: filename [
 	h := CPPHeader new.
 	h filename: filename.
 	h initializeFromContentAsString: fileContentAsString.
-	headers add: h
+	headers at: h baseFilename put: h
+	"headers add: h"
 ]
 
 { #category : #processing }
@@ -85,7 +88,8 @@ CPPProcessor >> processModuleAsString: fileContentAsString named: filename [
 	m := CPPModule new.
 	m filename: filename.
 	m initializeFromContentAsString: fileContentAsString.
-	modules add: m
+	modules at: m baseFilename put: m
+	"modules add: m"
 ]
 
 { #category : #processing }
@@ -117,7 +121,7 @@ CPPProcessor >> resolveDependencies [
 CPPProcessor >> resolveDependenciesBetweenHeaderAndModule [
 	| m |
 	"We link header to modules, and modules to header"
-	headers do: [ :h |
+	self headers do: [ :h |
 		"We first look for a module whose name ends with .c"
 		m := self moduleNamed: h baseFilenameWithoutExtension, '.c'.
 		"If not found, we look for a module ending with .cpp"
@@ -130,7 +134,7 @@ CPPProcessor >> resolveDependenciesBetweenHeaderAndModule [
 
 { #category : #'resolving dependencies' }
 CPPProcessor >> resolveDependenciesBetweenHeaders [
-	headers copy do: [ :h |
+	self headers copy do: [ :h |
 		h includedNames do: [ :name |
 			| hh |
 			hh := self headerNamed: name.
@@ -142,7 +146,7 @@ CPPProcessor >> resolveDependenciesBetweenHeaders [
 
 { #category : #'resolving dependencies' }
 CPPProcessor >> resolveDependenciesBetweenModules [
-	modules copy do: [ :m |
+	self modules copy do: [ :m |
 		"We first use the header to extract the dependencies between the modules"
 		m hasHeader ifTrue: [ 
 			| oh |
@@ -155,7 +159,7 @@ CPPProcessor >> resolveDependenciesBetweenModules [
 
 { #category : #'resolving dependencies' }
 CPPProcessor >> resolveDependenciesBetweenModulesAndHeaders [
-	modules copy do: [ :m |
+	self modules copy do: [ :m |
 		m includedNames do: [ :name | 
 			| hh |
 			hh := self headerNamed: name.
