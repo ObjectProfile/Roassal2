@@ -220,6 +220,48 @@ AElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTGrapherExample >> exampleDotsInFrontOfLines [
+
+| b ds dots |
+"Dot are located behind lines per default. This code forces the dots to be in front."
+b := RTGrapher new.
+
+ds := RTData new.
+ds dotShape size: 10; color: Color red.
+dots := ds points: (1 to: 10) asArray shuffle.
+ds y: #yourself.
+ds connectUsing: Color blue.
+b add: ds.
+
+b build.
+dots do: #pushFront.
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherExample >> exampleDotsInFrontOfLinesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADrUlEQVR4XuWcW0/yQBCG+dka
+E/U/8Q+EeOMdUTSSiJJI4ELlLKAMfkO+Emw47aF2t8+bEE10W7JP35mdnbal5ZKvkFTiTwEf
+CF98IHwgfPGB8IHwxQfCB8IXHwgfCF98IHzxgfCB8MUHwgfCFx8IHwhffCB8IHzxgfDFB8IH
+whcfCB8IX3wgfCB8xQGk1+tJq9US/b3T6UiMEyDjsSwvLooBpFaryf39vbTbbel2u7+ATCYT
+eX9/Dx+SwiiVlnJ5KYUIWd/f37JYLER/pv8WBZB/mp+diarwOSQWIApjrKGLD8RhEkcjL7E/
+cba6PASXxOsQT7G/3++vx4fgkiiBfH5+ynw+l8nJifPxv76+1scIwSVRAdHJGmmo+q/ZbOZ8
+/E2HhOCS4IEkuSJxhe/vuOmQEFwSvkMO5AqXK3rXxOfpkihC1r7ErQWo7XEHg8HWsXm6JHgg
+w+FQDiV422Pvy0F5uSR6IJtJ3lT7xi70vDnscQUNZNt2jO/lc9Z1TqGAHBuOslh9JblrOp3y
+gZgCSdcSPo+ty+KsnRoFEJPVU7qWcM0faR3jEl99lWCBmKyebBxiWuUfPIennBMsEK0Fsvjf
+QzWIjVOSXQQfC4AggdgsZU2h2BR+6XyS3lvLPYckbduXlxfJG4hJ2HJJ0tOPj/Xemo/NTa9A
+tJeuk/f4+CjbkrLNjQ+2k2Wy9LXJOX9VnzgBUQvv6qfbOsR2K8QkJ9isytL1CWbZawvEJHw4
+OYRSh2jfY3F+/icT5eoQRmHoITYfs0Mbyu0+QQNJViyusfmY6t6m/sAA0av10Pa67/yTxVI1
+aiCbPXLfk3NM/eK7kIvfITnfS+vSYSxsyMoSRla9Ed4qy5P21Rihu6OQQHbVGNqvmHq405EP
+xJdDAnsOBANk2za8rzqHD8QRShb9Cj4QQ2mdMzs9laz6FXwgpookV6BCVqwwCgsEWxgmLVrf
+PXU+EEslz6dv66lrUm02m/L29mb1eX19jW6sjwvQCci+Z9RVLs9u5DXWZXvFx9YM/10nlKR+
+c3Ozehj/+fnZ+KqpVCqrMenXdRyj29tb6/NeX19bnVdDt77zRT9PT0/i4pTMgFxdXYlOTqPR
+MP5y5XJZ6vW6PDw8GI+tVqvW59V3t9icV///7u5uNU7zqcvTV/yQRapD+OID4QPhiw+ED4Qv
+PhA+EL74QPjiA+ED4YsPhA+ELz4QPhC++ED4QPjiA+GLD4QPhC8+ED4QvvhA+ED44gPhA+GL
+D4SvX/oBtJ07nqFutBYAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherExample >> exampleDoubleBar [
 
 | b |
