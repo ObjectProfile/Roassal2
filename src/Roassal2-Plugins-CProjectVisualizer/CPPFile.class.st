@@ -68,13 +68,14 @@ CPPFile >> initialize [
 
 { #category : #initialization }
 CPPFile >> initializeFromContentAsString: string [
-	| lines includesLines |
+	| lines includesLines ss |
 	lines := string lines.
 	loc := lines size.
 	
 	includesLines := lines select: [ :l | l beginsWith: '#include ' ].
 	includesLines do: [ :l |
-		includedNames add: (l findTokens: '<>"') second
+		ss := l findTokens: '<>"'.
+		ss size = 2 ifTrue: [ includedNames add: ss second ]
 	 ].
 
 ]
