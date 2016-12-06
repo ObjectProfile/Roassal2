@@ -77,12 +77,12 @@ Color class >> distinctTenStrongColors [
 			add: Color red;
 			add: Color blue;
 			add: Color orange;
-			add: Color cyan;
-			add: Color green;
-			add: Color pink;
+			add: Color cyan darker;
+			add: Color green twiceDarker;
+			add: Color pink twiceDarker;
 			add: Color brown;
 			add: Color purple;
-			add: Color yellow;
+			add: Color yellow darker;
 			add: Color gray;
 			yourself
 ]
