@@ -1,7 +1,7 @@
 Class {
 	#name : #RTDuplicationBetweenPackages,
 	#superclass : #RTUsefulScript,
-	#category : #'Roassal2-Plugins'
+	#category : #'Roassal2-PluginsAndScripts'
 }
 
 { #category : #accessing }
