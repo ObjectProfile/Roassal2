@@ -1,7 +1,7 @@
 Class {
 	#name : #RTPDFExporterPlugin,
 	#superclass : #RTAbstractPlugin,
-	#category : #'Roassal2-Plugins'
+	#category : #'Roassal2-PluginsAndScripts'
 }
 
 { #category : #hooks }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTMultiPilesPlugin,
 	#superclass : #RTAbstractPlugin,
-	#category : #'Roassal2-Plugins'
+	#category : #'Roassal2-PluginsAndScripts'
 }
 
 { #category : #hooks }
@@ -11,6 +11,12 @@ RTMultiPilesPlugin >> description [
 
 { #category : #hooks }
 RTMultiPilesPlugin >> execute [
+
+	Metacello new
+    configuration: 'OSSubprocess';
+    repository: 'github://marianopeck/OSSubprocess:master/repository';
+    version: #stable;
+    load.
 
 	Gofer new 
 		smalltalkhubUser: 'abergel' project: 'GitLogExtractor';
