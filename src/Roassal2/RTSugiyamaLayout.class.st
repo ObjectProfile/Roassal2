@@ -144,8 +144,8 @@ RTSugiyamaLayout >> defaultAttachPoint [
 { #category : #hook }
 RTSugiyamaLayout >> doExecute: aNodeCollection [ 
 	"Coffman-Graham-Layering. Di Battista Book, page 275, chapter, 9.2.1"
-	self assignLabels: aNodeCollection.
-	self buildLayers: aNodeCollection copy.
+	self assignLabels: aNodeCollection asOrderedCollection.
+	self buildLayers: aNodeCollection asOrderedCollection copy.
 	self addDummyNodes.
 	self reduceCrossing.
 	self layoutAt: self verticalGap @ self horizontalGap
