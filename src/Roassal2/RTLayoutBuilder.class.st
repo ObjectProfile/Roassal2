@@ -120,6 +120,20 @@ RTLayoutBuilder >> flow [
 
 { #category : #'public - partition' }
 RTLayoutBuilder >> for: aBlockCondition use: aLayout [
+	"Allow one to use associate a layout for a particular set of elements, obtained from aBlockCondition
+
+	classes := (TRPlatform current packageNamed: 'Roassal2') definedClasses.
+	b := RTMondrian new.
+	b shape circle size: 5.
+	b nodes: classes.
+	b edges connectFrom: #superclass.
+
+	b layout
+			for: [ :c | (classes intersection: (Array with: c superclass), c subclasses) notEmpty ] use: RTTreeLayout new;
+			for: [ :c | (classes intersection: (Array with: c superclass), c subclasses) isEmpty ] use: RTGridLayout new;
+			horizontalLine.
+	b
+	"
 
 	partitions add: (Array with: aBlockCondition with: aLayout)
 ]
