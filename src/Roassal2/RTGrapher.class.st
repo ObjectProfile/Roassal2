@@ -1,12 +1,14 @@
 "
 RTGrapher describes a chart. Data set may be added and axis may be configured. Consider the following example:
 
+-=-=-=
 b := RTGrapher new.
 ds := RTDataSet new. 
 ds dotShape color: Color red. 
 ds points: #(5 1 20 8).
 b add: ds.
-b build.
+b
+-=-=-=
 
 "
 Class {
@@ -142,6 +144,30 @@ RTGrapher >> homogenizeMinAndMax [
 
 { #category : #hooks }
 RTGrapher >> inferLegendInteractions [
+	"This is a private method. If you need to have some legend, so something like:
+
+-=-=-=-=-=-=-=-=-=-=-=-=
+	b := RTGrapher new.
+	b extent: 300 @ 300.
+	
+	(Array with: Color red with: Color blue with: Color green with: Color yellow) doWithIndex: [ :color :i |
+		ds := RTData new.
+		ds label: 'x^', i asString.
+		ds dotShape ellipse size: 0.
+		ds points: (0.0 to: 10.0 by: 0.1).
+		ds connectColor: color.
+		ds x: #yourself.
+		ds y: [ :v | v raisedTo: i ].
+		b add: ds.
+	].
+	
+	b axisXWithNumberOfTicks: 3.
+	b axisYWithNumberOfTicks: 4.
+	b legend right.
+	^ b
+-=-=-=-=-=-=-=-=-=-=-=-=
+	
+	"
 	datasets
 		select:
 			[ :each | each interaction hasInteractionOfType: RTDataHighlightInteraction ]
@@ -278,6 +304,31 @@ RTGrapher >> renderIn: aView [
 
 { #category : #hooks }
 RTGrapher >> renderLegend [
+	"This is a private method. If you need to have a legend, use #legend, such as in:
+
+-=-=-=-=-=-=-=-=-=-=-=-=
+	b := RTGrapher new.
+	b extent: 300 @ 300.
+	
+	(Array with: Color red with: Color blue with: Color green with: Color yellow) doWithIndex: [ :color :i |
+		ds := RTData new.
+		ds label: 'x^', i asString.
+		ds dotShape ellipse size: 0.
+		ds points: (0.0 to: 10.0 by: 0.1).
+		ds connectColor: color.
+		ds x: #yourself.
+		ds y: [ :v | v raisedTo: i ].
+		b add: ds.
+	].
+	
+	b axisXWithNumberOfTicks: 3.
+	b axisYWithNumberOfTicks: 4.
+	b legend right.
+	^ b
+-=-=-=-=-=-=-=-=-=-=-=-=
+
+	"
+
 	self legend view: self view.
 	datasets
 		do: [ :each | self renderDataset: each inLegend: self legend ].
