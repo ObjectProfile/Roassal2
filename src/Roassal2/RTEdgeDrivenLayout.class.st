@@ -95,12 +95,6 @@ RTEdgeDrivenLayout >> doAttachPoint [
 ]
 
 { #category : #hook }
-RTEdgeDrivenLayout >> doExecute: elements [
-	
-	self subclassResponsibility
-]
-
-{ #category : #hook }
 RTEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
 	"called by refreshLayoutEvery: ms. It is used to convey a feeling of incremental execution."
 	

@@ -64,14 +64,6 @@ RTLayoutBuilder >> cluster [
 	^ layout
 ]
 
-{ #category : #'public - partition' }
-RTLayoutBuilder >> connectedUse: layoutInner globalUse: layoutOutter [
-	| elements groups |
-	groups := elements groupsOfConnectedElements.
-	groups do: [ :g | layoutInner on: g ].
-	layoutOutter on: groups
-]
-
 { #category : #'public - layout' }
 RTLayoutBuilder >> date [
 	"Used by RTCalendarBuilder"
@@ -300,6 +292,13 @@ RTLayoutBuilder >> month [
 RTLayoutBuilder >> overall: overallLayout [ 
 	self assert: [ layout class == RTConditionalLayout ].
 	layout overallLayout: overallLayout
+]
+
+{ #category : #'public - condition' }
+RTLayoutBuilder >> partition [
+
+	layout := RTPartitionLayout new.
+	^ layout
 ]
 
 { #category : #'public - partition' }

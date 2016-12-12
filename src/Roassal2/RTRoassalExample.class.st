@@ -7823,7 +7823,7 @@ v elements do: [ :el | el trachelShape addCallback: callback ].
 
 head := v elements last.
 v when: TRMouseMove do: [ :evt | 
-	head translateBy: (evt positionFromCamera - head position) / 10.
+	head translateBy: (evt position - head position) / 10.
 	v canvas signalUpdate ].
 
 head translateBy: -150 @ -150.
