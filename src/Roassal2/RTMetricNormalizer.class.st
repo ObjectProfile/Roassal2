@@ -79,13 +79,12 @@ RTMetricNormalizer >> distinctColorForGroup [
 	b
 	"
 	
-	| elementsToProcess groups visitedElements cycleId allConnectedElements |
-	elementsToProcess := elements copy.
+	| groups visitedElements cycleId allConnectedElements |
 	groups := Dictionary new.
 	visitedElements := Set new.
 	
 	cycleId := 1.
-	elementsToProcess do: [ :e |
+	elements do: [ :e |
 		(visitedElements includes: e) ifFalse: [ 
 			allConnectedElements := e withAllConnectedElements.
 			visitedElements addAll: allConnectedElements.
