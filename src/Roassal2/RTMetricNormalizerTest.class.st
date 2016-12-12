@@ -249,6 +249,43 @@ RTMetricNormalizerTest >> testDistinctColor [
 	self assert: (v elementFromModel: 1) trachelShape color ~= (v elementFromModel: 2) trachelShape color
 ]
 
+{ #category : #'test colors' }
+RTMetricNormalizerTest >> testDistinctColorForGroup [
+
+	| b roots |
+	b := RTMondrian new.
+	b nodes: (5 to: 20).
+	b edges connectFrom: [ :v | v // 2 ].
+	b layout tree.
+	b normalizer distinctColorForGroup.
+	b build.
+	
+	roots := b view elements select: [ :e | (5 to: 9) includes: e model ].
+	self assert: (roots collect: [ :e | e trachelShape color ]) asSet size equals: roots size.
+	self assert: (b view elementFromModel: 11) trachelShape color equals: (b view elementFromModel: 20) trachelShape color.
+	self assert: (b view elementFromModel: 12) trachelShape color equals: (b view elementFromModel: 13) trachelShape color.
+	
+]
+
+{ #category : #'test colors' }
+RTMetricNormalizerTest >> testDistinctColorForGroupAndEdgeColor [
+
+	| b roots |
+	b := RTMondrian new.
+	b nodes: (5 to: 20).
+	b edges connectFrom: [ :v | v // 2 ].
+	b layout tree.
+	b normalizer distinctColorForGroup; propagateColorToEdges.
+	b build.
+	
+	roots := b view elements select: [ :e | (5 to: 9) includes: e model ].
+	self assert: (roots collect: [ :e | e trachelShape color ]) asSet size equals: roots size.
+	self assert: (b view elementFromModel: 11) trachelShape color equals: (b view elementFromModel: 20) trachelShape color.
+	self assert: (b view elementFromModel: 12) trachelShape color equals: (b view elementFromModel: 13) trachelShape color.
+	
+	self assert: (b view edges allSatisfy: [ :edge | edge trachelShape color = edge from trachelShape color ])
+]
+
 { #category : #'test x' }
 RTMetricNormalizerTest >> testNormalizeXBugTracking [
 
