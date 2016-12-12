@@ -190,7 +190,7 @@ RTGroupTest >> testgroupsOfConnectedElements [
 	b nodes: (5 to: 20).
 	b edges connectFrom: [ :v | v // 2 ].
 	b layout tree.
-	b normalizer distinctColorForGroup.
+	b normalizer distinctColorForConnectedParts.
 	b build.
 	
 	groups := b view elements groupsOfConnectedElements.
