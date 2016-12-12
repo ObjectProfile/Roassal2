@@ -26,7 +26,7 @@ translator
 "
 Class {
 	#name : #RTLayout,
-	#superclass : #RTObject,
+	#superclass : #RTAbstractLayout,
 	#instVars : [
 		'affectedNodes',
 		'translator',
@@ -83,13 +83,6 @@ RTLayout >> applyOn: elements [
 ]
 
 { #category : #hook }
-RTLayout >> doExecute: elements [
-	"Performs the layout"
-
-	self subclassResponsibility
-]
-
-{ #category : #hook }
 RTLayout >> doInitialize: elements [
 	"Method executed before beginning the layout. Useful when the graph to be ordered need to be prepared"
 	"self announce: (ROLayoutBegin new elements: elements)."
@@ -106,7 +99,7 @@ RTLayout >> executeOnElements: elements [
 	"Execute the layout, myself, on the elements"
 		
 	self doInitialize: elements.
-	self doExecute: elements asOrderedCollection.
+	self doExecute: elements.
 	self doPost: elements.
 
 ]

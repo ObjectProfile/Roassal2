@@ -569,3 +569,17 @@ RTElementTest >> testwithAllConnectedElements02 [
 	self assert: es first withAllConnectedElements size equals: 3.
 	self assert: (es first withAllConnectedElements collect: #model) asSet equals: #(1 2 3) asSet
 ]
+
+{ #category : #connection }
+RTElementTest >> testwithAllConnectedElements03 [
+	| v es eb |
+	v := RTView new.
+	es := RTElement forCollection: (1 to: 6).
+	v addAll: es.
+	eb := RTEdgeBuilder new.
+	eb view: v.
+	eb elements: es.
+	eb useAssociations: (OrderedCollection new add: 1 -> 2; yourself).
+	self assert: v numberOfEdges equals: 1.
+	self assert: es second withAllConnectedElements size equals: 2.
+]

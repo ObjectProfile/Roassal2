@@ -152,7 +152,7 @@ RTGroup >> groupsOfConnectedElements [
 		(visitedElements includes: e) ifFalse: [ 
 			allConnectedElements := e withAllConnectedElements.
 			visitedElements addAll: allConnectedElements.
-			groups add: allConnectedElements
+			groups add: allConnectedElements asGroup
 		]
 	].
 	^ groups
