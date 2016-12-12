@@ -257,7 +257,7 @@ RTMetricNormalizerTest >> testDistinctColorForGroup [
 	b nodes: (5 to: 20).
 	b edges connectFrom: [ :v | v // 2 ].
 	b layout tree.
-	b normalizer distinctColorForGroup.
+	b normalizer distinctColorForConnectedParts.
 	b build.
 	
 	roots := b view elements select: [ :e | (5 to: 9) includes: e model ].
@@ -275,7 +275,7 @@ RTMetricNormalizerTest >> testDistinctColorForGroupAndEdgeColor [
 	b nodes: (5 to: 20).
 	b edges connectFrom: [ :v | v // 2 ].
 	b layout tree.
-	b normalizer distinctColorForGroup; propagateColorToEdges.
+	b normalizer distinctColorForConnectedParts; propagateColorToEdges.
 	b build.
 	
 	roots := b view elements select: [ :e | (5 to: 9) includes: e model ].

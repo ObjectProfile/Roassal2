@@ -2252,7 +2252,7 @@ b shape arrowedLine withOffset.
 b edges 
 	moveBehind; connectToAll: #dependentClasses.
 b layout force charge: -300.
-b normalizer distinctColorForGroup.
+b normalizer distinctColorForConnectedParts.
 ^ b
 ]
 

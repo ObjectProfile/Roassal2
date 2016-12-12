@@ -67,7 +67,7 @@ RTMetricNormalizer >> distinctColor [
 ]
 
 { #category : #'public normalize color' }
-RTMetricNormalizer >> distinctColorForGroup [
+RTMetricNormalizer >> distinctColorForConnectedParts [
 	"Give a distinct color for each group of connected elements"
 	
 	"
