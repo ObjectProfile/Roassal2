@@ -497,8 +497,8 @@ RTGrapherExample >> exampleFunctions [
 	
 	b axisXWithNumberOfTicks: 3.
 	b axisYWithNumberOfTicks: 4.
-b legend right.
-^ b
+	b legend right.
+	^ b
 ]
 
 { #category : #icons }
