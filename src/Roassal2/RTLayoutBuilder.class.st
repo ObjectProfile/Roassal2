@@ -64,6 +64,14 @@ RTLayoutBuilder >> cluster [
 	^ layout
 ]
 
+{ #category : #'public - partition' }
+RTLayoutBuilder >> connectedUse: layoutInner globalUse: layoutOutter [
+	| elements groups |
+	groups := elements groupsOfConnectedElements.
+	groups do: [ :g | layoutInner on: g ].
+	layoutOutter on: groups
+]
+
 { #category : #'public - layout' }
 RTLayoutBuilder >> date [
 	"Used by RTCalendarBuilder"

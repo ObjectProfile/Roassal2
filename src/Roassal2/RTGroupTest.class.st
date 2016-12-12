@@ -182,3 +182,19 @@ RTGroupTest >> testViewWhenAddedToView [
 	v addAll: group.
 	self assert: group view equals: group first view
 ]
+
+{ #category : #tests }
+RTGroupTest >> testgroupsOfConnectedElements [
+	| b groups |
+	b := RTMondrian new.
+	b nodes: (5 to: 20).
+	b edges connectFrom: [ :v | v // 2 ].
+	b layout tree.
+	b normalizer distinctColorForGroup.
+	b build.
+	
+	groups := b view elements groupsOfConnectedElements.
+	self assert: groups size equals: 5.
+	self assert: (groups allButFirst allSatisfy: [ :g | g size = 3 ]).
+	self assert: groups first size equals: 4
+]
