@@ -373,6 +373,69 @@ CB+EHz4IH4QfPsiI5h+gbzXg0htPpwAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }
+RTGrapherDecorationExample >> exampleLabellingCurve [
+
+| b ds1 |
+b := RTGrapher new.
+
+ds1 := RTData new.
+ds1 label: 'x'.
+ds1 noDot.
+ds1 points: (0.0 to: 10.0 by: 0.1).
+ds1 connectColor: Color blue.
+ds1 y: [ :v | v ].
+b add: ds1.
+
+ds1 := RTData new.
+ds1 label: 'x^2'.
+ds1 noDot.
+ds1 points: (0.0 to: 10.0 by: 0.1).
+ds1 connectColor: Color blue.
+ds1 y: [ :v | v raisedTo: 2 ].
+b add: ds1.
+
+ds1 := RTData new.
+ds1 label: 'x^3'.
+ds1 noDot.
+ds1 points: (0.0 to: 10.0 by: 0.1).
+ds1 connectColor: Color blue.
+ds1 y: [ :v | v raisedTo: 3 ].
+b add: ds1.
+
+b addDecorator:  RTDataSetLabelDecorator new.
+
+^ b
+
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleLabellingCurveIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEoElEQVR4XuWcy08TQRzH+bPk
+pidDYsQTBxMTTbjAEYPxBJIeNCYmmogEiIkcwGcACQ+hhFEQFEGBAgUiCEILgfJ+FgrfdX5b
+UdSobbXLbL+fZMOUdjoz+9l57cw2zbL4MYk0/lPAL4QffiH8QvjhF8IvhB9+IfxC+OEXwi+E
+H34h/PAL4RfCD78QfiH88AvhF8IPvxB+IfzwC+GHXwi/EH74hfAL4YdfCL8QfviFuBWMj8P+
+GwjAMSE+nw9+vx9jY2OYm5vDwsKCHT58f3Jy0n6fScTGzDJQXQ10dgIjI4DH44yQg4MD++SP
+6ESHh4cRDAYhAiR89HPyPyYhbQ+mgCdPorUjEgGKimBUk8Uk5MULwPg+hElIezu/EGNoaQFc
+McpiETI6yi/EGOrqANfMQ1JdSDgMrK7yCzGGZ88AV83UU1nI+/dIWtn4hSQyCWzjF2IML18i
+qeXiFxIH+/vAxAS/EGN49AhJLxO/kBh5/RqOlIdfSAxAMzjIL8QYKivhWFn4hfyF7m44Wg5+
+IX8gFAJmZ/mFGENfHxwvQ1rindwg2vSU9XA9/egaupZhKaVcLeTuXRxL/tMSvfpXVlawtraG
+QCCAxcVFO5wqNSSZ96r4m6wE5huyR4FfiAFIB+7UfINfyF/Y2wOcmo3zC4kBnw9G5JdfiEY2
+GpqSF2ohMnzv74dR+aQVsrMD9PbCuDxSCpG9VCZ04PxCNB8+QN9dgLEXC5WQigoY369RCJEa
+YWJ/QSlEtuwsLcE1Q/CUFSLDWXmYyXIZKSdErwSgoeH4RHx7xlDfGKMW8uoV0NFxPCKmpoAe
+79KPzxiWlvIJ2d2N1obW1uSKkPNbUgJIf6SXgfDwIfD4MbC5+T1dTB15xnB+HsjI4BAiOwff
+vAH+x+7zYBCoqYmebBmFycl+/hy4cwcYGnLRiqFTQvRCJIqLgc+foydNXv/us/IZqSn37wOy
+/NrVBWxsQJp01NZGT3Jz85+/w9WdujyrPjAwYK+pr6+v/7J8W6MvvcJCyzo8rl2DfRQWwioq
+OrA8noh93Ly5aV2/voqLFxdx6lQQp09P4vLlT7h69SOysz/izJlRpKf7ceLEELKyBpCf3497
+9/pQV9dj1de/s5qa3lrNzZ2W19sh6/j24fUqNDYqnQelm3WFp08VqqoUKiqUFqa0ZKWlKdy+
+rXDrlsKNGwoej0JBQfS4ckXp9BXy8hRyc6NHTo7ChQsKly4pnD+vcO6cQmamwtmzCidPKqu4
+2A+Ul+PYhMzMzGB6ehrhcBjy7PrP78sPCiT63f8SdzbB0c2/xl2SLSo9PTC2yeLHICET0vNq
+dvQ97ljjbG1t6VHLpr175Wg41vhSW8d1hyG7YKTWxpNfiSdpRSIR3e9sxJXuvB5RSXnHv84/
+JGyckD5dfeUnN5aXl2POnAiUOF26N97e3v4WjjW+CCwrK9MLTv32hSCv4xFymK6IjSfdUCgE
+Ka/0qYKE+Zss/iaLH34h/EL44RfCD78QfiH88AvhF8IPvxB+IfzwC+EXwg+/EH4h/PAL4Ydf
+CL8QfviF8Avhh18IvxB++IXwC+GHXwg//EL4hfCTAF8AFAcIUFlf2wQAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherDecorationExample >> exampleLegend02 [
 
 | b ds |
