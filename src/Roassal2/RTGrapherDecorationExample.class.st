@@ -1,3 +1,21 @@
+"
+RTGrapherDecorationExample new installTitle: 'MinAndMaxSetManually' 
+		code:
+		'
+| b ds |
+b := RTGrapher new.
+ds := RTDataSet new.
+ds points: #(1 2 3).
+b add: ds.
+
+b maxX: 6.
+b minX: -2.
+b maxY: 5.
+
+b build.
+^ b view'
+	
+"
 Class {
 	#name : #RTGrapherDecorationExample,
 	#superclass : #RTAbstractExample,
@@ -318,6 +336,40 @@ jyEubgVKtQcPHkzNbWpq0g/IdgACPttffMH/6cHpGxkZsSsrK+3Dhw/bY2NjKZBQNBMQLMuy
 5+bm7L179+oHRL8N2eWAjI6ObjqXxfuQ9QOin/QDoh8Q/aQfEP2A6Cf9gOgHRD/pB0Q/6QdE
 PyD6ST8g+gHRT/oB0Q+IftIPiH5A9JN+QPSTfkD0A6Kf1kH/B57ZaB+VqHXsAAAAAElFTkSu
 QmCC'
+]
+
+{ #category : #sources }
+RTGrapherDecorationExample >> exampleGraphTitle [
+| b ds |
+b := RTGrapher new.
+ds := RTData new.
+ds dotShape color: Color red.
+ds points: #(5 1 20 8 4 2 10 23).
+b add: ds.
+b addDecorator: (RTAverageDecorator new withLabel: #asFloat).
+b addDecorator: (RTTitleDecorator new height: 20; title: 'Example').
+^ b
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleGraphTitleIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADSUlEQVR4XuXc3UoyURTG8W6t
+C+gSuqhOI+oggqAOghClQvsiFPoSM7MiLZTqoKIvzZLH17VJ6UDeckZnBv8PDJq6o5mfLl2z
+t421WvxEKWP8Q8AH4YcPwgfhhw/CB+GHD8IH4YcPwgfhhw/CDx+ED8IPH4QPwg8fhA/CDx+E
+D8IPH4QfPggfhB8+CB8kwqnX6+KDDDhzc3OtVCrlaazXcXyQP4DUajUVi0W3pdNpJRIJfd+v
+5eVlHR4eKh6Pyx57enqqWCzmrn98fOj4+Lj7eD6Iz/x8ls/MzMiytramTCajzv2d6ysrK+o8
+fmlpqYvTvnQbH2QA2dra0s7Oju7u7twBLZVKrWQyqYODg+7PlUrFXS8UCg5hb29PdtvFxYW7
+3cZns1k+SBix0sX/lMVPNECsJNzf37tn5P7+vviHM2SQ1dVVtWu4Tk5OtL29rVErHyNXsvgg
+fJBQo++P33yQqIBYn/T5KT4Iv2TxQfggfJC/9SFXV1ey09y9+pBhgajZlObnxQfp0Yecn58r
+n88H3odoY4MPwi9ZfBA+CB+ED8IPH4QPwk8QIDZf/b/5ED5IwCC2qIA/H8IvWXwQPggfhA/C
+B+GD8MMH8Z/Hx0dVq1W3X7aa8uXlRTc3N7q8vFQk+pAw5kPCis3DPExN6ezszO2XLVe12DGw
+pa2NRkOh9yFhzYeElfLsrF5fX93aYVtHbD2YrSne3NxU5EuWLXB+enrCbM/Pz/xlQD1LSzot
+/pt6lECmp32vj+KD8MMH4YPwM3wQmw+xxsi2fkDc2qqFBT7YIEHsm7HWJNk3Y3t1qr+9QrS+
+zgehl6z2aQVpfFx8EH74IHyQEQDR5KQ0gFMgfJBBgXx9if8K6XVgJibUnmwQv2T1kff3d5XL
+ZU99CD9DAHl7e3P/T8RrHzKsV5efsUdHR6GMDaRk8RMhkOvra/ds6VXKfkvnv/h4GWsTRV7H
+dubKvYz1s7+BgNjUrl3a9Ga/Y29vbz2PXVxc9Dx2d3fX89hcLud5bCAgzfbJw5+Xfn5HUGP9
+/M2D2F/+ewitU+eHD8IH4YcPwgfhhw/CB+GHD8IPH4QPwg8fhA/CDx+ED8IPH4QPwg8fhB8+
+CB+EHz4IH4QfPsiI5h+gbzXg0htPpwAAAABJRU5ErkJggg=='
 ]
 
 { #category : #sources }

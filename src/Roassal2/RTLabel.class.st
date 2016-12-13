@@ -26,6 +26,11 @@ RTLabel class >> defaultColor [
 	^ Color gray
 ]
 
+{ #category : #initialization }
+RTLabel class >> defaultFontSize [
+	^ TRLabelShape defaultFontSize
+]
+
 { #category : #public }
 RTLabel class >> text: aBlockOrValueOrSymbol [
 	^ self new text: aBlockOrValueOrSymbol
@@ -35,6 +40,11 @@ RTLabel class >> text: aBlockOrValueOrSymbol [
 RTLabel >> defaultColor [
 
 	^ self class defaultColor
+]
+
+{ #category : #initialization }
+RTLabel >> defaultFontSize [
+	^ self class defaultFontSize
 ]
 
 { #category : #'instance creation' }
@@ -82,7 +92,7 @@ RTLabel >> heightFor: element [
 RTLabel >> initialize [
 	super initialize.
 	text := self defaultText.
-	height := TRLabelShape defaultFontSize.
+	height := self defaultFontSize.
 	fontName := TRLabelShape defaultFamilyFontName
 ]
 
