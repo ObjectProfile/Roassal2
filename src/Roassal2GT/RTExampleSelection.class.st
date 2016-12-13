@@ -38,6 +38,12 @@ RTExampleSelection class >> gtExampleFlags3 [
 	^ (RTComposedShapeExample >> #exampleFlags) gtExample
 ]
 
+{ #category : #'as yet unclassified' }
+RTExampleSelection >> gtDebuggerSourceIn: composite [
+	"Cancel the method"
+	<gtDebuggerPresentationOrder: 1>
+]
+
 { #category : #ui }
 RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 	<gtInspectorPresentationOrder: 0>
