@@ -58,10 +58,10 @@ RTDataSet >> OBSOLETE [
 
 { #category : #OBSOLETE }
 RTDataSet >> xScale [
-
+	^ RTLinearTransformation instance
 ]
 
 { #category : #OBSOLETE }
 RTDataSet >> yScale [
-
+	^ RTLinearTransformation instance
 ]
