@@ -114,7 +114,7 @@ RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: self textColor
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RTLegendBuilder >> backgroundTransparencyOnDemand [
 	^ 0.9
 ]
@@ -282,7 +282,7 @@ RTLegendBuilder >> right [
 	position := #right
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RTLegendBuilder >> setAsFixed [
 
 	"The legend is fixed, therefore not subject to the camera movement.
@@ -290,7 +290,7 @@ RTLegendBuilder >> setAsFixed [
 	isFixed := true
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RTLegendBuilder >> textColor [
 	^ Color lightGray
 ]

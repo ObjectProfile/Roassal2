@@ -156,7 +156,7 @@ RTAxisConfiguration >> initialize [
 	titlePosition := self defaultTitlePosition.
 	self doNotRotateLabels.
 	ticksCentered := false.
-	scaleTransformation := #yourself
+	scaleTransformation := RTLinearTransformation instance "#yourself"
 ]
 
 { #category : #accessing }
@@ -338,8 +338,9 @@ RTAxisConfiguration >> scaleTransformation [
 ]
 
 { #category : #accessing }
-RTAxisConfiguration >> scaleTransformation: anObject [
-	scaleTransformation := anObject
+RTAxisConfiguration >> scaleTransformation: aRTScaleTransformation [
+	"Set the scale transformation. This is a __private__ method"
+	scaleTransformation := aRTScaleTransformation
 ]
 
 { #category : #configuration }
