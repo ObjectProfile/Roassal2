@@ -109,6 +109,18 @@ RTAbstractLine >> initialize [
 	width := 1.
 ]
 
+{ #category : #public }
+RTAbstractLine >> sameColorThanEnding [
+	"Pick the same color than the ending element"
+	self colorElement: [ :edge | edge to trachelShape color ]
+]
+
+{ #category : #public }
+RTAbstractLine >> sameColorThanStarting [
+	"Pick the same color than the starting element"
+	self colorElement: [ :edge | edge from trachelShape color ]
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> startingPointOf: anEdge [
 	^ attachPoint startingPointOf: anEdge
