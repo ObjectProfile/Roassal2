@@ -63,7 +63,6 @@ CPPProcessor >> processDirectories: listOfDirectories [
 
 { #category : #processing }
 CPPProcessor >> processFileAsString: fileContentAsString named: filename [
-
 	((filename endsWith: '.c') or: [ filename endsWith: '.cpp' ])
 		ifTrue: [ ^ self processModuleAsString: fileContentAsString named: filename ].
 
@@ -99,7 +98,7 @@ CPPProcessor >> processRootFolder: aFileReference [
 	allFiles := aFileReference allChildren.
 	allDirectories := allFiles select: #isDirectory.
 	self processDirectories: allDirectories.
-	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp') includes: f extension ].
+	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp' 'hpp' 'C' 'H' 'CPP' 'HPP') includes: f extension ].
 	relevantFiles do: [ :f | 
 			| r |
 			r := f readStream.
