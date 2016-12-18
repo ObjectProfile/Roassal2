@@ -30,6 +30,11 @@ CPPModule >> hasHeader [
 	^ header notNil
 ]
 
+{ #category : #testing }
+CPPModule >> hasNoHeader [
+	^ self hasHeader not
+]
+
 { #category : #accessing }
 CPPModule >> header [
 	^ header
