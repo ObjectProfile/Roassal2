@@ -110,6 +110,11 @@ RTAbstractHighlightable >> highlight: aBlock [
 ]
 
 { #category : #public }
+RTAbstractHighlightable >> highlightConnectedElements [
+	^ self highlightElements: [ :e | (e outgoingEdges collect: #to) asSet ]
+]
+
+{ #category : #public }
 RTAbstractHighlightable >> highlightElements [
 	^ highlightElements
 ]
