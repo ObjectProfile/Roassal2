@@ -96,6 +96,6 @@ RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
 
 	multipleEdges size <= 1 ifTrue: [ ^ 0 @ 0 ].
 	indexOfEdge := multipleEdges indexOf: anEdge.
-	normal := (anEdge to position - anEdge from position) normal.
+	normal := self getNormalForPoint: (anEdge to position - anEdge from position).
 	^ (indexOfEdge - 1 - (multipleEdges size / 2)) * offset * normal
 ]

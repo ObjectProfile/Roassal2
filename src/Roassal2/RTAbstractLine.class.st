@@ -203,7 +203,26 @@ RTAbstractLine >> withHorizontalAttachPoint [
 
 { #category : #public }
 RTAbstractLine >> withOffsetIfMultiple [
-	"Make the edge to shift in case several edges are starting from tne same element and ending to the same element. (I.e., multile edges)"
+	"Make the edge to shift in case several edges are starting from tne same element and ending to the same element. (I.e., multiple edges)
+	
+	
+Here is an example:
+v := RTView new.
+es := RTEllipse new size: 20; color: Color red; elementsOn: (Array with: 1 with: 2).
+v addAll: es.
+es @ RTDraggable.
+es second translateBy: 80 @ 50.
+
+eb := RTEdgeBuilder new.
+eb view: v.
+
+eb shape styledLine; arrowHead; dottedLine; filledCircleTail;  color: Color black;withOffsetIfMultiple.
+
+eb useAssociations: (Array with: 1 -> 2 with: 2 -> 1).
+
+v
+	
+	"
 	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new
 ]
 
