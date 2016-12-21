@@ -94,6 +94,43 @@ RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
 			unhighlight: event element ].
 ]
 
+{ #category : #'public - highlighting' }
+RTInteractionBuilder >> highlightConnectedElements [
+	"Highlight connected elements
+	"
+	
+	"
+	Example:
+b := RTMondrian new.
+b interaction highlightNeighbour: [ :v | Array with: v - 1 with: v with: v + 1 ].
+b nodes: (1 to: 11).
+b layout grid.
+b 
+	
+	"
+	interactions add: [ :element | element @ (RTHighlightable new highlightConnectedElements) ]
+]
+
+{ #category : #'public - highlighting' }
+RTInteractionBuilder >> highlightConnectedElementsUsing: aColor [
+	"Highlight connected elements
+	"
+	
+	"
+	Example:
+b := RTMondrian new.
+
+b shape circle size: 20.
+b interaction highlightConnectedElementsUsing: Color red.
+b nodes: (1 to: 100).
+b edges connectFrom: [ :v | v // 2 ].
+b layout radial.
+b
+	
+	"
+	interactions add: [ :element | element @ (RTHighlightable new color: aColor; highlightConnectedElements) ]
+]
+
 { #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightElements: elementsOrABlock [
 	"Highlight the elements, elementsOrABlock may either be a block (which takes as argument the selected element and return a list of elements"
