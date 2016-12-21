@@ -12,7 +12,7 @@ s := RTShapeBuilder new
 es := s elementsOn: RTShape withAllSubclasses.
 v add: es.
 
-es @ RTPopup @ (RTLabelled new setAsHighlightable).
+es @ RTPopup @ (RTLabeled new setAsHighlightable).
 
 expand := (RTExpandable new
 				group: [ :group :element | 

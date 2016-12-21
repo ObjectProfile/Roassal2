@@ -100,7 +100,7 @@ RTInteractionBuilder >> highlightElements: elementsOrABlock [
 	interactions add: [ :element | element @ (RTHighlightable highlightElements: (elementsOrABlock rtValue: element model)) ]
 ]
 
-{ #category : #'public-highlighting' }
+{ #category : #'public - highlighting' }
 RTInteractionBuilder >> highlightNeighbour: aBlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
 	
@@ -119,7 +119,7 @@ b
 	interactions add: [ :element | element @ (RTHighlightable highlight: aBlock) ]
 ]
 
-{ #category : #'public-highlighting' }
+{ #category : #'public - highlighting' }
 RTInteractionBuilder >> highlightNeighbour: aBlock color: aColorOrABlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
 	interactions add: [ :element | element @ (RTHighlightable new 
@@ -127,7 +127,7 @@ RTInteractionBuilder >> highlightNeighbour: aBlock color: aColorOrABlock [
 																highlight: aBlock) ]
 ]
 
-{ #category : #'public-highlighting' }
+{ #category : #'public - highlighting' }
 RTInteractionBuilder >> highlightNeighbourWithCenteredText: aBlock [
 	"Highlight by labelling the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
 	
@@ -147,7 +147,7 @@ b
 	interactions add: [ :element | element @ (RTShowLabel new highlight: aBlock; center; yourself) ]
 ]
 
-{ #category : #'public-highlighting' }
+{ #category : #'public - highlighting' }
 RTInteractionBuilder >> highlightNeighbourWithText: aBlock [
 	"Highlight by labelling the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
 	
@@ -185,12 +185,12 @@ RTInteractionBuilder >> interactionOfType: cls [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'public-menu' }
+{ #category : #'public - menu' }
 RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
 	interactions add: [ :element | element @ (RTMenuActivable new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
 ]
 
-{ #category : #'public-menu' }
+{ #category : #'public - menu' }
 RTInteractionBuilder >> menu [
 	| i |
 	i := RTMenuActivable new.
