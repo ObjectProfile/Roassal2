@@ -1,7 +1,7 @@
 Class {
 	#name : #RTAbstractPlugin,
 	#superclass : #RTAbstractMenuEntry,
-	#category : #'Roassal2-PluginsAndScripts'
+	#category : #'Roassal2-Plugins'
 }
 
 { #category : #'world menu' }

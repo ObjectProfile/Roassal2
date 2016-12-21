@@ -94,50 +94,13 @@ RTInteractionBuilder >> highlightColored: aColorOrAOneArgBlockOrSymbol [
 			unhighlight: event element ].
 ]
 
-{ #category : #'public - highlighting' }
-RTInteractionBuilder >> highlightConnectedElements [
-	"Highlight connected elements
-	"
-	
-	"
-	Example:
-b := RTMondrian new.
-b interaction highlightNeighbour: [ :v | Array with: v - 1 with: v with: v + 1 ].
-b nodes: (1 to: 11).
-b layout grid.
-b 
-	
-	"
-	interactions add: [ :element | element @ (RTHighlightable new highlightConnectedElements) ]
-]
-
-{ #category : #'public - highlighting' }
-RTInteractionBuilder >> highlightConnectedElementsUsing: aColor [
-	"Highlight connected elements
-	"
-	
-	"
-	Example:
-b := RTMondrian new.
-
-b shape circle size: 20.
-b interaction highlightConnectedElementsUsing: Color red.
-b nodes: (1 to: 100).
-b edges connectFrom: [ :v | v // 2 ].
-b layout radial.
-b
-	
-	"
-	interactions add: [ :element | element @ (RTHighlightable new color: aColor; highlightConnectedElements) ]
-]
-
 { #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightElements: elementsOrABlock [
 	"Highlight the elements, elementsOrABlock may either be a block (which takes as argument the selected element and return a list of elements"
 	interactions add: [ :element | element @ (RTHighlightable highlightElements: (elementsOrABlock rtValue: element model)) ]
 ]
 
-{ #category : #'public - highlighting' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightNeighbour: aBlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
 	
@@ -156,52 +119,12 @@ b
 	interactions add: [ :element | element @ (RTHighlightable highlight: aBlock) ]
 ]
 
-{ #category : #'public - highlighting' }
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightNeighbour: aBlock color: aColorOrABlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
 	interactions add: [ :element | element @ (RTHighlightable new 
 																highlightedColor: aColorOrABlock; 
 																highlight: aBlock) ]
-]
-
-{ #category : #'public - highlighting' }
-RTInteractionBuilder >> highlightNeighbourWithCenteredText: aBlock [
-	"Highlight by labelling the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
-	
-	aBlock takes as input an object and return a collection of objects.
-	"
-	
-	"
-	Example:
-b := RTMondrian new.
-b interaction highlightNeighbourWithCenteredText: [ :v | Array with: v - 1 with: v with: v + 1 ].
-b shape box size: 20.
-b nodes: (1 to: 11).
-b layout grid.
-b 
-	
-	"
-	interactions add: [ :element | element @ (RTShowLabel new highlight: aBlock; center; yourself) ]
-]
-
-{ #category : #'public - highlighting' }
-RTInteractionBuilder >> highlightNeighbourWithText: aBlock [
-	"Highlight by labelling the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
-	
-	aBlock takes as input an object and return a collection of objects.
-	"
-	
-	"
-	Example:
-b := RTMondrian new.
-b interaction highlightNeighbourWithText: [ :v | Array with: v - 1 with: v with: v + 1 ].
-b shape box size: 20.
-b nodes: (1 to: 11).
-b layout grid.
-b 
-	
-	"
-	interactions add: [ :element | element @ (RTShowLabel new highlight: aBlock; yourself) ]
 ]
 
 { #category : #initialization }
@@ -222,12 +145,12 @@ RTInteractionBuilder >> interactionOfType: cls [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'public - menu' }
+{ #category : #public }
 RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
 	interactions add: [ :element | element @ (RTMenuActivable new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
 ]
 
-{ #category : #'public - menu' }
+{ #category : #public }
 RTInteractionBuilder >> menu [
 	| i |
 	i := RTMenuActivable new.
@@ -317,16 +240,6 @@ RTInteractionBuilder >> setUpElements: elements [
 
 { #category : #public }
 RTInteractionBuilder >> showEdge [
-	"
-	Draw connections between elements
-
-b := RTMondrian new.
-b interaction showEdge connectTo: [ :v | (v - 1) to: v + 1 ].
-b shape box size: 20.
-b nodes: (1 to: 9).
-b layout grid.
-b 
-	"
 	| i |
 	i := RTShowEdge new.
 	interactions add: i. 

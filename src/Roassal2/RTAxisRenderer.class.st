@@ -34,14 +34,12 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 	ticksShift := self areTicksCentered
 		ifTrue: [ 1 ]
 		ifFalse: [ tickLength ].
-
 	RTMetricNormalizer new
 		elements: ticks;
 		normalizePosition: [ :v | v @ v ]
 			min: fromPosition + (angle sin @ angle cos * ticksShift / 2)
 			max: toPosition + (angle sin @ angle cos * ticksShift / 2)
-			using: [ :aPoint | (config scaleTransformation rtValue: aPoint x) @ (config scaleTransformation rtValue: aPoint y) ].
-			"using: [ :aPoint | (aPoint x rtValue: config scaleTransformation) @ (aPoint y rtValue: config scaleTransformation) ]."
+			using: [ :aPoint | (aPoint x rtValue: config scaleTransformation) @ (aPoint y rtValue: config scaleTransformation) ].
 	ticks rotateByDegrees: angle radiansToDegrees.
 
 	"Ticks should not have any model"

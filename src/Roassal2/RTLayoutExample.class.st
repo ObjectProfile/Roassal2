@@ -1,21 +1,26 @@
 "
 Example about layouts
 
-RTLayoutExample new installTitle: 'Partition' 
+RTLayoutExample new installTitle: 'ConditionaLayoutInMondrian' 
 		code:
 		'
-classes := (RPackageOrganizer default packageNamed: ''Roassal2'') definedClasses.
-classes := classes copyWithout: RTObject.
-
 b := RTMondrian new.
-b nodes: classes.
+b shape rectangle
+	fillColor: Color white;
+	borderColor: Color lightGray;
+	withTextAbove: #name.
+b nodes: Collection withAllSubclasses forEach: [ :cls |
+	b nodes: cls methods.
+	b edges connectToAll: #dependentMethods.
+	b layout 
+		ifElement: #isConnected then: RTTreeLayout new;
+		else: RTGridLayout new.
+ ].
+
 b edges connectFrom: #superclass.
-b layout partition
-	withinGroup: RTTreeLayout;
-	forNotConnected: RTGridLayout;
-	forGroups: RTFlowLayout.
-^ b
-'
+b layout tree.
+b build.
+^ b view'
 	
 "
 Class {
@@ -270,85 +275,6 @@ GLbp4UZD/It/IP6B+Bf/QPyLfyD+gfgX/0D8A/Ev/oH4B+Jf/APxD8S/+AfiX/wD8Q/Ev/gH
 4h+If/EPxD8Q/+IfiH8g/sU/EP/iH4h/IP7FPxD/QPyLfyD+gfgX/0D8A/Ev/oH4F/9A/APx
 L/6B+AfiX/wD8Q/Ev/gH4h+If/EPxL/4B+IfiH/xD+TflP8Aq9/baOYXdDoAAAAASUVORK5C
 YII='
-]
-
-{ #category : #sources }
-RTLayoutExample >> exampleConditionalAndLayout [
-
-classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
-classes := classes copyWithout: RTObject.
-
-b := RTMondrian new.
-b nodes: classes.
-b edges connectFrom: #superclass.
-b layout partition
-	withinGroup: RTTreeLayout;
-	forGroups: (RTConditionalLayout new 
-						condition: [ :g | g size > 1 ];
-						thenLayout: RTFlowLayout;
-						elseLayout: RTGridLayout
-						).
-
-^ b
-
-]
-
-{ #category : #icons }
-RTLayoutExample >> exampleConditionalAndLayoutIcon [
-	^ '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
-Q/8BoIcN886bdxMAAAAASUVORK5CYII='
 ]
 
 { #category : #sources }
@@ -666,88 +592,6 @@ ZxYQvmUZsCo+GBrNDD4YTqSQUVK/0+JbViaFjpL6n4bNt6zMNYM/SmpMsp+2Yu6fGGrU1P82
 Bb5lZZQbIQ0ZJVVQ9I+ifMsy1GnxwTCjmlPv/FHSwmr7jnT+KKmB+hFjXXwwzKgu22kDRT4Y
 Zpb/TTtt8kdJ+WA4gfo+eEbig2EBSh/aVuGD4YQa2kzkg6HxYPDBsKBd8cHQWEHng6GxlrdP
 fDCcCAZDCvpcwfAfVog6NLjaUcUAAAAASUVORK5CYII='
-]
-
-{ #category : #sources }
-RTLayoutExample >> examplePartition [
-
-| classes b |
-classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
-classes := classes copyWithout: RTObject.
-
-b := RTMondrian new.
-b nodes: classes.
-b edges connectFrom: #superclass.
-b layout partition
-	withinGroup: RTTreeLayout;
-	forNotConnected: RTGridLayout;
-	forGroups: RTFlowLayout.
-^ b
-
-]
-
-{ #category : #icons }
-RTLayoutExample >> examplePartitionIcon [
-	^ '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
-AElFTkSuQmCC'
 ]
 
 { #category : #sources }

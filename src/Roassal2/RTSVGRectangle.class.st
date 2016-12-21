@@ -40,7 +40,7 @@ RTSVGRectangle >> addOn: stream using: aSVGVisitor [
 RTSVGRectangle >> addPosition: stream [
 	stream
 		nextPutAll:
-				('x="<1p>" y="<2p>" ' expandMacrosWith: self box topLeft x rounded with: self box topLeft y rounded).
+				('x="<1p>" y="<2p>" ' expandMacrosWith: (self box topLeft x round: 2) with: (self box topLeft y round: 2)).
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ RTSVGRectangle >> element: anElement box: aRectangle fillColor: aColor borderWid
 
 { #category : #accessing }
 RTSVGRectangle >> height [
-	height ifNil: [ height := self box height rounded ].
+	height ifNil: [ height := self box height round: 2 ].
 	^ height
 ]
 
@@ -81,7 +81,7 @@ RTSVGRectangle >> initialize [
 
 { #category : #accessing }
 RTSVGRectangle >> width [
-	width ifNil: [ width := self box width rounded ].
+	width ifNil: [ width := self box width round: 2 ].
 	^ width
 ]
 

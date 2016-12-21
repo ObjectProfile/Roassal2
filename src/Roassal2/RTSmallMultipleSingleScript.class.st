@@ -10,7 +10,7 @@ Class {
 		'objectsY',
 		'objectsX'
 	],
-	#category : #'Roassal2-PluginsAndScripts'
+	#category : #'Roassal2-Plugins'
 }
 
 { #category : #hooks }

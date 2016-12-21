@@ -140,24 +140,6 @@ RTGroup >> extent: newExtentT [
 	
 ]
 
-{ #category : #accessing }
-RTGroup >> groupsOfConnectedElements [
-	"Return the list of connected elements"
-
-	| groups visitedElements allConnectedElements |
-	groups := RTGroup new.
-	visitedElements := Set new.
-	
-	self do: [ :e |
-		(visitedElements includes: e) ifFalse: [ 
-			allConnectedElements := e withAllConnectedElements.
-			visitedElements addAll: allConnectedElements.
-			groups add: allConnectedElements asGroup
-		]
-	].
-	^ groups
-]
-
 { #category : #attributes }
 RTGroup >> hasAttribute: aKey [ 
 	"Return true if attributes includes aKey"

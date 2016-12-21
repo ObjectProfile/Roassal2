@@ -46,5 +46,5 @@ RTAbstractArrowedLine >> width: aValue [
 
 { #category : #public }
 RTAbstractArrowedLine >> withOffsetIfMultiple [
-	^ super withOffsetIfMultiple
+	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new.
 ]

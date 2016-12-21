@@ -1,43 +1,3 @@
-"
-This is a conditional layout that allow one to compose layouts.
-Here is an example:
-
-[[[
-	v := RTView new.
-	es := (RTBox new
-				color: [ :value | value odd ifTrue: [ Color red ] ifFalse: [ Color blue ] ])
-				elementsOn: (1 to: 4).
-	v addAll: es.
-	
-	l := RTConditionalLayout new
-				condition: [ :element | element model odd ];
-				thenLayout: RTVerticalLineLayout new;
-				elseLayout: RTHorizontalLineLayout new.
-	l on: es.
-	v
-]]]
-
-
-Another example:
-
-[[[
-classes := (RPackageOrganizer default packageNamed: 'Roassal2') definedClasses.
-classes := classes copyWithout: RTObject.
-
-b := RTMondrian new.
-b nodes: classes.
-b edges connectFrom: #superclass.
-b layout partition
-	withinGroup: RTTreeLayout;
-	forGroups: (RTConditionalLayout new 
-						condition: [ :g | g size > 1 ];
-						thenLayout: RTFlowLayout;
-						elseLayout: RTGridLayout
-						).
-
-b
-]]]
-"
 Class {
 	#name : #RTConditionalLayout,
 	#superclass : #RTLayout,
@@ -63,7 +23,7 @@ RTConditionalLayout >> condition: aBlockOrSymbolOrValue [
 	condition := aBlockOrSymbolOrValue
 ]
 
-{ #category : #hook }
+{ #category : #'as yet unclassified' }
 RTConditionalLayout >> doExecute: elements [
 	| thenElements elseElements |
 	thenElements := RTGroup new.
@@ -88,7 +48,7 @@ RTConditionalLayout >> elseLayout: aLayout [
 	elseLayout := aLayout
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 RTConditionalLayout >> initialize [
 	super initialize.
 	condition := true.

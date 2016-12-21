@@ -281,23 +281,3 @@ RTElement >> width [
 RTElement >> width: aValue [
 	^ trachelShape width: aValue
 ]
-
-{ #category : #'public - connections' }
-RTElement >> withAllConnectedElements [
-	| group |
-	group := Set new.
-	self withAllConnectedElementsVisitedElements: group.
-	^ group
-]
-
-{ #category : #'public - connections' }
-RTElement >> withAllConnectedElementsVisitedElements: visitedElements [
-	(visitedElements includes: self)
-		ifTrue: [ ^ self ].
-	visitedElements add: self.
-	self outgoingEdges, self incomingEdges
-		do:
-			[ :edge | 
-				edge from withAllConnectedElementsVisitedElements: visitedElements.
-				edge to withAllConnectedElementsVisitedElements: visitedElements ]
-]
