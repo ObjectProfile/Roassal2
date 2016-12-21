@@ -254,7 +254,6 @@ RTMondrian >> nodes: objects [
 	"
 	
 	| els |
-	self assert: [ objects notNil ] description: 'Cannot provide nil'.
 	els := self elementsOn: objects.
 	self currentFrame addElements: els.
 	view addAll: els.

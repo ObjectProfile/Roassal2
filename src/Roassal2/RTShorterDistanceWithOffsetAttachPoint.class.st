@@ -64,15 +64,6 @@ RTShorterDistanceWithOffsetAttachPoint >> basicStartingPointOf: anEdge [
 	^ (super basicStartingPointOf: anEdge) + (self offsetNormalFor: anEdge)
 ]
 
-{ #category : #public }
-RTShorterDistanceWithOffsetAttachPoint >> getNormalForPoint: aPoint [
-	"We have this method to make sure that normal are correctly computed on VisualWorks.
-	The default behavior is the one of Pharo"
-	^ aPoint isZero 
-		ifTrue: [ -1 @ 0 ]
-		ifFalse: [ aPoint normal ]
-]
-
 { #category : #initialization }
 RTShorterDistanceWithOffsetAttachPoint >> initialize [
 	super initialize.
@@ -105,6 +96,6 @@ RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
 
 	multipleEdges size <= 1 ifTrue: [ ^ 0 @ 0 ].
 	indexOfEdge := multipleEdges indexOf: anEdge.
-	normal := self getNormalForPoint: (anEdge to position - anEdge from position).
+	normal := (anEdge to position - anEdge from position) normal.
 	^ (indexOfEdge - 1 - (multipleEdges size / 2)) * offset * normal
 ]

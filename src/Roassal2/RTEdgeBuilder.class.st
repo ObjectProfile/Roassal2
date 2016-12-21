@@ -130,10 +130,8 @@ RTEdgeBuilder >> edgeFrom: source to: target [
 
 { #category : #accessing }
 RTEdgeBuilder >> elements: someElements [
-	| someElementsAsGroup |
-	someElementsAsGroup := someElements asGroup.
-	self toElements: someElementsAsGroup.
-	self fromElements: someElementsAsGroup
+	self toElements: someElements.
+	self fromElements: someElements
 ]
 
 { #category : #accessing }

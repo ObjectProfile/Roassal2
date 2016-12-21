@@ -1,7 +1,7 @@
 Class {
 	#name : #RTVoronojPlugin,
 	#superclass : #RTAbstractPlugin,
-	#category : #'Roassal2-PluginsAndScripts'
+	#category : #'Roassal2-Plugins'
 }
 
 { #category : #hooks }

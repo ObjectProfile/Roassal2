@@ -58,11 +58,6 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #'public - scaling' }
-RTData >> README [
-	"Look at RTAbstractData "
-]
-
 { #category : #hooks }
 RTData >> addedInBuilder: aBuilder [
 	super addedInBuilder: aBuilder.

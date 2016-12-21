@@ -120,20 +120,6 @@ RTLayoutBuilder >> flow [
 
 { #category : #'public - partition' }
 RTLayoutBuilder >> for: aBlockCondition use: aLayout [
-	"Allow one to use associate a layout for a particular set of elements, obtained from aBlockCondition
-
-	classes := (TRPlatform current packageNamed: 'Roassal2') definedClasses.
-	b := RTMondrian new.
-	b shape circle size: 5.
-	b nodes: classes.
-	b edges connectFrom: #superclass.
-
-	b layout
-			for: [ :c | (classes intersection: (Array with: c superclass), c subclasses) notEmpty ] use: RTTreeLayout new;
-			for: [ :c | (classes intersection: (Array with: c superclass), c subclasses) isEmpty ] use: RTGridLayout new;
-			horizontalLine.
-	b
-	"
 
 	partitions add: (Array with: aBlockCondition with: aLayout)
 ]
@@ -252,18 +238,6 @@ b.
 
 { #category : #'public - condition' }
 RTLayoutBuilder >> ifNotConnectedThen: thenLayout [
-	"
-	Select a layout for elements that are not connected. 
-	Here is an example
-
-b := RTMondrian new.
-b nodes: RTShape allSubclasses.
-b edges connectFrom: #superclass.
-b layout
-	tree;
-	ifNotConnectedThen: RTGridLayout new.
-b
-	"
 	^ self ifElement: #isNotConnected then: thenLayout
 ]
 
@@ -292,13 +266,6 @@ RTLayoutBuilder >> month [
 RTLayoutBuilder >> overall: overallLayout [ 
 	self assert: [ layout class == RTConditionalLayout ].
 	layout overallLayout: overallLayout
-]
-
-{ #category : #'public - condition' }
-RTLayoutBuilder >> partition [
-
-	layout := RTPartitionLayout new.
-	^ layout
 ]
 
 { #category : #'public - partition' }

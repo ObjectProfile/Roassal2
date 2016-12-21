@@ -67,35 +67,6 @@ RTMetricNormalizer >> distinctColor [
 ]
 
 { #category : #'public normalize color' }
-RTMetricNormalizer >> distinctColorForConnectedParts [
-	"Give a distinct color for each group of connected elements"
-	
-	"
-	b := RTMondrian new.
-	b nodes: RTShape withAllSubclasses.
-	b edges connectToAll: #dependentClasses.
-	b layout circle.
-	b normalizer distinctColorForGroup; propagateColorToEdges.
-	b
-	"
-	
-	| groups visitedElements cycleId allConnectedElements |
-	groups := Dictionary new.
-	visitedElements := Set new.
-	
-	cycleId := 1.
-	elements do: [ :e |
-		(visitedElements includes: e) ifFalse: [ 
-			allConnectedElements := e withAllConnectedElements.
-			visitedElements addAll: allConnectedElements.
-			allConnectedElements do: [ :ee | groups at: ee model put: cycleId ].
-			cycleId := cycleId + 1.
-		]
-	].
-	self distinctColorUsing: [ :obj | groups at: obj ].
-]
-
-{ #category : #'public normalize color' }
 RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
 	"Give a color to each element according to the result of execution the block and symbol on each element.
 
@@ -1013,12 +984,6 @@ RTMetricNormalizer >> objects: someObjects [
 	self assert: [ view notNil ] description: 'A view has to be set'.
 	
 	self elements: (self view elementsFromModels: someObjects)
-]
-
-{ #category : #'public normalize color' }
-RTMetricNormalizer >> propagateColorToEdges [
-	"Utility methods, not really a metric normalizer, but still useful"
-	elements do: [ :e | e outgoingEdges do: [ :edge | edge shape colorElement: [ :anEdge | anEdge from trachelShape color ] ] ]
 ]
 
 { #category : #'public translation' }

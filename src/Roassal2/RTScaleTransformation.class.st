@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Scaling'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleTransformation class >> instance [
 	instance ifNil: [ instance := self new ].
 	^ instance
@@ -18,7 +18,7 @@ RTScaleTransformation >> invTrans: value [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTScaleTransformation >> rtValue: aValue [
 	^ self trans: aValue
 ]

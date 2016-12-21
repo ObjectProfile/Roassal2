@@ -1,7 +1,7 @@
 Class {
 	#name : #RTUsefulScript,
 	#superclass : #RTAbstractMenuEntry,
-	#category : #'Roassal2-PluginsAndScripts'
+	#category : #'Roassal2-Plugins'
 }
 
 { #category : #'as yet unclassified' }
