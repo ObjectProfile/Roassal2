@@ -1,3 +1,32 @@
+"
+Add some horizontal lines, one line per tick.
+
+	b := RTGrapher new.
+
+	b extent: 300 @ 200.
+
+	ds := RTData new.
+	ds points: (-50 to: 100 by: 0.1).
+	ds y: [ :x | (0.1 * x) sin  ].
+	ds noDot.
+	ds interaction popupText: 'sinus'.
+	ds connectColor: Color blue.
+	b add: ds.
+
+	ds := RTData new.
+	ds points: (-50 to: 100 by: 0.1).
+	ds y: [ :x | (0.1 * x) cos  ].
+	ds noDot.
+	ds interaction popupText: 'cosinus'.
+	ds connectColor: Color red.
+	b add: ds.
+
+	b addDecorator: RTHorizontalTickLineDecorator new.
+	b addDecorator: RTVerticalTickLineDecorator new.
+
+	^ b
+	
+"
 Class {
 	#name : #RTHorizontalTickLineDecorator,
 	#superclass : #RTAbstractTickLineDecorator,
