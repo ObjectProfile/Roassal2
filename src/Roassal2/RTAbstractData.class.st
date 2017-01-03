@@ -24,7 +24,7 @@ RTAbstractData >> addedInBuilder: aBuilder [
 	self builder: aBuilder.
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartUsing: barLabelFactory [
 	"Draw an histogram with title"
 	| v |
@@ -42,13 +42,13 @@ RTAbstractData >> barChartUsing: barLabelFactory [
 	 ^ v
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol [
 	"Add bar charts with centered title, the default color is used. This is a public method"
 	^ self barChartWithBarCenteredTitle: aBlockOrSymbol color: self defaultLabelColor
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol color: aColor [
 	"Draw a bar chart with title"
 	self barShape.
@@ -65,20 +65,20 @@ RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol color: aColor [
 	 
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol [
 	"Draw a barChart with title"
 	^ self barChartWithBarTitle: aBlockOrSymbol rotation: -45
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree [
 	"Draw an histogram with title"
 
 	^ self barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: self defaultLabelColor
 ]
 
-{ #category : #public }
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarTitle: aBlockOrSymbol rotation: rotationInDegree color: aColor [
 	"Draw an histogram with title"
 	| barLabelFactory |
