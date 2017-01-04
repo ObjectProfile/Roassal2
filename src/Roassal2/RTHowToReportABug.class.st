@@ -1,32 +1,32 @@
 "
-I am a class that display general information about Roassal contributions
+I am a class that display general information about how to report a bug
 "
 Class {
-	#name : #RTHowToContributeRoassal,
+	#name : #RTHowToReportABug,
 	#superclass : #RTObject,
 	#category : #'Roassal2-MorphSpecific'
 }
 
 { #category : #'world menu' }
-RTHowToContributeRoassal class >> menuCommandOn: aBuilder [
+RTHowToReportABug class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'How To Contribute')
 			order: 0.002; 
 			parent: #Roassal;
-			label: 'How To Contribute';
+			label: 'How To report a bug';
 			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
 			action: [ self new open ]
 ]
 
 { #category : #'instance creation' }
-RTHowToContributeRoassal >> addAnimationTo: v [
+RTHowToReportABug >> addAnimationTo: v [
 	| e |
 	v when: TRMouseClick do: [ :event | v clean ].
 	v
 		when: TRMouseMove
 		do: [ :event | 
 			e := (RTEllipse new
-				color: "(Color blue alpha: 0.2)" (RTPalette c1 atRandom alpha: 0.2);
+				color: (RTPalette c4 atRandom alpha: 0.2);
 				size: 20 atRandom + 5) element.
 			e translateTo: event position.
 			v add: e.
@@ -39,36 +39,27 @@ RTHowToContributeRoassal >> addAnimationTo: v [
 ]
 
 { #category : #'instance creation' }
-RTHowToContributeRoassal >> open [
+RTHowToReportABug >> open [
 	"
 	self new open
 	"
 	| v labels |
 	v := RTView new.
-	v add: (RTBitmap new form: self picAsForm) element.
-	labels := RTLabel
-		elementsOn:
-			#('You can help us making Roassal better by:' 
-			'  - Sharing your cool visualizations'
-			'  - Submitting bug fixes'
-			'  - Saying hello on Slack'
-			'  - Buying a printed version of AgileVisualization'
-			''
-			'More information on: ').
+	labels := RTGroup new.
+	labels
+		add:
+			((RTLabel new )
+				elementOn: 'Problems and bugs can be reported on:').
+				
+
 	labels
 		add:
 			((RTLabel new color: Color veryVeryDarkGray)
-				elementOn: 'http://AgileVisualization.com').
+				elementOn: 'https://github.com/moosetechnology/Moose/issues').
 				
 				
-	"labels
-		addAll:
-			(RTLabel
-				elementsOn:
-					#('A printed version and an eBook are available for sale.' '' '' 'We are deeply thankful to all of you involved' 'in the development of Roassal'))."
 	v add: labels.
 	RTVerticalLineLayout on: labels.
-	TRConstraint move: v elements first onTheLeftOf: labels.
 
 
 	"Adding animation"
@@ -77,7 +68,7 @@ RTHowToContributeRoassal >> open [
 ]
 
 { #category : #data }
-RTHowToContributeRoassal >> pic [ ^ 'iVBORw0KGgoAAAANSUhEUgAAAN0AAAClCAYAAADYtfi2AAAKpWlDQ1BJQ0MgUHJvZmlsZQAA
+RTHowToReportABug >> pic [ ^ 'iVBORw0KGgoAAAANSUhEUgAAAN0AAAClCAYAAADYtfi2AAAKpWlDQ1BJQ0MgUHJvZmlsZQAA
 SImVlwdUE9kax+9MeqMFIiAl9Ca9g/QaiiAdRCUkEEKJISGAiA1ZVHAtqIiAIuhSFVyVuhZE
 FAuLYMO+QRYVdV0s2FDZAR7h7XvnvXfe/5zvzO98c+e739y595z/AEC+zOTzU2EZANJ4GYIQ
 H3d6VHQMHScGEEADWeAIqEyWkO8WHBwAEM1d/64Pd5DRiG4aT9f69/v/VbLsBCELACgY4Xi2
@@ -1401,7 +1392,7 @@ X1bR8JFH/zbvL7h7PP4hMjKGh2cOqOqRYfRkLgHtFvRHVnVZ0YZn57XbmZTfDpN1jnnxkMON
 ]
 
 { #category : #'instance creation' }
-RTHowToContributeRoassal >> picAsForm [
+RTHowToReportABug >> picAsForm [
 
 	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContributeRoassal new pic readStream)
 ]
