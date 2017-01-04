@@ -48,7 +48,7 @@ RTHowToReportABug >> open [
 	labels := RTGroup new.
 	labels
 		add:
-			((RTLabel new )
+			(RTLabel
 				elementOn: 'Problems and bugs can be reported on:').
 				
 
