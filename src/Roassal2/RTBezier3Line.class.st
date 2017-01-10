@@ -64,8 +64,9 @@ RTBezier3Line >> controlPointFor: cp1 and: cp3 [
 	vectorNormInverse := vectorNorm y negated @ vectorNorm x.
 	"distanceFromMidpoint :=  (0.5 - pairEdges.length / 2 + i) * stepSize."
 	distanceFromMidPoint := -20.
-	^ (mid x + (vectorNormInverse x * distanceFromMidPoint))@
-	(mid y + (vectorNormInverse y * distanceFromMidPoint))
+	^ mid + (vectorNormInverse * distanceFromMidPoint).
+	
+
 ]
 
 { #category : #hooks }
