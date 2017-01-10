@@ -15,6 +15,11 @@ RTShapeBuilder >> arc [
 ]
 
 { #category : #'shape - edges' }
+RTShapeBuilder >> arrowedBezier [
+	self shape: (RTArrowedLine new line: RTBezier3Line new).
+]
+
+{ #category : #'shape - edges' }
 RTShapeBuilder >> arrowedLine [
 	self shape: RTArrowedLine new
 ]

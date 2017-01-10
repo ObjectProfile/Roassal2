@@ -57,7 +57,8 @@ RTArrowedLine >> head [
 
 { #category : #accessing }
 RTArrowedLine >> head: aLineDecorationShape [
-	head := aLineDecorationShape
+	head := aLineDecorationShape.
+	line ifNotNil: [ head line: line ].
 ]
 
 { #category : #accessing }
