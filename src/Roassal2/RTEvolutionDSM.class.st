@@ -34,7 +34,7 @@ RTEvolutionDSM >> initialize [
 		inst ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTEvolutionDSM >> labelShape [
 	^ labelShape
 		ifNil: [ 
@@ -43,7 +43,7 @@ RTEvolutionDSM >> labelShape [
 				text: text]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTEvolutionDSM >> labelShape: shape [
 	labelShape := shape.
 	
