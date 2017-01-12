@@ -50,6 +50,17 @@ RTEvolutionDSM >> labelShape: shape [
 ]
 
 { #category : #accessing }
+RTEvolutionDSM >> sparklineValues: ablock size: aNumber [
+	| shapes |
+	shapes := self shape shape allShapes.
+	shapes first size: aNumber.
+	shapes second
+		width: aNumber;
+		height: aNumber;
+		values: ablock.
+]
+
+{ #category : #accessing }
 RTEvolutionDSM >> timeline [
 	^ timelineBlock
 ]
