@@ -15,7 +15,8 @@ Roassal2VW >> blacklist [
 	RTAbstractExample class >> #createIcon.
 	FileReference >> #gtInspectorCsvIn:.
 	RTTabTable >> #gtInspectorTableIn:.
-	RTExploraBuilderExample >> #exampleCircularList }
+	RTExploraBuilderExample >> #exampleCircularList.
+	RTHTML5ExporterExample >> #exportAll }
 ]
 
 { #category : #importing }
