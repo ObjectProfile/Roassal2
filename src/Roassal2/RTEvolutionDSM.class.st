@@ -34,7 +34,7 @@ RTEvolutionDSM >> initialize [
 		inst ].
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTEvolutionDSM >> labelShape [
 	^ labelShape
 		ifNil: [ 
@@ -43,21 +43,10 @@ RTEvolutionDSM >> labelShape [
 				text: text]
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 RTEvolutionDSM >> labelShape: shape [
 	labelShape := shape.
 	
-]
-
-{ #category : #accessing }
-RTEvolutionDSM >> sparklineValues: ablock size: aNumber [
-	| shapes |
-	shapes := self shape shape allShapes.
-	shapes first size: aNumber.
-	shapes second
-		width: aNumber;
-		height: aNumber;
-		values: ablock.
 ]
 
 { #category : #accessing }

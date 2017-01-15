@@ -37,7 +37,7 @@ RTLineTail >> updateFor: edge trachelShape: trachelShape [
 	line
 		ifNotNil: [ 
 			| lineShape |
-			lineShape := edge trachelShape shapes first.
+			lineShape := edge trachelShape shape1.
 			lineShape class = TRBezierShape
 				ifTrue: [ fromPoint := lineShape points second ] ].
 	self updateFor: edge trachelShape: trachelShape from: fromPoint
