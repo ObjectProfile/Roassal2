@@ -84,7 +84,7 @@ RTShorterDistanceWithOffsetAttachPoint >> offset: anInteger [
 { #category : #public }
 RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
     "Return the offset in case of multiple edges with the same starting and ending points"
-    | indexOfEdge multipleEdges normal |
+    | indexOfEdge multipleEdges normal pos |
     multipleEdges := OrderedCollection new.
     multipleEdges addAll: 
         (anEdge to connectedEdges select: [ :e | 
@@ -96,6 +96,7 @@ RTShorterDistanceWithOffsetAttachPoint >> offsetNormalFor: anEdge [
 
 	multipleEdges size <= 1 ifTrue: [ ^ 0 @ 0 ].
 	indexOfEdge := multipleEdges indexOf: anEdge.
-	normal := (anEdge to position - anEdge from position) normal.
+	pos := anEdge to position - anEdge from position.
+	normal := pos = (0@0) ifTrue: [ -1 @0  ] ifFalse: [ pos normal].
 	^ (indexOfEdge - 1 - (multipleEdges size / 2)) * offset * normal
 ]
