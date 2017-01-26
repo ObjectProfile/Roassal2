@@ -25,17 +25,20 @@ Class {
 
 { #category : #interactions }
 RTSVGEntity >> addContainedInteractions: aSVGVisitor [
-	aSVGVisitor addContainedInteractions: self label , self id element: self element
+	aSVGVisitor addContainedInteractions: (self label , self id) element: self element
 ]
 
 { #category : #interactions }
 RTSVGEntity >> addEmbeddingInteractions: aSVGVisitor [
-	^ aSVGVisitor addEmbeddingInteractions: self label , self id element: self element
+	^ aSVGVisitor addEmbeddingInteractions: (self label , self id) element: self element
 ]
 
 { #category : #interactions }
 RTSVGEntity >> addExternalInteractions: aSVGVisitor [
-	aSVGVisitor addExternalInteractions: self label , self id element: self element
+	| ide |
+	ide := 'pop' , self id.
+	aSVGVisitor addExternalInteractions: ide element: self element.
+	
 ]
 
 { #category : #style }

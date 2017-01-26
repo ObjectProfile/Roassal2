@@ -60,23 +60,28 @@ RTInteractiveSVGExporter >> addMarginsAndGlobals: bounds [
 							globals add: i class ] ] ].
 ]
 
-{ #category : #svg }
+{ #category : #adding }
 RTInteractiveSVGExporter >> addScript [
 	stream
-		nextPutAll: '    <script><![CDATA[';
-		nextPutAll: String cr.
-	interactions
-		keysAndValuesDo: [ :k :l | 
-			l
-				do: [ :i | 
-					(functions includes: i type)
-						ifTrue: [ 
-							(i type beginsWith: 'button')
-								ifTrue: [ i addContribution: stream ] ]
-						ifFalse: [ 
-							i addFunctions: stream.
-							functions add: i type ] ] ].
-	stream nextPutAll: '    ]]></script>'
+		nextPutAll: '    <script><![CDATA[
+		function init(evt){
+			if(window.svgDocument == null){
+				svgDocument = evt.target.ownerDocument;
+			}
+		}
+		var popup = null;
+		function showPopup(evt, id){
+			if (popup != null)
+				hidePopup(id);
+			popup = svgDocument.getElementById(id);
+			popup.setAttributeNS(null, "visibility", "visible");
+		}
+		function hidePopup(id){
+			popup = svgDocument.getElementById(id);
+			popup.setAttributeNS(null, "visibility", "hidden");
+			popup = null;
+		}
+		 ]]></script>'
 ]
 
 { #category : #svg }
@@ -93,12 +98,18 @@ RTInteractiveSVGExporter >> addStart: bounds [
 		addCode.
 ]
 
+{ #category : #svg }
+RTInteractiveSVGExporter >> addVersion [
+	stream nextPutAll: '<svg xmlns="http://www.w3.org/2000/svg" onload="init(evt)" '
+]
+
 { #category : #exporting }
 RTInteractiveSVGExporter >> exportOnStream: fileStream [
 	|bounds|
 	bounds := self fixedEncompassingRectangle.
 	self stream: fileStream.
 	self addStart: bounds.
+	self setInteractions.
 	RTSVGVisitor visit: view on: stream with: self interactions canvas: bounds center: (marginX+paddingX)@(marginY + paddingY).
 	self addEnd.
 ]
@@ -161,4 +172,18 @@ RTInteractiveSVGExporter >> selfAddHelperElements [
 		nextPutAll:
 				'<rect id="BackDrop" x="-10%" y="-10%" width="110%" height="110%" fill="none" pointer-events="all" />' , String cr;
 		nextPutAll: '<svg id="Wrapper"/>' , String cr
+]
+
+{ #category : #accessing }
+RTInteractiveSVGExporter >> setInteractions [
+	view canvas shapes do: [ :s | | list |
+		list := TRPlatform current validInteractionsOf: s oklist: (Array with: #RTPopup).
+		list do: [:pop | | interaction elements group |
+			[
+			interaction := RTSVGGroupPopup new.
+			elements := pop createPopupFor: s element.
+			interaction group: elements.
+			group := interactions at: s ifAbsentPut: [ OrderedCollection new ].
+			group add: interaction.
+			] on: Error do: [ :ex| ] ] ].
 ]

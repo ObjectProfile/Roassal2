@@ -14,9 +14,7 @@ Class {
 
 { #category : #adding }
 RTSVGRectangle >> addOn: stream using: aSVGVisitor [
-	| closings |
 	aSVGVisitor names at: self element put: self id.
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPosition: stream.
 	self addWidth: (self width) height: (self height) into: stream.
@@ -31,9 +29,8 @@ RTSVGRectangle >> addOn: stream using: aSVGVisitor [
 	self startClass: stream.
 	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
 ]
 
 { #category : #adding }

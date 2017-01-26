@@ -17,9 +17,8 @@ Class {
 
 { #category : #adding }
 RTSVGText >> addOn: stream using: aSVGVisitor [
-	| closings box |
+	| box |
 	aSVGVisitor names at: self element put: self id.
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPosition: stream.
 	self startStyle: stream.
@@ -31,13 +30,12 @@ RTSVGText >> addOn: stream using: aSVGVisitor [
 	
 	self closeTag: stream.
 	self startClass: stream.
-	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
 	self closeDefWithContent: stream.
 	self addStringWithFont: self content fontSize: self fontSize into: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeFullDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
+
 ]
 
 { #category : #adding }
