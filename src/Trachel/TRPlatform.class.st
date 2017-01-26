@@ -281,7 +281,12 @@ TRPlatform >> trMorphClass [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : #utilities }
+TRPlatform >> validInteractionsOf: shape oklist: list [
+	self subclassResponsibility
+]
+
+{ #category : #utilities }
 TRPlatform >> visitInteractionsFor: aVisitor and: anObject [
 	self subclassResponsibility
 ]
