@@ -12,10 +12,8 @@ Class {
 
 { #category : #adding }
 RTSVGLine >> addOn: stream using: aSVGVisitor [
-	| closings |
 	
 	self id: (aSVGVisitor nameFor: self element).
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPosition: stream.
 	self startStyle: stream.
@@ -25,11 +23,10 @@ RTSVGLine >> addOn: stream using: aSVGVisitor [
 	self closeTag: stream.
 	self decoration ifNotNil: [ self addMarker: stream ].
 	self startClass: stream.
-	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
+	
 ]
 
 { #category : #adding }

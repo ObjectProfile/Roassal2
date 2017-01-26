@@ -47,13 +47,12 @@ RTSVGBezierLine >> addCurves: stream with: visitor [
 
 { #category : #adding }
 RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
-	| closings from to shape el |
+	| from to shape el |
 	shape := self element.
 	el := shape element.
 	from := aSVGVisitor names at: el from trachelShape.
 	to := aSVGVisitor names at: el to trachelShape.
 	self id: from , '_' , to.
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPath: stream with: aSVGVisitor.
 	self startStyle: stream.
@@ -64,11 +63,9 @@ RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
 	self closeTag: stream.
 	self decoration ifNotNil: [ self addMarker: stream ].
 	self startClass: stream.
-	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
 ]
 
 { #category : #adding }

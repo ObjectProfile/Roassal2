@@ -14,9 +14,7 @@ Class {
 
 { #category : #adding }
 RTSVGPathEntity >> addOn: stream using: aSVGVisitor [
-	| closings |
 	aSVGVisitor names at: self element put: self id.
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPath: stream.
 	self startStyle: stream.
@@ -32,9 +30,9 @@ RTSVGPathEntity >> addOn: stream using: aSVGVisitor [
 	self startClass: stream.
 	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
+
 ]
 
 { #category : #adding }

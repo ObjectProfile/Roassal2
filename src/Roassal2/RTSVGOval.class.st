@@ -14,9 +14,7 @@ Class {
 
 { #category : #adding }
 RTSVGOval >> addOn: stream using: aSVGVisitor [
-	| closings | 
 	aSVGVisitor names at: self element put: self id.
-	closings := self addEmbeddingInteractions: aSVGVisitor.
 	self openDef: stream.
 	self addPosition: stream.
 	self addWidth: (self rx) height: (self ry) into: stream.
@@ -29,11 +27,10 @@ RTSVGOval >> addOn: stream using: aSVGVisitor [
 			self addStrokeWidth: stream ].	
 	self closeTag: stream.
 	self startClass: stream.
-	self addContainedInteractions: aSVGVisitor.
 	self closeTag: stream.
+	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
-	closings do: [ :c | stream nextPutAll: c ].
-	self addExternalInteractions: aSVGVisitor
+
 ]
 
 { #category : #adding }

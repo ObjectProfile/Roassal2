@@ -49,32 +49,42 @@ RTSVGVisitor class >> visit: view on: stream with: interactions canvas: aRectang
 ]
 
 { #category : #interactions }
-RTSVGVisitor >> addContainedInteractions: id element: element [
+RTSVGVisitor >> addContainedInteractions: id element: e [
 	| aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
-	(interactions at: element ifAbsent: [OrderedCollection new]) 
+	aNumber := self alignPoint: e center.
+	(interactions at: e ifAbsent: [OrderedCollection new]) 
 		do: [ :i | i contained
-			ifTrue: [ i addEventHandlers: stream id: id  element: element center: aNumber] ]
+			ifTrue: [ i addEventHandlers: stream id: id  element: e center: aNumber] ]
 ]
 
 { #category : #interactions }
-RTSVGVisitor >> addEmbeddingInteractions: id element: element [
+RTSVGVisitor >> addEmbeddingInteractions: id element: e [
 	|closings aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
+	aNumber := self alignPoint: e center.
 	closings := OrderedCollection new.
-	(interactions at: element ifAbsent: [OrderedCollection new]) 
-		do: [ :i | (i external = false and: [i contained = false])
-			ifTrue: [ closings add: (i addEventHandlers: stream id: id  element: element center: aNumber)] ].
+	(interactions at: e ifAbsent: [OrderedCollection new]) 
+		do: [ :i | (i external not and: [i contained not])
+			ifTrue: [ 
+				closings add: (i addEventHandlers: stream id: id  element: e center: aNumber)] ].
 	^(closings reverse)
 ]
 
 { #category : #interactions }
-RTSVGVisitor >> addExternalInteractions: id element: element [
+RTSVGVisitor >> addExternalInteractions: id element: el [
 	| aNumber |
-	[aNumber := self alignPoint: (element trachelShape center)] on: Error do: [:ex | aNumber := 0].
-	(interactions at: element ifAbsent: [OrderedCollection new]) 
-		do: [ :i |	 i external = true
-			ifTrue: [ self afterStream add: [:e | i addEventHandlers: stream id: id  element: element center: aNumber] ]]
+	aNumber := self alignPoint: el center.
+	(interactions at: el ifAbsent: [OrderedCollection new]) 
+		do: [ :i | i external
+			ifTrue: [ 
+				self stream
+					nextPutAll: ' onmousemove="showPopup(evt, ''';
+					nextPutAll: id;
+					nextPutAll: ''')" onmouseout="hidePopup(''';
+					nextPutAll: id;
+					nextPutAll: ''')"'.
+		
+				self afterStream add: [:e | 
+					i addEventHandlers: stream id: id  element: el center: aNumber] ]]
 ]
 
 { #category : #accessing }
