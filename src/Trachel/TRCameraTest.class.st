@@ -105,12 +105,6 @@ TRCameraTest >> testIsVisibleWithCameraMoving [
 	
 ]
 
-{ #category : #tests }
-TRCameraTest >> testNull [
-	self assert: TRCamera null equals: TRCamera null.
-	self assert: TRCamera null ~~ (TRCamera forCanvas: TRCanvas new).
-]
-
 { #category : #callbacks }
 TRCameraTest >> testScale [
 	| callback t |
