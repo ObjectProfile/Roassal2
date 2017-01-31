@@ -14,12 +14,15 @@ Class {
 { #category : #lastPopup }
 RTAbstractPopup class >> lastPopup [
 	"Return the group of elements that have been recently added as a popup"
-	^ lastPopup
+	^ lastPopup isNil
+		ifTrue: [ nil ]
+		ifFalse: [ lastPopup first ]
+
 ]
 
 { #category : #lastPopup }
 RTAbstractPopup class >> lastPopup: anElement [
-	lastPopup := anElement
+	lastPopup := WeakArray with: anElement
 ]
 
 { #category : #lastPopup }
