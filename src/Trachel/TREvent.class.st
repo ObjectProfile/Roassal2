@@ -40,7 +40,6 @@ TREvent >> canvas: aTrachelCanvas [
 TREvent >> initialize [
 	super initialize.
 	position := 0 @ 0.
-	canvas := TRCanvas null
 ]
 
 { #category : #accessing }
@@ -68,7 +67,10 @@ TREvent >> position: aPoint [
 { #category : #accessing }
 TREvent >> positionFromCamera [
 	"Return the position from the camera. I.e., 0 @ 0 is at the center of the window if the camera has not been translated"
-	^ canvas camera fromPixelToSpace: self position
+	^ canvas 
+		ifNil: [ canvas camera fromPixelToSpace: self position ]
+		ifNotNil: [ -250 @ -250 ]
+
 ]
 
 { #category : #accessing }
