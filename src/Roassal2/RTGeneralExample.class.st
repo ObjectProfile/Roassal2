@@ -1690,6 +1690,7 @@ RTGeneralExample >> smoothLayout [
 { #category : #beziers }
 RTGeneralExample >> softviz01 [
 	<gtExample>
+	<noTest>
 	"
 	self new softviz01
 	Circle = classes, size = number of methods; gray links = inheritance; blue links = dependencies; layout = force based layout on the inheritance links
