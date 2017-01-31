@@ -466,7 +466,7 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max [
 
 { #category : #'public normalize line width' }
 RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
-	| values |
+	| values block |
 	self checkNotEmpty.
 	
 	values := (self getNormalizedForLineWidthValues: metricBlock 
@@ -475,7 +475,12 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue
 							minValue: minValue 
 							maxValue: maxValue 
 							using: transformation).
-	self edges with: values do: [ :edge :v | edge shape width: v ] 
+	"Very ugly hack"
+	block := [ :modelOfTheEdge | modelOfTheEdge ].
+	self edges with: values do: [ :edge :aValue | 
+		edge model: aValue asFloat.
+		edge shape width: block.
+		] 
 	
 	
 ]
