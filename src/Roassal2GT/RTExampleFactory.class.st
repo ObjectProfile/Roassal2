@@ -21,9 +21,9 @@ RTExampleFactory >> initializeExample: aGTExample fromMethod: aCompiledMethod [
 RTExampleFactory >> initializeIconFromMethod: aCompiledMethod forExample: aGTExample [
 	aGTExample icon ifNotNil: [ ^ self ].
 
-	[ aGTExample form: (aGTExample method: RTExampleMethodIcon forClass: aCompiledMethod methodClass selector: aCompiledMethod selector) ]
-		on:Error
-		do:[ :exception | 
+	[ aGTExample form: (aGTExample methodResolver resolve: RTExampleMethodIcon example: self className: aCompiledMethod methodClass meta: aCompiledMethod methodClass isMeta selector: aCompiledMethod selector)  ]
+		on: Error
+		do: [ :exception | 
 			aGTExample addProblem: (GTExampleError new 
 				example: aGTExample;
 				signaledException: exception;
