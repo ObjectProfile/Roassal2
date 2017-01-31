@@ -1389,7 +1389,7 @@ EHwg+IIPBF/wgeADwRd8IPhA8AUfCD4QfMEHgg8EX/CB4As+EHwg+IIPBB8IvuADwQeCL/hA
 
 { #category : #sources }
 RTGrapherExample >> examplePrimeNumberSpace [
-
+	<noTest>
 	| diag v ds anim |
 	"Made by Serge Serge Stinckwich <serge.stinckwich@gmail.com>"
 	v := RTView new.

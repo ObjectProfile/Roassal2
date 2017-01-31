@@ -441,11 +441,10 @@ RTGeneralExample >> directedEdges01 [
 	v addAll: classesTrachel.
 	RTEdgeBuilder new
 		view: v;
-		objects: RTObject withAllSubclasses;
+		fromObjects: RTObject withAllSubclasses;
+		toObjects: TRObject withAllSubclasses;
 		shape: (RTDirectedLine new color: (Color blue alpha: 0.5));
-		connectFrom: #yourself
-			toAll:
-				[ :c | c dependentClasses copyWithoutAll: RTObject withAllSubclasses ].
+		connectToAll: #dependentClasses.
 	RTHorizontalLineLayout new
 		gapSize: 1;
 		on: classesRoassal , classesTrachel.
