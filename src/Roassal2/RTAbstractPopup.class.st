@@ -27,12 +27,12 @@ RTAbstractPopup class >> lastPopup: anElement [
 
 { #category : #lastPopup }
 RTAbstractPopup class >> removeLastPopup [
-	lastPopup ifNil: [ ^ self ].
-	lastPopup view
+	self lastPopup ifNil: [ ^ self ].
+	self lastPopup view
 		ifNil: [ 
 			self resetLastPopup.
 			^ self ].
-	lastPopup remove.
+	self lastPopup remove.
 	self resetLastPopup.
 ]
 
