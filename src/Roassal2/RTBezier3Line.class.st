@@ -77,17 +77,14 @@ RTBezier3Line >> trachelShapeClass [
 
 { #category : #rendering }
 RTBezier3Line >> updateFor: edge trachelShape: trachelShape [
-	| cp1 cp2 cp3 |
+	| points |
 	trachelShape isNil
 		ifTrue: [ ^ self ].
-	cp1 := attachPoint startingPointOf: edge.
-	cp3 := attachPoint endingPointOf: edge.
-	cp2 := controlElement
-		ifNil: [ self controlPointFor: cp1 and: cp3 ]
-		ifNotNil: [ controlElement isPoint
-				ifTrue: [ controlElement ]
-				ifFalse: [ controlElement position ] ].
-	trachelShape points: (Array with: cp1 with: cp2 with: cp3).
+	points := edge from = edge to
+		ifTrue: [ self pointsForOneElement: edge ]
+		ifFalse: [ self pointsFor: edge ].
+	
+	trachelShape points: points.
 	trachelShape color: (self colorFor: edge).
 	trachelShape width: (self widthFor: edge).
 	trachelShape resetPath.

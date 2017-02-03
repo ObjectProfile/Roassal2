@@ -105,10 +105,12 @@ RTGradualDSM >> initialize [
 RTGradualDSM >> renderIn: aView [
 	super renderIn: aView.	
 	
-	RTMetricNormalizer new
-		elements: (elements select: [ :e | selectElement rtValue: e ]);
-		normalizeColor: score using: (Array with: Color veryVeryLightGray with: Color red);
-		alphaColor: self transparencyWhenNonHighlighted.
+	1 to: objectsX size do: [:j | 
+		RTMetricNormalizer new
+			elements: ((self columnAt: j) select: [:e | selectElement rtValue: e]);
+			normalizeColor: score using: (Array with: Color veryVeryLightGray with: (Color colorFrom: '#4d79ff') );
+			alphaColor: self transparencyWhenNonHighlighted.
+			].
 	^ aView
 ]
 

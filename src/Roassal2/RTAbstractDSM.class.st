@@ -12,7 +12,9 @@ Class {
 		'transparencyWhenNonHighlighted',
 		'transparencyWhenHighlighted',
 		'creationBlock',
-		'selectElement'
+		'selectElement',
+		'xinteraction',
+		'yinteraction'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -39,6 +41,7 @@ RTAbstractDSM >> addLabelsLeft [
 			[ :e | 
 			theModel := e model key.
 			lbl := lblShape elementOn: theModel.
+			yinteraction setUpElement: lbl.
 			view add: lbl.
 			RTConstraint new
 				fix: e;
@@ -61,6 +64,7 @@ RTAbstractDSM >> addLabelsTop [
 			theModel := e model value.
 			lbl := lblShape elementOn: theModel.
 			labels add: lbl.
+			xinteraction setUpElement: lbl.
 			view add: lbl.
 			lbl rotateByDegrees: rotation.
 			RTConstraint new
@@ -74,7 +78,6 @@ RTAbstractDSM >> addLabelsTop [
 			deltaY := deltaY min: lbl position y ].
 	labels do: [ :l | 
 		l translateTo: l position x @ deltaY ].
-		
 ]
 
 { #category : #UI }
@@ -113,17 +116,16 @@ RTAbstractDSM >> createElements [
 					e := self elementOn: (self createObjectBlock value: anObject1 -> anObject2).
 					e @ RTPopup.
 					e when: TRMouseEnter do: [ :evt | 
-						self highlightColumn: (evt element attributeAt: #matrixIndex) x.
-						self highlightRow: (evt element attributeAt: #matrixIndex) y.
-						 ].
-					e when: TRMouseLeave do: [ :evt | 
+						self highlightElements.
 						self unhighlightColumn: (evt element attributeAt: #matrixIndex) x.
 						self unhighlightRow: (evt element attributeAt: #matrixIndex) y.
+						 ].
+					e when: TRMouseLeave do: [ :evt | 
+						self unhighlightElements.
 						 ].
 					
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
-
 ]
 
 { #category : #accessing }
@@ -195,6 +197,8 @@ RTAbstractDSM >> initialize [
 	self createObjectBlock: [ :assoc| assoc ].
 	self selectElement: [ :e | true ].
 	self interaction popup.
+	xinteraction := RTInteractionBuilder new.
+	yinteraction := RTInteractionBuilder new.
 	rotation := self defaultTopLabelRotation.
 	wantsLabel := true.
 	text := #yourself.

@@ -6,7 +6,8 @@ Class {
 	#superclass : #RTShape,
 	#instVars : [
 		'width',
-		'attachPoint'
+		'attachPoint',
+		'allowSelfLoop'
 	],
 	#category : #'Roassal2-Shapes'
 }
@@ -106,6 +107,7 @@ RTAbstractLine >> endingPointOf: anEdge [
 RTAbstractLine >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
+	self withSelfLoop.
 	width := 1.
 ]
 
