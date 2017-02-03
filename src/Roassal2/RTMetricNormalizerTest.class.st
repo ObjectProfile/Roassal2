@@ -249,29 +249,6 @@ RTMetricNormalizerTest >> testDistinctColor [
 	self assert: (v elementFromModel: 1) trachelShape color ~= (v elementFromModel: 2) trachelShape color
 ]
 
-{ #category : #'edge width' }
-RTMetricNormalizerTest >> testEdgeWidth [
-	| b view |
-	b := RTMondrian new. 
-	b nodes: (1 to: 4).
-
-	b shape line color: Color gray trans.
-	b edges connectTo: [ :v | v * 2 ].
-	b layout force.
-
-	b normalizer 
-		normalizeSize: #yourself;
-		normalizeColor: #yourself;
-		alphaColor: 0.4;
-		normalizeLineWidth: [ :fromValue :toValue | fromValue + toValue ] min: 5 max: 10.
-
-	b build.
-	view := b view.
-	
-	self assert: view numberOfEdges equals: 2.
-	self assert: view edges first trachelShape width ~= view edges second trachelShape width
-]
-
 { #category : #'test x' }
 RTMetricNormalizerTest >> testNormalizeXBugTracking [
 

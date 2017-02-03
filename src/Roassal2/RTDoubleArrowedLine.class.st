@@ -77,6 +77,8 @@ RTDoubleArrowedLine >> simple [
 { #category : #public }
 RTDoubleArrowedLine >> trachelShapeFor: anEdge [
 	| lineTrachelShape headStartTrachelShape headEndTrachelShape |
+	(self isSelfLoopAllowedFor: anEdge) ifFalse: [ 
+		^ TRNoShape instance ].
 	lineTrachelShape := line trachelShapeFor: anEdge.
 	headStartTrachelShape := headStart trachelShapeFor: anEdge.
 	headEndTrachelShape := headEnd trachelShapeFor: anEdge.
@@ -90,6 +92,7 @@ RTDoubleArrowedLine >> trachelShapeFor: anEdge [
 
 { #category : #rendering }
 RTDoubleArrowedLine >> updateFor: edge trachelShape: trachelShape [
+	(self isSelfLoopAllowedFor: edge) ifFalse: [ ^ self ].
 	line updateFor: edge trachelShape: edge trachelShape shapes first.
 	headStart updateFor: edge trachelShape: edge trachelShape shapes second.
 	headEnd updateFor: edge trachelShape: edge trachelShape shapes third

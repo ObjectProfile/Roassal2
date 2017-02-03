@@ -21,7 +21,7 @@ RTZoomableBoxView >> initialize [
 RTZoomableBoxView >> updateScale: evt [
 	| s r sc |
 	s := evt shape.
-	s extent isZero
+	(s extent x <= 0 or: [ s extent y <= 0 ])
 		ifTrue: [ view canvas focusOnCenterScaled ]
 		ifFalse: [ 
 			r := s encompassingRectangle.

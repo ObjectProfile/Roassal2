@@ -104,6 +104,8 @@ RTArcLine >> trachelShapeClass [
 { #category : #hooks }
 RTArcLine >> trachelShapeFor: anEdge [
 	| lineTrachelShape headTrachelShape shape |
+	(self isSelfLoopAllowedFor: anEdge) ifFalse: [ 
+		^ TRNoShape instance ].
 	lineTrachelShape := self trachelShapeClass new.
 	self updateLineFor: anEdge trachelShape: lineTrachelShape.
 	headTrachelShape := head trachelShapeFor: anEdge.
@@ -116,6 +118,8 @@ RTArcLine >> trachelShapeFor: anEdge [
 
 { #category : #rendering }
 RTArcLine >> updateFor: edge trachelShape: trachelShape [
+	(self isSelfLoopAllowedFor: edge) ifFalse: [ 
+		^ trachelShape ].
 	self updateLineFor: edge trachelShape: trachelShape shapes first.
 	head updateFor: edge trachelShape: trachelShape shapes second.
 	^ trachelShape

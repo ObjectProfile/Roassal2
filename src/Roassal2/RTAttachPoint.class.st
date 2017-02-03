@@ -31,6 +31,8 @@ RTAttachPoint >> basicStartingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RTAttachPoint >> endingPointOf: anEdge [
+	(anEdge from = anEdge to) 
+		ifTrue: [ ^ anEdge from encompassingRectangle topCenter ].
     ^ inverted
         ifTrue: [ self basicStartingPointOf: anEdge ]
         ifFalse: [ self basicEndingPointOf: anEdge ]
@@ -59,6 +61,8 @@ RTAttachPoint >> isInverted [
 
 { #category : #'public - hooks' }
 RTAttachPoint >> startingPointOf: anEdge [
+	(anEdge from = anEdge to) 
+		ifTrue: [ ^ anEdge from encompassingRectangle rightCenter ].
     ^ inverted
         ifTrue: [ self basicEndingPointOf: anEdge ]
         ifFalse: [ self basicStartingPointOf: anEdge ]
