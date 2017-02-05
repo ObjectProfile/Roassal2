@@ -107,7 +107,7 @@ RTAbstractLine >> endingPointOf: anEdge [
 RTAbstractLine >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
-	self withSelfLoop.
+	"self withSelfLoop."
 	width := 1.
 ]
 
