@@ -12,10 +12,25 @@ Class {
 		'shouldRefresh',
 		'session',
 		'isDrawing',
-		'shapeUnderDrag'
+		'shapeUnderDrag',
+		'morphDropShape'
 	],
 	#category : #'Trachel-MorphSpecific'
 }
+
+{ #category : #'dropping/grabbing' }
+TRMorph >> acceptDroppingMorph: aMorph event: anEvent [
+	| trEvent relativePosition |
+	relativePosition := self relativePositionFor: anEvent.
+	(trEvent := TRMorphDrop new)
+		morph: self;
+		droppedMorph: aMorph;
+		dropMorphEvent: anEvent;
+		canvas: trachelCanvas;
+		position: relativePosition.
+	morphDropShape announce: trEvent.
+	morphDropShape := nil
+]
 
 { #category : #'event handling' }
 TRMorph >> announceToEventOverseer: evt [
@@ -162,7 +177,7 @@ TRMorph >> eventOverseer [
 	^ trachelCanvas eventOverseer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'events-processing' }
 TRMorph >> handleKeyUp: anEvent [
 	super handleKeyUp: anEvent.
 	self trKeyUp: anEvent
@@ -567,6 +582,31 @@ TRMorph >> trMouseWheel: aMorphicEvent [
 { #category : #accessing }
 TRMorph >> trachelCanvas [
 	^ trachelCanvas
+]
+
+{ #category : #'dropping/grabbing' }
+TRMorph >> wantsDroppedMorph: aMorph event: aMorphicEvent [
+	| shapes trEvent relativePosition wasHandled |
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	shapes := trachelCanvas
+		allShapesWithAction: TRMorphWantsDrop
+		forPositionInPixels: relativePosition.
+	wasHandled := false.
+	(trEvent := TRMorphWantsDrop new)
+		morph: self;
+		droppedMorph: aMorph;
+		dropMorphEvent: aMorphicEvent;
+		canvas: trachelCanvas;
+		position: relativePosition;
+		whenHandled: [ :dropShape | 
+			wasHandled := true.
+			morphDropShape := dropShape.
+			^ true ].
+	shapes
+		do: [ :each | 
+			trEvent shape: each.
+			each announce: trEvent ].
+	^ false
 ]
 
 { #category : #testing }
