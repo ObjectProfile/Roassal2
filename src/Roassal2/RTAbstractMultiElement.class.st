@@ -41,12 +41,12 @@ RTAbstractMultiElement >> addedIn: aView [
 	ownedElements do: [ :c | c addedIn: aView ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTAbstractMultiElement >> baseShape [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'creating - subelements' }
 RTAbstractMultiElement >> createOwnedElements [
 	"subElements are optional"
 ]
@@ -84,7 +84,7 @@ RTAbstractMultiElement >> renderOn: trachelCanvas [
 	self trachelShape triggerCallbacksForStep: 0 @ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 RTAbstractMultiElement >> show: anElement if: aConditionBlock [
 	(anElement view isNil and: aConditionBlock)
 		ifTrue: [ ownedElements add: anElement.
