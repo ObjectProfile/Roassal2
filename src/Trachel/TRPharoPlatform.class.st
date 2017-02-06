@@ -196,7 +196,7 @@ TRPharoPlatform >> defaultFont [
 { #category : #public }
 TRPharoPlatform >> deletePopup: popup [
 	popup ifNil: [ ^ self ].
-	popup delete.
+	popup do: [:e | e ifNotNil: [ e remove ] ].
 ]
 
 { #category : #windows }
