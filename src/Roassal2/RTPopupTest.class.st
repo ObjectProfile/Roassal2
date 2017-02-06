@@ -181,8 +181,8 @@ RTPopupTest >> testWithMultiLine04 [
 	self assert: v canvas numberOfFixedShapes equals: 5.
 
 	"Leaving"
-	firstElement := RTPopup lastPopup first.
-	secondElement := RTPopup lastPopup second.
+	firstElement := RTPopup lastPopup first first.
+	secondElement := RTPopup lastPopup first second.
 	self assert: secondElement shape class equals: RTLabel.
 	self deny: secondElement isFixed.
 	firstElement remove.
