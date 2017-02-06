@@ -111,6 +111,11 @@ RTAbstractLine >> initialize [
 	width := 1.
 ]
 
+{ #category : #testing }
+RTAbstractLine >> isSelfLoopAllowedFor: aRTEdge [ 
+	^ true
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> startingPointOf: anEdge [
 	^ attachPoint startingPointOf: anEdge
