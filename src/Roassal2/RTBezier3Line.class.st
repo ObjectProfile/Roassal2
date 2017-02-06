@@ -69,10 +69,57 @@ RTBezier3Line >> controlPointFor: cp1 and: cp3 [
 
 ]
 
+{ #category : #private }
+RTBezier3Line >> pointsFor: edge [
+	| cp1 cp2 cp3 |
+	cp1 := attachPoint startingPointOf: edge.
+	cp3 := attachPoint endingPointOf: edge.
+	cp2 := controlElement
+		ifNil: [ self controlPointFor: cp1 and: cp3 ]
+		ifNotNil: [ controlElement isPoint
+				ifTrue: [ controlElement ]
+				ifFalse: [ controlElement position ] ].
+			
+	^ Array with: cp1 with: cp2 with: cp3
+]
+
+{ #category : #private }
+RTBezier3Line >> pointsForOneElement: edge [
+	| cp1 cp3 e w h |
+	e := edge to encompassingRectangle.
+	w := e width/2.
+	h := e height/2.
+	cp1 := e rightCenter.
+	cp3 := e topCenter.
+	^ OrderedCollection new 
+		add:cp1;
+		add: cp1 + (w @0);
+		add: (cp1 x + w)@cp3 y;
+		add: (cp1 x + w)@(cp3 y - h);
+		add: (cp1 x)@(cp3 y - h);
+		add: (cp1 x-w)@(cp3 y - h);
+		add: cp3;
+		yourself.
+		
+	
+]
+
 { #category : #hooks }
 RTBezier3Line >> trachelShapeClass [
 	^ TRBezier3Shape
 
+]
+
+{ #category : #hooks }
+RTBezier3Line >> trachelShapeFor: anEdge [
+	| trachelShape |
+	(self isSelfLoopAllowedFor: anEdge) ifFalse: [ 
+		^ nil ].
+	trachelShape := (anEdge from = anEdge to
+		ifTrue: [ TRBezierShape ]
+		ifFalse: [ self trachelShapeClass ]) new.
+	self updateFor: anEdge trachelShape: trachelShape.
+	^ trachelShape
 ]
 
 { #category : #rendering }

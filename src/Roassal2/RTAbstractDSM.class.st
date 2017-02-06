@@ -146,6 +146,11 @@ RTAbstractDSM >> createShapeBuilder [
 	^ sb
 ]
 
+{ #category : #hooks }
+RTAbstractDSM >> createView [
+	^ super createView @ RTDraggableView @ RTZoomableView
+]
+
 { #category : #UI }
 RTAbstractDSM >> defaultTopLabelRotation [
 	^ -55
@@ -211,6 +216,16 @@ RTAbstractDSM >> labelShape [
 	^ RTLabel new
 		height: self cellSize;
 		text: text
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelsXInteraction [
+	^ xinteraction
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelsYInteraction [
+	^ yinteraction
 ]
 
 { #category : #UI }

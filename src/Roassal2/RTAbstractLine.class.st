@@ -49,6 +49,11 @@ RTAbstractLine >> accept: aVisitor [
 	aVisitor visitLine: self
 ]
 
+{ #category : #testing }
+RTAbstractLine >> allowSelfLoop [
+	^ allowSelfLoop
+]
+
 { #category : #'attach point' }
 RTAbstractLine >> attachPoint [
 	"Return the attach point of the line"
@@ -107,13 +112,20 @@ RTAbstractLine >> endingPointOf: anEdge [
 RTAbstractLine >> initialize [
 	super initialize.
 	attachPoint := RTCenteredAttachPoint new.
-	"self withSelfLoop."
+	self withSelfLoop.
 	width := 1.
 ]
 
 { #category : #testing }
-RTAbstractLine >> isSelfLoopAllowedFor: aRTEdge [ 
-	^ true
+RTAbstractLine >> isSelfLoopAllowedFor: anEdge [
+	^ anEdge from = anEdge to 
+		ifTrue: [ allowSelfLoop ]
+		ifFalse: [ true].
+]
+
+{ #category : #configuration }
+RTAbstractLine >> noSelfLoop [
+	allowSelfLoop := false.
 ]
 
 { #category : #'attach point' }
@@ -200,6 +212,11 @@ RTAbstractLine >> withHorizontalAttachPoint [
 RTAbstractLine >> withOffsetIfMultiple [
 	"Make the edge to shift in case several edges are starting from tne same element and ending to the same element. (I.e., multile edges)"
 	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new
+]
+
+{ #category : #configuration }
+RTAbstractLine >> withSelfLoop [
+	allowSelfLoop := true.
 ]
 
 { #category : #'attach point' }
