@@ -1,9 +1,11 @@
+"
+I am an abstract class for dependency structural matrices
+"
 Class {
 	#name : #RTAbstractDSM,
 	#superclass : #RTBuilder,
 	#instVars : [
 		'elements',
-		'objects',
 		'objectsX',
 		'objectsY',
 		'wantsLabel',
@@ -14,7 +16,9 @@ Class {
 		'creationBlock',
 		'selectElement',
 		'xinteraction',
-		'yinteraction'
+		'yinteraction',
+		'labelShapeX',
+		'labelShapeY'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -33,14 +37,13 @@ RTAbstractDSM >> addLabelsIfNecessary [
 
 { #category : #UI }
 RTAbstractDSM >> addLabelsLeft [
-	| es lblShape theModel lbl |
+	| es theModel lbl |
 	es := self columnAt: 1.
-	lblShape := self labelShape.
 	es
 		do:
 			[ :e | 
 			theModel := e model key.
-			lbl := lblShape elementOn: theModel.
+			lbl := self labelShapeY elementOn: theModel.
 			yinteraction setUpElement: lbl.
 			view add: lbl.
 			RTConstraint new
@@ -53,16 +56,15 @@ RTAbstractDSM >> addLabelsLeft [
 
 { #category : #UI }
 RTAbstractDSM >> addLabelsTop [
-	| es lblShape theModel lbl labels deltaY |
+	| es theModel lbl labels deltaY |
 	es := self rowAt: 1.
-	lblShape := self labelShape.
 	labels := OrderedCollection new.
 	deltaY := Float fmax.
 	es
 		do:
 			[ :e | 
 			theModel := e model value.
-			lbl := lblShape elementOn: theModel.
+			lbl := self labelShapeX elementOn: theModel.
 			labels add: lbl.
 			xinteraction setUpElement: lbl.
 			view add: lbl.
@@ -74,13 +76,12 @@ RTAbstractDSM >> addLabelsTop [
 				middle;
 				top;
 				move.
-			lbl translateBy: self cellSize negated @ 0.
 			deltaY := deltaY min: lbl position y ].
 	labels do: [ :l | 
 		l translateTo: l position x @ deltaY ].
 ]
 
-{ #category : #UI }
+{ #category : #configuration }
 RTAbstractDSM >> cellSize [
 	^ 10
 ]
@@ -114,16 +115,6 @@ RTAbstractDSM >> createElements [
 				doWithIndex:
 					[ :anObject2 :index2 | 
 					e := self elementOn: (self createObjectBlock value: anObject1 -> anObject2).
-					e @ RTPopup.
-					e when: TRMouseEnter do: [ :evt | 
-						self highlightElements.
-						self unhighlightColumn: (evt element attributeAt: #matrixIndex) x.
-						self unhighlightRow: (evt element attributeAt: #matrixIndex) y.
-						 ].
-					e when: TRMouseLeave do: [ :evt | 
-						self unhighlightElements.
-						 ].
-					
 					e attributeAt: #matrixIndex put: index2 @ index1.
 					elements add: e ] ].
 ]
@@ -151,6 +142,12 @@ RTAbstractDSM >> createView [
 	^ super createView @ RTDraggableView @ RTZoomableView
 ]
 
+{ #category : #configuration }
+RTAbstractDSM >> defaultCellShape [
+	^ RTBox new
+		size: self cellSize.
+]
+
 { #category : #UI }
 RTAbstractDSM >> defaultTopLabelRotation [
 	^ -55
@@ -172,22 +169,26 @@ RTAbstractDSM >> elements [
 	^ elements copy
 ]
 
-{ #category : #UI }
+{ #category : #highlighting }
 RTAbstractDSM >> highlightColumn: aNumber [
 	^ self highlightElements: (self columnAt: aNumber)
 ]
 
-{ #category : #UI }
-RTAbstractDSM >> highlightElements: someElements [
-	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | | shape |
-		shape := e trachelShape class = TRCompositeShape 
-			ifTrue: [ e trachelShape firstShape ]
-			ifFalse: [ e trachelShape ].
-		shape
-			color: (e trachelShape color alpha: self transparencyWhenHighlighted) ]
+{ #category : #highlighting }
+RTAbstractDSM >> highlightElements [
+	self highlightElements: elements
 ]
 
-{ #category : #UI }
+{ #category : #highlighting }
+RTAbstractDSM >> highlightElements: someElements [
+	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | | shapes |
+		shapes := e trachelShape class = TRCompositeShape 
+			ifTrue: [ e trachelShape shapes ]
+			ifFalse: [ Array with: e trachelShape ].
+		shapes do: [ :s | s color: (s color alpha: self transparencyWhenHighlighted) ] ].
+]
+
+{ #category : #highlighting }
 RTAbstractDSM >> highlightRow: aNumber [
 	^ self highlightElements: (self rowAt: aNumber)
 ]
@@ -202,13 +203,24 @@ RTAbstractDSM >> initialize [
 	self createObjectBlock: [ :assoc| assoc ].
 	self selectElement: [ :e | true ].
 	self interaction popup.
+	self interaction 
+		when: TRMouseEnter do: [ :evt | 
+			self highlightElements.
+			self unhighlightColumn: (evt element attributeAt: #matrixIndex) x.
+			self unhighlightRow: (evt element attributeAt: #matrixIndex) y.
+		];when: TRMouseLeave do: [ :evt | 
+			self unhighlightElements. ].
 	xinteraction := RTInteractionBuilder new.
 	yinteraction := RTInteractionBuilder new.
 	rotation := self defaultTopLabelRotation.
 	wantsLabel := true.
 	text := #yourself.
-	transparencyWhenNonHighlighted := 0.4.
-	transparencyWhenHighlighted := 0.9
+	self labelShapeX: RTShapeBuilder new.
+	self labelShapeX label.
+	self labelShapeY: RTShapeBuilder new.
+	self labelShapeY label.
+	transparencyWhenHighlighted := 0.4.
+	transparencyWhenNonHighlighted := 1.
 ]
 
 { #category : #UI }
@@ -216,6 +228,32 @@ RTAbstractDSM >> labelShape [
 	^ RTLabel new
 		height: self cellSize;
 		text: text
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelShapeX [
+	^ labelShapeX
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelShapeX: aShapeBuilder [
+	labelShapeX := aShapeBuilder
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelShapeY [
+	^ labelShapeY
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelShapeY: aShapeBuilder [
+	labelShapeY := aShapeBuilder
+]
+
+{ #category : #accessing }
+RTAbstractDSM >> labelShapesDo: aBlock1arg [
+	aBlock1arg value: self labelShapeX.
+	aBlock1arg value: self labelShapeY.
 ]
 
 { #category : #accessing }
@@ -347,17 +385,27 @@ RTAbstractDSM >> transparencyWhenNonHighlighted: anObject [
 	transparencyWhenNonHighlighted := anObject
 ]
 
-{ #category : #UI }
+{ #category : #highlighting }
 RTAbstractDSM >> unhighlightColumn: aNumber [
 	^ self unhighlightElements: (self columnAt: aNumber)
 ]
 
-{ #category : #UI }
-RTAbstractDSM >> unhighlightElements: someElements [
-	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | e trachelShape color: (e trachelShape color alpha: self transparencyWhenNonHighlighted) ]
+{ #category : #highlighting }
+RTAbstractDSM >> unhighlightElements [
+	self unhighlightElements: elements
 ]
 
-{ #category : #UI }
+{ #category : #highlighting }
+RTAbstractDSM >> unhighlightElements: someElements [
+	(someElements select: [ :e | selectElement rtValue: e ]) do: [ :e | | shapes |
+		shapes := e trachelShape class = TRCompositeShape 
+			ifTrue: [ e trachelShape shapes ]
+			ifFalse: [ Array with: e trachelShape ]. 
+		shapes do: [ :s |
+			s color: (s color alpha: self transparencyWhenNonHighlighted ) ] ].
+]
+
+{ #category : #highlighting }
 RTAbstractDSM >> unhighlightRow: aNumber [
 	^ self unhighlightElements: (self rowAt: aNumber)
 ]

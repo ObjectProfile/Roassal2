@@ -7,10 +7,21 @@ Class {
 	#instVars : [
 		'xvalue',
 		'timeline',
-		'yvalue'
+		'yvalue',
+		'afterBlock'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
+
+{ #category : #accessing }
+RTEvolutionLine >> afterBlock [
+	^ afterBlock
+]
+
+{ #category : #accessing }
+RTEvolutionLine >> afterBlock: ablockWith1arg [
+	afterBlock := ablockWith1arg
+]
 
 { #category : #ui }
 RTEvolutionLine >> gtEvolutionGraphIn: composite [
@@ -92,8 +103,10 @@ RTEvolutionLine >> roassalView [
 		ifFalse: [ 1 ].
 	b axisY
 		labelConversion: [ :aValue | aValue + min round: round ];
-		title: self value.
-	b view @ RTZoomableView.
+		title: self value value.
+	self afterBlock ifNotNil: [ self afterBlock value: b.  ].
+	
+	b view @ RTZoomableBoxView.
 	^ b
 ]
 
@@ -113,7 +126,7 @@ RTEvolutionLine >> timeline [
 { #category : #accessing }
 RTEvolutionLine >> timeline: anArray [
 	anArray ifNil: [ ^ self ].
-	timeline := anArray sort: [ :a :b | a key < b key ]
+	timeline := anArray
 ]
 
 { #category : #accessing }

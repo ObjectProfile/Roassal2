@@ -13,9 +13,7 @@ Class {
 	#name : #RTDSM,
 	#superclass : #RTAbstractDSM,
 	#instVars : [
-		'dependency',
-		'colorForDependency',
-		'colorForNonDependency'
+		'dependency'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -73,37 +71,6 @@ RTDSM class >> example04Authorship [
 	^ b
 ]
 
-{ #category : #UI }
-RTDSM >> colorForDependency [
-	^ colorForDependency
-]
-
-{ #category : #UI }
-RTDSM >> colorForNonDependency [
-	^ colorForNonDependency
-]
-
-{ #category : #UI }
-RTDSM >> defaultCellShape [
-	^ RTBox new
-		size: self cellSize;
-		color:
-				[ :assoc | 
-					(self isAssocDependent: assoc)
-						ifTrue: [ self colorForDependency ]
-						ifFalse: [ self colorForNonDependency ] ]
-]
-
-{ #category : #configuration }
-RTDSM >> defaultColorForDependency [
-	^ Color red alpha: self transparencyWhenNonHighlighted 
-]
-
-{ #category : #configuration }
-RTDSM >> defaultColorForNonDependency [
-	^ Color veryVeryLightGray alpha: self transparencyWhenNonHighlighted
-]
-
 { #category : #accessing }
 RTDSM >> dependency [
 	^ dependency
@@ -121,8 +88,9 @@ RTDSM >> initialize [
 	"
 	super initialize.
 	dependency := #yourself.
-	colorForDependency := self defaultColorForDependency.
-	colorForNonDependency := self defaultColorForNonDependency.
+	self shape
+		if: [ :assoc | self isAssocDependent: assoc ] fillColor: Color red.
+	
 ]
 
 { #category : #testing }
