@@ -70,6 +70,11 @@ RTGroup >> attributes [
 	^ attributes ifNil: [ attributes := Dictionary new ]
 ]
 
+{ #category : #accessing }
+RTGroup >> canvas [
+	^ self anyOne trachelShape canvas
+]
+
 { #category : #public }
 RTGroup >> center [
 	"Return the center of the group"
