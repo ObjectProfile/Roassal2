@@ -314,7 +314,6 @@ RTDSMExample >> exampleClasses [
 	dsm := RTDSM new.
 	dsm objects: RTShape withAllSubclasses.
 	dsm dependency: #dependentClasses.
-	dsm build.
 	^ dsm
 
 ]
@@ -503,7 +502,6 @@ RTDSMExample >> exampleNumbers [
 	dsm := RTDSM new.
 	dsm objects: (1 to: 10).
 	dsm dependency: [ :aValue | aValue // 2 ].
-	dsm build.
 	^ dsm
 
 ]

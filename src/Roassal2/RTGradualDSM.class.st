@@ -86,19 +86,10 @@ RTGradualDSM class >> example03AuthorshipByTime [
 	^ c view
 ]
 
-{ #category : #UI }
-RTGradualDSM >> defaultCellShape [
-	^ RTBox new
-		size: self cellSize;
-		color: RTBox defaultColor
-]
-
 { #category : #initialization }
 RTGradualDSM >> initialize [
 	super initialize.
 	score := [ :association | 0 ].
-	transparencyWhenNonHighlighted := 0.9.
-	transparencyWhenHighlighted := 0.4
 ]
 
 { #category : #hooks }

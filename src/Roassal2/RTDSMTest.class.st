@@ -67,6 +67,71 @@ RTDSMTest >> testExample02 [
 ]
 
 { #category : #tests }
+RTDSMTest >> testHightlightElements [
+	| b elements |
+	b := RTDSM new.
+	b objects: (1 to: 3).
+	b dependency: [ :aValue | aValue + 1 ].
+	b shape box color: Color blue.
+	b build.
+	b highlightElements.
+	elements := b view elements select: [ :e| e trachelShape class = TRBoxShape ].
+	self assert: elements first color equals: (Color blue alpha: b transparencyWhenHighlighted).
+	b unhighlightElements.
+	self assert: elements first color equals: (Color blue alpha: b transparencyWhenNonHighlighted).
+		
+	
+]
+
+{ #category : #tests }
+RTDSMTest >> testLabelShapeColor [
+	| b elements |
+	b := RTDSM new.
+	b objectsX: #(1 2 3 4).
+	b objectsY: #( 'A' 'B' 'C' ).
+	b labelShapeX 
+		if: [:n | n even ] color: Color red.
+	b build.
+	elements := b view elements select: [ :e | 
+		e trachelShape class = TRLabelShape and: [ e model isKindOf: Number ] ].
+	self assert: elements first model equals: 1.
+	self assert: elements second color equals: Color red
+		
+	
+]
+
+{ #category : #tests }
+RTDSMTest >> testLabelShapeHeight [
+	| b elements |
+	b := RTDSM new.
+	b objectsX: #(1 2 3 4).
+	b objectsY: #( 'A' 'B' 'C' ).
+	b labelShapesDo: [ :l| l height: 30; color: Color blue ].
+	b build.
+	elements := b view elements select: [ :e | 
+		e trachelShape class = TRLabelShape ].
+	self assert: elements first color equals: Color blue.
+	self assert: elements first height > TRLabelShape defaultFontSize.
+		
+	
+]
+
+{ #category : #tests }
+RTDSMTest >> testLabelsTopPosition [
+	| b elements firstRow|
+	b := RTDSM new.
+	b objectsY: (1 to: 3).
+	b objectsX: #(#a #b #c).
+	b dependency: [ :aValue | aValue + 1 ].
+	b build.
+	elements := b view elements select: [ :e | 
+		e trachelShape class = TRLabelShape and: [ e model isString ] ]. 
+	firstRow := b rowAt: 1.
+	firstRow doWithIndex: [ :e :i | 
+		self assert: e position x equals: (elements at: i) position x ].
+]
+
+{ #category : #tests }
 RTDSMTest >> testUsingXAndY [
 	| b |
 

@@ -5,8 +5,7 @@ Class {
 	#name : #RTEvolutionDSM,
 	#superclass : #RTGradualDSM,
 	#instVars : [
-		'timelineBlock',
-		'labelShape'
+		'timelineBlock'
 	],
 	#category : #'Roassal2-Builder-DSM'
 }
@@ -32,21 +31,6 @@ RTEvolutionDSM >> initialize [
 			yvalue: assoc value.
 		inst timeline: (self timeline value: inst).
 		inst ].
-]
-
-{ #category : #accessing }
-RTEvolutionDSM >> labelShape [
-	^ labelShape
-		ifNil: [ 
-			labelShape := RTLabel new
-				height: self cellSize;
-				text: text]
-]
-
-{ #category : #accessing }
-RTEvolutionDSM >> labelShape: shape [
-	labelShape := shape.
-	
 ]
 
 { #category : #accessing }
