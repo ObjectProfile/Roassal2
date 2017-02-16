@@ -4,7 +4,7 @@ I am a class that display general information about Roassal contributions
 Class {
 	#name : #RTHowToContributeRoassal,
 	#superclass : #RTObject,
-	#category : #'Roassal2-MorphSpecific'
+	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
 { #category : #'world menu' }

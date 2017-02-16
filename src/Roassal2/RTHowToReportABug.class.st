@@ -4,7 +4,7 @@ I am a class that display general information about how to report a bug
 Class {
 	#name : #RTHowToReportABug,
 	#superclass : #RTObject,
-	#category : #'Roassal2-MorphSpecific'
+	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
 { #category : #'world menu' }
@@ -57,6 +57,16 @@ RTHowToReportABug >> open [
 			((RTLabel new color: Color veryVeryDarkGray)
 				elementOn: 'https://github.com/moosetechnology/Moose/issues').
 				
+	labels
+		add:
+			(RTLabel
+				elementOn: 'After inserting the bug, please send an email to ').
+	labels
+		add:
+			(RTLabel
+				elementOn: 'the moose mailing list or to the Slack #roassal channel').
+
+
 				
 	v add: labels.
 	RTVerticalLineLayout on: labels.

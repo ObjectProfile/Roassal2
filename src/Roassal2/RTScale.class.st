@@ -10,7 +10,7 @@ Class {
 		'interpolate',
 		'uninterpolate'
 	],
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
 { #category : #'instance creation' }

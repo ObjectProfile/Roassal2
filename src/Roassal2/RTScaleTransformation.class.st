@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
 { #category : #'as yet unclassified' }

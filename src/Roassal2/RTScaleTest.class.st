@@ -1,7 +1,7 @@
 Class {
 	#name : #RTScaleTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Scaling-Tests'
+	#category : #'Roassal2-Builder-Grapher-Scaling-Tests'
 }
 
 { #category : #tests }

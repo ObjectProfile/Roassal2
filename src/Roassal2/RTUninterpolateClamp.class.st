@@ -1,7 +1,7 @@
 Class {
 	#name : #RTUninterpolateClamp,
 	#superclass : #RTUninterpolate,
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
 { #category : #interpolating }

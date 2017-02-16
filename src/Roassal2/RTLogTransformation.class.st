@@ -1,7 +1,7 @@
 Class {
 	#name : #RTLogTransformation,
 	#superclass : #RTScaleTransformation,
-	#category : #'Roassal2-Scaling'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
 { #category : #hooks }
