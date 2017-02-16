@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-MorphSpecific'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTMethodAgeTest >> testMethodAge [ 
 	self assert: RTAbstractElementShape computeYoungestMethod notNil
 ]
