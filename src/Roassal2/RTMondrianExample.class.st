@@ -2338,6 +2338,45 @@ RK5CYII='
 ]
 
 { #category : #sources }
+RTMondrianExample >> exampleHighlightableEdges [
+
+| b edges |
+b := RTMondrian new.
+b shape circle size: 10; color: Color red.
+b nodes: (1 to: 20).
+
+edges := b edges moveBehind; connectFrom: [ :v | v // 2 ].
+edges @ RTHighlightable.
+edges @ (RTPopup text: [ :association | 'An edge from ', association key asString, ' to ', association value asString ]).
+b layout cluster.
+^ b
+]
+
+{ #category : #icons }
+RTMondrianExample >> exampleHighlightableEdgesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD40lEQVR4XuWcOy+sURSGR4NK
+QvwZjVAoFBKFaERoNUQhGnEpNH6AaJQkfgIRCZ1EhDDu9/v9OnGZOfM6s2bOOTliOPj2zHxn
+nifRme2zHnuvtfden8DLCx8/EeCHgC+ED18IXwgfvhC+ED58IXwhfPhC+EL48IXw4QvhC+HD
+F8IXwocvhC+ED18IXwgfvhA+fCF8IXz4QvhC+PCF8IX4HLW0SIWF4gvxi5CyMr0EAvwZ4iee
+np4UjUbfnSXq64tL0+ys+ELSxPb29rvBvhgYSAhZX+cLSSe3t7dvAr68vCz+kpUh9vf3/wT/
+4eFBZ2dn4ueQDBPt7NTJ+LiSzRa+kH9VSLFkq+JiZ4HT0lIiV1RWil9lfSeAFjgLYCQil5KP
+Fxf5QrywtrbmNIBHR0d8IX6Tsre3x88hnvcSMzNSLCkrttHzOtbNzQ1fiGe6ul7iOaW7W6ne
+LPKFfJKD2AxxNVY4HI7VCxH+xtALz8/PTgP4P80S324MXUt5HB6WPjh8TFo+9/YmSvK5OeGF
+BINBZ0GITk8nAltf/6UxrwcHE5/b2eELub+/9xSElZUVXV9f6/fZltrbFRod1WdLYTvKPz4+
+Fn/J+uIMUWOjVFsr2wheXV3pMye7duB4cHDw4fednJyIn0P+ro4mJ6WhISXbgS8sLCgUCun8
+/FwKBL59W2hSkomx8flJ/c2TBeJfFpx/HYMEPZ5bmZTT01NpbEznaUzgvheyu7sbX7cfHx+l
+iQmpv/9TwbHZ4uqPQDk5bCGWeG1Nv7y8VKYrMvX0SLF7FNu3GBgh1pBgSXPHUTlpM8r1M9qs
+20ljuZtWIWpuloqKtLm5qY2NDee/ZCr7suJLaFNT2vq+0iOktDSlfVOp7stSeXna+r6y5k79
+8PCQ37nIF8IXwhfCF8IXwhfCF8IXwhfCF8IXwhfCF8IX4gv47xj6BDvltTvzH7/OyqxTMRMn
+tGghdolld+cfLVHWQrS1taXV1dWM3WtkpRA1NEj5+fHA2qXR0zf7fe3zdgn2XFcn5eXx3zH8
+KjYDLi4uFHF87K2Kivh4Nra1CfGFJAtSa6uUmyt7FcEaDe7u7l4FyvUrCq9+dgybPdZEEamp
+kQoKxBdSXZ3oDnynzdPl9exH+UQlJb745wO+T+ouG9Yy1fyWVULm5+flx7H4M4Q/Q3xS+ra1
+ybpWPI8zNSVVVUnhML/s9faEiZZSz0I6OhLFw8gIX4inQIZCkqOXN5XCEhp7dJLt8IXwhfDh
+C+EL4cMXwhfChy+EL4QPXwhfCB++ED58IXwhfPhC+EL48IXwhfDhC+EL4cMXwocvhC+ED18I
+Xwgft/wE8aALou9qsYoAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTMondrianExample >> exampleInnerAndPopup [
 	| b |
 	b := RTMondrian new.
