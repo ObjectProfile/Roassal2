@@ -516,6 +516,7 @@ RTGrapherDecorationExample >> exampleVerticalAndHorizontalLines [
 	b extent: 300 @ 200.
 
 	ds := RTData new.
+	ds noDot.
 	ds points: (-50 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) sin  ].
 	ds noDot.
@@ -524,6 +525,7 @@ RTGrapherDecorationExample >> exampleVerticalAndHorizontalLines [
 	b add: ds.
 
 	ds := RTData new.
+	ds noDot.
 	ds points: (-50 to: 100 by: 0.1).
 	ds y: [ :x | (0.1 * x) cos  ].
 	ds noDot.
@@ -534,8 +536,7 @@ RTGrapherDecorationExample >> exampleVerticalAndHorizontalLines [
 	b addDecorator: RTHorizontalTickLineDecorator new.
 	b addDecorator: RTVerticalTickLineDecorator new.
 
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
