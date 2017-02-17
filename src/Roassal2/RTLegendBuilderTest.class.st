@@ -57,6 +57,13 @@ RTLegendBuilderTest >> testBelow [
 ]
 
 { #category : #tests }
+RTLegendBuilderTest >> testColorNotNil [
+
+	self should: [ RTColorLegendItem new color: nil ] raise: Error.
+	self shouldnt: [ RTColorLegendItem new color: Color red ] raise: Error
+]
+
+{ #category : #tests }
 RTLegendBuilderTest >> testEdgesWhenOnDemand [
 
 	| v  lb lbl allElements edges |
