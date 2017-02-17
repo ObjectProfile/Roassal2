@@ -72,6 +72,56 @@ RTPopupTest >> testPopup [
 	es first announce: TRMouseEnter new
 ]
 
+{ #category : #tests }
+RTPopupTest >> testPopupView [
+	| b |
+	b := RTMondrian new.
+	b interaction
+		popupView: [ :group :el | 
+			group addAll: (RTBox elementsOn: (1 to: 5)).
+			RTGridLayout on: group ].
+	b node: 42.
+	b build.
+	
+	"No garbage collector happens"
+	self assert: b view numberOfElements equals: 1.
+	b view elements anyOne announce: TRMouseEnter.
+	self assert: b view numberOfElements equals: 7.
+	b view elements anyOne announce: TRMouseLeave.
+	self assert: b view numberOfElements equals: 1.
+	
+	"We use the garbage collector"
+	b view elements anyOne announce: TRMouseEnter.
+	Smalltalk garbageCollect.
+	RTPopup removeLastPopup.
+	self assert: b view numberOfElements equals: 1.
+]
+
+{ #category : #tests }
+RTPopupTest >> testPopupView02 [
+	| b |
+	b := RTMondrian new.
+	"b interaction
+		popupView: [ :group :el | 
+			group addAll: (RTBox elementsOn: (1 to: 5)).
+			RTGridLayout on: group ]."
+	b node: 42.
+	b build.
+	
+	"No garbage collector happens"
+	self assert: b view numberOfElements equals: 1.
+	b view elements anyOne announce: TRMouseEnter.
+	self assert: b view numberOfElements equals: 3.
+	b view elements anyOne announce: TRMouseLeave.
+	self assert: b view numberOfElements equals: 1.
+	
+	"We use the garbage collector"
+	b view elements anyOne announce: TRMouseEnter.
+	Smalltalk garbageCollect.
+	RTPopup removeLastPopup.
+	self assert: b view numberOfElements equals: 1.
+]
+
 { #category : #'multi lines' }
 RTPopupTest >> testWithMultiLine [
 	| v e p |
@@ -181,8 +231,8 @@ RTPopupTest >> testWithMultiLine04 [
 	self assert: v canvas numberOfFixedShapes equals: 5.
 
 	"Leaving"
-	firstElement := RTPopup lastPopup first first.
-	secondElement := RTPopup lastPopup first second.
+	firstElement := RTPopup lastPopup first.
+	secondElement := RTPopup lastPopup second.
 	self assert: secondElement shape class equals: RTLabel.
 	self deny: secondElement isFixed.
 	firstElement remove.
