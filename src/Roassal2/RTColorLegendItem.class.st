@@ -15,8 +15,9 @@ RTColorLegendItem >> color [
 ]
 
 { #category : #accessing }
-RTColorLegendItem >> color: anObject [
-	color := anObject
+RTColorLegendItem >> color: aColor [
+	self assert: [ aColor notNil ] description: 'You have to provide a color'.
+	color := aColor
 ]
 
 { #category : #hooks }
