@@ -203,6 +203,7 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 	
 	| min max |
 	"We get the min and the max of the metric for all the elements"
+	self assert: [ elements notEmpty ] description: 'You need to provide elements using #objects:, #elements:, #fromObjects:, ... '.
 	min := transformation rtValue: (metricBlock rtValue: elements anyOne model).
 	max := min.
 	elements do: [ :el | 
