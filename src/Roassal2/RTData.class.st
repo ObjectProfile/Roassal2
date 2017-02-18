@@ -118,6 +118,12 @@ RTData >> dotSize: metricAsBlockOrSymbol min: minValue max: maxValue using: tran
 			normalizeSize: metricAsBlockOrSymbol min: minValue max: maxValue using: transformation ]
 ]
 
+{ #category : #utility }
+RTData >> executeUserDeclaredActions [
+	"Execute the actions on all the elements (i.e., dots)"
+	elementActions do: [ :act | act rtValue: elements ]
+]
+
 { #category : #accessing }
 RTData >> getValuesX [
 	^ elements collect: x
@@ -191,6 +197,27 @@ RTData >> isStacked [
 { #category : #accessing }
 RTData >> lineShape [
 	^ lineBuilder
+]
+
+{ #category : #'public - dots' }
+RTData >> moveDotInFront [
+	"
+	Make the dots placed in front of the lines (if connected). Per default, dots are behind. Here is an example.
+	
+	b := RTGrapher new.
+	ds := RTData new.
+	ds dotShape color: Color red; size: 10.
+	ds points: (Collection withAllSubclasses copyFrom: 1 to: 10).
+	ds y: #numberOfMethods.
+	ds connectColor: Color blue. 
+	ds moveDotInFront.
+	b add: ds.
+
+	b
+	"
+
+	elementActions add: [ :elems |
+		elems pushFront ]
 ]
 
 { #category : #obsolete }
@@ -297,10 +324,8 @@ RTData >> renderBarChartIn: aView [
 
 { #category : #hooks }
 RTData >> renderDotAndLinesIn: aView [
-
 	builder view addAll: elements.
 	interaction setUpElements: elements.
-	
 	RTMetricNormalizer new
 		elements: elements;
 		normalizeElementX: [ :anElement | x rtValue: anElement ]
@@ -309,7 +334,6 @@ RTData >> renderDotAndLinesIn: aView [
 			minValue: (xScale rtValue: minX)
 			maxValue: (xScale rtValue: maxX)
 			using: xScale.
-			
 	RTMetricNormalizer new
 		elements: elements;
 		normalizeElementY: [ :anElement | y rtValue: anElement ]
@@ -318,10 +342,8 @@ RTData >> renderDotAndLinesIn: aView [
 			minValue: (yScale rtValue: minY)
 			maxValue: (yScale rtValue: maxY)
 			using: yScale.
-			
-	elementActions do: [ :act | act rtValue: elements ].
-			
-	self renderLinesFor: elements in: aView
+	self renderLinesFor: elements in: aView.
+	self executeUserDeclaredActions
 ]
 
 { #category : #hooks }
