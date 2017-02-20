@@ -6,7 +6,8 @@ Class {
 	#superclass : #RTObject,
 	#instVars : [
 		'view',
-		'fileName'
+		'fileName',
+		'saveWithScale'
 	],
 	#category : #'Roassal2-Exporter-PNG'
 }
@@ -29,7 +30,11 @@ RTPNGExporter >> cameraPositionNegated [
 
 { #category : #util }
 RTPNGExporter >> cameraScale [
-	^ self trachelCanvas camera scale asFloat
+	| camera |
+	camera := self trachelCanvas camera.
+	^ self saveWithScale
+		ifTrue: [ camera scale asFloat ]
+		ifFalse: [ camera defaultCameraScale ]
 ]
 
 { #category : #util }
@@ -64,7 +69,7 @@ RTPNGExporter >> exportToFile [
 				fillRectangle: (0@0 corner: viewExtent) withSolidColor: view canvas color.
 			cs pathTransform
 				translateBy: self viewHalfExtent asFloatPoint;
-				scaleBy: 1.0001;
+				scaleBy: self cameraScale;
 				translateBy: self cameraPositionNegated asFloatPoint.
 			trachelCanvas shapes do: [ :trachelShape | trachelShape drawOn: cs ].
 			cs pathTransform loadIdentity scaleBy: 1.001.
@@ -98,6 +103,7 @@ RTPNGExporter >> getIFrameDefFromView: aView label: aLabelAsString directory: aD
 { #category : #initialization }
 RTPNGExporter >> initialize [
 	super initialize.
+	self withoutScale.
 	self setDefaultFileName
 ]
 
@@ -113,6 +119,11 @@ RTPNGExporter >> insert: aView named: aName inPillarStream: aStream directory: a
 	aStream nextPutAll: '{{{ <BR>', s, ' }}}'
 ]
 
+{ #category : #accessing }
+RTPNGExporter >> saveWithScale [
+	^ saveWithScale
+]
+
 { #category : #initialization }
 RTPNGExporter >> setDefaultFileName [
 	self fileName: 'roassal.png'
@@ -125,10 +136,20 @@ RTPNGExporter >> trachelCanvas [
 
 { #category : #util }
 RTPNGExporter >> viewExtent [
-	^ self encompassingRectangle extent asIntegerPoint + (5 @ 5)
+	^ self encompassingRectangle extent asIntegerPoint * self cameraScale + (5 @ 5)
 ]
 
 { #category : #util }
 RTPNGExporter >> viewHalfExtent [
 	^ (self viewExtent / 2) asFloatPoint
+]
+
+{ #category : #accessing }
+RTPNGExporter >> withScale [
+	saveWithScale := true.
+]
+
+{ #category : #accessing }
+RTPNGExporter >> withoutScale [
+	saveWithScale := false
 ]

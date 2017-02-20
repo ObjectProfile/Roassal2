@@ -25,8 +25,8 @@ RTPNGExporterTest >> testBasic [
 	self assert: emptyExporter builder equals: view.
 	"5 @ 5 is a delta we add to make sure we have no pb when exporting
 	plus the delta from TRCanvas>>encompassingRectangle"
-	self assert: emptyExporter viewExtent equals: (6 @ 6).
-	self assert: emptyExporter viewHalfExtent equals: (3 @ 3).
+	self assert: (emptyExporter viewExtent closeTo: (6 @ 6)).
+	self assert: (emptyExporter viewHalfExtent closeTo: (3 @ 3)).
 ]
 
 { #category : #tests }
@@ -60,4 +60,21 @@ RTPNGExporterTest >> testDefault [
 
 	self assert: emptyExporter fileName equals: 'roassal.png'.
 	self assert: emptyExporter builder equals: nil
+]
+
+{ #category : #tests }
+RTPNGExporterTest >> testExportWithScale [
+
+	emptyExporter withScale.
+	view canvas camera scale: 2.
+	emptyExporter builder: view.
+	
+	self assert: emptyExporter viewExtent equals: (7 @ 7).
+	self assert: emptyExporter viewHalfExtent equals: (3.5 @ 3.5).
+	self assert: emptyExporter saveWithScale.
+	
+	emptyExporter withoutScale.
+	self assert: (emptyExporter viewExtent closeTo: (6 @ 6)).
+	self assert: (emptyExporter viewHalfExtent closeTo: (3 @ 3)).
+	
 ]
