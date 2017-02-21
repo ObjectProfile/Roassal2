@@ -1,6 +1,9 @@
 Class {
 	#name : #RTMapLocationBuilder,
 	#superclass : #RTBuilder,
+	#instVars : [
+		'addedElements'
+	],
 	#category : #'Roassal2-Builder-Map'
 }
 
@@ -11,7 +14,10 @@ RTMapLocationBuilder >> addPoint: geoPoint value: aValue [
 	el := self elementOn: aValue.
 	el translateTo: (self translateGeoPositionToPixels: geoPoint).
 	el @ RTPopup.
-	view add: el
+	view add: el.
+	
+	"We keep track of the added elements"
+	addedElements add: el
 ]
 
 { #category : #hooks }
@@ -59,6 +65,49 @@ RTMapLocationBuilder >> example02 [
 		color: (Color red alpha: 0.3).
 	tab values do: [ :row | b addPoint: row second @ row third value: row fifth ].
 	^ b
+]
+
+{ #category : #examples }
+RTMapLocationBuilder >> example03Normalizer [
+
+	"
+	self new example03Normalizer
+	"
+	| paris london santiago b newYork |
+	paris := 48.8567 @ 2.3508.
+	london := 51.507222 @ -0.1275.
+	santiago := -33.45 @ -70.666667.
+	newYork := 40.7127 @ -74.0059.
+
+	b := RTMapLocationBuilder new.
+	b shape circle.
+	b addPoint: paris value: 10. 
+	b addPoint: london value: 15.
+	b addPoint: santiago value: 20.
+	b addPoint: newYork value: 30.
+	b normalizer normalizeSize: #yourself max: 50; normalizeColor: #yourself; alphaColor: 0.3.
+	^ b
+]
+
+{ #category : #initialization }
+RTMapLocationBuilder >> initialize [
+	super initialize.
+	addedElements := OrderedCollection new
+]
+
+{ #category : #hooks }
+RTMapLocationBuilder >> metricNormalizerClass [
+	^ RTMetricNormalizer
+]
+
+{ #category : #hooks }
+RTMapLocationBuilder >> normalizer [
+	"
+	:: Void->RTMetricNormalizer
+	
+	This metric normalizer assumes that elements have been already created. Which may not be the case...
+	"
+	^ super normalizer elements: addedElements; yourself
 ]
 
 { #category : #utility }
