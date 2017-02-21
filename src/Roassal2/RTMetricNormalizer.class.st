@@ -51,6 +51,7 @@ RTMetricNormalizer >> alphaColor: anAlphaValue [
 { #category : #utility }
 RTMetricNormalizer >> checkNotEmpty [
 	"Raise an error if no elements have been added"
+	elements ifNil: [ self error: 'Need to provide a list of elements' ].
 	elements ifEmpty: [ self error: 'Please specify what are the elements I should operate on using #elements:' ]
 ]
 
@@ -561,6 +562,13 @@ RTMetricNormalizer >> normalizeSize: metricBlock [
 	"metricBlock is evaluated on each node model. 
 	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
 	self normalizeSize: metricBlock min: 5 max: 30
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeSize: metricBlock max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeSize: metricBlock min: 5 max: maxValue using: #yourself
 ]
 
 { #category : #'public normalize size' }
