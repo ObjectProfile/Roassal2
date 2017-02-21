@@ -88,7 +88,7 @@ CPPProcessor >> processModuleAsString: fileContentAsString named: filename [
 	m filename: filename.
 	m initializeFromContentAsString: fileContentAsString.
 	modules at: m baseFilename put: m
-	"modules add: m"
+
 ]
 
 { #category : #processing }
