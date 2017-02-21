@@ -14,11 +14,6 @@ CPPAbstractFile >> fileReference [
 ]
 
 { #category : #accessing }
-CPPAbstractFile >> fileReference: anObject [
-	fileReference := anObject
-]
-
-{ #category : #accessing }
 CPPAbstractFile >> filename [
 	^ filename
 ]
@@ -26,7 +21,7 @@ CPPAbstractFile >> filename [
 { #category : #accessing }
 CPPAbstractFile >> filename: afileName [
 	filename := afileName.
-	fileReference := afileName asFileReference
+
 ]
 
 { #category : #accessing }
