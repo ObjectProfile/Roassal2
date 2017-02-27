@@ -34,7 +34,16 @@ PyProcessor >> moduleNamed: afilename [
 	fn := afilename.
 	(afilename beginsWith: '.') 
 		ifTrue: [ fn := fn copyFrom: 2 to: fn size ].
-	^ files at: fn ifAbsent: [ nil ]
+	
+	^ files at: fn ifAbsent: [ | r |
+		r := nil.
+		files keys do: [ :k | (k endsWith: fn) ifTrue: [ r := files at: k ] ].
+		r ].
+]
+
+{ #category : #accessing }
+PyProcessor >> modules [
+	^ files values
 ]
 
 { #category : #properties }
@@ -48,12 +57,32 @@ PyProcessor >> numberOfModules [
 ]
 
 { #category : #processing }
+PyProcessor >> processDirectories: listOfDirectories [
+	"TODO"
+]
+
+{ #category : #processing }
 PyProcessor >> processFileAsString: fileContentAsString named: filename [
 	| f |
 	f := PyFile new.
 	f filename: filename.
 	f initializeFromContentAsString: fileContentAsString.
 	files at: f baseFilename put: f
+]
+
+{ #category : #processing }
+PyProcessor >> processRootFolder: aFileReference [
+	| relevantFiles allFiles allDirectories |
+	allFiles := aFileReference allChildren.
+	allDirectories := allFiles select: #isDirectory.
+	self processDirectories: allDirectories.
+	relevantFiles := allFiles select: [ :f | #('py') includes: f extension ].
+	relevantFiles do: [ :f |
+		| r | 
+		r := f readStream.
+		r ascii.
+		r converter: Latin1TextConverter new.
+		self processFileAsString: r contents named: f pathString ].
 ]
 
 { #category : #'resolving dependencies' }
