@@ -62,3 +62,16 @@ PyAbstractFile >> gtInspectorTableIn: composite [
 		title: 'Source';
 		display: [ self getSource ]
 ]
+
+{ #category : #accessing }
+PyAbstractFile >> parent [
+	"Return the full path of the folder that contains myself"
+	^ self fileReference parent pathString
+]
+
+{ #category : #printing }
+PyAbstractFile >> printOn: str [
+	str nextPut: $<.
+	self baseFilename notNil ifTrue: [ str nextPutAll: self baseFilename ].
+	str nextPut: $>.
+]
