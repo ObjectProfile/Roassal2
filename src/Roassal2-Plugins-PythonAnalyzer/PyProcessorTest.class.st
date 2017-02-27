@@ -704,6 +704,292 @@ class WordCloud(object):
 '
 ]
 
+{ #category : #sources }
+PyProcessorTest >> file03 [
+"__init__.py"
+	^ '
+from .wordcloud import WordCloud, STOPWORDS, random_color_func, get_single_color_func
+from .color_from_image import ImageColorGenerator
+
+__all__ = [''WordCloud'', ''STOPWORDS'', ''random_color_func'', ''get_single_color_func'', ''ImageColorGenerator'']
+
+'.
+]
+
+{ #category : #sources }
+PyProcessorTest >> file04 [
+"color_from_image.py"
+	^ '
+import numpy as np
+from PIL import ImageFont
+
+
+class ImageColorGenerator(object):
+    """Color generator based on a color image.
+
+    Generates colors based on an RGB image. A word will be colored using
+    the mean color of the enclosing rectangle in the color image.
+
+    After construction, the object acts as a callable that can be passed as
+    color_func to the word cloud constructor or to the recolor method.
+
+    Parameters
+    ----------
+    image : nd-array, shape (height, width, 3)
+        Image to use to generate word colors. Alpha channels are ignored.
+        This should be the same size as the canvas. for the wordcloud.
+    """
+    # returns the average color of the image in that region
+    def __init__(self, image):
+        if image.ndim not in [2, 3]:
+            raise ValueError("ImageColorGenerator needs an image with ndim 2 or"
+                             " 3, got %d" % image.ndim)
+        if image.ndim == 3 and image.shape[2] not in [3, 4]:
+            raise ValueError("A color image needs to have 3 or 4 channels, got %d"
+                             % image.shape[2])
+        self.image = image
+
+    def __call__(self, word, font_size, font_path, position, orientation, **kwargs):
+        """Generate a color for a given word using a fixed image."""
+        # get the font to get the box size
+        font = ImageFont.truetype(font_path, font_size)
+        transposed_font = ImageFont.TransposedFont(font,
+                                                   orientation=orientation)
+        # get size of resulting text
+        box_size = transposed_font.getsize(word)
+        x = position[0]
+        y = position[1]
+        # cut out patch under word box
+        patch = self.image[x:x + box_size[0], y:y + box_size[1]]
+        if patch.ndim == 3:
+            # drop alpha channel if any
+            patch = patch[:, :, :3]
+        if patch.ndim == 2:
+            raise NotImplementedError("Gray-scale images TODO")
+        color = np.mean(patch.reshape(-1, 3), axis=0)
+        return "rgb(%d, %d, %d)" % tuple(color)
+
+'.
+]
+
+{ #category : #sources }
+PyProcessorTest >> file05 [
+"tokenization.py"
+	^ '
+from itertools import tee
+from operator import itemgetter
+from collections import defaultdict
+from math import log
+
+
+def l(k, n, x):
+    # dunning''s likelihood ratio with notation from
+    # http://nlp.stanford.edu/fsnlp/promo/colloc.pdf
+    return log(max(x, 1e-10)) * k + log(max(1 - x, 1e-10)) * (n - k)
+
+
+def score(count_bigram, count1, count2, n_words):
+    """Collocation score"""
+    N = n_words
+    c12 = count_bigram
+    c1 = count1
+    c2 = count2
+    p = c2 / N
+    p1 = c12 / c1
+    p2 = (c2 - c12) / (N - c1)
+    score = (l(c12, c1, p) + l(c2 - c12, N - c1, p)
+             - l(c12, c1, p1) - l(c2 - c12, N - c1, p2))
+    return -2 * score
+
+
+def pairwise(iterable):
+    # from itertool recipies
+    # is -> (s0,s1), (s1,s2), (s2, s3), ...
+    a, b = tee(iterable)
+    next(b, None)
+    return zip(a, b)
+
+
+def unigrams_and_bigrams(words):
+    n_words = len(words)
+    # make tuples of two words following each other
+    bigrams = list(pairwise(words))
+    counts_unigrams = defaultdict(int)
+    counts_bigrams = defaultdict(int)
+    counts_unigrams, standard_form = process_tokens(words)
+    counts_bigrams, standard_form_bigrams = process_tokens(
+        [" ".join(bigram) for bigram in bigrams])
+    # create a copy of counts_unigram so the score computation is not changed
+    counts = counts_unigrams.copy()
+
+    # decount words inside bigrams
+    for bigram_string, count in counts_bigrams.items():
+        bigram = tuple(bigram_string.split(" "))
+        # collocation detection (30 is arbitrary):
+        word1 = standard_form[bigram[0].lower()]
+        word2 = standard_form[bigram[1].lower()]
+
+        if score(count, counts[word1], counts[word2], n_words) > 30:
+            counts_unigrams[word1] -= counts_bigrams[bigram_string]
+            counts_unigrams[word2] -= counts_bigrams[bigram_string]
+        # add joined bigram into unigrams
+        counts_unigrams[bigram_string] = counts_bigrams[bigram_string]
+    return counts_unigrams
+
+
+def process_tokens(words):
+    """Normalize cases and remove plurals.
+
+    Each word is represented by the most common case.
+    If a word appears with an "s" on the end and without an "s" on the end,
+    the version with "s" is assumed to be a plural and merged with the
+    version without "s".
+
+    Parameters
+    ----------
+    words : iterable of strings
+        Words to count.
+
+    Returns
+    -------
+    counts : dict from string to int
+        Counts for each unique word, with cases represented by the most common
+        case, and plurals removed.
+
+    standard_forms : dict from string to string
+        For each lower-case word the standard capitalization.
+    """
+    # words can be either a list of unigrams or bigrams
+    # d is a dict of dicts.
+    # Keys of d are word.lower(). Values are dicts
+    # counting frequency of each capitalization
+    d = defaultdict(dict)
+    for word in words:
+        word_lower = word.lower()
+        # get dict of cases for word_lower
+        case_dict = d[word_lower]
+        # increase this case
+        case_dict[word] = case_dict.get(word, 0) + 1
+
+    # merge plurals into the singular count (simple cases only)
+    merged_plurals = {}
+    for key in list(d.keys()):
+        if key.endswith(''s''):
+            key_singular = key[:-1]
+            if key_singular in d:
+                dict_plural = d[key]
+                dict_singular = d[key_singular]
+                for word, count in dict_plural.items():
+                    singular = word[:-1]
+                    dict_singular[singular] = (dict_singular.get(singular, 0)
+                                               + count)
+                merged_plurals[key] = key_singular
+                del d[key]
+    fused_cases = {}
+    standard_cases = {}
+    item1 = itemgetter(1)
+    for word_lower, case_dict in d.items():
+        # Get the most popular case.
+        first = max(case_dict.items(), key=item1)[0]
+        fused_cases[first] = sum(case_dict.values())
+        standard_cases[word_lower] = first
+    # add plurals to fused cases:
+    for plural, singular in merged_plurals.items():
+        standard_cases[plural] = standard_cases[singular.lower()]
+    return fused_cases, standard_cases
+
+'.
+]
+
+{ #category : #sources }
+PyProcessorTest >> file06 [
+"wordcloud_cli.py"
+	^ '
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+r"""Command-line tool to generate word clouds
+Usage::
+    $ cat word.txt | wordcloud_cli.py
+
+    $ wordcloud_cli.py --text=words.txt --stopwords=stopwords.txt
+"""
+import argparse
+import wordcloud as wc
+import numpy as np
+import sys
+from PIL import Image
+
+def main(args):
+    wordcloud = wc.WordCloud(stopwords=args.stopwords, mask=args.mask,
+        width=args.width, height=args.height, font_path=args.font_path,
+        margin=args.margin, relative_scaling=args.relative_scaling,
+        color_func=args.color_func, background_color=args.background_color).generate(args.text)
+    image = wordcloud.to_image()
+
+    with args.imagefile:
+        out = args.imagefile if sys.version < ''3'' else args.imagefile.buffer
+        image.save(out, format=''png'')
+
+def parse_args(arguments):
+    prog = ''python wordcloud_cli.py''
+    description = (''A simple command line interface for wordcloud module.'')
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(''--text'', metavar=''file'', type=argparse.FileType(), default=''-'',
+        help=''specify file of words to build the word cloud (default: stdin)'')
+    parser.add_argument(''--stopwords'', metavar=''file'', type=argparse.FileType(),
+        help=''specify file of stopwords (containing one word per line) to remove from the given text after parsing'')
+    parser.add_argument(''--imagefile'', metavar=''file'', type=argparse.FileType(''w''), default=''-'',
+        help=''file the completed PNG image should be written to (default: stdout)'')
+    parser.add_argument(''--fontfile'', metavar=''path'', dest=''font_path'',
+        help=''path to font file you wish to use (default: DroidSansMono)'')
+    parser.add_argument(''--mask'', metavar=''file'', type=argparse.FileType(),
+        help=''mask to use for the image form'')
+    parser.add_argument(''--colormask'', metavar=''file'', type=argparse.FileType(),
+        help=''color mask to use for image coloring'')
+    parser.add_argument(''--relative_scaling'', type=float, default=0,
+        metavar=''rs'', help='' scaling of words by frequency (0 - 1)'')
+    parser.add_argument(''--margin'', type=int, default=2,
+        metavar=''width'', help=''spacing to leave around words'')
+    parser.add_argument(''--width'', type=int, default=400,
+        metavar=''width'', help=''define output image width'')
+    parser.add_argument(''--height'', type=int, default=200,
+        metavar=''height'', help=''define output image height'')
+    parser.add_argument(''--color'', metavar=''color'',
+        help=''use given color as coloring for the image - accepts any value from PIL.ImageColor.getcolor'')
+    parser.add_argument(''--background'', metavar=''color'', default=''black'', type=str, dest=''background_color'',
+        help=''use given color as background color for the image - accepts any value from PIL.ImageColor.getcolor'')
+    args = parser.parse_args(arguments)
+
+    if args.colormask and args.color:
+        raise ValueError(''specify either a color mask or a color function'')
+
+    with args.text:
+        args.text = args.text.read()
+
+    if args.stopwords:
+        with args.stopwords:
+            args.stopwords = set(map(str.strip, args.stopwords.readlines()))
+
+    if args.mask:
+        args.mask = np.array(Image.open(args.mask))
+
+    color_func = wc.random_color_func
+    if args.colormask:
+        image = np.array(Image.open(args.colormask))
+        color_func = wc.ImageColorGenerator(image)
+
+    if args.color:
+        color_func = wc.get_single_color_func(args.color)
+
+    args.color_func = color_func
+    return args
+
+if __name__ == ''__main__'':
+    main(parse_args(sys.argv[1:]))
+
+'
+]
+
 { #category : #initialization }
 PyProcessorTest >> setUp [
 	p := PyProcessor new.
@@ -732,7 +1018,57 @@ PyProcessorTest >> testBasic02 [
 
 	f := p files anyOne.
 	self assert: f loc equals: self file02 lines size.
-	self assert: f importedFilenames equals: #('warnings' 'os' 're' 'sys' 'colorsys' 'numpy').
+	self assert: f importedFilenames equals: #('warnings' 'os' 're' 'sys' 'colorsys' 'numpy' '__future__' 'random' 'operator' 'PIL' '.query_integral_image' '.tokenization').
 	self assert: f baseFilenameWithoutExtension equals: 'wordcloud'.
 	self assert: f baseFilename equals: 'wordcloud.py'.
+]
+
+{ #category : #tests }
+PyProcessorTest >> testBasic03 [
+	| m1 m2 |
+	p processFileAsString: self file02 named: 'wordcloud.py'.
+	p processFileAsString: self file03 named: '__init__.py'.
+	p processFileAsString: self file04 named: 'color_from_image.py'.
+	p processFileAsString: self file05 named: 'tokenization.py'.
+	p processFileAsString: self file06 named: 'wordcloud_cli.py'.
+	p resolveDependencies.
+	
+	self assert: p numberOfModules equals: 5.
+	
+	m1 := p moduleNamed: 'wordcloud.py'.
+	m2 := p moduleNamed: 'wordcloud_cli.py'.
+	self assert: m1 dependentModules size equals: 2.
+	self assert: m1 dependentModules first equals: m2.
+	
+	self assert: m2 dependentModules size equals: 0.
+]
+
+{ #category : #tests }
+PyProcessorTest >> testBasic04 [
+	| m1 |
+	p processFileAsString: self file02 named: 'wordcloud.py'.
+	p processFileAsString: self file03 named: 'init.py'.
+	p processFileAsString: self file04 named: 'color_from_image.py'.
+	p processFileAsString: self file05 named: 'tokenization.py'.
+	p processFileAsString: self file06 named: 'wordcloud_cli.py'.
+	p resolveDependencies.
+	
+	m1 := p moduleNamed: 'init'.
+	
+	self assert: m1 equals: nil.
+	m1 := p moduleNamed: 'init.py'.
+	self assert: m1 notNil.
+	
+	self assert: m1 importedFilenames size equals: 2.
+	self assert: m1 importedFiles size equals: 2.
+]
+
+{ #category : #tests }
+PyProcessorTest >> testBasic05 [
+	| m1 |
+	p processFileAsString: self file02 named: 'wordcloud.py'.
+	p resolveDependencies.
+	m1 := p moduleNamed: 'wordcloud.py'.
+	self assert: m1 filename equals: 'wordcloud.py'.
+	self assert: (m1 fileReference isKindOf: FileReference).
 ]

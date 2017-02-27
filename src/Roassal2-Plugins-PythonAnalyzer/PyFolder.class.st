@@ -1,3 +1,6 @@
+"
+I am a simple representation of a python folder
+"
 Class {
 	#name : #PyFolder,
 	#superclass : #PyAbstractFile,

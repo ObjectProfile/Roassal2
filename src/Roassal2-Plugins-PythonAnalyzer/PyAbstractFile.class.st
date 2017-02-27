@@ -1,3 +1,6 @@
+"
+I am the abstract class for files and directories in python
+"
 Class {
 	#name : #PyAbstractFile,
 	#superclass : #PyObject,
