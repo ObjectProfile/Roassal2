@@ -1,3 +1,6 @@
+"
+I am a simple python processor code, to analyze code and resolve dependecies
+"
 Class {
 	#name : #PyProcessor,
 	#superclass : #PyObject,
@@ -25,8 +28,22 @@ PyProcessor >> initialize [
 	directories := OrderedCollection new
 ]
 
+{ #category : #accessing }
+PyProcessor >> moduleNamed: afilename [
+	| fn |
+	fn := afilename.
+	(afilename beginsWith: '.') 
+		ifTrue: [ fn := fn copyFrom: 2 to: fn size ].
+	^ files at: fn ifAbsent: [ nil ]
+]
+
 { #category : #properties }
 PyProcessor >> numberOfFiles [
+	^ files size
+]
+
+{ #category : #properties }
+PyProcessor >> numberOfModules [
 	^ files size
 ]
 
@@ -37,4 +54,20 @@ PyProcessor >> processFileAsString: fileContentAsString named: filename [
 	f filename: filename.
 	f initializeFromContentAsString: fileContentAsString.
 	files at: f baseFilename put: f
+]
+
+{ #category : #'resolving dependencies' }
+PyProcessor >> resolveDependencies [
+	self resolveDependenciesBetweenModules
+]
+
+{ #category : #'resolving dependencies' }
+PyProcessor >> resolveDependenciesBetweenModules [
+	self files copy do: [ :m | | ext |
+		m importedFilenames do: [ :file | 
+			ext := self moduleNamed: file,'.py'.
+			ext ifNotNil: [ 
+				ext addDependentModules: (Array with: m).
+				m addImportedFile: ext ]  ].
+		 ]
 ]
