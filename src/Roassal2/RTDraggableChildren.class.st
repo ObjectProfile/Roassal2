@@ -9,23 +9,28 @@ Class {
 
 { #category : #hooks }
 RTDraggableChildren >> initializeElement: element [
-	| recursiveDrag set |
+	| recursiveGetChildren dragElements |
 	
-	set := Set new.
+	dragElements := nil.
+	recursiveGetChildren := nil.
 	
-	recursiveDrag := [ :elem :ancestor|
-		set add: elem.
+	recursiveGetChildren := [ :elem :ancestor|
+		dragElements add: elem.
 		elem outgoingEdges do: [ :edge |
 			(edge to = ancestor) ifFalse: [
-				recursiveDrag value: edge to value: ancestor].
+				recursiveGetChildren value: edge to value: ancestor].
 			].
 		].
 	
-	element when: TRMouseDragging do: [ :e |
+	element when: TRMouseDragging do: [ :ev |
 		| d |
-		recursiveDrag value: e element value: e element. e signalUpdate.
-		d := element view canvas camera distanceFromPixelToSpace: e step.
-		set do: [ :e1 | e1 translateBy: d ].
-		 ]
+		dragElements := Set new.
+		ev shiftKeyPressed 
+			ifTrue: [dragElements add: ev element]
+			ifFalse: [recursiveGetChildren value: ev element value: ev element]. 
+		ev signalUpdate.
+		d := element view canvas camera distanceFromPixelToSpace: ev step.
+		dragElements do: [ :e1 | e1 translateBy: d ].
+		]
 	
 ]
