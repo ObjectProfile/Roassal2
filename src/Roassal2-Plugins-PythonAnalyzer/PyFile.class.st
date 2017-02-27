@@ -32,6 +32,23 @@ PyFile >> dependentModules [
 	^ dependentModules
 ]
 
+{ #category : #initialization }
+PyFile >> getRelevantLinesOf: rawLines [
+	"return the lines that are not within a multi-line comments"
+	| amIInAMultiLineComment lines |
+	amIInAMultiLineComment := false.
+	lines := OrderedCollection new.
+	rawLines do: [ :l |
+		| trimmed |
+		trimmed := l trimLeft.
+		((trimmed beginsWith: '"""') or: [ (trimmed beginsWith: 'r"""') ]) 
+			ifTrue: [ amIInAMultiLineComment := amIInAMultiLineComment not ].
+		amIInAMultiLineComment 
+			ifFalse: [ lines add: l ]
+	].
+	^ lines
+]
+
 { #category : #accessing }
 PyFile >> importedFilenames [
 	^ importedFilenames asArray
@@ -54,9 +71,10 @@ PyFile >> initialize [
 
 { #category : #initialization }
 PyFile >> initializeFromContentAsString: string [
-	| lines importLines importFrom addModule |
-	lines := string lines.
-	loc := lines size.
+	| lines importLines importFrom addModule rawLines |
+	rawLines := string lines.
+	lines := self getRelevantLinesOf: rawLines.
+	loc := rawLines size.
 	
 	importLines := lines select: [ :l | l beginsWith: 'import ' ].
 	importFrom := lines select: [ :l | l beginsWith: 'from ' ].

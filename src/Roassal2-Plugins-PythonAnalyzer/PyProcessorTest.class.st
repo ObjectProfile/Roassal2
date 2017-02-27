@@ -1039,7 +1039,6 @@ PyProcessorTest >> testBasic03 [
 	m2 := p moduleNamed: 'wordcloud_cli.py'.
 	self assert: m1 dependentModules size equals: 2.
 	self assert: m1 dependentModules first equals: m2.
-	
 	self assert: m2 dependentModules size equals: 0.
 ]
 
@@ -1067,6 +1066,21 @@ PyProcessorTest >> testBasic04 [
 PyProcessorTest >> testBasic05 [
 	| m1 |
 	p processFileAsString: self file02 named: 'wordcloud.py'.
+	p resolveDependencies.
+	m1 := p moduleNamed: 'wordcloud.py'.
+	self assert: m1 filename equals: 'wordcloud.py'.
+	self assert: (m1 fileReference isKindOf: FileReference).
+]
+
+{ #category : #tests }
+PyProcessorTest >> testBasic06 [
+	| m1 ff |
+ff := '
+"""
+from my world is your world
+"""
+'.
+	p processFileAsString: ff named: 'wordcloud.py'.
 	p resolveDependencies.
 	m1 := p moduleNamed: 'wordcloud.py'.
 	self assert: m1 filename equals: 'wordcloud.py'.
