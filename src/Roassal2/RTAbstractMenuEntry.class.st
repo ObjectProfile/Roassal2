@@ -36,6 +36,32 @@ RTAbstractMenuEntry >> label [
 	^ 'Need to define'
 ]
 
+{ #category : #'public - useful snippet' }
+RTAbstractMenuEntry >> loadPeterFileDialog [
+	"
+	self new loadPeterFileDialog
+	"
+
+	Metacello new
+	    baseline: 'FileDialog';
+	    repository: 'github://peteruhnak/file-dialog/repository';
+	    load.
+	(Smalltalk at: #FDMorphicUIManager) new beDefault
+]
+
+{ #category : #'public - useful snippet' }
+RTAbstractMenuEntry >> loadPeterFileDialogIfNecessary [
+	"
+	self new loadPeterFileDialogIfNecessary
+	"
+	(Smalltalk includesKey: #FDOpenFileDialog) ifFalse: [
+		Metacello new
+		    baseline: 'FileDialog';
+		    repository: 'github://peteruhnak/file-dialog/repository';
+		    load ].
+"	(Smalltalk at: #FDMorphicUIManager) new beDefault"
+]
+
 { #category : #public }
 RTAbstractMenuEntry >> run [
 	| answer |
