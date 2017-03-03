@@ -86,6 +86,7 @@ RTAbstractElasticBoxInteraction >> initialize [
 RTAbstractElasticBoxInteraction >> initializeElement: anElement [
 	view := anElement.
 	view removeInteractionIfPresent: RTDraggableView.
+	view removeInteractionIfPresent: self class.
 	draggingView := false.
 	view canvas when: events first do: [ :e | draggingView := true ].
 	view canvas
