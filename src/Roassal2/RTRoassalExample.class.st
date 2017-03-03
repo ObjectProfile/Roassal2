@@ -983,6 +983,7 @@ v elements fifth translateBy: 0 @ -60.
 v elements last translateBy: 150 @ 100.
 
 edge := (RTBezierLine new controllingElements: v elements) edgeFrom: els first to: els last.
+edge when: TRMouseEnter do: [ :ev | edge trachelShape color: Color random. ev signalUpdate ].
 v add: edge.
 
 	^ v
