@@ -17,21 +17,26 @@ GLMRoassal2Action class >> initializePresentation: aRoassal2Presentation [
 	| instances orderedInstances |
 	instances := self allLeafSubclasses collect: #new.
 	orderedInstances := instances sortedAs: #order.
-	orderedInstances
-		do: [ :inst | 
-			inst icon notNil
-				ifTrue: [ aRoassal2Presentation
-						act: [ :r | inst executeOn: r ]
-						icon: inst icon
-						entitled: inst title ]
-				ifFalse: [ aRoassal2Presentation
-						act: [ :r | inst executeOn: r ]
-						entitled: inst title ] ]
+	orderedInstances do: [ :inst | 
+		inst icon notNil
+			ifTrue: [ aRoassal2Presentation
+				act: [ :r | inst executeOn: r ]
+				icon: inst icon
+				entitled: inst title ]
+			ifFalse: [ aRoassal2Presentation
+				act: [ :r | inst executeOn: r ]
+				entitled: inst title
+				categorized: inst category ] ]
 ]
 
 { #category : #testing }
 GLMRoassal2Action class >> isLeaf [
 	^ self subclasses size = 0
+]
+
+{ #category : #accessing }
+GLMRoassal2Action >> category [
+	^ nil
 ]
 
 { #category : #hooks }

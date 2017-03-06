@@ -4,6 +4,11 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
+{ #category : #accessing }
+GLMAddLabelAction >> category [
+	^ 'Interactions...'
+]
+
 { #category : #hooks }
 GLMAddLabelAction >> execute [
 	| msg lbl height |

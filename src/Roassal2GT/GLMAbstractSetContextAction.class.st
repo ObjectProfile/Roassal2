@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+GLMAbstractSetContextAction >> category [
+	^ 'Set context...'
+]
+
+{ #category : #accessing }
 GLMAbstractSetContextAction >> contextClass [
 	"Override to return the class to be considered"
 	self subclassResponsibility

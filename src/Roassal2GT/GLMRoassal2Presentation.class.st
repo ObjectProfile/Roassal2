@@ -37,6 +37,19 @@ Class {
 	#category : #'Roassal2GT-Glamour'
 }
 
+{ #category : #'scripting actions' }
+GLMRoassal2Presentation >> act: aBlock entitled: aString categorized: anotherString help: anotherString2 [
+	 
+	self 
+		addAction: 
+			((GLMGenericAction new) 
+				action: aBlock; 
+				title: aString; 
+				category: anotherString;
+				help: anotherString2;
+				yourself)
+]
+
 { #category : #'initialize-release' }
 GLMRoassal2Presentation >> defaultActions [
 	GLMRoassal2Action initializePresentation: self
