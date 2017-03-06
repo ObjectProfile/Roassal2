@@ -4,6 +4,11 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
+{ #category : #accessing }
+GLMAddScrollbarAction >> category [
+	^ 'Interactions...'
+]
+
 { #category : #hooks }
 GLMAddScrollbarAction >> execute [
 	self roassalView @ RTDoubleScrollBar.

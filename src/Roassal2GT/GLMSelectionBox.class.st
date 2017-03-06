@@ -1,22 +1,22 @@
 Class {
-	#name : #GLMBoxZoomAction,
+	#name : #GLMSelectionBox,
 	#superclass : #GLMRoassal2Action,
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
 { #category : #accessing }
-GLMBoxZoomAction >> category [
+GLMSelectionBox >> category [
 	^ 'Interactions...'
 ]
 
 { #category : #hooks }
-GLMBoxZoomAction >> execute [
+GLMSelectionBox >> execute [
 	| int |
-	int := RTZoomableBoxView new.
+	int := RTSelectionBox new.
 	self roassalView @ int.
 ]
 
 { #category : #hooks }
-GLMBoxZoomAction >> title [
-	^ 'Add RTZoomableBoxView'
+GLMSelectionBox >> title [
+	^ 'Add RTSelectionBox'
 ]

@@ -4,6 +4,11 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
+{ #category : #accessing }
+GLMHTMLExportingAction >> category [
+	^ 'Export as...'
+]
+
 { #category : #hooks }
 GLMHTMLExportingAction >> execute [
 	| fileName |

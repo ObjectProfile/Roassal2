@@ -4,6 +4,11 @@ Class {
 	#category : #'Roassal2GT-Glamour-Actions'
 }
 
+{ #category : #accessing }
+GLMAbstractExportingAction >> category [
+	^ 'Export as...'
+]
+
 { #category : #hooks }
 GLMAbstractExportingAction >> doExportToFull: fileName [
 
