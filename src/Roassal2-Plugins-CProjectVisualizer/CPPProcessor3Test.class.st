@@ -1,5 +1,5 @@
 Class {
-	#name : #CPPProcessor2Test,
+	#name : #CPPProcessor3Test,
 	#superclass : #RTTest,
 	#instVars : [
 		'p'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'code example' }
-CPPProcessor2Test >> file01 [
+CPPProcessor3Test >> file01 [
 	^ 
 '
 #include "util/foo.h"
@@ -19,7 +19,7 @@ void main() {
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file02 [
+CPPProcessor3Test >> file02 [
 	^ 
 '
 // Foo.hpp
@@ -27,7 +27,7 @@ CPPProcessor2Test >> file02 [
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file03 [
+CPPProcessor3Test >> file03 [
 	^ 
 '
 #include <foo.h>
@@ -40,7 +40,7 @@ void zork() {
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file04 [
+CPPProcessor3Test >> file04 [
 	^ 
 '
 // bar.h
@@ -52,7 +52,7 @@ void zork();
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file05 [
+CPPProcessor3Test >> file05 [
 	^ 
 '
 #include "foo.h"
@@ -61,7 +61,7 @@ CPPProcessor2Test >> file05 [
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file06NodDotC [
+CPPProcessor3Test >> file06NodDotC [
 	^ 
 '
 #include "Nod.h"
@@ -77,7 +77,7 @@ CPPProcessor2Test >> file06NodDotC [
 ]
 
 { #category : #'code example' }
-CPPProcessor2Test >> file07NodDotH [
+CPPProcessor3Test >> file07NodDotH [
 	^ 
 '
 #ifndef MESSAGE_BEHAVIOUR_NOD_H
@@ -104,15 +104,15 @@ namespace behaviour {
 ]
 
 { #category : #running }
-CPPProcessor2Test >> setUp [
+CPPProcessor3Test >> setUp [
 	super setUp.
 	p := CPPProcessor new
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic [
+CPPProcessor3Test >> testBasic [
 	| m h |
-	p processFileAsString: self file01 named: 'util/foo.c'.
+	p processFileAsString: self file01 named: 'util/foo.cc'.
 	p processFileAsString: self file02 named: 'util/foo.h'.
 	p resolveDependencies.
 	
@@ -140,7 +140,7 @@ CPPProcessor2Test >> testBasic [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic01 [
+CPPProcessor3Test >> testBasic01 [
 	| m h |
 	p processFileAsString: self file01 named: 'foo.c'.
 	p processFileAsString: self file02 named: 'util/foo.h'.
@@ -170,7 +170,7 @@ CPPProcessor2Test >> testBasic01 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic01bis [
+CPPProcessor3Test >> testBasic01bis [
 	| m h |
 	p processFileAsString: self file01 named: 'foo.c'.
 	p processFileAsString: self file02 named: 'foo.h'.
@@ -200,7 +200,7 @@ CPPProcessor2Test >> testBasic01bis [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic01bisbis [
+CPPProcessor3Test >> testBasic01bisbis [
 	| m h |
 	p processFileAsString: self file01 named: 'foo.c'.
 	p processFileAsString: self file02 named: 'foo.hpp'.
@@ -230,7 +230,7 @@ CPPProcessor2Test >> testBasic01bisbis [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic01bisbisbis [
+CPPProcessor3Test >> testBasic01bisbisbis [
 	| m h |
 	p processFileAsString: self file01 named: 'foo.cpp'.
 	p processFileAsString: self file02 named: 'foo.hpp'.
@@ -260,7 +260,7 @@ CPPProcessor2Test >> testBasic01bisbisbis [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic02 [
+CPPProcessor3Test >> testBasic02 [
 	p processFileAsString: self file01 named: 'foo.c'.
 	p processFileAsString: self file02 named: 'foo.h'.
 
@@ -271,11 +271,11 @@ CPPProcessor2Test >> testBasic02 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic03 [
+CPPProcessor3Test >> testBasic03 [
 	| h1 h2 |
-	p processFileAsString: self file01 named: 'foo.c'.
-	p processFileAsString: self file02 named: 'foo.h'.
-	p processFileAsString: self file03 named: 'bar.c'.
+	p processFileAsString: self file01 named: 'util/foo.c'.
+	p processFileAsString: self file02 named: 'util/foo.h'.
+	p processFileAsString: self file03 named: '/foo/zork/bar.c'.
 	p processFileAsString: self file04 named: 'bar.h'.
 	p resolveDependencies.
 	
@@ -292,7 +292,7 @@ CPPProcessor2Test >> testBasic03 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic04 [
+CPPProcessor3Test >> testBasic04 [
 	| m1  m2 |
 	p processFileAsString: self file01 named: 'foo.c'.
 	p processFileAsString: self file02 named: 'foo.h'.
@@ -309,7 +309,7 @@ CPPProcessor2Test >> testBasic04 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic05 [
+CPPProcessor3Test >> testBasic05 [
 	| m |
 	p processFileAsString: self file05 named: 'foo.c'.
 	p resolveDependencies.
@@ -319,7 +319,7 @@ CPPProcessor2Test >> testBasic05 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testBasic06 [
+CPPProcessor3Test >> testBasic06 [
 	| m1  m2 |
 	p processFileAsString: self file01 named: '/abc/def/foo.c'.
 	p processFileAsString: self file02 named: '/abc/def/foo.h'.
@@ -339,7 +339,7 @@ CPPProcessor2Test >> testBasic06 [
 ]
 
 { #category : #tests }
-CPPProcessor2Test >> testDefault [
+CPPProcessor3Test >> testDefault [
 
 	self assert: p numberOfHeaders equals: 0.
 	self assert: p numberOfModules equals: 0.

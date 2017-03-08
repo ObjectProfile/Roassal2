@@ -6,12 +6,16 @@ Class {
 		'modules',
 		'directories'
 	],
-	#category : #'Roassal2-Plugins-CProjectVisualizer'
+	#category : #'Roassal2-Plugins-CProjectVisualizer-Core'
 }
 
 { #category : #processing }
 CPPProcessor >> headerNamed: afileName [
-	^ headers at: afileName ifAbsent: [ nil ]
+	| entry |
+	entry := (afileName includes: $/)
+		ifTrue: [ afileName copyFrom: (afileName lastIndexOf: $/) + 1 to: afileName size ]
+		ifFalse: [ afileName ].
+	^ headers at: entry ifAbsent: [ nil ]
 	"^ headers detect: [ :h | h baseFilename = afileName ] ifNone: [ nil ]"
 ]
 
@@ -63,7 +67,7 @@ CPPProcessor >> processDirectories: listOfDirectories [
 
 { #category : #processing }
 CPPProcessor >> processFileAsString: fileContentAsString named: filename [
-	((filename endsWith: '.c') or: [ filename endsWith: '.cpp' ])
+	(((filename endsWith: '.c') or: [ filename endsWith: '.cpp' ]) or: [ filename endsWith: '.cc' ])
 		ifTrue: [ ^ self processModuleAsString: fileContentAsString named: filename ].
 
 	((filename endsWith: '.h') or: [ filename endsWith: '.hpp' ])
@@ -98,7 +102,7 @@ CPPProcessor >> processRootFolder: aFileReference [
 	allFiles := aFileReference allChildren.
 	allDirectories := allFiles select: #isDirectory.
 	self processDirectories: allDirectories.
-	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp' 'hpp' 'C' 'H' 'CPP' 'HPP') includes: f extension ].
+	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp' 'hpp' 'C' 'H' 'CPP' 'HPP' 'cc') includes: f extension ].
 	relevantFiles do: [ :f | 
 			| r |
 			r := f readStream.
@@ -125,6 +129,9 @@ CPPProcessor >> resolveDependenciesBetweenHeaderAndModule [
 		m := self moduleNamed: h baseFilenameWithoutExtension, '.c'.
 		"If not found, we look for a module ending with .cpp"
 		m ifNil: [ m := self moduleNamed: h baseFilenameWithoutExtension, '.cpp' ].
+		"Else, ending with .cc"
+		m ifNil: [ m := self moduleNamed: h baseFilenameWithoutExtension, '.cc' ].
+		
 		m ifNotNil: [ 
 			m header: h. 
 			h module: m ]
