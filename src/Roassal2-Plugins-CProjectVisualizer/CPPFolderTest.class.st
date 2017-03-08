@@ -1,7 +1,7 @@
 Class {
 	#name : #CPPFolderTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Plugins-CProjectVisualizer'
+	#category : #'Roassal2-Plugins-CProjectVisualizer-Tests'
 }
 
 { #category : #tests }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'p'
 	],
-	#category : #'Roassal2-Plugins-CProjectVisualizer'
+	#category : #'Roassal2-Plugins-CProjectVisualizer-Tests'
 }
 
 { #category : #'code example' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RTVisualizeCPPApplicationModuleAndHeaderScript,
 	#superclass : #RTUsefulScript,
-	#category : #'Roassal2-Plugins-CProjectVisualizer'
+	#category : #'Roassal2-Plugins-CProjectVisualizer-Scripts'
 }
 
 { #category : #accessing }
