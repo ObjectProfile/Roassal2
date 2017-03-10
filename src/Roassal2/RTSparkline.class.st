@@ -2,9 +2,7 @@ Class {
 	#name : #RTSparkline,
 	#superclass : #RTAbstractElementShape,
 	#instVars : [
-		'valueBlock',
-		'maxValue',
-		'minValue'
+		'valueBlock'
 	],
 	#category : #'Roassal2-Sparkline'
 }
@@ -15,46 +13,6 @@ RTSparkline >> initialize [
 	borderWidth := 1.
 	borderColor := Color black.
 	self color: Color white
-]
-
-{ #category : #accessing }
-RTSparkline >> maxValue [
-	^ maxValue
-]
-
-{ #category : #accessing }
-RTSparkline >> maxValue: aNumber [
-	self maxValueElement: [ :e | aNumber rtValue: e model ].
-]
-
-{ #category : #accessing }
-RTSparkline >> maxValueElement: anObject [
-	maxValue := anObject
-]
-
-{ #category : #accessing }
-RTSparkline >> maxValueFor: anElement [
-	^ maxValue rtValue: anElement
-]
-
-{ #category : #accessing }
-RTSparkline >> minValue [
-	^ minValue
-]
-
-{ #category : #accessing }
-RTSparkline >> minValue: aNumber [
-	self minValueElement: [ :e | aNumber rtValue: e model ].
-]
-
-{ #category : #accessing }
-RTSparkline >> minValueElement: anObject [
-	minValue := anObject
-]
-
-{ #category : #accessing }
-RTSparkline >> minValueFor: anElement [
-	^ minValue rtValue: anElement
 ]
 
 { #category : #public }
@@ -80,10 +38,8 @@ RTSparkline >> updateFor: element trachelShape: trachelShape [
 	w := self widthFor: element.
 	h := self heightFor: element.
 	stepHorizontal := w / vs size.
-	min := self minValueFor: element.
-	max := self maxValueFor: element.
-	min ifNil: [ min := vs min].
-	max ifNil: [ max := vs max].
+	min := vs min.
+	max := vs max.
 	
 	stepVertical := max = min 
 		ifTrue: [ h ]
