@@ -1,18 +1,18 @@
 Class {
-	#name : #RTViewFolderScript,
+	#name : #RTViewFolder2Script,
 	#superclass : #RTUsefulScript,
 	#category : #'Roassal2-Plugins'
 }
 
 { #category : #accessing }
-RTViewFolderScript >> description [
+RTViewFolder2Script >> description [
 	^ 
 'Let you select a directory and see its content. 
 A color is given to each file based on its extension.'
 ]
 
 { #category : #hooks }
-RTViewFolderScript >> execute [
+RTViewFolder2Script >> execute [
 	
 	| fr allChildren b lb |
 	fr := UIManager default chooseDirectory.
@@ -29,10 +29,10 @@ RTViewFolderScript >> execute [
 			size: [ :f | (f size + 1) log * 3 ].
 		b nodes: fileRef allChildren.
 		b edges connectFrom: #parent.
-		b layout tree.
+		b layout cluster.
 
 	].
-	b layout verticalLine.
+	b layout grid.
 	b normalizer
 		objects: (allChildren reject: #isDirectory);
 		distinctColorUsing: #extension.
@@ -52,6 +52,6 @@ RTViewFolderScript >> execute [
 ]
 
 { #category : #hooks }
-RTViewFolderScript >> label [
-	^ 'Visualizing Folder'
+RTViewFolder2Script >> label [
+	^ 'Visualizing Folder using a Cluster layout'
 ]
