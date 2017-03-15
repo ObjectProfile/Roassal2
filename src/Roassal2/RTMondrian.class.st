@@ -102,6 +102,11 @@ RTMondrian >> circleLayout [
 ]
 
 { #category : #hooks }
+RTMondrian >> computeColorForNode [
+	^ Color gray: ((5 - (self currentDepth + 1 min: 5)) / 5.0) asFloat
+]
+
+{ #category : #hooks }
 RTMondrian >> createInteractionBuilder [
 	^ RTInteractionBuilder new popup; draggable; yourself
 ]
@@ -123,12 +128,9 @@ RTMondrian >> createNewFrame [
 RTMondrian >> createShapeBuilder [
 	| sb |
 	sb := RTBoundedShapeBuilder new.
-	sb shapeInitializer: [ :aShape | sb color: (Color gray: (5 - ((self currentDepth + 1 min: 5)) / 5.0) asFloat) ].
-
-"	sb rectangle color: (Color gray: (5 - ((self currentDepth + 1 min: 5)) / 5.0) asFloat)."
-	"sb rectangle color: Color white; borderColor: Color black."
+	sb shapeInitializer:
+		[ :aShape | sb color: self computeColorForNode ].
 	^ sb
-	
 ]
 
 { #category : #hooks }
