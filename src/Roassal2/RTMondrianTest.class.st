@@ -315,7 +315,7 @@ RTMondrianTest >> testFramesWithNestingNesting2 [
 RTMondrianTest >> testHighlightNeighbor [
 
 	| elements |
-	b interaction highlightNeighbour: [ :v | Array with: v + 1 ].
+	b interaction highlightNeighbors: [ :v | Array with: v + 1 ].
 	b nodes: #(1 2 2).
 	b build.
 	elements := b view elements.
@@ -328,6 +328,25 @@ RTMondrianTest >> testHighlightNeighbor [
 	self assert: (elements first trachelShape color = b computeColorForNode ).
 	self assert: (elements second trachelShape color ~= b computeColorForNode ).
 	self assert: (elements third trachelShape color ~= b computeColorForNode ).
+]
+
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testHighlightNeighborColor [
+
+	| elements |
+	b interaction highlightNeighbors: [ :v | Array with: v + 1 ] color: Color red.
+	b nodes: #(1 2 2).
+	b build.
+	elements := b view elements.
+	
+	"All nodes have default color"
+	self assert: (elements allSatisfy: [ :e | e trachelShape color = b computeColorForNode ]).
+	
+	elements first announce: TRMouseEnter.
+	
+	self assert: (elements first trachelShape color = b computeColorForNode ).
+	self assert: (elements second trachelShape color = Color red ).
+	self assert: (elements third trachelShape color = Color red ).
 ]
 
 { #category : #'tests - interaction' }
@@ -543,6 +562,22 @@ RTMondrianTest >> testShapeAndForEach [
 		self assert: b shape ~~ i
 	].
 	self assert: nodes first shape == nodes second shape
+]
+
+{ #category : #'tests - interaction' }
+RTMondrianTest >> testShowEdge [
+	| elements |
+	b interaction showEdge connectTo: [ :v | Array with: v + 1 ].
+	b nodes: #(1 2 2 3).
+
+	b layout circle initialRadius: 10. 
+	b build.
+
+	self assert: b view numberOfEdges equals: 0.
+	
+	elements := b view elements.
+	elements first announce: TRMouseEnter new.
+	self assert: b view numberOfEdges equals: 2.
 ]
 
 { #category : #'tests - nodes' }
