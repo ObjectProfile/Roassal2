@@ -47,7 +47,6 @@ Class {
 	#name : #RTData,
 	#superclass : #RTAbstractData,
 	#instVars : [
-		'points',
 		'dotBuilder',
 		'lineBuilder',
 		'shouldConnect',
