@@ -25,82 +25,50 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #adding }
-RTMultipleData >> addMetric: aBlockOrSymbolOrValue [
-	metrics add: aBlockOrSymbolOrValue
-]
-
-{ #category : #adding }
-RTMultipleData >> addedInBuilder: aBuilder [
-	super addedInBuilder: aBuilder.
-	aBuilder axisX noLabel; noTick.
-	
-	elements := RTGroup new.
-	points do: [ :p | 
-		| values es |
-		values := metrics collect: [ :m | m rtValue: p ].
-		es := barBuilder elementsOn: values.
-		es doWithIndex: [ :e :index | e trachelShape color: (self colorPalette at: index) ].
-		groupedElements add: es.
-		elements addAll: es
-		 ] separatedBy: [ elements add: ((RTBox new size: 0) elementOn: 0) ].
-	self addAll: elements
-]
-
 { #category : #rendering }
-RTMultipleData >> colorPalette [
-	^ super  colorPalette
-]
+RTMultipleData >> renderIn: aView [
 
-{ #category : #hooks }
-RTMultipleData >> getModelForElement:e atIndex: index [
-	"Return the model that is used to insert a label for the element. index is index-th label to be provided."
-	^ self points at: index
-]
+	"We need to do the layout here"
 
-{ #category : #rendering }
-RTMultipleData >> initialize [
-	^ super initialize
-]
+	| centralDot positiveElements negativeElements  |
+	centralDot := self centralDot.
 
-{ #category : #rendering }
-RTMultipleData >> numberOfMetrics [
-	^ super numberOfMetrics
-]
+	RTMetricNormalizer new
+		elements: elements;
+		normalizeElementX: [ :anElement | x rtValue: anElement ]
+			min: 0
+			max: builder extent x
+			minValue: minX
+			maxValue: maxX + 1.
+	"We have 'maxX + 1' because we do not want the last bar on the extremity of the X-Axis"
 
-{ #category : #'public - query' }
-RTMultipleData >> numberOfPoints [
-	"Return the number of points added in the data set"
-	^ points size
-]
+	"We treat the element with a positive value"
+	positiveElements := elements select: [ :el | (y rtValue: el) >= 0 ].
+	positiveElements
+		ifNotEmpty: [
+			RTMetricNormalizer new
+				elements: positiveElements;
+				normalizeElementHeight: [ :anElement | y rtValue: anElement ]
+					min: 0
+					max: builder extent y + centralDot position y
+					minValue: 0
+					maxValue: maxY ].
 
-{ #category : #accessing }
-RTMultipleData >> points [
-	^ points
-]
-
-{ #category : #rendering }
-RTMultipleData >> points: vv [
-	^ super points: vv
-]
-
-{ #category : #rendering }
-RTMultipleData >> renderIn: blah [
-	^ super renderIn: blah
-	
-]
-
-{ #category : #hooks }
-RTMultipleData >> resetShapeBuilderForBar [
-	super resetShapeBuilderForBar.
-	
-	"Default width that compute an appropriate width"
-	barBuilder width: [ :object | 
-		(builder extent x / (self numberOfPoints * self numberOfMetrics * 2)) asFloat ]
-]
-
-{ #category : #rendering }
-RTMultipleData >> selectElementsForAddingBarTitle [
-	^ super 
-selectElementsForAddingBarTitle
+	RTAlignment new elements: positiveElements; fixedElement: centralDot; bottom.
+	"TRConstraint use: centralDot alignFromBottom: positiveElements.	"
+		
+	"We treat the element with a negative value"
+	negativeElements := elements copyWithoutAll: positiveElements.
+	negativeElements
+		ifNotEmpty: [ 
+			RTMetricNormalizer new
+				elements: negativeElements;
+				normalizeElementHeight: [ :anElement | y rtValue: anElement ]
+					min: centralDot position y negated 
+					max: 0
+					minValue: minY
+					maxValue: 0.
+			RTAlignment new elements: negativeElements; fixedElement: centralDot; top.
+			"TRConstraint use: centralDot alignFromTop: negativeElements "].	"We set the actions, if any"
+	elementActions do: [ :act | act rtValue: elements ]
 ]
