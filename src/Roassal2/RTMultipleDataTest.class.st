@@ -7,10 +7,10 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Tests'
 }
 
-{ #category : #running }
+{ #category : #initialization }
 RTMultipleDataTest >> setUp [
 	super setUp.
-	d := RTVerticalMultipleData new.
+	d := RTHorizontalMultipleData new.
 	d points: #( #(1 2) #(2 4) #(3 5)).
 	d addMetric: #first.
 	d addMetric: #second.
@@ -77,7 +77,7 @@ RTMultipleDataTest >> testSelectElementsForAddingBarTitle01 [
 
 	| b |
 	b := RTGrapher new.
-	d := RTVerticalMultipleData new.
+	d := RTHorizontalMultipleData new.
 	d barShape color: Color blue.
 	d points: #( #('hello' 1 2 1) #('world' 2 4 2) #('bonjour' 3 5 4) #('Gutten Morgen' -1 4 -5)).
 	d addMetric: #second.
