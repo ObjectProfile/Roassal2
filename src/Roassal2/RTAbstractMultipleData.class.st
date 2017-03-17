@@ -5,7 +5,8 @@ Class {
 		'groupedElements',
 		'interaction',
 		'metrics',
-		'points'
+		'points',
+		'colors'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
@@ -13,6 +14,12 @@ Class {
 { #category : #'public - metrics' }
 RTAbstractMultipleData >> addMetric: aBlockOrSymbolOrValue [
 	metrics add: aBlockOrSymbolOrValue
+]
+
+{ #category : #'public - metrics' }
+RTAbstractMultipleData >> addMetric: aBlockOrSymbolOrValue color: aColor [
+	self addMetric: aBlockOrSymbolOrValue.
+	colors add: aColor
 ]
 
 { #category : #adding }
@@ -25,7 +32,7 @@ RTAbstractMultipleData >> addedInBuilder: aBuilder [
 		| values es |
 		values := metrics collect: [ :m | m rtValue: p ].
 		es := barBuilder elementsOn: values.
-		es doWithIndex: [ :e :index | e trachelShape color: (self colorPalette at: index) ].
+		es doWithIndex: [ :e :index | e trachelShape color: (self colorsToUse at: index) ].
 		groupedElements add: es.
 		elements addAll: es
 		 ] separatedBy: [ elements add: ((RTBox new size: 0) elementOn: 0) ].
@@ -36,6 +43,19 @@ RTAbstractMultipleData >> addedInBuilder: aBuilder [
 RTAbstractMultipleData >> colorPalette [
 	^ RTPalette c3
 	"^ RTColorPalette qualitative colors: 8 scheme: 'Set2'"
+]
+
+{ #category : #accessing }
+RTAbstractMultipleData >> colors: aCollectionOfColors [
+	colors := aCollectionOfColors
+]
+
+{ #category : #accessing }
+RTAbstractMultipleData >> colorsToUse [
+	"Return a collection of colors to use"
+	^ colors isEmpty 
+		ifTrue: [ self colorPalette ]
+		ifFalse: [ colors ]
 ]
 
 { #category : #hooks }
@@ -54,7 +74,7 @@ RTAbstractMultipleData >> initialize [
 	y := [ :anElement | anElement model ].
 	self resetMinAndMax.
 	self resetShapeBuilderForBar.
-
+	colors := OrderedCollection new
 ]
 
 { #category : #'public - query' }
