@@ -39,7 +39,7 @@ p resolveDependencies.
 b := RTMondrian new.
 b shape circle.
 
-b interaction highlightNeighbour: #dependentModules color: Color purple.
+b interaction highlightNeighbors: #dependentModules color: Color purple.
 b nodes: p modules.
 
 b shape line
