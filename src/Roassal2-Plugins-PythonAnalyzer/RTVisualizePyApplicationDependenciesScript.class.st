@@ -40,7 +40,7 @@ b shape box.
 allContainingFolders := p modules groupedBy: #parent.
 
 b nodes: allContainingFolders keys forEach: [:k |
-	b interaction highlightNeighbour: #dependentModules color: Color purple.
+	b interaction highlightNeighbors: #dependentModules color: Color purple.
 	b shape box 
 		size: [ :f | f loc sqrt ].
 	b nodes: (allContainingFolders at: k).
