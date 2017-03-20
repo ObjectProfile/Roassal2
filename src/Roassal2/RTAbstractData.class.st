@@ -299,8 +299,7 @@ RTAbstractData >> resetShapeBuilderForBar [
 
 { #category : #hooks }
 RTAbstractData >> selectElementsForAddingBarTitle [
-	"Return the collection of principal element for each element group.  
-	This principal element is used to position the title label"
+	"This method has to be overriden to provide the elements that deserve to receive a title"
 	self subclassResponsibility
 ]
 
