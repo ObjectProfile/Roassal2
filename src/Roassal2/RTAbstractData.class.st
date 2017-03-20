@@ -20,11 +20,6 @@ Class {
 }
 
 { #category : #adding }
-RTAbstractData >> addAll: someElements [
-	self builder view addAll: someElements
-]
-
-{ #category : #adding }
 RTAbstractData >> addedInBuilder: aBuilder [
 	self builder: aBuilder.
 ]
