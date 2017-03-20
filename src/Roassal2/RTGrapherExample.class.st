@@ -2100,46 +2100,6 @@ AAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
-RTGrapherExample >> exampleVerticalMultiDataPoint [
-
-| b d |
-b := RTGrapher new.
-
-d := RTVerticalMultipleData new.
-d barShape color: Color blue.
-d points: #( #('hello' 1 2 1) #('world' 2 4 2) #('bonjour' 3 5 4)).
-d addMetric: #second.
-d addMetric: #third.
-d addMetric: #fourth.
-
-"d barChartWithBarCenteredTitle: #first."
-d barChartWithBarTitle: #first rotation: -30.
-
-b add: d.
-^ b 
-]
-
-{ #category : #icons }
-RTGrapherExample >> exampleVerticalMultiDataPointIcon [
-	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABeCAYAAADVA7GfAAADHUlEQVR4XuXc7U/aUBTHcf//
-v2Gvluzdsjdb5MUCgZCooIMpQREQCuVhWKAIKuXBwzxNaJqgi2mZYL+/5CQmJDdyPvbe2nvT
-g9WKn33KAb8FfBB++CB8EH74IHwQfvggfBB++CB8EH74IPzwQfgg/PBB+CD88EH4IPzwQfgg
-/PBB+OGDRB6k0+nIaDSSarUqtVpNptOp8Fu6Q5BSqSRXV1dSr9elXC7Lw8PDBoh+9hEaMe13
-VvZ1zqvITll8ED4IH4QPwgfhg/BB+CB8ED4IH4QPwgfhg3wIkGHdWdWSd17xQfggfJBIgiQS
-CfeJ7+3t7Ubj2+22/E+Q5XwmzsjySoMHsSxLJpOJLBYLee8rZDa2xb8Qy9MTH2SXUxYfhA/C
-B+GD8EH4IHyQiIBMh/fSOauv1vXEB9ktyL01F38Tnz34IHwQPggfhA/CB+GDBE2z2XQf6r12
-jJQP8s4guVxO9IyvbdsbzdCjpi+BTMyKrGt+fyf7AFK7eJTEl6FXH3rK0vv/5XL55ivE/8+c
-M+rvBUjl1+Mq9mngFWoN4YPsGUjvoi7rehyO+SC7BvE3cdyd8UH4IHwQPggB5I8xE38Tn2/0
-+CB8ED4IH2TbINlvtleW4fBBdg3i/+KtMh+EDxJlkNPT01ePkrZaLSkWi6JHSv3182vZq2K+
-sfH5W6v4uyE/Pl97ZZqtwGMVzgxJfa96FXQcrfE4+NOH0CCNRuOfR0n52bMp66V0u92t4RUK
-ha2NpXs7KBB9H4q+gkNjmmaoL28YhuhezM3NTegm6pSbz+dFx8SA6Atq9EvrptVwGHwDSPde
-BoOBHB8fSyaTkaOjIwk61eq6d3l56b48R8dDTFnasHQ6LYeHh9Lr9STsHdvJyYk4jhPqr1l3
-NxVVf7dUKuX+jFlDdJrq9/uhF/1KpSJr3DAN1CsiFou5r5M6Pz+X+Xwu+EU9aMI0TxGy2azE
-43H36tKxwhw95YNs4Q4qmUwK/7aXHz4IH4QfPggfhB8+CB+EHz4IP3wQPgg/fBA+CD98ED4I
-P3wQPgg/fBB++CB8EH74IHwQfvgg0ctfBYCB+IEfCoYAAAAASUVORK5CYII='
-]
-
-{ #category : #sources }
 RTGrapherExample >> exampledoubleCurves [
 	| f g b ds xValues |
 	f := [ :x | x ].
