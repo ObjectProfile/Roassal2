@@ -377,7 +377,7 @@ RTAxisConfiguration >> tickLabelOffset: aPoint [
 
 { #category : #accessing }
 RTAxisConfiguration >> ticksCentered [
-	^ ticksCentered
+	^ ticksCentered.
 ]
 
 { #category : #accessing }

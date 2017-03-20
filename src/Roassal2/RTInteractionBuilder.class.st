@@ -101,7 +101,7 @@ RTInteractionBuilder >> highlightElements: elementsOrABlock [
 ]
 
 { #category : #'public - events-registering' }
-RTInteractionBuilder >> highlightNeighbors: aBlock [
+RTInteractionBuilder >> highlightNeighbour: aBlock [
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
 	
 	aBlock takes as input an object and return a collection of objects.
@@ -120,38 +120,7 @@ b
 ]
 
 { #category : #'public - events-registering' }
-RTInteractionBuilder >> highlightNeighbors: aBlock color: aColorOrABlock [
-	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
-	interactions add: [ :element | element @ (RTHighlightable new 
-																highlightedColor: aColorOrABlock; 
-																highlight: aBlock) ]
-]
-
-{ #category : #'public - events-registering' }
-RTInteractionBuilder >> highlightNeighbour: aBlock [
-	self deprecated: 'Use #highlightNeighbors: instead'.
-	
-	"Highlight the elements for which the model is given by 'aBlock rtValue: element model', where 'element' is the current element
-	
-	aBlock takes as input an object and return a collection of objects.
-	"
-	
-	"
-	Example:
-| b |
-b := RTMondrian new.
-b interaction highlightNeighbors: [ :v | Array with: v - 1 with: v with: v + 1 ].
-b nodes: (1 to: 11).
-b layout grid.
-b 
-	
-	"
-	interactions add: [ :element | element @ (RTHighlightable highlight: aBlock) ]
-]
-
-{ #category : #'public - events-registering' }
 RTInteractionBuilder >> highlightNeighbour: aBlock color: aColorOrABlock [
-	self deprecated: 'Use #highlightNeighbors:color: instead'.
 	"Highlight the elements for which the model is given by 'aBlock rtValue: element', where 'element' is the current element"
 	interactions add: [ :element | element @ (RTHighlightable new 
 																highlightedColor: aColorOrABlock; 
