@@ -105,7 +105,7 @@ RTAbstractHighlightable >> highlight: aBlock [
 	highlightElements := [ :el | 
 		| objects |
 		objects := aBlock rtValue: el model.
-		(objects collect: [ :o | el view elementFromModel: o ]) copyWithout: nil
+		(objects flatCollect: [ :o | el view elementsFromModel: o ]) copyWithout: nil
 		]
 ]
 
