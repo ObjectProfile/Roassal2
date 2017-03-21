@@ -130,6 +130,7 @@ RTNameCloud >> example03 [
 	"
 	self new example03
 	"
+	<noTest>
 	| b |
 	b := RTNameCloud new. 
 	b dictionary: (RTSourceCodeDictionary new).
