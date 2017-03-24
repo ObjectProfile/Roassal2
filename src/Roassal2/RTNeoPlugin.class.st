@@ -30,5 +30,5 @@ RTNeoPlugin >> isLoaded [
 
 { #category : #hooks }
 RTNeoPlugin >> label [
-	^ 'Load the Neo JSON and CSV parser'
+	^ 'Neo JSON and CSV parser'
 ]

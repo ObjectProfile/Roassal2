@@ -25,6 +25,12 @@ RTMultiPilesPlugin >> execute [
 
 ]
 
+{ #category : #testing }
+RTMultiPilesPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'MultiPiles'
+ 
+]
+
 { #category : #hooks }
 RTMultiPilesPlugin >> label [
 	^ 'Small MultiPiles (Dependency Structure Visualization)'
