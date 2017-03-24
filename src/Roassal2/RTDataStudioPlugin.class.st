@@ -18,6 +18,12 @@ RTDataStudioPlugin >> execute [
 		package: 'DataStudio'; load.
 ]
 
+{ #category : #testing }
+RTDataStudioPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'DataStudio'
+ 
+]
+
 { #category : #hooks }
 RTDataStudioPlugin >> label [
 	^ 'Data Studio'

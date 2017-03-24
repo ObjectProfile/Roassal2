@@ -23,7 +23,13 @@ RTAvispaPlugin >> execute [
 
 ]
 
+{ #category : #testing }
+RTAvispaPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'ProcessModel'
+ 
+]
+
 { #category : #hooks }
 RTAvispaPlugin >> label [
-	^ 'Load Avispa'
+	^ 'Avispa (Software Process EPF Visualization)'
 ]

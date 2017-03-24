@@ -27,5 +27,5 @@ RTMultiPilesPlugin >> execute [
 
 { #category : #hooks }
 RTMultiPilesPlugin >> label [
-	^ 'Load Small MultiPiles'
+	^ 'Small MultiPiles (Dependency Structure Visualization)'
 ]

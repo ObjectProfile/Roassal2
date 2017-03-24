@@ -22,6 +22,17 @@ RTExampleEventCollectorPlugin >> execute [
 ]
 
 { #category : #hooks }
+RTExampleEventCollectorPlugin >> isEnabled [
+	^ false
+]
+
+{ #category : #hooks }
+RTExampleEventCollectorPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'Roassal2EventCollector'
+ 
+]
+
+{ #category : #hooks }
 RTExampleEventCollectorPlugin >> label [
 	^ 'Example event collector'
 ]
