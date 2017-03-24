@@ -1086,3 +1086,145 @@ from my world is your world
 	self assert: m1 filename equals: 'wordcloud.py'.
 	self assert: (m1 fileReference isKindOf: FileReference).
 ]
+
+{ #category : #'tests - import' }
+PyProcessorTest >> testFromImport [
+	| f1 f2 f3 main foobar schemaMapper |
+	f1 := 'from schemaMapper import zork
+from foobar import foo
+
+if __name__ == ''__main__'':
+    print(''Foo = %d'' % (foo(zork())))
+'.
+
+	f2 := '
+def foo(n):
+    return 42 + n
+'.
+
+	f3 := 'def zork():
+    return 5
+'.
+
+	p processFileAsString: f1 named: 'main.py'.
+	p processFileAsString: f2 named: 'foobar.py'.
+	p processFileAsString: f3 named: 'schemaMapper.py'.
+	p resolveDependencies.
+	
+	self assert: p numberOfModules equals: 3.
+	main := p moduleNamed: 'main.py'.
+	foobar := p moduleNamed: 'foobar.py'.
+	schemaMapper := p moduleNamed: 'schemaMapper.py'.
+	
+	self assert: main importedFilenames equals: #('schemaMapper' 'foobar').
+	self assert: main importedFiles size equals: 2.
+	self assert: main importedFiles first equals: schemaMapper.
+	self assert: main importedFiles second equals: foobar.
+]
+
+{ #category : #'tests - import' }
+PyProcessorTest >> testFromImportAs [
+	"This semantic is not clear to me.... We need to work on this"
+	| f1 f2 f3 main foobar schemaMapper |
+	f1 := 'import schemaMapper as s
+import foobar as bar
+
+if __name__ == ''__main__'':
+    print(''Foo = %d'' % (bar.foo(s.zork())))
+'.
+
+	f2 := '
+def foo(n):
+    return 42 + n
+'.
+
+	f3 := 'def zork():
+    return 5
+'.
+
+	p processFileAsString: f1 named: 'main.py'.
+	p processFileAsString: f2 named: 'rep/foobar.py'.
+	p processFileAsString: f3 named: 'rep/schemaMapper.py'.
+	p resolveDependencies.
+	
+	self assert: p numberOfModules equals: 3.
+	main := p moduleNamed: 'main.py'.
+	foobar := p moduleNamed: 'foobar.py'.
+	schemaMapper := p moduleNamed: 'schemaMapper.py'.
+	
+	self assert: main importedFilenames equals: #('schemaMapper' 'foobar').
+	self assert: main importedFiles size equals: 2.
+	self assert: main importedFiles first equals: schemaMapper.
+	self assert: main importedFiles second equals: foobar.
+]
+
+{ #category : #'tests - import' }
+PyProcessorTest >> testFromImportWithStar [
+	"This semantic is not clear to me.... We need to work on this"
+	| f1 f2 f3 main foobar schemaMapper |
+	f1 := 'from .rep.schemaMapper import *
+from .rep.foobar import *
+
+if __name__ == ''__main__'':
+    print(''Foo = %d'' % (foo(zork())))
+'.
+
+	f2 := '
+def foo(n):
+    return 42 + n
+'.
+
+	f3 := 'def zork():
+    return 5
+'.
+
+	p processFileAsString: f1 named: 'main.py'.
+	p processFileAsString: f2 named: 'rep/foobar.py'.
+	p processFileAsString: f3 named: 'rep/schemaMapper.py'.
+	p resolveDependencies.
+	
+	self assert: p numberOfModules equals: 3.
+	main := p moduleNamed: 'main.py'.
+	foobar := p moduleNamed: 'foobar.py'.
+	schemaMapper := p moduleNamed: 'schemaMapper.py'.
+	
+	self assert: main importedFilenames equals: #('.rep.schemaMapper' '.rep.foobar').
+	self assert: main importedFiles size equals: 2.
+	self assert: main importedFiles first equals: schemaMapper.
+	self assert: main importedFiles second equals: foobar.
+]
+
+{ #category : #'tests - import' }
+PyProcessorTest >> testImport [
+	| f1 f2 f3 main foobar schemaMapper |
+	f1 := 'import schemaMapper
+import foobar
+
+if __name__ == ''__main__'':
+    print(''Foo = %d'' % (foobar.foo(schemaMapper.zork())))
+'.
+
+	f2 := '
+def foo(n):
+    return 42 + n
+'.
+
+	f3 := 'def zork():
+    return 5
+'.
+
+	p processFileAsString: f1 named: 'main.py'.
+	p processFileAsString: f2 named: 'foobar.py'.
+	p processFileAsString: f3 named: 'schemaMapper.py'.
+	p resolveDependencies.
+	
+	self assert: p numberOfModules equals: 3.
+	main := p moduleNamed: 'main.py'.
+	foobar := p moduleNamed: 'foobar.py'.
+	schemaMapper := p moduleNamed: 'schemaMapper.py'.
+	
+	self assert: main importedFilenames equals: #('schemaMapper' 'foobar').
+	self assert: main importedFiles size equals: 2.
+	self assert: main importedFiles first equals: schemaMapper.
+	self assert: main importedFiles second equals: foobar.
+]

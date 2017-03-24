@@ -8,7 +8,8 @@ Class {
 		'importedFilenames',
 		'loc',
 		'importedFiles',
-		'dependentModules'
+		'dependentModules',
+		'importedInFiles'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -22,9 +23,16 @@ PyFile >> addDependentModules: someModules [
 
 { #category : #accessing }
 PyFile >> addImportedFile: afile [
-	self assert: afile class == self class.
+	self assert: [ afile class == self class ].
 	importedFiles add: afile.
 	importedFiles removeDuplicates.
+]
+
+{ #category : #accessing }
+PyFile >> addImportedInFile: afile [
+	self assert: [ afile class == self class ].
+	importedInFiles add: afile.
+	importedInFiles removeDuplicates.
 ]
 
 { #category : #accessing }
@@ -59,14 +67,23 @@ PyFile >> importedFiles [
 	^ importedFiles asArray
 ]
 
+{ #category : #accessing }
+PyFile >> importedInFiles [
+	^ importedInFiles asArray
+]
+
 { #category : #initialization }
 PyFile >> initialize [
 	super initialize.
 	importedFilenames := OrderedCollection new.
 	importedFiles := OrderedCollection new.
+	importedInFiles := OrderedCollection new.
+	
+	"Should be removed"
 	dependentModules := OrderedCollection new.
 	self filename: 'UNAMED'.
 	self loc: -1.
+	
 ]
 
 { #category : #initialization }
@@ -93,6 +110,18 @@ PyFile >> initializeFromContentAsString: string [
 
 	
 
+]
+
+{ #category : #testing }
+PyFile >> isImported [
+	"Return true if I am imported in other file"
+	^ self importedInFiles notEmpty
+]
+
+{ #category : #testing }
+PyFile >> isTest [
+	"Return true if I am a test, i.e., import the package unittest"
+	^ importedFilenames includes: 'unittest'
 ]
 
 { #category : #accessing }
