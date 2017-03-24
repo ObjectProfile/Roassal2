@@ -93,10 +93,15 @@ PyProcessor >> resolveDependencies [
 { #category : #'resolving dependencies' }
 PyProcessor >> resolveDependenciesBetweenModules [
 	self files copy do: [ :m | | ext |
-		m importedFilenames do: [ :file | 
-			ext := self moduleNamed: file,'.py'.
+		"Remove import named '.'"
+		(m importedFilenames copyWithout: '.') do: [ :file | 
+			| cleanedName |
+			"we exclude all the dots from the name"
+			cleanedName := (file substrings: '.') last.
+			ext := self moduleNamed: cleanedName,'.py'.
 			ext ifNotNil: [ 
 				ext addDependentModules: (Array with: m).
-				m addImportedFile: ext ]  ].
+				m addImportedFile: ext.
+				ext addImportedInFile: m ]  ].
 		 ]
 ]
