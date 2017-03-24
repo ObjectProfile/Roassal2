@@ -7,12 +7,7 @@ Class {
 { #category : #tests }
 RTCacheTest >> testBasic [
 
-	"temporary disable the test because of an FFI/Athens issue:
-	https://pharo.fogbugz.com/f/cases/19820/Epicea-GrafPort-error-when-open-browse"
-	
-	self fail.
-	
-	"| v es form |
+	| v es form |
 	v := RTView new.
 	es := (RTEllipse new size: 20) elementsOn: (1 to: 20).
 	v addAll: es.
@@ -26,5 +21,5 @@ RTCacheTest >> testBasic [
 	self assert: v elements anyOne trachelShape form class equals: TRPlatform current formClass.
 	
 	form :=  v elements anyOne trachelShape form.
-	self assert: form extent equals: es extent"
+	self assert: form extent equals: es extent
 ]

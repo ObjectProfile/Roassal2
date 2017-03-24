@@ -22,6 +22,12 @@ RTNeoPlugin >> execute [
 	(Smalltalk at: #ConfigurationOfNeoCSV) loadBleedingEdge.
 ]
 
+{ #category : #testing }
+RTNeoPlugin >> isLoaded [
+	^ (RPackageOrganizer default includesPackageNamed: 'Neo-JSON-Core') and: [ RPackageOrganizer default includesPackageNamed: 'Neo-CSV-Core' ]
+ 
+]
+
 { #category : #hooks }
 RTNeoPlugin >> label [
 	^ 'Load the Neo JSON and CSV parser'
