@@ -18,11 +18,6 @@ RTPDFExporterPlugin >> execute [
 	(Smalltalk at: #ConfigurationOfRTPDFExporter) loadDevelopment
 ]
 
-{ #category : #testing }
-RTPDFExporterPlugin >> isLoaded [
-	^ RPackageOrganizer default includesPackageNamed: 'RTPDFExporter'
-]
-
 { #category : #hooks }
 RTPDFExporterPlugin >> label [
 	^ 'Install PDF Exporter'

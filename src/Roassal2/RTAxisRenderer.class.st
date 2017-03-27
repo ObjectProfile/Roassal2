@@ -39,7 +39,7 @@ RTAxisRenderer >> addTicksFrom: toPosition to: fromPosition [
 		normalizePosition: [ :v | v @ v ]
 			min: fromPosition + (angle sin @ angle cos * ticksShift / 2)
 			max: toPosition + (angle sin @ angle cos * ticksShift / 2)
-			using: [ :aPoint | (aPoint x rtValue: config scaleTransformation) @ (aPoint y rtValue: config scaleTransformation) ].
+			using: [ :aPoint | (config scaleTransformation rtValue: aPoint x) @ (config scaleTransformation rtValue: aPoint y) ].
 	ticks rotateByDegrees: angle radiansToDegrees.
 
 	"Ticks should not have any model"

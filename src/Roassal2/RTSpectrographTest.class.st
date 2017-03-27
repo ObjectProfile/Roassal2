@@ -58,3 +58,24 @@ RTSpectrographTest >> testHighlight [
 	
 
 ]
+
+{ #category : #'method timestamp' }
+RTSpectrographTest >> testLivingDays [
+
+	self assert: self class oldestMethod selector equals: #setUp.
+	"self assert: (self class hasAnyMethodProducedAfterDay: self class oldestMethod livingInDays)."
+	self deny: (self class hasAnyMethodProducedAfterDay: self class oldestMethod livingInDays - 1).
+	self assert: (self class gotMethodOnDay: 0).
+	
+]
+
+{ #category : #'method timestamp' }
+RTSpectrographTest >> testTimeStamp [
+
+	| cm |
+	cm := self class >> #foo.
+	self assert: cm notNil.
+	self assert: cm timeStamp equals:  'AlexandreBergel 5/11/2014 00:30'.
+	"self assert: cm date equals: (DateAndTime fromString: '5/11/2014 00:30').
+	self assert: cm dateSinceEpoch equals: ((DateAndTime fromString: '5/11/2014 00:30') - DateAndTime dosEpoch)"
+]

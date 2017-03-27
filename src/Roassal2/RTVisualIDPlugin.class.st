@@ -40,12 +40,6 @@ RTVisualIDPlugin >> execute [
 		load"
 ]
 
-{ #category : #testing }
-RTVisualIDPlugin >> isLoaded [
-	^ RPackageOrganizer default includesPackageNamed: 'VisualIDGlyph'
- 
-]
-
 { #category : #hooks }
 RTVisualIDPlugin >> label [
 	^ 'VisualID shapes'

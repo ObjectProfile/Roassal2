@@ -17,13 +17,7 @@ RTCPPAnalysisPlugin >> execute [
 		load.
 ]
 
-{ #category : #testing }
-RTCPPAnalysisPlugin >> isLoaded [
-	^ RPackageOrganizer default includesPackageNamed: 'Roassal2-Plugins-CProjectVisualizer'
- 
-]
-
 { #category : #hooks }
 RTCPPAnalysisPlugin >> label [
-	^ 'simple C and C++ analyzer'
+	^ 'Load a simple C and C++ analyzer'
 ]
