@@ -17,11 +17,6 @@ RTPythonAnalysisPlugin >> execute [
 		load.
 ]
 
-{ #category : #testing }
-RTPythonAnalysisPlugin >> isLoaded [
-	^ RPackageOrganizer default includesPackageNamed: 'Roassal2-Plugins-PythonAnalyzer'
-]
-
 { #category : #hooks }
 RTPythonAnalysisPlugin >> label [
 	^ 'Load a simple Python analyzer'

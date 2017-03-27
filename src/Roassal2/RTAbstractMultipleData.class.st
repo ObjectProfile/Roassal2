@@ -11,11 +11,6 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #adding }
-RTAbstractMultipleData >> addAll: someElements [
-	self view addAll: someElements
-]
-
 { #category : #'public - metrics' }
 RTAbstractMultipleData >> addMetric: aBlockOrSymbolOrValue [
 	metrics add: aBlockOrSymbolOrValue
@@ -166,9 +161,4 @@ RTAbstractMultipleData >> selectElementsForAddingBarTitle [
 	"Return the collection of principal element for each element group.  
 	This principal element is used to position the title label"
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-RTAbstractMultipleData >> view [
-	^ builder view
 ]

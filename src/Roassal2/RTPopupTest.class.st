@@ -28,12 +28,6 @@ RTPopupTest >> setUp [
 	view := RTView new.
 ]
 
-{ #category : #running }
-RTPopupTest >> tearDown [
-
-	RTPopup resetLastPopup.
-]
-
 { #category : #tests }
 RTPopupTest >> test [
 	| el |

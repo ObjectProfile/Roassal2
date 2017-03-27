@@ -35,5 +35,5 @@ RTKendrickPlugin >> execute [
 
 { #category : #hooks }
 RTKendrickPlugin >> label [
-	^ 'Kendrick (epidemiological platform)'
+	^ 'Load Kendrick'
 ]

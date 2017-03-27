@@ -234,9 +234,8 @@ RTDoubleSlider >> labeled [
 	labelled := true
 ]
 
-{ #category : #obsolete }
+{ #category : #accessing }
 RTDoubleSlider >> labelled [
-	self deprecated: 'Please, use #labeled instead'.
 	self labeled
 ]
 

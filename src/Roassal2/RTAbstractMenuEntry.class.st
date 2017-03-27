@@ -30,12 +30,6 @@ RTAbstractMenuEntry >> execute [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
-RTAbstractMenuEntry >> isEnabled [
-	^ true
-	
-]
-
 { #category : #hooks }
 RTAbstractMenuEntry >> label [
 	"Menu entry"
