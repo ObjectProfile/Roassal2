@@ -658,34 +658,37 @@ var TRMouseWheelEvent = TRShapeEvent.extend({
 var TRInteraction = Class.extend({
 	initOn: function (s){ /*override*/}
 });
-
-var RTDraggable = TRInteraction.extend({
+var RTAbstractDraggable = TRInteraction.extend({
 	groupToDrag: null,
 	ides: null,
-	init: function (arr){
+	init: function(arr){
 		this.ides = arr;
 	},
 	initOn: function (s){
 		var self = this;
-		s.whenDo(TRMouseDragging, function (e){
-			var t = new TRGroup();
+		s.whenDo(TRMouseDragging, function(e){
+			var t = new TRGroup()
 			t.addAll(self.getGroup(s));
+			if(!t.includes(s)) t.add(s);
 			var sc = s.canvas.camera.scale;
-			t.translateBy({x: e.step.x/sc, y: e.step.y/sc});
+			t.translateBy(self.transformDistance({x: e.step.x/sc, y: e.step.y/sc}, s));
 			e.canvas.update();
 		});
 	},
 	getGroup: function(s){
-		if(this.groupToDrag == null) {
-			var g = this.groupToDrag = [];
+		var g = this.groupToDrag;
+		if(g == null){
+			g = this.groupToDrag = [];
 			var ides = this.ides;
 			if(ides == null) return g;
 			for(var k = 0; k<ides.length; k++)
 				g[k] = s.canvas.getShapeById(ides[k]);
 		}
-		return this.groupToDrag;
-	}
+		return g;
+	},
+	transformDistance: function(distAsPoint,s){ return distAsPoint;}
 });
+var RTDraggable = RTAbstractDraggable.extend({});
 
 var RTDraggableView = TRInteraction.extend({
 	initOn: function (canvas){
