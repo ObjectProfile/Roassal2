@@ -5,9 +5,6 @@ A RTDraggable is an interaction that make an element draggable using the mouse.
 Class {
 	#name : #RTDraggable,
 	#superclass : #RTAbstractDraggable,
-	#instVars : [
-		'element'
-	],
 	#category : #'Roassal2-Interactions'
 }
 
@@ -19,21 +16,6 @@ RTDraggable class >> groupToDrag: elements [
 { #category : #vistor }
 RTDraggable >> accept: aVisitor with: args [
 	aVisitor visitDraggableInteraction: self with: args
-]
-
-{ #category : #accessing }
-RTDraggable >> element [
-	^ element
-]
-
-{ #category : #hooks }
-RTDraggable >> initializeElement: el [
-	element ifNil: [ 
-		element := el.
-		super initializeElement: el. ]
-	ifNotNil: [ self class new initializeElement: el "hack for RTHTML5Exporter" ].
-	
-	
 ]
 
 { #category : #hooks }

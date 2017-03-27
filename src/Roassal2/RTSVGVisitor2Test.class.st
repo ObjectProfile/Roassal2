@@ -23,7 +23,7 @@ RTSVGVisitor2Test >> testAddInteractions [
 	element := RTBox new borderColor: Color black; elementOn: 1.
 	element @ RTDraggable.
 	visitor addInteractions: element.
-	self assert: visitor stream contents equals: 'ints: [new RTDraggable(["0", ])], '
+	self assert: visitor stream contents equals: 'ints: [RTDraggable], '
 ]
 
 { #category : #tests }
