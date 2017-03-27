@@ -21,6 +21,12 @@ RTVoronojPlugin >> execute [
 	#ConfigurationOfVoronoiDiagram asClass loadDevelopment
 ]
 
+{ #category : #testing }
+RTVoronojPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'ConfigurationOfVoronoiDiagram'
+ 
+]
+
 { #category : #hooks }
 RTVoronojPlugin >> label [
 	^ 'Voronoj diagrams'

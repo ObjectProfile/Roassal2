@@ -4,12 +4,12 @@ Class {
 	#category : #'Roassal2-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTNetworkLatencyPlugin >> description [
 	^ 'NetworkLatency shows the network latency of 145 cities, from 70 countries'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #hooks }
 RTNetworkLatencyPlugin >> execute [
 	Gofer new
 		smalltalkhubUser: 'merino'
@@ -22,7 +22,13 @@ RTNetworkLatencyPlugin >> execute [
 	(Smalltalk at: #NLVisualise) new open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+RTNetworkLatencyPlugin >> isLoaded [
+	^ RPackageOrganizer default includesPackageNamed: 'ConfigurationOfNetworkLatency'
+ 
+]
+
+{ #category : #hooks }
 RTNetworkLatencyPlugin >> label [
 	^ 'Network Latency application'
 ]
