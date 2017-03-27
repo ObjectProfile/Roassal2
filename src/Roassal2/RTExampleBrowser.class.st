@@ -50,7 +50,7 @@ RTExampleBrowser >> examples [
 { #category : #'instance creation' }
 RTExampleBrowser >> open [
 	| pager |
-	self checkSendingData.
+	self shouldEventBeManaged ifTrue: [ self checkSendingData ]. 
 	pager := GLMPager new.
 	pager title: 'Roassal examples browser'.
 	pager showFirst: [ :a | a list format: #label. ].
@@ -61,4 +61,10 @@ RTExampleBrowser >> open [
 			a dynamic
 				display: [ :x | (GLMCompositePresentation new with: [ :d | each gtInspectorPresentationsIn: d inContext: pager ]) startOn: x ] ].
 	pager openOn: self examples
+]
+
+{ #category : #'instance creation' }
+RTExampleBrowser >> shouldEventBeManaged [
+	"Per default, data about example usage is not collected"
+	^ false
 ]

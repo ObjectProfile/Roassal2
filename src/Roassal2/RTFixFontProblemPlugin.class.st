@@ -10,6 +10,11 @@ RTFixFontProblemPlugin >> description [
 When the problem happens, this plugin should fix it.'
 ]
 
+{ #category : #testing }
+RTFixFontProblemPlugin >> doesItLoadCode [
+	^ false
+]
+
 { #category : #hooks }
 RTFixFontProblemPlugin >> execute [
 
