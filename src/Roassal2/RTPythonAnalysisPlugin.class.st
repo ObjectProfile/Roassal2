@@ -24,5 +24,5 @@ RTPythonAnalysisPlugin >> isLoaded [
 
 { #category : #hooks }
 RTPythonAnalysisPlugin >> label [
-	^ 'Load a simple Python analyzer'
+	^ 'simple Python analyzer'
 ]
