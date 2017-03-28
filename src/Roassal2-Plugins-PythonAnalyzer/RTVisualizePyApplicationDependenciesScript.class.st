@@ -1,7 +1,7 @@
 Class {
 	#name : #RTVisualizePyApplicationDependenciesScript,
 	#superclass : #RTUsefulScript,
-	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
+	#category : #'Roassal2-Plugins-PythonAnalyzer-Scripts'
 }
 
 { #category : #accessing }

@@ -9,7 +9,8 @@ Class {
 		'loc',
 		'importedFiles',
 		'dependentModules',
-		'importedInFiles'
+		'importedInFiles',
+		'functions'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -40,6 +41,11 @@ PyFile >> dependentModules [
 	^ dependentModules
 ]
 
+{ #category : #accessing }
+PyFile >> functions [
+	^ functions
+]
+
 { #category : #initialization }
 PyFile >> getRelevantLinesOf: rawLines [
 	"return the lines that are not within a multi-line comments"
@@ -48,9 +54,13 @@ PyFile >> getRelevantLinesOf: rawLines [
 	lines := OrderedCollection new.
 	rawLines do: [ :l |
 		| trimmed |
-		trimmed := l trimLeft.
-		((trimmed beginsWith: '"""') or: [ (trimmed beginsWith: 'r"""') ]) 
-			ifTrue: [ amIInAMultiLineComment := amIInAMultiLineComment not ].
+		trimmed := l trimBoth.
+		"Check if the line begins with a comment"
+		((trimmed beginsWith: '"""') or: [ (trimmed beginsWith: 'r"""') ])
+			ifTrue: [ 
+				"If this is the case, we need to check if there is a comment terminator in the _same_ line"
+				((trimmed copyFrom: 4 to: trimmed size) endsWith: '"""') not 
+					ifTrue: [ amIInAMultiLineComment := amIInAMultiLineComment not ] ].
 		amIInAMultiLineComment 
 			ifFalse: [ lines add: l ]
 	].
@@ -88,28 +98,63 @@ PyFile >> initialize [
 
 { #category : #initialization }
 PyFile >> initializeFromContentAsString: string [
-	| lines importLines importFrom addModule rawLines |
+	| lines rawLines |
+	"Relevant lines are lines that are not part of a multiline comment"
+	"We manage the import"
 	rawLines := string lines.
 	lines := self getRelevantLinesOf: rawLines.
 	loc := rawLines size.
 	
-	importLines := lines select: [ :l | l beginsWith: 'import ' ].
-	importFrom := lines select: [ :l | l beginsWith: 'from ' ].
-	addModule := [ :st :flag | | s |
-		s := st splitOn: ','.
-		s do: [ :spart | | temp |
-			temp := spart substrings first.
-			(flag or: [ (importedFilenames includes: temp) not ]) 
-				ifTrue: [ importedFilenames add: temp ] ] ].
-	importLines do: [ :l |
-		addModule value: (l copyFrom: 8 to: l size) value: true.
-	 ].
-	importFrom do: [ :l | |index|
-		index := l indexOfSubCollection: 'import' startingAt: 0.
-		addModule value: (l copyFrom: 6 to: index) value: false ].
+	self initializeImportFromLines: lines.
+	self initializeFunctionsFromLines: rawLines
+]
 
+{ #category : #initialization }
+PyFile >> initializeFunctionsFromLines: lines [
+	functions := OrderedCollection new.
+	lines
+		withIndexDo: [ :l :index | 
+			 "we mark the last line of the function"
+					(l size > 0 and: [ l first isLetter ])
+						ifTrue: [ functions notEmpty
+								ifTrue: [ functions last endLine: index ] ].
+			(l beginsWith: 'def ')
+				ifTrue: [ | f |
+					f := PyFunction new
+						name: (l substrings: ' (') second;
+						startLine: index;
+						file: self.
+					functions add: f ] ].
+					
+	"In case there is no marker to end the last function of the file"
+	functions notEmpty ifTrue: [
+		functions last endLine ifNil: [ functions last endLine: lines size + 1] ].
 	
+	"We keep everything as array"
+	functions := functions asArray
+]
 
+{ #category : #initialization }
+PyFile >> initializeImportFromLines: lines [
+	| importFrom addModule importLines |
+	importLines := lines select: [ :l | l beginsWith: 'import ' ].	"We manage the import"
+	importFrom := lines select: [ :l | l beginsWith: 'from ' ].
+	addModule := [ :st :flag | 
+	| s |
+	s := st splitOn: ','.
+	s
+		do: [ :spart | 
+			| temp |
+			temp := spart substrings first.
+			(flag or: [ (importedFilenames includes: temp) not ])
+				ifTrue: [ importedFilenames add: temp ] ] ].
+	importLines
+		do: [ :l | addModule value: (l copyFrom: 8 to: l size) value: true ].
+	importFrom
+		do: [ :l | 
+			| index |
+			index := l indexOfSubCollection: 'import' startingAt: 0.
+			addModule value: (l copyFrom: 6 to: index) value: false ]
 ]
 
 { #category : #testing }
@@ -134,4 +179,14 @@ PyFile >> loc [
 PyFile >> loc: anInteger [
 	"Set the number of lines of code of the file"
 	loc := anInteger
+]
+
+{ #category : #metrics }
+PyFile >> numberOfFunctions [
+	^ self functions size
+]
+
+{ #category : #metrics }
+PyFile >> numberOfLinesOfCode [
+	^ self loc
 ]
