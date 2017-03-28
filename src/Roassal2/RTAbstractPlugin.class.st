@@ -5,19 +5,39 @@ Class {
 }
 
 { #category : #'world menu' }
+RTAbstractPlugin class >> allEnabledAndLoadedPlugins [
+	^ self allEnabledPlugins select: #isLoaded
+]
+
+{ #category : #'world menu' }
+RTAbstractPlugin class >> allEnabledAndNotLoadedPlugins [
+	^ self allEnabledPlugins reject: #isLoaded
+]
+
+{ #category : #'world menu' }
+RTAbstractPlugin class >> allEnabledPlugins [
+	^ self allPlugins select: #isEnabled
+]
+
+{ #category : #'world menu' }
 RTAbstractPlugin class >> allLoadedPluginClasses [
-	^ self allPluginClasses select: [ :c | c new isLoaded ]
+	^ (self allEnabledAndLoadedPlugins sortedAs: #pluginName) collect: #class
 ]
 
 { #category : #'world menu' }
 RTAbstractPlugin class >> allNotLoadedPluginClasses [
-	^ self allPluginClasses select: [ :c | c new isLoaded not ]
+	^ (self allEnabledAndNotLoadedPlugins sortedAs: #pluginName) collect: #class
 ]
 
 { #category : #'world menu' }
 RTAbstractPlugin class >> allPluginClasses [
 	"Return the list of plugin"
 	^ self allSubclasses select: [ :c | c new isEnabled ]
+]
+
+{ #category : #'world menu' }
+RTAbstractPlugin class >> allPlugins [
+	^ self allPluginClasses collect: #new
 ]
 
 { #category : #'world menu' }
