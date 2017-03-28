@@ -10,7 +10,7 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontal [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -21,8 +21,8 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontal [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
-	self assert: d step equals: 6 + 2 / 4.
+	self assert: b axisX step equals: 1.
+	self assert: d step equals: 2.
 ]
 
 { #category : #tests }
@@ -31,7 +31,7 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontalWithNumberOfTicks [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -42,8 +42,8 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontalWithNumberOfTicks [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
-	self assert: d step equals: 6 + 2 / 10.
+	self assert: b axisX step equals: 1.
+	self assert: d step equals: 4 / 5.
 ]
 
 { #category : #tests }
@@ -52,7 +52,7 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontalWithStep [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -63,7 +63,7 @@ RTVerticalTickLineDecoratorTest >> testBasicHorizontalWithStep [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
+	self assert: b axisX step equals: 1.
 	self assert: d step equals: 1.
 ]
 
@@ -73,7 +73,7 @@ RTVerticalTickLineDecoratorTest >> testBasicVertical [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -83,8 +83,8 @@ RTVerticalTickLineDecoratorTest >> testBasicVertical [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
-	self assert: d step equals: 6 + 2 / 4.
+	self assert: b axisX step equals: 1.
+	self assert: d step equals: 1.
 ]
 
 { #category : #tests }
@@ -93,7 +93,7 @@ RTVerticalTickLineDecoratorTest >> testBasicVerticalWithNumberOfTicks [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -104,8 +104,8 @@ RTVerticalTickLineDecoratorTest >> testBasicVerticalWithNumberOfTicks [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
-	self assert: d step equals: 6 + 2 / 10.
+	self assert: b axisX step equals: 1.
+	self assert: d step equals: 2 / 5.
 ]
 
 { #category : #tests }
@@ -114,7 +114,7 @@ RTVerticalTickLineDecoratorTest >> testBasicVerticalWithStep [
 	| b ds d |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
+	ds := RTData new.
 	ds points: #(3 4 6 -2).
 	b add: ds.
 
@@ -125,6 +125,6 @@ RTVerticalTickLineDecoratorTest >> testBasicVerticalWithStep [
 	b build.
 	
 	self assert: b axisX numberOfTicks equals: 4.
-	self assert: b axisX step equals: 6 + 2 / 4.
+	self assert: b axisX step equals: 1.
 	self assert: d step equals: 1.
 ]

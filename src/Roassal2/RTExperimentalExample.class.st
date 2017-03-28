@@ -1206,7 +1206,7 @@ y := RTScale log
 	base: Float e;
 	domain: (#(0 9) collect: #exp);
 	range: (Array with: 0 with: extent y).
-s := RTDataSet new.
+s := RTData new.
 s points: (0 to: 100).
 s x: [ :n | n ].
 s y: [ :n | y scale: ((n * n)) ].
