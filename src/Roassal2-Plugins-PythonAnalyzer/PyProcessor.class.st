@@ -5,27 +5,32 @@ Class {
 	#name : #PyProcessor,
 	#superclass : #PyObject,
 	#instVars : [
-		'files',
-		'directories'
+		'directoriesAsDictionary',
+		'filesAsDictionary'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
 
 { #category : #accessing }
 PyProcessor >> directories [
-	^ directories
+	^ directoriesAsDictionary
 ]
 
 { #category : #accessing }
 PyProcessor >> files [
-	^ files
+	^ filesAsDictionary
+]
+
+{ #category : #accessing }
+PyProcessor >> functions [
+	^ self files values flatCollect: #functions
 ]
 
 { #category : #initialization }
 PyProcessor >> initialize [
 	super initialize.
-	files := Dictionary new.
-	directories := OrderedCollection new
+	filesAsDictionary := Dictionary new.
+	directoriesAsDictionary := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -35,25 +40,30 @@ PyProcessor >> moduleNamed: afilename [
 	(afilename beginsWith: '.') 
 		ifTrue: [ fn := fn copyFrom: 2 to: fn size ].
 	
-	^ files at: fn ifAbsent: [ | r |
+	^ filesAsDictionary at: fn ifAbsent: [ | r |
 		r := nil.
-		files keys do: [ :k | (k endsWith: fn) ifTrue: [ r := files at: k ] ].
+		filesAsDictionary keys do: [ :k | (k endsWith: fn) ifTrue: [ r := filesAsDictionary at: k ] ].
 		r ].
 ]
 
 { #category : #accessing }
 PyProcessor >> modules [
-	^ files values
+	^ filesAsDictionary values
 ]
 
 { #category : #properties }
 PyProcessor >> numberOfFiles [
-	^ files size
+	^ filesAsDictionary size
+]
+
+{ #category : #properties }
+PyProcessor >> numberOfFunctions [
+	^ self functions size
 ]
 
 { #category : #properties }
 PyProcessor >> numberOfModules [
-	^ files size
+	^ filesAsDictionary size
 ]
 
 { #category : #processing }
@@ -67,7 +77,7 @@ PyProcessor >> processFileAsString: fileContentAsString named: filename [
 	f := PyFile new.
 	f filename: filename.
 	f initializeFromContentAsString: fileContentAsString.
-	files at: f baseFilename put: f
+	filesAsDictionary at: f baseFilename put: f
 ]
 
 { #category : #processing }

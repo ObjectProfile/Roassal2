@@ -4,7 +4,7 @@ I am a simple script of the Python code analyzer
 Class {
 	#name : #RTVisualizePyApplicationFolderScript,
 	#superclass : #RTUsefulScript,
-	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
+	#category : #'Roassal2-Plugins-PythonAnalyzer-Scripts'
 }
 
 { #category : #accessing }

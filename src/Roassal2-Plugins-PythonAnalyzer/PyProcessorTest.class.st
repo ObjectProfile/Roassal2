@@ -1087,6 +1087,18 @@ from my world is your world
 	self assert: (m1 fileReference isKindOf: FileReference).
 ]
 
+{ #category : #tests }
+PyProcessorTest >> testBasic07 [
+	| m1 ff relevantLines |
+ff := '
+"""
+from my world is your world
+"""
+'.
+	relevantLines := PyFile new getRelevantLinesOf: ff lines.
+	self assert: relevantLines size equals: 2.
+]
+
 { #category : #'tests - import' }
 PyProcessorTest >> testFromImport [
 	| f1 f2 f3 main foobar schemaMapper |
@@ -1194,6 +1206,26 @@ def foo(n):
 	self assert: main importedFiles second equals: foobar.
 ]
 
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions01 [
+ 
+	| firstFile functions |
+	p processFileAsString: self file05 named: 'tokenization.py'.
+	self assert: p numberOfFunctions equals: 5.
+	firstFile := p files values first.
+	self assert: firstFile numberOfFunctions equals: 5.
+	
+	functions := firstFile functions.
+	self assert: functions equals: p functions.
+	self assert: functions first name equals: 'l'.
+	self assert: functions second name equals: 'score'.
+	self assert: functions last name equals: 'process_tokens'.
+	
+	self assert: functions first numberOfLinesOfCode equals: 7.
+	self assert: functions third numberOfLinesOfCode equals: 9.
+	self assert: functions last numberOfLinesOfCode equals: 62.
+]
+
 { #category : #'tests - import' }
 PyProcessorTest >> testImport [
 	| f1 f2 f3 main foobar schemaMapper |
@@ -1227,4 +1259,35 @@ def foo(n):
 	self assert: main importedFiles size equals: 2.
 	self assert: main importedFiles first equals: schemaMapper.
 	self assert: main importedFiles second equals: foobar.
+]
+
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testNoFunctions [
+ 
+	self assert: p numberOfFunctions equals: 0.
+	
+]
+
+{ #category : #tests }
+PyProcessorTest >> testRelevantLines01 [
+	| ff relevantLines |
+ff := '
+"""from my world is your world"""
+'.
+	relevantLines := PyFile new getRelevantLinesOf: ff lines.
+	self assert: relevantLines size equals: 2.
+	self assert: relevantLines first equals: ''.
+	self assert: relevantLines second equals: '"""from my world is your world"""'.
+]
+
+{ #category : #tests }
+PyProcessorTest >> testRelevantLines02 [
+	| ff relevantLines |
+ff := '
+"""
+from my world is your world
+"""
+'.
+	relevantLines := PyFile new getRelevantLinesOf: ff lines.
+	self assert: relevantLines size equals: 2.
 ]
