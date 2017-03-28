@@ -1226,6 +1226,19 @@ PyProcessorTest >> testFunctions01 [
 	self assert: functions last numberOfLinesOfCode equals: 62.
 ]
 
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions02CallNames [
+ 
+	| firstFile functions firstFunction |
+	p processFileAsString: self file05 named: 'tokenization.py'.
+	firstFile := p files values first.
+	functions := firstFile functions.
+	firstFunction := functions first.
+	
+	self assert: firstFunction name equals: 'l'.
+	self assert: firstFunction callNames asArray equals: (Array with: 'log' with: 'max' with: 'log' with: 'max')
+]
+
 { #category : #'tests - import' }
 PyProcessorTest >> testImport [
 	| f1 f2 f3 main foobar schemaMapper |

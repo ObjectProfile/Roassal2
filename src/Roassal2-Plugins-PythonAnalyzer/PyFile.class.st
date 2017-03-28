@@ -114,22 +114,26 @@ PyFile >> initializeFunctionsFromLines: lines [
 	functions := OrderedCollection new.
 	lines
 		withIndexDo: [ :l :index | 
-			 "we mark the last line of the function"
-					(l size > 0 and: [ l first isLetter ])
-						ifTrue: [ functions notEmpty
-								ifTrue: [ functions last endLine: index ] ].
+			"we mark the last line of the function"
+			(l size > 0 and: [ l first isLetter ])
+				ifTrue: [ functions notEmpty ifTrue: [ functions last endLine: index ] ].
 			(l beginsWith: 'def ')
 				ifTrue: [ | f |
 					f := PyFunction new
 						name: (l substrings: ' (') second;
 						startLine: index;
 						file: self.
-					functions add: f ] ].
-					
+					functions add: f ].
+			
+			"We process the lines, to extract the callNames"
+			(l size > 0 and: [ l first isLetter not ])
+				ifTrue: [ functions notEmpty ifTrue: [ functions last processLine: l ] ].
+	 ].
+
 	"In case there is no marker to end the last function of the file"
-	functions notEmpty ifTrue: [
-		functions last endLine ifNil: [ functions last endLine: lines size + 1] ].
-	
+	functions notEmpty
+		ifTrue: [ functions last endLine ifNil: [ functions last endLine: lines size + 1 ] ].
+
 	"We keep everything as array"
 	functions := functions asArray
 ]
