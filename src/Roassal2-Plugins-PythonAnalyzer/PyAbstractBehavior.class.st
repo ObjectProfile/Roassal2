@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+PyAbstractBehavior >> callNames [
+	^ callNames
+]
+
+{ #category : #accessing }
 PyAbstractBehavior >> endLine [
 	^ endLine
 ]
@@ -55,6 +60,18 @@ PyAbstractBehavior >> name: nameAsString [
 { #category : #metrics }
 PyAbstractBehavior >> numberOfLinesOfCode [
 	^ self loc
+]
+
+{ #category : #processing }
+PyAbstractBehavior >> processLine: line [
+	| trimmed tokens |
+	trimmed := line trimLeft.
+	(trimmed beginsWith: '#') ifTrue: [ ^ self ].
+	tokens := trimmed findTokens: ' (' keep: '('.
+	2 to: tokens size do: [ :i |
+		(((tokens at: i) = '(') and: [ (tokens at: i - 1) first isLetter ])
+			ifTrue: [ callNames add: (tokens at: i -1) ]
+	]
 ]
 
 { #category : #accessing }
