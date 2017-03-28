@@ -6,7 +6,7 @@ Class {
 
 { #category : #hooks }
 RTPythonAnalysisPlugin >> description [
-	^ 'Load a simple model for analyzing C and CPP source code application'
+	^ 'Load a simple model for analyzing Python source code application'
 ]
 
 { #category : #hooks }
