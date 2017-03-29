@@ -136,8 +136,11 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 			s := l substrings: ' ():'.
 			c := PyClass new.
 			c name: s second.
-			c superclassName: s third.
+			s size = 3 
+				ifTrue: [ c superclassName: s third ]
+				ifFalse: [ c superclassName: 'object' ].
 			c startLine: index.
+			c file: self.
 			classes add: c.
 			insideClassDefinition := true
 		].

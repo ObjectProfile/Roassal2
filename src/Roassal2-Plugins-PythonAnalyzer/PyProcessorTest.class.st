@@ -1357,6 +1357,35 @@ PyProcessorTest >> testOOP01 [
 	self assert: secondClass methods first callNames isEmpty
 ]
 
+{ #category : #'tests - oop' }
+PyProcessorTest >> testOOP02NoSuperclass [
+
+	| f |
+	f := '
+class Foo():
+'.
+	p processFileAsString: f named: 'codeOOP.py'.
+	p resolveDependencies.
+	self assert: p numberOfClasses equals: 1.
+	
+	self assert: p classes values first superclassName equals: 'object'
+]
+
+{ #category : #'tests - oop' }
+PyProcessorTest >> testOOP03 [
+
+	| f |
+	f := '
+class Foo():
+'.
+	p processFileAsString: f named: 'codeOOP.py'.
+	p resolveDependencies.
+	self assert: p numberOfClasses equals: 1.
+	
+	self assert: p classes values first superclassName equals: 'object'.
+	self assert: p classes values first file equals: p files values first.
+]
+
 { #category : #tests }
 PyProcessorTest >> testRelevantLines01 [
 	| ff relevantLines |

@@ -117,14 +117,17 @@ PyProcessor >> resolveDependenciesBetweenModules [
 	self files copy do: [ :m | | ext |
 		"Remove import named '.'"
 		(m importedFilenames copyWithout: '.') do: [ :file | 
-			| cleanedName |
+			| cleanedName substrings|
 			"we exclude all the dots from the name"
-			cleanedName := (file substrings: '.') last.
-			ext := self moduleNamed: cleanedName,'.py'.
-			ext ifNotNil: [ 
-				ext addDependentModules: (Array with: m).
-				m addImportedFile: ext.
-				ext addImportedInFile: m ]  ].
+			substrings := file substrings: '.'.
+			"substrings can be empty if file is '..'"
+			substrings ifNotEmpty: [ 
+				cleanedName := substrings last.
+				ext := self moduleNamed: cleanedName,'.py'.
+				ext ifNotNil: [ 
+					ext addDependentModules: (Array with: m).
+					m addImportedFile: ext.
+					ext addImportedInFile: m ] ] ]. 
 		 ]
 ]
 
