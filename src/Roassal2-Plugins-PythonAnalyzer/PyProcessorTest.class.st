@@ -1349,7 +1349,12 @@ PyProcessorTest >> testOOP01 [
 	self assert: secondClass superclass notNil.
 	self assert: secondClass superclass equals: firstClass.
 
+
+	"Check for methods callNames"
+	self assert: firstClass methods first callNames asArray equals: (Array with: 'fibonacci').
+	self assert: firstClass methods second callNames asArray equals: (Array with: 'fibonacci' with: 'fibonacci').	
 	
+	self assert: secondClass methods first callNames isEmpty
 ]
 
 { #category : #tests }
