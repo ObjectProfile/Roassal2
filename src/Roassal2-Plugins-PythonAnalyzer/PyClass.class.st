@@ -3,7 +3,8 @@ Class {
 	#superclass : #PyStructuralElement,
 	#instVars : [
 		'superclassName',
-		'methods'
+		'methods',
+		'superclass'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -16,12 +17,28 @@ PyClass >> addMethod: aMethod [
 { #category : #initialization }
 PyClass >> initialize [
 	super initialize.
-	methods := OrderedCollection new
+	methods := OrderedCollection new.
+	superclass := nil
 ]
 
 { #category : #accessing }
 PyClass >> methods [
 	^ methods
+]
+
+{ #category : #metrics }
+PyClass >> numberOfMethods [
+	^ methods size
+]
+
+{ #category : #accessing }
+PyClass >> superclass [
+	^ superclass
+]
+
+{ #category : #accessing }
+PyClass >> superclass: pyClass [
+	superclass := pyClass
 ]
 
 { #category : #accessing }
