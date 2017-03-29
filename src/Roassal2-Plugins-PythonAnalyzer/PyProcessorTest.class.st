@@ -1318,13 +1318,38 @@ PyProcessorTest >> testOOP00 [
 { #category : #'tests - oop' }
 PyProcessorTest >> testOOP01 [
 
-	| m |
+	| m firstClass secondClass |
 	p processFileAsString: self codeOOP named: 'codeOOP.py'.
+	self assert: p numberOfClasses equals: 2.
+	
 	m := p modules anyOne.
 	self assert: m containsMain.
 	
 	self assert: m numberOfClasses equals: 2.
-	self assert: m numberOfMethods equals: 3
+	self assert: m numberOfMethods equals: 3.
+	
+	firstClass := m classes first.
+	self assert: firstClass name equals: 'Foo'.
+	self assert: firstClass superclassName equals: 'object'.
+	self assert: firstClass numberOfMethods equals: 2.
+	self assert: firstClass methods first name equals: 'getValue'.
+	self assert: firstClass methods second name equals: 'fibonacci'.
+
+	secondClass := m classes second.
+	self assert: secondClass name equals: 'Bar'.
+	self assert: secondClass superclassName equals: 'Foo'.
+	self assert: secondClass numberOfMethods equals: 1.
+	self assert: secondClass methods first name equals: 'foo'.
+	
+	"Check for the superclass link"
+	self assert: firstClass superclass isNil.
+	self assert: secondClass superclass isNil.
+	p resolveDependencies.
+	self assert: firstClass superclass isNil.
+	self assert: secondClass superclass notNil.
+	self assert: secondClass superclass equals: firstClass.
+
+	
 ]
 
 { #category : #tests }

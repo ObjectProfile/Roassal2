@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #accessing }
+PyProcessor >> classes [
+	^ self files flatCollect: #classes
+]
+
+{ #category : #accessing }
 PyProcessor >> directories [
 	^ directoriesAsDictionary
 ]
@@ -51,17 +56,22 @@ PyProcessor >> modules [
 	^ filesAsDictionary values
 ]
 
-{ #category : #properties }
+{ #category : #metrics }
+PyProcessor >> numberOfClasses [
+	^ self classes size
+]
+
+{ #category : #metrics }
 PyProcessor >> numberOfFiles [
 	^ filesAsDictionary size
 ]
 
-{ #category : #properties }
+{ #category : #metrics }
 PyProcessor >> numberOfFunctions [
 	^ self functions size
 ]
 
-{ #category : #properties }
+{ #category : #metrics }
 PyProcessor >> numberOfModules [
 	^ filesAsDictionary size
 ]
@@ -97,7 +107,9 @@ PyProcessor >> processRootFolder: aFileReference [
 
 { #category : #'resolving dependencies' }
 PyProcessor >> resolveDependencies [
-	self resolveDependenciesBetweenModules
+	"Public method"
+	self resolveDependenciesBetweenModules.
+	self resolveDependenciesForClassInheritance.
 ]
 
 { #category : #'resolving dependencies' }
@@ -114,4 +126,15 @@ PyProcessor >> resolveDependenciesBetweenModules [
 				m addImportedFile: ext.
 				ext addImportedInFile: m ]  ].
 		 ]
+]
+
+{ #category : #'resolving dependencies' }
+PyProcessor >> resolveDependenciesForClassInheritance [
+	| d |
+	d := Dictionary new.
+	self classes do: [ :c | d at: c name put: c ].
+	self classes
+		do: [ :c | 
+			(d includesKey: c superclassName)
+				ifTrue: [ c superclass: (d at: c superclassName) ] ]
 ]
