@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 PyProcessor >> classes [
-	^ self files flatCollect: #classes
+	^ self files values flatCollect: #classes
 ]
 
 { #category : #accessing }
