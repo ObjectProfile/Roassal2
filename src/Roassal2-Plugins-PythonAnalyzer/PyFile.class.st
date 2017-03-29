@@ -122,11 +122,13 @@ PyFile >> initializeCheckIfContainsMain: rawLines [
 
 { #category : #initialization }
 PyFile >> initializeClassesAndMethodsFromLines: lines [
+	| insideClassDefinition |
+	insideClassDefinition := false.
 	
 	lines withIndexDo: [ :l :index | 
 		"we mark the last line of the last class"
 		(l size > 0 and: [ l first isLetter ])
-				ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index ] ].
+				ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index ]. insideClassDefinition := false ].
 
 		"We find a class definition"
 		(l beginsWith: 'class ') ifTrue: [ 
@@ -137,22 +139,24 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 			c superclassName: s third.
 			c startLine: index.
 			classes add: c.
+			insideClassDefinition := true
 		].
 	
-		"We find a method definition"
-		(l beginsWith: '    def ') ifTrue: [ 
-			| m |
-			m := PyMethod new
-						name: (l substrings: ' (') second;
-						startLine: index;
-						pythonClass: classes last.
-			classes last addMethod: m
-		].
-	
+		insideClassDefinition ifTrue: [ 
+			"We find a method definition"
+			(l beginsWith: '    def ') ifTrue: [ 
+				| m |
+				m := PyMethod new
+							name: (l substrings: ' (') second;
+							startLine: index;
+							pythonClass: classes last.
+				classes last addMethod: m
+			].
+		
 			"We process the lines, to extract the callNames"
-"			(l size > 0 and: [ l first isLetter not ])
-				ifTrue: [ functions notEmpty ifTrue: [ functions last processLine: l ] ].
-"
+			(((l size > 0 and: [ l first isLetter not ]) and: [ classes notEmpty ]) and: [ (l beginsWith: '    def ') not ])
+				ifTrue: [ classes last methods notEmpty ifTrue: [ classes last methods last processLine: l ] ].
+		]
 	].
 
 	"In case there is no marker to end the last function of the file"
