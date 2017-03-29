@@ -11,6 +11,28 @@ Class {
 }
 
 { #category : #sources }
+PyProcessorTest >> codeOOP [
+^
+'class Foo(object):
+    def getValue(self):
+        return self.fibonacci(10)
+
+    def fibonacci(self, n):
+        if n < 2:
+            return n
+        else:
+            return self.fibonacci(n - 1) + self.fibonacci(n - 2)
+    
+class Bar(Foo):
+    def foo(self):
+        return 42
+
+if __name__ == ''__main__'':
+    print(''Value = %d\n'' % (Foo().getValue()))
+'
+]
+
+{ #category : #sources }
 PyProcessorTest >> file01 [
 	^ '
 import random
@@ -1279,6 +1301,30 @@ PyProcessorTest >> testNoFunctions [
  
 	self assert: p numberOfFunctions equals: 0.
 	
+]
+
+{ #category : #'tests - oop' }
+PyProcessorTest >> testOOP00 [
+
+	| m |
+	p processFileAsString: '' named: 'emptyFile.py'.
+	m := p modules anyOne.
+	self deny: m containsMain.
+	
+	self assert: m numberOfClasses equals: 0.
+	self assert: m numberOfMethods equals: 0
+]
+
+{ #category : #'tests - oop' }
+PyProcessorTest >> testOOP01 [
+
+	| m |
+	p processFileAsString: self codeOOP named: 'codeOOP.py'.
+	m := p modules anyOne.
+	self assert: m containsMain.
+	
+	self assert: m numberOfClasses equals: 2.
+	self assert: m numberOfMethods equals: 3
 ]
 
 { #category : #tests }

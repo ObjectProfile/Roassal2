@@ -10,7 +10,9 @@ Class {
 		'importedFiles',
 		'dependentModules',
 		'importedInFiles',
-		'functions'
+		'functions',
+		'containsMain',
+		'classes'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -34,6 +36,17 @@ PyFile >> addImportedInFile: afile [
 	self assert: [ afile class == self class ].
 	importedInFiles add: afile.
 	importedInFiles removeDuplicates.
+]
+
+{ #category : #accessing }
+PyFile >> classes [
+	^ classes
+]
+
+{ #category : #testing }
+PyFile >> containsMain [
+	"Return true if the file contains a line such as 'if __name__ == '__main__':'"
+	^ containsMain
 ]
 
 { #category : #accessing }
@@ -88,12 +101,67 @@ PyFile >> initialize [
 	importedFilenames := OrderedCollection new.
 	importedFiles := OrderedCollection new.
 	importedInFiles := OrderedCollection new.
-	
+	classes := OrderedCollection new.
+
 	"Should be removed"
 	dependentModules := OrderedCollection new.
 	self filename: 'UNAMED'.
 	self loc: -1.
+	containsMain := false
 	
+]
+
+{ #category : #initialization }
+PyFile >> initializeCheckIfContainsMain: rawLines [
+	"Check for 
+	if __name__ == '__main__':
+	"
+	containsMain := rawLines anySatisfy: [ :l | l endsWith: '''__main__'':' ]
+	
+]
+
+{ #category : #initialization }
+PyFile >> initializeClassesAndMethodsFromLines: lines [
+	
+	lines withIndexDo: [ :l :index | 
+		"we mark the last line of the last class"
+		(l size > 0 and: [ l first isLetter ])
+				ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index ] ].
+
+		"We find a class definition"
+		(l beginsWith: 'class ') ifTrue: [ 
+			| c s |
+			s := l substrings: ' ():'.
+			c := PyClass new.
+			c name: s second.
+			c superclassName: s third.
+			c startLine: index.
+			classes add: c.
+		].
+	
+		"We find a method definition"
+		(l beginsWith: '    def ') ifTrue: [ 
+			| m |
+			m := PyMethod new
+						name: (l substrings: ' (') second;
+						startLine: index;
+						pythonClass: classes last.
+			classes last addMethod: m
+		].
+	
+			"We process the lines, to extract the callNames"
+"			(l size > 0 and: [ l first isLetter not ])
+				ifTrue: [ functions notEmpty ifTrue: [ functions last processLine: l ] ].
+"
+	].
+
+	"In case there is no marker to end the last function of the file"
+	classes notEmpty
+		ifTrue: [ classes last endLine ifNil: [ classes last endLine: lines size + 1 ] ].
+
+	"We keep everything as array"
+	classes := classes asArray
+
 ]
 
 { #category : #initialization }
@@ -106,7 +174,9 @@ PyFile >> initializeFromContentAsString: string [
 	loc := rawLines size.
 	
 	self initializeImportFromLines: lines.
-	self initializeFunctionsFromLines: rawLines
+	self initializeFunctionsFromLines: rawLines.
+	self initializeCheckIfContainsMain: rawLines.
+	self initializeClassesAndMethodsFromLines: rawLines
 ]
 
 { #category : #initialization }
@@ -185,6 +255,16 @@ PyFile >> loc: anInteger [
 	loc := anInteger
 ]
 
+{ #category : #accessing }
+PyFile >> methods [
+	^ self classes flatCollect: #methods
+]
+
+{ #category : #metrics }
+PyFile >> numberOfClasses [
+	^ classes size
+]
+
 { #category : #metrics }
 PyFile >> numberOfFunctions [
 	^ self functions size
@@ -193,4 +273,9 @@ PyFile >> numberOfFunctions [
 { #category : #metrics }
 PyFile >> numberOfLinesOfCode [
 	^ self loc
+]
+
+{ #category : #metrics }
+PyFile >> numberOfMethods [
+	^ self methods size
 ]
