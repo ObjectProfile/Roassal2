@@ -126,9 +126,10 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 	insideClassDefinition := false.
 	
 	lines withIndexDo: [ :l :index | 
-		"we mark the last line of the last class"
-		(l size > 0 and: [ l first isLetter ])
-				ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index ]. insideClassDefinition := false ].
+		insideClassDefinition ifTrue: [ 
+			"we mark the last line of the last class"
+			(l size > 0 and: [ l first isLetter ])
+					ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index - 1 ]. insideClassDefinition := false ] ].
 
 		"We find a class definition"
 		(l beginsWith: 'class ') ifTrue: [ 
