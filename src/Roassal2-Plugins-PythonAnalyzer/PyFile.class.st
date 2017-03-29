@@ -122,45 +122,56 @@ PyFile >> initializeCheckIfContainsMain: rawLines [
 
 { #category : #initialization }
 PyFile >> initializeClassesAndMethodsFromLines: lines [
-	| insideClassDefinition |
+	| insideClassDefinition insideAMultilineComment |
 	insideClassDefinition := false.
+	insideAMultilineComment := false.
 	
 	lines withIndexDo: [ :l :index | 
-		insideClassDefinition ifTrue: [ 
-			"we mark the last line of the last class"
-			(l size > 0 and: [ l first isLetter ])
-					ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index - 1 ]. insideClassDefinition := false ] ].
-
-		"We find a class definition"
-		(l beginsWith: 'class ') ifTrue: [ 
-			| c s |
-			s := l substrings: ' ():'.
-			c := PyClass new.
-			c name: s second.
-			s size = 3 
-				ifTrue: [ c superclassName: s third ]
-				ifFalse: [ c superclassName: 'object' ].
-			c startLine: index.
-			c file: self.
-			classes add: c.
-			insideClassDefinition := true
-		].
-	
-		insideClassDefinition ifTrue: [ 
-			"We find a method definition"
-			(l beginsWith: '    def ') ifTrue: [ 
-				| m |
-				m := PyMethod new
-							name: (l substrings: ' (') second;
-							startLine: index;
-							pythonClass: classes last.
-				classes last addMethod: m
-			].
+						
+		"We found a multiline comment"
+		"We check if this multiline is not actually a single line"
+		((l trimLeft beginsWith: '"""') and: [ (l select: [ :c | c = $" ]) size < 6 ])
+			ifTrue: [  
+				insideAMultilineComment := insideAMultilineComment not ].
 		
-			"We process the lines, to extract the callNames"
-			(((l size > 0 and: [ l first isLetter not ]) and: [ classes notEmpty ]) and: [ (l beginsWith: '    def ') not ])
-				ifTrue: [ classes last methods notEmpty ifTrue: [ classes last methods last processLine: l ] ].
-		]
+		
+		insideAMultilineComment ifFalse: [
+			insideClassDefinition ifTrue: [ 
+				"we mark the last line of the last class"
+				(l size > 0 and: [ l first isLetter ])
+						ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index - 1 ]. insideClassDefinition := false ] ].
+
+			"We find a class definition"
+			(l beginsWith: 'class ') ifTrue: [ 
+				| c s |
+				s := l substrings: ' ():'.
+				c := PyClass new.
+				c name: s second.
+				s size = 3 
+					ifTrue: [ c superclassName: s third ]
+					ifFalse: [ c superclassName: 'object' ].
+				c startLine: index.
+				c file: self.
+				classes add: c.
+				insideClassDefinition := true
+			].
+			
+			insideClassDefinition ifTrue: [ 
+				"We find a method definition"
+				(l beginsWith: '    def ') ifTrue: [ 
+					| m |
+					m := PyMethod new
+								name: (l substrings: ' (') second;
+								startLine: index;
+								pythonClass: classes last.
+					classes last addMethod: m
+				].
+			
+				"We process the lines, to extract the callNames"
+				(((l size > 0 and: [ l first isLetter not ]) and: [ classes notEmpty ]) and: [ (l beginsWith: '    def ') not ])
+					ifTrue: [ classes last methods notEmpty ifTrue: [ classes last methods last processLine: l ] ].
+			]
+		] "Inside a comment"
 	].
 
 	"In case there is no marker to end the last function of the file"
@@ -276,6 +287,11 @@ PyFile >> numberOfClasses [
 { #category : #metrics }
 PyFile >> numberOfFunctions [
 	^ self functions size
+]
+
+{ #category : #metrics }
+PyFile >> numberOfFunctionsAndMethods [
+	^ self numberOfFunctions + self numberOfMethods 
 ]
 
 { #category : #metrics }

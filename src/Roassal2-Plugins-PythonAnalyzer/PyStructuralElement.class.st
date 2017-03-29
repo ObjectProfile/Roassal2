@@ -34,6 +34,7 @@ PyStructuralElement >> file: aPyFile [
 PyStructuralElement >> getSource [
 	| allLines lines |
 	lines := self file getSource lines.
+	lines ifEmpty: [ ^ '' ].
 	allLines := lines copyFrom: self startLine to: (self endLine min: lines size).
 	^ String cr join: allLines
 ]
