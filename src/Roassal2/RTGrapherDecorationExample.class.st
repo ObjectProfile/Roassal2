@@ -344,6 +344,38 @@ D8IH4YcPwgfhhw/CB+GHD4LNHyhras4H+gdeAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTGrapherDecorationExample >> exampleRangeBelowXAxis [
+
+	| b d |
+	b := RTGrapher new.
+	d := RTData new.
+	d points: (1 to: 5).
+	d y: #yourself.
+	b add: d.
+	b addDecorator: (RTRangeBelowXAxis new startValue: 2.5; endValue: 4; label: 'A').
+	b addDecorator: (RTRangeBelowXAxis new startValue: 0; endValue: 2; label: 'B').
+	^ b
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleRangeBelowXAxisIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACi0lEQVR4XuXcyYrCQBRGYd9/
+lb1voeADOG1cOitOiIozQqIL9dregKs23VQSK4nnBxGEMqY+K6lrJeYeD37SlBy/C/gg/PBB
++CD88EH4IPzwQfgg/PBB+CD88EH44YPwQfjhg/BB+OGD8EH44YPwQfjhg/DDB+GD8MMHQYOs
+12vR59lsJvyuTAHIcrkU13VlMBj8ApFnzuczCmoymSQLcr1e5X6/y+12e9vxh8OBP3LSdA7h
+g/BB+CB8ED4IH4QPkjGQoDqED2IZpFqtyvF4DKxDsg4SR11hfYTw6xD+OYQPwgfhg/BB+CB8
+EH7iBtGf3/l1SIpATqeTv+YRVIfs93uh1xVWQfjrIfxzCB+ED8IH4YPwQfgg/PBBACA65dX0
++/1Epr1ZqCusgnQ6HWk2m9Jut/l1CP+QxQfhg/BB+CB8ED4IP3yQbwXZbrd+h7+rQ8Ksh3xj
+XWEVRFcKe70evw7hH7L4IHwQPggfhA/CB+GHD/LNIKvVSjabjQTVIVFAotzjHqXt5XJJpG0s
+IIvFQp7FXGAdklSnYkH4ydA5pNFoiOd5Mp1Ojb41r+uFh8OhvP5LxSSVSsVvY9pWt6tL0rVa
+LdR2W61WqP21BlIul0U/pHasSTv9KUYfxWLRPxzqf6mYtNd2urSs72HSTjuy2+3KbrcLtV29
+3zLM/vIPWeRpr0n0Cvp8Pm9tmqzfaD7IHymVSlIoFKx00nw+F8dx+CD/jZCg67viTr1e9++v
+51fqlt4/ru0mgfZRkNFo9NEdGo/HYvK6aaJOYfkjhD9C+OGD8EH44YPwQfjhg/DDB+GD8MMH
+4YPwwwfhg/DDB+GD8MMH4YcPwgfhhw/CB+GHD8IH4YcPwgfhJ/n8AKGdfbwIxmI1AAAAAElF
+TkSuQmCC'
+]
+
+{ #category : #sources }
 RTGrapherDecorationExample >> exampleUsingLegend [
 
 | clss b lb n ds |

@@ -1,19 +1,16 @@
 "
-RTGrapherExample new installTitle: 'MinAndMaxSetManually' 
+RTGrapherDecorationExample new installTitle: 'RangeBelowXAxis' 
 		code:
 		'
-| b ds |
-b := RTGrapher new.
-ds := RTDataSet new.
-ds points: #(1 2 3).
-b add: ds.
-
-b maxX: 6.
-b minX: -2.
-b maxY: 5.
-
-b build.
-^ b view'
+	| b d |
+	b := RTGrapher new.
+	d := RTData new.
+	d points: (1 to: 5).
+	d y: #yourself.
+	b add: d.
+	b addDecorator: (RTRangeBelowXAxis new startValue: 2.5; endValue: 4; label: ''A'').
+	b addDecorator: (RTRangeBelowXAxis new startValue: 0; endValue: 2; label: ''B'').
+	^ b'
 	
 "
 Class {
