@@ -47,6 +47,7 @@ RTCache >> cacheElements: someElements edges: someEdges [
 
 { #category : #public }
 RTCache >> cacheView: aView [
+	"Public method"
 	self cacheElements: aView elements edges: aView edges
 ]
 
