@@ -16,7 +16,9 @@ Roassal2VW >> blacklist [
 	FileReference >> #gtInspectorCsvIn:.
 	RTTabTable >> #gtInspectorTableIn:.
 	RTExploraBuilderExample >> #exampleCircularList.
-	RTHTML5ExporterExample >> #exportAll }
+	RTHTML5ExporterExample >> #exportAll.
+	RTPopupTest >> #testPopupView.
+	RTPopupTest >> #testPopupView02 }
 ]
 
 { #category : #importing }
@@ -199,7 +201,7 @@ Roassal2VW >> packages [
 	| tags nopkgs |
 	nopkgs := {
 		'Trachel-MorphSpecific'.
-		 'Roassal2-OpenStreetMap'. 'Roassal2-MorphSpecific'. 'Roassal2-Plugins'. 'Roassal2-ExporterVW' }.
+		 'Roassal2-OpenStreetMap'. 'Roassal2-MorphSpecific'. 'Roassal2-Plugins'. 'Roassal2-ExporterVW'. 'Roassal2-MorphSpecific-Menu' }.
 	
 	tags := {'Roassal2'. 'Trachel'} flatCollect: [ :n | | pkg |
 		pkg := RPackageOrganizer default packageNamed: n.
