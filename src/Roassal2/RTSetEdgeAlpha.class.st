@@ -1,23 +1,37 @@
 "
 A RTSetEdgeAlpha is an interaction raises the transparency of the incoming and outgoing edges for a given element when the mouse enter the element.
 
-Instance Variables
-	highAlpha:		<Object>
-	lowAlpha:		<Object>
-
-highAlpha
-	- xxxxx
-
-lowAlpha
-	- xxxxx
-
+-=-=-=-=
+	| v es |
+	v := RTView new.
+	es := RTEllipse new elementsOn: RTShape withAllSubclasses.
+	v addAll: es.
+	RTWeightedCircleLayout new
+		initialRadius: 200;
+		on: es.
+	RTMetricNormalizer new
+		elements: es;
+		normalizeSize: #numberOfMethods
+			min: 10
+			max: 35
+			using: #sqrt;
+		normalizeColor: #numberOfLinesOfCode.
+	RTEdgeBuilder new
+		view: v;
+		objects: RTShape withAllSubclasses;
+		shape: (RTLine new color: Color blue);
+		connectFrom: #yourself toAll: #dependentClasses.
+	es @ RTPopup @ RTSetEdgeAlpha.
+	^ v
+-=-=-=-=
 "
 Class {
 	#name : #RTSetEdgeAlpha,
 	#superclass : #RTInteraction,
 	#instVars : [
 		'highAlpha',
-		'lowAlpha'
+		'lowAlpha',
+		'evaluationBlock'
 	],
 	#category : #'Roassal2-Interactions'
 }
@@ -27,6 +41,7 @@ RTSetEdgeAlpha >> initialize [
 	super initialize.
 	highAlpha := 1.0.
 	lowAlpha := 0.1.
+	evaluationBlock := #connectedEdges
 ]
 
 { #category : #hooks }
@@ -44,9 +59,9 @@ RTSetEdgeAlpha >> initializeElement: element [
 			e signalUpdate ]
 ]
 
-{ #category : #utility }
+{ #category : #initialization }
 RTSetEdgeAlpha >> setAlpha: alpha for: element [
-	element connectedEdges do: [ :e | e trachelShape allColor: (e trachelShape color alpha: alpha) ]
+	(evaluationBlock rtValue: element)  do: [ :e | e trachelShape allColor: (e trachelShape color alpha: alpha) ]
 ]
 
 { #category : #utility }

@@ -105,6 +105,7 @@ RTElement >> height: aValue [
 
 { #category : #accessing }
 RTElement >> incomingEdges [
+	"Return the list of incoming edges from the node"
 	connectedEdges ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e to == self ]
 ]
@@ -157,6 +158,7 @@ RTElement >> nestedElements [
 
 { #category : #accessing }
 RTElement >> outgoingEdges [
+	"Return the list of outgoing edges from the node"
 	connectedEdges ifNil: [ ^ #() ].
 	^ self connectedEdges select: [ :e | e from == self ]
 ]
