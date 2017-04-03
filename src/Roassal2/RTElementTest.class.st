@@ -4,6 +4,12 @@ Class {
 	#category : #'Roassal2-Core-Tests'
 }
 
+{ #category : #running }
+RTElementTest >> tearDown [
+
+	RTAbstractPopup withAllSubclassesDo: [ :c | c resetLastPopup ]
+]
+
 { #category : #tests }
 RTElementTest >> testAddingABoxAndEllipse [
 
