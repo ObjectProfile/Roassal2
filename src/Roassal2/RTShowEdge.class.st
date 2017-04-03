@@ -1,16 +1,17 @@
 "
 RTShowEdge is an interaction that add edges on one particular element when the mouse is above the element. Edges are removed when the mouse leaves the element.
 
-Instance Variables
-	connectToElements:		<Object>
-	shape:		<Object>
+=-=-=-=
+	| v es |
+	v := RTView new.
+	es := ((RTEllipse new size: 30) + RTLabel) elementsOn: (1 to: 20).
+	v addAll: es.
+	RTCircleLayout new initialRadius: 150; on: es.
 
-connectToElements
-	- xxxxx
+	es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
 
-shape
-	- xxxxx
-
+	^ v
+=-=-=-=
 "
 Class {
 	#name : #RTShowEdge,
