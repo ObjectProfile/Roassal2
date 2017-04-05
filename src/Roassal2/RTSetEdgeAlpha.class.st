@@ -40,7 +40,7 @@ Class {
 RTSetEdgeAlpha >> initialize [
 	super initialize.
 	highAlpha := 1.0.
-	lowAlpha := 0.1.
+	lowAlpha := 0.4.
 	evaluationBlock := #connectedEdges
 ]
 
