@@ -10,6 +10,6 @@ SmalltalkCISpec {
   ],
 
   #testing : {
-   #categories: [ 'Roassal2-*' ]
+   #categories: [ 'Roassal2-Tests' ]
     }
 }
