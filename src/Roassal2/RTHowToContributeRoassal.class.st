@@ -10,12 +10,12 @@ Class {
 { #category : #'world menu' }
 RTHowToContributeRoassal class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'How To Contribute')
+	(aBuilder item: #'Make Roassal Better')
 			order: 0.002; 
 			parent: #Roassal;
-			label: 'How To Contribute';
+			label: 'Make Roassal Better';
 			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
-			action: [ self new open ]
+			action: [ self new open. WebBrowser openOn: 'http://www.lulu.com/shop/http://www.lulu.com/shop/alexandre-bergel/agile-visualization/paperback/product-22853677.html' ]
 ]
 
 { #category : #'instance creation' }
