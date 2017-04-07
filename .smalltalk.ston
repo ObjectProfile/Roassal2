@@ -1,0 +1,11 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #configuration : 'Roassal2',
+      #repository : 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/',
+      #load : [ 'default' ],
+      #platforms : [ #pharo ],
+      #version: #development
+    }
+  ]
+}
