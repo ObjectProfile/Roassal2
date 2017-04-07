@@ -12,7 +12,7 @@ SmalltalkCISpec {
   #testing : {
    #categories: [ 'Roassal2-Tests', 'Roassal2-AttachPoint-Tests' ],
    #coverage : {
-         #packages : [ 'Roassal2.*' ],
+         #packages : [ 'Roassal2.*' ]
     }
    }
 }
