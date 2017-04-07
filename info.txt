@@ -1,0 +1,6 @@
+"Extracting the unit tests"
+
+cs := ((((TestCase withAllSubclasses select: [ :c | (c category beginsWith: 'Roassal2') or: [ c category beginsWith: 'Trachel' ] ]) collectAsSet: #category) collect: #asString) collect: #printString )sorted.
+
+', ' join: cs
+
