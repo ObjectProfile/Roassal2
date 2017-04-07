@@ -151,7 +151,7 @@ ConfigurationOfRoassal2 class >> validate [
 	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline10: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -182,7 +182,7 @@ ConfigurationOfRoassal2 >> baseline10: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2')]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline110: spec [
 	<version: '1.10-baseline'>
 
@@ -211,7 +211,7 @@ ConfigurationOfRoassal2 >> baseline110: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline111: spec [
 	<version: '1.11-baseline'>
 
@@ -240,7 +240,7 @@ ConfigurationOfRoassal2 >> baseline111: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline112: spec [
 	<version: '1.12-baseline'>
 
@@ -274,7 +274,7 @@ ConfigurationOfRoassal2 >> baseline112: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline113: spec [
 	<version: '1.13-baseline'>
 
@@ -317,7 +317,7 @@ ConfigurationOfRoassal2 >> baseline113: spec [
 
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline114: spec [
 	<version: '1.14-baseline'>
 	spec
@@ -352,7 +352,7 @@ ConfigurationOfRoassal2 >> baseline114: spec [
 				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ] ]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline115: spec [
 	<version: '1.15-baseline'>
 	spec
@@ -430,6 +430,58 @@ ConfigurationOfRoassal2 >> baseline116: spec [
 ]
 
 { #category : #baselines }
+ConfigurationOfRoassal2 >> baseline117: spec [
+	<version: '1.17-baseline'>
+	spec
+		for: #common
+		do: [ spec blessing: #baseline.
+			spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+			spec
+				project: 'GlamourCore'
+				with: [ spec
+						className: #ConfigurationOfGlamourCore;
+						version: #development;
+						repository: 'http://smalltalkhub.com/mc/Moose/Glamour/main/' ].
+			spec
+				project: 'GTExamples'
+				with: [ spec
+						className: #ConfigurationOfGTExamples;
+						version: #development;
+						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main/' ].
+					
+					
+			spec baseline: 'Geometry' with: [ 
+				spec repository: 'github://peteruhnak/geometry/repository' ].
+
+			spec
+				project: 'Neo-JSON-Core'
+				with: [ spec
+						className: #ConfigurationOfNeoJSON;
+						version: #stable;
+						repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+
+			"Some menu added by Roassal open a webpage"
+			spec
+				project: 'WebBrowser'
+				with: [ spec
+						className: #ConfigurationOfWebBrowser;
+						version: #stable;
+						repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main' ].
+					
+			spec package: 'Athens-SVG' with: [ spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+			spec
+				package: 'Trachel';
+				package: 'Roassal2' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
+				package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GlamourCore' 'GTExamples') ];
+				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ].
+				
+			spec group: 'default' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
+			spec group: 'NoGlamour' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
+			spec group: 'Tests' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
+]
+
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline11: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -461,7 +513,7 @@ ConfigurationOfRoassal2 >> baseline11: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec')]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline12: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -497,7 +549,7 @@ ConfigurationOfRoassal2 >> baseline12: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal') ]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline13: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -537,7 +589,7 @@ ConfigurationOfRoassal2 >> baseline13: spec [
 			group: 'core'    with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'GT-SpotterExtensions-CoreRoassal' 'Neo-JSON-Core') ]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline14: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
 	Name the baseline after the first version it was introduced.
@@ -570,7 +622,7 @@ ConfigurationOfRoassal2 >> baseline14: spec [
 			]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline15: spec [
 	<version: '1.5-baseline'>
 
@@ -612,7 +664,7 @@ ConfigurationOfRoassal2 >> baseline15: spec [
 			]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline16: spec [
 	<version: '1.6-baseline'>
 
@@ -657,7 +709,7 @@ ConfigurationOfRoassal2 >> baseline16: spec [
 						repository: 'http://smalltalkhub.com/mc/Moose/GToolkit/main' ] ]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline17: spec [
 	<version: '1.7-baseline'>
 
@@ -705,7 +757,7 @@ ConfigurationOfRoassal2 >> baseline17: spec [
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main' ] ]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline18: spec [
 	<version: '1.8-baseline'>
 
@@ -756,7 +808,7 @@ ConfigurationOfRoassal2 >> baseline18: spec [
 					]
 ]
 
-{ #category : #baselines }
+{ #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline19: spec [
 	<version: '1.9-baseline'>
 
@@ -828,7 +880,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo6.x' version: '1.44'.
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version10: spec [
 	<version: '1.0' imports: #('1.1-baseline' )>
 
@@ -844,7 +896,7 @@ ConfigurationOfRoassal2 >> version10: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version110: spec [
 	<version: '1.10' imports: #('1.4-baseline' )>
 
@@ -861,7 +913,7 @@ ConfigurationOfRoassal2 >> version110: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version111: spec [
 	<version: '1.11' imports: #('1.5-baseline' )>
 
@@ -882,7 +934,7 @@ ConfigurationOfRoassal2 >> version111: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version112: spec [
 	<version: '1.12' imports: #('1.5-baseline' )>
 
@@ -903,7 +955,7 @@ ConfigurationOfRoassal2 >> version112: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version113: spec [
 	<version: '1.13' imports: #('1.5-baseline' )>
 
@@ -924,7 +976,7 @@ ConfigurationOfRoassal2 >> version113: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version114: spec [
 	<version: '1.14' imports: #('1.6-baseline' )>
 
@@ -945,7 +997,7 @@ ConfigurationOfRoassal2 >> version114: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version115: spec [
 	<version: '1.15' imports: #('1.6-baseline' )>
 
@@ -966,7 +1018,7 @@ ConfigurationOfRoassal2 >> version115: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version116: spec [
 	<version: '1.17' imports: #('1.7-baseline' )>
 
@@ -987,7 +1039,7 @@ ConfigurationOfRoassal2 >> version116: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version117: spec [
 	<version: '1.17' imports: #('1.7-baseline' )>
 
@@ -1008,7 +1060,7 @@ ConfigurationOfRoassal2 >> version117: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version118: spec [
 	<version: '1.18' imports: #('1.7-baseline' )>
 
@@ -1029,7 +1081,7 @@ ConfigurationOfRoassal2 >> version118: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version119: spec [
 	<version: '1.19' imports: #('1.8-baseline' )>
 
@@ -1048,7 +1100,7 @@ ConfigurationOfRoassal2 >> version119: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version11: spec [
 	<version: '1.1' imports: #('1.1-baseline' )>
 
@@ -1063,7 +1115,7 @@ ConfigurationOfRoassal2 >> version11: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version120: spec [
 	<version: '1.20' imports: #('1.9-baseline' )>
 
@@ -1081,7 +1133,7 @@ ConfigurationOfRoassal2 >> version120: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version122: spec [
 	<version: '1.22' imports: #('1.9-baseline' )>
 
@@ -1099,7 +1151,7 @@ ConfigurationOfRoassal2 >> version122: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version123: spec [
 	<version: '1.23' imports: #('1.10-baseline' )>
 
@@ -1118,7 +1170,7 @@ ConfigurationOfRoassal2 >> version123: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version124: spec [
 	<version: '1.24' imports: #('1.10-baseline' )>
 
@@ -1137,7 +1189,7 @@ ConfigurationOfRoassal2 >> version124: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version125: spec [
 	<version: '1.25' imports: #('1.10-baseline' )>
 
@@ -1156,7 +1208,7 @@ ConfigurationOfRoassal2 >> version125: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version126: spec [
 	<version: '1.26' imports: #('1.10-baseline' )>
 
@@ -1175,7 +1227,7 @@ ConfigurationOfRoassal2 >> version126: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version127: spec [
 	<version: '1.27' imports: #('1.11-baseline' )>
 
@@ -1195,7 +1247,7 @@ ConfigurationOfRoassal2 >> version127: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version128: spec [
 	<version: '1.28' imports: #('1.12-baseline' )>
 
@@ -1215,7 +1267,7 @@ ConfigurationOfRoassal2 >> version128: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version129: spec [
 	<version: '1.29' imports: #('1.13-baseline' )>
 
@@ -1235,7 +1287,7 @@ ConfigurationOfRoassal2 >> version129: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version12: spec [
 	<version: '1.2' imports: #('1.1-baseline' )>
 
@@ -1250,7 +1302,7 @@ ConfigurationOfRoassal2 >> version12: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version130: spec [
 	<version: '1.30' imports: #('1.13-baseline' )>
 
@@ -1270,7 +1322,7 @@ ConfigurationOfRoassal2 >> version130: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version131: spec [
 	<version: '1.31' imports: #('1.13-baseline' )>
 
@@ -1290,7 +1342,7 @@ ConfigurationOfRoassal2 >> version131: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version132: spec [
 	<version: '1.32' imports: #('1.13-baseline' )>
 
@@ -1310,7 +1362,7 @@ ConfigurationOfRoassal2 >> version132: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version133: spec [
 	<version: '1.33' imports: #('1.13-baseline' )>
 
@@ -1330,7 +1382,7 @@ ConfigurationOfRoassal2 >> version133: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version134: spec [
 	<version: '1.34' imports: #('1.13-baseline' )>
 
@@ -1350,7 +1402,7 @@ ConfigurationOfRoassal2 >> version134: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version135: spec [
 	<version: '1.35' imports: #('1.13-baseline' )>
 
@@ -1370,7 +1422,7 @@ ConfigurationOfRoassal2 >> version135: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version136: spec [
 	<version: '1.36' imports: #('1.13-baseline' )>
 
@@ -1390,7 +1442,7 @@ ConfigurationOfRoassal2 >> version136: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version137: spec [
 	<version: '1.37' imports: #('1.13-baseline' )>
 
@@ -1410,7 +1462,7 @@ ConfigurationOfRoassal2 >> version137: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version138: spec [
 	<version: '1.38' imports: #('1.13-baseline' )>
 
@@ -1430,7 +1482,7 @@ ConfigurationOfRoassal2 >> version138: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version139: spec [
 	<version: '1.39' imports: #('1.13-baseline' )>
 
@@ -1450,7 +1502,7 @@ ConfigurationOfRoassal2 >> version139: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version13: spec [
 	<version: '1.3' imports: #('1.1-baseline' )>
 
@@ -1465,7 +1517,7 @@ ConfigurationOfRoassal2 >> version13: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version140: spec [
 	<version: '1.40' imports: #('1.15-baseline' )>
 
@@ -1485,7 +1537,7 @@ ConfigurationOfRoassal2 >> version140: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version141: spec [
 	<version: '1.41' imports: #('1.15-baseline' )>
 
@@ -1505,7 +1557,7 @@ ConfigurationOfRoassal2 >> version141: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version142: spec [
 	<version: '1.42' imports: #('1.15-baseline' )>
 
@@ -1525,7 +1577,7 @@ ConfigurationOfRoassal2 >> version142: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version143: spec [
 	<version: '1.43' imports: #('1.15-baseline' )>
 
@@ -1566,6 +1618,26 @@ ConfigurationOfRoassal2 >> version144: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfRoassal2 >> version145: spec [
+	<version: '1.45' imports: #('1.16-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '04/07/2017'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-akevalion.409';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1575';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-akevalion.48';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version14: spec [
 	<version: '1.4' imports: #('1.1-baseline' )>
 
@@ -1580,7 +1652,7 @@ ConfigurationOfRoassal2 >> version14: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version151: spec [
 	<version: '1.5.1' imports: #('1.1-baseline' )>
 
@@ -1595,7 +1667,7 @@ ConfigurationOfRoassal2 >> version151: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version152: spec [
 	<version: '1.5.2' imports: #('1.1-baseline' )>
 
@@ -1610,7 +1682,7 @@ ConfigurationOfRoassal2 >> version152: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version15: spec [
 	<version: '1.5' imports: #('1.1-baseline' )>
 
@@ -1625,7 +1697,7 @@ ConfigurationOfRoassal2 >> version15: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version16: spec [
 	<version: '1.6' imports: #('1.1-baseline' )>
 
@@ -1640,7 +1712,7 @@ ConfigurationOfRoassal2 >> version16: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version17: spec [
 	<version: '1.7' imports: #('1.1-baseline' )>
 
@@ -1655,7 +1727,7 @@ ConfigurationOfRoassal2 >> version17: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version18: spec [
 	<version: '1.8' imports: #('1.2-baseline' )>
 
@@ -1670,7 +1742,7 @@ ConfigurationOfRoassal2 >> version18: spec [
 
 ]
 
-{ #category : #versions }
+{ #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version19: spec [
 	<version: '1.9' imports: #('1.4-baseline' )>
 
