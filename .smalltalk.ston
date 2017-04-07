@@ -10,6 +10,6 @@ SmalltalkCISpec {
   ],
 
   #testing : {
-   #categories : [ 'Roassal2-AttachPoint-Tests', 'Roassal2-Builder-AnimatedScatterPlot' ]
+   #categories : [ 'Roassal2-AttachPoint-Tests', 'Roassal2-Builder-AnimatedScatterPlot', 'Roassal2-Builder-ApplicationMatrix', 'Roassal2-Builder-CircularMap', 'Roassal2-Builder-Common', 'Roassal2-Builder-Composer', 'Roassal2-Builder-DSM' ]
    }
 }
