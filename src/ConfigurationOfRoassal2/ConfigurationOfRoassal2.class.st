@@ -853,7 +853,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	spec for: #'common' version: '1.4-baseline'.
 	spec for: #'pharo4.x' version: '1.5-baseline'.
 	spec for: #'pharo5.x' version: '1.13-baseline'.
-	spec for: #'pharo6.x' version: '1.16-baseline'.
+	spec for: #'pharo6.x' version: '1.17-baseline'.
 ]
 
 { #category : #accessing }
@@ -876,8 +876,8 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'common' version: '1.11'.
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
-	spec for: #'pharo5.x' version: '1.44'.
-	spec for: #'pharo6.x' version: '1.44'.
+	spec for: #'pharo5.x' version: '1.45'.
+	spec for: #'pharo6.x' version: '1.45'.
 ]
 
 { #category : #'old-versions' }
@@ -1619,7 +1619,7 @@ ConfigurationOfRoassal2 >> version144: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version145: spec [
-	<version: '1.45' imports: #('1.16-baseline' )>
+	<version: '1.45' imports: #('1.17-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
