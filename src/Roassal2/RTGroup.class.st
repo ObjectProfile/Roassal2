@@ -97,6 +97,12 @@ RTGroup >> elements [
 	^ self select: [ :o | o class == RTElement ]
 ]
 
+{ #category : #accessing }
+RTGroup >> elementsFromModel: anObject [
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	^ self select: [ :el | el model = anObject ]
+]
+
 { #category : #public }
 RTGroup >> elementsFromModels: objects [
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
