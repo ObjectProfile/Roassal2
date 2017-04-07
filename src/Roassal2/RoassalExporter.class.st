@@ -331,7 +331,7 @@ RoassalExporter >> packageNameForClass: aClass [
 RoassalExporter >> packageNameForMethod: aMethodReference [
 	^ (self includesClass: aMethodReference realClass)
 		ifTrue: [self packageNameForClass: aMethodReference realClass]
-		ifFalse: [package externalName, '-Extensions']
+		ifFalse: [ namespace,'-Extensions']
 ]
 
 { #category : #accesing }
