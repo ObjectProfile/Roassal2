@@ -128,6 +128,11 @@ RTLayout >> initialize [
 
 ]
 
+{ #category : #testing }
+RTLayout >> isEdgeDrivenLayout [
+	^ false
+]
+
 { #category : #utils }
 RTLayout >> layerOf: aNode [
 	^ aNode attributes at: #layout

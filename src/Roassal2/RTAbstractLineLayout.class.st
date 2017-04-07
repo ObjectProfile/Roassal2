@@ -195,11 +195,6 @@ RTAbstractLineLayout >> initialize [
 	verticallyStretchable := false
 ]
 
-{ #category : #testing }
-RTAbstractLineLayout >> isLineLayout [
-	^ true
-]
-
 { #category : #hook }
 RTAbstractLineLayout >> movePointer: pointer accordingToFigure: aNodeFigure [
 	

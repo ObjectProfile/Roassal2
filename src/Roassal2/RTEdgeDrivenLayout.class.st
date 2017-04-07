@@ -173,8 +173,8 @@ RTEdgeDrivenLayout >> initialize [
 ]
 
 { #category : #testing }
-RTEdgeDrivenLayout >> isLineLayout [
-	^ false
+RTEdgeDrivenLayout >> isEdgeDrivenLayout [
+	^ true
 ]
 
 { #category : #accessing }
