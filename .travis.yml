@@ -1,7 +1,6 @@
 language: smalltalk
 
 os:
-  - linux
   - osx
 
 smalltalk:
