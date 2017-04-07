@@ -8,6 +8,7 @@ SmalltalkCISpec {
       #version: #development
     }
   ],
+
   #testing : {
    #categories: [ 'Roassal2-*' ]
     }
