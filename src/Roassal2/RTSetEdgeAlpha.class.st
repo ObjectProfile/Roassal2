@@ -40,7 +40,7 @@ Class {
 RTSetEdgeAlpha >> initialize [
 	super initialize.
 	highAlpha := 1.0.
-	lowAlpha := 0.4.
+	lowAlpha := 0.1.
 	evaluationBlock := #connectedEdges
 ]
 
@@ -57,6 +57,16 @@ RTSetEdgeAlpha >> initializeElement: element [
 		do: [ :e | 
 			self setLowAlphaFor: element.
 			e signalUpdate ]
+]
+
+{ #category : #'public - setting' }
+RTSetEdgeAlpha >> onlyIncomingEdges [
+	evaluationBlock := #incomingEdges
+]
+
+{ #category : #'public - setting' }
+RTSetEdgeAlpha >> onlyOutgoingEdges [
+	evaluationBlock := #outgoingEdges
 ]
 
 { #category : #initialization }
