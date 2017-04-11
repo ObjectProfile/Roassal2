@@ -132,7 +132,8 @@ Qfx8ED8fxAfx80F8ED8fxAfx80F8ED8fxM8H8UH8fBAfxM8H8UH8fBAfxM8H8fNBfBA/H8QH
 
 { #category : #sources }
 RTExploraBuilderExample >> exampleFileSystem [
-| builder |
+	<noTest>
+	| builder |
 	builder := RTExploraBuilder new.
 	builder shape circle size: 10;
 		if: [ :x | x isFile ] fillColor: (Color yellow alpha: 0.8);
@@ -278,6 +279,7 @@ RTExploraBuilderExample >> exploreClassHierarchy3 [
 
 { #category : #basic }
 RTExploraBuilderExample >> exploreFileSystem [
+	<noTest>
 	"
 	self new exploreFileSystem
 	"
