@@ -89,7 +89,11 @@ RTGroup >> edges [
 { #category : #public }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ self detect: [ :el | el model == anObject ] ifNone: [ nil ]
+	
+	"We have this line because of a bug of the implementation of CompiledMethod>>#="
+	(anObject class == CompiledMethod) ifTrue: [ ^ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ].
+
+	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -100,7 +104,10 @@ RTGroup >> elements [
 { #category : #accessing }
 RTGroup >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ self select: [ :el | el model == anObject ]
+	
+	"We have this line because of a bug of the implementation of CompiledMethod>>#="
+	(anObject class == CompiledMethod) ifTrue: [ ^ self select: [ :el | el model == anObject ] ].
+	^ self select: [ :el | el model = anObject ]
 ]
 
 { #category : #public }
@@ -110,8 +117,8 @@ RTGroup >> elementsFromModels: objects [
 	self assert: [ objects isCollection ] description: 'Provide a set of elements instead of one single element'. 
 	answer := RTGroup new.
 	objects do: [ :o |
-		t := self elementFromModel: o.
-		t notNil ifTrue: [ answer add: t ] ].
+		t := self elementsFromModel: o.
+		t notNil ifTrue: [ answer addAll: t ] ].
 	^ answer
 ]
 
