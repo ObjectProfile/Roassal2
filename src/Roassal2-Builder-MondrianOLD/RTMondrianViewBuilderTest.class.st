@@ -9,7 +9,7 @@ Class {
 
 { #category : #basic }
 RTMondrianViewBuilderTest >> setUp [
-
+	super setUp.
 	builder := RTMondrianViewBuilder new
 ]
 
