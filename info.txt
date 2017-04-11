@@ -4,3 +4,6 @@ cs := ((((TestCase withAllSubclasses select: [ :c | (c category beginsWith: 'Roa
 
 ', ' join: cs
 
+
+
+We exclude GT and 'Roassal2-ExporterVW', 
