@@ -174,7 +174,7 @@ RTView >> cleanAll [
 { #category : #'accessing-computed' }
 RTView >> edgeFromModel: anObject [
 	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ edges detect: [ :edge | edge model == anObject ] ifNone: [ nil ]
+	^ edges detect: [ :edge | edge model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -191,7 +191,7 @@ RTView >> elementFromModel: anObject [
 	:: Object -> RTElement
 	"
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements detect: [ :el | el model == anObject ] ifNone: [ nil ]
+	^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -205,7 +205,7 @@ RTView >> elements [
 { #category : #'accessing-computed' }
 RTView >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements select: [ :el | el model == anObject ]
+	^ elements select: [ :el | el model = anObject ]
 ]
 
 { #category : #'accessing-computed' }
