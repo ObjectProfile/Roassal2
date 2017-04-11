@@ -89,7 +89,7 @@ RTGroup >> edges [
 { #category : #public }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ self detect: [ :el | el model == anObject ] ifNone: [ nil ]
+	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -100,7 +100,7 @@ RTGroup >> elements [
 { #category : #accessing }
 RTGroup >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ self select: [ :el | el model == anObject ]
+	^ self select: [ :el | el model = anObject ]
 ]
 
 { #category : #public }
