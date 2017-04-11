@@ -2515,12 +2515,12 @@ SUVORK5CYII='
 
 { #category : #sources }
 RTMondrianExample >> exampleLegendInPopup [
-	| view |
+	| b |
 
-	view := RTMondrianViewBuilder new.
-	view interaction noInteractions.
+	b := RTMondrian new.
+	b interaction noInteractions.
 
-	view interaction popup group: [ :group :el |
+	b interaction popup group: [ :group :el |
 	
 		| background elements cls legend1 legend2 | 
 		elements := RTGroup new.
@@ -2556,11 +2556,11 @@ RTMondrianExample >> exampleLegendInPopup [
 		group addAll: legend2.
 		group addAll: elements ].
 
-	view shape rectangle size: #yourself.
-	view nodes: (1 to:50).
-	view gridLayout.
+	b shape rectangle size: #yourself.
+	b nodes: (1 to:50).
+	b layout grid.
 	
-	^ view view
+	^ b view
 ]
 
 { #category : #icons }
