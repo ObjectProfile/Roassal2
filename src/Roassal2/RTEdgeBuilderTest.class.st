@@ -11,7 +11,7 @@ Class {
 
 { #category : #running }
 RTEdgeBuilderTest >> setUp [
-
+	super setUp.
 	view := RTView new.
 	elements := RTBox elementsOn: (1 to: 10).
 	view addAll: elements. 

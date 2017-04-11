@@ -11,6 +11,7 @@ Class {
 
 { #category : #running }
 RTPNGExporterTest >> setUp [
+	super setUp.
 	emptyExporter := RTPNGExporter new.
 	
 	view := RTView new.

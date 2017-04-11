@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTDoubleScrollBarTest >> setUp [
+	super setUp.
 	view := RTView new
 ]
 

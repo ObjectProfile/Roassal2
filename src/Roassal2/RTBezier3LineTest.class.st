@@ -3,7 +3,7 @@ A RTBezier3LineTest is a test class for testing the behavior of RTBezier3Line
 "
 Class {
 	#name : #RTBezier3LineTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-Tests'
 }
 

@@ -10,7 +10,7 @@ builder
 "
 Class {
 	#name : #RTExploraBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'builder'
 	],

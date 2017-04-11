@@ -3,7 +3,7 @@ A RTLabelGeneratorTest is a test class for testing the behavior of RTLabelGenera
 "
 Class {
 	#name : #RTLabelGeneratorTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'nice',
 		'lg'

@@ -3,7 +3,7 @@ A RTDynamicEqualizerGrapherTest is a test class for testing the behavior of RTDy
 "
 Class {
 	#name : #RTDynamicEqualizerGrapherTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'b'
 	],

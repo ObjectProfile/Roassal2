@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTAlignmentTest >> setUp [
+	super setUp.
 	align := RTAlignment new.
 ]
 

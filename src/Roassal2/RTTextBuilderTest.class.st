@@ -46,6 +46,7 @@ RTTextBuilderTest >> fixmeTestWordHighlight [
 
 { #category : #running }
 RTTextBuilderTest >> setUp [
+	super setUp.
 	builder := RTTextBuilder new
 ]
 

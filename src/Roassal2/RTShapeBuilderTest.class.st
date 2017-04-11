@@ -10,7 +10,7 @@ Class {
 
 { #category : #running }
 RTShapeBuilderTest >> setUp [
-
+	super setUp.
 	builder := RTShapeBuilder new
 ]
 

@@ -3,7 +3,7 @@ I am a simple test class for RTSVGVisitor2
 "
 Class {
 	#name : #RTSVGVisitor2Test,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'visitor'
 	],

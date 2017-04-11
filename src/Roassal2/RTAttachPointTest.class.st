@@ -11,9 +11,9 @@ Class {
 	#category : #'Roassal2-Core-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RTAttachPointTest >> setUp [
-	
+	super setUp.
 	view := RTView new.
 	el1 := RTBox new size: 30; elementOn: 1.
 	el2 := RTBox new size: 30; elementOn: 2.
@@ -54,7 +54,7 @@ RTAttachPointTest >> testContinuousRectangleAttachPoint [
 					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTAttachPointTest >> testHorizontalAttachPoint [
 	shape withHorizontalAttachPoint.
 	self 
@@ -67,7 +67,7 @@ RTAttachPointTest >> testHorizontalAttachPoint [
 					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTAttachPointTest >> testShorterDistancePoint1 [
 	shape withShorterDistanceAttachPoint.
 	"el1 and el2 are on the same horizontal line. el1 is on the left of el2"
@@ -81,7 +81,7 @@ RTAttachPointTest >> testShorterDistancePoint1 [
 						+ (0 @ (el2 encompassingRectangle extent y / 2)))).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTAttachPointTest >> testShorterDistancePoint2 [
 	| p |
 	shape withShorterDistanceAttachPoint.
@@ -99,7 +99,7 @@ RTAttachPointTest >> testShorterDistancePoint2 [
 					+ (0 @ (el2 encompassingRectangle extent y / 2)))).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTAttachPointTest >> testShorterDistancePoint3 [
 	| p |
 	shape withShorterDistanceAttachPoint.
@@ -118,7 +118,7 @@ RTAttachPointTest >> testShorterDistancePoint3 [
 							@ el2 encompassingRectangle width))).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTAttachPointTest >> testVerticalAttachPoint [
 	shape withVerticallAttachPoint.
 	self 

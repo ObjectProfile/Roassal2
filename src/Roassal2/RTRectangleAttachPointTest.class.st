@@ -16,6 +16,7 @@ Class {
 
 { #category : #running }
 RTRectangleAttachPointTest >> setUp [
+	super setUp.
 	"| shape |
 	true ifTrue: [ ^ self skip ].
 	shape := RTBox new size: 20.

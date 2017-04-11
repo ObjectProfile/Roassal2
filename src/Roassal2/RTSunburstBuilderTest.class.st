@@ -3,7 +3,7 @@ A RTSunburstBuilderTest is a test class for testing the behavior of RTSunburstBu
 "
 Class {
 	#name : #RTSunburstBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-Tests'
 }
 
