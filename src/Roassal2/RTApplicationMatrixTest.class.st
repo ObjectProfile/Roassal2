@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTApplicationMatrixTest >> setUp [
+	super setUp.
 	b := RTApplicationMatrix new.
 ]
 

@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTAxisConfigurationTest >> setUp [
+	super setUp.
 	config := RTAxisConfiguration new
 ]
 

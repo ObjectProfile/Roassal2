@@ -1,6 +1,6 @@
 Class {
 	#name : #RTSliderTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'slider'
 	],
@@ -9,6 +9,7 @@ Class {
 
 { #category : #initialization }
 RTSliderTest >> setUp [
+	super setUp.
 	slider := RTSlider new
 ]
 

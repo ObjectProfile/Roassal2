@@ -3,7 +3,7 @@ A DCRTAbstractLineDecorationTest is a test class for testing the behavior of DCR
 "
 Class {
 	#name : #RTAbstractLineDecorationTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'from',
 		'to'
@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 RTAbstractLineDecorationTest >> setUp [
+	super setUp.
 	(from := RTBox element) translateTo: 0 @ 0.
 	(to := RTBox element) translateTo: 100 @ 0
 ]

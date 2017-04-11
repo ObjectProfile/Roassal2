@@ -3,7 +3,7 @@ A RTShowLabelTest is a test class for testing the behavior of RTShowLabel
 "
 Class {
 	#name : #RTShowLabelTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#instVars : [
 		'box',
 		'view'

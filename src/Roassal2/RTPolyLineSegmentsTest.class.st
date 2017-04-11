@@ -1,6 +1,6 @@
 Class {
 	#name : #RTPolyLineSegmentsTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-Tests'
 }
 

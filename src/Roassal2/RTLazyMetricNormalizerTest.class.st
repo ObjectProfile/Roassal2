@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTLazyMetricNormalizerTest >> setUp [
+	super setUp.
 	n := RTLazyMetricNormalizer new.
 ]
 

@@ -32,3 +32,9 @@ exporter fileOutAsString
 
 "
 ]
+
+{ #category : #initialization }
+RTTest >> setUp [
+	Transcript show: self class name asString, '>>'.
+	Transcript show: testSelector asString; cr
+]

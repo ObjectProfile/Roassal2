@@ -3,7 +3,7 @@ A RTTimeLineSetTest is a test class for testing the behavior of RTTimeLineSet
 "
 Class {
 	#name : #RTTimelineSetTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-Builder-Timeline-Tests'
 }
 

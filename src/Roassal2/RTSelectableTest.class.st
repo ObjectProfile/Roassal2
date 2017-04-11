@@ -12,6 +12,7 @@ Class {
 { #category : #running }
 RTSelectableTest >> setUp [
 	| b |
+	super setUp.
 	b := RTMondrian new.
 	b nodes: Collection withAllSubclasses.
 	b layout flow.

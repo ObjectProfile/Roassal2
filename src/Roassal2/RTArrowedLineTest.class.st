@@ -3,7 +3,7 @@ A RTArrowedLineTest is a test class for testing the behavior of RTArrowedLine
 "
 Class {
 	#name : #RTArrowedLineTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-Tests'
 }
 

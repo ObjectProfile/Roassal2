@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTMapBuilderTest >> setUp [
+	super setUp.
 	builder := RTMapBuilder new.
 ]
 

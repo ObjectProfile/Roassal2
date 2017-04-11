@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RTLayoutBuilderTest >> setUp [
+	super setUp.
 	builder := RTLayoutBuilder new
 ]
 

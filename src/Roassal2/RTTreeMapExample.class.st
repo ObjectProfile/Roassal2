@@ -112,6 +112,7 @@ zWoI7KMAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTTreeMapExample >> exampleFileSystem [
+<noTest>
 | b color |
 b := RTTreeMapBuilder new.
 color := RTScale linear 
