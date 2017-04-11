@@ -608,7 +608,7 @@ vA9IjDlEvHaTdVbCr43wPiCRBsQ3mUFFBXr2RGlN8/E+IG6gbNxY5r4kzPvfFu19QLx/eR8Q
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleFileSystem [
-	<gtExample>
+	<noTest>
 
 	| b c1 c2 |
 	b := RTSunburstBuilder new.
@@ -632,7 +632,7 @@ RTSunburstBuilderExamples >> exampleFileSystem [
 
 { #category : #sources }
 RTSunburstBuilderExamples >> exampleFileSystem2 [
-	<gtExample>
+	<noTest>
 	<iconSelectorBase64: #exampleFileSystem2Icon>
 	
 	| b c1 c2 |
