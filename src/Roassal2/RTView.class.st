@@ -174,7 +174,7 @@ RTView >> cleanAll [
 { #category : #'accessing-computed' }
 RTView >> edgeFromModel: anObject [
 	"Return an edge that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ edges detect: [ :edge | edge model == anObject ] ifNone: [ nil ]
+	^ edges detect: [ :edge | edge model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -191,7 +191,8 @@ RTView >> elementFromModel: anObject [
 	:: Object -> RTElement
 	"
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements detect: [ :el | el model == anObject ] ifNone: [ nil ]
+	^ elements elementFromModel: anObject
+	"^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]"
 ]
 
 { #category : #accessing }
@@ -205,24 +206,15 @@ RTView >> elements [
 { #category : #'accessing-computed' }
 RTView >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	^ elements select: [ :el | el model == anObject ]
+	^ elements elementsFromModel: anObject
+	"^ elements select: [ :el | el model = anObject ]"
 ]
 
 { #category : #'accessing-computed' }
 RTView >> elementsFromModels: objects [
-	"
-	:: Collection -> RTGroup
-	var answer : RTGroup
-	var t : Object
-	var o : Object
-	"
 	"Return elements that corresponds to the objects provided as parameter. If none is found, then return an empty collection"
-	| answer t |
-	answer := RTGroup new.
-	objects do: [ :o |
-		t := self elementsFromModel: o.
-		t notNil ifTrue: [ answer addAll: t ] ].
-	^ answer
+	^ elements elementsFromModels: objects
+
 ]
 
 { #category : #initialization }
@@ -234,8 +226,8 @@ RTView >> initialize [
 
 { #category : #initialization }
 RTView >> initializeContent [
-	elements := OrderedCollection new.
-	edges := OrderedCollection new
+	elements := RTGroup new.
+	edges := RTGroup new
 ]
 
 { #category : #testing }
