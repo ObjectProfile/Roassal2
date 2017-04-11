@@ -38,7 +38,7 @@ RTExampleSelection class >> gtExampleFlags3 [
 	^ (RTComposedShapeExample >> #exampleFlags) gtExample
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'inspector extensions' }
 RTExampleSelection >> gtDebuggerSourceIn: composite [
 	"Cancel the method"
 	<gtDebuggerPresentationOrder: 1>
@@ -59,6 +59,17 @@ RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 		
 ]
 
+{ #category : #'inspector extensions' }
+RTExampleSelection >> gtInspectorMetaIn: composite [
+	"Cancel the method"
+	<gtDebuggerPresentationOrder: 1>
+]
+
+{ #category : #'inspector extensions' }
+RTExampleSelection >> gtInspectorMethodIn: composite [
+	"Cancelling method"
+]
+
 { #category : #ui }
 RTExampleSelection >> gtInspectorRoassalViewIn: composite [
 	<gtInspectorPresentationOrder: -10>
@@ -72,13 +83,19 @@ RTExampleSelection >> gtInspectorRoassalViewIn: composite [
 		
 ]
 
+{ #category : #'inspector extensions' }
+RTExampleSelection >> gtInspectorSourceIn: composite [
+	"Cancel the method"
+	<gtDebuggerPresentationOrder: 1>
+]
+
 { #category : #ui }
 RTExampleSelection >> gtInspectorViewIn: composite [
 	self deprecated: 'Please use #gtInspectorRoassalViewIn: instead'.
 	^ self gtInspectorRoassalViewIn: composite
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'inspector extensions' }
 RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	<spotterPreview: 10>
 	(self icon notNil or: [ self provider class canPerform: (self selector, 'Icon') asSymbol ])
@@ -90,13 +107,18 @@ RTExampleSelection >> gtSpotterPreviewIconIn: aComposite [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RTExampleSelection >> matchesQuery: aSetOfNames [
 	| sourceCode |
 	
 	sourceCode := self method sourceCode asLowercase.
 	^ aSetOfNames allSatisfy: [ :each | sourceCode includesSubstring: each ]
 
+]
+
+{ #category : #'inspector extensions' }
+RTExampleSelection >> methodResolver [
+	^ self
 ]
 
 { #category : #public }
