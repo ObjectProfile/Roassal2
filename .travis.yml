@@ -2,6 +2,8 @@ language: smalltalk
 
 os:
   - osx
+  - linux
 
 smalltalk:
   - Pharo-6.0
+  - Pharo-5.0
