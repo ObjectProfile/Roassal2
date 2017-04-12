@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 TRCanvasTest >> setUp [
-
+	super setUp.
 	canvas := TRCanvas new
 ]
 

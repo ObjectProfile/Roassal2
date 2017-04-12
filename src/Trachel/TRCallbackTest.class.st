@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 TRCallbackTest >> setUp [
-
+	super setUp.
 	canvas := TRCanvas new.
 	rectangle1 := (20@20) corner: 150@100.
 	circle1 := canvas buildCircleFrom: rectangle1 origin 
