@@ -3,7 +3,7 @@ A Roassal2VWTest is a test class for testing the behavior of Roassal2VW
 "
 Class {
 	#name : #Roassal2VWTest,
-	#superclass : #TestCase,
+	#superclass : #RTTest,
 	#category : #'Roassal2-ExporterVW'
 }
 
