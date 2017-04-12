@@ -44,6 +44,7 @@ Class {
 
 { #category : #'basic tests' }
 TRArcShapeTest >> setUp [
+	super setUp.
 	arc1:=TRArcShape new.
 	arc2:=TRArcShape new.
 	arc3:=TRArcShape new.

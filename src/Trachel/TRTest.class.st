@@ -4,7 +4,7 @@ Class {
 	#category : #'Trachel-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #documentation }
 TRTest >> readme [
 
 "
@@ -20,4 +20,10 @@ exporter fileOutAsString
  
 
 "
+]
+
+{ #category : #initialization }
+TRTest >> setUp [
+	Transcript show: self class name asString, '>>'.
+	Transcript show: testSelector asString; cr
 ]
