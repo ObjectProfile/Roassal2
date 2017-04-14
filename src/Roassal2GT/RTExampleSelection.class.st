@@ -116,11 +116,6 @@ RTExampleSelection >> matchesQuery: aSetOfNames [
 
 ]
 
-{ #category : #'inspector extensions' }
-RTExampleSelection >> methodResolver [
-	^ self
-]
-
 { #category : #public }
 RTExampleSelection >> playgroundSourceCode [ 
 	" this is really ugly - we would like to perfectly preserve the original format including comments BUT with pragmas stripped - is there a better way ? original code below "
