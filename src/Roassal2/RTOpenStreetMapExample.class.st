@@ -1596,7 +1596,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthLive [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleSeismOnEarthLiveZoom: aView [
 	<gtExample>
-	<dependsOn: #exampleSeismOnEarthLive>
+	<depends: #exampleSeismOnEarthLive>
 	<noTest>
 	"This example download a data set from the web and scale the view afterwards."
 
@@ -1609,7 +1609,7 @@ RTOpenStreetMapExample >> exampleSeismOnEarthLiveZoom: aView [
 { #category : #sources }
 RTOpenStreetMapExample >> exampleSeismOnEarthZoom: aView [
 	<gtExample>
-	<dependsOn: #exampleSeismOnEarth>
+	<depends: #exampleSeismOnEarth>
 	<noTest>
 	"This example reuse the seism data of Roassal 2."
 
