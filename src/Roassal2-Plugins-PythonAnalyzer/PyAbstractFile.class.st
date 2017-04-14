@@ -5,7 +5,8 @@ Class {
 	#name : #PyAbstractFile,
 	#superclass : #PyObject,
 	#instVars : [
-		'filename'
+		'filename',
+		'parentFolder'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -35,8 +36,8 @@ PyAbstractFile >> filename [
 ]
 
 { #category : #accessing }
-PyAbstractFile >> filename: afileName [
-	filename := afileName.
+PyAbstractFile >> filename: aFullFilename [
+	filename := aFullFilename.
 
 ]
 
@@ -59,6 +60,17 @@ PyAbstractFile >> gtInspectorContentsIn: composite [
 PyAbstractFile >> parent [
 	"Return the full path of the folder that contains myself"
 	^ self fileReference parent pathString
+]
+
+{ #category : #accessing }
+PyAbstractFile >> parentFolder [
+	^ parentFolder
+]
+
+{ #category : #accessing }
+PyAbstractFile >> parentFolder: aPyFolder [
+	self assert: [ aPyFolder class == PyFolder ] description: 'Provide a PyFolder please'.
+	parentFolder := aPyFolder
 ]
 
 { #category : #printing }
