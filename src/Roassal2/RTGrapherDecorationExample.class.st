@@ -230,6 +230,72 @@ QmCC'
 ]
 
 { #category : #sources }
+RTGrapherDecorationExample >> exampleLikertScale [
+
+| q11 q12 q21 q22 q3 t toVisualize b ds lb |
+q11 := #(A A SA SA A SA N A A SA N) groupedBy: #yourself. 
+q12 := #(D SA SA SA A N SA A SA A A) groupedBy: #yourself.
+q21 := #(A N SA A SA A D A N A N) groupedBy: #yourself.
+q22 := #(D N SA A SA SA D A A SA A) groupedBy: #yourself.
+q3  := #(D A SA SA N A SA A SA A A) groupedBy: #yourself.
+
+t := q3.
+toVisualize := OrderedCollection new.
+toVisualize add: #SA -> (t at: #SA ifAbsent: [ #() ]).
+toVisualize add: #A -> (t at: #A ifAbsent: [ #() ]).
+toVisualize add: #N -> (t at: #N ifAbsent: [ #() ]).
+toVisualize add: #D -> (t at: #D ifAbsent: [ #() ]).
+toVisualize add: #SD -> (t at: #SD ifAbsent: [ #() ]).
+
+b := RTGrapher new.
+ds := RTData new.
+ds barChartWithBarTitle: #key rotation: 0.
+ds points: toVisualize, {'' -> #() }.
+ds y: [ :as | as value size ].
+b add: ds.
+b axisX noTick; noTitle.
+b axisY noDecimal.
+b maxY: 5.
+b build.
+
+lb := RTLegendBuilder new.
+lb view: b view.
+lb addText: 'Likert scale result'.
+lb addText: 'SA = Strong agree; A = agree; N = neutral'.
+lb addText: 'D = Disagree; SD = Strongly Disagree'.
+lb build.
+
+^ b view
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleLikertScaleIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEiElEQVR4XuWcaU/yQBSF/f+/
+yA9GjSZCXCK47/uKG4obUWecZ/JeUhFs5RWpPSdplOHOTLlPW+5hKEPe6ytPGtJPgT4QfekD
+0QeiL30g+kD0pQ9EH4i+9IHoA9GXPhB96QPRB6IvfSDqQFxQs9l07e2np6duc3PT/cQO3t3d
+ufZNH0gX7e7uul6e++YcnzZ9ID8MSx+IPhB9IPpA9IHoA9EHog9EH8hX2tjY6Jh0fEipVHI/
+4S/0gfzSGZI10fpA9IHoA9EHog9EH4g+EH0g+kD0gQwYSL1ed29vb64XH6IPpA9A9vb2nP4Z
+on/J0geiD0QfiD4QfSD6QPSB6AMpOBA8CNL3ITkBsrKy4hqNhtM/Q/QvWfpA9IHoA9EHog9E
+H4g+EH0gBQZycXHRMeknJye/7kOyfs8r7/eb/BeQ/f199/z8nAsfUpQzrjCXLH0g+kD0gegD
+0QeiD0QfiD6Q4gBh3aNWq7lOPmR0dNRVKpWuW7lc/rTlKe67G7kYOJDj4+Oed2Jrayv2vb6+
+zjRGlriHh4fMY93f338Ze3R05LLE/ZlLVppmZ2fdy8uL297eTn3BWeO4o2t9fT01bm5uzq2u
+rrqvzvy1tTWXFlcoIGNjYw4ol5eXLgu8LHEAOTg4SI2bmppyk5OTXeP4OGVkZMSlxRUKiL70
+gegD0Zc+EH0g3YQX4Tezirr9SSD6x3tOgfDlxmazmalflriwKKYPpBcgwe2aM/Y7Ozs4aX9+
+fu6DyePuq/hc8BcsBfunpyfcMauQMd7agyeIfXjM/4zBWMG06QPpBQhHMwkMJssHFx2TzmOS
+/M/M+aWlpZjo4IojqJmZmQgFONaHOECGj1xi/4WFBX0g+u8h+kD0gegD0QeiL30g+kD0lQcg
+Z2dnPnzM4MOqWyxX8RKUsYjSljL26uoqlsC04zNou729jaVtWJhiscgzDn2Jo/x9fHz0Nzc3
+MQ4dHh7GNhs7zM3tdrGMph0/Qzzr59aH+Zk72S+spbRKccpwvNHExEQcz8b800B4AXgM/AQJ
+xoUDB/FizdyZ8yaG5ISl4ehDgDE+Pu4XFxdjQokjMQAgyQjQPP/6+toamzHwKcQxt8Uzvs1F
+0gGd7Gf7yRx4H/osLy+39us3vE/fL1kc5Z1k7XbUkRgTQEiEaXp62ocl1Q9xfBxj5rLT2Iyb
+/EYJ8bQ3Go3UfWcOu5fV5mvfX/33EP33EH0g+kD0pQ9EH4i+BgekVqvFEjIpPl6n+sEDZBXl
+p3kT/EhS+JwOv+7xQZSzJqo3yunvzF8YILZARcKo40km9T+QSBKlLImuVqv8TEcsY/EJ/KX0
+JWmUmZg3+jEeniNp5pKQmKder/vh4eHW2oothvHY/Adj0w8jaPtCHHBtXtoGsTLZVyAkG+OW
+FEcnZw6JMyActaVSqeUbKpVKbCeWxHOGkDj+b/cRAAIEiTRTaCuOJBXYjEMcmp+fj/E8Dyja
+mbdcLsd9snmBo/8eoq/+AeEOXf2vAeUIiL70gegD0Zc+EH0g+tIHog9EX/pA9KUPRB+IvvSB
+6APRlz6QYusdM8tBXZ5uKHAAAAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherDecorationExample >> exampleMarkerOnTheXAxis [
 
 | b ds |
