@@ -22,9 +22,9 @@ RTLabelledTest >> testDefault [
 	self assert: v numberOfElements = 1.
 	self assert: v canvas numberOfShapes = 2.
 	
-	self assert: v canvas shapes last class == TRLabelShape.
-	self assert: v canvas shapes last position x = 0.
-	self assert: v canvas shapes last position y < 10
+	self assert: v canvas shapes first class == TRLabelShape.
+	self assert: v canvas shapes first position x = 0.
+	self assert: v canvas shapes first position y < 10
 ]
 
 { #category : #tests }
@@ -39,10 +39,10 @@ RTLabelledTest >> testDefaultFromNumber [
 	self assert: v numberOfElements = 1.
 	self assert: v canvas numberOfShapes = 2.
 	
-	self assert: v canvas shapes last class == TRLabelShape.
-	self assert: v canvas shapes last position x = 0.
-	self assert: v canvas shapes last position y < 10.
-	self assert: v canvas shapes last text = '5'.
+	self assert: v canvas shapes first class == TRLabelShape.
+	self assert: v canvas shapes first position x = 0.
+	self assert: v canvas shapes first position y < 10.
+	self assert: v canvas shapes first text = '5'.
 ]
 
 { #category : #tests }
