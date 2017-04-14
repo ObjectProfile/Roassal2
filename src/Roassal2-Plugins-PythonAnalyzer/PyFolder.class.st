@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : #adding }
-PyFolder >> addFile: aFile [
-	files add: aFile
+PyFolder >> addFile: aPyFile [
+	self assert: [ aPyFile class == PyFile ] description: 'Please provide a PyFile instead'.
+	files add: aPyFile
 ]
 
 { #category : #accessing }

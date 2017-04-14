@@ -51,6 +51,7 @@ PyFile >> containsMain [
 
 { #category : #accessing }
 PyFile >> dependentModules [
+	"Should be removed. Too obscure name."
 	^ dependentModules
 ]
 
@@ -87,11 +88,13 @@ PyFile >> importedFilenames [
 
 { #category : #accessing }
 PyFile >> importedFiles [
+	"Return the list of files that I import"
 	^ importedFiles asArray
 ]
 
 { #category : #accessing }
 PyFile >> importedInFiles [
+	"Return the list of files that import me"
 	^ importedInFiles asArray
 ]
 

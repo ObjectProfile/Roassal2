@@ -5,8 +5,8 @@ Class {
 	#name : #PyProcessor,
 	#superclass : #PyObject,
 	#instVars : [
-		'directoriesAsDictionary',
-		'filesAsDictionary'
+		'filesAsDictionary',
+		'directories'
 	],
 	#category : #'Roassal2-Plugins-PythonAnalyzer-Core'
 }
@@ -19,12 +19,33 @@ PyProcessor >> classes [
 
 { #category : #accessing }
 PyProcessor >> directories [
-	^ directoriesAsDictionary
+	^ directories
 ]
 
 { #category : #visualizations }
 PyProcessor >> fileHierarchy [
+	| b directoriesElements |
+	b := RTMondrian new.
+	directoriesElements := b nodes: self directories forEach: [ :aFolder |
+		b shape box size: [ :f | f loc sqrt ].
+		b interaction highlightNeighbors: #dependentModules color: Color purple.
+		b nodes: aFolder files.
+		
+		b shape line
+			color: (Color blue trans);
+			width: 2.
+		b edges
+			objects: aFolder files;
+			connectToAll: #dependentModules.
+		b layout flow.
+	].
+	b edges connectFrom: #parentFolder.
+	b layout tree.
+	b build.
 	
+	directoriesElements @ (RTLabeled new setAsHighlightable).
+ 
+	^ b view
 ]
 
 { #category : #accessing }
@@ -38,28 +59,19 @@ PyProcessor >> functions [
 ]
 
 { #category : #visualizations }
-PyProcessor >> gtViewFilesOn: composite [
+PyProcessor >> gtViewFileHierarchyOn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal2
-		title: 'Files';
+		title: 'Hierarchy';
 		initializeView: [
-			self viewFiles ]
-]
-
-{ #category : #visualizations }
-PyProcessor >> gtViewNestedFilesOn: composite [
-	<gtInspectorPresentationOrder: -10>
-	composite roassal2
-		title: 'Folder&Files';
-		initializeView: [
-			self nestedFiles ]
+			self fileHierarchy ]
 ]
 
 { #category : #initialization }
 PyProcessor >> initialize [
 	super initialize.
 	filesAsDictionary := Dictionary new.
-	directoriesAsDictionary := OrderedCollection new.
+	directories := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -129,7 +141,22 @@ PyProcessor >> numberOfModules [
 
 { #category : #processing }
 PyProcessor >> processDirectories: listOfDirectories [
-	"TODO"
+	| t |
+	"Create a PyFolder for each FileReference"
+	directories := listOfDirectories collect: [ :fileReference | PyFolder new filename: fileReference fullName ].
+
+	"We link the parent"	
+	t := directories groupedBy: #filename.
+	directories do: [ :f | (t includesKey: f parent) ifTrue: [ f parentFolder: (t at: f parent) anyOne ] ].
+
+	"We link the folder to its contained PyFile"
+	filesAsDictionary values do: [ :aPyFile | 
+		| pf |
+		(t includesKey: aPyFile parent) ifTrue: [ 
+			pf := (t at: aPyFile parent) anyOne.
+			aPyFile parentFolder: pf.
+			pf addFile: aPyFile ] ].
+	
 ]
 
 { #category : #processing }
@@ -143,10 +170,12 @@ PyProcessor >> processFileAsString: fileContentAsString named: filename [
 
 { #category : #processing }
 PyProcessor >> processRootFolder: aFileReference [
+	"This is the main public method"
+	
 	| relevantFiles allFiles allDirectories |
+	self assert: [ aFileReference class == FileReference ] description: 'Please provide a file reference instead'.
+
 	allFiles := aFileReference allChildren.
-	allDirectories := allFiles select: #isDirectory.
-	self processDirectories: allDirectories.
 	relevantFiles := allFiles select: [ :f | #('py') includes: f extension ].
 	relevantFiles do: [ :f |
 		| r | 
@@ -154,6 +183,10 @@ PyProcessor >> processRootFolder: aFileReference [
 		r ascii.
 		r converter: Latin1TextConverter new.
 		self processFileAsString: r contents named: f pathString ].
+	
+	allDirectories := allFiles select: #isDirectory.
+	self processDirectories: allDirectories.
+
 ]
 
 { #category : #'resolving dependencies' }
