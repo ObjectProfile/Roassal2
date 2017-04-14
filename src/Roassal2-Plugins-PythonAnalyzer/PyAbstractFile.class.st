@@ -51,16 +51,8 @@ PyAbstractFile >> getSource [
 
 { #category : #inspector }
 PyAbstractFile >> gtInspectorContentsIn: composite [
-	<gtInspectorPresentationOrder: 5>
+	<gtInspectorPresentationOrder: -110>
 	self fileReference ifNotNil: [ self fileReference gtInspectorContentsIn: composite ]
-]
-
-{ #category : #inspector }
-PyAbstractFile >> gtInspectorTableIn: composite [
-	<gtInspectorPresentationOrder: -15>
-	composite text
-		title: 'Source';
-		display: [ self getSource ]
 ]
 
 { #category : #accessing }

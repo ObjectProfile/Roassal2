@@ -13,12 +13,18 @@ Class {
 
 { #category : #accessing }
 PyProcessor >> classes [
+	"Return all the classes defined in the processor"
 	^ self files values flatCollect: #classes
 ]
 
 { #category : #accessing }
 PyProcessor >> directories [
 	^ directoriesAsDictionary
+]
+
+{ #category : #visualizations }
+PyProcessor >> fileHierarchy [
+	
 ]
 
 { #category : #accessing }
@@ -29,6 +35,24 @@ PyProcessor >> files [
 { #category : #accessing }
 PyProcessor >> functions [
 	^ self files values flatCollect: #functions
+]
+
+{ #category : #visualizations }
+PyProcessor >> gtViewFilesOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal2
+		title: 'Files';
+		initializeView: [
+			self viewFiles ]
+]
+
+{ #category : #visualizations }
+PyProcessor >> gtViewNestedFilesOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal2
+		title: 'Folder&Files';
+		initializeView: [
+			self nestedFiles ]
 ]
 
 { #category : #initialization }
@@ -54,6 +78,33 @@ PyProcessor >> moduleNamed: afilename [
 { #category : #accessing }
 PyProcessor >> modules [
 	^ filesAsDictionary values
+]
+
+{ #category : #visualizations }
+PyProcessor >> nestedFiles [
+	
+	| b allContainingFolders |
+	b := RTMondrian new.
+	b shape box.
+
+	allContainingFolders := self modules groupedBy: #parent.
+
+	b nodes: allContainingFolders keys forEach: [:k |
+		b interaction highlightNeighbors: #dependentModules color: Color purple.
+		b shape box 
+			size: [ :f | f loc sqrt ].
+		b nodes: (allContainingFolders at: k).
+		b shape line
+			color: (Color blue trans);
+			width: 2.
+		b edges
+			objects: (allContainingFolders at: k);
+			connectToAll: #dependentModules.
+		b layout grid.
+	].
+
+	b layout flow.
+	^ b
 ]
 
 { #category : #metrics }
@@ -140,4 +191,14 @@ PyProcessor >> resolveDependenciesForClassInheritance [
 		do: [ :c | 
 			(d includesKey: c superclassName)
 				ifTrue: [ c superclass: (d at: c superclassName) ] ]
+]
+
+{ #category : #visualizations }
+PyProcessor >> viewFiles [
+	| b |
+	b := RTMondrian new.
+	b nodes: self files.
+	b normalizer distinctColor.
+	b layout grid; gapSize: 1.
+	^ b 
 ]
