@@ -54,7 +54,7 @@ RTView >> spotterPreviewIn: aComposite [
 
 { #category : #'*Roassal2GT-Spotter' }
 RTView >> spotterShapesFor: aStep [
-	<spotterOrder: 15>
+	<spotterOrder: 10>
 	^ aStep listProcessor
 		title: 'Shapes';
 		candidatesLimit: 5;
@@ -69,7 +69,7 @@ RTView >> spotterShapesFor: aStep [
 
 { #category : #'*Roassal2GT-Spotter' }
 RTView >> spotterShapesModelsFor: aStep [
-	<spotterOrder: 10>
+	<spotterOrder: 15>
 	^ aStep listProcessor
 		title: 'Model objects';
 		candidatesLimit: 5;
