@@ -28,7 +28,7 @@ PyProcessor >> fileHierarchy [
 	b := RTMondrian new.
 	directoriesElements := b nodes: self directories forEach: [ :aFolder |
 		b shape box size: [ :f | f loc sqrt ].
-		b interaction highlightNeighbors: #dependentModules color: Color purple.
+		b interaction highlightNeighbors: #importedFiles color: Color purple.
 		b nodes: aFolder files.
 		
 		b shape line
@@ -36,7 +36,7 @@ PyProcessor >> fileHierarchy [
 			width: 2.
 		b edges
 			objects: aFolder files;
-			connectToAll: #dependentModules.
+			connectToAll: #importedFiles.
 		b layout flow.
 	].
 	b edges connectFrom: #parentFolder.
@@ -67,6 +67,15 @@ PyProcessor >> gtViewFileHierarchyOn: composite [
 			self fileHierarchy ]
 ]
 
+{ #category : #visualizations }
+PyProcessor >> gtViewSystemComplexityOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal2
+		title: 'SystemComplexity';
+		initializeView: [
+			self systemComplexity ]
+]
+
 { #category : #initialization }
 PyProcessor >> initialize [
 	super initialize.
@@ -90,33 +99,6 @@ PyProcessor >> moduleNamed: afilename [
 { #category : #accessing }
 PyProcessor >> modules [
 	^ filesAsDictionary values
-]
-
-{ #category : #visualizations }
-PyProcessor >> nestedFiles [
-	
-	| b allContainingFolders |
-	b := RTMondrian new.
-	b shape box.
-
-	allContainingFolders := self modules groupedBy: #parent.
-
-	b nodes: allContainingFolders keys forEach: [:k |
-		b interaction highlightNeighbors: #dependentModules color: Color purple.
-		b shape box 
-			size: [ :f | f loc sqrt ].
-		b nodes: (allContainingFolders at: k).
-		b shape line
-			color: (Color blue trans);
-			width: 2.
-		b edges
-			objects: (allContainingFolders at: k);
-			connectToAll: #dependentModules.
-		b layout grid.
-	].
-
-	b layout flow.
-	^ b
 ]
 
 { #category : #metrics }
@@ -227,11 +209,18 @@ PyProcessor >> resolveDependenciesForClassInheritance [
 ]
 
 { #category : #visualizations }
-PyProcessor >> viewFiles [
+PyProcessor >> systemComplexity [
 	| b |
 	b := RTMondrian new.
-	b nodes: self files.
-	b normalizer distinctColor.
-	b layout grid; gapSize: 1.
-	^ b 
+	b shape circle.
+	b shape box 
+		height: #numberOfLinesOfCode;
+		width: [ :c | c numberOfMethods * 10 ].
+	b nodes: self classes.
+	b edges connectFrom: #superclass.
+	b layout tree;
+		ifNotConnectedThen: RTFlowLayout new.
+	b normalizer
+		distinctColorUsing: #file.
+	^ b
 ]
