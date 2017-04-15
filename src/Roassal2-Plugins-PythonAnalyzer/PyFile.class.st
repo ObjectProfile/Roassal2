@@ -282,6 +282,11 @@ PyFile >> methods [
 	^ self classes flatCollect: #methods
 ]
 
+{ #category : #datastudio }
+PyFile >> metrics [
+	^ #(#numberOfClasses #numberOfFunctions #numberOfFunctionsAndMethods #numberOfLinesOfCode #numberOfMethods)
+]
+
 { #category : #metrics }
 PyFile >> numberOfClasses [
 	^ classes size
@@ -305,4 +310,9 @@ PyFile >> numberOfLinesOfCode [
 { #category : #metrics }
 PyFile >> numberOfMethods [
 	^ self methods size
+]
+
+{ #category : #datastudio }
+PyFile >> structuralConnections [
+	^ #(#importedFiles #importedInFiles)
 ]
