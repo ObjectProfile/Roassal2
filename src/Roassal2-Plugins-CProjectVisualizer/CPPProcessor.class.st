@@ -9,6 +9,23 @@ Class {
 	#category : #'Roassal2-Plugins-CProjectVisualizer-Core'
 }
 
+{ #category : #visualizations }
+CPPProcessor >> gtViewArtworkOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	(Smalltalk hasClassNamed: #CAArtwork) ifTrue: [
+		composite roassal2
+			title: 'Artwork@Headers';
+			initializeView: [
+				| a action |
+				a := (Smalltalk at: #CAArtwork) new.
+				action := (Smalltalk at: #CAAddElementAction) new.
+				action objects: self headers.
+				a doAction: action.
+				a view
+				] 
+		]
+]
+
 { #category : #processing }
 CPPProcessor >> headerNamed: afileName [
 	| entry |
@@ -173,4 +190,27 @@ CPPProcessor >> resolveDependenciesBetweenModulesAndHeaders [
 				m addOutgoingHeader: hh ] ]
 	].
 
+]
+
+{ #category : #visualizations }
+CPPProcessor >> viewHeaders [
+	| b p |
+	b := RTMondrian new.
+	b shape circle 
+		color: Color gray;
+		if: [ :f | '*RTOS*' match: f filename ] color: Color red.
+	b interaction highlightNeighbors: #outgoingHeaders color: Color orange .
+"	b shape box size: #loc."
+	b nodes: self headers.
+	
+	b shape line 
+		color: (Color blue alpha: 0.2);
+		width: 2.
+	b edges 
+		moveBehind;
+		connectToAll: #outgoingHeaders.
+	b layout grid.
+	
+	b normalizer normalizeSize: #loc.
+	^ b
 ]
