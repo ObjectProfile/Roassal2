@@ -59,6 +59,23 @@ PyProcessor >> functions [
 ]
 
 { #category : #visualizations }
+PyProcessor >> gtViewArtworkOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	(Smalltalk hasClassNamed: #CAArtwork) ifTrue: [
+		composite roassal2
+			title: 'Artwork@Files';
+			initializeView: [
+				| a action |
+				a := (Smalltalk at: #CAArtwork) new.
+				action := (Smalltalk at: #CAAddElementAction) new.
+				action objects: self files values.
+				a doAction: action.
+				a view
+				] 
+		]
+]
+
+{ #category : #visualizations }
 PyProcessor >> gtViewFileHierarchyOn: composite [
 	<gtInspectorPresentationOrder: -10>
 	composite roassal2
