@@ -14,7 +14,7 @@ RTHowToReportABug class >> menuCommandOn: aBuilder [
 			order: 0.002; 
 			parent: #Roassal;
 			label: 'How To report a bug';
-			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
+			icon: (Smalltalk ui icons iconNamed: #smallDebug);
 			action: [ self new open.  WebBrowser openOn: 'https://github.com/moosetechnology/Moose/issues'  ]
 ]
 
