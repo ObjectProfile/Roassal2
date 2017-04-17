@@ -43,6 +43,22 @@ PyFile >> classes [
 	^ classes
 ]
 
+{ #category : #visualizations }
+PyFile >> classesAndMethods [
+	| b |
+	b := RTMondrian new.
+	b shape box color: Color blue darker darker darker.
+	b nodes: classes forEach: [ :c |
+		b shape box size: [ :m | m numberOfLinesOfCode sqrt ].
+		b nodes: c methods.
+		b layout grid.
+	].
+	b shape orthoVerticalLine.
+	b edges connectFrom: #superclass.
+	b layout tree.
+	^ b
+]
+
 { #category : #testing }
 PyFile >> containsMain [
 	"Return true if the file contains a line such as 'if __name__ == '__main__':'"
@@ -79,6 +95,15 @@ PyFile >> getRelevantLinesOf: rawLines [
 			ifFalse: [ lines add: l ]
 	].
 	^ lines
+]
+
+{ #category : #visualizations }
+PyFile >> gtViewClassesAndMethodskOn: composite [
+	<gtInspectorPresentationOrder: -10>
+	composite roassal2
+		title: 'ClassesAndMethods';
+		initializeView: [
+			self classesAndMethods ]
 ]
 
 { #category : #accessing }
@@ -125,7 +150,7 @@ PyFile >> initializeCheckIfContainsMain: rawLines [
 
 { #category : #initialization }
 PyFile >> initializeClassesAndMethodsFromLines: lines [
-	| insideClassDefinition insideAMultilineComment |
+	| insideClassDefinition insideAMultilineComment ms |
 	insideClassDefinition := false.
 	insideAMultilineComment := false.
 	
@@ -142,7 +167,11 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 			insideClassDefinition ifTrue: [ 
 				"we mark the last line of the last class"
 				(l size > 0 and: [ l first isLetter ])
-						ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index - 1 ]. insideClassDefinition := false ] ].
+						ifTrue: [ classes notEmpty ifTrue: [ 
+										classes last endLine: index - 1.
+										classes last methods ifNotEmpty: [ 
+											 classes last methods last endLine: index - 1 ] ]. 
+								insideClassDefinition := false ] ].
 
 			"We find a class definition"
 			(l beginsWith: 'class ') ifTrue: [ 
@@ -167,7 +196,12 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 								name: (l substrings: ' (') second;
 								startLine: index;
 								pythonClass: classes last.
-					classes last addMethod: m
+					classes last addMethod: m.
+					
+					"We set the last line of code the of previous method"
+					classes last methods notEmpty ifTrue: [ 
+						classes last methods last endLine: index - 1.
+					]
 				].
 			
 				"We process the lines, to extract the callNames"
@@ -179,7 +213,10 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 
 	"In case there is no marker to end the last function of the file"
 	classes notEmpty
-		ifTrue: [ classes last endLine ifNil: [ classes last endLine: lines size + 1 ] ].
+		ifTrue: [ classes last endLine ifNil: [ 
+						classes last endLine: lines size + 1. 
+						ms := classes last methods.
+						ms notEmpty ifTrue: [ ms last endLine: lines size + 1 ] ] ]. 
 
 	"We keep everything as array"
 	classes := classes asArray

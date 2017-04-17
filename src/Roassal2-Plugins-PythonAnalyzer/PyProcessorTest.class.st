@@ -4488,10 +4488,13 @@ PyProcessorTest >> testOOP08LargeClass [
 	p processFileAsString: self printers named: 'printers.py'.
 	p resolveDependencies.
 	self assert: p numberOfClasses equals: 1.
-	
+self halt.
 	class := p classes first.
 	self assert: class superclassName equals: 'optparse.OptionParser'.
-	self assert: class numberOfMethods equals: 3
+	self assert: class numberOfMethods equals: 3.
+	
+	p classes do: [ :c | 
+		self assert: (c methods allSatisfy: [ :m | m numberOfLinesOfCode > 1 ]) ]
 ]
 
 { #category : #tests }
