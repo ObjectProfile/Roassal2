@@ -44,7 +44,7 @@ PyProcessor >> fileHierarchy [
 	b build.
 	
 	directoriesElements @ (RTLabeled new setAsHighlightable).
- 
+ 	b view @ RTHighlightElementsInView new transparent.
 	^ b view
 ]
 
@@ -239,5 +239,6 @@ PyProcessor >> systemComplexity [
 		ifNotConnectedThen: RTFlowLayout new.
 	b normalizer
 		distinctColorUsing: #file.
+	b view @ RTHighlightElementsInView new transparent.
 	^ b
 ]
