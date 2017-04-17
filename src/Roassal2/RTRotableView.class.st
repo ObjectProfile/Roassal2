@@ -4,6 +4,7 @@ I am an interaction that makes a view rotable using the left button and draggabl
 Here is an example
 
 [[[ 
+	| b v |
 	v := RTView new.
 	v @ RTRotableView.
 	b := RTMondrian new.
@@ -16,7 +17,7 @@ Here is an example
 "
 Class {
 	#name : #RTRotableView,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractInteractionView,
 	#instVars : [
 		'view',
 		'draggingView',

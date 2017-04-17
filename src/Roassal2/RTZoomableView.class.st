@@ -3,7 +3,7 @@ I am interaction which allows view to be zoomed with a mouce wheel. While zommin
 "
 Class {
 	#name : #RTZoomableView,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractInteractionView,
 	#instVars : [
 		'minZoom',
 		'maxZoom'
