@@ -250,7 +250,7 @@ toVisualize add: #SD -> (t at: #SD ifAbsent: [ #() ]).
 b := RTGrapher new.
 ds := RTData new.
 ds barChartWithBarTitle: #key rotation: 0.
-ds points: toVisualize, {'' -> #() }.
+ds points: toVisualize, (Array with: '' -> #() ).
 ds y: [ :as | as value size ].
 b add: ds.
 b axisX noTick; noTitle.
