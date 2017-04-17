@@ -9,7 +9,7 @@ see class-side
 "
 Class {
 	#name : #RTGridView,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractInteractionView,
 	#instVars : [
 		'gridShape',
 		'gridSize',

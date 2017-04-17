@@ -16,7 +16,7 @@ view2 addMenu: 'Morphing' callback: [ view2 @ (RTMorphingView new referenceView:
 "
 Class {
 	#name : #RTAbstractMorphingView,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractInteractionView,
 	#instVars : [
 		'referenceView',
 		'translator',

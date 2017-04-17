@@ -5,7 +5,7 @@ I am a class to describe elastic boxes in view, this means that there is a shape
 "
 Class {
 	#name : #RTAbstractElasticBoxInteraction,
-	#superclass : #RTInteraction,
+	#superclass : #RTAbstractInteractionView,
 	#instVars : [
 		'view',
 		'draggingView',
