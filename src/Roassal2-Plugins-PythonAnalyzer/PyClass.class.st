@@ -11,7 +11,8 @@ Class {
 
 { #category : #adding }
 PyClass >> addMethod: aMethod [
-	methods add: aMethod
+	methods add: aMethod.
+	aMethod file: self file.
 ]
 
 { #category : #initialization }
