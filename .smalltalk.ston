@@ -8,7 +8,6 @@ SmalltalkCISpec {
       #version: #development
     },
 
-  #loading : [
     SCIMetacelloLoadSpec {
       #configuration : 'Roassal2',
       #repository : 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/',
