@@ -33,6 +33,7 @@ PyStructuralElement >> file: aPyFile [
 { #category : #accessing }
 PyStructuralElement >> getSource [
 	| allLines lines |
+	self file ifNil: [ ^ '' ].
 	lines := self file getSource lines.
 	lines ifEmpty: [ ^ '' ].
 	allLines := lines copyFrom: self startLine to: (self endLine min: lines size).

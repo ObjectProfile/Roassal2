@@ -4326,13 +4326,16 @@ PyProcessorTest >> testOOP01 [
 	self assert: firstClass superclassName equals: 'object'.
 	self assert: firstClass numberOfMethods equals: 2.
 	self assert: firstClass methods first name equals: 'getValue'.
+	self assert: firstClass methods first numberOfLinesOfCode equals: 3.
 	self assert: firstClass methods second name equals: 'fibonacci'.
+	self assert: firstClass methods second numberOfLinesOfCode equals: 6.
 
 	secondClass := m classes second.
 	self assert: secondClass name equals: 'Bar'.
 	self assert: secondClass superclassName equals: 'Foo'.
 	self assert: secondClass numberOfMethods equals: 1.
 	self assert: secondClass methods first name equals: 'foo'.
+	self assert: secondClass methods first numberOfLinesOfCode equals: 3.
 	
 	"Check for the superclass link"
 	self assert: firstClass superclass isNil.
@@ -4488,7 +4491,7 @@ PyProcessorTest >> testOOP08LargeClass [
 	p processFileAsString: self printers named: 'printers.py'.
 	p resolveDependencies.
 	self assert: p numberOfClasses equals: 1.
-self halt.
+
 	class := p classes first.
 	self assert: class superclassName equals: 'optparse.OptionParser'.
 	self assert: class numberOfMethods equals: 3.

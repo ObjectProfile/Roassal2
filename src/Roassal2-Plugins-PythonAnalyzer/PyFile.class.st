@@ -18,6 +18,12 @@ Class {
 }
 
 { #category : #accessing }
+PyFile >> addClass: aPyClass [
+	classes add: aPyClass.
+	aPyClass file: self.
+]
+
+{ #category : #accessing }
 PyFile >> addDependentModules: someModules [
 	self assert: [ someModules allSatisfy: [ :m | m class == self class ] ].
 	dependentModules addAll: (someModules copyWithout: self).
@@ -150,13 +156,15 @@ PyFile >> initializeCheckIfContainsMain: rawLines [
 
 { #category : #initialization }
 PyFile >> initializeClassesAndMethodsFromLines: lines [
-	| insideClassDefinition insideAMultilineComment ms |
+	| insideClassDefinition insideAMultilineComment |
 	insideClassDefinition := false.
 	insideAMultilineComment := false.
 	
 	lines withIndexDo: [ :l :index | 
-						
-		"We found a multiline comment"
+"
+self haltIf: [ l = '    def fibonacci(self, n):' ]						.
+
+"		"We found a multiline comment"
 		"We check if this multiline is not actually a single line"
 		((l trimLeft beginsWith: '"""') and: [ (l select: [ :c | c = $" ]) size < 6 ])
 			ifTrue: [  
@@ -167,15 +175,13 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 			insideClassDefinition ifTrue: [ 
 				"we mark the last line of the last class"
 				(l size > 0 and: [ l first isLetter ])
-						ifTrue: [ classes notEmpty ifTrue: [ 
-										classes last endLine: index - 1.
-										classes last methods ifNotEmpty: [ 
-											 classes last methods last endLine: index - 1 ] ]. 
-								insideClassDefinition := false ] ].
+						ifTrue: [ classes notEmpty ifTrue: [ classes last endLine: index - 1 ]. 
+							self markEndOfMethodAtLine: index. insideClassDefinition := false ] ].
 
 			"We find a class definition"
 			(l beginsWith: 'class ') ifTrue: [ 
 				| c s |
+				self markEndOfMethodAtLine: index.
 				s := l substrings: ' ():'.
 				c := PyClass new.
 				c name: s second.
@@ -184,7 +190,7 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 					ifFalse: [ c superclassName: 'object' ].
 				c startLine: index.
 				c file: self.
-				classes add: c.
+				self addClass: c.
 				insideClassDefinition := true
 			].
 			
@@ -192,16 +198,12 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 				"We find a method definition"
 				(l beginsWith: '    def ') ifTrue: [ 
 					| m |
+					self markEndOfMethodAtLine: index.
 					m := PyMethod new
 								name: (l substrings: ' (') second;
 								startLine: index;
 								pythonClass: classes last.
-					classes last addMethod: m.
-					
-					"We set the last line of code the of previous method"
-					classes last methods notEmpty ifTrue: [ 
-						classes last methods last endLine: index - 1.
-					]
+					classes last addMethod: m
 				].
 			
 				"We process the lines, to extract the callNames"
@@ -213,10 +215,7 @@ PyFile >> initializeClassesAndMethodsFromLines: lines [
 
 	"In case there is no marker to end the last function of the file"
 	classes notEmpty
-		ifTrue: [ classes last endLine ifNil: [ 
-						classes last endLine: lines size + 1. 
-						ms := classes last methods.
-						ms notEmpty ifTrue: [ ms last endLine: lines size + 1 ] ] ]. 
+		ifTrue: [ classes last endLine ifNil: [ classes last endLine: lines size + 1 ] ].
 
 	"We keep everything as array"
 	classes := classes asArray
@@ -312,6 +311,24 @@ PyFile >> loc [
 PyFile >> loc: anInteger [
 	"Set the number of lines of code of the file"
 	loc := anInteger
+]
+
+{ #category : #initialization }
+PyFile >> markEndOfClassAtLine: index [
+	classes notEmpty
+		ifTrue: [ classes last endLine: index - 1.
+			self markEndOfMethodAtLine: index ]
+]
+
+{ #category : #initialization }
+PyFile >> markEndOfMethodAtLine: index [
+	"We set the last line of code the of previous method"
+	classes ifEmpty: [ ^ self ].
+	classes last methods notEmpty
+		ifTrue: [ 
+			| lastMethod |
+			lastMethod := classes last methods last.
+			lastMethod endLine isNil ifTrue: [  lastMethod endLine: index - 1 ] ]
 ]
 
 { #category : #accessing }
