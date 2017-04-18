@@ -1652,7 +1652,7 @@ ConfigurationOfRoassal2 >> version146: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.410';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1598';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
-			package: 'Roassal2GT' with: 'Roassal2GT-akevalion.54';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.55';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
