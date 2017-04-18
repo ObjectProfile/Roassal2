@@ -57,6 +57,7 @@ PyFile >> classesAndMethods [
 	b nodes: classes forEach: [ :c |
 		b shape box size: [ :m | m numberOfLinesOfCode sqrt ].
 		b nodes: c methods.
+		b edges connectToAll: #outgoingMethods.
 		b layout grid.
 	].
 	b shape orthoVerticalLine.
@@ -196,7 +197,7 @@ self haltIf: [ l = '    def fibonacci(self, n):' ]						.
 			
 			insideClassDefinition ifTrue: [ 
 				"We find a method definition"
-				(l beginsWith: '    def ') ifTrue: [ 
+				((l beginsWith: '    def ') or: [ l beginsWith: '	def ' ]) ifTrue: [ 
 					| m |
 					self markEndOfMethodAtLine: index.
 					m := PyMethod new
