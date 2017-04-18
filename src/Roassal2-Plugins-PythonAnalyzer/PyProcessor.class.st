@@ -101,6 +101,11 @@ PyProcessor >> initialize [
 ]
 
 { #category : #accessing }
+PyProcessor >> methods [
+	^ self files values flatCollect: #methods
+]
+
+{ #category : #accessing }
 PyProcessor >> moduleNamed: afilename [
 	| fn |
 	fn := afilename.
@@ -193,6 +198,21 @@ PyProcessor >> resolveDependencies [
 	"Public method"
 	self resolveDependenciesBetweenModules.
 	self resolveDependenciesForClassInheritance.
+	self resolveDependenciesBetweenMethodsAndFunctions
+]
+
+{ #category : #'resolving dependencies' }
+PyProcessor >> resolveDependenciesBetweenMethodsAndFunctions [
+	| allRelevantFunctions g |
+	allRelevantFunctions := self functions, self methods.
+	g := allRelevantFunctions groupedBy: #name.
+	allRelevantFunctions do: [ :f |
+		f callNames do: [ :name |
+			g at: name ifPresent: [ :ll | 
+				f addOutgoingMethods: ll. 
+				ll do: [ :ff | ff addIncomingMethod: f ] ]
+		]
+	]
 ]
 
 { #category : #'resolving dependencies' }

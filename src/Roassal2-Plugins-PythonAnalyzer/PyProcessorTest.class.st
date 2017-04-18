@@ -4254,6 +4254,102 @@ PyProcessorTest >> testFunctions02CallNames [
 	self assert: firstFunction callNames asArray equals: (Array with: 'log' with: 'max' with: 'log' with: 'max')
 ]
 
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions03CallNames [
+ 
+	| firstFile foo |
+	p processFileAsString:
+'def foo():
+	v=bar()
+	
+def bar():
+	return 5'
+	 named: 'foo.py'.
+	self assert: p numberOfFunctions equals: 2.
+	firstFile := p files values first.
+	self assert: firstFile numberOfFunctions equals: 2.
+	
+	foo := firstFile functions first.
+	self assert: foo name equals: 'foo'.
+	self assert: foo callNames size equals: 1.
+	self assert: foo callNames anyOne equals: 'bar'.
+]
+
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions04CallNames [
+ 
+	| firstFile foo |
+	p processFileAsString:
+'def foo():
+	v=bar()+zork()
+	
+def bar():
+	return 5
+	
+def zork():
+	return 4
+'
+	 named: 'foo.py'.
+	firstFile := p files values first.
+	
+	
+	foo := firstFile functions first.
+	self assert: foo name equals: 'foo'.
+	self assert: foo callNames size equals: 2.
+	self assert: foo callNames first equals: 'bar'.
+	self assert: foo callNames second equals: 'zork'.
+]
+
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions05CallNames [
+ 
+	| firstFile foo |
+	p processFileAsString:
+'def foo():
+	v=bar()-zork()
+	
+def bar():
+	return 5
+	
+def zork():
+	return 4
+'
+	 named: 'foo.py'.
+	firstFile := p files values first.
+	
+	
+	foo := firstFile functions first.
+	self assert: foo name equals: 'foo'.
+	self assert: foo callNames size equals: 2.
+	self assert: foo callNames first equals: 'bar'.
+	self assert: foo callNames second equals: 'zork'.
+]
+
+{ #category : #'tests - functions parsing' }
+PyProcessorTest >> testFunctions06CallNames [
+ 
+	| firstFile foo |
+	p processFileAsString:
+'def foo():
+	v=bar()/zork()
+	
+def bar():
+	return 5
+	
+def zork():
+	return 4
+'
+	 named: 'foo.py'.
+	firstFile := p files values first.
+	
+	
+	foo := firstFile functions first.
+	self assert: foo name equals: 'foo'.
+	self assert: foo callNames size equals: 2.
+	self assert: foo callNames first equals: 'bar'.
+	self assert: foo callNames second equals: 'zork'.
+]
+
 { #category : #'tests - import' }
 PyProcessorTest >> testImport [
 	| f1 f2 f3 main foobar schemaMapper |
@@ -4498,6 +4594,46 @@ PyProcessorTest >> testOOP08LargeClass [
 	
 	p classes do: [ :c | 
 		self assert: (c methods allSatisfy: [ :m | m numberOfLinesOfCode > 1 ]) ]
+]
+
+{ #category : #'tests - oop' }
+PyProcessorTest >> testOOP09Invocations [
+
+	| f class firstMethod |
+	f := '
+class Foo(object):
+	def foo(self):
+		return self.bar()
+		
+	def bar(self):
+		return 42
+		
+class Bar(object):
+	def foo(self):
+		return 56
+		
+	def bar(self):
+		return 56
+
+	def zork(self):
+		return 56
+		
+'.
+	p processFileAsString: f named: 'codeOOP.py'.
+	p resolveDependencies.
+	self assert: p numberOfClasses equals: 2.
+	
+	class := p classes first.
+	self assert: class superclassName equals: 'object'.
+	self assert: class file equals: p files values first.
+	
+	self assert: class file numberOfClasses equals: 2.
+	self assert: class file numberOfFunctions equals: 0.
+	self assert: class numberOfLinesOfCode equals: 7.
+	
+	firstMethod := class methods first.
+	self assert: firstMethod name equals: 'foo'.
+	self assert: firstMethod outgoingMethods size equals: 2.
 ]
 
 { #category : #tests }
