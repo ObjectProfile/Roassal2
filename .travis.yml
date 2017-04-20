@@ -7,3 +7,10 @@ os:
 smalltalk:
   - Pharo-6.0
   - Pharo-5.0
+
+matrix:
+    include: 
+        - smalltalk: Pharo-6.0
+          smalltalk_config: .smalltalk_stable.ston
+        - smalltalk: Pharo-6.0
+          smalltalk_config: .smalltalk.ston
