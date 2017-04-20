@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'rectangle',
 		'strokeWidth',
-		'borderStyle',
 		'dashes'
 	],
 	#classInstVars : [
