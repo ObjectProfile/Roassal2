@@ -158,7 +158,7 @@ TRShape >> encompassingRectangle [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : #geometry }
 TRShape >> extent: anExtent [
 	"do nothing here. This method may be overriden for particular behavior"
 ]
