@@ -12,12 +12,14 @@ matrix:
     include: 
         - smalltalk: Pharo-6.0
           smalltalk_config: .smalltalk_stable.ston
-          os: 
-              - osx
-              - linux
+          os: osx
         - smalltalk: Pharo-5.0
           smalltalk_config: .smalltalk_stable.ston
-          os: 
-              - osx
-              - linux
+          os: osx
+        - smalltalk: Pharo-6.0
+          smalltalk_config: .smalltalk_stable.ston
+          os: linux
+        - smalltalk: Pharo-5.0
+          smalltalk_config: .smalltalk_stable.ston
+          os: linux
 
