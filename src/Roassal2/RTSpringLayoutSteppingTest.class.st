@@ -8,7 +8,7 @@ Class {
 RTSpringLayoutSteppingTest >> testAfterBlock [
 	| t s |
 	t := 0.
-	s := RTSpringLayoutStepping new.
+	s := RTForceLayoutStepping new.
 	s afterBlock: [ t := t + 1 ].
 	self assert: t equals: 0.
 	s refresh; refresh.
@@ -19,7 +19,7 @@ RTSpringLayoutSteppingTest >> testAfterBlock [
 RTSpringLayoutSteppingTest >> testBasic [
 
 	| l |
-	l := RTSpringLayoutStepping new.
+	l := RTForceLayoutStepping new.
 	self deny: l hasCompleted.
 	
 ]
@@ -27,7 +27,7 @@ RTSpringLayoutSteppingTest >> testBasic [
 { #category : #tests }
 RTSpringLayoutSteppingTest >> testBasic2 [
 
-	RTSpringLayoutStepping new refresh
+	RTForceLayoutStepping new refresh
 	
 ]
 
@@ -35,7 +35,7 @@ RTSpringLayoutSteppingTest >> testBasic2 [
 RTSpringLayoutSteppingTest >> testBasic3 [
 
 	| v l |
-	l := RTSpringLayoutStepping new.
+	l := RTForceLayoutStepping new.
 	self assert: l nodes isEmpty.
 
 	v := RTView new.

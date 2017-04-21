@@ -2280,7 +2280,7 @@ b build.
 
 ff := RTForceBasedLayout new.
 ff initialLayout: (RTGridLayout new lineItemsCount: 30).
-RTSpringLayoutStepping new 
+RTForceLayoutStepping new 
 	view: b view; 
 	layout: ff;
 	inView: b view.
