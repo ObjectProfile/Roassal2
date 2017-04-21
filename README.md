@@ -7,3 +7,11 @@ Roassal2 is a visualization engine for the Pharo and VisualWorks programming lan
 Extensive documentatino is available on http://AgileVisualization.com
 
 Source code of Roassal is kept on SmalltalkHub: http://smalltalkhub.com/#!/~ObjectProfile/Roassal2
+
+Execute the following code snippet to load Roassal2
+```Smalltalk
+Gofer it
+    smalltalkhubUser: 'ObjectProfile' project: 'Roassal2';
+    configurationOf: 'Roassal2';
+    loadDevelopment
+```
