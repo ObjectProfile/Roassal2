@@ -12,7 +12,8 @@ Class {
 		'announcer',
 		'color',
 		'session',
-		'eventOverseer'
+		'eventOverseer',
+		'theme'
 	],
 	#category : #'Trachel-Core'
 }
@@ -289,6 +290,13 @@ TRCanvas >> hasAnimation: anAnimation [
 	^ animations includes: anAnimation
 ]
 
+{ #category : #theme }
+TRCanvas >> hasTheme [
+	"Return whether the canvas has a theme set by the user. If no theme is set, then
+	 a theme will be infered by (TRMorph or TRVisual)"
+	^ theme notNil 
+]
+
 { #category : #initialization }
 TRCanvas >> initialize [
 	super initialize.
@@ -300,7 +308,7 @@ TRCanvas >> initialize [
 	camera := TRCamera forCanvas: self.
 	color := Color white.
 	session := TRPlatform current session.
-	
+	theme := TRWhiteTheme default.
 	"No event overseer at the creation"
 	eventOverseer := nil
 ]
@@ -602,6 +610,20 @@ TRCanvas >> shapes [
 { #category : #updating }
 TRCanvas >> signalUpdate [
 	morph changed
+]
+
+{ #category : #accessing }
+TRCanvas >> theme [
+	"Return the theme used by TRCanvas. Note that the theme may be nil. In that case, it means that the theme will be infered by TRMorph (if Pharo is the running platform)"
+	^ theme
+]
+
+{ #category : #accessing }
+TRCanvas >> theme: aTheme [
+	"Set the theme used by the Trachel Canvas."
+	self assert: [ aTheme isKindOf: TRAbstractTheme ].
+	theme := aTheme.
+	self color: theme trachelCanvasColor
 ]
 
 { #category : #accessing }

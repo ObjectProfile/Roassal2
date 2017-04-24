@@ -99,9 +99,9 @@ TRAbstractLineDecoratorShape >> drawOn: athensCanvas [
 				athensCanvas setShape: self path.
 				open 
 					ifFalse: [
-						athensCanvas setPaint: color.
+						athensCanvas setPaint: self themedColor.
 						athensCanvas draw ].
-				(athensCanvas setStrokePaint: strokePaint) width: self width.
+				(athensCanvas setStrokePaint: self themedStrokeColor) width: self width.
 				athensCanvas draw ] ]
 ]
 

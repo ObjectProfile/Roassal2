@@ -133,11 +133,11 @@ TRShape >> drawOn: athensCanvas [
 		pt scaleBy: matrix sx @ matrix sy.
 		
 		athensCanvas
-			setPaint: color;
+			setPaint: self themedColor;
 			drawShape: self path.
 			
 		athensCanvas
-			setStrokePaint: strokePaint;
+			setStrokePaint: self themedStrokeColor;
 			drawShape: self path  ]
 ]
 
@@ -194,8 +194,8 @@ TRShape >> indexInCanvas [
 { #category : #initialization }
 TRShape >> initialize [
 	super initialize.
-	color := Color gray.
-	strokePaint := Color black.
+	color := self theme transformColor: Color gray.
+	strokePaint := self theme transformColor: Color black.
 	matrix := TRPlatform current affineTransformClass new.
 	rotationAngleDegrees := 0.
 	self position: 0 @ 0.
@@ -392,6 +392,25 @@ TRShape >> strokePaint: aColor [
 	"set the color of the border line"
 	[ aColor isNil or: [ aColor isColor ] ] assert.
 	strokePaint := aColor
+]
+
+{ #category : #accessing }
+TRShape >> theme [
+	"Return the theme used by the Canvas"
+	canvas ifNil: [ ^ TRWhiteTheme default ].
+	^ canvas theme
+]
+
+{ #category : #accessing }
+TRShape >> themedColor [
+	"Return the color that has been themed"
+	^ self theme transformColor: color
+]
+
+{ #category : #accessing }
+TRShape >> themedStrokeColor [
+	"Return the stroke color that has been themed"
+	^ self theme transformColor: strokePaint
 ]
 
 { #category : #private }

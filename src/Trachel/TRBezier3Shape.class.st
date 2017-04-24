@@ -38,7 +38,7 @@ TRBezier3Shape >> computePath [
 TRBezier3Shape >> drawOn: athensCanvas [
 	athensCanvas pathTransform
 		restoreAfter: [ athensCanvas setShape: self path.
-			(athensCanvas setStrokePaint: color) width: width asFloat.
+			(athensCanvas setStrokePaint: self themedColor) width: width asFloat.
 			athensCanvas draw ]
 ]
 

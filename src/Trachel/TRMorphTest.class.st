@@ -101,3 +101,21 @@ TRMorphTest >> testHandleEventClass02 [
 	self assert: (t announcer handleEventClass: TRMouseClick superclass).
 	self deny: (t announcer handleEventClass: TRMouseClick new).
 ]
+
+{ #category : #theme }
+TRMorphTest >> testTheme01 [
+
+	| m c |
+	c := TRCanvas new.
+	m := TRMorph new.
+	m canvas: c.
+	m setTheme.
+	self assert: c theme notNil.
+	
+]
+
+{ #category : #theme }
+TRMorphTest >> testTheme02Failure [
+	self should: [ TRMorph new setTheme ] raise: AssertionFailure.
+	
+]
