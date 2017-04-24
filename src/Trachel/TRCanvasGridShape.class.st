@@ -71,7 +71,7 @@ TRCanvasGridShape >> encompassingRectangle [
 	^ 0 @ 0 corner: 0@0
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TRCanvasGridShape >> initialize [
 	super initialize.
 	color := Color black alpha: 0.05.

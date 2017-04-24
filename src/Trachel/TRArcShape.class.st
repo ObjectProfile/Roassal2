@@ -99,7 +99,7 @@ TRArcShape >> drawOn: athensCanvas [
 		athensCanvas pathTransform
 				multiplyBy: matrix asFloatTransform.
 		athensCanvas
-			setPaint: color;
+			setPaint: self themedColor;
 			drawShape: self path.
 
 		self drawStrokeIfNecessaryOn: athensCanvas

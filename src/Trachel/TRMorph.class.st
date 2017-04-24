@@ -40,7 +40,11 @@ TRMorph >> announceToEventOverseer: evt [
 
 { #category : #accessing }
 TRMorph >> canvas: aTrachelCanvas [
+	"Set the Trachel canvas to the morph. 
+	 Set the theme if not set in the Trachel canvas.
+	 And creates the Athens surface"
 	trachelCanvas := aTrachelCanvas.
+	self setTheme.
 	surface := AthensCairoSurface extent: (aTrachelCanvas extent) asIntegerPoint
 ]
 
@@ -238,6 +242,15 @@ TRMorph >> handlesMouseWheel: evt [
 ]
 
 { #category : #initialization }
+TRMorph >> inferCurrentTheme [
+	| themeToSet |
+	UITheme current class == Pharo3DarkTheme
+		ifTrue: [ themeToSet := TRDarkTheme new ]
+		ifFalse: [ themeToSet := TRWhiteTheme new ].
+	^ themeToSet
+]
+
+{ #category : #initialization }
 TRMorph >> initialize [
 	super initialize.
 	self createSurface.
@@ -342,8 +355,17 @@ TRMorph >> relativePositionFor: evt [
 	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
 ]
 
+{ #category : #initialization }
+TRMorph >> setTheme [
+	"his method infers the theme to use and modify the canvas"
+	self assert: [ trachelCanvas notNil ] description: 'Need to have a Trachel canvas'.
+	trachelCanvas theme: self inferCurrentTheme.
+	^ trachelCanvas theme
+]
+
 { #category : #'event-processed' }
-TRMorph >> shapeForEvent: anEvent [	
+TRMorph >> shapeForEvent: anEvent [
+	"Return the Trachel shape for the event provided as argument"
 	^ self shapeWithActionForPositionInPixels: (self relativePositionFor: anEvent)
 ]
 

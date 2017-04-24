@@ -103,7 +103,7 @@ TRLabelShape >> drawOn: athensCanvas [
 			translateBy: ((self textWidth / -2) @ (self textHeight / 2)) asFloatPoint;
 			translateBy: (0 @ self descent negated) asFloatPoint.
 		athensCanvas setFont: font.
-		athensCanvas setPaint: color.
+		athensCanvas setPaint: self themedColor.
 		athensCanvas drawString: text
 	]
 ]

@@ -33,7 +33,7 @@ TRRotatedLabelShape >> drawOn: athensCanvas [
 			translateBy: ((self notRotatedWidth value / -2) @ (self notRotatedHeight value / 2)) asIntegerPoint;
 			translateBy: (0 @ font descent negated) asIntegerPoint.
 		athensCanvas setFont: font.
-		athensCanvas setPaint: color.
+		athensCanvas setPaint: self themedColor.
 		athensCanvas drawString: text
 	].
 ]
