@@ -1,3 +1,6 @@
+"
+Abstract class for labeled interaction. Maybe this abstract class is not necessary, since it has only one subclass
+"
 Class {
 	#name : #RTAbstractLabeled,
 	#superclass : #RTInteraction,
