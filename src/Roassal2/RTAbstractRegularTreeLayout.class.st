@@ -32,7 +32,9 @@ Class {
 		'topGap',
 		'leftGap',
 		'nodesByLayer',
-		'isLayered'
+		'isLayered',
+		'shouldBeHorizontallyReversed',
+		'shouldBeVerticallyReversed'
 	],
 	#category : #'Roassal2-Layouts'
 }
@@ -63,13 +65,47 @@ RTAbstractRegularTreeLayout >> doExecute: elements [
 		self rearrangeByLayers: elements ]
 ]
 
+{ #category : #hook }
+RTAbstractRegularTreeLayout >> doPost: elements [
+	shouldBeHorizontallyReversed ifTrue: [ self horizontallyReverse: elements ].
+	shouldBeVerticallyReversed ifTrue: [ self verticallyReverse: elements ].
+]
+
+{ #category : #accessing }
+RTAbstractRegularTreeLayout >> horizontallyReverse [
+	shouldBeHorizontallyReversed := true
+]
+
+{ #category : #reversing }
+RTAbstractRegularTreeLayout >> horizontallyReverse: elements [
+	"Horizontally reverse the elements, as well as the attachpoints"
+
+	| g largeur |
+	g := elements asGroup.
+	largeur := g extent x.
+	elements
+		do: [ :el | el translateTo: (largeur - el position x) @ el position y ]
+]
+
 { #category : #'initialize-release' }
 RTAbstractRegularTreeLayout >> initialize [
 	super initialize.
 	topGap := 5.
 	leftGap := 5.
 	isLayered := false.
-	self doAttachPoint
+	shouldBeHorizontallyReversed := false.
+	shouldBeVerticallyReversed := false.
+	self doAttachPoint.
+]
+
+{ #category : #reversing }
+RTAbstractRegularTreeLayout >> inverseAttachPoint [
+	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
+
+	edges
+		do: [ :edge | 
+			edge shape attachPoint inverted: true.
+			edge updateFromTo ]
 ]
 
 { #category : #accessing }
@@ -112,6 +148,18 @@ RTAbstractRegularTreeLayout >> rearrangeByLayers: aGraph [
 ]
 
 { #category : #accessing }
+RTAbstractRegularTreeLayout >> shouldBeHorizontallyReversed [
+	"Return if the layout is horizontally reversed"
+	^ shouldBeHorizontallyReversed 
+]
+
+{ #category : #accessing }
+RTAbstractRegularTreeLayout >> shouldBeVerticallyReversed [
+	"Return if the layout is vertically reversed"
+	^ shouldBeVerticallyReversed
+]
+
+{ #category : #accessing }
 RTAbstractRegularTreeLayout >> topGap [
 	^ topGap
 ]
@@ -119,4 +167,22 @@ RTAbstractRegularTreeLayout >> topGap [
 { #category : #accessing }
 RTAbstractRegularTreeLayout >> topGap: anInteger [
 	topGap := anInteger
+]
+
+{ #category : #accessing }
+RTAbstractRegularTreeLayout >> verticallyReverse [
+	shouldBeVerticallyReversed := true
+	
+
+]
+
+{ #category : #reversing }
+RTAbstractRegularTreeLayout >> verticallyReverse: elements [
+	"Vertically reverse the elements, as well as the attachpoints"
+
+	| g hauteur |
+	g := elements asGroup.
+	hauteur := g extent y.
+	elements
+		do: [ :el | el translateTo: el position x @ (hauteur - el position y) ]
 ]
