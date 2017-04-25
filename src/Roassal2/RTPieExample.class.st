@@ -14,17 +14,16 @@ Class {
 { #category : #sources }
 RTPieExample >> exampleEmphasis [
 
-| b |
-b := RTPieBuilder new.
-b interaction popup.
-b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
-b slice: #numberOfMethods.
-b normalizer distinctColor.	
-b labeled.
-b emphasize: Set by: 20.
-b emphasize: Dictionary by: 20.
-b build.
-^ b view
+	| b |
+	b := RTPieBuilder new.
+	b interaction popup.
+	b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
+	b slice: #numberOfMethods.
+	b normalizer distinctColor.	
+	b labeled.
+	b emphasize: Set by: 20.
+	b emphasize: Dictionary by: 20.
+	^ b 
 ]
 
 { #category : #icons }
@@ -62,15 +61,14 @@ TkSuQmCC'
 { #category : #sources }
 RTPieExample >> exampleLabelledChart [
 
-| b |
-b := RTPieBuilder new.
-b interaction popup.
-b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection).
-b slice: #numberOfMethods.
-b normalizer distinctColor.	
-b labeled.
-b build.
-^ b view
+	| b |
+	b := RTPieBuilder new.
+	b interaction popup.
+	b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection).
+	b slice: #numberOfMethods.
+	b normalizer distinctColor.	
+	b labeled.
+	^ b
 ]
 
 { #category : #icons }
@@ -105,10 +103,6 @@ g+CD4AcfBB8EP/gg+CD4wQfBDz4IPgh+8EHwQfAjIf8CK2x8XCu31d4AAAAASUVORK5CYII='
 
 { #category : #sources }
 RTPieExample >> exampleLabelledIf [
-	"
-	var b: RTPieBuilder
-	var c: Class
-	"
 	| b |
 	b := RTPieBuilder new.
 	b interaction popup.
@@ -116,8 +110,7 @@ RTPieExample >> exampleLabelledIf [
 	b slice: #numberOfMethods.
 	b normalizer distinctColor.	
 	b labeledIf: [ :c | c numberOfMethods > 18 ].
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #icons }
@@ -162,30 +155,35 @@ l/8BzNJh52yayYQAAAAASUVORK5CYII='
 
 { #category : #sources }
 RTPieExample >> examplePieAndLegend [
+	"
+	RTPieExample new examplePieAndLegend
+	"
 
-| b myClasses lb normalizer |
-myClasses := (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
+	| b myClasses lb |
+	myClasses := (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
 
-b := RTPieBuilder new.
-b interaction popup.
-b objects: myClasses.
-b slice: #numberOfMethods.
-b normalizer distinctColor.	
-b labeled.
-b emphasize: Set by: 20.
-b emphasize: Dictionary by: 20.
-
-"Legend"
-lb := RTLegendBuilder new.
-lb view: b view.
-lb addText: 'Distribution of number of Methods in some classes'.
-normalizer := RTMultiLinearColorForIdentity new objects: myClasses.
-myClasses do: [ :aClass |
-	lb addColor: (normalizer rtValue: aClass) text: aClass name.
-].
-lb build.
-b build.
-^ b view
+	b := RTPieBuilder new.
+	b interaction popup.
+	b objects: myClasses.
+	b slice: #numberOfMethods.
+	b normalizer distinctColor.	
+	b labeled.
+	b emphasize: Set by: 20.
+	b emphasize: Dictionary by: 20.
+	b build.
+	
+	"Legend"
+	lb := RTLegendBuilder new.
+	lb view: b view.
+	lb addText: 'Distribution of number of Methods in some classes'.
+	myClasses do: [ :aClass |
+		| aColor |
+		aColor := (b view elementFromModel: aClass) trachelShape color.
+		lb addColor: aColor text: aClass name.
+	].
+	lb build.
+	
+	^ b view
 ]
 
 { #category : #icons }
@@ -240,37 +238,37 @@ rkJggg=='
 { #category : #sources }
 RTPieExample >> exampleRefreshPie [
 
-| view fillView |
-"We create an empty view. The view will contain the button and the pie."
-view := RTView new.
+	| view fillView |
+	"We create an empty view. The view will contain the button and the pie."
+	view := RTView new.
 
-"fillView is block that: 
-	(i) remove all the elements in the view (except the button); 
-	(ii) create a new pie with totally random data
-	(iii) force a screen refresh with #signalUpdate"
-fillView := 
-[
-	| b |
-	view clean.
-	b := RTPieBuilder new.
-	
-	"The RTPieBuilder will create the pie in the view"
-	b view: view.
-	b interaction popup.
-	b objects: ((1 to: 10 atRandom) collect: [ :i | 30 atRandom ]).
-	b slice: [ :aNumber | aNumber ].
-	b normalizer distinctColor.
-	b labeled.
-	b build.
-	view signalUpdate
-].
+	"fillView is block that: 
+		(i) remove all the elements in the view (except the button); 
+		(ii) create a new pie with totally random data
+		(iii) force a screen refresh with #signalUpdate"
+	fillView := 
+	[
+		| b |
+		view clean.
+		b := RTPieBuilder new.
+		
+		"The RTPieBuilder will create the pie in the view"
+		b view: view.
+		b interaction popup.
+		b objects: ((1 to: 10 atRandom) collect: [ :i | 30 atRandom ]).
+		b slice: [ :aNumber | aNumber ].
+		b normalizer distinctColor.
+		b labeled.
+		b build.
+		view signalUpdate
+	].
 
-"Add a button menu to the view"
-view addMenu: 'Generate new data' callback: [ fillView value ].
+	"Add a button menu to the view"
+	view addMenu: 'Generate new data' callback: [ fillView value ].
 
-"We want some data when opening the view"
-fillView value.
-^ view
+	"We want some data when opening the view"
+	fillView value.
+	^ view
 
 ]
 
@@ -312,17 +310,16 @@ Dz8If/hB+EH4ww+y2vIvwbhd6S5RRvwAAAAASUVORK5CYII='
 { #category : #sources }
 RTPieExample >> exampleRingChart [
 
-| b |
-b := RTPieBuilder new.
-b interaction popup.
-b shape current
-	innerRadius: 70;
-	externalRadius: 100.
-b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
-b slice: #numberOfMethods.
-b normalizer distinctColor.	
-b build.
-^ b view
+	| b |
+	b := RTPieBuilder new.
+	b interaction popup.
+	b shape current
+		innerRadius: 70;
+		externalRadius: 100.
+	b objects: (Array with: Dictionary with: Collection with: Set with: OrderedCollection ).
+	b slice: #numberOfMethods.
+	b normalizer distinctColor.	
+	^ b
 ]
 
 { #category : #icons }
@@ -354,16 +351,15 @@ EHwQ/DQo/wGK0Xg+nbEqTgAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTPieExample >> exampleSimple [
 
-| b |
-b := RTPieBuilder new.
-b interaction popup.
+	| b |
+	b := RTPieBuilder new.
+	b interaction popup.
 
-b objects: #(10 4 1 2 5).
-b slice: [ :aNumber | aNumber ].
-b normalizer distinctColor.
-b labeled.
-b build.
-^ b view
+	b objects: #(10 4 1 2 5).
+	b slice: #yourself.
+	b normalizer distinctColor.
+	b labeled.
+	^ b
 ]
 
 { #category : #icons }
