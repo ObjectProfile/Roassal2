@@ -204,16 +204,20 @@ t8ikZv69CObLev7v8xf4CZ+Dg4PRguCXeAo+CD4IfsEHwQfBL/gg+CD4BR8EHwS/xF3+A8ir
 
 { #category : #sources }
 RTTreeMapExample >> exampleSimple [
-
-| b labels |
-b := RTTreeMapBuilder new.
-  labels := #('uno' 'dos' 'tres' 'cuatro' 'cinco' 'cent mille').
-  b shape fillColor: Color veryLightGray.
-  b from: labels using: [#()].
-  b weight: [:n | n size ].
-  b build.
-b view elements @ (RTLabeled new color: Color black; center).
-  ^ b view.
+	| b labels |
+	b := RTTreeMapBuilder new.
+	labels := #('uno' 'dos' 'tres' 'cuatro' 'cinco' 'cent mille').
+	b shape fillColor: Color veryLightGray.
+	b from: labels using: [ #() ].
+	b weight: [ :n | n size ].
+	b build.
+	b view elements
+		@
+			(RTLabeled new
+				color: Color black;
+				setAsShouldBeInTheFront;
+				center).
+	^ b view
 ]
 
 { #category : #icons }
