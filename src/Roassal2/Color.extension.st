@@ -119,8 +119,3 @@ Color >> trans [
 	"Make the color transparent"
 	^ self alpha: 0.4
 ]
-
-{ #category : #'*roassal2-exportervw' }
-Color class >> visualworksName [
-	^ 'ColorValue'
-]
