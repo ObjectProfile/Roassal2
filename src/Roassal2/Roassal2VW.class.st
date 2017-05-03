@@ -18,16 +18,7 @@ Roassal2VW >> blacklist [
 	RTExploraBuilderExample >> #exampleCircularList.
 	RTHTML5ExporterExample >> #exportAll.
 	RTPopupTest >> #testPopupView.
-	RTPopupTest >> #testPopupView02.
-	RTBuilder >> #openWithToolbar.
-	RTView >> #openWithToolbar.
-	RTView >> #spotterShapesFor:.
-	RTView >> #spotterShapesModelsFor:.
-	RTGrapherTest >> #testError.
-	RTMondrianTest >> #testSourceError.
-	RTObject class >> #gtExamplesFactory.
-	TRDarkTheme >> #trachelCanvasColor.
-	 }
+	RTPopupTest >> #testPopupView02 }
 ]
 
 { #category : #importing }
@@ -131,12 +122,11 @@ classes do:[:cls |
 		('*Test' match: cls myClass name) ifTrue: [ 
 			currentB := btests.
 			('*Tests' match: cat) 
-				ifFalse: [ cat := cat , '-Tests'.] ]
-			ifFalse: [
+				ifFalse: [ cat := cat , '-Tests'.] ].
 		(('*Example*' match: cls myClass name) or: [ '*Examples' match: cls myClass name]) 
 			ifTrue: [ 
 				currentB := bexamples.
-				cat := cat , '-Examples' ] ].
+				cat := cat , '-Examples' ].
 		('Trachel*' match: cat) 
 			ifTrue: [ cat := 'Roassal2-', cat ].
 		p := map at: cat ifAbsent: [ 
