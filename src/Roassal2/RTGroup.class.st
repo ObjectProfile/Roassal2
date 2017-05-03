@@ -6,7 +6,8 @@ Class {
 	#name : #RTGroup,
 	#superclass : #OrderedCollection,
 	#instVars : [
-		'attributes'
+		'attributes',
+		'elementFromModelCache'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -24,6 +25,18 @@ RTGroup >> @ interaction [
 { #category : #visitor }
 RTGroup >> accept: aRTVisitor [
 	self  do: [ :e | e trachelShape accept: aRTVisitor]
+]
+
+{ #category : #accessing }
+RTGroup >> add: element [
+	self resetElementFromModelCache.
+	^ super add: element
+]
+
+{ #category : #accessing }
+RTGroup >> addAll: elements [
+	self resetElementFromModelCache.
+	^ super addAll: elements
 ]
 
 { #category : #public }
@@ -86,14 +99,28 @@ RTGroup >> edges [
 	^ self select: [ :o | o class == RTEdge ]
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	
-	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	(anObject class == CompiledMethod) ifTrue: [ ^ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ].
+	| t |
+	self elementFromModelCache at: anObject ifPresent: [ :v |
+		v isCollection ifFalse: [ ^ v ] ].
 
-	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
+	"We have this line because of a bug of the implementation of CompiledMethod>>#="
+	t := (anObject class == CompiledMethod) 
+				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
+				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
+
+	self elementFromModelCache at: anObject put: t.
+	^ t
+]
+
+{ #category : #accessing }
+RTGroup >> elementFromModelCache [
+	"Define a cache for the element lookup from models"
+	elementFromModelCache ifNil: [ elementFromModelCache := Dictionary new ].
+	^ elementFromModelCache
 ]
 
 { #category : #accessing }
@@ -103,11 +130,18 @@ RTGroup >> elements [
 
 { #category : #accessing }
 RTGroup >> elementsFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
-	
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
+
+	| t |
+	self elementFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
+
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	(anObject class == CompiledMethod) ifTrue: [ ^ self select: [ :el | el model == anObject ] ].
-	^ self select: [ :el | el model = anObject ]
+	t := (anObject class == CompiledMethod) 
+				ifTrue: [ self select: [ :el | el model == anObject ] ]
+				ifFalse: [ self select: [ :el | el model = anObject ] ].
+
+	self elementFromModelCache at: anObject put: t.
+	^ t
 ]
 
 { #category : #public }
@@ -270,6 +304,12 @@ RTGroup >> removeInteractionIfPresent: anInteractionClass [
 { #category : #rendering }
 RTGroup >> renderOn: trachelCanvas [
 	"Do nothing"
+]
+
+{ #category : #actions }
+RTGroup >> resetElementFromModelCache [
+	"Reset the cache"
+	elementFromModelCache := nil
 ]
 
 { #category : #public }
