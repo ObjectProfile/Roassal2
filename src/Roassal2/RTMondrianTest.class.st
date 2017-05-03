@@ -637,9 +637,10 @@ RTMondrianTest >> testSourceConnectFromToAll [
 { #category : #'tests - source' }
 RTMondrianTest >> testSourceError [
 	| values |
-	values := Array with: (1 -> 2)
-		with: (1 -> 3)
-		with: (3 -> 7).
+	values := Array with: (1 -> 2) 
+	 with: (1 -> 3) 
+	 with: (3 -> 7).
+	
 	b := RTMondrian new.
 	b shape box
 		fillColor: Color transparent;

@@ -490,9 +490,9 @@ RTGeneralExample >> directedEdges02 [
 	v addAll: elements2.
 	RTEdgeBuilder new
 		view: v;
-		objects: objects1, objects2;
+		objects: assocs;
 		shape: (RTDirectedLine new color: (Color blue alpha: 0.5));
-		source: assocs connectFrom: #key to: #value.
+		connectFrom: #key to: #value.
 	RTHorizontalLineLayout new
 		gapSize: 1;
 		on: elements1 , elements2.

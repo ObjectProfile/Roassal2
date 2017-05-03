@@ -382,7 +382,7 @@ RTRoassalExample >> exampleAnimatedCircle [
 	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
 	RTGridLayout on: v elements.
 	
-	v when: TRMouseMove do: [ :evt |  Transcript show: evt position printString; cr . mousePos := evt position. v elements do: #updateShape. v canvas signalUpdate ].
+	v when: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
 	
 
 	^ v
@@ -3474,7 +3474,7 @@ v addAll: es.
 RTGridLayout new gapSize: 0; on: es.
 
 v when: TRMouseMove do: [ :evt |
-	mousePosition := evt position.
+	mousePosition := evt positionFromCamera.
 	es updateShape.
 	v signalUpdate
 ].

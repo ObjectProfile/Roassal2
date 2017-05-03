@@ -36,6 +36,60 @@ RTGroupTest >> testAttributeAtput [
 	self assert: (g hasAttribute: #foo)
 ]
 
+{ #category : #'tests - caches' }
+RTGroupTest >> testCache01 [
+
+	| es el |
+	es := RTBox elementsOn: (1 to: 5).
+	self assert: es class equals: RTGroup.
+	self assert: es elementFromModelCache isEmpty.
+	
+	el := es elementFromModel: 2.
+	self assert: el class equals: RTElement.
+	self assert: el model equals: 2.
+	
+	self deny: es elementFromModelCache isEmpty.
+]
+
+{ #category : #'tests - caches' }
+RTGroupTest >> testCache02 [
+
+	| es el els |
+	es := RTBox elementsOn: #(1 1).
+	
+	el := es elementFromModel: 1.
+	self assert: el class equals: RTElement.
+	self assert: el model equals: 1.
+	
+	els := es elementsFromModel: 1.
+	self assert: els class equals: RTGroup.
+	self assert: els size equals: 2
+]
+
+{ #category : #'tests - caches' }
+RTGroupTest >> testCache03 [
+
+	| es el |
+	es := RTBox elementsOn: #(1 1).
+	
+	es elementsFromModel: 1.
+	el := es elementFromModel: 1.
+	self assert: el class equals: RTElement.
+	self assert: el model equals: 1.
+	
+]
+
+{ #category : #'tests - caches' }
+RTGroupTest >> testCache04 [
+
+	| es |
+	es := RTBox elementsOn: #(1).
+	self assert: (es elementsFromModel: 1) size equals: 1.
+	
+	es addAll: (RTBox elementsOn: #(1)). 
+	self assert: (es elementsFromModel: 1) size equals: 2.
+]
+
 { #category : #tests }
 RTGroupTest >> testElementFromModel [
 	| group |
