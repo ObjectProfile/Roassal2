@@ -442,13 +442,16 @@ RTElementTest >> testSizeAndModel [
 	self assert: el width = 7
 ]
 
-{ #category : #tests }
+{ #category : #view }
 RTElementTest >> testTrachelShape [
 
-	self assert: RTBox element trachelShape notNil.
-	self assert: RTBox element trachelShape class == TRBoxShape.
-
-	self assert: (RTElement new + RTBox) trachelShape notNil.
+	| e |
+	e := RTBox element.
+	self assert: e trachelShape ~~ e.
+	self assert: e trachelShape class equals: TRBoxShape.
+	
+	self assert: e trachelShape trachelShape equals: e trachelShape.
+	self assert: e trachelShape trachelShape trachelShape equals: e trachelShape.
 ]
 
 { #category : #tests }
