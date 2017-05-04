@@ -51,9 +51,7 @@ RTEdgeDrivenLayout class >> withEdges: aCollection [
 
 { #category : #'default attach points' }
 RTEdgeDrivenLayout >> addDefaultAttachPointToEdges [
-	| a |
-	a := self defaultAttachPoint.
-	edges do: [ :e | e shape attachPoint: a ]
+	edges do: [ :e | e shape attachPoint: self defaultAttachPoint ]
 ]
 
 { #category : #accessing }
@@ -75,7 +73,7 @@ RTEdgeDrivenLayout >> affectedNodesOf:  aNode [
 
 { #category : #'default attach points' }
 RTEdgeDrivenLayout >> defaultAttachPoint [
-	^ RTCenteredAttachPoint new
+	^ RTCenteredAttachPoint instance
 ]
 
 { #category : #'default values' }

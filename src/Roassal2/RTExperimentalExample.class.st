@@ -51,30 +51,21 @@ RTExperimentalExample class >> bumpLayer: n [
 
 { #category : #utility }
 RTExperimentalExample >> createExampleButton [
-	| shape base color |
-"	color := TRPlatform current linearGradientClass new start: 0@ -10.5; stop: 0@10.5;
-colorRamp: (Array with: (0.0 -> (Color white alpha: 0.4)) with: (1.0 -> Color transparent)).
-"	color := Color blue.
+	| shape base |
 	base := Color r: 0 g: 84 b: 85 range: 256.
-	shape := RTCompositeShape new
-		add: (RTEllipse new width: 103; height: 50; 
-			color: Color gray);
-		add: (RTLabel new text: 'Swap Data'; color: Color white).
-
-	
-"	base := Color r: 0 g: 84 b: 85 range: 256.
 	shape := RTCompositeShape new
 		add: (RTEllipse new width: 103; height: 50; 
 			color: Color gray);
 		add: (RTEllipse new width: 97; height: 47; 
 			color: base );
 		add: (RTEllipse new width: 71; height: 21;
-			color: color) translateBy: 0@ -10;
+			color: (TRPlatform current linearGradientClass new start: 0@ -10.5; stop: 0@10.5;
+colorRamp: (Array with: (0.0 -> (Color white alpha: 0.4)) with: (1.0 -> Color transparent)))) translateBy: 0@ -10;
 		add: (RTLabel new text: 'Swap Data'; color: Color white).
-"		
+		
 	^ shape element.
 
-
+	
 ]
 
 { #category : #utility }
@@ -477,20 +468,20 @@ update := [ arcs do: #update. v signalUpdate ].
 b := RTMenuBuilder new view: v.
 color := Color green.
 size := 10.
-b menu: 'Color' submenu: 'Red' callback: [ color := Color red ].
+b menu: 'Color' submenu: 'Red' background: Color yellow callback: [ color := Color red ].
 b menu: 'Color' submenu: 'Green' callback: [ color := Color green ].
 b menu: 'Color' submenu: 'Blue' callback: [ color := Color blue ].
 b menu: 'Color' submenu: 'Black' callback: [ color := Color black ].
 block := [ :i |
-	 b menu: 'Size' submenu: i asString callback: [ size := i ] ].
+	 b menu: 'Size' submenu: i asString background: Color yellow callback: [ size := i ] ].
 1 to: 10 do: [ :i | block value: i ].
-b menu: 'Base' submenu: 'Show' callback: [ 
+b menu: 'Base' submenu: 'Show' background: Color yellow callback: [ 
 	bcolor := Color random.
 	update value. ].
 b menu: 'Base' submenu: 'Hide' callback: [ 
 	bcolor := Color black.
 	update value. ].
-b menu: 'Clear' callback: [ 
+b menu: 'Clear' background: Color yellow callback: [ 
 	(v elements select: [ :e | e shape class = RTEllipse ]) do: #remove.
 	v signalUpdate. ].
 

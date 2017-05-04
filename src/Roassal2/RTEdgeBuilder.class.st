@@ -389,8 +389,6 @@ b layout force.
 b
 	"
 	| assocs allObjects |
-	self assert: [ objects notNil ] description: 'Cannot provide a nil value as the source'.
-	self assert: [ objects isCollection ] description: 'Need to provide a collection as the source'.
 	allObjects := Set new.
 	
 	assocs := objects collect: [ :o | 

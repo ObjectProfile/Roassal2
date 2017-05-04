@@ -192,7 +192,7 @@ RTView >> elementFromModel: anObject [
 	"
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements elementFromModel: anObject
-
+	"^ elements detect: [ :el | el model = anObject ] ifNone: [ nil ]"
 ]
 
 { #category : #accessing }
@@ -207,7 +207,7 @@ RTView >> elements [
 RTView >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	^ elements elementsFromModel: anObject
-
+	"^ elements select: [ :el | el model = anObject ]"
 ]
 
 { #category : #'accessing-computed' }
@@ -427,13 +427,6 @@ RTView >> setUpCanvas [
 RTView >> signalUpdate [
 	"Force the view to be refreshed. Useful in case some elements have changed"
 	^ self canvas signalUpdate
-]
-
-{ #category : #'accessing-computed' }
-RTView >> theme [
-	"Return the theme currently used. A theme is an instance of a subclass of TRAbstractTheme"
-
-	^ self canvas theme
 ]
 
 { #category : #'accessing-computed' }

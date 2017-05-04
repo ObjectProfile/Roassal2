@@ -33,7 +33,7 @@ Class {
 	#category : #'Roassal2-Layouts'
 }
 
-{ #category : #hook }
+{ #category : #'as yet unclassified' }
 RTReversedTreeLayout >> doPost: elements [
 	| g hauteur |
 	g := elements asGroup.
