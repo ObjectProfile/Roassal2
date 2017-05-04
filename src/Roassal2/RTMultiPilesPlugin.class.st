@@ -23,6 +23,11 @@ RTMultiPilesPlugin >> execute [
 		package: 'MultiPiles'; 
 		load.
 
+	Gofer new 
+		smalltalkhubUser: 'AlisonFernandez' project: 'MMatrix';
+		package: 'MultiPileMatrix'; 
+		load.
+
 ]
 
 { #category : #testing }

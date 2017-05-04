@@ -277,32 +277,33 @@ RvoB0Q+IftIPiH5A9JN+QPQDop/0A6IfEP2kHxD9gOgn/YDoJ/2A6AdEP+kHRD8g+kk/IPoB
 
 { #category : #sources }
 RTGrapherScatterplotExample >> exampleSeismDepthAndMag [
-	<noTest>
-	|tab ds b |
-	tab := RTTabTable new 
-		input: (TRPlatform current downloadContent: 
-	 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv')
-		usingDelimiter: $,.
-	tab removeFirstRow.
-	tab replaceEmptyValuesWith: '0' inColumns: #(4 5).
-	tab convertColumnsAsFloat: #(4 5).
+
+|tab ds b |
+tab := RTTabTable new 
+	input: (TRPlatform current downloadContent: 
+ 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv')
+	usingDelimiter: $,.
+tab removeFirstRow.
+tab replaceEmptyValuesWith: '0' inColumns: #(4 5).
+tab convertColumnsAsFloat: #(4 5).
 
 
-	b := RTGrapher new.
-	ds := RTData new.
-	ds interaction popup.
-	ds points: tab values.
-	ds dotShape color: (Color blue alpha: 0.3).
-	ds x: [ :row | row at: 4 ].
-	ds y: [ :row | row at: 5 ].
-	b add: ds.
+b := RTGrapher new.
+ds := RTData new.
+ds interaction popup.
+ds points: tab values.
+ds dotShape color: (Color blue alpha: 0.3).
+ds x: [ :row | row at: 4 ].
+ds y: [ :row | row at: 5 ].
+b add: ds.
 
-	b maxY: 8.
-	b maxX: 700.
+b maxY: 8.
+b maxX: 700.
 
-	b axisX title: 'depth'.
-	b axisY title: 'magnitude'.
-	^ b
+b axisX title: 'depth'.
+b axisY title: 'magnitude'.
+b build.
+^ b view
 ]
 
 { #category : #icons }

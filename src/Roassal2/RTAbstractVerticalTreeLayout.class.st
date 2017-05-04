@@ -20,7 +20,7 @@ RTAbstractVerticalTreeLayout >> computeChildrenFor: aNode [
 
 { #category : #'default attach points' }
 RTAbstractVerticalTreeLayout >> defaultAttachPoint [
-	^ RTVerticalAttachPoint new
+	^ RTVerticalAttachPoint instance
 ]
 
 { #category : #'initialize-release' }
@@ -28,19 +28,6 @@ RTAbstractVerticalTreeLayout >> initialize [
 	super initialize.
 	verticalGap := 20.
 	horizontalGap := 3
-]
-
-{ #category : #reversing }
-RTAbstractVerticalTreeLayout >> inverseAttachPoint [
-	"Invert the attach point of all the considered edges. It is likely that all the attachpoint are the same, but we do not have a garanty"
-
-	| a |
-	a := RTShorterVerticalDistanceAttachPoint new.
-	edges
-		do: [ :edge | 
-			edge shape attachPoint: a.
-			edge updateFromTo ]
-
 ]
 
 { #category : #'hook-private' }
@@ -71,12 +58,4 @@ RTAbstractVerticalTreeLayout >> rearrangeByLayers: aGraph [
 			eachNode translateTo: (eachNode position x @ cursor ).
 			max max: eachNode height ].
 		cursor := cursor + layerDepthSize + self verticalGap ]
-]
-
-{ #category : #reversing }
-RTAbstractVerticalTreeLayout >> verticallyReverse: elements [
-	"Vertically reverse the elements, as well as the attachpoints"
-
-	super verticallyReverse: elements.
-	self inverseAttachPoint
 ]

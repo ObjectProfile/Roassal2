@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Builder-Common'
 }
 
-{ #category : #example }
+{ #category : #'as yet unclassified' }
 RTShapeBuilderExample >> example01 [
 	"
 	self new example01
@@ -27,7 +27,7 @@ RTShapeBuilderExample >> example01 [
 	^ v view
 ]
 
-{ #category : #example }
+{ #category : #'as yet unclassified' }
 RTShapeBuilderExample >> example02 [
 	"
 	self new example02
@@ -45,7 +45,7 @@ RTShapeBuilderExample >> example02 [
 	^ v view
 ]
 
-{ #category : #example }
+{ #category : #'as yet unclassified' }
 RTShapeBuilderExample >> example03 [
 	"
 	self new example03

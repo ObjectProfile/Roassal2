@@ -201,15 +201,13 @@ RTAbstractGraphLayout >> highestNestingParentFor: aNodeFigure [
 
 { #category : #accessing }
 RTAbstractGraphLayout >> horizontalGap [
-	"Return the horizontal space, in pixel, between two neighbors"
-
-	^ horizontalGap ifNil: [ self class horizontalGap ]
+	
+	^horizontalGap ifNil: [ self class horizontalGap ]
 ]
 
 { #category : #accessing }
 RTAbstractGraphLayout >> horizontalGap: anInteger [
-	"Set the horizontal space, in pixel, between two neighbors"
-
+	
 	horizontalGap := anInteger
 ]
 
@@ -280,14 +278,12 @@ RTAbstractGraphLayout >> shiftTree: aNode by: aPoint [
 
 { #category : #accessing }
 RTAbstractGraphLayout >> verticalGap [
-	"Return the vertical space, in pixel, between a layer and a children layer"
-
-	^ verticalGap ifNil: [ self class verticalGap ]
+	
+	^verticalGap ifNil: [self class verticalGap]
 ]
 
 { #category : #accessing }
 RTAbstractGraphLayout >> verticalGap: anInteger [
-	"Set the vertical space, in pixel, between a layer and a children layer"
-
+	
 	verticalGap := anInteger
 ]

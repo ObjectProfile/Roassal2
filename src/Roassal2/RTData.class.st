@@ -51,7 +51,8 @@ Class {
 		'lineBuilder',
 		'shouldConnect',
 		'interaction',
-		'shouldHaveBars'
+		'shouldHaveBars',
+		'alignmentOffset'
 	],
 	#category : #'Roassal2-Builder-Grapher-Core'
 }

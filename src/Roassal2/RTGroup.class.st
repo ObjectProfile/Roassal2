@@ -6,8 +6,7 @@ Class {
 	#name : #RTGroup,
 	#superclass : #OrderedCollection,
 	#instVars : [
-		'attributes',
-		'elementFromModelCache'
+		'attributes'
 	],
 	#category : #'Roassal2-Core'
 }
@@ -25,18 +24,6 @@ RTGroup >> @ interaction [
 { #category : #visitor }
 RTGroup >> accept: aRTVisitor [
 	self  do: [ :e | e trachelShape accept: aRTVisitor]
-]
-
-{ #category : #accessing }
-RTGroup >> add: element [
-	self resetElementFromModelCache.
-	^ super add: element
-]
-
-{ #category : #accessing }
-RTGroup >> addAll: elements [
-	self resetElementFromModelCache.
-	^ super addAll: elements
 ]
 
 { #category : #public }
@@ -99,28 +86,14 @@ RTGroup >> edges [
 	^ self select: [ :o | o class == RTEdge ]
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	
-	| t |
-	self elementFromModelCache at: anObject ifPresent: [ :v |
-		v isCollection ifFalse: [ ^ v ] ].
-
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
-				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
+	(anObject class == CompiledMethod) ifTrue: [ ^ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ].
 
-	self elementFromModelCache at: anObject put: t.
-	^ t
-]
-
-{ #category : #accessing }
-RTGroup >> elementFromModelCache [
-	"Define a cache for the element lookup from models"
-	elementFromModelCache ifNil: [ elementFromModelCache := Dictionary new ].
-	^ elementFromModelCache
+	^ self detect: [ :el | el model = anObject ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -130,18 +103,11 @@ RTGroup >> elements [
 
 { #category : #accessing }
 RTGroup >> elementsFromModel: anObject [
-	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
-
-	| t |
-	self elementFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
-
+	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
+	
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
-	t := (anObject class == CompiledMethod) 
-				ifTrue: [ self select: [ :el | el model == anObject ] ]
-				ifFalse: [ self select: [ :el | el model = anObject ] ].
-
-	self elementFromModelCache at: anObject put: t.
-	^ t
+	(anObject class == CompiledMethod) ifTrue: [ ^ self select: [ :el | el model == anObject ] ].
+	^ self select: [ :el | el model = anObject ]
 ]
 
 { #category : #public }
@@ -273,43 +239,9 @@ RTGroup >> removeAttributeAt: aKey ifAbsent: anErrorBlock [
 	^ self attributes removeKey: aKey ifAbsent: anErrorBlock
 ]
 
-{ #category : #actions }
-RTGroup >> removeInteractionIfPresent: anInteractionClass [
-	"Remove an interaction, if present, on each element contained in the group
-	
-	For example:
-	-=-=-=-=-=
-	v := RTView new.
-	elements := RTEllipse new size: 20; elementsOn: (1 to: 20).
-	v addAll: elements.
-	RTGridLayout on: elements.
-
-	relevantElements := elements select: [ :e | e model < 10 ].
-	relevantElements do: [ :e | e trachelShape color: Color blue ].
-
-	d := RTDraggable new groupToDrag: relevantElements.
-	v canvas addMenu: 'add group dragging' callback: [
-		relevantElements @ d.
-	].
-
-	v canvas addMenu: 'remove group dragging' callback: [
-		relevantElements removeInteractionIfPresent: RTDraggable
-	].
-	v
-	-=-=-=-=-=
-	"
-	self do: [ :e | e removeInteractionIfPresent: anInteractionClass ]
-]
-
 { #category : #rendering }
 RTGroup >> renderOn: trachelCanvas [
 	"Do nothing"
-]
-
-{ #category : #actions }
-RTGroup >> resetElementFromModelCache [
-	"Reset the cache"
-	elementFromModelCache := nil
 ]
 
 { #category : #public }

@@ -1,6 +1,6 @@
-Extension { #name : #TClass }
+Extension { #name : #Class }
 
 { #category : #'*roassal2-exportervw' }
-TClass >> visualworksName [
+Class >> visualworksName [
 	^ self name
 ]
