@@ -1,21 +1,21 @@
-Extension { #name : #ClassDescription }
+Extension { #name : #TClassDescription }
 
-{ #category : #'*roassal2' }
-ClassDescription >> ageInDays [
+{ #category : #'*Roassal2' }
+TClassDescription >> ageInDays [
 	"Return the number of days the class exists"
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
 	^ (DateAndTime now - self oldestMethod date) asDays
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> ageInDaysRounded [
+{ #category : #'*Roassal2' }
+TClassDescription >> ageInDaysRounded [
 	"Return the number of days the class exists"
 
 	^ self ageInDays rounded
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> commonSuperclassWith: aClass [
+{ #category : #'*Roassal2' }
+TClassDescription >> commonSuperclassWith: aClass [
 	"
 	Metaclass commonSuperclassWith: Class
 	Metaclass commonSuperclassWith: Point
@@ -35,8 +35,8 @@ ClassDescription >> commonSuperclassWith: aClass [
 		ifFalse: [ t2 last ]
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> computeOldestMethod [
+{ #category : #'*Roassal2' }
+TClassDescription >> computeOldestMethod [
 	| d m |
 	d := DateAndTime now.
 	m := nil.
@@ -44,8 +44,8 @@ ClassDescription >> computeOldestMethod [
 	^ m
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> computeYoungestMethod [
+{ #category : #'*Roassal2' }
+TClassDescription >> computeYoungestMethod [
 	| d m ms aMethod |
 	ms := self methods, self class methods.
 	aMethod := ms anyOne.
@@ -56,8 +56,8 @@ ClassDescription >> computeYoungestMethod [
 	^ m
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> gotMethodOnDay: dayAsNumber [
+{ #category : #'*Roassal2' }
+TClassDescription >> gotMethodOnDay: dayAsNumber [
 	"Return true if a method has been defined on dayAsNumber.
 	Always returns true for dayAsNumber = 0"
 	| age |
@@ -66,14 +66,14 @@ ClassDescription >> gotMethodOnDay: dayAsNumber [
 
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
+{ #category : #'*Roassal2' }
+TClassDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
 	^ self methods anySatisfy: [ :cm | cm livingInDays = aNumberOfDays ]
 
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> isReferencedBy: aClass [ 
+{ #category : #'*Roassal2' }
+TClassDescription >> isReferencedBy: aClass [ 
 	"
 	Return true or false on whether the class receiver is referenced by aClass
 	
@@ -82,24 +82,24 @@ ClassDescription >> isReferencedBy: aClass [
 	^ aClass dependentClasses includes: self 
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> livingInDays [
+{ #category : #'*Roassal2' }
+TClassDescription >> livingInDays [
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
 	^ (DateAndTime now - self oldestMethod date) asDays
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> numberOfSubclasses [
+{ #category : #'*Roassal2' }
+TClassDescription >> numberOfSubclasses [
 	^ self allSubclasses size
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> numberOfVariables [
+{ #category : #'*Roassal2' }
+TClassDescription >> numberOfVariables [
 	^ self instVarNames size
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> oldestMethod [
+{ #category : #'*Roassal2' }
+TClassDescription >> oldestMethod [
 	"We pick a method, and put the cache in it"
 	| aMethod |
 	aMethod := (self methods, self class methods) first.
@@ -111,14 +111,14 @@ ClassDescription >> oldestMethod [
 
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> rtmethods [
+{ #category : #'*Roassal2' }
+TClassDescription >> rtmethods [
 	"This method is useful to have examples working on VisualWorks"
 	^ self methods
 ]
 
-{ #category : #'*roassal2' }
-ClassDescription >> youngestMethod [
+{ #category : #'*Roassal2' }
+TClassDescription >> youngestMethod [
 	"We pick a method, and put the cache in it"
 	| aMethod |
 	aMethod := (self methods, self class methods) first.

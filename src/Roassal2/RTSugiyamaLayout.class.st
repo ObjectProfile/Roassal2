@@ -138,7 +138,7 @@ RTSugiyamaLayout >> cl: layer u: u v: v [
 
 { #category : #'default attach points' }
 RTSugiyamaLayout >> defaultAttachPoint [
-	^ RTVerticalAttachPoint instance
+	^ RTVerticalAttachPoint new
 ]
 
 { #category : #hook }

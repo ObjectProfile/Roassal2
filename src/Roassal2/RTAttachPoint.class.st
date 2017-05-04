@@ -19,6 +19,11 @@ RTAttachPoint class >> instance [
 	^ instance
 ]
 
+{ #category : #public }
+RTAttachPoint class >> resetInstance [
+	instance := nil
+]
+
 { #category : #'public - hooks' }
 RTAttachPoint >> basicEndingPointOf: anEdge [
 	self subclassResponsibility 
@@ -46,16 +51,21 @@ RTAttachPoint >> initialize [
 
 { #category : #'public - hooks' }
 RTAttachPoint >> inverted [
-	inverted := inverted not.
+	"Swap the starting and ending points"
+
+	inverted := inverted not
 ]
 
 { #category : #'public - hooks' }
 RTAttachPoint >> inverted: aBool [
+	"Set if the attachpoint should be inverted"
+
 	inverted := aBool
 ]
 
 { #category : #testing }
 RTAttachPoint >> isInverted [
+	"Return wether the attach point is inverted"
 	^ inverted
 ]
 

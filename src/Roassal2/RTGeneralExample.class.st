@@ -490,9 +490,9 @@ RTGeneralExample >> directedEdges02 [
 	v addAll: elements2.
 	RTEdgeBuilder new
 		view: v;
-		objects: assocs;
+		objects: objects1, objects2;
 		shape: (RTDirectedLine new color: (Color blue alpha: 0.5));
-		connectFrom: #key to: #value.
+		source: assocs connectFrom: #key to: #value.
 	RTHorizontalLineLayout new
 		gapSize: 1;
 		on: elements1 , elements2.
@@ -856,7 +856,7 @@ RTGeneralExample >> forceBasedLayout [
 	edges do: [ :e | e trachelShape pushBack ].
 
 	"RTForceBasedLayout on: v elements edges: v edges."
-	v addAnimation: (RTSpringLayoutStepping new view: v).
+	v addAnimation: (RTForceLayoutStepping new view: v).
 	v @ RTDraggableView.
 	^ v
 ]
