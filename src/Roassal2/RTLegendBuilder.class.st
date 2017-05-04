@@ -114,6 +114,13 @@ RTLegendBuilder >> addText: aText [
 	self addColoredText: aText color: self textColor
 ]
 
+{ #category : #hooks }
+RTLegendBuilder >> backgroundBoxElement [
+	^ (RTBox new
+		borderColor: Color lightGray;
+		fillColor: Color transparent) element
+]
+
 { #category : #configuration }
 RTLegendBuilder >> backgroundTransparencyOnDemand [
 	^ 0.9
@@ -224,37 +231,37 @@ RTLegendBuilder >> onDemand: text [
 RTLegendBuilder >> renderIn: aView [
 	| myGroup elementsInTheViewWithoutTheLegend |
 	super renderIn: aView.
-
-	isOnDemand ifTrue: [ ^ self renderOnDemandIn: aView ].
-
+	isOnDemand
+		ifTrue: [ ^ self renderOnDemandIn: aView ].
 	elementsInTheViewWithoutTheLegend := aView elements.
 	myGroup := self group.
-	legendElement := (RTBox new
-		borderColor: Color lightGray;
-		fillColor: Color white) element.
+	legendElement := self backgroundBoxElement.
 	aView add: legendElement.
 	myGroup do: [ :g | aView addAll: g ].
 	RTNest new on: legendElement nest: myGroup.
-	
-	self isBelow ifTrue: [ 
-		TRConstraint move: legendElement below: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-		legendElement translateBy: 0 @ offset. ].
-
-	self isRight ifTrue: [ 
-		RTConstraint move: legendElement onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-		legendElement translateBy: offset @ 0. ].
-
-	self isLeft ifTrue: [ 
-		TRConstraint move: legendElement onTheLeftOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-		legendElement translateBy: offset @ 0. ].
-	
+	self isBelow
+		ifTrue: [ TRConstraint
+				move: legendElement
+				below: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
+			legendElement translateBy: 0 @ offset ].
+	self isRight
+		ifTrue: [ RTConstraint
+				move: legendElement
+				onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
+			legendElement translateBy: offset @ 0 ].
+	self isLeft
+		ifTrue: [ TRConstraint
+				move: legendElement
+				onTheLeftOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
+			legendElement translateBy: offset @ 0 ].
 	legendElement @ RTDraggable.
-	isFixed ifTrue: [ 
-		| els |
-		els := aView elements copyWithoutAll: elementsInTheViewWithoutTheLegend.
-		els do: [ :e | e trachelShape setAsFixed ].
-		TRConstraint stickAtTheBottomOfTheWindow: legendElement trachelShape.
-		 ]
+	isFixed
+		ifTrue: [ | els |
+			els := aView elements
+				copyWithoutAll: elementsInTheViewWithoutTheLegend.
+			els do: [ :e | e trachelShape setAsFixed ].
+			TRConstraint
+				stickAtTheBottomOfTheWindow: legendElement trachelShape ]
 ]
 
 { #category : #hooks }
@@ -301,6 +308,6 @@ RTLegendBuilder >> textSize [
 ]
 
 { #category : #accessing }
-RTLegendBuilder >> textSize: anObject [
-	textSize := anObject
+RTLegendBuilder >> textSize: aSizeAsInteger [
+	textSize := aSizeAsInteger
 ]

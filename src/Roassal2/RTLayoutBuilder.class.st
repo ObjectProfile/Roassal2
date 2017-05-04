@@ -90,7 +90,7 @@ RTLayoutBuilder >> doActionsOnEdgesFor: elements [
 RTLayoutBuilder >> doDynamicForceBasedLayoutOn: elements [
 	| v |
 	v := elements anyOne view.
-	v addAnimation: (RTSpringLayoutStepping new view: v)
+	v addAnimation: (RTForceLayoutStepping new view: v)
 ]
 
 { #category : #'public - layout' }

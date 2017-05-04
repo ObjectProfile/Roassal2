@@ -26,7 +26,7 @@ RTMetricNormalizer new
 	normalizeColor: #numberOfMethods using: (Array with: Color green with: Color red );
 	alphaColor: 0.3.
 	 
-anim := RTSpringLayoutStepping new view: v.
+anim := RTForceLayoutStepping new view: v.
 v addAnimation: anim. 
 
 v addMenu: 'add edges' callback: [ 
@@ -111,7 +111,7 @@ RTRoassalExample >> exampleAddingNodeDynamically [
 | v stepping |
 v := RTView new.
 v @ RTDraggableView.
-stepping := RTSpringLayoutStepping new view: v.
+stepping := RTForceLayoutStepping new view: v.
 stepping after: [ v canvas camera focusOnCenter ].
 v addAnimation: stepping.
 
@@ -382,7 +382,7 @@ RTRoassalExample >> exampleAnimatedCircle [
 	v addAll: (shape elementsOn: (1 to: nbOfCircles)).
 	RTGridLayout on: v elements.
 	
-	v when: TRMouseMove do: [ :evt |  Transcript show: evt positionFromCamera printString; cr . mousePos := evt positionFromCamera. v elements do: #updateShape. v canvas signalUpdate ].
+	v when: TRMouseMove do: [ :evt |  Transcript show: evt position printString; cr . mousePos := evt position. v elements do: #updateShape. v canvas signalUpdate ].
 	
 
 	^ v
@@ -422,7 +422,7 @@ elements := (RTEllipse new size: 20; color: (Color blue alpha: 0.3)) elementsOn:
 v addAll: elements.
 elements @ RTDraggable.
 
-s := RTSpringLayoutStepping new view: v.
+s := RTForceLayoutStepping new view: v.
 v addAnimation: s.
 
 	^ v
@@ -479,7 +479,7 @@ elements := (RTEllipse new size: 20; color: (Color blue alpha: 0.3)) elementsOn:
 v addAll: elements.
 elements @ RTDraggable.
 
-stepping := RTSpringLayoutStepping new view: v.
+stepping := RTForceLayoutStepping new view: v.
 stepping addStartStopButton.
 "Uncomment the next line to have the animation from the beginning"
 "v addAnimation: stepping."
@@ -1566,7 +1566,7 @@ RTEdgeBuilder new
 	
 setSizeAndColor value.
 
-s := RTSpringLayoutStepping new view: v.
+s := RTForceLayoutStepping new view: v.
 layout := RTForceBasedLayout new.
 s layout: layout.
 v addAnimation: s.
@@ -3016,7 +3016,7 @@ RTEdgeBuilder new
 	connectToAll: [ :value | (Array with: value -1  with: value + 1 with: value + 2) ].
 
 RTForceBasedLayout on: es.
-v addAnimation: (RTSpringLayoutStepping new view: v).
+v addAnimation: (RTForceLayoutStepping new view: v).
 
 v @ RTDraggableView.
 
@@ -3474,7 +3474,7 @@ v addAll: es.
 RTGridLayout new gapSize: 0; on: es.
 
 v when: TRMouseMove do: [ :evt |
-	mousePosition := evt positionFromCamera.
+	mousePosition := evt position.
 	es updateShape.
 	v signalUpdate
 ].
@@ -3795,7 +3795,7 @@ RTRoassalExample >> exampleForceBasedLayoutAnimated [
 	edges do: [ :e | e trachelShape pushBack ].
 
 	"RTForceBasedLayout on: v elements edges: v edges."
-	v addAnimation: (RTSpringLayoutStepping new view: v).
+	v addAnimation: (RTForceLayoutStepping new view: v).
 	v @ RTDraggableView.
 	^ v
 ]
@@ -5286,7 +5286,7 @@ RTRoassalExample >> exampleMovingGrid [
 		lineItemsCount: size;
 		on: es.
 	layout := RTForceBasedLayout new initialLayout: initialLayout.
-	step := RTSpringLayoutStepping new
+	step := RTForceLayoutStepping new
 		view: v;
 		layout: layout.
 	v addAnimation: step.
@@ -6629,7 +6629,7 @@ RTRoassalExample >> exampleScrollZoomIcon [
 
 { #category : #sources }
 RTRoassalExample >> exampleSeisms [
-
+<noTest>
 | b tab l|
 tab := RTTabTable new input: 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv' asZnUrl retrieveContents usingDelimiter: $,.
 tab removeFirstRow.
