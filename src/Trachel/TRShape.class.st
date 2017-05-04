@@ -413,6 +413,13 @@ TRShape >> themedStrokeColor [
 	^ self theme transformColor: strokePaint
 ]
 
+{ #category : #accessing }
+TRShape >> trachelShape [
+	"To be compatible with RTElement"
+	^ self
+	
+]
+
 { #category : #private }
 TRShape >> transformedEncompassingRectangle [
 	"Not all shapes are alredy using matrix. 
