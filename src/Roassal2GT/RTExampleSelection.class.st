@@ -38,6 +38,19 @@ RTExampleSelection class >> gtExampleFlags3 [
 	^ (RTComposedShapeExample >> #exampleFlags) gtExample
 ]
 
+{ #category : #hooks }
+RTExampleSelection >> extendPlayground: aGLMPharoScriptPresentation [
+	"Extend the Playground presentation with other actions."
+
+	| pragmas |
+	pragmas := Pragma allNamed: #playgroundExtension in: self class.
+	pragmas
+		do: [ :eachPragma | 
+			self
+				perform: eachPragma methodSelector
+				with: aGLMPharoScriptPresentation ]
+]
+
 { #category : #'inspector extensions' }
 RTExampleSelection >> gtDebuggerSourceIn: composite [
 	"Cancel the method"
@@ -55,8 +68,8 @@ RTExampleSelection >> gtDisplayPlaygroundIn: composite [
 				text evaluateSelectionAndDo: [ :anObject | text selection: anObject ] ]
 			icon: GLMUIThemeExtraIcons glamorousGo
 			on: $g
-			entitled: 'Do it all and go (g)'
-		
+			entitled: 'Do it all and go (g)';
+		with: [ :pharoScript | self extendPlayground: pharoScript ]		
 ]
 
 { #category : #'inspector extensions' }
