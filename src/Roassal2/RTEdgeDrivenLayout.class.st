@@ -111,7 +111,7 @@ RTEdgeDrivenLayout >> doIncrementallyExecute: anElementNode [
 
 { #category : #'default attach points' }
 RTEdgeDrivenLayout >> doNotAttachPoint [
-	"Do not add an attach point to edges"
+	"Do not add an attach point to edges when doing the layout"
 	shouldSetDefaultAttachPoint := false
 ]
 
