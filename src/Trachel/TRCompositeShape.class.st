@@ -196,6 +196,23 @@ TRCompositeShape >> firstShape [
 ]
 
 { #category : #actions }
+TRCompositeShape >> from [
+	"To be compatible with edges"
+	self shapesDo: [ :s | 
+		(s class canUnderstand: #from) ifTrue: [ ^ s from ].
+		 ].
+	^ nil
+]
+
+{ #category : #actions }
+TRCompositeShape >> from: p [
+	"To be compatible with edges"
+	self shapesDo: [ :s | 
+		(s class canUnderstand: #from:) ifTrue: [ s from: p ].
+		 ]
+]
+
+{ #category : #actions }
 TRCompositeShape >> from: p1 to: p2 [
 	"To be compatible with edges"
 	self shapesDo: [ :s | 
@@ -381,6 +398,23 @@ TRCompositeShape >> signalUpdate [
 
 	shapeAndOffsets ifEmpty: [ ^ self ].
 	self firstShape signalUpdate
+]
+
+{ #category : #actions }
+TRCompositeShape >> to [
+	"To be compatible with edges"
+	self shapesDo: [ :s | 
+		(s class canUnderstand: #to) ifTrue: [ ^ s to ].
+		 ].
+	^ nil
+]
+
+{ #category : #actions }
+TRCompositeShape >> to: p [
+	"To be compatible with edges"
+	self shapesDo: [ :s | 
+		(s class canUnderstand: #to:) ifTrue: [ s to: p ].
+		 ]
 ]
 
 { #category : #actions }
