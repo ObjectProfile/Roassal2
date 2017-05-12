@@ -1,11 +1,11 @@
 Class {
-	#name : #RTOnlineDocumentationRoassal,
-	#superclass : #RTObject,
+	#name : #RTOnlineDocumentation,
+	#superclass : #RTAbstractWorldMenu,
 	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
 { #category : #'world menu' }
-RTOnlineDocumentationRoassal class >> menuCommandOn: aBuilder [
+RTOnlineDocumentation class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Online documentation')
 			order: 0.001; 
@@ -16,7 +16,7 @@ RTOnlineDocumentationRoassal class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
-RTOnlineDocumentationRoassal >> addAnimationTo: v [
+RTOnlineDocumentation >> addAnimationTo: v [
 	| e |
 	v when: TRMouseClick do: [ :event | v clean ].
 	v
@@ -36,7 +36,7 @@ RTOnlineDocumentationRoassal >> addAnimationTo: v [
 ]
 
 { #category : #'instance creation' }
-RTOnlineDocumentationRoassal >> open [
+RTOnlineDocumentation >> open [
 	| v labels |
 	v := RTView new.
 	v add: (RTBitmap new form: TRPlatform current roassalIcon) element.

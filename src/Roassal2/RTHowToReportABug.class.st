@@ -3,7 +3,7 @@ I am a class that display general information about how to report a bug
 "
 Class {
 	#name : #RTHowToReportABug,
-	#superclass : #RTObject,
+	#superclass : #RTAbstractWorldMenu,
 	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
@@ -12,7 +12,7 @@ RTHowToReportABug class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'How To Contribute')
 			order: 0.002; 
-			parent: #Roassal;
+			parent: self projectName asSymbol;
 			label: 'How To report a bug';
 			icon: (Smalltalk ui icons iconNamed: #smallDebug);
 			action: [ self new open.  WebBrowser openOn: 'https://github.com/moosetechnology/Moose/issues'  ]
@@ -1404,5 +1404,5 @@ X1bR8JFH/zbvL7h7PP4hMjKGh2cOqOqRYfRkLgHtFvRHVnVZ0YZn57XbmZTfDpN1jnnxkMON
 { #category : #'instance creation' }
 RTHowToReportABug >> picAsForm [
 
-	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContributeRoassal new pic readStream)
+	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContribute new pic readStream)
 ]
