@@ -28,10 +28,7 @@ RTAbstractHorizontalTreeLayout >> horizontallyReverse: elements [
 	"Horizontally reverse the elements, as well as the attachpoints"
 
 	super horizontallyReverse: elements.
-	self inverseAttachPoint
-	
-
-
+	self inverseAttachPointIfNecessary
 ]
 
 { #category : #'initialize-release' }
@@ -52,6 +49,13 @@ RTAbstractHorizontalTreeLayout >> inverseAttachPoint [
 			edge shape attachPoint: a.
 			edge updateFromTo ]
 
+]
+
+{ #category : #reversing }
+RTAbstractHorizontalTreeLayout >> inverseAttachPointIfNecessary [
+	"Inverse the attach point if the user has not used #doNotAttachPoint"
+	self shouldSetDefaultAttachPoint
+		ifTrue: [ self inverseAttachPoint ]
 ]
 
 { #category : #'hook-private' }

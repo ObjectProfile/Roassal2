@@ -11,10 +11,11 @@ RTPythonAnalysisPlugin >> description [
 
 { #category : #hooks }
 RTPythonAnalysisPlugin >> execute [
-	Gofer new 
+	self inform: 'This is obsolete. You need to load DataStudio'
+"	Gofer new 
 		smalltalkhubUser: 'ObjectProfile' project: 'Roassal2';
 		package: 'Roassal2-Plugins-PythonAnalyzer'; 
-		load.
+		load."
 ]
 
 { #category : #testing }
@@ -24,5 +25,5 @@ RTPythonAnalysisPlugin >> isLoaded [
 
 { #category : #hooks }
 RTPythonAnalysisPlugin >> label [
-	^ 'simple Python analyzer'
+	^ 'simple Python analyzer [Obsolete]'
 ]
