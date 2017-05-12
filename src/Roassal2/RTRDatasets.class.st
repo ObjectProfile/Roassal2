@@ -12,15 +12,6 @@ Class {
 }
 
 { #category : #accessing }
-RTRDatasets class >> dataPackages [
-	rDataSets isNil
-		ifTrue: [ self loadRDatasets  ].
-	packages := Set new.
-	rDataSets values do: [ :row | packages add: row first ].
-	^ packages
-]
-
-{ #category : #accessing }
 RTRDatasets class >> from: aPackage [
 	rDataSets isNil
 		ifTrue: [ self loadRDatasets ].
@@ -68,7 +59,14 @@ RTRDatasets class >> loadRDatasets [
 		input: 'http://vincentarelbundock.github.com/Rdatasets/datasets.csv' asUrl retrieveContents
 		usingDelimiter: $,.
 	rDataSets removeFirstRow.
-	
-	"Apparently, this is not necessary"
-	"rDataSets convertColumns: #(1 2 3 4) to:[:aString| aString allButFirst allButLast ]"
+	rDataSets convertColumns: #(1 2 3 4) to:[:aString| aString allButFirst allButLast ]
+]
+
+{ #category : #accessing }
+RTRDatasets class >> packages [
+	rDataSets isNil
+		ifTrue: [ self loadRDatasets  ].
+	packages := Set new.
+	rDataSets values do: [ :row | packages add: row first ].
+	^ packages
 ]

@@ -2,24 +2,24 @@
 I am a class that display general information about Roassal contributions
 "
 Class {
-	#name : #RTHowToContribute,
-	#superclass : #RTAbstractWorldMenu,
+	#name : #RTHowToContributeRoassal,
+	#superclass : #RTObject,
 	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
 { #category : #'world menu' }
-RTHowToContribute class >> menuCommandOn: aBuilder [
+RTHowToContributeRoassal class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: ('Make ', self projectName, ' Better') asSymbol)
+	(aBuilder item: #'Make Roassal Better')
 			order: 0.002; 
 			parent: #Roassal;
-			label: 'Make ', self projectName, ' Better';
+			label: 'Make Roassal Better';
 			icon: (Smalltalk ui icons iconNamed: #thumbsUp);
 			action: [ self new open. WebBrowser openOn: 'http://www.lulu.com/shop/http://www.lulu.com/shop/alexandre-bergel/agile-visualization/paperback/product-22853677.html' ]
 ]
 
 { #category : #'instance creation' }
-RTHowToContribute >> addAnimationTo: v [
+RTHowToContributeRoassal >> addAnimationTo: v [
 	| e |
 	v when: TRMouseClick do: [ :event | v clean ].
 	v
@@ -39,7 +39,7 @@ RTHowToContribute >> addAnimationTo: v [
 ]
 
 { #category : #'instance creation' }
-RTHowToContribute >> open [
+RTHowToContributeRoassal >> open [
 	"
 	self new open
 	"
@@ -77,7 +77,7 @@ RTHowToContribute >> open [
 ]
 
 { #category : #data }
-RTHowToContribute >> pic [ ^ 'iVBORw0KGgoAAAANSUhEUgAAAN0AAAClCAYAAADYtfi2AAAKpWlDQ1BJQ0MgUHJvZmlsZQAA
+RTHowToContributeRoassal >> pic [ ^ 'iVBORw0KGgoAAAANSUhEUgAAAN0AAAClCAYAAADYtfi2AAAKpWlDQ1BJQ0MgUHJvZmlsZQAA
 SImVlwdUE9kax+9MeqMFIiAl9Ca9g/QaiiAdRCUkEEKJISGAiA1ZVHAtqIiAIuhSFVyVuhZE
 FAuLYMO+QRYVdV0s2FDZAR7h7XvnvXfe/5zvzO98c+e739y595z/AEC+zOTzU2EZANJ4GYIQ
 H3d6VHQMHScGEEADWeAIqEyWkO8WHBwAEM1d/64Pd5DRiG4aT9f69/v/VbLsBCELACgY4Xi2
@@ -1401,7 +1401,7 @@ X1bR8JFH/zbvL7h7PP4hMjKGh2cOqOqRYfRkLgHtFvRHVnVZ0YZn57XbmZTfDpN1jnnxkMON
 ]
 
 { #category : #'instance creation' }
-RTHowToContribute >> picAsForm [
+RTHowToContributeRoassal >> picAsForm [
 
-	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContribute new pic readStream)
+	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContributeRoassal new pic readStream)
 ]

@@ -1,20 +1,5 @@
 "
-You can use this builder to represent a hierarchy of an object(like Collection and all subclasses). 
-
-This builder uses cluster layout.
-
-This builder uses all the leaf of the tree structure, and put a string representation for each object.
-
-Also this builder can create bezier relations between each leaf node. that you can activate with mouseEnter in one node
-
-This builders adds some interactions, like
-* an interaction with beziers
-	 - #useBezierlineWith: . Send nil to disable
-* a slider to change the tension for each bezier shape
-	- #sliderShape: .Send nil to disable
-* RTRotableView
-	- view: anotherView. Send another view to disable
-
+I am a experimental builder
 "
 Class {
 	#name : #RTBundleBuilder,
@@ -40,7 +25,7 @@ RTBundleBuilder >> bezier [
 	^ bezier
 ]
 
-{ #category : #'rendering-utility' }
+{ #category : #'as yet unclassified' }
 RTBundleBuilder >> createBezierIfNecessary: aView [
 	| ebuilder   |
 	connectBezierBlock ifNil: [ ^ self ].
@@ -68,7 +53,7 @@ RTBundleBuilder >> createElements: obj using: ablock depth: depth [
 	^ e
 ]
 
-{ #category : #'rendering-utility' }
+{ #category : #'as yet unclassified' }
 RTBundleBuilder >> createLabelFor: e view: aView [
 	| lbl |
 	lbl := label elementOn: e model.
@@ -85,7 +70,7 @@ RTBundleBuilder >> createLabelFor: e view: aView [
 
 ]
 
-{ #category : #'rendering-utility' }
+{ #category : #'as yet unclassified' }
 RTBundleBuilder >> createSliderIfNecessary: aView [
 	| bedges slider |
 	sliderShape ifNil: [ ^ self ].
@@ -201,7 +186,7 @@ RTBundleBuilder >> labelShape [
 	^ label
 ]
 
-{ #category : #'rendering-utility' }
+{ #category : #'as yet unclassified' }
 RTBundleBuilder >> parentOf: model view: aView [
 	| element |
 	element := view elementFromModel: model.
@@ -238,7 +223,7 @@ RTBundleBuilder >> sliderShape: aShape [
 	sliderShape := aShape
 ]
 
-{ #category : #'rendering-utility' }
+{ #category : #'as yet unclassified' }
 RTBundleBuilder >> useBezierlineWith: ablock [
 	connectBezierBlock := ablock
 	

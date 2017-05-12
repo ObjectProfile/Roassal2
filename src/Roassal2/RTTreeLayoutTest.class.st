@@ -46,43 +46,7 @@ RTTreeLayoutTest >> testAttachPoint [
 	RTTreeLayout on: es.
 
 	self assert: edge trachelShape from equals: 10 @ 15.
-	self assert: edge trachelShape from ~= es first center.
-	
 	self assert: edge trachelShape to equals: 10 @ 35.
-	self assert: edge trachelShape to ~= es second center.
-]
-
-{ #category : #tests }
-RTTreeLayoutTest >> testAttachPointAndArrowedLine [
-	| v es edge |
-	v := RTView new.
-	es := RTBox new size: 10; elementsOn: #(1 2).
-	v addAll: es.
-	edge := RTArrowedLine new color: Color red; edgeFrom: es first to: es second.
-	v add: edge.
-
-	RTTreeLayout on: es.
-
-	self assert: edge trachelShape from equals: 10 @ 15.
-	self assert: edge trachelShape from ~= es first center.
-	
-	self assert: edge trachelShape to equals: 10 @ 35.
-	self assert: edge trachelShape to ~= es second center.
-]
-
-{ #category : #tests }
-RTTreeLayoutTest >> testAttachPointAndArrowedLineNo [
-	| v es edge |
-	v := RTView new.
-	es := RTBox new size: 10; elementsOn: #(1 2).
-	v addAll: es.
-	edge := RTArrowedLine new color: Color red; edgeFrom: es first to: es second.
-	v add: edge.
-
-	RTTreeLayout new doNotAttachPoint; on: es.
-
-	self assert: edge trachelShape from equals: es first center.
-	self assert: edge trachelShape to equals: es second center
 ]
 
 { #category : #tests }
@@ -198,60 +162,6 @@ RTTreeLayoutTest >> testVerticallyReversed [
 	
 	"ATTACHPOINT"
 	self assert: (v edges collect: [ :ed | ed shape attachPoint ]) asSet size equals: 1.
-]
-
-{ #category : #'tests - reversed' }
-RTTreeLayoutTest >> testVerticallyReversedAndAttachPoint [
-	| es v edge |
-	v := RTView new.
-	es := RTBox new color: Color blue trans; size: 10; elementsOn: #(1 2).
-	v addAll: es.
-	edge := RTArrowedLine new color: Color red trans; edgeFrom: es first to: es second.
-	v add: edge.
-	es @ RTDraggable.
-	
-	RTTreeLayout new verticallyReverse; on: es.
-
-	self assert: edge trachelShape from equals: es first encompassingRectangle topCenter.
-	self assert: edge trachelShape from equals: 10 @ 25.
-	self assert: edge trachelShape to equals: es second encompassingRectangle bottomCenter.
-	self assert: edge trachelShape to equals: 10 @ 5.
-]
-
-{ #category : #'tests - reversed' }
-RTTreeLayoutTest >> testVerticallyReversedAndAttachPointNo [
-	| es v edge |
-	v := RTView new.
-	es := RTBox new color: Color blue trans; size: 10; elementsOn: #(1 2).
-	v addAll: es.
-	edge := RTArrowedLine new color: Color red trans; edgeFrom: es first to: es second.
-	v add: edge.
-	es @ RTDraggable.
-	
-	RTTreeLayout new doNotAttachPoint; verticallyReverse; on: es.
-
-	self assert: edge trachelShape from equals: es first center.
-	self assert: edge trachelShape from equals: 10 @ 30.
-	self assert: edge trachelShape to equals: es second center.
-	self assert: edge trachelShape to equals: 10 @ 0.
-]
-
-{ #category : #'tests - reversed' }
-RTTreeLayoutTest >> testVerticallyReversedAndAttachPointNo02 [
-	| es v edge |
-	v := RTView new.
-	es := RTBox new color: Color blue trans; size: 10; elementsOn: #(1 2).
-	v addAll: es.
-	edge := RTArrowedLine new color: Color red trans; edgeFrom: es first to: es second.
-	v add: edge.
-	es @ RTDraggable.
-	
-	RTTreeLayout new verticallyReverse; doNotAttachPoint; on: es.
-
-	self assert: edge trachelShape from equals: es first center.
-	self assert: edge trachelShape from equals: 10 @ 30.
-	self assert: edge trachelShape to equals: es second center.
-	self assert: edge trachelShape to equals: 10 @ 0.
 ]
 
 { #category : #'tests - reversed' }
