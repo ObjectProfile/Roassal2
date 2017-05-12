@@ -2,24 +2,24 @@
 I am a class that display general information about Roassal
 "
 Class {
-	#name : #RTAboutRoassal,
-	#superclass : #RTObject,
+	#name : #RTAbout,
+	#superclass : #RTAbstractWorldMenu,
 	#category : #'Roassal2-MorphSpecific-Menu'
 }
 
 { #category : #'world menu' }
-RTAboutRoassal class >> menuCommandOn: aBuilder [
+RTAbout class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'About Roassal')
+	(aBuilder item: ('About ', self projectName) asSymbol)
 			order: 0.001; 
-			parent: #Roassal;
-			label: 'About Roassal';
+			parent: self projectName asSymbol;
+			label: 'About ', self projectName;
 			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
 			action: [ self new open ]
 ]
 
 { #category : #'instance creation' }
-RTAboutRoassal >> addAnimationTo: v [
+RTAbout >> addAnimationTo: v [
 	| e |
 	v when: TRMouseClick do: [ :event | v clean ].
 	v
@@ -39,7 +39,7 @@ RTAboutRoassal >> addAnimationTo: v [
 ]
 
 { #category : #'instance creation' }
-RTAboutRoassal >> open [
+RTAbout >> open [
 	| v labels |
 	v := RTView new.
 	v add: (RTBitmap new form: TRPlatform current roassalIcon) element.

@@ -3,7 +3,7 @@ I am a class that simply forward to the discord channel
 "
 Class {
 	#name : #RTChatWithUs,
-	#superclass : #RTObject,
+	#superclass : #RTAbstractWorldMenu,
 	#classInstVars : [
 		'discord'
 	],
@@ -26,7 +26,7 @@ RTChatWithUs class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Live chat')
 			order: 0.002; 
-			parent: #Roassal;
+			parent: self projectName asSymbol;
 			label: 'Live chat';
 			icon: self discord;
 			action: [ WebBrowser openOn: 'https://discord.gg/bAuNJMP'  ]
