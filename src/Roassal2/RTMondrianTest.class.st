@@ -393,6 +393,11 @@ RTMondrianTest >> testNoLineShape [
 ]
 
 { #category : #'tests - nodes' }
+RTMondrianTest >> testNodesError [
+	self should: [ b nodes: 5 ] raise: AssertionFailure.
+]
+
+{ #category : #'tests - nodes' }
 RTMondrianTest >> testNodesOnce [
 
 	b nodes: #(1 2 3).

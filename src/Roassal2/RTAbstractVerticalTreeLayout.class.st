@@ -43,13 +43,6 @@ RTAbstractVerticalTreeLayout >> inverseAttachPoint [
 
 ]
 
-{ #category : #reversing }
-RTAbstractVerticalTreeLayout >> inverseAttachPointIfNecessary [
-	"Inverse the attach point if the user has not used #doNotAttachPoint"
-	self shouldSetDefaultAttachPoint
-		ifTrue: [ self inverseAttachPoint ]
-]
-
 { #category : #'hook-private' }
 RTAbstractVerticalTreeLayout >> layout: aNodeCollection atPoint: aPoint atLayer: aNumber [
 	| treeSize childrenPosition x y middleOfTree |
@@ -85,5 +78,5 @@ RTAbstractVerticalTreeLayout >> verticallyReverse: elements [
 	"Vertically reverse the elements, as well as the attachpoints"
 
 	super verticallyReverse: elements.
-	self inverseAttachPointIfNecessary
+	self inverseAttachPoint
 ]
