@@ -13,43 +13,51 @@ RTInspectorScript >> description [
 { #category : #hooks }
 RTInspectorScript >> execute [
 	"This is the initial object you would like to inspect"
-	| initialObject v b block |
+	| initialObject v b block nodes outterBox |
 	initialObject := RTView new.
+
+	initialObject := RPackageOrganizer default packageNamed: 'Roassal2'.
 
 	v := RTView new.
 	v @ RTDraggableView.
 
-	block := [ :anObject | 
+	nodes := Dictionary new.
 
-		b := RTMondrian new.
-		b shape box color: Color gray trans; withTextAbove.
-		b node: anObject class name forIt: [
-			b shape label text: #key;
-				if: [:assoc | assoc value isNil ] color: Color brown.
-			b interaction 
-					noInteractions;
-					highlight;
-					when: TRMouseClick do: [ :evt | 
-						| toElement |
-						"When we click on a label, we add the nodes, and create a link"
-						toElement := block value: evt element model value.
-						v add: (RTArrowedLine new withShorterDistanceAttachPoint; edgeFrom: evt element to: toElement).
-						v signalUpdate.
-						 ];
-					popupText: [ :ass | ass value asString ].
-					
-			b nodes: (anObject class instVarNames collect: [ :n | n -> (anObject instVarNamed: n) ]).
-			b layout verticalLine.
-		].
-		b build.
-		"The elements we have just built are added to the view"
-		v addAll: b view elements.
-		
-		"We refresh the view"
-		v signalUpdate.
-		
-		"We return the outter box, useful to draw the edge"
-		b view elements first.
+	block := [ :anObject | 
+	    
+	    b := RTMondrian new.
+	    b shape box color: Color gray trans; withTextAbove.
+	    
+	    b node: anObject class name forIt: [
+	        b shape label text: #key;
+	            if: [:assoc | assoc value isNil ] color: Color brown.
+	        b interaction 
+	                noInteractions;
+	                highlight;
+	                when: TRMouseClick do: [ :evt | 
+	                    | obj |
+	                    "When we click on a label, we add the nodes, and create a link"
+	                          obj := evt element model value.
+	                          (nodes keys includes: obj) ifFalse: [
+	                            block value: evt element model value ].
+
+	                    v add: (RTArrowedLine new withShorterDistanceAttachPoint; edgeFrom: evt element to: (nodes at: obj)).
+	                    v signalUpdate.
+	                     ];
+	                popupText: [ :ass | ass value asString ].
+
+	        b nodes: (anObject class allInstVarNames collect: [ :n | n -> (anObject instVarNamed: n) ]).
+	        b layout verticalLine.
+	    ].
+	    b build.
+	    "The elements we have just built are added to the view"
+	    v addAll: b view elements.
+	    
+	    "We refresh the view"
+	    v signalUpdate.
+	    
+	    outterBox := b view elements first.
+	    nodes at: anObject put: outterBox.
 	].
 
 	block value: initialObject.
