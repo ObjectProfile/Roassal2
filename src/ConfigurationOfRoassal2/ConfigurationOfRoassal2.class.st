@@ -1677,6 +1677,26 @@ ConfigurationOfRoassal2 >> version147: spec [
 
 ]
 
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version148: spec [
+	<version: '1.48' imports: #('1.17-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '05/15/2017'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.415';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1638';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.56';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
 { #category : #'old-versions' }
 ConfigurationOfRoassal2 >> version14: spec [
 	<version: '1.4' imports: #('1.1-baseline' )>
