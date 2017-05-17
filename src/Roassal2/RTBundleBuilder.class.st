@@ -32,7 +32,7 @@ Class {
 		'center',
 		'edgeBuilderDo'
 	],
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Builder-BundleEdge'
 }
 
 { #category : #accessing }
@@ -233,7 +233,7 @@ RTBundleBuilder >> sliderShape [
 	^ sliderShape
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RTBundleBuilder >> sliderShape: aShape [
 	sliderShape := aShape
 ]
@@ -242,4 +242,9 @@ RTBundleBuilder >> sliderShape: aShape [
 RTBundleBuilder >> useBezierlineWith: ablock [
 	connectBezierBlock := ablock
 	
+]
+
+{ #category : #'public - configuration' }
+RTBundleBuilder >> withoutSlider [
+	self sliderShape: nil
 ]
