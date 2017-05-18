@@ -15,7 +15,8 @@ Currently it is still very early work'
 RTDataStudioPlugin >> execute [
 	Gofer new 
 		smalltalkhubUser: 'ObjectProfile' project: 'DataStudio';
-		package: 'DataStudio'; load.
+		configurationOf: 'DataStudio'; 
+		loadBleedingEdge.
 ]
 
 { #category : #testing }
