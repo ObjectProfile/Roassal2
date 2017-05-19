@@ -1,6 +1,6 @@
 Class {
 	#name : #TRWhiteTheme,
-	#superclass : #TRAbstractTheme,
+	#superclass : #TRPlainColorTheme,
 	#classInstVars : [
 		'default'
 	],

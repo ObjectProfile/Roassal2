@@ -242,15 +242,6 @@ TRMorph >> handlesMouseWheel: evt [
 ]
 
 { #category : #initialization }
-TRMorph >> inferCurrentTheme [
-	| themeToSet |
-	UITheme current class == Pharo3DarkTheme
-		ifTrue: [ themeToSet := TRDarkTheme new ]
-		ifFalse: [ themeToSet := TRWhiteTheme new ].
-	^ themeToSet
-]
-
-{ #category : #initialization }
 TRMorph >> initialize [
 	super initialize.
 	self createSurface.
@@ -359,7 +350,7 @@ TRMorph >> relativePositionFor: evt [
 TRMorph >> setTheme [
 	"his method infers the theme to use and modify the canvas"
 	self assert: [ trachelCanvas notNil ] description: 'Need to have a Trachel canvas'.
-	trachelCanvas theme: self inferCurrentTheme.
+	trachelCanvas theme: TRTheme infer.
 	^ trachelCanvas theme
 ]
 

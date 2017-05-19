@@ -1,6 +1,6 @@
 Class {
 	#name : #TRDarkTheme,
-	#superclass : #TRAbstractTheme,
+	#superclass : #TRPlainColorTheme,
 	#category : #'Trachel-Theme'
 }
 
