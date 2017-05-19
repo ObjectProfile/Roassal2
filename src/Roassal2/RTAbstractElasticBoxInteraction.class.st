@@ -39,6 +39,15 @@ RTAbstractElasticBoxInteraction >> announcer: anAnnouncer [
 	announcer := anAnnouncer.
 ]
 
+{ #category : #util }
+RTAbstractElasticBoxInteraction >> createShapeForView [
+	| s |
+	s := shapeBuilder elementOn: self.
+	view add: s.
+	view attributes at: self key put: s.
+	^ s
+]
+
 { #category : #'selection events' }
 RTAbstractElasticBoxInteraction >> dragViewWithEvent: e [
 	view canvas camera translateBy: e step negated / view canvas camera scale.
@@ -49,11 +58,7 @@ RTAbstractElasticBoxInteraction >> dragViewWithEvent: e [
 RTAbstractElasticBoxInteraction >> getOrCreateShapeForView [
 	^ (view attributes includesKey: self key) 
 		ifTrue: [ view attributes at: self key ]
-		ifFalse: [ | s |
-			s := shapeBuilder elementOn: self.
-			view add: s.
-			view attributes at: self key put: s.
-			s ].
+		ifFalse: [ self createShapeForView ].
 ]
 
 { #category : #util }

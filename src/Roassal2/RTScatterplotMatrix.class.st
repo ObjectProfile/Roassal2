@@ -7,32 +7,38 @@ Class {
 	#instVars : [
 		'metrics',
 		'objects',
-		'allowLegend',
-		'colors',
-		'keySelector',
 		'xScales',
 		'yScales',
 		'padding',
 		'boxSize',
-		'objectsGrouped',
 		'shouldUseAxisForX',
 		'shouldUseAxisForY',
 		'generator',
 		'lineShape',
 		'boxShape',
 		'allowEvent',
-		'boxes'
+		'boxes',
+		'allDotElements',
+		'labelShape'
 	],
 	#category : #'Roassal2-Experimental'
 }
 
 { #category : #helpers }
-RTScatterplotMatrix >> addSelectableViewIfNecessary: aView [
+RTScatterplotMatrix >> addBrushInteractionIfNecessary: aView [
 	| int |
-	"self allowSelectableView" false ifFalse: [ ^ self ].
+	self allowSelectableView ifFalse: [ ^ self ].
 	int := RTBrushInteraction new.
+	int elementsToBrush: [ :group | 
+		group flatCollect: [ :e | aView elementsFromModel: e model ] ].
+	int domainElements: self allDotElements.
 	int groups: self boxes.
 	aView @ int.
+]
+
+{ #category : #accesing }
+RTScatterplotMatrix >> allDotElements [
+	^ allDotElements
 ]
 
 { #category : #accesing }
@@ -58,11 +64,6 @@ RTScatterplotMatrix >> boxShape: aShape [
 { #category : #accesing }
 RTScatterplotMatrix >> boxes [
 	^ boxes ifNil: [ boxes := RTGroup new ].
-]
-
-{ #category : #accesing }
-RTScatterplotMatrix >> colors [
-	^ colors
 ]
 
 { #category : #helpers }
@@ -164,49 +165,43 @@ RTScatterplotMatrix >> createAxisYIfNecessary: aView [
 
 ]
 
-{ #category : #helpers }
-RTScatterplotMatrix >> createLegendIfNecessary: aView [
-	| lb |
-	allowLegend ifFalse: [ ^ self ].
-	lb := RTLegendBuilder new.
-	lb view: aView.
-	objectsGrouped keys do: [ :k | lb addColor: (self colors at: k) text: k asString ].
-	lb build
-]
-
 { #category : #hooks }
 RTScatterplotMatrix >> createView [
 	^ RTView new @ RTDraggableView @ RTZoomableView  
 ]
 
-{ #category : #accesing }
-RTScatterplotMatrix >> hideLegend [
-	allowLegend := false
-]
-
 { #category : #initialization }
 RTScatterplotMatrix >> initialize [
 	super initialize.
-	self showLegend.
 	self padding: 15.
 	self scatterBoxSize: 150.
 	self shouldUseAxis: true.
 	self allowSelectableView: true.
+	
+	self shape circle 
+		size: 4; 
+		color: (Color colorFrom: '#020289').
 	self boxShape: (RTBox new size: self scatterBoxSize;
 		color: Color transparent; 
 		borderColor: Color veryLightGray).
 	self lineShape: (RTLine new color: Color veryLightGray trans).
+	self labelShape: (RTLabel new).
+	
 	generator := RTLabelGenerator nice: RTNiceStepSizeGenerator new.
 	generator setLooseFlag: true.
-	self shape circle 
-		size: 3;
-		color: [:o | self colors at: (keySelector value: o)].
 	metrics := Dictionary new.
+	
+
 ]
 
-{ #category : #accesing }
-RTScatterplotMatrix >> keySelector [
-	^ keySelector
+{ #category : #accessing }
+RTScatterplotMatrix >> labelShape [
+	^ labelShape
+]
+
+{ #category : #accessing }
+RTScatterplotMatrix >> labelShape: aShape [
+	labelShape := aShape
 ]
 
 { #category : #accesing }
@@ -229,23 +224,9 @@ RTScatterplotMatrix >> objects [
 	^ objects
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RTScatterplotMatrix >> objects: aCollection [
-	self objects: aCollection groupedBy: #yourself
-]
-
-{ #category : #accesing }
-RTScatterplotMatrix >> objects: aCollection groupedBy: selector [ 
-	| temp |
-	objects := aCollection.
-	keySelector := selector.
-	
-	objectsGrouped := aCollection groupedBy: selector.
-	temp := RTColorPalette qualitative colors: 16 scheme:'FlatUI1'.
-	colors := Dictionary new.
-	objectsGrouped keys doWithIndex: [ :k :index | | i |
-		i := (index % 16) + 1.
-		colors at: k put: (temp at: i) ].
+	objects := aCollection
 ]
 
 { #category : #accesing }
@@ -281,28 +262,36 @@ RTScatterplotMatrix >> prepareScales [
 RTScatterplotMatrix >> renderIn: aView [
 	self renderMatrix: aView.
 	self createAxisIfNecessary: aView.
-	self addSelectableViewIfNecessary: aView.
-	self createLegendIfNecessary: aView.
+	self addBrushInteractionIfNecessary: aView.
 ]
 
-{ #category : #helpers }
+{ #category : #rendering }
 RTScatterplotMatrix >> renderMatrix: aView [
-	| m elements x y box delta |
+	| m elements x y box delta label |
 	m := self metrics.
 	self prepareScales.
+	allDotElements := RTGroup new.
 	m keys doWithIndex: [ :metric1 :j | 
 		m keys doWithIndex: [ :metric2 :k |
 			delta := ((k@j)* boxSize)+((k@j)*padding).
 			box := self boxShape elementOn: k@j.
 			box translateBy: delta.
 			self boxes add: box.
+			
+			k = j ifTrue: [
+				label := self labelShape elementOn: metric1.
+				RTConstraint new
+					fix: box; movable: label; inner;
+					left; top; move.
+				aView add: label  ].
+			
 			aView add: box.
 			elements := self shape elementsOn: self objects.
 			elements do: [ :e | 
 				x := (xScales at: metric1) scale: ((m at: metric1) rtValue: e model).
 				y := (yScales at: metric2) scale: ((m at: metric2) rtValue: e model).
 				e translateTo: (x @ y)+delta ].
-			
+			allDotElements addAll: elements.
 			aView addAll: elements.
 			 ].
 		].
@@ -335,9 +324,4 @@ RTScatterplotMatrix >> shouldUseAxisForX: aBool [
 RTScatterplotMatrix >> shouldUseAxisForY: aBool [
 	shouldUseAxisForY := aBool
 	
-]
-
-{ #category : #accesing }
-RTScatterplotMatrix >> showLegend [
-	allowLegend := true
 ]
