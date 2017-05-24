@@ -103,7 +103,7 @@ RTGroup >> edges [
 RTGroup >> elementFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"
 	
-	| t |
+	| t key|
 	self elementFromModelCache at: anObject ifPresent: [ :v |
 		v isCollection ifFalse: [ ^ v ] ].
 
@@ -111,8 +111,9 @@ RTGroup >> elementFromModel: anObject [
 	t := (anObject class == CompiledMethod) 
 				ifTrue: [ self detect: [ :el | el model == anObject ] ifNone: [ nil ] ]
 				ifFalse: [ self detect: [ :el | el model = anObject ] ifNone: [ nil ] ].
-
-	self elementFromModelCache at: anObject put: t.
+	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
+	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
+	self elementFromModelCache at: key put: t.
 	^ t
 ]
 
@@ -132,7 +133,7 @@ RTGroup >> elements [
 RTGroup >> elementsFromModel: anObject [
 	"Return an element that corresponds to the object provided as parameter. If none is found, then return nil"	
 
-	| t |
+	| t key |
 	self elementFromModelCache at: anObject ifPresent: [ :v | v isCollection ifTrue: [ ^ v ] ].
 
 	"We have this line because of a bug of the implementation of CompiledMethod>>#="
@@ -140,7 +141,9 @@ RTGroup >> elementsFromModel: anObject [
 				ifTrue: [ self select: [ :el | el model == anObject ] ]
 				ifFalse: [ self select: [ :el | el model = anObject ] ].
 
-	self elementFromModelCache at: anObject put: t.
+	"We have this hack for nil objects because in visualWorks a dictionary cannot have nil as a key"
+	key := anObject isNil ifTrue: [ 'KeyForNilObjects' ] ifFalse: [ anObject ].
+	self elementFromModelCache at: key put: t.
 	^ t
 ]
 
