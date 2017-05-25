@@ -105,17 +105,31 @@ TRMorphTest >> testHandleEventClass02 [
 { #category : #theme }
 TRMorphTest >> testTheme01 [
 
-	| m c |
+	| m c originalTheme |
 	c := TRCanvas new.
+	originalTheme := c theme.
+	self assert: originalTheme notNil.
+	
 	m := TRMorph new.
 	m canvas: c.
-	m setTheme.
 	self assert: c theme notNil.
 	
+	"Make sure we do not compute it twice"
+	self assert: c theme == c theme.
+
+	self assert: c theme == originalTheme
 ]
 
 { #category : #theme }
-TRMorphTest >> testTheme02Failure [
-	self should: [ TRMorph new setTheme ] raise: AssertionFailure.
+TRMorphTest >> testTheme02SettingTheme [
+	| m c |
+	c := TRCanvas new.
+	c theme: TRDarkTheme new.
 	
+	m := TRMorph new.
+	m canvas: c.
+	self assert: c theme notNil.
+	
+	"Make sure we do not compute it twice"
+	self assert: c theme == c theme.
 ]

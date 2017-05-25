@@ -44,7 +44,6 @@ TRMorph >> canvas: aTrachelCanvas [
 	 Set the theme if not set in the Trachel canvas.
 	 And creates the Athens surface"
 	trachelCanvas := aTrachelCanvas.
-	self setTheme.
 	surface := AthensCairoSurface extent: (aTrachelCanvas extent) asIntegerPoint
 ]
 
@@ -344,14 +343,6 @@ TRMorph >> relativePositionFor: evt [
 	"Return the position within the window"
 	^ evt position - self bounds origin
 	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
-]
-
-{ #category : #initialization }
-TRMorph >> setTheme [
-	"his method infers the theme to use and modify the canvas"
-	self assert: [ trachelCanvas notNil ] description: 'Need to have a Trachel canvas'.
-	trachelCanvas theme: TRTheme infer.
-	^ trachelCanvas theme
 ]
 
 { #category : #'event-processed' }
