@@ -308,7 +308,7 @@ TRCanvas >> initialize [
 	camera := TRCamera forCanvas: self.
 	color := Color white.
 	session := TRPlatform current session.
-	theme := TRWhiteTheme default.
+	theme := TRTheme infer.
 	"No event overseer at the creation"
 	eventOverseer := nil
 ]

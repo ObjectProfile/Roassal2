@@ -1,7 +1,7 @@
 Class {
 	#name : #TRDarkSolarizedTheme,
 	#superclass : #TRSolarizedTheme,
-	#category : #'Trachel-Theme'
+	#category : #'Trachel-Core-Theme'
 }
 
 { #category : #accessing }
