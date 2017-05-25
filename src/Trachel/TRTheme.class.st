@@ -72,6 +72,11 @@ TRTheme class >> violet [
 ]
 
 { #category : #'base color' }
+TRTheme class >> white [
+	^ self current white
+]
+
+{ #category : #'base color' }
 TRTheme class >> yellow [
 	^ self current yellow
 ]
