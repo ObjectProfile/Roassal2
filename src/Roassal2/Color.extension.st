@@ -1,5 +1,11 @@
 Extension { #name : #Color }
 
+{ #category : #'*Roassal2-Core' }
+Color >> asThemed [
+	"Infer a color that is supposed to be adapted to the current theme"
+	^ TRTheme current transformColor: self
+]
+
 { #category : #'*Roassal2' }
 Color class >> colorWheel: s alpha: a [
 	^ (Color wheel: 6) collect: [:c | c alpha: a ].
