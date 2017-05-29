@@ -306,9 +306,9 @@ TRCanvas >> initialize [
 	fixedShapes := OrderedCollection new.
 	animations := OrderedCollection new.
 	camera := TRCamera forCanvas: self.
-	color := Color white.
-	session := TRPlatform current session.
 	theme := TRTheme infer.
+	color := theme trachelCanvasColor.
+	session := TRPlatform current session.
 	"No event overseer at the creation"
 	eventOverseer := nil
 ]
