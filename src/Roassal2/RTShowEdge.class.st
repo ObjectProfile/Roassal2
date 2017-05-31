@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'connectToElements',
 		'shape',
-		'reciber'
+		'receiver'
 	],
 	#classInstVars : [
 		'lastHighlightedElements',
@@ -96,7 +96,7 @@ RTShowEdge >> doShowEdges: element [
 
 	t := (connectToElements rtValue: element).
 	t := t copyWithout: nil.
-	edges := (shape rtValue: element) edgesFrom: (reciber rtValue: element) toAll: t.
+	edges := (shape rtValue: element) edgesFrom: (receiver rtValue: element) toAll: t.
 	element view addAll: edges.
 	element attributes at: #showEdges put: edges.
 	self class lastHighlightedElements: edges
@@ -111,7 +111,7 @@ RTShowEdge >> highlightedColor [
 RTShowEdge >> initialize [
 	super initialize.
 	connectToElements := [ :el | Array with: el ].
-	reciber := #yourself.
+	receiver := #yourself.
 	self shape: RTLine
 ]
 
@@ -130,13 +130,13 @@ RTShowEdge >> initializeElement: element [
 ]
 
 { #category : #accessing }
-RTShowEdge >> reciber [
-	^ reciber
+RTShowEdge >> receiver [
+	^ receiver
 ]
 
 { #category : #accessing }
-RTShowEdge >> reciber: anElementOrBlock [
-	reciber := anElementOrBlock
+RTShowEdge >> receiver: anElementOrBlock [
+	receiver := anElementOrBlock
 ]
 
 { #category : #actions }
