@@ -58,7 +58,8 @@ Class {
 		'textColor',
 		'alphaPopupBackground',
 		'backgroundColor',
-		'borderColor'
+		'borderColor',
+		'hasBorder'
 	],
 	#category : #'Roassal2-Interactions'
 }
@@ -145,7 +146,21 @@ RTPopup >> borderColor [
 
 { #category : #accessing }
 RTPopup >> borderColor: aColor [
-	borderColor := aColor
+	"Set the border color
+	Here is an example:
+
+b := RTMondrian new.
+b interaction popupView: [ :group :el |
+    group add: (RTBitmap new form: TRPlatform current roassalIcon) element.
+    group add: (RTLabel new color: Color orange; elementOn: el model printString).
+    RTVerticalLineLayout on: group.
+] backgroundColor: Color white borderColor: Color black .
+b nodes: (1 to: 100).
+b layout grid.
+b
+"
+	borderColor := aColor.
+	hasBorder := true.
 ]
 
 { #category : #initialization }
@@ -168,7 +183,10 @@ RTPopup >> createAndShowPopupFor: element event: event [
 
 { #category : #private }
 RTPopup >> createBackgroundElement: aColor [
-	^ (RTBox new color: (aColor alpha: self alphaPopupBackground)) element
+	| shape |
+	shape := RTBox new color: (aColor alpha: self alphaPopupBackground).
+	self hasBorder ifTrue: [ shape borderColor: borderColor; borderWidth: 3 ].
+	^ shape element
 ]
 
 { #category : #hooks }
@@ -195,6 +213,12 @@ RTPopup >> group: aTwoArgBlock [
 	groupBlock := aTwoArgBlock
 ]
 
+{ #category : #public }
+RTPopup >> hasBorder [
+	"Answer true if a border has to be used. When setting a border color, the border is used"
+	^ hasBorder
+]
+
 { #category : #initialization }
 RTPopup >> initialize [
 	super initialize.
@@ -202,7 +226,8 @@ RTPopup >> initialize [
 	textColor := Color black.
 	alphaPopupBackground := 0.4.
 	backgroundColor := Color gray alpha: 0.8.
-	borderColor := Color gray alpha: 0.5
+	borderColor := Color gray alpha: 0.5.
+	hasBorder := false
 ]
 
 { #category : #public }
@@ -288,7 +313,7 @@ RTPopup >> textElement: aOneArgBlock [
 	"
 	self group: [ :group :element | 
 		| backRectangle lbl |
-		backRectangle := (RTBox new color: (backgroundColor alpha: self alphaPopupBackground); borderColor: borderColor) element.
+		backRectangle := self createBackgroundElement: backgroundColor "(RTBox new color: (backgroundColor alpha: self alphaPopupBackground); borderWidth: 5; borderColor: borderColor) element".
 		
 		lbl := (RTLabel new 
 				color: textColor;
