@@ -94,6 +94,7 @@ RTSVGVisitor2Test >> testVisitArrowShape [
 	e2 := box element.
 	shape := RTArrowedLine edgeFrom: e1 to: e2.
 	view add: e1; add: e2; add: shape.
+	view canvas color: Color white.
 	visitor visitView: view.
 	self assert: visitor stream contents equals:'mamani.color({r:255,g:255,b:255});
 	mamani.camera.setScale(1.0001);
