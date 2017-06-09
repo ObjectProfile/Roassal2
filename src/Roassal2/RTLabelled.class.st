@@ -13,7 +13,7 @@ RTLabelled class >> new [
 	^ super new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'obsolete class' }
 RTLabelled >> OBSOLETECLASS [
 	"THIS CLASS IS OBSOLETE. PLEASE REFER TO RTLabeled"
 ]

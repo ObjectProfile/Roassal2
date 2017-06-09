@@ -19,6 +19,30 @@ Class {
 	#category : #'Roassal2-Interactions'
 }
 
+{ #category : #public }
+RTAbstractLabeled class >> hasLabel: anElement [
+	"Return whether the element has a label"
+	^ anElement attributes keys includes: #RTLabelledLabel
+]
+
+{ #category : #public }
+RTAbstractLabeled class >> removeLabelFrom: aRTElement [ 
+	| callback label |
+	callback := aRTElement attributeAt: #RTLabelledCallback ifAbsent: [ ^ self ].
+	aRTElement trachelShape removeCallback: callback ifAbsent: [ ].
+	label := aRTElement attributeAt: #RTLabelledLabel ifAbsent: [ ^ self ].
+	label remove.
+	aRTElement
+		removeAttributeAt: #RTLabelledCallback;
+		removeAttributeAt: #RTLabelledLabel.
+]
+
+{ #category : #removing }
+RTAbstractLabeled class >> removeLabelFromElements: elements [
+	"Remove label for each element of the collection"
+	elements do: [ :e | self removeLabelFrom: e ]
+]
+
 { #category : #visitor }
 RTAbstractLabeled >> accept: aVisitor with: args [
 	aVisitor visitLabelledInteraction: self with: args
@@ -147,15 +171,9 @@ RTAbstractLabeled >> pushBackLabelIfNecessary [
 ]
 
 { #category : #public }
-RTAbstractLabeled >> removeLabelFrom: aRTElement [ 
-	| callback label |
-	callback := aRTElement attributeAt: #RTLabelledCallback ifAbsent: [ ^ self ].
-	aRTElement trachelShape removeCallback: callback ifAbsent: [ ].
-	label := aRTElement attributeAt: #RTLabelledLabel ifAbsent: [ ^ self ].
-	label remove.
-	aRTElement
-		removeAttributeAt: #RTLabelledCallback;
-		removeAttributeAt: #RTLabelledLabel.
+RTAbstractLabeled >> removeLabelFrom: anElement [
+	"Remove the label from anElement"
+	self class removeLabelFrom: anElement
 ]
 
 { #category : #'public - layout' }

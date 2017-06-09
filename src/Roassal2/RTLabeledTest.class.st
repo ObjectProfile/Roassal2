@@ -1,17 +1,33 @@
 Class {
-	#name : #RTLabelledTest,
+	#name : #RTLabeledTest,
 	#superclass : #RTTest,
 	#category : #'Roassal2-Core-Tests'
 }
 
 { #category : #tests }
-RTLabelledTest >> testConstruction [
+RTLabeledTest >> testAddAndRemoveLabel [
+
+	| v e |
+	e := RTEllipse elementOn: 'hello'.
+	v := RTView new.
+	v add: e.
+	self deny: (RTLabeled hasLabel: e).
+	
+	e @ RTLabeled.
+	self assert: (RTLabeled hasLabel: e).
+	
+	RTLabeled removeLabelFrom: e.
+	self deny: (RTLabeled hasLabel: e).
+]
+
+{ #category : #tests }
+RTLabeledTest >> testConstruction [
 
 	RTLabeled above; below; center
 ]
 
 { #category : #tests }
-RTLabelledTest >> testDefault [
+RTLabeledTest >> testDefault [
 
 	| v el |
 	v := RTView new.
@@ -28,7 +44,7 @@ RTLabelledTest >> testDefault [
 ]
 
 { #category : #tests }
-RTLabelledTest >> testDefaultFromNumber [
+RTLabeledTest >> testDefaultFromNumber [
 
 	| v el |
 	v := RTView new.
@@ -46,7 +62,7 @@ RTLabelledTest >> testDefaultFromNumber [
 ]
 
 { #category : #tests }
-RTLabelledTest >> testDefaultWithNoLabel [
+RTLabeledTest >> testDefaultWithNoLabel [
 
 	| v el |
 	v := RTView new.
@@ -62,7 +78,7 @@ RTLabelledTest >> testDefaultWithNoLabel [
 ]
 
 { #category : #tests }
-RTLabelledTest >> testRemovingLabelledElement [
+RTLabeledTest >> testRemovingLabelledElement [
 
 	| v el |
 	v := RTView new.
@@ -77,4 +93,19 @@ RTLabelledTest >> testRemovingLabelledElement [
 	self assert: v numberOfElements equals: 0.
 	self assert: v canvas numberOfShapes equals: 0.
 
+]
+
+{ #category : #tests }
+RTLabeledTest >> testremoveFromElements [
+	| v es  |
+	es := RTEllipse elementsOn: #(1 2 3).
+	v := RTView new.
+	v addAll: es.
+	self deny: (RTLabeled hasLabel: es anyOne).
+	
+	es @ RTLabeled.
+	self assert: (RTLabeled hasLabel: es anyOne).
+	
+	RTLabeled removeLabelFromElements: es.
+	self deny: (RTLabeled hasLabel: es anyOne).
 ]
