@@ -262,6 +262,12 @@ RTLayoutBuilder >> month [
 	^ layout
 ]
 
+{ #category : #'public - layout' }
+RTLayoutBuilder >> none [
+	layout := RTNoLayout new.
+	^ layout
+]
+
 { #category : #'public - condition' }
 RTLayoutBuilder >> overall: overallLayout [ 
 	self assert: [ layout class == RTConditionalLayout ].
