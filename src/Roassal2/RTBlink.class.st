@@ -49,7 +49,7 @@ v
 "
 Class {
 	#name : #RTBlink,
-	#superclass : #RTAction,
+	#superclass : #RTInteraction,
 	#instVars : [
 		'color'
 	],
@@ -118,6 +118,14 @@ RTBlink class >> isHighlighted: element [
 RTBlink class >> on: element [
 
 	^ self new on: element
+]
+
+{ #category : #public }
+RTBlink class >> on: element in: view [
+	| anim |
+	anim := self on: element.
+	view addAnimation: anim.
+	anim start
 ]
 
 { #category : #public }
@@ -194,6 +202,17 @@ RTBlink >> initialize [
 	color := self defaultColor.
 ]
 
+{ #category : #initialization }
+RTBlink >> initializeElement: element [
+	| anim |
+	self highlight: element color: (color rtValue: element).
+	anim := RTNopAnimation new
+		waitFor: self nbOfSecondsLightOn after: [ self unhighlight: element ].
+	element view addAnimation: anim.
+	anim start.
+	^ anim
+]
+
 { #category : #testing }
 RTBlink >> isHighlighted: element [
 	^ self class isHighlighted: element
@@ -204,15 +223,9 @@ RTBlink >> nbOfSecondsLightOn [
 	^ 1
 ]
 
-{ #category : #public }
+{ #category : #'instance creation' }
 RTBlink >> on: element [
-	| anim |
-	self highlight: element color: (color rtValue: element).
-	anim := RTNopAnimation new
-		waitFor: self nbOfSecondsLightOn after: [ self unhighlight: element ].
-	element view addAnimation: anim.
-	anim start.
-	^ anim
+	^ self initializeElement: element
 ]
 
 { #category : #util }
