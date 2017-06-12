@@ -2,24 +2,13 @@
 RTExperimentalExample new installTitle: 'BoxSelectionForEdges' 
 		code:
 		'
-| view lb |
-view := RTMondrianExample new exampleClassDependencies view.
-lb := RTLegendBuilder new.
-lb view: view.
-lb addText: '1 Right click on the view';
-	addText: '2 Select one option from the menu';
-	addText: '3 Move the new box';
-	addText: '4 Change the the size of the box with double click'.
-lb build.
-
-view  @ RTSelectionBox.
-view canvas camera 
-	noInitializationWhenOpen;
-	scale: 0.6;
-	translateTo: 72@1270.
-RTEmptyViewContext setOnView: view.
-^ view
-	'
+<gtExample>
+| b v |
+b := RTObjectBrowser new.
+v := RTView new.
+v addElement: RTBox element.
+b object: v.
+^ b'
 "
 Class {
 	#name : #RTExperimentalExample,
@@ -1215,6 +1204,58 @@ LSCzlptvFlBNuv8tB1gQ8Gz2TZwDiMw3Epx8S94r7mDx1ZCjVRswnvhDSmoNx9n/1UtdQFkq
 QasYVwUg+QjAC2k7uFi1AURPIpHMRsZ2AILs5ZHXst4DBBShnmvqdLIqQIr5/Y6FUW91JQVf
 S8bb1GoBiAqzuqaAgBaz989qQxKqAQFHDK8s8gQgq3cklb+WTjUg1epT/N9aowaA+L9O3f+A
 +B8Q/wPif0D8D4j/AfE/IKbl/xFj7sSG9uh9AAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTExperimentalExample >> exampleObjectBrowser [
+
+| b v |
+b := RTObjectBrowser new.
+v := RTView new.
+v addElement: RTBox element.
+b object: v.
+^ b
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleObjectBrowserIcon [
+	^ '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
+rkJggg=='
 ]
 
 { #category : #sources }
