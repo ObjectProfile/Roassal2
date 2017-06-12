@@ -78,6 +78,11 @@ TRPlatform >> dateAndTimeFromString: aString [
 	self subclassResponsibility
 ]
 
+{ #category : #fonts }
+TRPlatform >> defaultFamilyFontName [
+	self subclassResponsibility
+]
+
 { #category : #windows }
 TRPlatform >> deletePopup: apopup [
 	"delete the platform popup for a class"
