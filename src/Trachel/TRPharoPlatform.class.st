@@ -189,6 +189,22 @@ Ebola2.6,POINT (21.758664 -4.038333),2008-01-01T00:00:00,2009-01-01T00:00:00,Dem
 ]
 
 { #category : #fonts }
+TRPharoPlatform >> defaultFamilyFontName [
+	"Default Family font"
+	| fontList |
+	fontList := TRPlatform current fontListStrings.
+	fontList ifEmpty: [ ^ TRPlatform current defaultFont familyName ].
+	
+	(fontList includes: StandardFonts listFont familyName ) 
+		ifTrue: [ ^ StandardFonts listFont familyName ].
+	
+	(fontList includes: 'Source Sans Pro') ifTrue: [ ^ 'Source Sans Pro' ].
+	(fontList includes: 'DejaVu Sans') ifTrue: [ ^ 'DejaVu Sans' ].
+
+    ^ TRPlatform current defaultFont familyName
+]
+
+{ #category : #fonts }
 TRPharoPlatform >> defaultFont [
 	^ StandardFonts defaultFont
 ]
