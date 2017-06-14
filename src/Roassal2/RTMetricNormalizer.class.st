@@ -104,6 +104,12 @@ RTMetricNormalizer >> edges [
 	^ edges
 ]
 
+{ #category : #'public normalize line width' }
+RTMetricNormalizer >> edges: someEdges [
+	"Set the edges to take into account"
+	edges := someEdges.
+]
+
 { #category : #accessing }
 RTMetricNormalizer >> elements [
 	"Elements on which the normalization will occur"
