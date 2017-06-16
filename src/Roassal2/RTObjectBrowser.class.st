@@ -13,14 +13,32 @@ Class {
 }
 
 { #category : #private }
+RTObjectBrowser >> addInteractions: b [
+	| obj temp |
+	b interaction menu
+		item: 'Inspect' action: [:e | e model inspect];
+		item: 'Browse class' action: [ :e | e model class browse ];
+		item: 'Close ' action: [:e | 
+			temp := e model.
+			obj := self objects at: temp.
+			self objects removeKey: temp.
+			obj do: #remove.
+			view canvas focusOnCenterScaled.
+			view signalUpdate ].
+	b interaction
+		when: TRMouseDragEnd do: [ :e | view canvas focusOnCenterScaled. view signalUpdate ].
+]
+
+{ #category : #private }
 RTObjectBrowser >> addNewElement: anElement [
 	| pos anime |
 	pos := self positionFor: anElement.
-	anElement first translateTo: pos.
-	view addAll: anElement.
+	anElement key first translateTo: pos.
+	view addAll: anElement key.
+	view addAll: anElement value.
 	anime := RTAddElementAnimation new.
 	anime shape circle color: Color transparent; borderColor: Color blue.
-	anime element: anElement during: 1.
+	anime element: anElement key during: 1.
 	view canvas focusOnCenterScaled.
 	view addAnimation: anime.
 ]
@@ -28,9 +46,10 @@ RTObjectBrowser >> addNewElement: anElement [
 { #category : #private }
 RTObjectBrowser >> addNewObject: anObject [
 	| newElement |
+	anObject ifNil: [ ^ self ].
 	newElement := self createElementsFor: anObject.
 	self addNewElement: newElement.
-	self objects at: anObject put: newElement.
+	self objects at: anObject put: newElement key.
 ]
 
 { #category : #'adding item' }
@@ -53,19 +72,12 @@ RTObjectBrowser >> contains: anObject [
 
 { #category : #private }
 RTObjectBrowser >> createElementsFor: anObject [
-	| b obj |
+	| b vars edges |
 	b := RTMondrian new.
 	b shape box color: Color veryLightGray; 
 		withTextAbove: [ anObject class name ].
-	b interaction menu
-		item: 'Inspect' action: [:e | e model inspect];
-		item: 'Browse class' action: [ :e | e model class browse ];
-		item: 'Close ' action: [:e | 
-			(self objects at: anObject) do: #remove.
-			view canvas focusOnCenterScaled.
-			view signalUpdate ].
-	b interaction
-		when: TRMouseDragEnd do: [ :e | view canvas focusOnCenterScaled. view signalUpdate ].
+	self addInteractions: b.
+	
 	b node: anObject forIt: [ 
 		b shape label text: #key;
 			if: [ :assoc | assoc value isNil ] color: Color red.
@@ -73,24 +85,33 @@ RTObjectBrowser >> createElementsFor: anObject [
 			noInteractions;
 			highlight;
 			when: TRMouseClick do: [ :evt |
-				obj := evt element model value.
-				self addObject: obj.
-				view add: (RTArrowedLine new 
-					withShorterDistanceAttachPoint; 
-					color: Color blue;
-					edgeFrom: evt element to: (self objects at: obj) first)
-				 ];
+				self openNewObject: evt ];
 			popupText: [:ass | ass value asString ].
-		b nodes: (anObject class allInstVarNames collect: [ :n |
-			n -> (anObject instVarNamed: n) ] ).
+		vars := anObject class allInstVarNames collect: [ :n |
+			n -> (anObject instVarNamed: n)].
+		
+		b nodes: vars.
 		b layout verticalLine ].
 	b build.
-	^ b view elements
+	edges := vars 
+		select: [ :v | self objects includesKey: v value ]
+		thenCollect: [ :v | self 
+			edgeFrom: (b view elementFromModel: v)
+			to: (self objects at: v value) first ].
+	^ b view elements->edges.
 ]
 
 { #category : #hooks }
 RTObjectBrowser >> createView [
 	^ super createView @ RTDraggableView @ RTZoomableView.
+]
+
+{ #category : #private }
+RTObjectBrowser >> edgeFrom: e1 to: e2 [
+	^ RTArrowedLine new 
+		withShorterDistanceAttachPoint; 
+		color: Color blue;
+		edgeFrom: e1 to: e2
 ]
 
 { #category : #initialization }
@@ -107,6 +128,18 @@ RTObjectBrowser >> object: anObject [
 { #category : #accessing }
 RTObjectBrowser >> objects [
 	^ objects
+]
+
+{ #category : #private }
+RTObjectBrowser >> openNewObject: evt [
+	| obj temp |
+	obj := evt element model value.
+	obj ifNil: [ ^ self ].
+	self addObject: obj.
+	temp := (self objects at: obj) first.
+	(view edges select: [ :e | 
+		e from = evt element and: [ e to = temp ] ]) ifEmpty: [ 
+		view add: (self edgeFrom: evt element to: (self objects at: obj) first) ] 
 ]
 
 { #category : #private }
