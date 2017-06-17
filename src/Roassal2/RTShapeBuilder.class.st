@@ -318,6 +318,25 @@ RTShapeBuilder >> labelledAs: aBlock [
 	^ label
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> labelledBox [
+	"
+	A box with a label in it.
+
+	b := RTMondrian new.
+	b shape labelledBox.
+	b nodes: Dictionary withAllSubclasses.
+	b edges connectFrom: #superclass.
+	b layout sugiyama.
+	b
+	"
+	self composite: [ :comp |
+		comp add: RTBox new.
+		comp add: RTLabel new.
+		comp allOfSameSizeWithPadding.
+		 ]
+]
+
 { #category : #'shape - edges' }
 RTShapeBuilder >> line [
 	self shape: RTLine new
