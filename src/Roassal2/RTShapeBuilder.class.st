@@ -304,7 +304,7 @@ RTShapeBuilder >> label [
 ]
 
 { #category : #shapes }
-RTShapeBuilder >> labelledAs: aBlock [
+RTShapeBuilder >> labeledAs: aBlock [
 	| label oldShape |
 	label := RTLabel new text: aBlock.
 	oldShape := shape.
@@ -319,12 +319,12 @@ RTShapeBuilder >> labelledAs: aBlock [
 ]
 
 { #category : #shapes }
-RTShapeBuilder >> labelledBox [
+RTShapeBuilder >> labeledBox [
 	"
 	A box with a label in it.
 
 	b := RTMondrian new.
-	b shape labelledBox.
+	b shape labeledBox.
 	b nodes: Dictionary withAllSubclasses.
 	b edges connectFrom: #superclass.
 	b layout sugiyama.
