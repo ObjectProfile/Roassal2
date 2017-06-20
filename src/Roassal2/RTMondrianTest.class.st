@@ -383,6 +383,16 @@ RTMondrianTest >> testInteractionOverridePopup [
 	self assert: b interaction numberOfInteractions equals: 2
 ]
 
+{ #category : #'tests - nodes' }
+RTMondrianTest >> testLabeledBox [
+	b shape labeledBox.
+	b node: 42.
+	b layout flow.
+	b build.
+	
+	self assert: b view canvas numberOfShapes equals: 2.
+]
+
 { #category : #'tests - edges' }
 RTMondrianTest >> testNoLineShape [
 
