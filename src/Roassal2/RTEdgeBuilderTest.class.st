@@ -19,6 +19,20 @@ RTEdgeBuilderTest >> setUp [
 ]
 
 { #category : #tests }
+RTEdgeBuilderTest >> testAllowRepetitionAndUseAssociations [
+
+	b := RTMondrian new.
+	b nodes: (1 to: 3).
+	b shape line
+		color: Color red trans;
+		withVerticallAttachPoint.
+	b edges noRepetition; useAssociations: { 1 -> 2 . 2 -> 3 . 1 -> 2}.
+	b layout grid.
+	b build.
+	self assert: b view numberOfEdges equals: 2
+]
+
+{ #category : #tests }
 RTEdgeBuilderTest >> testCompositeShapes [
 
 	| els lineShape edges eb |
