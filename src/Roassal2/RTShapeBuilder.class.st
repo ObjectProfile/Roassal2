@@ -481,6 +481,18 @@ RTShapeBuilder >> withText: aSymbolOrABlock [
 ]
 
 { #category : #'shapes - texting' }
+RTShapeBuilder >> withText: aSymbolOrABlock height: aHeightAsIntegerOrBlock [
+	shape := shape + (RTLabel new height: aHeightAsIntegerOrBlock; text: aSymbolOrABlock).
+	^ shape
+]
+
+{ #category : #'shapes - texting' }
+RTShapeBuilder >> withText: aSymbolOrABlock height: aHeightAsIntegerOrBlock color: aColor [
+	shape := shape + (RTLabel new height: aHeightAsIntegerOrBlock; color: aColor; text: aSymbolOrABlock).
+	^ shape
+]
+
+{ #category : #'shapes - texting' }
 RTShapeBuilder >> withTextAbove [
 	^ self withTextAbove: #yourself
 ]
