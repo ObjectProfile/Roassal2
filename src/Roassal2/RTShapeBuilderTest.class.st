@@ -340,3 +340,21 @@ RTShapeBuilderTest >> testWithTextAndTranslation [
 	self assert: el shape class == RTCompositeShape.
 	
 ]
+
+{ #category : #tests }
+RTShapeBuilderTest >> testWithTextHeightColor [
+	| b |
+	b := RTMondrian new.
+	b shape box
+		borderColor: Color black;
+		width: 40;
+		height: 30;
+		withText: #yourself height: 2 color: Color red.
+		
+	b node: 'hello'.
+	b build.
+	
+	self assert: b view numberOfElements equals: 1.
+	self assert: b view canvas numberOfShapes equals: 2.
+	self assert: b view canvas shapes second height equals: 2.
+]
