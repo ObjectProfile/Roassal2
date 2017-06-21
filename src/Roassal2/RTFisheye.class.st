@@ -58,7 +58,7 @@ RTFisheye >> initializeElement: aView [
 	view := aView.
 	self position: [ :e | e attributes at: #position ].
 	view when: TRMouseMove do: [ :evt |
-		self focus: evt positionFromCamera.
+		self focus: evt position.
 		view elements do: [ :e | | fisheye |
 			(e attributes includesKey: #position) 
 				ifFalse: [ e attributes at: #position put: e position ].
