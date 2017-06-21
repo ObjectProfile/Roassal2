@@ -312,6 +312,65 @@ RTMetricNormalizer >> normalizeElementHeight: metricBlock min: min max: max usin
 	self normalizeHeight: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
 ]
 
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeElementWidth: metricBlock [
+	"metricBlock is evaluated on each element"
+	^ self normalizeElementWidth: metricBlock min: 5 max: 30
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeElementWidth: metricBlock max: maxValue [
+	"metricBlock is evaluated on each node. 
+	 maxValue is an integer representing the maximum size in pixels for each node"
+	self normalizeElementWidth: metricBlock min: 5 max: maxValue
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeElementWidth: metricBlock min: minValue max: maxValue [
+	"metricBlock is evaluated on each node model. 
+	 minValue and maxValue are integer representing the minimum and maximum size in pixels for each node"
+	self normalizeElementWidth: metricBlock min: minValue max: maxValue using: #yourself
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeElementWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation [
+	"aBlock is evaluated on each node. 
+	 Colors is an array of colors used to do the fading"
+		
+	| values |
+	self checkNotEmpty.	
+	
+	values := (self getElementNormalizedValues: metricBlock 
+							min: min max: max 
+							minValue: minValue maxValue: maxValue 
+							using: transformation).
+	elements with: values do: [ :el :v | el trachelShape width: v ] 
+
+]
+
+{ #category : #'public normalize size' }
+RTMetricNormalizer >> normalizeElementWidth: metricBlock min: min max: max using: transformation [
+	"aBlock is evaluated on each node. 
+	 Colors is an array of colors used to do the fading"
+	
+	| minValue maxValue |
+	
+	self checkNotEmpty.
+
+	"We get the min and the max of the metric for all the elements"
+	minValue := transformation rtValue: (metricBlock rtValue: elements anyOne).
+	maxValue := minValue.
+	elements do: [ :el | 
+		| t |  
+		t := transformation rtValue: (metricBlock rtValue: el).
+		minValue := minValue min: t.
+		maxValue := maxValue max: t ].
+	
+	
+	self normalizeElementWidth: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation.
+	
+]
+
 { #category : #'public normalize x' }
 RTMetricNormalizer >> normalizeElementX: metricBlock min: min max: max minValue: minValue maxValue: maxValue [ 
 	"

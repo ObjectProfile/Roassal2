@@ -1,41 +1,29 @@
 "
-RTGrapherDecorationExample new installTitle: 'LikertScale' 
+RTGrapherBarChartExample new installTitle: 'HorizontalClasses' 
 		code:
 		'
-| q11 q12 q21 q22 q3 t toVisualize b ds lb |
-q11 := #(A A SA SA A SA N A A SA N) groupedBy: #yourself. 
-q12 := #(D SA SA SA A N SA A SA A A) groupedBy: #yourself.
-q21 := #(A N SA A SA A D A N A N) groupedBy: #yourself.
-q22 := #(D N SA A SA SA D A A SA A) groupedBy: #yourself.
-q3  := #(D A SA SA N A SA A SA A A) groupedBy: #yourself.
-
-t := q3.
-toVisualize := OrderedCollection new.
-toVisualize add: #SA -> (t at: #SA ifAbsent: [ #() ]).
-toVisualize add: #A -> (t at: #A ifAbsent: [ #() ]).
-toVisualize add: #N -> (t at: #N ifAbsent: [ #() ]).
-toVisualize add: #D -> (t at: #D ifAbsent: [ #() ]).
-toVisualize add: #SD -> (t at: #SD ifAbsent: [ #() ]).
+| b ds hasTest |
+hasTest := [ :cls | Smalltalk hasClassNamed: cls name, ''Test'' ].
 
 b := RTGrapher new.
-ds := RTData new.
-ds barChartWithBarTitle: #key rotation: 0.
-ds points: toVisualize, {'''' -> #() }.
-ds y: [ :as | as value size ].
+b extent: 500@500.
+ds := RTHorizontalData new.
+ds points: RTShape withAllSubclasses.
+ds barShape 
+	color: Color purple trans;
+	if: hasTest color: Color green trans.
+
+ds interaction popupText: [ :cls | cls name, ''
+LOC: '', cls numberOfLinesOfCode asString ].
+ds x: [ :cls | cls numberOfLinesOfCode * 
+	( (hasTest value: cls) 
+		ifTrue: [ 1 ]
+		ifFalse: [ -1 ] ) ].
 b add: ds.
-b axisX noTick; noTitle.
-b axisY noDecimal.
-b maxY: 5.
-b build.
-
-lb := RTLegendBuilder new.
-lb view: b view.
-lb addText: ''Likert scale result''.
-lb addText: ''SA = Strong agree; A = agree; N = neutral''.
-lb addText: ''D = Disagree; SD = Strongly Disagree''.
-lb build.
-
-^ b view'
+b axisY decimalIfNecessary.
+b axisX numberOfTicks: 4.
+^ b
+'
 	
 "
 Class {
@@ -398,6 +386,86 @@ QU4knU47o3R9nn5ohLUBi8XiqoGhFyDmZW8biFlmQMyL4KZ2F9u27wpyeHzrPMI1tS2fn59S
 LpelWq06jTe1u+jjX/d0vV7/bR0z73hd9zLb35n1T23T1g4DYmu3WXZq23cB0b1C33rfbDaS
 z+etDZDv7Pl5nHMIP3wQPgg/fBA+CD98ED4IP3wQfvggfBB++CB8EH74IHwQfvggfBB++CD8
 8EH4IPzwQfgg/PBB+CD88EH4IPzwQfjhg/BB+DmbX54DDngf154DAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTGrapherBarChartExample >> exampleHorizontalBasic [
+
+| b ds |
+b := RTGrapher new.
+ds := RTHorizontalData new.
+ds barShape color: Color blue trans.
+
+ds points: #( 3 2 -4 9 5.5).
+b add: ds.
+^ b
+]
+
+{ #category : #icons }
+RTGrapherBarChartExample >> exampleHorizontalBasicIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAACXklEQVR4XuXc2WrCQBiGYe//
+CrwQj/VAEY9cEIyC4o6ouIG4HPhp/zmsWrRZHPO+MLS0ECSPSWcS08z1ys+nMvxdwAfhxwfh
+g/Djg/BB+PFB+CD8+CB8EH58EH58ED4IPz4IH4QfH4QPwo8Pwgfhxwfhxwfhg/Djg/BB+PFB
++CAfLAikOAYf5J9ls1Icgw/ypNFopNlspsVicbeTarWa+CAJ1+l01O/3NZlMxD9CvuCUVShI
+cQw+CD8+CB+EH38dkvTgr0NimmX5Ojvjg/BB+CDegmy3W10uF3W7XVnn81m/V+r5vLwaqQYZ
+DAZulW4Q9pU/x+JPe/kg/D4M0m5LYQYfxLNZEh+ED8IH4YMkCOL7vJ8/y+LnN0ir1XKr9MPh
+cHc0VKtV/hGSdJVKRYYyHo/5K/VvOGXR1ilff7WXD8IH4YPwQTyKtk7hr0P4IPz4IHyQ11ou
+l+5vwHQ6fXhP3VbqtPsnHwUZDoc/O7GtYrH49J467epw6j4GxAfhg/DXIWlel/BnWXwQfnwQ
+Pgg/Pggf5HH1el3vjFwu5xaGpVLp7nf283e3l/SwUnWEBEHw53PqURf1DrTHKfinLP4p67V2
+u507hI/HY+h3jX0KxY4a21YU72r7Fx6n0ymy7c3nc/egkX3f6/XkHchms1G5XJZduV2v16Ff
+YLPZdOfo1Wole9Iq7Pb2+717fVFtz65UNxoNh2tPevFPWfxTFj8+CB+EHx+EHx+ED8KPD8IH
+4ccH4YPw44PwQfjxQfjxQfgg/PggfBB+fBA+CD8+CB+EHx+EHx+ED8KPD8IH4ReyGyeBQ1Q7
+vS9UAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
+RTGrapherBarChartExample >> exampleHorizontalClasses [
+
+| b ds hasTest |
+hasTest := [ :cls | Smalltalk hasClassNamed: cls name, 'Test' ].
+
+b := RTGrapher new.
+b extent: 500@500.
+ds := RTHorizontalData new.
+ds points: RTShape withAllSubclasses.
+ds barShape 
+	color: Color purple trans;
+	if: hasTest color: Color green trans.
+
+ds interaction popupText: [ :cls | cls name, '
+LOC: ', cls numberOfLinesOfCode asString ].
+ds x: [ :cls | cls numberOfLinesOfCode * 
+	( (hasTest value: cls) 
+		ifTrue: [ 1 ]
+		ifFalse: [ -1 ] ) ].
+b add: ds.
+b axisY decimalIfNecessary.
+b axisX numberOfTicks: 4.
+^ b
+
+]
+
+{ #category : #icons }
+RTGrapherBarChartExample >> exampleHorizontalClassesIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAADxklEQVR4XuWdbU8aQRSF/f+/
+wKRt7Pc2tt9aX2qsVWIALQqICLugKG8LikQXInjtjLKJIhKMhb3muSebIGpMzuPdnTszd5i7
+u5s82nVf1r/G5I4fU4u51/yw3Iq4eZcPRAuQWr4l0V97fCBagFycXUkikuYD0QLERrwcl9hA
+Z0Z8C0MGslXdkqWB8kZ8C0MG4hQd6RvxrVMCZKmxJPtGfOuUACkWi3wYWoCUM+f8wpCfIXwg
+L8bxricb3+J8IFqAXDU7kt495APhV+p8IHwg7+WhnjxNimPEt04JkBVvRT4Z8a3jD3v5QIaj
+EKvzC0N+hvCB8IHwgfBjJJByuSytVku63a4UCgUplUpSq9WeAIhWonwgswJyeXkp19fXks1m
+xfM8sdlgwQTf931fIvkIH8isgPR6PbERfP34Nb9SV/gM4W8D4j/U+UD4QPhA+MEHwgfCj2kA
+4a+pKwPCX1NXBsROv/MLQz4QPpBxYdfUfSO+dUqALHvLUjHiW8cf9vKBjArbjsC3jZ8hfCDj
+MmR+oLjwi8TQgTjHjnQG6hnxLQwRyPnplcTW+O1saoC0PZ9fGGq7ZQV96vwedSVAbJ/6T6Oc
+Ed8+BUDcois3RrdGfPtmAOTk5ERyuYf//lQqJS8Ne8tGfPtmACSRSEil8jBXtb29/cR0u1Eu
+k8nwQYR1y7Ib54bfW6uv8YFoeobwp04UANlcOJTg2vjOny4JHUgt15Lg4q+pKy0Mh5UWfgXP
+B8IHYtbUS0lxjc6N+PYpAGLX1D8a7Rjx7eMPe/lAHsf6fJrfp87PED6Q8VnCzxBdQBz+2e+6
+gEQqEVkxqhvx7VNUGF4Y8e1TBIRfmSsBEqypR4R/okPoQPo3t+I6BT4IfmHIB8IvDN8LkMeb
+ra3sA55vIz9D+ECCWPVWZYGvN8kzmgiIPU0u2PpjT5drNpvPTpTbP92XI77eJNvKMREQe4pc
+8NqCGD5RrtPpyKa7ya/Sw7plDZ8oF1TqfCCKniEHf7N8GJqA/F7kD3P5w14+kDHTJ/ypE36G
+8IG8YupknL4Y8S2eMhDbp+5PqK4R3+IpA+H3qSsDwu9TVwLEnvvOP1FOERDbrJP8cSzRVf7Z
+76puWbZPvTcQv1dd2bCX/7nq/MKQD2SSwpBvIz9D+EBsbH0+lD/8PnU9QKpHLUnt8PvUQwdS
+2mvcF4X8wpAPhA9kXHiFthwk+GvqaoBsfDgQ/pp6CECq1arwh70hAWm32zJ85fN5cV332fuN
+RuN+89yo3yFc9qNpp/03RmZIv9/nZ8GIGLVx8H/HP3L/1vfotFYdAAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }

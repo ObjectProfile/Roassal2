@@ -9,7 +9,8 @@ Class {
 		'shape',
 		'shapes',
 		'numberOfShapes',
-		'side'
+		'side',
+		'center'
 	],
 	#category : #'Roassal2-Experimental'
 }
@@ -28,6 +29,7 @@ RTAddElementAnimation >> element: anElement during: seconds [
 	shapes := shape elementsOn: (1 to: numberOfShapes).
 	
 	anElement view addAll: shapes.
+	center := rect center.
 	shapes do: [ :e | 
 		e extent: 0@0.
 		e pushBack].
@@ -48,7 +50,7 @@ RTAddElementAnimation >> hasCompleted [
 RTAddElementAnimation >> initialize [
 	super initialize.
 	shape := RTShapeBuilder new.
-	self numberOfShapes: 3.
+	self numberOfShapes: 4.
 ]
 
 { #category : #accessing }
@@ -58,14 +60,14 @@ RTAddElementAnimation >> numberOfShapes: aNumber [
 
 { #category : #refreshing }
 RTAddElementAnimation >> refresh [
-	| t f a center |
+	| t f a |
 	t := animatedValue value.
-	center := element position.
 	shapes doWithIndex: [ :e :i | 
 		e translateTo: center.
 		f := i * 0.5 / shapes size.
 		(t - f) > 0 ifTrue: [ 
 			a := side interpolateTo: 0 at: (t - f).
+			
 			e extent: a @ a  ]
 		 ].
 	element signalUpdate.
