@@ -14,19 +14,16 @@ Class {
 
 { #category : #private }
 RTObjectBrowser >> addInteractions: b [
-	| obj temp |
+	| obj |
 	b interaction menu
 		item: 'Inspect' action: [:e | e model inspect];
 		item: 'Browse class' action: [ :e | e model class browse ];
 		item: 'Close ' action: [:e | 
-			temp := e model.
-			obj := self objects at: temp.
-			self objects removeKey: temp.
-			obj do: #remove.
+			obj := self objects at: e model.
+			(self objects at: e model) do: #remove.
+			self objects removeKey: e model.
 			view canvas focusOnCenterScaled.
 			view signalUpdate ].
-	b interaction
-		when: TRMouseDragEnd do: [ :e | view canvas focusOnCenterScaled. view signalUpdate ].
 ]
 
 { #category : #private }
@@ -38,7 +35,7 @@ RTObjectBrowser >> addNewElement: anElement [
 	view addAll: anElement value.
 	anime := RTAddElementAnimation new.
 	anime shape circle color: Color transparent; borderColor: Color blue.
-	anime element: anElement key during: 1.
+	anime element: anElement key during: 0.75.
 	view canvas focusOnCenterScaled.
 	view addAnimation: anime.
 ]
@@ -46,7 +43,6 @@ RTObjectBrowser >> addNewElement: anElement [
 { #category : #private }
 RTObjectBrowser >> addNewObject: anObject [
 	| newElement |
-	anObject ifNil: [ ^ self ].
 	newElement := self createElementsFor: anObject.
 	self addNewElement: newElement.
 	self objects at: anObject put: newElement key.
@@ -55,7 +51,9 @@ RTObjectBrowser >> addNewObject: anObject [
 { #category : #'adding item' }
 RTObjectBrowser >> addObject: anObject [
 	| bool |
+	
 	bool := false.
+	anObject ifNil: [ ^ bool ].
 	(self contains: anObject) ifFalse: [
 		self addNewObject: anObject.
 		bool := true ].
@@ -117,7 +115,7 @@ RTObjectBrowser >> edgeFrom: e1 to: e2 [
 { #category : #initialization }
 RTObjectBrowser >> initialize [
 	super initialize.
-	objects := Dictionary new.
+	objects := IdentityDictionary new.
 ]
 
 { #category : #public }

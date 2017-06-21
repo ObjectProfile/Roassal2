@@ -97,6 +97,13 @@ RTAxisConfiguration >> decimal: anInteger [
 ]
 
 { #category : #configuration }
+RTAxisConfiguration >> decimalIfNecessary [
+	self labelConversion: [ :number | number asInteger = number
+		ifTrue: [ number asInteger ]
+		ifFalse: [ number asFloat ] ]
+]
+
+{ #category : #configuration }
 RTAxisConfiguration >> defaultColor [
 	^ Color gray
 ]
