@@ -256,6 +256,21 @@ RTInteractionBuilder >> popupView: aTwoArgBlock backgroundColor: aBackgroundColo
 	self addExclusiveInteraction: (RTPopup new borderColor: aBorderColor; background: aBackgroundColor group: aTwoArgBlock)
 ]
 
+{ #category : #'public - events-registering' }
+RTInteractionBuilder >> popupViewWithName: aTwoArgBlock [
+	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
+	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
+	^ self popupViewWithName: aTwoArgBlock backgroundColor: (Color blue alpha: 0.6)
+
+]
+
+{ #category : #'public - events-registering' }
+RTInteractionBuilder >> popupViewWithName: aTwoArgBlock backgroundColor: aBackgroundColor [
+	"aTwoArgBlock has to follow the pattern [ :group :element |  ... ]
+	group is an empty group. You need to add what you want to be displayed in the popup. el is the element on which the mouse is above."
+	self addExclusiveInteraction: (RTPopup new namedBackground: aBackgroundColor group: aTwoArgBlock)
+]
+
 { #category : #public }
 RTInteractionBuilder >> removeInteractionOfType: cls [
 	"Remove the interaction of type cls if present"
