@@ -2683,7 +2683,7 @@ RTRoassalExample >> exampleDynamicBezierEdges [
 	RTCircleLayout new initialRadius: 150; on: es.
 
 	es @ (RTShowEdge new 
-				connectTo: [ :value | value - 5 to: value + 5]; 
+				connectToAll: [ :value | value - 5 to: value + 5]; 
 				shape: [ :el | RTBezierLine new 
 									centerOfObjects: (el model - 5 to: el model + 5) inView: v; 
 									color: (Color blue alpha: 0.4) ] ).
@@ -2766,7 +2766,7 @@ RTRoassalExample >> exampleDynamicEdges [
 	v addAll: es.
 	RTCircleLayout new initialRadius: 150; on: es.
 
-	es @ (RTShowEdge new connectTo: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
+	es @ (RTShowEdge new connectToAll: [ :value | value - 5 to: value + 5]; shape: (RTLine new color: (Color blue alpha: 0.4))).
 
 	^ v
 ]
@@ -2835,7 +2835,7 @@ RTRoassalExample >> exampleDynamicLabelsAndEdges [
 	RTCircleLayout new initialRadius: 150; on: elements.
 	elements @ (RTShowLabel new highlight: [ :value | value - 5 to: value + 5]; center; yourself).
 	elements @ (RTShowEdge new 
-						connectTo: [ :value | value - 5 to: value + 5]; 
+						connectToAll: [ :value | value - 5 to: value + 5]; 
 						shape: (RTLine new color: (Color blue alpha: 0.4))).
 	^ view
 ]
@@ -5403,7 +5403,7 @@ RTNest new
 		RTGridLayout on: group ].
 	
 es @ (RTShowEdge new 
-			connectTo: #dependentClasses; 
+			connectToAll: #dependentClasses; 
 			shape: (RTLine new color: Color red);
 			yourself).
 es @ (RTShowLabel new 
