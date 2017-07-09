@@ -42,14 +42,12 @@ RTBundleBuilder >> bezier [
 
 { #category : #'rendering-utility' }
 RTBundleBuilder >> createBezierIfNecessary: aView [
-	| ebuilder   |
 	connectBezierBlock ifNil: [ ^ self ].
-	edgeBuilderDo ifNil: [^ self ].
-	ebuilder := RTEdgeBuilder new
+	RTEdgeBuilder new
 		view: aView;
 		elements: elements;
-		shape: bezier.
-	edgeBuilderDo value: ebuilder.
+		shape: bezier;
+		connectToAll: connectBezierBlock.
 ]
 
 { #category : #private }
@@ -110,35 +108,45 @@ RTBundleBuilder >> createView [
 
 { #category : #default }
 RTBundleBuilder >> defaultInteractions [
-	self interaction popup;
-		addInteraction: (RTHighlightable new 
-			highlightedColor: (Color r: 0 g: 120 b: 0 range: 255);
-			highlightElements: [ :el |
-				edges := el view edges select: [:e | e model key = el model ].
-				edges, (edges flatCollect: [:ed |
-					el view elements select: [ :elem | elem model = ed to model ] ] ).
-			 ]);
-		addInteraction: (RTHighlightable new
-			highlightedColor: Color red;
-			highlightElements: [:el | 
-				edges := el view edges select: [:e | e model value = el model].
-				edges, (edges flatCollect: [:ed |
-					el view elements select: [ :elem | elem model = ed from model ] ] ).
-				]);
-		addInteraction: RTHighlightable allSibblings.
-	
+	| hl uhl set |
+	set := [ :e :c :v |
+		e trachelShape color: c.
+		e isEdge ifTrue: [e trachelShape width: v ] ].
+	hl := [ :e :c |
+		(e attributes includesKey: #oc)
+			ifFalse: [ e attributes at: #oc put: e trachelShape color ].
+		set value: e value: c value: 2].
+	uhl := [ :e | | c |
+		(e attributes includesKey: #oc) ifTrue: [ 
+			c := e attributes at: #oc.
+			set value: e value: c value: 1 ].
+		].
+	self interaction
+		popup;
+		when: TRMouseEnter do: [ :evt | | red blue ed el |
+			el := evt element.
+			hl value: el value: Color black.
+			ed := el view edges.
+			red := ed select: [ :e | e from model = el model ].
+			red := red, (red flatCollect: [:e | el view elementsFromModel: e to model ]).
+			red do: [ :e | hl value: e value: Color green ].
+			
+			blue := ed select: [ :e | e to model = el model ].
+			blue := blue, (blue flatCollect: [:e |el view elementsFromModel: e from model]).
+			blue do: [ :e | hl value: e value: Color red ].
+			
+			el attributes at: #ed put: red, blue.
+			evt signalUpdate ];
+		when: TRMouseLeave do: [ :evt | | el |
+			el := evt element.
+			uhl value: el.
+			(el attributes at: #ed ifAbsent: [ #() ]) do: [ :e |
+				uhl value: e ] ].
 ]
 
 { #category : #default }
 RTBundleBuilder >> defaultSliderShape [
-	| lin c |
-	"lin := TRPlatform current linearGradientClass.
-	c := lin new
-				start: 0@ -8.75; stop: 0@8.75;
-				colorRamp: (Array with: (0.0 -> (Color white alpha: 0.6)) with: (1.0 -> Color transparent).
-	c2 := lin new
-				start: 0@ 7.0; stop: 0@12.0;
-				colorRamp: (Array with: (0.0-> Color transparent) with: (1.0 -> (Color white alpha: 0.6))."
+	| c |
 	c := Color blue.
 	sliderShape := RTCompositeShape new 
 		add: (RTEllipse new size: 30; color: Color blue; borderWidth: 0.01; borderColor: Color black);
@@ -201,6 +209,11 @@ RTBundleBuilder >> labelShape [
 	^ label
 ]
 
+{ #category : #accessing }
+RTBundleBuilder >> layout [
+	^ layoutBuilder
+]
+
 { #category : #'rendering-utility' }
 RTBundleBuilder >> parentOf: model view: aView [
 	| element |
@@ -218,8 +231,9 @@ RTBundleBuilder >> renderIn: aView [
 		elements: elements;
 		connectToAll: childrenBlock.
 	layoutBuilder setUpElements: elements.
+	view edges do: #remove.
 	self createBezierIfNecessary: aView.
-	
+	view edges pushBack.
 	center := elements encompassingRectangle center.
 	(elements select: [ :e | (childrenBlock rtValue: e model) isEmpty ]) 
 		do: [ :e | self createLabelFor: e view: aView ].
