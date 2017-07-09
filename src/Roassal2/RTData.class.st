@@ -254,6 +254,13 @@ RTData >> numberOfPoints [
 	^ elements size
 ]
 
+{ #category : #'public - bar shape' }
+RTData >> offsetForBarCharts [
+	"Make all the elements from left to right"
+	self xElement: [ :anElement | (elements indexOf: anElement) - 0.5 ].
+
+]
+
 { #category : #accessing }
 RTData >> points [
 	^ elements collect: #model
