@@ -1709,7 +1709,7 @@ ConfigurationOfRoassal2 >> version149: spec [
 		
 		spec 
 			package: 'Athens-SVG' with: 'Athens-SVG-AliakseiSyrel.16';
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.421';
+			package: 'Trachel' with: 'Trachel-akevalion.421';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1672';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.56';
