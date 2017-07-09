@@ -22,7 +22,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Core'
 }
 
-{ #category : #adding }
+{ #category : #'public - adding' }
 RTGrapher >> add: aDataSet [
 	"Essential method. Add a dataset into the grapher. Only non-empty set are considered"
 	self assert: [ (aDataSet isKindOf: RTAbstractData) or: [ aDataSet isKindOf: RTAbstractDataSet ]] description: 'Wrong argument'.
@@ -32,7 +32,7 @@ RTGrapher >> add: aDataSet [
 	aDataSet addedInBuilder: self
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'public - axis' }
 RTGrapher >> axisX [
 	| s |
 	self checkIfDataSetHaveBeenAdded.
@@ -41,13 +41,13 @@ RTGrapher >> axisX [
 	^ s
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'public - axis' }
 RTGrapher >> axisXWithNumberOfTicks: aNumber [
 	self axisX numberOfTicks: aNumber
 
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'public - axis' }
 RTGrapher >> axisY [
 	| s |
 	self checkIfDataSetHaveBeenAdded.
@@ -56,7 +56,7 @@ RTGrapher >> axisY [
 	^ s
 ]
 
-{ #category : #'public-axis' }
+{ #category : #'public - axis' }
 RTGrapher >> axisYWithNumberOfTicks: aNumber [
 	self axisY numberOfTicks: aNumber
 
@@ -65,6 +65,32 @@ RTGrapher >> axisYWithNumberOfTicks: aNumber [
 { #category : #utility }
 RTGrapher >> checkIfDataSetHaveBeenAdded [
 	datasets ifEmpty: [ self error: 'No dataset has been added?' ]
+]
+
+{ #category : #'public - bar chart' }
+RTGrapher >> configureForBarCharts [
+	"Public method
+	
+	Configure the grapher to have bar within the X-axis limits
+	Here is an example:
+-=-=-=-=-=-=-=-=
+g := RTGrapher new.
+
+ds := RTData new.
+ds barShape.
+ds points: #(1 2 3 -2).
+ds maxX: 10.
+g add: ds.
+
+g configureForBarCharts.
+
+g
+-=-=-=-=-=-=-=-=
+	"
+	self datasets do: #offsetForBarCharts.
+	self minX: 0.5.
+	self maxX: self getMaxNumberOfPoints.
+	self axisX noTick.
 ]
 
 { #category : #hooks }
@@ -288,23 +314,77 @@ RTGrapher >> renderLegend [
 
 { #category : #resetting }
 RTGrapher >> resetLegend [
+	"Private method. Not meant to be used publically"
 	legendBuilder := self createLegendBuilder
 ]
 
 { #category : #accessing }
-RTGrapher >> shouldUseNiceLabels: aBool [
-	self shouldUseNiceLabelsForX: aBool.
-	self shouldUseNiceLabelsForY: aBool.
+RTGrapher >> shouldUseNiceLabels: aBoolean [
+	"
+	Use an algorithm to determine the best values for the ticks. 
+	
+
+-=-=-=-=-=-=-=-=-=-=-=-=
+g := RTGrapher new.
+g shouldUseNiceLabels: true.
+
+ds := RTData new.
+ds barShape.
+ds points: #(1.2 2.1 3.9).
+g add: ds.
+
+g
+-=-=-=-=-=-=-=-=-=-=-=-=
+	"
+	self shouldUseNiceLabelsForX: aBoolean.
+	self shouldUseNiceLabelsForY: aBoolean.
 ]
 
 { #category : #accessing }
-RTGrapher >> shouldUseNiceLabelsForX: aBool [
-	shouldUseNiceLabelsForX := aBool
+RTGrapher >> shouldUseNiceLabelsForX: aBoolean [
+	"
+	Use an algorithm to adequately select the value of the ticks on the X-axis.
+
+	Consider the following script. Try replacing false by true
+-=-=-=
+g := RTGrapher new.
+g shouldUseNiceLabelsForY: false.
+g shouldUseNiceLabelsForX: false.
+
+ds := RTData new.
+ds points: #(1.2 2.1 3.9).
+ds x: #yourself.
+ds y: #yourself.
+g add: ds.
+
+g
+-=-=-=
+	"
+
+	shouldUseNiceLabelsForX := aBoolean
 ]
 
 { #category : #accessing }
-RTGrapher >> shouldUseNiceLabelsForY: aBool [
-	shouldUseNiceLabelsForY := aBool
+RTGrapher >> shouldUseNiceLabelsForY: aBoolean [
+	"
+	Use an algorithm to adequately select the value of the ticks on the Y-axis.
+
+	Consider the following script. Try replacing false by true
+-=-=-=
+g := RTGrapher new.
+g shouldUseNiceLabelsForY: false.
+g shouldUseNiceLabelsForX: false.
+
+ds := RTData new.
+ds points: #(1.2 2.1 3.9).
+ds x: #yourself.
+ds y: #yourself.
+g add: ds.
+
+g
+-=-=-=
+	"
+	shouldUseNiceLabelsForY := aBoolean
 ]
 
 { #category : #accessing }
