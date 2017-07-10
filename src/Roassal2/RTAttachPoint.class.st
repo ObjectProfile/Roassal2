@@ -20,8 +20,42 @@ RTAttachPoint class >> instance [
 ]
 
 { #category : #public }
+RTAttachPoint class >> on: elementOrElements [
+	| els temp |
+	els := elementOrElements.
+	els isCollection 
+		ifFalse: [ els := Array with: els ].
+	temp := self setAttachPoint: els.
+	els do: #updateConnectedEdges.
+	^ temp
+]
+
+{ #category : #public }
+RTAttachPoint class >> on: elementOrElements thenDo: aBlock [
+	| els temp |
+	els := elementOrElements.
+	els isCollection 
+		ifFalse: [ els := Array with: els ].
+	temp := self setAttachPoint: els.
+	aBlock value: temp.
+	els do: #updateConnectedEdges.
+	^ temp
+]
+
+{ #category : #public }
 RTAttachPoint class >> resetInstance [
 	instance := nil
+]
+
+{ #category : #public }
+RTAttachPoint class >> setAttachPoint: els [
+	| temp shapes |
+	temp := self new.
+	shapes := els flatCollectAsSet: [ :e | 
+		e connectedEdges collect: [ :ed | ed shape ] ].
+	shapes do: [ :s |
+		s attachPoint: temp ].
+	^ temp
 ]
 
 { #category : #'public - hooks' }
