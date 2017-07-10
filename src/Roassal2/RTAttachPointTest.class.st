@@ -55,6 +55,20 @@ RTAttachPointTest >> testContinuousRectangleAttachPoint [
 ]
 
 { #category : #tests }
+RTAttachPointTest >> testDual [
+	view := RTView new.
+	el1 := RTBox element.
+	el2 := RTBox element.
+	edge := RTLine edgeFrom: el1 to: el2.
+	view add: el1.
+	view add: el2.
+	view add: edge.
+	RTDualAttachPoint  on: view elements attachFrom: RTBorderAttachPoint instance.
+	self assert: edge shape attachPoint class equals: RTDualAttachPoint 
+
+]
+
+{ #category : #tests }
 RTAttachPointTest >> testHorizontalAttachPoint [
 	shape withHorizontalAttachPoint.
 	self 
@@ -65,6 +79,34 @@ RTAttachPointTest >> testHorizontalAttachPoint [
 		assert: (shape endingPointOf: edge) 
 		equals: (el2 encompassingRectangle topLeft 
 					+ (0 @ (el2 encompassingRectangle extent y / 2)) asIntegerPoint).
+]
+
+{ #category : #tests }
+RTAttachPointTest >> testOn [
+	view := RTView new.
+	el1 := RTBox element.
+	el2 := RTBox element.
+	edge := RTLine edgeFrom: el1 to: el2.
+	view add: el1.
+	view add: el2.
+	view add: edge.
+	RTBorderAttachPoint on: view elements.
+	self assert: edge shape attachPoint class equals: RTBorderAttachPoint
+
+]
+
+{ #category : #tests }
+RTAttachPointTest >> testOnThenDo [
+	view := RTView new.
+	el1 := RTBox element.
+	el2 := RTBox element.
+	edge := RTLine edgeFrom: el1 to: el2.
+	view add: el1.
+	view add: el2.
+	view add: edge.
+	RTBorderAttachPoint on: view elements thenDo: [ :ap |
+		ap offset: 20 ].
+	view
 ]
 
 { #category : #tests }
