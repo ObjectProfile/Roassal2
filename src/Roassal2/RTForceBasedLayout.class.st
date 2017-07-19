@@ -305,6 +305,17 @@ RTForceBasedLayout >> removeAllEdges [
 	edges := OrderedCollection new
 ]
 
+{ #category : #updating }
+RTForceBasedLayout >> removeEdge: ed [
+	edges remove: ed
+]
+
+{ #category : #updating }
+RTForceBasedLayout >> removeNode: node [
+	nodes remove: node.
+	node connectedEdges do: [ :ed | self removeEdge: ed. ]
+]
+
 { #category : #algorithm }
 RTForceBasedLayout >> repulse: aNode from: aQuad [
 
