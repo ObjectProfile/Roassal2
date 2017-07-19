@@ -123,6 +123,13 @@ RTForceLayoutStepping >> removeAllEdges [
 	layout removeAllEdges
 ]
 
+{ #category : #updating }
+RTForceLayoutStepping >> removeNode: anElement [
+	"Designate the collection of elements that have to be layouted"
+	layout 
+		removeNode: anElement
+]
+
 { #category : #actions }
 RTForceLayoutStepping >> start [
 	view canvas signalUpdate
