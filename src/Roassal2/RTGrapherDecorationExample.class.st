@@ -5,6 +5,98 @@ Class {
 }
 
 { #category : #sources }
+RTGrapherDecorationExample >> exampleAreaDecorator [
+
+| tab b year values colors|
+tab := RTTabTable new input: (TRPlatform current downloadContent: 'https://dl.dropboxusercontent.com/s/b9syomd2h0np69s/International.txt?dl=0') usingDelimiter: $,.
+
+b := RTGrapher new.
+b extent: 800@300.
+colors := (Array with: '#5e3782'
+	with: '#d49935'
+	with: '#81211d'
+	with: '#238999') collect: [:c | Color colorFrom: c ].
+
+b addDecorator: (RTHorizontalTickLineDecorator new
+	moveInFront;
+	yourself).
+	
+tab values doWithIndex: [ :ti :i | 
+	year := ti first.
+	values := ti allButFirst collect: [ :n | n trim asNumber].
+	d := RTData new.
+	d interaction.
+	d noDot.
+	d connectUsing: (RTLine new color: (colors at: i); width: 2).
+	
+	d points: values.
+	
+	b add: d.
+	b addDecorator: (RTAreaDecorator new
+		points: values;
+		color: ((colors at: i) alpha: 0.3)).
+	 ].
+b axisX 
+	numberOfTicks: 50;
+	numberOfLabels: 50;
+	rotateLabels;
+	labelConversion: [ :n | 'Day ', n asInteger asString ].
+b axisY
+	numberOfTicks: 10;
+	numberOfLabels: 10;
+	labelConversion: [ :n | '$', n asInteger asStringWithCommas ].
+^ b
+
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleAreaDecoratorIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTGrapherDecorationExample >> exampleAverage [
 	| b ds |
 	b := RTGrapher new.
