@@ -6,8 +6,8 @@ Class {
 
 { #category : #sources }
 RTGrapherDecorationExample >> exampleAreaDecorator [
-<noTest>
-| tab b year values colors d |
+
+| tab b year values colors|
 tab := RTTabTable new input: (TRPlatform current downloadContent: 'https://dl.dropboxusercontent.com/s/b9syomd2h0np69s/International.txt?dl=0') usingDelimiter: $,.
 
 b := RTGrapher new.

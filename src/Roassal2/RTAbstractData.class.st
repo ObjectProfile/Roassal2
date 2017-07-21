@@ -243,8 +243,9 @@ RTAbstractData >> maxX [
 ]
 
 { #category : #accessing }
-RTAbstractData >> maxX: anObject [
-	maxX := anObject
+RTAbstractData >> maxX: aNumber [
+	"PRIVATE METHOD. Use the method on a Grapher, not on a Data"
+	maxX := aNumber
 ]
 
 { #category : #accessing }
@@ -253,8 +254,9 @@ RTAbstractData >> maxY [
 ]
 
 { #category : #accessing }
-RTAbstractData >> maxY: anObject [
-	maxY := anObject
+RTAbstractData >> maxY: aNumber [
+	"PRIVATE METHOD. Use the method on a Grapher, not on a Data"
+	maxY := aNumber
 ]
 
 { #category : #accessing }
@@ -263,8 +265,9 @@ RTAbstractData >> minX [
 ]
 
 { #category : #accessing }
-RTAbstractData >> minX: anObject [
-	minX := anObject
+RTAbstractData >> minX: aNumber [
+	"PRIVATE METHOD. Use the method on a Grapher, not on a Data"
+	minX := aNumber
 ]
 
 { #category : #accessing }
@@ -273,8 +276,9 @@ RTAbstractData >> minY [
 ]
 
 { #category : #accessing }
-RTAbstractData >> minY: anObject [
-	minY := anObject
+RTAbstractData >> minY: aNumber [
+	"PRIVATE METHOD. Use the method on a Grapher, not on a Data"
+	minY := aNumber
 ]
 
 { #category : #utility }
