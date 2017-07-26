@@ -7,46 +7,97 @@ Class {
 { #category : #sources }
 RTGrapherDecorationExample >> exampleAreaDecorator [
 <noTest>
-| tab b year values colors d |
+| tab b year values colors d image box popup rec elements |
 tab := RTTabTable new input: (TRPlatform current downloadContent: 'https://dl.dropboxusercontent.com/s/b9syomd2h0np69s/International.txt?dl=0') usingDelimiter: $,.
-
 b := RTGrapher new.
-b extent: 800@300.
-colors := (Array with: '#5e3782'
+b extent: 1000 @ 400.
+colors := (Array
+	with: '#5e3782'
 	with: '#d49935'
 	with: '#81211d'
-	with: '#238999') collect: [:c | Color colorFrom: c ].
-
-b addDecorator: (RTHorizontalTickLineDecorator new
-	moveInFront;
-	yourself).
-	
-tab values doWithIndex: [ :ti :i | 
-	year := ti first.
-	values := ti allButFirst collect: [ :n | n trim asNumber].
-	d := RTData new.
-	d interaction.
-	d noDot.
-	d connectUsing: (RTLine new color: (colors at: i); width: 2).
-	
-	d points: values.
-	
-	b add: d.
-	b addDecorator: (RTAreaDecorator new
-		points: values;
-		color: ((colors at: i) alpha: 0.3)).
-	 ].
-b axisX 
+	with: '#238999') collect: [ :c | Color colorFrom: c ].
+b
+	addDecorator:
+		(RTHorizontalTickLineDecorator new
+			moveInFront;
+			yourself).
+tab values
+	doWithIndex: [ :ti :i | 
+		year := ti first.
+		values := ti allButFirst collect: [ :n | n trim asNumber ].
+		d := RTData new.
+		d interaction.
+		d noDot.
+		d
+			connectUsing:
+				(RTLine new
+					color: (colors at: i);
+					width: 2).
+		d points: values.
+		b add: d.
+		b
+			addDecorator:
+				(RTAreaDecorator new
+					points: values;
+					color: ((colors at: i) alpha: 0.3)) ].
+b axisX
 	numberOfTicks: 50;
 	numberOfLabels: 50;
 	rotateLabels;
-	labelConversion: [ :n | 'Day ', n asInteger asString ].
+	labelConversion: [ :n | 'Day ' , n asInteger asString ].
 b axisY
 	numberOfTicks: 10;
 	numberOfLabels: 10;
-	labelConversion: [ :n | '$', n asInteger asStringWithCommas ].
-^ b
+	labelConversion: [ :n | '$' , n asInteger asStringWithCommas ].
+	
+b build.
 
+box := RTBox new color: Color transparent; element.
+rec := Rectangle 
+	origin: b axisY toPoint
+	corner: b axisX toPoint.
+box
+	extent: rec extent;
+	translateTo: rec center.
+popup := RTContinuousPopup new
+	alphaPopupBackground: 0.7;
+	background: Color white group: [ :group :evt | | x |
+		x :=((evt position x - box position x + (box extent x / 2)) 
+			* (b maxX) / box extent x) asInteger.
+		group add: (RTLabel text: 'Day ', x asString) element.
+		x := x + 1.
+		tab values reverse do: [ :ti | (x between: 1 and: ti size)  ifTrue: [ 
+			group add: (RTLabel text: 'The international ', ti first, 
+				' $', (ti at: x) asInteger asStringWithCommas ) element ] ].
+		RTVerticalLineLayout on: group ].
+popup pointers: [:g :evt | | x shapes s e |
+		x :=((evt position x - box position x + (box extent x / 2)) 
+			* (b maxX) / box extent x) asInteger.
+		x := x + 1.
+		shapes := Array with: RTPolygon diamond with: RTEllipse new 
+			with: RTBox new with: RTPolygon star.
+		tab values doWithIndex: [ :ti :i | (x between: 1 and: ti size) ifTrue: [
+			e := (shapes at: i) size: 10; color: (colors at: i); element.
+			
+			e translateTo: (b getPixelPositionOf: (x-1) @ (ti at: x) asInteger );
+				translateBy: box position - rec center.
+			g add: e ] ] ].
+box @ popup.
+b view add: box.
+
+elements := (b view canvas shapes) asGroup.
+image := 'https://dl.dropboxusercontent.com/s/v5b7fg4gzb4w4xs/dota.jpeg?dl=0'.
+image := (TRPlatform current download: image ) contents.
+image := RTBitmap new 
+	form: (ImageReadWriter formFromStream: image readStream); 
+	element.
+b view add: image.
+image pushBack.
+(RTConstraint on: elements background: image)
+	center;
+	stick.
+
+^ b view.
 ]
 
 { #category : #icons }
