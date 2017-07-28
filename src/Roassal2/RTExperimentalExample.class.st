@@ -2067,6 +2067,11 @@ b build.
 
 lb := RTLegendBuilder new.
 lb view: b view.
+lb positionDo: [ :p |
+	p 
+		verticalPadding: -150;
+		horizontalPadding: 50;
+		outer; right; top; move ].
 lb addText: 'Iris flower data set'.
 d keys do: [ :k |lb addColor: (d at: k) text: 'Iris ', k ].
 lb build.
