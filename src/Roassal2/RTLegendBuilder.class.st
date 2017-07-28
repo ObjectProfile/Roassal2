@@ -33,7 +33,9 @@ Class {
 		'textSize',
 		'gapSize',
 		'isFixed',
-		'onDemandText'
+		'onDemandText',
+		'boxShape',
+		'nestBlock'
 	],
 	#category : #'Roassal2-Builder-Legend'
 }
@@ -116,9 +118,15 @@ RTLegendBuilder >> addText: aText [
 
 { #category : #hooks }
 RTLegendBuilder >> backgroundBoxElement [
-	^ (RTBox new
-		borderColor: Color lightGray;
-		fillColor: Color transparent) element
+	| e |
+	e := self backgroundShape elementOn: nil.
+	self interaction setUpElement: e.
+	^ e
+]
+
+{ #category : #accessing }
+RTLegendBuilder >> backgroundShape [
+	^ boxShape
 ]
 
 { #category : #configuration }
@@ -128,7 +136,14 @@ RTLegendBuilder >> backgroundTransparencyOnDemand [
 
 { #category : #'public - positioning' }
 RTLegendBuilder >> below [
-	position := #below
+	self positionDo: [ :p | 
+		p 
+			outer;
+			verticalPadding: offset;
+			bottom;
+			center;
+			move.
+		 ].
 ]
 
 { #category : #initialization }
@@ -165,37 +180,41 @@ RTLegendBuilder >> initialize [
 	group := RTGroup new.
 	
 	offset := self defaultOffset.
-	position := #below.
+	self below.
+	self nestDo: [ :n :e :g | n on: e nest: g ].
+	self interaction draggable.
 	isOnDemand := false.
 	textSize := 12.
 	gapSize := 10.
 	items := OrderedCollection new.
+	boxShape := RTShapeBuilder new.
+	boxShape box; 
+		borderColor: Color lightGray;
+		fillColor: Color transparent.
 	isFixed := false
 ]
 
 { #category : #'public - positioning' }
-RTLegendBuilder >> isBelow [
-	^ position = #below
-]
-
-{ #category : #'public - positioning' }
-RTLegendBuilder >> isLeft [
-	^ position = #left
-]
-
-{ #category : #'public - positioning' }
-RTLegendBuilder >> isRight [
-	^ position = #right
-]
-
-{ #category : #'public - positioning' }
 RTLegendBuilder >> left [
-	position := #left
+	self positionDo: [ :p |
+		p
+			outer;
+			left;
+			horizontalPadding: offset;
+			middle;
+			move.
+		 ].
 ]
 
 { #category : #accessing }
 RTLegendBuilder >> legendElement [
 	^ legendElement
+]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> nestDo: aBlockThreeArg [
+	"read documentation of RTNest to position elements in the legend"
+	nestBlock := aBlockThreeArg 
 ]
 
 { #category : #'private - utility' }
@@ -227,6 +246,11 @@ RTLegendBuilder >> onDemand: text [
 	onDemandText := text
 ]
 
+{ #category : #'public - positioning' }
+RTLegendBuilder >> positionDo: aBlockOneArg [
+	position := aBlockOneArg 
+]
+
 { #category : #hooks }
 RTLegendBuilder >> renderIn: aView [
 	| myGroup elementsInTheViewWithoutTheLegend |
@@ -238,23 +262,12 @@ RTLegendBuilder >> renderIn: aView [
 	legendElement := self backgroundBoxElement.
 	aView add: legendElement.
 	myGroup do: [ :g | aView addAll: g ].
-	RTNest new on: legendElement nest: myGroup.
-	self isBelow
-		ifTrue: [ TRConstraint
-				move: legendElement
-				below: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-			legendElement translateBy: 0 @ offset ].
-	self isRight
-		ifTrue: [ RTConstraint
-				move: legendElement
-				onTheRightOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-			legendElement translateBy: offset @ 0 ].
-	self isLeft
-		ifTrue: [ TRConstraint
-				move: legendElement
-				onTheLeftOf: (RTGroup withAll: elementsInTheViewWithoutTheLegend).
-			legendElement translateBy: offset @ 0 ].
-	legendElement @ RTDraggable.
+	nestBlock value: RTNest new value: legendElement value: myGroup.
+	
+	position value: (RTConstraint
+		movable: legendElement
+		fix: (RTGroup withAll: elementsInTheViewWithoutTheLegend)).
+	
 	isFixed
 		ifTrue: [ | els |
 			els := aView elements
@@ -286,7 +299,14 @@ RTLegendBuilder >> renderOnDemandIn: aView [
 
 { #category : #'public - positioning' }
 RTLegendBuilder >> right [
-	position := #right
+	self positionDo: [ :p |
+		p 
+			outer;
+			right;
+			middle;
+			horizontalPadding: offset;
+			move.
+		 ].
 ]
 
 { #category : #configuration }

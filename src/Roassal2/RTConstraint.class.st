@@ -187,8 +187,8 @@ RTConstraint >> movable: aMovableElement [
 
 { #category : #initialization }
 RTConstraint >> movable: aMovableElement fix: aFixedElement [
-	fixedElement := aFixedElement.
-	movableElement := aMovableElement
+	movableElement := aFixedElement.
+	fixedElement := aMovableElement
 ]
 
 { #category : #'public - executing' }

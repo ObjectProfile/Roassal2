@@ -113,6 +113,11 @@ RTShapeBuilder >> current [
 	^ shape
 ]
 
+{ #category : #shapes }
+RTShapeBuilder >> diamond [
+	shape := RTPolygon diamond
+]
+
 { #category : #'shape - edges' }
 RTShapeBuilder >> directedLine [
 	self shape: RTDirectedLine new
@@ -200,6 +205,11 @@ RTShapeBuilder >> hasSetLineShape [
 { #category : #testing }
 RTShapeBuilder >> hasSetShape [
 	^ shape class ~~ RTNoShape
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> heptagon [
+	shape := RTPolygon heptagon
 ]
 
 { #category : #'shape - attach point on edges' }
@@ -389,6 +399,11 @@ RTShapeBuilder >> noBorder [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> octagon [
+	shape := RTPolygon octagon
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> orthoHorizontalLine [
 	^ self shape: RTMultiLine new orthoHorizontal 
 ]
@@ -396,6 +411,11 @@ RTShapeBuilder >> orthoHorizontalLine [
 { #category : #shapes }
 RTShapeBuilder >> orthoVerticalLine [
 	^ self shape: (RTMultiLine new withVerticallAttachPoint; orthoVertical)
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> pentagon [
+	shape := RTPolygon pentagon
 ]
 
 { #category : #shapes }
@@ -417,6 +437,11 @@ RTShapeBuilder >> resetCreatedElements [
 { #category : #accessing }
 RTShapeBuilder >> resetShape [
 	shape := RTNoShape instance
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> rhomboid [
+	shape := RTPolygon rhomboid
 ]
 
 { #category : #'public - building' }
@@ -470,6 +495,11 @@ RTShapeBuilder >> shortestDistanceAttachPointWithJump [
 ]
 
 { #category : #shapes }
+RTShapeBuilder >> star [
+	shape := RTPolygon star
+]
+
+{ #category : #shapes }
 RTShapeBuilder >> styledLabel [
 	shape := RTStyledLabel new
 ]
@@ -477,6 +507,16 @@ RTShapeBuilder >> styledLabel [
 { #category : #'shapes - texting' }
 RTShapeBuilder >> text [
 	self shape: RTLabel new
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> triangle [
+	shape := RTPolygon triangle
+]
+
+{ #category : #shapes }
+RTShapeBuilder >> vee [
+	shape := RTPolygon vee
 ]
 
 { #category : #'shape - attach point on edges' }
