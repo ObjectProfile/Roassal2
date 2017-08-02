@@ -128,6 +128,52 @@ A+EXPxB+8QPhB8IvfiD8QPjFD4QfCL/4gfAD4Rc/EH7xA+EHwi9+IPxA+OVH/QN5hH7m1fOr
 +wAAAABJRU5ErkJggg=='
 ]
 
+{ #category : #sources }
+RTStackBarPlotExample >> exampleVerticalStackBarPlot [
+
+| b |
+b := RTStackBarPlot new.
+b vertical.
+b interaction popupText.
+b colorPalette colors: (Array with: Color green with: Color red).
+b add: #(37 33 ) title: 'SampleText1'.
+b add: #(24 26 ) title: 'SampleText2'.
+b add: #(25 29 ) title: 'SampleText3'.
+b add: #(30 33 ) title: 'SampleText4'.
+b addLegend: #('yes' 'no').
+b barWidth: 40 height: 260.
+b
+	addLabelToBars: [:assoc | (assoc key / b totalSum * 100) asInteger asString , '%']
+		if: [:assoc | assoc key > 5]
+		color: Color black.
+b build.
+^ b view
+]
+
+{ #category : #icons }
+RTStackBarPlotExample >> exampleVerticalStackBarPlotIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAD+klEQVR4XuWcy0uUURiHBxc1
+/0DMdrzgInHbSsTb4P1+Q/EGCu1ctioUdxW0iKxFgbjIJME25WibyAupi6BAUAgTQV24cBNZ
+Rmd63/EoCt83zsDQ9+nD8DDfN+fHt3ifM+cc5zufgaKiohgf/xDgF4EvhA9fCF8IH74QvhA+
+fCF8IXz4QvhC+IXgC+HDF8IXwocvhC8kMYWRQlNQVeCKtnuZwwkJj4VjgQQvbfcyxxfCF8IX
+whfCF8IXwhfCF8IXwhfCF8IXwhfCF8IXwhdyWYRsyScLwqawJ2wLKy65N8IzYV3YFWZchEwJ
+r4SovfYqX8hxAV/YwvwR1mzRnQo4ItwW3gpLwrBD7rN88kD4KjyxuXGHXNQKWLL6R4VJvpBY
+4IuU4LWVMS9MC7MOBdywPVlfv4R9YSKNQ9ahcMQXctyTPwnLwk/hwIrhzyH8SZ0vhC+EL4Qv
+hC+EL4QvhC+EL4QvhC+EL4QvxKdCbo1km/zFa65ou+bGwuFYLBBwRds119sbjg0NBVzRdr6Q
+BEKSLXS6c3whfCHeCnl0M9t8u3HdFW33q5CBgYGk9/+mkvVUiFeF5gu5okJCcyGjQ2twJ3iu
+4OXl5aaqqsp0dHQYvhCPhfT395vGxkZTU1Nj2tra+EL+p5D8O/km62mWyX2Ye1rw1tbWk2NT
+XFzMF8KfQ/hC+EL4QvhC+EL4QnwuZEvOF4Qd4b2wLaw45P7K+TthRlgXdu2xk5Ap4b4wbq+9
+mqKQuVDIaH4nGDRXSsiiLcwHYU3YdCngiLAs/BCWhGGH3Ec5v2cL/Nvmxh1yUSvgpW0bFSbT
+IESXvYODg6alpcVcSiFawO+CfgP2hGlh1qGAG3IetdK0bV+YSOOQdSgcpSjkbl6e0ezjnJzT
+gldWVpqKigpz5u+Ry/cNOThTaD2e588h/Ek9VSF9fX2mq6srKfTnFL4Q/v0QvhC+EL4QvhC+
+EL4QvhC+EL4QvhC+EL4Q/wt5nplpDjMyXNF2L3P8/0rKhy+EL4QPXwhfCJ+rLaS2tjapVU99
+fb3RfbXJ5HTv7UU53Xl4svuQL8RSV1dnqqurz92jdsspZ2+dJrpee3v7hTnN6I0ovhCLblrW
+O25NTU2mubnZJJPr6elJKqdclLOdgC1Et/CXlZXFC6tDi1uP9yqHEaJDhM4VkUgkPlRoURS/
+5HBCtEfqeK1baBINE17lMEJ0vO7s7Iw/bZRo5eNVDiOktLTUdHd3x3umvrstV73KIYRoEUpK
+SkxDQ0N88tThQh/98ksOJ0QnT11KakFOnr/zUw45ZCW7tvcqx//phA9fCF8IH74QvhA+fCF8
+IXz4QvjwhfCF8OEL4QvhwxfCF8KHL4QvhI+3/AOXK+27CEfa9wAAAABJRU5ErkJggg=='
+]
+
 { #category : #accessing }
 RTStackBarPlotExample >> label [
 	^ 'StackBarPlot'
