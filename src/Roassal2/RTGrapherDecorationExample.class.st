@@ -70,7 +70,7 @@ popup := RTContinuousPopup new
 			group add: (RTLabel text: 'The international ', ti first, 
 				' $', (ti at: x) asInteger asStringWithCommas ) element ] ].
 		RTVerticalLineLayout on: group ].
-popup pointers: [:g :evt | | x shapes s e |
+popup pointers: [:g :evt | | x shapes e |
 		x :=((evt position x - box position x + (box extent x / 2)) 
 			* (b maxX) / box extent x) asInteger.
 		x := x + 1.
@@ -89,7 +89,7 @@ elements := (b view canvas shapes) asGroup.
 image := 'https://dl.dropboxusercontent.com/s/v5b7fg4gzb4w4xs/dota.jpeg?dl=0'.
 image := (TRPlatform current download: image ) contents.
 image := RTBitmap new 
-	form: (ImageReadWriter formFromStream: image readStream); 
+	form: (TRPlatform  current formClass fromBinaryStream: image readStream); 
 	element.
 b view add: image.
 image pushBack.
