@@ -11,7 +11,8 @@ Class {
 		'labelBlock',
 		'labelConditionalBlock',
 		'labelColor',
-		'legend'
+		'legend',
+		'isVertical'
 	],
 	#category : #'Roassal2-Builder-StackBarPlot'
 }
@@ -31,7 +32,11 @@ RTStackBarPlot >> addLabelToBarIfNecessary [
 	labelBlock ifNil: [ ^ self ].
 	view elements do: [ :e | 
 		(labelConditionalBlock rtValue: e model)
-			ifTrue: [ e @ (RTLabeled new center; color: labelColor; text: labelBlock) ] ].
+			ifTrue: [ e @ (RTLabeled new 
+				center; 
+				color: labelColor; 
+				setAsShouldBeInTheFront;
+				text: labelBlock) ] ].
 ]
 
 { #category : #'public - configuration' }
@@ -79,7 +84,7 @@ RTStackBarPlot >> addLegendIfNecessary [
 	l view: view.
 "	l addText: title."
 	1 to: self numberOfValuesPerRow do: [ :index |
-		c := self colorPalette level: (index / self numberOfValuesPerRow).
+		c := self colorPalette level: (self levelFor: index).
 		l addColor: c text: (legend at: index).
 	].
 	l build.
@@ -104,9 +109,13 @@ RTStackBarPlot >> createShapeBuilder [
 	sb
 			rectangle; 
 			height: [ :anObject | self height rtValue: anObject ];
-			color: [ :association | self colorPalette level: (association value / self numberOfValuesPerRow) ];
+			width: [ :anObject | self width rtValue: anObject ];
+			color: [ :association |
+				self colorPalette level: (self levelFor: association value) ];
 			yourself.
 	^ sb
+	
+
 ]
 
 { #category : #hooks }
@@ -218,15 +227,35 @@ RTStackBarPlot >> height [
 	^ heightBlock
 ]
 
+{ #category : #accessing }
+RTStackBarPlot >> horizontal [
+	isVertical := false.
+]
+
 { #category : #initialization }
 RTStackBarPlot >> initialize [
 	super initialize.
 	values := OrderedCollection new.
+	self horizontal.
 	colorPalette := RTMultiLinearColorForIdentity new.
 	self barWidth: self defaultBarWidth height: self defaultBarHeight.
 	
 	labelConditionalBlock := true.
 	labelColor := Color black
+]
+
+{ #category : #accessing }
+RTStackBarPlot >> isVertical [
+	^ isVertical
+]
+
+{ #category : #'private - utility' }
+RTStackBarPlot >> levelFor: value [ 
+	| temp |
+	temp := self numberOfValuesPerRow -1.
+	^ temp <= 0 
+		ifTrue: [ 1 ]
+		ifFalse: [ (value-1) / temp]
 ]
 
 { #category : #accessing }
@@ -247,49 +276,71 @@ RTStackBarPlot >> offsetBetweenBarAndTitle [
 
 { #category : #hooks }
 RTStackBarPlot >> renderIn: aView [
-	| elements lines lbl |
+	| elements lines lbl maxSum|
 	numberOfValuesPerRow := values first numberOfValues.
+	maxSum := (values collect: #totalSum) max. 
 	lines := RTGroup new.
 	values
 		do: [ :tupple | 
 			elements := tupple values asGroup collectWithIndex: [ :aValue :index | self elementOn: aValue -> index ].
 			aView addAll: elements.
 			lines add: elements ].
-	self normalizer
-		elements: (lines flatCollect: #yourself);
-		normalizeWidth: #key
-			min: 0
-			max: widthBlock
-			minValue: 0
-			maxValue: values first totalSum.
+	lines doWithIndex: [ :l :i | 
+		self isVertical ifTrue: [ 
+			self normalizer
+				elements: l;
+				normalizeHeight: [ :m | m key * maxSum / (values at: i) totalSum ]
+					min: 0
+					max: heightBlock
+					minValue: 0
+					maxValue: maxSum
+			 ] ifFalse: [ 
+			self normalizer
+				elements: l;
+				normalizeWidth: [ :m | m key * maxSum / (values at: i) totalSum ]
+					min: 0
+					max: widthBlock
+					minValue: 0
+					maxValue: maxSum
+			 ] ].
 	lines
 		do: [ :aLineOfElements | 
-			RTHorizontalLineLayout new
+			(self isVertical 
+				ifTrue: [ RTVerticalLineLayout  ]
+				ifFalse: [ RTHorizontalLineLayout ]) new
 				gapSize: 0;
 				on: aLineOfElements ].
-	RTVerticalLineLayout on: lines.
-	RTConstraint new
-		fix: lines first;
-		movable: lines allButFirst;
-		leftOf.
-	"TRConstraint use: lines first alignFromLeft: lines allButFirst."
+	(self isVertical 
+		ifTrue: [ RTHorizontalLineLayout ]
+		ifFalse: [ RTVerticalLineLayout  ]) on: lines.
+	
 	self addLabelToBarIfNecessary.
-	values
-		with: lines
-		do: [ :barRow :line | 
-			barRow title
-				ifNotNil: [ 
-					lbl := (RTLabel new text: barRow title) element.
-					aView add: lbl.
-					TRConstraint move: lbl onTheLeftOf: line first.
-					lbl translateBy: self offsetBetweenBarAndTitle negated @ 0 ] ].
-			
+	values with: lines do: [ :barRow :line | | const fix |
+		barRow title ifNotNil: [ 
+			lbl := (RTLabel new text: barRow title) element.
+			aView add: lbl.
+			fix := line first.
+			self isVertical ifTrue: [
+				fix := line last.
+				lbl rotateByDegrees: -30 ].
+			const := RTConstraint movable: lbl fix: fix.
+			const outer.
+			self isVertical 
+				ifTrue: [ const verticalPadding: self offsetBetweenBarAndTitle; bottom ]
+				ifFalse: [ const horizontalPadding: self offsetBetweenBarAndTitle; left ].
+			const move] ].
+	
 	self addLegendIfNecessary
 ]
 
 { #category : #accessing }
 RTStackBarPlot >> totalSum [
 	^ values first totalSum
+]
+
+{ #category : #accessing }
+RTStackBarPlot >> vertical [
+	isVertical := true.
 ]
 
 { #category : #accessing }
