@@ -53,7 +53,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Interactions'
 }
 
 { #category : #configuration }
