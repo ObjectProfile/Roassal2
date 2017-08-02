@@ -74,6 +74,10 @@ RTRectanglePackLayout >> doExecute: elements [
 		smaller encompassingRectangle halfPerimeter ].
 	sortedElements addAll: elements.
 	
+	sortedElements size <= 2 ifTrue: [ 
+		RTHorizontalLineLayout on: sortedElements.
+		^ self
+	].
 	sortedElements
 		do: [ :element | self packIn: element ]
 		displayingProgress: 'Laying out elements'
