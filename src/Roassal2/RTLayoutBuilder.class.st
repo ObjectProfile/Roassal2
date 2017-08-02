@@ -305,6 +305,13 @@ RTLayoutBuilder >> overall: overallLayout [
 	layout overallLayout: overallLayout
 ]
 
+{ #category : #'public - layout' }
+RTLayoutBuilder >> packed [
+	"Rectangle packed layout"
+	layout := RTRectanglePackLayout new.
+	^ layout
+]
+
 { #category : #'public - partition' }
 RTLayoutBuilder >> processPartitions: elements [
 
