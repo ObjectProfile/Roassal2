@@ -78,6 +78,7 @@ RTMultiLinearColor >> level: f [
 	i2 := arr second.
 	
 	i1 >= colors size ifTrue: [ ^ colors last ].
+	i1 < 1 ifTrue: [ ^ colors first ].
 	c1 := colors at: (i1).
 	c2 := colors at: (i2).
 	
