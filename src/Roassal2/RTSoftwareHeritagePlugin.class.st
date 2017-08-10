@@ -6,15 +6,19 @@ Class {
 
 { #category : #hooks }
 RTSoftwareHeritagePlugin >> description [
-	^ 'Load a script for roassal helps you to explore data from SoftwareHeriatage'
+	^ 'Load: NeoJSON, SoftwareHeriatage Package and a RoassalScript to explore open projects from software heriatage'
 ]
 
 { #category : #hooks }
 RTSoftwareHeritagePlugin >> execute [
 	Gofer new 
+		smalltalkhubUser: 'SvenVanCaekenberghe' project: 'Neo';
+		package: 'ConfigurationOfNeoJSON'; load.
+	(Smalltalk at: #ConfigurationOfNeoJSON) loadBleedingEdge.
+	
+	Gofer new 
 		smalltalkhubUser: 'azazael' project: 'BeyondRoassal';
-		package: 'softwareheritage'; 
-		load.
+		package: 'softwareheritage'; load.
 ]
 
 { #category : #hooks }
