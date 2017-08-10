@@ -1,5 +1,5 @@
 Class {
-	#name : #RTGTContext,
+	#name : #RTGTContextTest,
 	#superclass : #RTTest,
 	#instVars : [
 		'prez',
@@ -9,14 +9,14 @@ Class {
 }
 
 { #category : #tests }
-RTGTContext >> setUp [
+RTGTContextTest >> setUp [
 	super setUp.
 	prez := GLMRoassal2Presentation new.
 	view := RTView new.
 ]
 
 { #category : #tests }
-RTGTContext >> testGetContextFor [
+RTGTContextTest >> testGetContextFor [
 
 	| context |
 	self deny: view hasAttributes.
@@ -28,7 +28,7 @@ RTGTContext >> testGetContextFor [
 ]
 
 { #category : #tests }
-RTGTContext >> testGetContextFor02 [
+RTGTContextTest >> testGetContextFor02 [
 
 	| context |
 	context := prez getContextFor: view.
@@ -41,7 +41,7 @@ RTGTContext >> testGetContextFor02 [
 ]
 
 { #category : #'removing context' }
-RTGTContext >> testRemovingContext [
+RTGTContextTest >> testRemovingContext [
 	| c |
 	self assert: view announcer numberOfSubscriptions equals: 0.
 	RTInteractiveViewContext setOnView: view.
@@ -56,7 +56,7 @@ RTGTContext >> testRemovingContext [
 ]
 
 { #category : #'removing context' }
-RTGTContext >> testRemovingContext02 [
+RTGTContextTest >> testRemovingContext02 [
 	RTInteractiveViewContext setOnView: view.
 	prez useContextToInitialize: view.
 	self assert: view announcer numberOfSubscriptions equals: 1.
@@ -74,13 +74,13 @@ RTGTContext >> testRemovingContext02 [
 ]
 
 { #category : #tests }
-RTGTContext >> testdefaultContextClass [
+RTGTContextTest >> testdefaultContextClass [
 	self assert: RTAbstractViewContext defaultContextClass notNil.
 	self assert: RTAbstractViewContext defaultContextClass isBehavior.
 ]
 
 { #category : #tests }
-RTGTContext >> testuseContextToInitialize [
+RTGTContextTest >> testuseContextToInitialize [
 
 	self assert: view announcer numberOfSubscriptions = 0.
 	prez useContextToInitialize: view.
