@@ -1058,6 +1058,65 @@ TkSuQmCC'
 ]
 
 { #category : #sources }
+RTExperimentalExample >> exampleContinuousDecorator [
+| g d1 d2 deco |
+g := RTGrapher new.
+g extent.
+d1 := RTData new.
+d1 noDot .
+d1 connectColor: Color blue.
+d1 points: (Array with: -5@2 with: -3@4 with: 0@1 with: 5@7).
+d1 y: #y.
+d1 x: #x.
+g add: d1.
+
+d2 := RTData new.
+d2 noDot .
+d2 connectColor: Color red.
+d2 points: #(1 -3 3 5 9 10).
+d2 y: #yourself.
+g add: d2.
+deco := RTContinuousDecorator new.
+deco title: 'My Data'.
+deco legendLabel text: [ :as | | pos |
+	pos := deco calculatePointFor: as.
+	(as key == d1 ifTrue: ['Blue'] ifFalse: ['Red'] ),
+	' line ',
+	 pos y asString ].
+
+g addDecorator: deco .
+
+^ g
+
+
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleContinuousDecoratorIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEG0lEQVR4XuXbW0/aYBgHcD+G
+1xpjBErLWUAoR0EOCrLpwmGLYTG66DYnaOKybLvarnazZPsg+37PxtNYA7WVVqDt/F/8o6a+
+pfTHey5LmUzmL37ckyX8m4APgh98EHwQ/OCD4IPgBx8EHwQ/+CD4IPg3Ah8EP/gg+CD4wQfB
+B8EPPgg+CH7wQfBB8IMPgh98EHwQ/OCD4IPgBx8EHwQ/+CD4IPjBB5mWSqVCzWaT+PdGo0H4
+IA5nZ2eHDg4OGIIODw8nQIrFIvX7fUeRrgSBjkMhwm+ybtPpdBwBGY4gjsJhwu9DHAa59Pup
+G40SfqfuApDhCAN/lOUikF4kgg/iFpCBTbUDH8RkXsRi+CBuAeERFf48xEUgrXicZDlLHs9n
+/D7EaRCe+Inie4rHn+E3WU6DBKRzyoovCX/pxGGQZLJKgnBFVzb3HfggOvF6byidLlJOlqmc
+SuGDaMMrvbu7u1StVolXfsePFQqFuS0uStI7CgTe3J3r+/o64a/26qRerxOv+PLPRdSQaLRD
+kvR24hy/V1YIf/ndgSZLbxj7y2EMR0EEYUg+30fy+4dkJwjXiEjk/ujp5+oqQW5Q+f2XFItN
+bjYJwrUyslkkSDB4eq95UvNjbY2gdgxlOUMMkUg0aVqtsQJjBiSdLpDX+8nw/7452IHbDiLL
+OQUimayRtVo0MAUzDUQQBqPXrhv+z0kwSBB76vyp5JuaSpVmesOiePEgjBEID2ONmqfx9Be0
+DesqkGi0O5pc5ef6RiXpTBdGC8JNItdIs+dtL3g79skPe4PBE+J+Rg+E+wluIs2e64ONm05P
+fh4SDh8pMAzCTVModGz55vbn/PgO/sSQ9ypar+mxW67PNzfxQeyaqV+I4oM3+8bnI5gnF7PZ
+LPHC3zzCj4/yAmOr1aJSqXTveK/XMyx7HQgYHjuNROZ2jblczt1PLs7yDK62LP/NGPv7+8qb
+f6iG7O3tTRw/lyTD62gkEhPHtGWtZJaycIuLen3JF4+HYB625k8z/+Q9DCvluDniql+r1ZTl
+du3exzQQ3i/RK3c6ara0Zc7Gag6/nnq96rVb3a/J5/NKXAdSLpep3W7TOIyZ8JvhfodvDt9Q
+vjlmmz0GUTevjMoNNFuxla2tu7+3t7eVppCfsFev3eoHUO3j3Npkkdqxz3oOi00WGZV7PTbf
++LqxQdoByGNed8Yy+BtUai1x6sEFfBBNXt0+KF1Mp/FB3LKF+2d5mfC/0vZEv0GFD4IPgg+C
+D4IP8n+A8OSNx/t6s2F8EJvDSyrdbleZxfNKgPZ76jxLxwfBDz4IPgh+8EHwgw+CD4IffBB8
+EPzgg+CD4AcfBB8EP/gg+MEHwQfBDz4IPgh+8EHwQfCDD4IPgh98EPzgg+CD4AcfBB8EP/gg
++CD4wQcByD+t8VcUjmtInQAAAABJRU5ErkJggg=='
+]
+
+{ #category : #sources }
 RTExperimentalExample >> exampleFisheye [
 	|v|
 	v := RTLayoutExample new exampleForce.
