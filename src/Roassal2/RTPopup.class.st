@@ -97,11 +97,6 @@ RTPopup class >> text: aBlockOrSymbol [
 	^ self new text: aBlockOrSymbol
 ]
 
-{ #category : #visitor }
-RTPopup >> accept: aVisitor with: args [
-	aVisitor visitPopupInteraction: self with: args.
-]
-
 { #category : #accessing }
 RTPopup >> alphaPopupBackground [
 	"Return the alpha value for the background. The alpha value is useful to make the background transparent"

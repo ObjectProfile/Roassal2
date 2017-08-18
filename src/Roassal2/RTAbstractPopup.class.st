@@ -57,6 +57,11 @@ RTAbstractPopup class >> resetLastPopup [
 	lastPopup := nil
 ]
 
+{ #category : #visitor }
+RTAbstractPopup >> accept: aVisitor with: args [
+	aVisitor visitPopupInteraction: self with: args.
+]
+
 { #category : #utility }
 RTAbstractPopup >> closestPositionOf: popup from: position inView: aView [
 	"Return the closest position for el to realPosition to be entierely visible in the view"

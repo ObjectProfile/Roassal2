@@ -1,42 +1,25 @@
 "
-shows a continous popup in one element
+shows a continuous popup in one element
 "
 Class {
 	#name : #RTContinuousPopup,
 	#superclass : #RTPopup,
 	#instVars : [
-		'pointers'
+		'pointers',
+		'controlPoint',
+		'view'
 	],
 	#category : #'Roassal2-Experimental'
 }
 
-{ #category : #utility }
-RTContinuousPopup >> closestPositionOf: popup from: position inView: aView [
-	"Return the closest position for el to realPosition to be entierely visible in the view"
-	"position is the location in the space"
+{ #category : #accessing }
+RTContinuousPopup >> blockValidArea [
+	^ controlPoint
+]
 
-	| idealVirtualPosition virtualPositionX virtualPositionY winSize |
-	idealVirtualPosition := position.
-	winSize := aView canvas extent.
-	"Happens if we are in a test"
-	winSize ifNil: [ winSize := 500 @ 500 ].
-	"Check if the element is within the width of the view"
-	virtualPositionX := 
-		((idealVirtualPosition x + popup width + self popupOffset x) < winSize x) 
-			ifTrue: [ idealVirtualPosition x + self popupOffset x ]
-			ifFalse: [ winSize x - popup width - self popupOffset x ].
-	virtualPositionX < 0
-		ifTrue: [ virtualPositionX := self popupOffset x ].
-
-	virtualPositionY := 
-		((idealVirtualPosition y + popup height + self popupOffset y) < winSize y) 
-			ifTrue: [ idealVirtualPosition y + self popupOffset y ]
-			ifFalse: [ idealVirtualPosition y - popup height - self popupOffset y ].
-	virtualPositionY  < 0
-		ifTrue: [ virtualPositionY := self popupOffset y ].
-
-	
-	^ virtualPositionX @ virtualPositionY
+{ #category : #accessing }
+RTContinuousPopup >> blockValidArea: aBlock [
+	controlPoint := aBlock
 ]
 
 { #category : #initialization }
@@ -50,7 +33,8 @@ RTContinuousPopup >> createAndShowPopupFor: element event: event [
 	"The following is useful when testing"
 	event position isNil
 		ifTrue: [ idealPosition := element position ]
-		ifFalse: [ idealPosition := element view canvas camera fromSpaceToPixel: event position ].
+		ifFalse: [ idealPosition := (element view canvas camera fromSpaceToPixel: event position)
+			- ((popup width/2)@0) ].
 	popupPosition := self closestPositionOf: popup from: idealPosition inView: element view.
 
 	popup translateTopLeftTo: popupPosition.	
@@ -67,36 +51,32 @@ RTContinuousPopup >> createAndShowPopupFor: element event: event [
 
 { #category : #initialization }
 RTContinuousPopup >> getNewPopupFor: evt [
+	"the super of this method recibes an element i recibe an event of roassal"
 	| popupGroup |
 	popupGroup := self createPopupFor: evt.
 	popupGroup do: [ :e | 
-		evt element view add: e. 
-		e trachelShape setAsFixed ].
+		view add: e.
+		e trachelShape setAsFixed. ].
 	evt signalUpdate.
 	^ popupGroup
 ]
 
 { #category : #initialization }
 RTContinuousPopup >> initializeElement: element [
-	element
-		when: TRMouseClick
-		do: [ :event | 
-			self removeLastPopup.
-			element trachelShape signalUpdate ].
-	element
+	| close |
+	view := element view.
+	close := [ :evt | 
+		self removeLastPopup.
+		evt signalUpdate ].
+	element 
+		when: TRMouseClick do: close;
+		when: TRMouseLeave do: close;
+		when: TRMouseDragging do: close;
 		when: TRMouseMove
 		do: [ :event |
-			self createAndShowPopupFor: element event: event ].
-	element
-		when: TRMouseLeave
-		do: [ :event | 
-			self removeLastPopup.
-			element trachelShape signalUpdate ].
-	element
-		when: TRMouseDragging
-		do: [ :event | 
-			self removeLastPopup.
-			element trachelShape signalUpdate ].
+			(self validPoint: event position)
+				ifTrue: [ self createAndShowPopupFor: element event: event ]
+				ifFalse: [ close value: event ] ].
 ]
 
 { #category : #accessing }
@@ -109,4 +89,15 @@ RTContinuousPopup >> pointers: aBlockOfTwoArgs [
 	"example
 	self pointers: [:anEmptyRTGroup :aMouseMoveEvent | elementsThatShowsThatPointOrPoints]"
 	pointers := aBlockOfTwoArgs 
+]
+
+{ #category : #accessing }
+RTContinuousPopup >> popupOffset [
+	^ 0 @ 15.
+]
+
+{ #category : #testing }
+RTContinuousPopup >> validPoint: aPosition [
+	controlPoint ifNil: [ ^ true ].
+	^ controlPoint value: aPosition
 ]
