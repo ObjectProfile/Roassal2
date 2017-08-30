@@ -80,6 +80,7 @@ RTRadialTreeLayout >> computePosition: aNode [
 													 self pointerOf: nodeA put: (self followLeftContour: aNode toLayer: ((self layerOf: nodeA) + 1)).
 													
 													 nodeA := self followRightContour: aNode toLayer: ((self layerOf: aNode) + 1).
+													nodeA ifNil: [ ^ self ].
 													 [(self followRightContour: nodeA toLayer: ((self layerOf: nodeA) + 1)) isNil ] whileFalse: [ nodeA := self followRightContour: nodeA toLayer: ((self layerOf: nodeA) +1) ].
 													self pointerOf: nodeA put: (self followRightContour: neighbor toLayer: ((self layerOf: nodeA) + 1) ) ] ]. 
 											

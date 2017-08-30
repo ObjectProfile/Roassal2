@@ -4,7 +4,7 @@ Class {
 	#category : #'Roassal2-Layouts-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RTCircleLayoutTest >> testEmptyLayout [
 
 	RTCircleLayout on: #()
