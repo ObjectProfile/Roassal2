@@ -66,6 +66,12 @@ RTConstraint class >> movable: moveableElement fix: fixedElement [
 ]
 
 { #category : #convenient }
+RTConstraint class >> move: es1 onTheLeftOf: es2 [
+	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
+	(RTConstraint on: es1 background: es2) leftOf; move
+]
+
+{ #category : #convenient }
 RTConstraint class >> move: es1 onTheRightOf: es2 [
 	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
 	(RTConstraint on: es1 background: es2) rightOf; move
@@ -76,6 +82,18 @@ RTConstraint class >> on: aChildShape background: aParentShape [
 	^ self new
 		setChild: aChildShape parent: aParentShape;
 		yourself
+]
+
+{ #category : #convenient }
+RTConstraint class >> stick: es1 onTheLeftOf: es2 [
+	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
+	(RTConstraint on: es1 background: es2) leftOf; stick
+]
+
+{ #category : #convenient }
+RTConstraint class >> stick: es1 onTheRightOf: es2 [
+	"Both es1 and es2 could be one element, a group of elements, or a group of Trachel shapesl "
+	(RTConstraint on: es1 background: es2) rightOf; stick
 ]
 
 { #category : #'public - positioning shortcuts' }
