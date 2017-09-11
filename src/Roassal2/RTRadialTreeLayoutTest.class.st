@@ -18,7 +18,7 @@ RTRadialTreeLayoutTest >> testOnGraph [
 	b nodes: (0 to: 20).
 	edges := b edges
 	    moveBehind;
-	    connectFromAll: [ :v | {v // 2. v // 3} ].
+	    connectFromAll: [ :v | Array with: v // 2 with: v // 3 ].
 	b layout radialTree.
 	"b layout force."
 	b build
