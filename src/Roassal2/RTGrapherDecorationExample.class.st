@@ -341,6 +341,53 @@ QmCC'
 ]
 
 { #category : #sources }
+RTGrapherDecorationExample >> exampleIris [
+table := RTTable inputWithComma: RTDatasets iris.
+table removeFirstRow.
+table convertColumnsToFloat: (1 to: 4).
+
+g := RTGrapher new.
+d := RTData new.
+d dotShape 
+	if: [ :row | row last = 'virginica' ] fillColor: Color blue trans;
+	if: [ :row | row last = 'setosa' ] fillColor: Color red trans.
+d points: table values.
+d x: #first.
+d y: #third.
+g add: d.
+
+^ g
+]
+
+{ #category : #icons }
+RTGrapherDecorationExample >> exampleIrisIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAErElEQVR4XuWc30uTURjHve5W
+MKjoQlJX/szNbOnUTTedmr+WmrO0mimYZImFFmJphdrF7EK6EgwMg4hQUNSbkCBEvPTW/E++
+dp6Tk0yXzdreV74XH97t3Y47O589zzk77+PiioqKtvkxD3H8g8AvhB9+IfxC+OEXwi+EH34h
+/EL44RfCL4R/IPiF8MMvhF8IP/xC+IXwwy+EXwg//EL4hfDDL4QffiH8QvjhF8IvhB9+IfxC
++DkeQqqrq1FSUgKfzwf+wTSBEK/Xq0X4/f59QkRUWVkZvygDUhZ22PcYvxCTzSH8QviFGILV
+GkBurh/8QkxCRkYvrNY2fiFmID+//L/J4BfyD9jt13DlSvWe92exvAC/EEOiwotLl27sRobd
+7lNyavhTVrQ5f/45fpUgAy+309MfITPzgZrIr+v7eXlXUVBQwi8kFmRl3UNeXiXOnPmgIuIu
+CgtdyMjoQXZ2O/iXvTFbNT2Ew+FGfPw3JCUF9Xs4ffojcnJa1flS8H8PMYDk5BGVoup0anI4
+PCpKqpCa+nTfRM4vJIoUFLjVXFC8uxVks91BcvJryNI2La1fpSsnTL/bK8empqYDNxcrKiqO
+jZCLFzuRkLCkNkTfoa3t52SemPhWzxsiZHr6PWy2W5AJ3LRC3G43SktLERJzXCMkJ+emGuzb
+cDqd6Ot7A4tlWKWq++jtXd3tf3d3N5aXl9Ha2sqfsmKJ39+CxcUvqKvrxMrKCrq6uhAMBrfX
+19fVuTpsbGzwC/mfpKS82tOnra2t7YWFBWxubsLlcsngQ+7L+bm5OczPz2NtbQ3Dw8Pg3+2N
+DRgZGdkdcImIkKjZ2VkdHWNjYxgYGOAXEiskCpQAHRVDQ0Po6ekB//WQGDM6Oqom8D69Elxd
+XcXg4KAW0tHRgfHxcXg8HvALMYDGxkYsLS2B/4qhgczMzOzpl6QoWVHJMp5fSIyZmJjA1NTU
+vn5VVVWBP0IMoKWlBYFAAPxFDiabNyYnJ8EvhJ/o72XJsba2lr9QziylpLKre9CavbKyEuFE
+8cOfsviF8AvhF3Iod2w21F++DG9+PrqysvhXWUZS5nDgYWYmGpWQicREPElN1X1bPHlSHx+n
+p8NVWMj/TT3a+Ox2eJSMz6dOYTQlBZsnTuC7YkvxSZ1bTkjQUdOflgYnv5Do88JiwfTZs3ip
+jkJHdja+xsfjgYqWCpW6gufO4dmFC7qfAZXS+IVEkeu5uWi3WnUfJApC5+/unPud9jDn+YVE
+gXYVGfyrLP5lL78QfiH8QswjJFSZGO7iDr8QA4SUl5cfuIlYXFysKxpFylGQzcmjtpV+GdFW
+qjgNFSKll3/6P3XZCT7q3/6XtvJhOG5ti/h/64RsUpeKePmUhyvEPmxeamho0GlLyjv/tq08
+X6JV2koqjeR1Q88PvW64qA9Hc3OzTlk7bc0nRIoJ6uvrI75IJQXN8mM28vsp0jaS0hyRH2or
+tyNtK/0NtY00ZYpI6XtNTQ34UxZ/yuKHXwi/EH74hfDDL4RfCD/8QviF8MMvhF8IP/xC+IXw
+wy+EXwj/IPAL4YdfCL8QfviF8Avhh18IvxB++IXwC+GHXwg//EL4hfBzBH4AC4WNX8fBFtAA
+AAAASUVORK5CYII='
+]
+
+{ #category : #sources }
 RTGrapherDecorationExample >> exampleLikertScale [
 
 | q11 q12 q21 q22 q3 t toVisualize b ds lb |
