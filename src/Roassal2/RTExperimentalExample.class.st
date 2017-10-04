@@ -2024,8 +2024,10 @@ RTExperimentalExample >> exampleSankeyBuilder [
 
 | response energy sankey nodes nodeAt colors d color form |
 
+Smalltalk at: #NeoJSONObject ifAbsent: [ ^ self ].
+
 response := TRPlatform current download: 'https://bost.ocks.org/mike/sankey/energy.json'.
-energy := NeoJSONObject fromString: response contents.
+energy := TRPlatform current jsonReaderClass fromString: response contents.
 
 colors := RTColorPalette qualitative colors: 20 scheme:'FlatUI1'.
 d := Dictionary new.

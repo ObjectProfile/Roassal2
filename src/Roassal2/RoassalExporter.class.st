@@ -35,8 +35,6 @@ RoassalExporter >> categoryForMethod: method [
 
 { #category : #accesing }
 RoassalExporter >> classes [
-	
-	
 	^ classes ifNil: [ classes := OrderedCollection new.
 		self packages do: [ :pkg | classes addAll: pkg classes ].
 		classes ].
@@ -343,6 +341,11 @@ RoassalExporter >> packages [
 				packagesInfo add: (pkg classTagNamed: tag) ]
 			 ].
 		packagesInfo ]."
+]
+
+{ #category : #accesing }
+RoassalExporter >> packages: ps [
+	packages := ps.
 ]
 
 { #category : #export }
