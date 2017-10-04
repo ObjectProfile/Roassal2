@@ -16,6 +16,38 @@ Class {
 }
 
 { #category : #adding }
+RTSVGText >> addMatrix: stream visitor: visitor [
+	"| m |
+	m := element matrix.
+	stream
+		nextPutAll: 'matrix(';
+		nextPutAll: (visitor number: m sx);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: m shy);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: m shx);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: m sy);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: m x);
+		nextPutAll: ',';
+		nextPutAll: (visitor number: m y negated);
+		nextPutAll: ')'."
+	| box |
+	box := element encompassingRectangle.
+	stream
+		nextPutAll: 'rotate(';
+		nextPutAll: (visitor number: self angle);
+		nextPutAll: ', ';
+		nextPutAll: (visitor number: self x);
+		nextPutAll: ', ';
+		nextPutAll: (visitor number: self y);
+		nextPutAll: ') '.
+		
+	
+]
+
+{ #category : #adding }
 RTSVGText >> addOn: stream using: aSVGVisitor [
 	| box |
 	aSVGVisitor names at: self element put: self id.
@@ -25,9 +57,7 @@ RTSVGText >> addOn: stream using: aSVGVisitor [
 	self addFillColor: stream.
 	self closeTag: stream.
 	self startTransform: stream.
-	box := element encompassingRectangle.
-	self addRotation: self angle point: (self x)@(self y) into: stream.
-	
+	self addMatrix: stream visitor: aSVGVisitor.
 	self closeTag: stream.
 	self startClass: stream.
 	self closeTag: stream.
@@ -40,16 +70,16 @@ RTSVGText >> addOn: stream using: aSVGVisitor [
 
 { #category : #adding }
 RTSVGText >> addPosition: stream [
-	|box fixX fixY|
-	box := TRLabelShape new
-		text: self content;
-		encompassingRectangle.
-	fixX := (self x - (box width / 5)) rounded.
-	fixY := (self y + (box height / 4)) rounded.
+	|box temp |
+	box := element encompassingRectangle.
+	temp := RTSVGVisitor new.
 	
 	stream
-		nextPutAll:
-				('x="<1p>" y="<2p>" ' expandMacrosWith: fixX with: fixY).
+		nextPutAll: 'x="';
+		nextPutAll: (temp number: (self x - (box width / 5)));
+		nextPutAll: '" y="';
+		nextPutAll: (temp number: (self y + (box height / 4)));
+		nextPutAll: '" '.
 ]
 
 { #category : #accessing }
