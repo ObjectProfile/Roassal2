@@ -197,7 +197,9 @@ RTBezierLine >> getListOfPointsForTrachel: anEdge [
 	
 	realControllingElements := controllingElements rtValue: anEdge.
 	realControllingElements ~= #() ifTrue: [ | cElements |
-		cElements := realControllingElements collect: #position.
+		cElements := realControllingElements collect: [ :o | o isPoint
+			ifTrue: [ o ]
+			ifFalse: [ o position] ].
 		cElements isNotEmpty ifTrue: [ 
 			
 			(cElements first = anEdge from position and: [ cElements size  > 1 ])

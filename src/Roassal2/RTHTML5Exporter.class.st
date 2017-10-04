@@ -1702,10 +1702,7 @@ var TREllipseShape = TRAbstractBoxShape.extend({
 	resetPath: function (){
 		var r = this.rectangle;
 		$(this.path).attr({rx: r.width()/2, ry: r.height()/2});
-	},
-	setStrokeWidth: function(w){
-		this._super(w*this.rectangle.width());
-	},
+	}
 });
 
 var TRBoxShape = TRAbstractBoxShape.extend({

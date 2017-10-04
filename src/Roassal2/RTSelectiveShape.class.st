@@ -55,6 +55,15 @@ RTSelectiveShape >> getShapeBySymbol: symbol [
 	^ RTPolygon perform: symbol.
 ]
 
+{ #category : #accessing }
+RTSelectiveShape >> if: block shapeElement: block2 [
+	| oldShape |
+	oldShape := self shapeElement.
+	^ self shapeElement: [ :e | (block rtValue: e) 
+		ifTrue: [ block2 rtValue: e ]
+		ifFalse: [ oldShape rtValue: e ] ]
+]
+
 { #category : #initialization }
 RTSelectiveShape >> initialize [
 	super initialize.
@@ -79,6 +88,11 @@ RTSelectiveShape >> labelShapeDo: aBlock [
 { #category : #accessing }
 RTSelectiveShape >> shape: aShapeOrSymbol [
 	self shapeElement: [ :e| aShapeOrSymbol rtValue: e model ]
+]
+
+{ #category : #accessing }
+RTSelectiveShape >> shapeElement [
+	^ shape
 ]
 
 { #category : #accessing }

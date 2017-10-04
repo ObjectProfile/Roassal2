@@ -83,14 +83,6 @@ RTSVGEntity >> addPosition: stream [
 ]
 
 { #category : #transform }
-RTSVGEntity >> addRotation: angle point: point into: stream [
-	angle isNotNil 
-		ifTrue: [  
-		stream 
-			nextPutAll: ('rotate(<1p>,<2p>,<3p>) ' expandMacrosWith: angle with: point x rounded with: point y rounded)]
-]
-
-{ #category : #transform }
 RTSVGEntity >> addScale: anInteger into: stream [
 	stream nextPutAll: ('scale(<1p>) ' expandMacrosWith: anInteger)
 ]
