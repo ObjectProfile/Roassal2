@@ -34,14 +34,12 @@ Roassal2VWTest >> simple [
 
 { #category : #tests }
 Roassal2VWTest >> testNoArray [
-	| t |
+	| t ex |
 	t := Roassal2VW new.
-	t packages do: [ :pkg | 
-		(pkg classes flatCollect: #methods),
-		(pkg classes flatCollect: [:cls | cls class methods]),
-		(pkg package extensionsForTag: pkg) do: [ :met |
-			(t blacklist includes: met) ifFalse: [ 
-				self deny: (self hasArraySelector: met) 
-				description: 'Remove brackets {} from: ',met methodClass name,'>>#', met selector.
-				]. ] ].
+	ex := RoassalExporter new.
+	ex packages: t packages.
+	ex methods do: [ :met | 
+		self deny: (self hasArraySelector: met) 
+			description: 'Remove brackets {} from: ',met methodClass name,'>>#', met selector.
+	 ] displayingProgress: [:met | 'Processing method: ', met selector ].
 ]
