@@ -115,7 +115,7 @@ RTConstraint >> border [
 
 { #category : #'public - positioning' }
 RTConstraint >> bottom [
-	movableElementY := [ :shape | shape encompassingRectangle bottom ].
+	fixedElementY := [ :shape | shape encompassingRectangle bottom ].
 	directionY := -1
 ]
 
@@ -135,18 +135,18 @@ RTConstraint >> bottomRight [
 
 { #category : #'public - positioning' }
 RTConstraint >> center [
-	movableElementX := [ :shape | shape position x ].
+	fixedElementX := [ :shape | shape position x ].
 	directionX := 0
 ]
 
 { #category : #private }
 RTConstraint >> computeX [
-	^ fixedElement width / 2 + horizontalPadding * orientation * directionX + self parentX
+	^ movableElement width / 2 + horizontalPadding * orientation * directionX + self parentX
 ]
 
 { #category : #private }
 RTConstraint >> computeY [
-	^ fixedElement height / 2 + verticalPadding * orientation * directionY + self parentY
+	^ movableElement height / 2 + verticalPadding * orientation * directionY + self parentY
 ]
 
 { #category : #initialization }
@@ -159,7 +159,7 @@ RTConstraint >> default [
 
 { #category : #initialization }
 RTConstraint >> fix: aFixedElement [
-	movableElement := aFixedElement
+	fixedElement := aFixedElement
 ]
 
 { #category : #'public - modifiers' }
@@ -171,8 +171,8 @@ RTConstraint >> horizontalPadding: aNumber [
 RTConstraint >> initialize [
 	super initialize.
 	self default.
-	fixedElementX := [ :shape | shape width / 2 ].
-	fixedElementY := [ :shape | shape height / 2 ]
+	movableElementX := [ :shape | shape width / 2 ].
+	movableElementY := [ :shape | shape height / 2 ]
 ]
 
 { #category : #'public - modifiers' }
@@ -182,7 +182,7 @@ RTConstraint >> inner [
 
 { #category : #'public - positioning' }
 RTConstraint >> left [
-	movableElementX := [ :shape | shape encompassingRectangle left ].
+	fixedElementX := [ :shape | shape encompassingRectangle left ].
 	directionX := 1
 ]
 
@@ -194,24 +194,24 @@ RTConstraint >> leftOf [
 
 { #category : #'public - positioning' }
 RTConstraint >> middle [
-	movableElementY := [ :shape | shape position y ].
+	fixedElementY := [ :shape | shape position y ].
 	directionY := 0
 ]
 
 { #category : #initialization }
 RTConstraint >> movable: aMovableElement [
-	fixedElement := aMovableElement
+	movableElement := aMovableElement
 ]
 
 { #category : #initialization }
 RTConstraint >> movable: aMovableElement fix: aFixedElement [
-	movableElement := aFixedElement.
-	fixedElement := aMovableElement
+	movableElement := aMovableElement.
+	fixedElement := aFixedElement
 ]
 
 { #category : #'public - executing' }
 RTConstraint >> move [
-	fixedElement translateTo: self computeX @ self computeY
+	movableElement translateTo: self computeX @ self computeY
 ]
 
 { #category : #'public - modifiers' }
@@ -227,17 +227,17 @@ RTConstraint >> padding: aNumber [
 
 { #category : #private }
 RTConstraint >> parentX [
-	^ movableElementX value: movableElement
+	^ fixedElementX value: fixedElement
 ]
 
 { #category : #private }
 RTConstraint >> parentY [
-	^ movableElementY value: movableElement
+	^ fixedElementY value: fixedElement
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> right [
-	movableElementX := [ :shape | shape encompassingRectangle right ].
+	fixedElementX := [ :shape | shape encompassingRectangle right ].
 	directionX := -1
 ]
 
@@ -249,8 +249,8 @@ RTConstraint >> rightOf [
 
 { #category : #obsolete }
 RTConstraint >> setChild: aChildShape parent: aParentShape [
-	fixedElement := aChildShape.
-	movableElement := aParentShape
+	fixedElement := aParentShape.
+	movableElement := aChildShape
 ]
 
 { #category : #'public - executing' }
@@ -258,13 +258,13 @@ RTConstraint >> stick [
 	| block |
 	self move.
 	block := [ :shape :step | self move ].
-	movableElement addCallback: (TRTranslationCallback block: block).
-	movableElement addCallback: (TRExtentCallback block: block)
+	fixedElement addCallback: (TRTranslationCallback block: block).
+	fixedElement addCallback: (TRExtentCallback block: block)
 ]
 
 { #category : #'public - positioning' }
 RTConstraint >> top [
-	movableElementY := [ :shape | shape encompassingRectangle top ].
+	fixedElementY := [ :shape | shape encompassingRectangle top ].
 	directionY := 1
 ]
 
