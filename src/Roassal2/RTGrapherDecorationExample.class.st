@@ -342,6 +342,7 @@ QmCC'
 
 { #category : #sources }
 RTGrapherDecorationExample >> exampleIris [
+|  table g d |
 table := RTTable inputWithComma: RTDatasets iris.
 table removeFirstRow.
 table convertColumnsToFloat: (1 to: 4).

@@ -166,11 +166,6 @@ RTSankeyBuilder >> defaultLine [
 ]
 
 { #category : #accessing }
-RTSankeyBuilder >> edgesDo: aBlock [
-	edgesDo := aBlock
-]
-
-{ #category : #accessing }
 RTSankeyBuilder >> extent: aPoint [
 	extent := aPoint
 ]
