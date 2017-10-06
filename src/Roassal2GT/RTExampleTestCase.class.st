@@ -1,6 +1,6 @@
 Class {
 	#name : #RTExampleTestCase,
-	#superclass : #GTExampleTestCase,
+	#superclass : #GtExampleTestCase,
 	#category : #'Roassal2GT-Tests-Examples'
 }
 
