@@ -923,7 +923,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
 	spec for: #'pharo5.x' version: '1.50'.
-	spec for: #'pharo6.x' version: '1.50'.
+	spec for: #'pharo6.x' version: '1.51'.
 ]
 
 { #category : #'old-versions' }
@@ -1798,18 +1798,23 @@ ConfigurationOfRoassal2 >> version150: spec [
 
 ]
 
-{ #category : #'old-versions' }
+{ #category : #versions }
 ConfigurationOfRoassal2 >> version151: spec [
-	<version: '1.5.1' imports: #('1.1-baseline' )>
+	<version: '1.51' imports: #('1.18-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
-		spec description: 'version 1.5.1: loads the version from 19th dec. because later changes seem to make Grapher unstable'.
-		spec author: 'UsmanBhatti'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '10/07/2017'.
+		
 		spec 
-			package: 'Trachel' with: 'Trachel-AlexandreBergel.252';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.672';
-			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.5'. ].
+			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
+			package: 'Trachel' with: 'Trachel-akevalion.421';
+			package: 'Roassal2' with: 'Roassal2-akevalion.1700';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.60';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
 
