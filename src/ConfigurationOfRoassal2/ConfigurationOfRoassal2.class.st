@@ -1810,7 +1810,7 @@ ConfigurationOfRoassal2 >> version151: spec [
 		
 		spec 
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
-			package: 'Trachel' with: 'Trachel-akevalion.421';
+			package: 'Trachel' with: 'Trachel-akevalion.422';
 			package: 'Roassal2' with: 'Roassal2-akevalion.1700';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.60';
