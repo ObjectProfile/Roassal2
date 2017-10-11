@@ -331,3 +331,15 @@ RTLegendBuilder >> textSize [
 RTLegendBuilder >> textSize: aSizeAsInteger [
 	textSize := aSizeAsInteger
 ]
+
+{ #category : #'public - positioning' }
+RTLegendBuilder >> top [
+	self positionDo: [ :p | 
+		p 
+			outer;
+			verticalPadding: offset;
+			top;
+			center;
+			move.
+		 ].
+]
