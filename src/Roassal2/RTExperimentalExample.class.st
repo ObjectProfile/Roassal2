@@ -2021,8 +2021,7 @@ Jsux/Av9KBnkMQ8L+QAAAABJRU5ErkJggg=='
 
 { #category : #sources }
 RTExperimentalExample >> exampleSankeyBuilder [
-
-| response energy sankey nodes nodeAt colors d color form |
+| response energy sankey nodes nodeAt colors d color form lineColor textColor |
 
 Smalltalk at: #NeoJSONObject ifAbsent: [ ^ self ].
 
@@ -2048,7 +2047,9 @@ form := [ :n | | e |
 
 sankey shape width: 15.
 
-sankey lineShape color: Color white trans.
+lineColor := TRTheme current blue trans.
+textColor := Color black.
+sankey lineShape color: lineColor.
 nodes := energy at: #nodes.
 nodeAt := [ :n | nodes at: n +1 ].
 sankey shape box
@@ -2059,16 +2060,17 @@ sankey shape box
 (sankey interaction 
 	popupText: [ :n | (n at: #name), String cr, (form value: n) ])
 	backgroundColor: Color white;
-	alphaPopupBackground: 1.
+	alphaPopupBackground: 1;
+	borderColor: Color gray.
 (sankey interactionEdge
 	popupText: [ :ass | (ass key at: #name) ,' → ', 
 		(ass value at: #name), String cr, (form value: ass). ])
 	backgroundColor: Color white;
-	alphaPopupBackground: 1.
+	alphaPopupBackground: 1;
+	borderColor: Color gray.
 sankey labelShape
 	text text: [ :n | n at: #name ];
-	color: Color green.
-sankey lineShape color: Color white trans.
+	color: textColor.
 sankey
 	extent: 960@500;
 	iterations: 32;
