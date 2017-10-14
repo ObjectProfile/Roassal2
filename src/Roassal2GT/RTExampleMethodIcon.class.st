@@ -1,8 +1,6 @@
 Class {
 	#name : #RTExampleMethodIcon,
 	#superclass : #GtAbstractExampleMethod,
-	#traits : 'TGtExampleIcon',
-	#classTraits : 'TGtExampleIcon classTrait',
 	#category : #'Roassal2GT-Examples'
 }
 

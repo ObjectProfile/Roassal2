@@ -3,6 +3,6 @@ Extension { #name : #RTObject }
 { #category : #'*Roassal2GT-Examples' }
 RTObject class >> gtExamplesFactory [
 	^ RTExampleFactory new
-		source: self;
+		sourceClass: self;
 		yourself
 ]
