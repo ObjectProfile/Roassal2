@@ -18,6 +18,11 @@ TRBezier4Shape >> computePath [
 		]
 ]
 
+{ #category : #'instance creation' }
+TRBezier4Shape >> from: a to: b [
+	"for layout process"
+]
+
 { #category : #public }
 TRBezier4Shape >> points: points [
 	self assert: [ points size = 4 ] description: 'Only 3 points may be provided'.
