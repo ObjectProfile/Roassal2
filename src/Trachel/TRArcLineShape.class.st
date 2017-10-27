@@ -85,8 +85,18 @@ TRArcLineShape >> includesPoint: aPoint [
 ]
 
 { #category : #accessing }
+TRArcLineShape >> line [
+	^ line
+]
+
+{ #category : #accessing }
 TRArcLineShape >> line: aLine [
 	line := aLine
+]
+
+{ #category : #accessing }
+TRArcLineShape >> normal [
+	^ normal
 ]
 
 { #category : #private }
