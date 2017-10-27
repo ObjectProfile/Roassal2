@@ -2047,7 +2047,7 @@ sankey shape width: 15.
 lineColor := TRTheme current blue trans.
 textColor := Color black.
 sankey lineShape color: lineColor.
-nodes := energy at: #nodes.
+nodes := energy at: 'nodes'.
 nodeAt := [ :n | nodes at: n +1 ].
 sankey shape box
 	borderColor: Color black;
@@ -2073,14 +2073,13 @@ sankey
 	iterations: 32;
 	nodePadding: 10;
 	nodes: nodes;
-	links: (energy at: #links);
-	linkFrom: [ :l | nodeAt value: (l at: #source) ];
-	linkTo: [ :l | nodeAt value: (l at: #target) ];
-	linkValue: [:l | l at: #value ].
+	links: (energy at: 'links');
+	linkFrom: [ :l | nodeAt value: (l at: 'source') ];
+	linkTo: [ :l | nodeAt value: (l at: 'target') ];
+	linkValue: [:l | l at: 'value' ].
 
 sankey build.
 ^ sankey view
-
 ]
 
 { #category : #icons }
