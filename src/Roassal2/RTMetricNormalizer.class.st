@@ -204,6 +204,19 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors [
 ]
 
 { #category : #'public normalize color' }
+RTMetricNormalizer >> normalizeColor: metricBlock using: colors min: min [
+	"aBlock is evaluated on each node model. 
+	 Colors is an array of colors used to do the fading"
+	
+	self normalizeColor: metricBlock using: colors using: #yourself min: min
+]
+
+{ #category : #'public normalize color' }
+RTMetricNormalizer >> normalizeColor: metricBlock using: colors min: min max: max [
+	^ self normalizeColor: metricBlock using: colors using: #yourself min: min max: max
+]
+
+{ #category : #'public normalize color' }
 RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transformation [
 	"aBlock is evaluated on each node model. 
 	 Colors is an array of colors used to do the fading"
@@ -221,9 +234,25 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 	max = 0 ifTrue: [ ^ self ].
 	
 	self normalizeColor: metricBlock using: colors using: transformation min: min max: max
-"	normalizer := RTMultiLinearColor new colors: colors.
-	elements do: [ :el |  
-		el trachelShape color: (normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) ]"
+
+]
+
+{ #category : #'public normalize color' }
+RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transformation min: min [
+	"aBlock is evaluated on each node model. 
+	 Colors is an array of colors used to do the fading"
+	
+	| max |
+	"We get the min and the max of the metric for all the elements"
+	self assert: [ elements notEmpty ] description: 'You need to provide elements using #objects:, #elements:, #fromObjects:, ... '.
+	max := transformation rtValue: (metricBlock rtValue: elements anyOne model).
+	elements do: [ :el | 
+		| t |  
+		t := transformation rtValue: (metricBlock rtValue: el model).
+		max := max max: t ].
+
+	self normalizeColor: metricBlock using: colors using: transformation min: min max: max
+
 ]
 
 { #category : #'public normalize color' }
@@ -236,9 +265,6 @@ RTMetricNormalizer >> normalizeColor: metricBlock using: colors using: transform
 							minValue: min maxValue: max
 							using: transformation).
 	normalizer := RTMultiLinearColor new colors: colors.
-"	elements do: [ :el |  
-		el trachelShape color: (normalizer level: (((transformation rtValue: (metricBlock rtValue: el model)) - min) / max)) ]
-"
 	elements with: values do: [ :el :v | 
 		el trachelShape color: (normalizer level: v) ] 
 	

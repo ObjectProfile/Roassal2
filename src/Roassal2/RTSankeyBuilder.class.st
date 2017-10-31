@@ -32,7 +32,7 @@ RTSankeyBuilder >> centerOf: el [
 
 { #category : #private }
 RTSankeyBuilder >> computeEdges [
-	links ifNil: [ ^  self ].
+	
 	elements do: [ :e |
 		e attributes 
 			at: #sourceLinks put: OrderedCollection new;
@@ -104,7 +104,6 @@ RTSankeyBuilder >> computeElementDepths [
 	elementsByBreadth := elements groupedBy: [ :e | e attributes at: #x ].
 	elementsByBreadth := elementsByBreadth keysSortedSafely 
 		collect: [:k | elementsByBreadth at: k ].
-	elementsByBreadth ifEmpty: [ ^ self ].
 	elementsByBreadth last do: [ :e |
 		e attributes at: #last put: true ].
 	self initializeElementsDepth: elementsByBreadth.
@@ -164,11 +163,6 @@ RTSankeyBuilder >> defaultLine [
 				ifTrue: [ points value: e ]
 				ifFalse: [ Array with: 0@0 with: 0@0 ] ].
 	
-]
-
-{ #category : #accessing }
-RTSankeyBuilder >> extent [
-	^ extent
 ]
 
 { #category : #accessing }
@@ -261,11 +255,6 @@ RTSankeyBuilder >> links: anArray [
 ]
 
 { #category : #accessing }
-RTSankeyBuilder >> nodePadding [
-	^ nodePadding
-]
-
-{ #category : #accessing }
 RTSankeyBuilder >> nodePadding: aNumber [
 	nodePadding := aNumber
 ]
@@ -306,11 +295,9 @@ RTSankeyBuilder >> relaxRightToLeft: alpha elements: elementsByBreadth [
 
 { #category : #hooks }
 RTSankeyBuilder >> renderIn: aView [
-	elements ifNil: [ elements := RTGroup new ].
 	self interaction setUpElements: elements.
 	aView addAll: elements.
 	self computeSankey.
-	lelements ifNil: [ lelements := RTGroup new ].
 	aView addAll: lelements.
 	self updateNodes.
 ]
@@ -367,6 +354,5 @@ RTSankeyBuilder >> updateNodes [
 			horizontalPadding: 5;
 			stick.
 		 ].
-	edges ifNil: [ ^ self ].
 	edges do: #updateShape
 ]
