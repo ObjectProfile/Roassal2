@@ -16,18 +16,16 @@ RTLineHead >> asHead [
 RTLineHead >> trachelShapeFor: anEdge [
 	| fromPoint |
 	fromPoint := attachPoint startingPointOf: anEdge.
-	line
-		ifNotNil:
-			[ | lineShape |
-			lineShape := line trachelShapeFor: anEdge.
-			lineShape class = TRBezierShape
-				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
-	anEdge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint)
-		ifTrue:
-			[ fromPoint := attachPoint
-				attachPointFor: anEdge
-				from: (anEdge to encompassingRectangle expandBy: 10)
-				to: anEdge to encompassingRectangle ].
+	line ifNotNil: [ | lineShape |
+		lineShape := line trachelShapeFor: anEdge.
+		lineShape class = TRBezierShape ifTrue: [ 
+			fromPoint := lineShape points allButLast last ] ].
+	
+	anEdge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint) ifTrue: [
+		fromPoint := (TRArcLineShape new 
+			line: (RTLineSegment from: fromPoint to: (attachPoint endingPointOf: anEdge));
+			distance: (anEdge shape distanceFor: anEdge)) normal to.
+		].
 	^ self trachelShapeFor: anEdge from: fromPoint
 ]
 
@@ -40,18 +38,12 @@ RTLineHead >> trachelShapeFor: anEdge from: aPoint [
 RTLineHead >> updateFor: edge trachelShape: trachelShape [
 	| fromPoint |
 	fromPoint := attachPoint startingPointOf: edge.
-	line
-		ifNotNil: [ 
-			| lineShape |
-			lineShape := edge trachelShape.
-			lineShape class = TRBezierShape
-				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
-	edge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint)
-		ifTrue:
-			[ fromPoint := attachPoint
-				attachPointFor: edge
-				from: (edge to encompassingRectangle expandBy: 1)
-				to: edge to encompassingRectangle ].
+	line ifNotNil: [ | lineShape |
+		lineShape := edge trachelShape.
+		lineShape class = TRBezierShape
+			ifTrue: [ fromPoint := lineShape points allButLast last ] ].
+	edge shape class = RTArcLine & (attachPoint class = RTBorderAttachPoint) ifTrue:[ 
+		fromPoint := edge trachelShape shapes first normal to ].
 	self updateFor: edge trachelShape: trachelShape from: fromPoint
 ]
 
