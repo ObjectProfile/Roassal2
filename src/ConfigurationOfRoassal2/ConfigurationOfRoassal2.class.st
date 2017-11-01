@@ -923,7 +923,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
 	spec for: #'pharo5.x' version: '1.50'.
-	spec for: #'pharo6.x' version: '1.52'.
+	spec for: #'pharo6.x' version: '1.53'.
 ]
 
 { #category : #'old-versions' }
@@ -1830,6 +1830,26 @@ ConfigurationOfRoassal2 >> version152: spec [
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.265';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.782';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-johanfabry.6'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version153: spec [
+	<version: '1.53' imports: #('1.18-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '11/01/2017'.
+		
+		spec 
+			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
+			package: 'Trachel' with: 'Trachel-akevalion.424';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1709';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
+			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
 ]
 
