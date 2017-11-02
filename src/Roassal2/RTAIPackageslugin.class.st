@@ -21,7 +21,13 @@ RTAIPackageslugin >> execute [
 	Gofer it
 	    smalltalkhubUser: 'abergel' project: 'GeneticAlgo';
 	    configurationOf: 'GeneticAlgo';
-	    loadDevelopment
+	    loadDevelopment.
+	
+	Gofer it
+	    smalltalkhubUser: 'abergel' project: 'NeuralNetworks';
+	    package: 'GeneticAlgoAndNeuralNetwork';
+	    load
+
 ]
 
 { #category : #hooks }

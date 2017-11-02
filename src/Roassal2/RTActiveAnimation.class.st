@@ -59,5 +59,6 @@ RTActiveAnimation >> refresh [
 
 { #category : #actions }
 RTActiveAnimation >> start [
+	view ifNil: [ ^ self ].
 	view canvas signalUpdate
 ]
