@@ -24,7 +24,7 @@ RTAIPackageslugin >> execute [
 	    loadDevelopment.
 	
 	Gofer it
-	    smalltalkhubUser: 'abergel' project: 'NeuralNetworks';
+	    smalltalkhubUser: 'abergel' project: 'GeneticAlgo';
 	    package: 'GeneticAlgoAndNeuralNetwork';
 	    load
 
