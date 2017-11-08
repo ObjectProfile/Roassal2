@@ -1340,13 +1340,13 @@ S8bb1GoBiAqzuqaAgBaz989qQxKqAQFHDK8s8gQgq3cklb+WTjUg1epT/N9aowaA+L9O3f+A
 
 { #category : #sources }
 RTExperimentalExample >> exampleObjectBrowser [
-
-| b v |
-b := RTObjectBrowser new.
-v := RTView new.
-v addElement: RTBox element.
-b object: v.
-^ b
+	<script: 'self new exampleObjectBrowser inspect'>
+	| b v |
+	b := RTObjectBrowser new.
+	v := RTView new.
+	v addElement: RTBox element.
+	b object: v.
+	^ b
 ]
 
 { #category : #icons }
