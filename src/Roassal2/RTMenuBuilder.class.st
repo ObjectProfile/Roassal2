@@ -206,7 +206,7 @@ RTMenuBuilder >> menu: aTitle background: aColor highlightColor: aColor2 callbac
 	view canvas addFixedShape: lbl.
 	lbl element: (RTMenu new view: view; label: lbl; menuBackgroundColor: aColor; buttonLabelBackgroundShapeAndColor: aColor; highlightColor: aColor2 ).
 	
-	lbl when: TRMouseClick do: [ :event | callback value.].
+	lbl when: TRMouseClick do: [ :event | lbl element hideAll. callback value. ].
 	lbl when: TRMouseEnter do: [ :event | closingSubmenuFlag := false. lbl element executeHighlight; executeTextHighlight. self signalUpdate. ].
 	lbl when: TRMouseLeave do: [ :event | lbl element endHighlight. self signalUpdate. ].
 
