@@ -129,7 +129,7 @@ RTLabelGenerator >> searchMin: dmin max: dmax desired: desiredNumberOfTicks [
 			k := 2.
 			[ :break2 |
 				[ true ] whileTrue: [ | z |
-					dm := [ self densityMax: k m: desiredNumberOfTicks ] on: ZeroDivide do: [ :ex | self error: 'Please increse the value of desiredNumberOfTicks/labels' ].
+					dm := [ self densityMax: k m: desiredNumberOfTicks ] on: ZeroDivide do: [ :ex | self error: 'Please increase the value of desiredNumberOfTicks/labels' ].
 					((self w: sm c: 1 d: dm l: 1) < bestScore) 
 						ifTrue: [ break2 value ].
 					delta := (dmax - dmin)/(k+1)/ n j/ (nice qat: n i).
