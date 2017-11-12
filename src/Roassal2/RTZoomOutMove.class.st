@@ -9,5 +9,5 @@ Class {
 
 { #category : #'stepping and presenter' }
 RTZoomOutMove >> step [
-	^ 0.8 
+	^ 0.5
 ]

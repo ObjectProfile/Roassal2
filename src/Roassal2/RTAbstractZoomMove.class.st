@@ -24,7 +24,7 @@ RTAbstractZoomMove >> hasCompleted [
 { #category : #'instance creation' }
 RTAbstractZoomMove >> on: view [
 
-	^ self on: view during: 0.5
+	^ self on: view during: 0.2
 ]
 
 { #category : #public }
