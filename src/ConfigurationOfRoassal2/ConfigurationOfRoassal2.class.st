@@ -527,6 +527,47 @@ ConfigurationOfRoassal2 >> baseline118: spec [
 			spec group: 'Tests' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
 ]
 
+{ #category : #baselines }
+ConfigurationOfRoassal2 >> baseline119: spec [
+	<version: '1.19-baseline'>
+	spec
+		for: #common
+		do: [ spec blessing: #baseline.
+			spec repository: 'http://www.smalltalkhub.com/mc/ObjectProfile/Roassal2/main'.
+			
+			spec baseline: 'GToolkitExamples' with: [ 
+				spec repository: 'github://feenkcom/gtoolkit-examples/src' ].
+			spec baseline: 'Geometry' with: [ 
+				spec repository: 'github://peteruhnak/geometry/repository' ].
+
+			spec
+				project: 'Neo-JSON-Core'
+				with: [ spec
+						className: #ConfigurationOfNeoJSON;
+						version: #stable;
+						repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ].
+
+			"Some menu added by Roassal open a webpage"
+			spec
+				project: 'WebBrowser'
+				with: [ spec
+						className: #ConfigurationOfWebBrowser;
+						version: #stable;
+						repository: 'http://smalltalkhub.com/mc/TorstenBergmann/WebBrowser/main' ].
+					
+			spec package: 'Athens-SVG' with: [ spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+			spec
+				package: 'Trachel';
+				package: 'Roassal2' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
+				package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GToolkitExamples') ];
+				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ].
+				
+			spec group: 'default' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
+			spec group: 'NoGlamour' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
+			spec group: 'Tests' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
+]
+
 { #category : #'old-baselines' }
 ConfigurationOfRoassal2 >> baseline11: spec [
 	"Baselines are used by convention in Metacello and essentially are nothing else than normal versions.
@@ -900,6 +941,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	spec for: #'pharo4.x' version: '1.5-baseline'.
 	spec for: #'pharo5.x' version: '1.13-baseline'.
 	spec for: #'pharo6.x' version: '1.18-baseline'.
+	spec for: #'pharo7.x' version: '1.19-baseline'.
 ]
 
 { #category : #accessing }
@@ -923,7 +965,8 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo4.x' version: '1.13'.
 	spec for: #'pharo3.x' version: '1.6'.
 	spec for: #'pharo5.x' version: '1.50'.
-	spec for: #'pharo6.x' version: '1.53'.
+	spec for: #'pharo6.x' version: '1.52'.
+	spec for: #'pharo7.x' version: '1.53'.
 ]
 
 { #category : #'old-versions' }
@@ -1835,18 +1878,18 @@ ConfigurationOfRoassal2 >> version152: spec [
 
 { #category : #versions }
 ConfigurationOfRoassal2 >> version153: spec [
-	<version: '1.53' imports: #('1.18-baseline' )>
+	<version: '1.53' imports: #('1.19-baseline' )>
 
 	spec for: #'common' do: [
 		spec blessing: #'stable'.
 		spec description: ''.
 		spec author: 'AlexandreBergel'.
-		spec timestamp: '11/01/2017'.
+		spec timestamp: '10/16/2017'.
 		
 		spec 
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
-			package: 'Trachel' with: 'Trachel-akevalion.424';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1709';
+			package: 'Trachel' with: 'Trachel-akevalion.425';
+			package: 'Roassal2' with: 'Roassal2-akevalion.1718';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.13';
 			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
