@@ -486,6 +486,8 @@ TRMorph >> trMouseDragStart: aMorphicEvent [
 		ifTrue: [ trEventClass := TRMouseLeftDragStart ].
 	aMorphicEvent yellowButtonChanged
 		ifTrue: [ trEventClass := TRMouseRightDragStart ].
+	aMorphicEvent blueButtonChanged
+		ifTrue: [ trEventClass := TRMouseMiddleDragStart ].
 	trEvent := self eventOfClass: trEventClass actionClass: TRMouseDragging from: aMorphicEvent.
 
 	shapeBeingPointed := trEvent shape.
