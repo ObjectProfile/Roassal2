@@ -14,11 +14,6 @@ RTExampleSelection >> discordAction: aGLMPharoScriptPresentation [
 ]
 
 { #category : #'*Roassal2ScriptOfTheDay' }
-RTExampleSelection >> publishAsScriptOfTheDayOnDiscord [
-	self shouldBeImplemented.
-]
-
-{ #category : #'*Roassal2ScriptOfTheDay' }
 RTExampleSelection >> publishOnDiscord [
 	self publishOnDiscordScript: self playgroundSourceCode
 ]
@@ -52,5 +47,5 @@ RTExampleSelection >> publishOnDiscordScript: aScript withTitle: aTitle [
 			(TRMorph new
 				canvas: view canvas;
 				extent: idealExtent);
-		post
+		send
 ]
