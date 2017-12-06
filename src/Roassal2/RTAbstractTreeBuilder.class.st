@@ -87,18 +87,50 @@ RTAbstractTreeBuilder >> elements: anArray [
 	elements := anArray
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTAbstractTreeBuilder >> explore: atree nesting: block1 leaves: block2 [
 	^ (self from: (Array with: atree) nesting: block1 leaves: block2) first
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTAbstractTreeBuilder >> explore: atree using: ablock [
 	^ (self from: (Array with: atree) using: ablock) first.
 	
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
+RTAbstractTreeBuilder >> from: objects [
+	"This is the main public method. Takes a list of objects"
+	"
+dic1 := Dictionary new.
+dic1 at: #one put: 1.
+dic1 at: #two put: 2.
+dic1 at: #three put: 3.
+
+dic2 := Dictionary new.
+dic2 at: #one put: 1.
+dic2 at: #two put: 2.
+dic2 at: #three put: 3.
+dic2 at: #five put: 5.
+
+dic3 := Dictionary new.
+dic3 at: #one put: 1.
+
+data := Array with: dic1 with: dic2 with: dic3.
+
+colorNormalizer := RTMultiLinearColorForIdentity new 
+					objects: data.
+
+b := RTTreeMapBuilder new.
+b shape color: colorNormalizer.
+b from: data 
+b weight: [ :aDictionary | aDictionary size ].
+b 
+	"
+	^ self from: objects using: [ :cap | #() ]
+]
+
+{ #category : #'public - building' }
 RTAbstractTreeBuilder >> from: objects nesting: block1 leaves: block2 [
 
 	rootNodes := objects collect: [:obj | self createElements: obj nesting: block1 leaves: block2 depth: 1 ].
@@ -106,11 +138,39 @@ RTAbstractTreeBuilder >> from: objects nesting: block1 leaves: block2 [
 	^ rootNodes
 ]
 
-{ #category : #building }
+{ #category : #'public - building' }
 RTAbstractTreeBuilder >> from: objects using: ablock [
+	"This is the main public method. Takes a list of objects, and a block to specify how to recurse"
+"
+dic1 := Dictionary new.
+dic1 at: #one put: 1.
+dic1 at: #two put: 2.
+dic1 at: #three put: 3.
 
+dic2 := Dictionary new.
+dic2 at: #one put: 1.
+dic2 at: #two put: 2.
+dic2 at: #three put: 3.
+dic2 at: #five put: 5.
+
+dic3 := Dictionary new.
+dic3 at: #one put: 1.
+
+data := Array with: dic1 with: dic2 with: dic3.
+
+colorNormalizer := RTMultiLinearColorForIdentity new 
+					objects: data.
+
+b := RTTreeMapBuilder new.
+b shape color: colorNormalizer.
+b 
+    from: data 
+    using: [ :cap | #() ]. 
+    
+b weight: [ :aDictionary | aDictionary size ].
+b 
+"
 	rootNodes := objects collect: [:obj | self createElements: obj using: ablock depth: 1 ].
-	
 	^ rootNodes
 ]
 
