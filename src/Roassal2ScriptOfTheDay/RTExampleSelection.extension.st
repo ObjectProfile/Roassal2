@@ -28,6 +28,7 @@ RTExampleSelection >> publishOnDiscordScript: aScript [
 { #category : #'*Roassal2ScriptOfTheDay' }
 RTExampleSelection >> publishOnDiscordScript: aScript withTitle: aTitle [
 	| view idealExtent message |
+	aTitle ifNil: [ ^ self "Do nothing" ].
 	message := 'Script of the day: *' , aTitle , '*', String cr , 'More information about Roassal on http://AgileVisualization.com'
 				, String cr , '```Smalltalk' , String cr , aScript , String cr , '```'.
 	view := (Compiler evaluate: aScript)
