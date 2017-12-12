@@ -121,7 +121,7 @@ RTNameCloud >> example02 [
 	"
 	| b |
 	b := RTNameCloud new.
-	b addStrings: (RTNameCloud rtmethods collect: #getSource).
+	b addStrings: (RTNameCloud rtmethods collect: #sourceCode).
 	^ b
 ]
 
@@ -135,7 +135,7 @@ RTNameCloud >> example03 [
 	b := RTNameCloud new. 
 	b dictionary: (RTSourceCodeDictionary new).
 	RTObject withAllSubclasses do: [ :c | 
-		b addObjects: c rtmethods description: #getSource ].
+		b addObjects: c rtmethods description: #sourceCode ].
 	^ b
 ]
 

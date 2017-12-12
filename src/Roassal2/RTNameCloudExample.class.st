@@ -32,7 +32,7 @@ RTNameCloudExample >> exampleRoassalCode [
 	ifFalse: [ ^ self ].
 	b := RTNameCloud new.
 	RTObject withAllSubclasses do: [ :c | 
-		b addStrings: (c rtmethods collect: #getSource) ].
+		b addStrings: (c rtmethods collect: #sourceCode) ].
 	^ b
 ]
 
