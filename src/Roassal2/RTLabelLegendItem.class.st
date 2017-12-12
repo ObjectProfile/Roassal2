@@ -15,8 +15,8 @@ RTLabelLegendItem >> color [
 ]
 
 { #category : #accessing }
-RTLabelLegendItem >> color: anObject [
-	color := anObject
+RTLabelLegendItem >> color: aColor [
+	color := aColor
 ]
 
 { #category : #hooks }
@@ -44,4 +44,9 @@ RTLabelLegendItem >> text [
 { #category : #accessing }
 RTLabelLegendItem >> text: aTextOrSymbolOrBlock [
 	text := aTextOrSymbolOrBlock
+]
+
+{ #category : #accessing }
+RTLabelLegendItem >> textColor [
+	^ color
 ]
