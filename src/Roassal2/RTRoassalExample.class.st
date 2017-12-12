@@ -3455,7 +3455,7 @@ gMS3+IDEByS+xQckvsUHJD4g8S0+IDln/wNYi2AIZ5zGfQAAAABJRU5ErkJggg=='
 RTRoassalExample >> exampleFadingLetter [
 
 | data mousePosition shape v es |
-data := (RTView rtmethods flatCollect: #getSource) copyFrom: 1 to: 1500.
+data := (RTView rtmethods flatCollect: #sourceCode) copyFrom: 1 to: 1500.
 data := data select: #isAlphaNumeric.
 mousePosition := 250 @ 250.
 shape := RTLabel new 

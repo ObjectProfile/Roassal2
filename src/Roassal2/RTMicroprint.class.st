@@ -22,7 +22,7 @@ RTMicroprint >> example01 [
 	b lineMatching: '*view*' color: Color red trans.
 	b lineMatching: '*roassal*' color: Color green trans.
 	b lineMatching: '*shape*' color: Color blue trans.
-	b texts: (RTBuilder methods collect: #getSource).
+	b texts: (RTBuilder methods collect: #sourceCode).
 	^ b
 ]
 
