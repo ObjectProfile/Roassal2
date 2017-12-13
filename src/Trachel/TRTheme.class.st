@@ -36,9 +36,9 @@ TRTheme class >> green [
 
 { #category : #accessing }
 TRTheme class >> infer [
-	^ UITheme current class == Pharo3DarkTheme
-		ifTrue: [ TRDarkSolarizedTheme new ]
-		ifFalse: [ TRWhiteSolarizedTheme new ]
+	^ ('*Dark*' match: UITheme current class name)
+			ifTrue: [ TRDarkSolarizedTheme new ]
+			ifFalse: [ TRWhiteSolarizedTheme new ]
 ]
 
 { #category : #'base color' }
