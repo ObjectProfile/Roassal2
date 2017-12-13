@@ -483,7 +483,12 @@ RTSVGVisitor >> visitPolygonShape: aPolygon [
 	((aPolygon strokePaint) isNil)
 		ifFalse: [ borderColor := aPolygon strokePaint].
 	box := self alignRectangle: (aPolygon encompassingRectangle).
-	svgE := RTSVGPolygon new element: aPolygon box: box color: fillColor borderWidth: 1 borderColor: borderColor.
+	svgE := RTSVGPolygon new 
+		element: aPolygon 
+		box: box 
+		color: fillColor 
+		borderWidth: 1
+		borderColor: borderColor.
 	svgE addOn: stream using: self.
 ]
 
@@ -501,14 +506,22 @@ RTSVGVisitor >> visitRotatedLabelShape: aRotatedLabel [
 
 { #category : #visitor }
 RTSVGVisitor >> visitSVGPath: aSVGPath [
-	|borderColor fillColor svgE|
-	((aSVGPath color) isNil)
+	| borderColor fillColor svgE |
+	aSVGPath color isNil
 		ifTrue: [ fillColor := Color r: 0 g: 0 b: 0]
 		ifFalse: [ fillColor := aSVGPath color].
-	((aSVGPath strokePaint) isNil)
-		ifTrue: [ borderColor := fillColor]
+	aSVGPath strokePaint isNil
+		ifTrue: [ borderColor := fillColor ]
 		ifFalse: [ borderColor := aSVGPath strokePaint].
-	svgE := RTSVGPathEntity new element: (aSVGPath) path: (aSVGPath pathString) center: (self center) scale: (aSVGPath scale) fillColor: fillColor borderColor: borderColor width: 1.
+	
+	svgE := RTSVGPathEntity new 
+		element: aSVGPath
+		path: aSVGPath pathString
+		center: (self alignPoint: aSVGPath position)
+		scale: aSVGPath scale
+		fillColor: fillColor 
+		borderColor: borderColor 
+		width: 1.
 	svgE addOn: stream using: self. 
 ]
 

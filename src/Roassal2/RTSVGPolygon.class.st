@@ -16,7 +16,7 @@ RTSVGPolygon >> addOn: stream using: aSVGVisitor [
 	aSVGVisitor names at: self element put: self id.
 	self openDef: stream.
 	self addPosition: stream.
-	self addPoints: (self points) into: stream.
+	self addPoints: (self points) into: stream visitor: aSVGVisitor.
 	self startStyle: stream.
 	self addFillColor: stream.
 	self addFillOpacity: stream.
@@ -29,6 +29,20 @@ RTSVGPolygon >> addOn: stream using: aSVGVisitor [
 	self closeTag: stream.
 	self addExternalInteractions: aSVGVisitor.
 	self closeDef: stream.
+]
+
+{ #category : #adding }
+RTSVGPolygon >> addPoints: array into: stream visitor: visitor [
+	| s |
+	s := String new writeStream.
+	array do: [ :p | s 
+		nextPutAll: (visitor number: p x );
+		nextPutAll: ',';
+		nextPutAll: (visitor number: p y);
+		nextPutAll: ' '. ].
+	stream
+		nextPutAll:
+				('points="', s contents,'" ').
 ]
 
 { #category : #adding }
