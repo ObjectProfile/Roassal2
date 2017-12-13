@@ -18,10 +18,24 @@ Class {
 		'strokeColor',
 		'strokeWidth',
 		'label',
-		'position'
+		'position',
+		'hasAnchor'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
+
+{ #category : #'adding-anchor' }
+RTSVGEntity >> addAnchorOn: stream [
+	| list interaction |
+	list := TRPlatform current validInteractionsOf: self element oklist: (Array with: #RTLinkView).
+	list isEmpty ifTrue: [ ^ self ].
+	hasAnchor := true.
+	interaction := list first.
+	stream 
+		nextPutAll: '<a xmlns="http://www.w3.org/2000/svg" target="_blank" ';
+		nextPutAll: interaction href.
+	 
+]
 
 { #category : #interactions }
 RTSVGEntity >> addContainedInteractions: aSVGVisitor [
@@ -68,23 +82,21 @@ RTSVGEntity >> addOn: aStream using: aSVGVisitor [
 ]
 
 { #category : #adding }
-RTSVGEntity >> addPoints: anArrayOfPoints into: stream [
-	| s |
-	s := ((anArrayOfPoints asString copyReplaceAll: '@' with: ',') copyReplaceAll: '.' with: ' ') replaceAllRegex: '[(){}]' with: '' .
-	
-	stream
-		nextPutAll:
-				('points="', s,'" ').
-]
-
-{ #category : #adding }
 RTSVGEntity >> addPosition: stream [
 	self subclassResponsibility
 ]
 
 { #category : #transform }
-RTSVGEntity >> addScale: anInteger into: stream [
-	stream nextPutAll: ('scale(<1p>) ' expandMacrosWith: anInteger)
+RTSVGEntity >> addScale: scale into: stream [
+	| s |
+	s := scale.
+	s isPoint ifFalse: [ s := s @ s ].
+	stream 
+		nextPutAll: 'scale(';
+		nextPutAll: s x asString;
+		nextPutAll: ',';
+		nextPutAll: s y asString;
+		nextPutAll: ')'
 ]
 
 { #category : #adding }
@@ -139,6 +151,14 @@ RTSVGEntity >> addWidth: x height: y into: stream [
 				('width="<1p>" height="<2p>" ' expandMacrosWith: x with: y).
 ]
 
+{ #category : #'adding-anchor' }
+RTSVGEntity >> closeAnchorOn: stream [
+	hasAnchor ifFalse: [ ^ self ].
+	stream 
+		nextPutAll: '</a>'.
+	 
+]
+
 { #category : #adding }
 RTSVGEntity >> closeDef: stream [
 	stream nextPutAll: '/>' , String cr
@@ -190,6 +210,12 @@ RTSVGEntity >> id [
 { #category : #accessing }
 RTSVGEntity >> id: anObject [
 	id := anObject
+]
+
+{ #category : #initialization }
+RTSVGEntity >> initialize [
+	super initialize.
+	hasAnchor := false.
 ]
 
 { #category : #accessing }

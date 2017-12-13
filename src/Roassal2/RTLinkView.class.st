@@ -1,5 +1,10 @@
 "
-I am an interaction to export views with the RTHTML5Exporter and linked it, check my example in RTHTML5Example to get more info.
+I allow to export several views
+
+for instance if in your visualization RTView, you have elements that have visualizalitations you can use it to explore it in a web browser
+
+RTLinkView works with RTHTML5Exporter and
+RTSVGExporter
 "
 Class {
 	#name : #RTLinkView,
@@ -7,9 +12,10 @@ Class {
 	#instVars : [
 		'showView',
 		'viewBlock',
-		'nameBlock'
+		'nameBlock',
+		'titleBlock'
 	],
-	#category : #'Roassal2-Exporter-HTML5'
+	#category : #'Roassal2-Exporter-SVG'
 }
 
 { #category : #visitor }
@@ -60,6 +66,27 @@ RTLinkView >> nameFor: e [
 { #category : #accessing }
 RTLinkView >> showView [
 	showView := true.
+]
+
+{ #category : #accessing }
+RTLinkView >> title: aBlock [
+	self titleElement: [ :e | aBlock rtValue: e model ].
+]
+
+{ #category : #accessing }
+RTLinkView >> titleElement [
+	^ titleBlock
+]
+
+{ #category : #accessing }
+RTLinkView >> titleElement: aBlock [
+	^ titleBlock := aBlock
+]
+
+{ #category : #accessing }
+RTLinkView >> titleFor: element [
+	^ titleBlock rtValue: element
+	
 ]
 
 { #category : #accessing }
