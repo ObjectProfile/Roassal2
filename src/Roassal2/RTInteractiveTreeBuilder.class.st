@@ -203,6 +203,7 @@ RTInteractiveTreeBuilder >> openChildren: arr parent: p [
 				e attributes at: #open put: true.
 				afterOpen ifNotNil: [ afterOpen rtValue: e ] ].
 		temp add: e.
+		e translateTo: p position.
 		temp add: (e attributes at: #label).
 		temp add: (self lineShape edgeFrom: p to: e).
 		temp addAll: (self openChildren: (e attributes at: self childrenKey) parent: e)
