@@ -177,6 +177,22 @@ RTAxisConfiguration >> labelConversion: aOneArgBlock [
 	
 #labelConversion: can be used to move the orgin of the graph. For example:
 -=-=-=-=
+graphCenter := 5 @ 10.
+data := (-3.1415 to: 3.1415 by: 0.1) collect: [ :x |  x @ (x sin * 3 + 10) ]. 
+b := RTGrapher new. 
+ds := RTData new.
+ds noDot; connectColor: Color blue. 
+ds points: data. 
+ds x: [ :p | p x - graphCenter x ]. 
+ds y: [ :p | p y - graphCenter y ].
+b add: ds. 
+b axisX labelConversion: [ :v | (v + graphCenter x) asFloat round: 2 ].
+b axisY labelConversion: [ :v | (v + graphCenter x) asFloat round: 2 ].
+b.
+-=-=-=-=
+
+
+-=-=-=-=
 	values := #(  5 6 10 10 20 22 23   5 6 10 10 20 22 23  5 6 10 10 20 22 23).
     lo := values min.
     hi := values max.
