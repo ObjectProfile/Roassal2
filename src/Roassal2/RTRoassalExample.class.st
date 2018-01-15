@@ -4187,6 +4187,118 @@ gw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OCDDz744IMPPvjggw8++OBzYvkP
 DO2Li2xss+0AAAAASUVORK5CYII='
 ]
 
+{ #category : #sources }
+RTRoassalExample >> exampleHappyNewYear2018 [
+
+| x y z da toBeTrans shape f v e |
+z := 20.
+x := 960/z.
+y := 500/z.
+toBeTrans := #(241 194 147 100 241 193 146 99 52 53 54 55 104 153 202 250 298 346 394 441 488 535 582 629 676 723 770 817 865 913 961 1009 1057 1058 1059 1060 1061 1062 1063 1064 1065 1066 205 158 111 64 65 66 67 116 165 214 1072 1073 1074 1075 1028 981 934 886 838 790 742 694 646 598 550 502 454 406 358 310 262 253 301 1023 974 349 397 445 493 541 589 637 685 733 781 829 877 925 237 188 139 90 89 88 87 134 181 228 276 567 568 518 469 420 372 324 569 570 523 476 429 381 333 285 619 668 717 614 661 708 756 804 852 900 948 997 1046 1095 1096 1097 1098 1051 1004 957 909 861 813 765 81 129 177 225 273 321 369 417 465 513 561 609 657 705 753 801 849 897 945 993 1089 1041 128 175 222 269 316 363 410 457).
+da := 0.
+shape := RTShapeBuilder new.
+f := 1.
+shape box.
+shape
+	size: z;
+	color: [ :dd| | d |
+		d := dd + (da degreesToRadians sin * 100).
+		Color 
+			h: (d % x) / x * 360
+			s: 1
+			l: (d / x) floor / y ].
+shape if: [ :d | toBeTrans includes: d ] color: Color transparent.
+v := RTView new.
+0 to: (x*y)-1 do: [ :d | 
+	e := shape elementOn: d.
+	e translateTo: ((d % x) * z) @ ((d / x ) floor * z).
+	e attributes at: #p put: e position.
+	v add: e.
+	].
+v elements when: TRMouseEnter do: [ :ev | | p el a |
+	el := ev element.
+	p := el attributes at: #p.
+	 RTLinearMove to: p during: 2 on: el.
+	a:= RTLinearMove 
+		to: (400 atRandom @ 400 atRandom)- 200 asPoint + p 
+		during: 2 on: el.
+	a after: [ v addAnimation: (RTLinearMove to: p during: 2 on: el)].
+	v addAnimation: a.
+	v addAnimation: (RTRotationMove angle: 360* 2 during: 4 on: el).
+	 ].
+v addAnimation: (RTActiveAnimation new 
+	intervalInMilliseconds: 20;
+	blockToExecute: [
+		da := da - 1.
+		v elements updateShape.
+		v signalUpdate.
+		]).
+^ v
+]
+
+{ #category : #icons }
+RTRoassalExample >> exampleHappyNewYear2018Icon [
+	^ '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
+IKTo7T9crVEAAAAASUVORK5CYII='
+]
+
 { #category : #icons }
 RTRoassalExample >> exampleHappyNewYearIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABjCAYAAABt56XsAAACGElEQVR4XuXZW08CQQyG4aII
