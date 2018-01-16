@@ -269,6 +269,143 @@ AAAASUVORK5CYII='
 ]
 
 { #category : #sources }
+RTMapExample >> exampleCity01WithNames [
+
+	
+	| b |
+	b := RTMapBuilder new.
+	
+	b countries: RTMapBuilder southAmerica.
+	b cities: #( " (name, population) pairs "
+		#('Santiago' 6027000)
+		#('Bogota' 6763000)
+		#('Buenos Aires' 12801365)
+		#('Brasilia' 2481000)
+		#('Montevideo' 1338000)
+		#('Lima' 8473000)
+		#('La Paz' 789585)
+		#('Quito' 1608000)
+		#('Sao Paulo' 19889559)
+		#('Caracas' 2104000))
+		named: [ :c | c at: 1 ].
+	
+	" Cities' pop-ups show their population "
+	b cities
+		withPopup: [ :c | (c at: 1), ': ', (((c at: 2) / 1000000 roundTo: 0.01) asString), 'M'].
+	
+	" Cities' size and color depend on the population "
+	b cities shape
+		size: [ :c | (c at: 2)/300000 + 10 ];
+		if: [ :c | (c at: 2) < 1000000 ] fillColor: (Color green alpha: 0.5);
+		if: [ :c | (c at: 2) >= 1000000 and: (c at: 2) < 5000000 ] fillColor: (Color yellow alpha: 0.5);
+		if: [ :c | (c at: 2) >= 5000000 ] fillColor: (Color red alpha: 0.5);
+		withTextAbove: #first.
+	
+	" We define some routes and color them, then we set the pop-ups to show each route's length "
+	b routes
+		from: 'Santiago' toAll: #('Buenos Aires' 'Lima' 'Sao Paulo');
+		from: 'Bogota' toAll: #('Sao Paulo' 'Brasilia' 'Quito');
+		ifRoute: [ :r | r fromCityName = 'Bogota' ] lineColor: (Color brown);
+		ifRoute: [ :r | r fromCityName = 'Santiago' ] lineColor: (Color blue);
+		withPopup: #lengthString.
+	
+	" We set the countries' colors, scale, and pop-up "
+	b color: Color veryVeryLightGray.
+	b scale: 3.
+	b withPopup.
+	b build.
+	^ b view
+]
+
+{ #category : #icons }
+RTMapExample >> exampleCity01WithNamesIcon [
+	^ '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'
+]
+
+{ #category : #sources }
 RTMapExample >> exampleColoredAfrica [
 
 	| b countries countriesName max cn |	
