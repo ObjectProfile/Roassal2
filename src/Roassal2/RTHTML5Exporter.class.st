@@ -371,14 +371,14 @@ RTHTML5Exporter >> roassalJSContent [
  */
 (function(){
   var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
- 
+
   this.Class = function(){};
   Class.extend = function(prop) {
     var _super = this.prototype;
     initializing = true;
     var prototype = new this();
     initializing = false;
-   
+
     for (var name in prop) {
       prototype[name] = typeof prop[name] == "function" &&
         typeof _super[name] == "function" && fnTest.test(prop[name]) ?
@@ -386,16 +386,16 @@ RTHTML5Exporter >> roassalJSContent [
           return function() {
             var tmp = this._super;
             this._super = _super[name];
-           
+
             var ret = fn.apply(this, arguments);
             this._super = tmp;
-           
+
             return ret;
           };
         })(name, prop[name]) :
         prop[name];
     }
-   
+
     function Class() {
       if ( !initializing && this.init )
         this.init.apply(this, arguments);
@@ -464,7 +464,7 @@ function lessThan(a,b){
 function interpolate(i, f, t){
 	if(i.x != null)
 		return plus(i, product(minus(f, i), t) );
-	else return i + (f - i)*t; 
+	else return i + (f - i)*t;
 }
 function eq(a, b){
 	return a.x == b.x && a.y == b.y;
@@ -479,7 +479,7 @@ function transposed(p){
 	return {x: p.y, y: p.x};
 }
 
-/*roassal/pharo classes*/	
+/*roassal/pharo classes*/
 var Rectangle = Class.extend({
 	origin: null,
 	corner: null,
@@ -621,7 +621,7 @@ var MatrixTransform = Class.extend({
 		return r;
 	},
 	transform: function(p){
-		return {x: this.sx*p.x+this.shx*p.y+this.x, 
+		return {x: this.sx*p.x+this.shx*p.y+this.x,
 				y: this.shy*p.x+this.sy*p.y+this.y}
 	}
 });
@@ -707,7 +707,7 @@ var RTLinkView = TRInteraction.extend({
 	initOn: function(s){
 		var link = this.link;
 		s.whenDo(TRMouseClick, function(e){
-			window.open(link+".html", "_blank");
+			window.open(link, "_blank");
 		});
 	}
 });
@@ -757,7 +757,7 @@ var VITimer = Class.extend({
 		var tini = t;
 		var f = obj.time * 1000 + t;
 		var cycle = (f - t)/cycles;
-		
+
 		var fun = function(){
 			try{ obj.refresh((t-tini)/(f-tini));
 			}catch(ex){console.log(ex);}
@@ -765,7 +765,7 @@ var VITimer = Class.extend({
 			if(t < f)
 				setTimeout(fun, cycle);
 			else{
-				try{ 
+				try{
 					obj.refresh(1);
 					callback();
 				}catch(ex){console.log(ex);}
@@ -914,7 +914,7 @@ var RTShowEdge = TRInteraction.extend({
 			d.update();
 			list[k] = d;
 		}
-		
+
 		this.vars.edges = list;
 	},
 	removeEdges: function(){
@@ -979,7 +979,7 @@ var RTPopup = RTAbstractPopup.extend({
 		this.removeLastPopup();
 		this.popup = this.createPopupFor(s);
 		this.lastPopup(this.popup);
-		
+
 		var idealPosition = {x:evt.raw.pageX,y:evt.raw.pageY};
 		var popupPosition = this.closestPositionOf(this.popup, idealPosition);
 		this.popup.translateTopLeftTo(popupPosition);
@@ -1150,7 +1150,7 @@ var RTRectangleAttachPoint = RTContinuousAttachPoint.extend({
 				minV = val;
 			}
 		} );
-		
+
 		if(minP == null) return fromRect.pointNearestTo(toPoint);
 		return minP;
 	}
@@ -1164,7 +1164,7 @@ var RTCircleAttachPoint = RTContinuousAttachPoint.extend({
 		return this.attachPointFor(anEdge, anEdge.from().encompassingRectangle(), anEdge.to().encompassingRectangle());
 	},
 	attachPointFor: function(anEdge, fromRect, toRect){
-		
+
 	}
 });
 var RTLineSegment = Class.extend({
@@ -1263,7 +1263,7 @@ var TRAnnouceableObject = Class.extend({
 		for( var k = 0; k<r.length; k++)
 			if(anEvent instanceof r[k].e)
 				res[res.length] = r[k];
-		
+
 		return res;
 	},
 	handleEventClass: function (anEventClass ){
@@ -1297,14 +1297,14 @@ var TRCanvas = TRAnnouceableObject.extend({
 	shapeBeingPointed: null,
 	init: function (){
 		this.svg = createSVG("svg");
-		document.getElementsByTagName("body")[0].appendChild(this.svg); 
+		document.getElementsByTagName("body")[0].appendChild(this.svg);
 		$(this.svg).css("float","left");
 		this.canvas = createSVG("g");
 		this.fixedCanvas = createSVG("g");
 		this.svg.appendChild(this.canvas);
 		this.svg.appendChild(this.fixedCanvas);
 		this.camera = new TRCamera(this);
-		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape, 
+		this.definedShapes = {"ellipse": TREllipseShape, "box": TRBoxShape, "line": TRLineShape,
 		"label": TRLabelShape, "bitmap": TRBitmapShape, "multi": TRMultiCompositeShape,
 		"path": TRSVGPath, "arc": TRArcShape, "polygon": TRPolygonShape, "simplearrow": TRSimpleArrowShape,
 		"headarrow": TREmptyHeadArrowShape, "bezier": TRBezierShape};
@@ -1434,7 +1434,7 @@ var TRCanvas = TRAnnouceableObject.extend({
 	rtmouseDragBegin: function (e){
 		this.eventBeginingDragging = e;
 		var shape = this.shapeBeingPointed = this.shapeWith(TRMouseDragging, e);
-		
+
 		var ee = new TRMouseDragStart();
 		ee.step = {x: 0, y: 0};
 		this.prepare(shape, ee, e);
@@ -1570,7 +1570,7 @@ var TRCamera = Class.extend({
 	},
 	encompassingRectangleOf: function(shapes){
 		var rect = null;
-		
+
 		for(var i in shapes){
 			if( rect == null){
 				rect = shapes[i].encompassingRectangle();
@@ -1684,7 +1684,7 @@ var TRAbstractBoxShape = TRShape.extend({
 		this.resetPath();
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rectangle); 
+		return this.matrix.transformRect(this.rectangle);
 	}
 });
 
@@ -1736,7 +1736,7 @@ var TRBitmapShape = TRShape.extend({
 		$(this.path).attr(o);
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rectangle); 
+		return this.matrix.transformRect(this.rectangle);
 	}
 });
 
@@ -2055,7 +2055,7 @@ var TRSVGPath = TRShape.extend({
 		this.setBorder(obj);
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rect); 
+		return this.matrix.transformRect(this.rect);
 	}
 });
 
@@ -2071,7 +2071,7 @@ var TRPolygonShape = TRShape.extend({
 		this.setBorder(obj);
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rect); 
+		return this.matrix.transformRect(this.rect);
 	}
 });
 
@@ -2113,10 +2113,10 @@ var TRArcShape = TRShape.extend({
 		" A "+i+" "+i+" 0 0 1 "+(i*xCos)+" "+(i*xSin)+
 		" A "+i+" "+i+" 0 0 1 "+(i*aCos)+" "+(i*aSin)+ " Z";
 		$(this.path).attr("d",str);
-		
+
 	},
 	encompassingRectangle: function (){
-		return this.matrix.transformRect(this.rect); 
+		return this.matrix.transformRect(this.rect);
 	}
 });
 
@@ -2145,7 +2145,7 @@ var TRLabelShape = TRShape.extend({
 		if(fonts == null) fonts =this.vars.fonts = [];
 		if(fonts[f] == null){
 			 fonts[f] = 1;
-			 $("head").append("<link href=\"https://fonts.googleapis.com/css?family=" + 
+			 $("head").append("<link href=\"https://fonts.googleapis.com/css?family=" +
 			 (f.replace(/ /g, "+"))+ "\" rel=\"stylesheet\" type=\"text/css\">");
 		}
 	},
@@ -2165,7 +2165,7 @@ var TRLabelShape = TRShape.extend({
 		this.path.setAttribute("lengthAdjust", "spacingAndGlyphs");
 	},
 	encompassingRectangle: function(){
-		return this.matrix.transformRect(this.rect); 
+		return this.matrix.transformRect(this.rect);
 	}
 });
 
@@ -2181,27 +2181,6 @@ $(document).ready( function(){
 	$(window).trigger("resize");
 	buildView();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '
 ]
 
