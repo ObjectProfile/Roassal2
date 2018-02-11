@@ -59,7 +59,7 @@ RTSimonExample >> basic03Animated [
 	builder shape current 
 						innerRadius: [ :r | 200 atRandom ];
 						externalRadius: [ :obj | 200 + 40 atRandom ];
-						outerAngle: [ :o | 
+						outerAngle: [ :e  | 
 							| a b |
 							a := 300 atRandom.
 							b := 200 atRandom.
@@ -67,7 +67,7 @@ RTSimonExample >> basic03Animated [
 													evaluator: [ :t | a interpolateTo: (a + b) at: t ];
 													timer: timer;
 													yourself. ]
-							innerAngle: [ :o | 50 atRandom ];
+							innerAngle: [ :e | 50 atRandom ];
 						color: [ :o | ((Array with: Color red with: Color blue with: Color white) atRandom alpha: 0.1)].
 	builder models: (1 to: 10).
 	timer start.
@@ -86,7 +86,8 @@ RTSimonExample >> softviz01 [
 	| b | 
 	b := RTSimon new.
 	b shape current
-				outerAngle: [ :cls | cls numberOfVariables * 25 ] innerAngle: [ :cls | cls numberOfMethods / 1 ];
+				outerAngle: [ :e | e model numberOfVariables * 25 ] 
+					innerAngle: [ :e | e model numberOfMethods / 1 ];
 				innerRadius: [ :cls | cls withAllSuperclasses size * 10 ];
 				thickness: [ :cls | cls numberOfMethods * 2 ];
 				color: (Color red alpha: 0.2).

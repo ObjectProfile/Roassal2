@@ -44,16 +44,18 @@ RTPieBuilder >> initialize [
 { #category : #initialization }
 RTPieBuilder >> initializeShapeBuilder [
 	self shape arc  
-		outerAngle: [ :object | self outerAngleOf: object ]
-			innerAngle: [ :object | self innerAngleOf: object ];
+		outerAngle: [ :e | self outerAngleOf: e ]
+			innerAngle: [ :e | self innerAngleOf: e ];
 		innerRadius: 0;
 		externalRadius: 90;
 		color: RTNIdentityNormalizer new
 ]
 
 { #category : #'private - utility' }
-RTPieBuilder >> innerAngleOf: object [
-	^ (self ratioOf: object) * 360
+RTPieBuilder >> innerAngleOf: element [
+	| i |
+	i := element attributes at: #index.
+	^ (values at: i) / sum * 360.
 ]
 
 { #category : #'private - utility' }
@@ -131,24 +133,21 @@ RTPieBuilder >> objects: someObjects [
 ]
 
 { #category : #'private - utility' }
-RTPieBuilder >> outerAngleOf: object [
-	^ ((values copyFrom: 1 to: (objects indexOf: object) - 1), (Array with: 0)) sum * 360.0 / sum
-]
-
-{ #category : #'private - utility' }
-RTPieBuilder >> ratioOf: anObject [
-	| i |
-	i := objects indexOf: anObject.
-	i isZero ifTrue: [ ^ 0 ].
-	^ (values at: i) / sum
-
+RTPieBuilder >> outerAngleOf: e [
+	^ ((values copyFrom: 1 to: (e attributes at: #index) - 1), (Array with: 0)) sum * 360.0 / sum
 ]
 
 { #category : #'public - pies' }
 RTPieBuilder >> slice: aBlockOrASymbol [
 	values := objects collect: aBlockOrASymbol.
 	sum := values sum.
-	elements := self elementsOn: objects.
+	elements := RTGroup new.
+	objects doWithIndex: [ :obj :index | | e |
+		e := RTElement new model: obj.
+		e attributes at: #index put: index.
+		e addShape: self shape shape.
+		elements add: e.
+	].
 	view addAll: elements.
 	^ elements
 ]
