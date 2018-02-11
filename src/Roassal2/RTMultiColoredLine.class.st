@@ -102,8 +102,16 @@ RTMultiColoredLine >> updateFor: anEdge trachelShape: trachelShape [
 	fromPoint := attachPoint startingPointOf: anEdge.
 	toPoint := attachPoint endingPointOf: anEdge.
 	p := path value: fromPoint value: toPoint.
-	
-	2 to: (p size) do: [ :i |
+	(trachelShape shapes size < p size) ifTrue: [ 
+		trachelShape shapes size to: p size do: [ :i | | s |
+			s := TRLineShape new.
+			s addedIn: trachelShape canvas.
+			trachelShape addShape: s. ].
+		trachelShape 
+			propagateElement;
+			positionShapesAfterBeingAdded.
+		 ].
+	2 to: p size do: [ :i |
 		shape := trachelShape shapes at: i - 1.
 		shape width: width.
 		shape from: (p at: i - 1) to: (p at: i).
