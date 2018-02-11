@@ -134,8 +134,8 @@ RTArc >> innerRadiusFor: anElement [
 
 { #category : #accessing }
 RTArc >> outerAngle: o innerAngle: i [
-	self alphaAngle: [ :obj | (o rtValue: obj) ].
-	self betaAngle: [ :obj | (o rtValue: obj) + (i rtValue: obj) ]
+	self alphaAngleElement: [ :e | (o rtValue: e) ].
+	self betaAngleElement: [ :e | (o rtValue: e) + (i rtValue: e) ]
 ]
 
 { #category : #accessing }
