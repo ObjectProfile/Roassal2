@@ -7,10 +7,16 @@ Class {
 	#instVars : [
 		'time',
 		'blockToExcute',
-		'animatedValue'
+		'animatedValue',
+		'afterBlock'
 	],
 	#category : #'Roassal2-Animation'
 }
+
+{ #category : #accessing }
+RTNumberAnimation >> after: aBlock [
+	afterBlock := aBlock
+]
 
 { #category : #api }
 RTNumberAnimation >> during: seconds [
@@ -39,6 +45,7 @@ RTNumberAnimation >> refresh [
 RTNumberAnimation >> start [
 	animatedValue := TRVIAnimatedValue new
 		timer: time;
+		finishCallback: afterBlock;
 		yourself.
 	animatedValue start.
 ]
