@@ -28,6 +28,11 @@ TRArcShape >> alphaAngle [
 	^alphaAngle
 ]
 
+{ #category : #accessing }
+TRArcShape >> alphaAngle: angle [
+	alphaAngle := angle
+]
+
 { #category : #initialization }
 TRArcShape >> alphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRadius: eR [
 	alphaAngle := stAngle.
@@ -40,6 +45,11 @@ TRArcShape >> alphaAngle: stAngle betaAngle: ndAngle innerRadius: iR externalRad
 { #category : #accessing }
 TRArcShape >> betaAngle [
 	^betaAngle
+]
+
+{ #category : #accessing }
+TRArcShape >> betaAngle: angle [
+	betaAngle := angle
 ]
 
 { #category : #accessing }
@@ -122,6 +132,11 @@ TRArcShape >> externalRadius [
 ]
 
 { #category : #accessing }
+TRArcShape >> externalRadius: radius [
+	externalRadius := radius
+]
+
+{ #category : #accessing }
 TRArcShape >> height [
 	
 	^ self encompassingRectangle height
@@ -172,6 +187,11 @@ TRArcShape >> initialize [
 { #category : #accessing }
 TRArcShape >> innerRadius [
 	^innerRadius 
+]
+
+{ #category : #accessing }
+TRArcShape >> innerRadius: radius [
+	innerRadius := radius
 ]
 
 { #category : #accessing }
