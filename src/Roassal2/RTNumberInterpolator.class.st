@@ -1,10 +1,13 @@
+"
+I am the basic interpolator for numbers
+"
 Class {
 	#name : #RTNumberInterpolator,
 	#superclass : #RTInterpolator,
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RTNumberInterpolator >> interpolate: t [
 	^ (start * (1 - t)) + (stop * t).
 ]

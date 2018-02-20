@@ -1,3 +1,6 @@
+"
+for scale log
+"
 Class {
 	#name : #RTScaleLog,
 	#superclass : #RTScaleLinear,
@@ -8,6 +11,11 @@ Class {
 	],
 	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
+
+{ #category : #accessing }
+RTScaleLog >> base [
+	^ base
+]
 
 { #category : #accessing }
 RTScaleLog >> base: number [
@@ -30,10 +38,15 @@ RTScaleLog >> domain: arr [
 { #category : #initialization }
 RTScaleLog >> initialize [
 	super initialize.
-	linear := RTScaleLinear new domain: #(0 1).
+	linear := self class linear.
 	base := 10.
 	positive := true.
 	domain := #(1 10). 
+]
+
+{ #category : #accessing }
+RTScaleLog >> interpolate [
+	^ linear interpolate
 ]
 
 { #category : #accessing }
@@ -50,14 +63,10 @@ RTScaleLog >> invert: x [
 RTScaleLog >> lg: x [
 	"logarithm"
 	^ (positive 
-		ifTrue: [ (x < 0 ifTrue: [ 0 ] ifFalse: [ x ]) ln ]
+		ifTrue: [ (x max: 0) ln ]
 		ifFalse: [ (x > 0 ifTrue: [ 0 ] ifFalse: [ 0 - x ] ) ln negated ])
 		/ (base ln).
-]
-
-{ #category : #utilities }
-RTScaleLog >> nice [
-	"TODO"
+		
 ]
 
 { #category : #'math functions' }
@@ -69,6 +78,11 @@ RTScaleLog >> pow: x [
 ]
 
 { #category : #accessing }
+RTScaleLog >> range [
+	^ linear range
+]
+
+{ #category : #accessing }
 RTScaleLog >> range: x [
 	linear range: x
 ]
@@ -76,9 +90,4 @@ RTScaleLog >> range: x [
 { #category : #accessing }
 RTScaleLog >> scale: x [
 	^ linear scale: (self lg: x)
-]
-
-{ #category : #utilities }
-RTScaleLog >> ticks [
-	"TODO"
 ]

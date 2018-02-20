@@ -14,6 +14,34 @@ Class {
 }
 
 { #category : #'instance creation' }
+RTScale class >> category10 [
+	^ self ordinal 
+		range: RTColorInterpolator category10;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RTScale class >> category20 [
+	^ self ordinal 
+		range: RTColorInterpolator category20;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RTScale class >> category20b [
+	^ self ordinal 
+		range: RTColorInterpolator category20b;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RTScale class >> category20c [
+	^ self ordinal 
+		range: RTColorInterpolator category20c;
+		yourself
+]
+
+{ #category : #'instance creation' }
 RTScale class >> linear [
 	^ RTScaleLinear new.
 ]
@@ -24,34 +52,21 @@ RTScale class >> log [
 
 ]
 
-{ #category : #todo }
+{ #category : #'instance creation' }
 RTScale class >> ordinal [
-	"TODO"
+	^ RTScaleOrdinal new
 ]
 
-{ #category : #todo }
+{ #category : #'instance creation' }
 RTScale class >> pow [
-	"TODO"
+	^ RTScalePow new
 ]
 
-{ #category : #todo }
-RTScale class >> quantile [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> quantize [
-	"TODO"
-]
-
-{ #category : #todo }
+{ #category : #'instance creation' }
 RTScale class >> sqrt [
-	"TODO"
-]
-
-{ #category : #todo }
-RTScale class >> threshold [
-	"TODO"
+	^ self pow
+		exponent: 0.5; 
+		yourself
 ]
 
 { #category : #accessing }
