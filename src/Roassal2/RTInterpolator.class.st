@@ -24,8 +24,8 @@ RTInterpolator class >> interpolate: a and: b [
 
 { #category : #interpolation }
 RTInterpolator class >> interpolatorFor: b [
-	(b isString or: [ b isColor ]) ifTrue: [ ^ CAColorInterpolator ].
-	b isNumber ifTrue: [ ^ CANumberInterpolator ].
+	(b isString or: [ b isColor ]) ifTrue: [ ^ RTColorInterpolator ].
+	b isNumber ifTrue: [ ^ RTNumberInterpolator ].
 	
 	self error: 'Invalid value for interpolator'
 ]
