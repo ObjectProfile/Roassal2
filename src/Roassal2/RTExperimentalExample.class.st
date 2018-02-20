@@ -3132,6 +3132,75 @@ x0aTt5dqDF9FuTKHXnMVjUaW0HjmC2P9H5zbfXvW5tQ1AAAAAElFTkSuQmCC'
 ]
 
 { #category : #sources }
+RTExperimentalExample >> exampleStars [
+
+	| random next next2 init width height rotation diagonal drawDist view shape elements |
+	width := 500.
+	height := 500.
+	rotation := 0.
+	diagonal := ((width * width) + (height * height)) sqrt / 2.
+	
+	random := SharedRandom globalGenerator.
+	next2 := [ :v :w | RTScale linear 
+		range: (Array with: v with: w); scale: random next ].
+	next := [ :v | next2 value: 0 value: v ].
+	
+	init := [ :e | | n |
+		e attributes
+			at: #l put: 1;
+			at: #n put: (n := next2 value: 1 value: width );
+			at: #r put: (next value: Float pi * 2);
+			at: #o put: (next2 value: 1 value: (next2 value: 1 value: width / n) ) ].
+	drawDist := [ :e | | n o |
+		n := e attributes at: #n.
+		o := e attributes at: #o.
+		(n/o) arcTan * width / (Float pi / 2)].
+	view := RTView new.
+	view canvas color: Color black.
+	
+	shape := RTEllipse new colorElement: Color white.
+	elements := shape elementsOn: (1 to: 200).
+	elements do: [ :e | init value: e ].
+	view addAll: elements.
+	view when: TRMouseDragStart do: [ view canvas clearBackground: false ].
+	view when: TRMouseDragEnd do: [ view canvas clearBackground: true ].
+	
+	view addAnimation: (RTActiveAnimation new
+		intervalInMilliseconds: 50;
+		blockToExecute: [ 
+			rotation := rotation - 0.002.
+			elements do: [ :e | | l o r d s color |
+				l := (e attributes at: #l) + 1.
+				e attributes at: #l put: l.
+				r := (e attributes at: #r) + rotation.
+				o := e attributes at: #o.
+				d := drawDist value: e.
+				color := Color white alpha: (1 min: l/255).
+				e color: color.
+				e trachelShape extent: (s := (width/o/8) asPoint).
+				e translateTo: (r cos @ r sin) * d.
+				e attributes at: #o put: o - 0.07.
+				(drawDist value: e) > diagonal ifTrue: [ init value: e ].
+				 ].
+			 ]).
+	view canvas camera scale: 1.5501711431096248.
+	^ view
+	
+
+
+]
+
+{ #category : #icons }
+RTExperimentalExample >> exampleStarsIcon [
+	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAABCElEQVR4XuXRwQ0AMAgDsWb/
+naEMwQPJkW6B+M3a71T+CT6Inw/ig/j5ID6Inw/ig/j5ID6Inw/i54P4IH4+iA/i54P4IH4+
+iA/i54P4+SA+iJ8P4oP4+SA+iJ8P4oP4+SB+PogP4ueD+CB+PogP4ueD+CB+PoifD+KD+Pkg
+PoifD+KD+PkgPoifD+Lng/ggfj6ID+Lng/ggfj6ID+Lng/j5ID7ImZKUD+Lng/ggfj6ID+Ln
+g/ggfj6Inw/ig/j5ID6Inw/ig/j5ID6Inw/i54P4IH4+iA/i54P4IH4+iA/i54P4+SA+iJ8P
+4oP4+SA+iJ8P4oP4+SB+/gk+iJ8P4oP4+SA+iN96HxRt6y3437BLAAAAAElFTkSuQmCC'
+]
+
+{ #category : #sources }
 RTExperimentalExample >> exampleTextNamesAndShapes [
 	<gtExample> 
 	<noTest>
