@@ -10,7 +10,7 @@ Class {
 		'start',
 		'stop'
 	],
-	#category : #'Roassal2-Experimental'
+	#category : #'Roassal2-Builder-Grapher-Scaling'
 }
 
 { #category : #'as yet unclassified' }
@@ -22,22 +22,12 @@ RTInterpolator class >> interpolate: a and: b [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #interpolation }
 RTInterpolator class >> interpolatorFor: b [
-	b isString
-		ifTrue: [ 
-			('#*' match: b) ifTrue: [ ^ RTColorInterpolator ].
-			^ nil. "RTStringInterpolator" ]. "TODO"
-	b isColor
-		ifTrue: [ ^ RTColorInterpolator ].
-	"b isArray
-		ifTrue: [ ^ RTArrayInterpolator ].
-	b isNumber
-		ifFalse: [^ RTObjectInterpolator]" "TODO"
-	^ RTNumberInterpolator
-
-
-		
+	(b isString or: [ b isColor ]) ifTrue: [ ^ CAColorInterpolator ].
+	b isNumber ifTrue: [ ^ CANumberInterpolator ].
+	
+	self error: 'Invalid value for interpolator'
 ]
 
 { #category : #accessing }
