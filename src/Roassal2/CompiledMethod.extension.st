@@ -28,6 +28,9 @@ CompiledMethod >> computeDate [
 
 	nbOfSpaces size = 2
 		ifTrue: [ ^ DateAndTime fromString: (s copyAfter: $ ) ].
+	
+	"Default date, as it happens that some methods do not have a date"
+	^ DateAndTime epoch
 ]
 
 { #category : #'*roassal2' }
