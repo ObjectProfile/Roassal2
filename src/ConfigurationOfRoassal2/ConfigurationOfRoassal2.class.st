@@ -629,9 +629,9 @@ ConfigurationOfRoassal2 >> baseline120: spec [
 				package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GToolkitExamples') ];
 				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ].
 				
-			spec group: 'default' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
-			spec group: 'NoGlamour' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
-			spec group: 'Tests' with: #('WebBrowser' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
+			spec group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
+			spec group: 'NoGlamour' with: #( 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
+			spec group: 'Tests' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
 ]
 
 { #category : #'old-baselines' }
