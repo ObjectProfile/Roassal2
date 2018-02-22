@@ -29,6 +29,10 @@ Roassal2VW >> blacklist [
 	TRDarkTheme >> #trachelCanvasColor.
 	TRTheme class >> #infer.
 	RTMondrianTest >> #testNodesError.
+	ClassDescription >> #rtmethods.
+	ClassDescription >> #oldestMethod.
+	ClassDescription >> #ageInDays.
+	ClassDescription >> #gotMethodOnDay:.
 	 }
 ]
 
