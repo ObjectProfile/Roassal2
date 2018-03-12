@@ -304,7 +304,7 @@ RTInteractionBuilder >> showEdge [
 	
 	| b |
 	b := RTMondrian new.
-	b interaction showEdge connectTo: [ :v | Array with: v + 1 ].
+	b interaction showEdge connectToAll: [ :v | Array with: v + 1 ].
 	b nodes: #(1 2 2 3).
 
 	b layout circle initialRadius: 10. 
@@ -318,7 +318,7 @@ b := RTMondrian new.
 b shape circle.
 b interaction showEdge 
 					shape: (RTArrowedLine new color: Color green);
-					connectTo: #dependentClasses.
+					connectToAll: #dependentClasses.
 b nodes: classes.
 b edges moveBehind; connectFrom: #superclass.
 b normalizer normalizeSize: #numberOfLinesOfCode; normalizeColor: #numberOfLinesOfCode.
