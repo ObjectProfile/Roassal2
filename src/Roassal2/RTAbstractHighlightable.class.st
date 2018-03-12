@@ -73,7 +73,6 @@ RTAbstractHighlightable >> doHighlight: element [
 	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
 	elements := elements copyWithout: nil.
-	elements := self getRelevantElementsFrom: elements.
 	elements do: [ :eachElement | self doHighlightElement: eachElement ].
 	element attributes at: self attributeIdentificator put: elements.
 	self class lastHighlightedElements: elements
@@ -100,12 +99,6 @@ RTAbstractHighlightable >> doUnhighlightElement: anElement [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
-RTAbstractHighlightable >> getRelevantElementsFrom: elements [
-	"For a given collections of elements, this methods return the elements that must be considered."
-	^ elements
-]
-
 { #category : #public }
 RTAbstractHighlightable >> highlight: aBlock [
 	"aBlock return an object or a list of objects to highlight"
@@ -130,7 +123,55 @@ RTAbstractHighlightable >> highlightElements: aBlock [
 { #category : #public }
 RTAbstractHighlightable >> highlightObject: aBlock [
 	"aBlock returns an object to highlight"
+	
+	"
+Example:
+
+b := RTMondrian new.
+b shape circle size: 10.
+b interaction showEdge 
+	connectToAll: #subclasses.
+
+b interaction highlightNeighbors: #subclasses color: Color red.
+
+b interaction showLabel 
+	highlightObject: #superclass.
+	
+
+b nodes: (Collection withAllSubclasses).
+b edges moveBehind; connectFrom: #superclass.
+b layout radial.
+b
+	"
+	
 	self highlight: [ :oo | Array with: (aBlock rtValue: oo) ]
+]
+
+{ #category : #public }
+RTAbstractHighlightable >> highlightObjects: aBlock [
+	"aBlock returns an array of objects to highlight"
+	
+	"
+Example:
+
+b := RTMondrian new.
+b shape circle size: 10.
+b interaction showEdge 
+	connectToAll: #subclasses.
+
+b interaction highlightNeighbors: #subclasses color: Color red.
+
+b interaction showLabel 
+	highlightObjects: #subclasses.
+	
+
+b nodes: (Collection withAllSubclasses).
+b edges moveBehind; connectFrom: #superclass.
+b layout radial.
+b
+	"
+	
+	self highlight: [ :oo | aBlock rtValue: oo ]
 ]
 
 { #category : #initialize }
