@@ -66,6 +66,7 @@ RTHighlightable >> highlightedColor [
 
 { #category : #configuration }
 RTHighlightable >> highlightedColor: aColorOrABlock [
+	"Set the Color used to highlight"
 	color := aColorOrABlock
 ]
 
