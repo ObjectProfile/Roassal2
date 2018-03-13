@@ -73,6 +73,7 @@ RTAbstractHighlightable >> doHighlight: element [
 	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
 	elements := elements copyWithout: nil.
+	elements := self getRelevantElementsFrom: elements.
 	elements do: [ :eachElement | self doHighlightElement: eachElement ].
 	element attributes at: self attributeIdentificator put: elements.
 	self class lastHighlightedElements: elements
@@ -97,6 +98,12 @@ RTAbstractHighlightable >> doUnhighlight: element [
 { #category : #actions }
 RTAbstractHighlightable >> doUnhighlightElement: anElement [
 	self subclassResponsibility
+]
+
+{ #category : #actions }
+RTAbstractHighlightable >> getRelevantElementsFrom: elements [
+	"For a given collections of elements, this methods return the elements that must be considered."
+	^ elements
 ]
 
 { #category : #public }
