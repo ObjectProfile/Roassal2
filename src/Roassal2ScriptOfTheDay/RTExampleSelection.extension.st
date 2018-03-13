@@ -38,7 +38,7 @@ RTExampleSelection >> publishOnDiscordScript: aScript withTitle: aTitle [
 	idealExtent := view elements encompassingRectangle extent.
 	DSWebhookClient new
 		url:
-			'https://discordapp.com/api/webhooks/310144103210024960/o2sGZ3CzmymrLzGQGtUAL38t4J-QCo7-HDbmjMp9NpfbBUyDp4qkW42pyBl7drCVrlzj';
+			'https://discordapp.com/api/webhooks/423098538084270081/YqkIWvxWthFmUGnMDyqtOztpb1ugEPV_YHaCq14O7tae3LlFVhODi6sxC9GSkb77DMpR';
 		message:
 			message;
 		username: 'Roassal Script of the Day';
