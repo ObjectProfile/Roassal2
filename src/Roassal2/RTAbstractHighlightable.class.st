@@ -69,6 +69,7 @@ RTAbstractHighlightable >> attributeIdentificator [
 
 { #category : #actions }
 RTAbstractHighlightable >> doHighlight: element [
+	"Public method. Highlight the RTElement passed as argument. It may do the necessary recursion if set by a subclass"
 	| elements |
 	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
@@ -86,6 +87,7 @@ RTAbstractHighlightable >> doHighlightElement: anElement [
 
 { #category : #actions }
 RTAbstractHighlightable >> doUnhighlight: element [
+	"Public method. Unhighlight the RTElement passed as argument. It may do the necessary recursion if set by a subclass"
 	self unhighlightRecordedElements.
 	(element hasAttribute: self attributeIdentificator)
 		ifFalse: [ ^ self ].
