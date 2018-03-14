@@ -14,7 +14,7 @@ RTTransitivelyTHighlightableTest >> testBasicNoCycle [
 	
 	eb := RTEdgeBuilder new.
 	eb view: v.
-	eb useAssociations: { 1 -> 2 . 2 -> 3 }.
+	eb useAssociations: (Array with: 1 -> 2 with: 2 -> 3 ).
 	
 	self assert: (v canvas shapes allSatisfy: [ :s | s color = RTShape defaultColor ]).
 	element := v elementFromModel: 1.
@@ -41,7 +41,7 @@ RTTransitivelyTHighlightableTest >> testBasicNoCycleAndIncoming [
 	
 	eb := RTEdgeBuilder new.
 	eb view: v.
-	eb useAssociations: { 1 -> 2 . 2 -> 3 }.
+	eb useAssociations: (Array with: 1 -> 2 with:  2 -> 3 ).
 	
 	self assert: (v canvas shapes allSatisfy: [ :s | s color = RTShape defaultColor ]).
 	element := v elementFromModel: 3.
@@ -62,7 +62,7 @@ RTTransitivelyTHighlightableTest >> testBasicWithCycle [
 	
 	eb := RTEdgeBuilder new.
 	eb view: v.
-	eb useAssociations: { 1 -> 2 . 2 -> 3 . 3 -> 1}.
+	eb useAssociations: (Array with: 1 -> 2 with: 2 -> 3 with: 3 -> 1).
 	
 	self assert: (v canvas shapes allSatisfy: [ :s | s color = RTShape defaultColor ]).
 	element := v elementFromModel: 1.
@@ -83,7 +83,7 @@ RTTransitivelyTHighlightableTest >> testBasicWithCycleAndEdgeHighlighting [
 	
 	eb := RTEdgeBuilder new.
 	eb view: v.
-	eb useAssociations: { 1 -> 2 . 2 -> 3 . 3 -> 1}.
+	eb useAssociations: (Array with: 1 -> 2 with: 2 -> 3 with: 3 -> 1).
 	
 	self assert: (v canvas shapes allSatisfy: [ :s | s color = RTShape defaultColor ]).
 	element := v elementFromModel: 1.
