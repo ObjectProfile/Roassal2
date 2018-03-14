@@ -36,20 +36,21 @@ RTHighlightable >> color: aColor [
 
 { #category : #actions }
 RTHighlightable >> doHighlightElement: anElement [
-	| v |
-	self recordElement: anElement.	"not sure if we need to return something"
-	v := anElement trachelShape color: (self highlightColorFor: anElement).
+	"Highlight a particular element."
+	self recordElement: anElement.
+	anElement trachelShape color: (self highlightColorFor: anElement).
 	anElement view ifNotNil: [ anElement view signalUpdate ].
-	^ v
 ]
 
 { #category : #actions }
-RTHighlightable >> doUnhighlightElement: anElement [
-	(anElement attributes includesKey: #originalColor)
+RTHighlightable >> doUnhighlightElement: anElementOrEdge [
+	"Unhighlight a particular element.
+	This method also works for edges"
+	(anElementOrEdge attributes includesKey: #originalColor)
 		ifFalse: [ ^ self ].
-	anElement trachelShape color: (anElement attributes at: #originalColor).
-	anElement attributes removeKey: #originalColor.
-	anElement view ifNotNil: [ anElement view signalUpdate ].
+	anElementOrEdge trachelShape color: (anElementOrEdge attributes at: #originalColor).
+	anElementOrEdge attributes removeKey: #originalColor.
+	anElementOrEdge view ifNotNil: [ anElementOrEdge view signalUpdate ].
 	
 ]
 
