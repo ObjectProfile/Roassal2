@@ -1,8 +1,5 @@
 # Roassal2
 
-[![Build Status](https://travis-ci.org/ObjectProfile/Roassal2.svg?branch=master)](https://travis-ci.org/ObjectProfile/Roassal2)
-[![Coverage Status](https://coveralls.io/repos/github/ObjectProfile/Roassal2/badge.svg?branch=master)](https://coveralls.io/github/ObjectProfile/Roassal2?branch=master)
-
 Roassal2 is a visualization engine for the Pharo and VisualWorks programming language and environment.
 Extensive documentatino is available on http://AgileVisualization.com
 
@@ -15,3 +12,14 @@ Gofer it
     configurationOf: 'Roassal2';
     loadDevelopment
 ```
+You can also load Roassal2 from the Pharo Catalog browser.
+
+If you wish to contribute to Roassal (e.g., fixing bug, proposing an improvement), please, commit to http://smalltalkhub.com/#!/~ObjectProfile/Contribution
+```Smalltalk
+MCHttpRepository
+	location: 'http://smalltalkhub.com/mc/ObjectProfile/Contribution/main'
+	user: ''
+	password: ''
+```  
+    
+    
