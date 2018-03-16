@@ -1,14 +1,6 @@
 "
 I am an iteraction for a RTView to select elements
 the default RTSelectableView provides a box shape to select the shapes in a view.
-
-b := RTMondrian new.
-b nodes: (1 to: 1000).
-b edges connectFrom: [ :v | v // 2 ].
-b layout grid.
-b build.
-b view @ RTSelectableView.
-b view
 "
 Class {
 	#name : #RTSelectableView,
