@@ -629,9 +629,9 @@ ConfigurationOfRoassal2 >> baseline120: spec [
 				package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GToolkitExamples') ];
 				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ].
 				
-			spec group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
-			spec group: 'NoGlamour' with: #( 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
-			spec group: 'Tests' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
+			spec group: 'default' with: #('WebBrowser-Core' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules').
+			spec group: 'NoGlamour' with: #('WebBrowser-Core' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Rules').
+			spec group: 'Tests' with: #('WebBrowser-Core' 'Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2GT' 'Roassal2-Rules') ]
 ]
 
 { #category : #'old-baselines' }
@@ -1981,9 +1981,10 @@ ConfigurationOfRoassal2 >> version156: spec [
 		spec timestamp: '02/22/2018'.
 		
 		spec 
+			package: 'WebBrowser-Core' with: 'WebBrowser-Core-TorstenBergmann.6';
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
 			package: 'Trachel' with: 'Trachel-akevalion.428';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1735';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1737';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.14';
 			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
