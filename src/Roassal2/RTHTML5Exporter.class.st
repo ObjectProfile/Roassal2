@@ -172,6 +172,12 @@ RTHTML5Exporter >> directory: aFile [
 	directory := aFile.
 ]
 
+{ #category : #accessing }
+RTHTML5Exporter >> directoryPathname: aPathAsString [
+	"Set the directory where the view is exported"
+	self directory: aPathAsString asFileReference 
+]
+
 { #category : #'Pillar example' }
 RTHTML5Exporter >> exampleWithPillar01 [
 
