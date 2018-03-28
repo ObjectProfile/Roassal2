@@ -29,7 +29,31 @@ SequenceableCollection >> histogram: aBlockOrSymbol [
 	#(5 6 5 6 4 2 10 10 10 10 12 12 14 8 5 6 4 2 3 4 5 6) histogram
 	(RTShape withAllSubclasses) histogram: #numberOfMethods
 	"
-	| b ds |
+
+	| values min max numberOfInterval increment buckets current elementsInCurrentBucket g d |
+	values := self collect: aBlockOrSymbol.
+	min := values min.
+	max := values max.
+	numberOfInterval := 7.
+	increment := (max - min) / numberOfInterval.
+	buckets := OrderedCollection new.
+	current := min.
+	1 to: numberOfInterval do: [ :nbInterval | 
+		elementsInCurrentBucket := values
+			select: [ :v | v >= current and: [ v < (current + increment) ] ].
+		buckets add: current -> elementsInCurrentBucket.
+		current := current + increment ].
+	g := RTGrapher new.
+	d := RTData new.
+	d barShape.
+	d points: buckets.
+	d x: [ :assoc | assoc key ].
+	d y: [ :assoc | assoc value size ].
+	g add: d.
+	^ g
+	
+	
+	"	| b ds |
 	b := RTGrapher new.
 	
 	ds := RTHistogramSet new.
@@ -47,7 +71,7 @@ SequenceableCollection >> histogram: aBlockOrSymbol [
 	b axisX title: 'Values'.
 	b axisY title: 'Frequency'.
 	
-	^ b.
+	^ b."
 ]
 
 { #category : #'*roassal2-core' }
