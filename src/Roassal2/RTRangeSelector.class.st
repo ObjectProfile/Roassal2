@@ -13,7 +13,31 @@ g add: ds.
 g addDecorator: (RTRangeSelector new callback: [:es | es inspect ]).
 ""RTGrapherSelectRangeViewContext onGrapher: g.""
 g 
+-=-=-=--=-=
 
+Another example:
+-=-=-=--=-=
+v := RTView new.
+b := [ :someClasses |
+	g := RTGrapher new.
+	g view: v.
+	ds := RTData new.
+	ds points: someClasses.
+	ds y: [ :cls | cls numberOfMethods ].
+	ds x: [ :cls | cls numberOfLinesOfCode ].
+	g add: ds.
+
+	g addDecorator: (RTRangeSelector new callback: [:es | 
+		| classesToZoomIn |
+		classesToZoomIn := es collect: #model.
+		v cleanAll.
+		b value: classesToZoomIn
+	]).
+	g build.
+].
+
+b value: RTShape withAllSubclasses.
+v
 -=-=-=--=-=
 "
 Class {
