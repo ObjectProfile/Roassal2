@@ -68,6 +68,7 @@ RTRangeSelector >> callback: aOneArgBlock [
 RTRangeSelector >> callbackWithSelectedElements [
 	| selectedElements |
 	selectedElements := self elementsWithinTheSelection.
+	selectedElements ifEmpty: [ ^ self ].
 	self evaluateCallBackWithElements: selectedElements
 ]
 
