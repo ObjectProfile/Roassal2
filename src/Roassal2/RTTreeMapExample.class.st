@@ -167,7 +167,7 @@ RTTreeMapExample >> exampleNumber [
 		explore: 1
 		using: [ :n | n< 8 ifTrue: [ Array with: n + 1 with:  n + 2 ] ifFalse: [ #() ] ];
 		weight: [ :n | n ].
-	^ b
+	^ b 
 ]
 
 { #category : #icons }
