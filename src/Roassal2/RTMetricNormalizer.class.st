@@ -548,6 +548,27 @@ RTMetricNormalizer >> normalizeHeight: metricBlock min: min max: max using: tran
 { #category : #'public normalize line width' }
 RTMetricNormalizer >> normalizeLineWidth: metricBlock [
 	"metricBlock is a two arg block that accept the from model and the to model"
+"
+Example:
+
+b := RTMondrian new.
+b shape circle size: 20; color: Color red trans.
+b nodes: RTObject withAllSubclasses.
+
+b shape line color: Color blue trans.
+es := b edges connectToAll: #dependentClasses.
+b layout force charge: -500.
+b normalizer 
+    edges: es;
+    normalizeLineWidth: [ :from :to | 
+        | outgoingRef |
+        outgoingRef := (from methods flatCollect: [ :cm | cm literals select: [ :l | l class == GlobalVariable ] ]) groupedBy: #value.
+        (outgoingRef keys includes: to)
+            ifTrue: [ (outgoingRef at: to) size ]
+            ifFalse: [ 0 ] ] min: 0.2 max: 20.
+b
+
+"
 	^ self normalizeLineWidth: metricBlock min: 0.5 max: 30
 ]
 
