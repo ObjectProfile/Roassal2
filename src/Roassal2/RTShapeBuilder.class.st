@@ -405,12 +405,12 @@ RTShapeBuilder >> octagon [
 
 { #category : #shapes }
 RTShapeBuilder >> orthoHorizontalLine [
-	^ self shape: RTMultiLine new orthoHorizontal 
+	^ self shape: RTStyledMultiLine new orthoHorizontal 
 ]
 
 { #category : #shapes }
 RTShapeBuilder >> orthoVerticalLine [
-	^ self shape: (RTMultiLine new withVerticallAttachPoint; orthoVertical)
+	^ self shape: (RTStyledMultiLine new withVerticallAttachPoint; orthoVertical)
 ]
 
 { #category : #shapes }
