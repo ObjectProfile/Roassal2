@@ -1380,6 +1380,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 			this.fixedShapes[k].update();
 	},
 	getShapeById: function (id){
+		var res = this.fixedShapes[id];
+		if(res) return res;
 		return this.shapes[id];
 	},
 	isDragging: function (){
