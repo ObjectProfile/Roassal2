@@ -53,6 +53,25 @@ RTPopupTest >> test [
 ]
 
 { #category : #tests }
+RTPopupTest >> testBackgroundColor [
+	| v |
+	v := RTView new.
+	v addAll: (RTEllipse new elementsOn: Collection withAllSubclasses).
+	v elements @ (RTPopup new backgroundColor: Color green; alphaPopupBackground: 0.2).
+	RTGridLayout on: v elements.
+	RTMetricNormalizer new
+		view: v;
+		elements: v elements;
+		normalizeColor: #numberOfMethods;
+		alphaColor: 0.5;
+		normalizeSize: #numberOfMethods.
+
+	"We display the popup for the String element"
+	(v elements elementFromModel: String) announce: TRMouseEnter new.
+	v
+]
+
+{ #category : #tests }
 RTPopupTest >> testBorderColor [
 
 	
@@ -63,6 +82,26 @@ RTPopupTest >> testHasBorder [
 
 	self deny: RTPopup new hasBorder.
 	self assert: (RTPopup new borderColor: Color black; hasBorder).
+]
+
+{ #category : #tests }
+RTPopupTest >> testNamedBackgroundGroup [
+	| v |
+	v := RTView new.
+	v addAll: (RTBox new elementsOn: (1 to: 100)).
+	v elements
+		@
+			(RTPopup new
+				namedBackground: Color black
+				group: [ :group :element | 
+					group
+						add:
+							(RTLabel new
+								color: Color red;
+								elementOn: 'x * x = ' , (element model * element model) asString);
+						yourself ]).
+	RTGridLayout on: v elements.
+	v elements do: [ :el | el announce: TRMouseEnter new ]
 ]
 
 { #category : #tests }
@@ -139,6 +178,21 @@ RTPopupTest >> testPopupView02 [
 	Smalltalk garbageCollect.
 	RTPopup removeLastPopup.
 	self assert: b view numberOfElements equals: 1.
+]
+
+{ #category : #tests }
+RTPopupTest >> testSimpleText [
+
+	| v |
+	v := RTView new.
+	v addAll: (RTBox new elementsOn: (1 to: 100)).
+
+	v elements @ (RTPopup new simpleText: [ :nb | 'hello ', nb asString ]).
+	RTGridLayout on: v elements.
+	
+	v elements do: [ :el | el announce: TRMouseEnter new ].
+	self assert: v elements size equals: 101.
+
 ]
 
 { #category : #'multi lines' }
