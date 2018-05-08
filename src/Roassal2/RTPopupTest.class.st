@@ -241,6 +241,14 @@ RTPopupTest >> testTextHeight [
 
 ]
 
+{ #category : #tests }
+RTPopupTest >> testTextHeight2 [
+
+	self assert: (RTPopup new textHeight rtValue: 42) equals: RTPopup new defaultTextHeight.
+	self assert: (RTPopup new textHeight rtValue: nil) equals: RTPopup new defaultTextHeight.
+
+]
+
 { #category : #'multi lines' }
 RTPopupTest >> testWithMultiLine [
 	| v e p |
