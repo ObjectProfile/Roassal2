@@ -347,7 +347,7 @@ RTPopup >> textElement: aOneArgBlock [
 		
 		lbl := (RTLabel new 
 				color: textColor;
-				height: [:x | 9];
+				height: textHeight;
 				text: (aOneArgBlock rtValue: element) asString) element.
 		RTNest new centerOn: backRectangle elements: (Array with: lbl).
 		group add: backRectangle; add: lbl
