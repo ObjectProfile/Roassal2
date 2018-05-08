@@ -54,27 +54,33 @@ RTPopupTest >> test [
 
 { #category : #tests }
 RTPopupTest >> testBackgroundColor [
-	| v |
-	v := RTView new.
-	v addAll: (RTEllipse new elementsOn: Collection withAllSubclasses).
-	v elements @ (RTPopup new backgroundColor: Color green; alphaPopupBackground: 0.2).
-	RTGridLayout on: v elements.
-	RTMetricNormalizer new
-		view: v;
-		elements: v elements;
-		normalizeColor: #numberOfMethods;
-		alphaColor: 0.5;
-		normalizeSize: #numberOfMethods.
 
-	"We display the popup for the String element"
-	(v elements elementFromModel: String) announce: TRMouseEnter new.
-	v
+	| v e background |
+	v := RTView new.
+	e := RTBox elementOn: 'Hello'.
+	e @ (RTPopup new backgroundColor: Color red).
+	v add: e.
+	self assert: v numberOfElements equals: 1.
+	
+	e announce: TRMouseEnter new.
+	self assert: v numberOfElements equals: 3.
+	self assert: v canvas shapes size equals: 1.
+	self assert: v canvas fixedShapes size equals: 2.
+	
+	background := v canvas fixedShapes first.
+	self assert: background class equals: TRBoxShape.
+	self assert: background color equals: (Color red alpha: 0.4).
+]
+
+{ #category : #tests }
+RTPopupTest >> testBackgroundColor02 [
+	self assert: (RTPopup new backgroundColor: Color red; backgroundColor) equals: Color red
 ]
 
 { #category : #tests }
 RTPopupTest >> testBorderColor [
 
-	
+	self assert: (RTPopup new borderColor: Color red; borderColor) equals: Color red
 ]
 
 { #category : #tests }
@@ -192,6 +198,46 @@ RTPopupTest >> testSimpleText [
 	
 	v elements do: [ :el | el announce: TRMouseEnter new ].
 	self assert: v elements size equals: 101.
+
+]
+
+{ #category : #tests }
+RTPopupTest >> testTextColor [
+
+	| v e label |
+	v := RTView new.
+	e := RTBox elementOn: 'Hello'.
+	e @ (RTPopup new textColor: Color red).
+	v add: e.
+	self assert: v numberOfElements equals: 1.
+	
+	e announce: TRMouseEnter new.
+	self assert: v numberOfElements equals: 3.
+	self assert: v canvas shapes size equals: 1.
+	self assert: v canvas fixedShapes size equals: 2.
+	
+	label := v canvas fixedShapes last.
+	self assert: label class equals: TRLabelShape.
+	self assert: label color equals: Color red.
+]
+
+{ #category : #tests }
+RTPopupTest >> testTextColor02 [
+
+	self assert: (RTPopup new textColor: Color red; textColor) equals: Color red
+]
+
+{ #category : #tests }
+RTPopupTest >> testTextHeight [
+
+	| v e |
+	v := RTView new.
+	e := RTBox elementOn: 'Hello'.
+	e @ (RTPopup new textHeight: 30).
+	v add: e.
+	
+	e announce: TRMouseEnter new.
+
 
 ]
 
