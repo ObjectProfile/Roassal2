@@ -205,6 +205,12 @@ RTPopup >> createElementFor: element [
 ]
 
 { #category : #initialization }
+RTPopup >> defaultTextHeight [
+	"size of popup"
+	^ 9
+]
+
+{ #category : #initialization }
 RTPopup >> getNewPopupFor: element [
 	| popupGroup |
 	popupGroup := self createPopupFor: element.
@@ -234,7 +240,8 @@ RTPopup >> initialize [
 	alphaPopupBackground := 0.4.
 	backgroundColor := Color gray alpha: 0.8.
 	borderColor := Color gray alpha: 0.5.
-	hasBorder := false
+	hasBorder := false.
+	self textHeight: [ :x | self defaultTextHeight ]
 ]
 
 { #category : #public }
