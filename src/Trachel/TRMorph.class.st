@@ -72,13 +72,13 @@ TRMorph >> drawOn: aCanvas [
 	self checkSession.
 
 	self recreateSurfaceIfNecessary.
-	trachelCanvas clearBackground 
-		ifTrue: [ aCanvas fillRectangle: bounds color: trachelCanvas color. ].
+		
+	aCanvas fillRectangle: bounds color: trachelCanvas color.
 	trachelCanvas playAnimations.
 	
 	"The drawing has to be done when a change in the shapes occured or when there is an animation."
 	surface drawDuring: [:cs |
-		trachelCanvas clearBackground ifTrue: [ surface clear ].
+		surface clear.
 		
 		"We display the elements that are subject to the camera"
 		cs pathTransform
