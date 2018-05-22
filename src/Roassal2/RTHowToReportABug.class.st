@@ -1404,5 +1404,5 @@ X1bR8JFH/zbvL7h7PP4hMjKGh2cOqOqRYfRkLgHtFvRHVnVZ0YZn57XbmZTfDpN1jnnxkMON
 { #category : #'instance creation' }
 RTHowToReportABug >> picAsForm [
 
-	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContribute new pic readStream)
+	^ Form fromBinaryStream: RTHowToContribute new pic base64Decoded readStream
 ]
