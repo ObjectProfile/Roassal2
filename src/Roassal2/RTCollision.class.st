@@ -27,7 +27,8 @@ Class {
 	#name : #RTCollision,
 	#superclass : #RTInteraction,
 	#instVars : [
-		'elementToCheckForCollision'
+		'elementToCheckForCollision',
+		'callback'
 	],
 	#category : #'Roassal2-Interactions'
 }
@@ -42,22 +43,27 @@ RTCollision >> avoidOverlapWith: aShape step: step [
 			| r en |
 			en := aShape encompassingRectangle.
 			r := (elementToCheckForCollision detect: [ :e | e encompassingRectangle intersects: en ]) encompassingRectangle.
-"self halt. "
+
 			"We need to determine which side is the most relevant"
-			tt := 1000.
-			"((r bottom - en top) < 0) ifTrue: [ tt := (r bottom - en top). side := #bottom ]."
-			 tt := (r bottom - en top). side := #bottom.
 			
+			tt := (r bottom - en top). side := #bottom.		
 			(tt abs > (r right - en left) abs) ifTrue: [ tt := r right - en left. side := #right ].
-			( tt abs > ((r top - en bottom) abs) ) ifTrue: [ tt := r top - en bottom. side := #top ].
-			( tt abs > ((r left - en right) abs) ) ifTrue: [ tt := r left - en right. side := #left ].
+			(tt abs > (r top - en bottom) abs) ifTrue: [ tt := r top - en bottom. side := #top ].
+			(tt abs > (r left - en right) abs) ifTrue: [ tt := r left - en right. side := #left ].
 			
 			side == #right ifTrue: [ delta := tt @ 0 ].
 			side == #left ifTrue: [ delta := tt @ 0 ].
 			side == #top ifTrue: [ delta := 0 @ tt ].
 			side == #bottom ifTrue: [ delta := 0 @ tt ].
 			
+			callback value: aShape value: side value.
 			aShape translateBy: delta ]
+]
+
+{ #category : #accessing }
+RTCollision >> callback: aTwoArgBlock [
+	"evaluate aTwoArgBlock in case of a collision"
+	callback := aTwoArgBlock
 ]
 
 { #category : #initialization }
@@ -73,6 +79,12 @@ RTCollision >> elementToCheckForCollision [
 { #category : #accessing }
 RTCollision >> elementToCheckForCollision: someElements [
 	elementToCheckForCollision := someElements
+]
+
+{ #category : #initialization }
+RTCollision >> initialize [
+	super initialize.
+	self callback: [ :aShape :aSide | ]
 ]
 
 { #category : #initialization }
