@@ -1,3 +1,28 @@
+"
+Allow for avoiding collision between elements
+
+-=-=-=
+v := RTView new.
+
+box1 := RTBox new size: 30; color: Color blue trans; element.
+v add: box1.
+
+
+box2 := RTBox new size: 30; color: Color blue trans; element.
+v add: box2.
+box2 translateBy: 100 @ 15.
+
+draggable := RTBox new size: 10; color: Color red trans; element.
+v add: draggable.
+draggable translateBy: 100 @ 100.
+draggable @ RTDraggable.
+
+draggable @ (RTCollision new elementToCheckForCollision: {box1 . box2}).
+
+v
+
+-=-=-=
+"
 Class {
 	#name : #RTCollision,
 	#superclass : #RTInteraction,
@@ -17,13 +42,15 @@ RTCollision >> avoidOverlapWith: aShape step: step [
 			| r en |
 			en := aShape encompassingRectangle.
 			r := (elementToCheckForCollision detect: [ :e | e encompassingRectangle intersects: en ]) encompassingRectangle.
-Halt once. 
+"self halt. "
 			"We need to determine which side is the most relevant"
 			tt := 1000.
-			((r bottom - en top) < 0) ifTrue: [ tt := (r bottom - en top). side := #bottom ].
-			((r right - en left) < 0 and: [ tt > ((r right - en left) abs) ]) ifTrue: [ tt := r right - en left. side := #right ].
-			((r top - en bottom) < 0 and: [ tt > ((r top - en bottom) abs) ]) ifTrue: [ tt := r top - en bottom. side := #top ].
-			((r left - en right) < 0 and: [ tt > ((r left - en right) abs) ]) ifTrue: [ tt := r left - en right. side := #left ].
+			"((r bottom - en top) < 0) ifTrue: [ tt := (r bottom - en top). side := #bottom ]."
+			 tt := (r bottom - en top). side := #bottom.
+			
+			(tt abs > (r right - en left) abs) ifTrue: [ tt := r right - en left. side := #right ].
+			( tt abs > ((r top - en bottom) abs) ) ifTrue: [ tt := r top - en bottom. side := #top ].
+			( tt abs > ((r left - en right) abs) ) ifTrue: [ tt := r left - en right. side := #left ].
 			
 			side == #right ifTrue: [ delta := tt @ 0 ].
 			side == #left ifTrue: [ delta := tt @ 0 ].
