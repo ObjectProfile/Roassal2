@@ -376,7 +376,8 @@ TRPharoPlatform >> messageTallyClass [
 
 { #category : #public }
 TRPharoPlatform >> mimeDecodeToBytes: stream [
-	^ Base64MimeConverter mimeDecodeToBytes: stream.
+	^ (ZnBase64Encoder new decode: stream contents) readStream
+	"^ Base64MimeConverter mimeDecodeToBytes: stream."
 ]
 
 { #category : #public }
