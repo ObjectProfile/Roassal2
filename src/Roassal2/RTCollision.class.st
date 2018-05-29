@@ -63,6 +63,8 @@ RTCollision >> avoidOverlapWith: aShape step: step [
 { #category : #accessing }
 RTCollision >> callback: aTwoArgBlock [
 	"evaluate aTwoArgBlock in case of a collision"
+	"The first argument is the Trachel shape that has collided with the elementToCheckForCollision
+	The second element is the side on which the collision occurs. It could be #top, #bottom, #right, #left"
 	callback := aTwoArgBlock
 ]
 
