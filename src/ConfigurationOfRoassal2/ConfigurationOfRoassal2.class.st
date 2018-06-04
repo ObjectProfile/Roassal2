@@ -1000,7 +1000,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo3.x' version: '1.6'.
 	spec for: #'pharo5.x' version: '1.50'.
 	spec for: #'pharo6.x' version: '1.58'.
-	spec for: #'pharo7.x' version: '1.58'.
+	spec for: #'pharo7.x' version: '1.59'.
 ]
 
 { #category : #'old-versions' }
@@ -2027,6 +2027,27 @@ ConfigurationOfRoassal2 >> version158: spec [
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.429';
 			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1774';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.14';
+			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version159: spec [
+	<version: '1.59' imports: #('1.20-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '06/04/2018'.
+		
+		spec 
+			package: 'WebBrowser-Core' with: 'WebBrowser-Core-TorstenBergmann.6';
+			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
+			package: 'Trachel' with: 'Trachel-akevalion.430';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1778';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.14';
 			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
