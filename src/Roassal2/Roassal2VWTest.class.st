@@ -36,10 +36,10 @@ Roassal2VWTest >> simple [
 Roassal2VWTest >> testNoArray [
 	| t ex |
 	t := Roassal2VW new.
-	ex := t exporter.
-	ex ifNil: [ ^ self ].
+	ex := RoassalExporter new.
+	ex packages: t packages.
 	ex methods do: [ :met | 
-		self deny: (ex hasArray: met)
+		self deny: (self hasArraySelector: met) 
 			description: 'Remove brackets {} from: ',met methodClass name,'>>#', met selector.
 	 ] displayingProgress: [:met | 'Processing method: ', met selector ].
 ]

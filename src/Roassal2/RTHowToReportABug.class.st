@@ -15,7 +15,7 @@ RTHowToReportABug class >> menuCommandOn: aBuilder [
 			parent: self projectName asSymbol;
 			label: 'How To report a bug';
 			icon: (Smalltalk ui icons iconNamed: #smallDebug);
-			action: [ self new open.  "WebBrowser openOn: 'https://github.com/moosetechnology/Moose/issues'"  ]
+			action: [ self new open.  WebBrowser openOn: 'https://github.com/moosetechnology/Moose/issues'  ]
 ]
 
 { #category : #'instance creation' }
@@ -1404,5 +1404,5 @@ X1bR8JFH/zbvL7h7PP4hMjKGh2cOqOqRYfRkLgHtFvRHVnVZ0YZn57XbmZTfDpN1jnnxkMON
 { #category : #'instance creation' }
 RTHowToReportABug >> picAsForm [
 
-	^ Form fromBinaryStream: RTHowToContribute new pic base64Decoded readStream
+	^ Form fromBinaryStream:  (Base64MimeConverter mimeDecodeToBytes: RTHowToContribute new pic readStream)
 ]

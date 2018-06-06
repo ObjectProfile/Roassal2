@@ -29,10 +29,6 @@ Roassal2VW >> blacklist [
 	TRDarkTheme >> #trachelCanvasColor.
 	TRTheme class >> #infer.
 	RTMondrianTest >> #testNodesError.
-	ClassDescription >> #rtmethods.
-	ClassDescription >> #oldestMethod.
-	ClassDescription >> #ageInDays.
-	ClassDescription >> #gotMethodOnDay:.
 	 }
 ]
 
@@ -220,31 +216,46 @@ arr do: [ :ar |
 
 { #category : #exporting }
 Roassal2VW >> exportPackages [
-	<script: 'self new exportPackages'>
-	self exporter export
-]
-
-{ #category : #accesing }
-Roassal2VW >> exporter [
-	| cls |
-	cls := Smalltalk classOrTraitNamed: 'Pharo2VW'.
-	cls ifNil: [ ^ nil ].
-	^  cls exporter
-		environment: 'Roassal2';
-		methodsBlacklist: self blacklist;
-		packages: {'Roassal2'. 'Trachel'} 
-			without: {
-				'Trachel-MorphSpecific'. 'Roassal2-OpenStreetMap'. 
-				'Roassal2-MorphSpecific'. 'Roassal2-Plugins'.
-				'Roassal2-ExporterVW'. 'Roassal2-MorphSpecific-Menu' };
-		yourself
+	"
+	self new exportPackages
+	"
+	"This code export all these packages to my workspace in order to export/import this code"
+	| dirpath exporter |
+	dirpath := ''.
+	exporter := RoassalExporter new
+		to: dirpath namespace: self namespace.
+	exporter blacklist: self blacklist.
+	exporter exportPackages: self packages.
+		
 ]
 
 { #category : #loadExporter }
 Roassal2VW >> loadExporter [
-	Gofer it
-		smalltalkhubUser: 'ObjectProfile' project: 'Pharo2VW';
-		package: 'Pharo2VW';
+Gofer new
+		squeaksource: 'PackageInfo';
+		package: 'PackageInfo-Exporters';
 		load.
 
+]
+
+{ #category : #accesing }
+Roassal2VW >> namespace [
+	^ #Roassal2
+]
+
+{ #category : #accesing }
+Roassal2VW >> packages [
+	"
+	self new packages
+	"
+	| tags nopkgs |
+	nopkgs := {
+		'Trachel-MorphSpecific'.
+		 'Roassal2-OpenStreetMap'. 'Roassal2-MorphSpecific'. 'Roassal2-Plugins'. 'Roassal2-ExporterVW'. 'Roassal2-MorphSpecific-Menu' }.
+	
+	tags := {'Roassal2'. 'Trachel'} flatCollect: [ :n | | pkg |
+		pkg := RPackageOrganizer default packageNamed: n.
+		pkg classTags.	 ].
+	
+	^ tags reject: [ :e | (nopkgs includes: e packageName,'-', e name) ].
 ]

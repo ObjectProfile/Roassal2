@@ -152,12 +152,6 @@ RTAnnounceableObject >> removeInteractionIfPresent: anInteractionClass [
 	(self getInteractionsForClass: anInteractionClass) do: [ :int | self announcer unsubscribe: int ]
 ]
 
-{ #category : #accessing }
-RTAnnounceableObject >> resetAnnouncer [
-	"Remove all the interaction added in the view"
-	self announcer: nil
-]
-
 { #category : #interaction }
 RTAnnounceableObject >> when: evt do: aOneArgBlock [
 	"Define a callback for the event evt (which could be a class event or an instance of a class event. aOneArgBlock is evaluated whenever the event is received."

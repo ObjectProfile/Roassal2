@@ -1,26 +1,5 @@
 "
 I am a simple selection Box interaction to  create elastic boxs that allow to explore the edges from a view
-
-Here is an example:
-
-b := RTMondrian new.
-b nodes: RTObject withAllSubclasses.
-b edges moveBehind; connectToAll: #dependentClasses.
-b layout grid.
-b build.
-b view @ RTSelectionBox.
-b view
-
-
-Another:
-
-b := RTMondrian new.
-b nodes: (1 to: 1000).
-b edges connectFrom: [ :v | v // 2 ].
-b layout grid.
-b build.
-b view @ RTSelectionBox.
-b view
 "
 Class {
 	#name : #RTSelectionBox,

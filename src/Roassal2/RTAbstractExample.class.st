@@ -43,7 +43,7 @@ RTAbstractExample class >> createIcon [
 	| memFile |
 	memFile := FileSystem memory / 'icon.png'.
 	PNGReadWriter putForm: Form fromUser onStream: memFile writeStream binary.
-	memFile readStream binary base64Decoded contents inspect
+	(Base64MimeConverter mimeEncode: memFile readStream binary) contents inspect
 ]
 
 { #category : #announcement }
@@ -63,7 +63,7 @@ RTAbstractExample class >> runningAllExamples [
 	
 	| examples result w |
 	w := '/tmp/result.txt' asFileReference writeStream.
-	self allSubclasses do: [ :cls |
+	self withAllSubclasses do: [ :cls |
 		examples := cls selectors select: [ :k |( k beginsWith: 'example')  and: [ (k endsWith: 'Icon') not ] ].
 		examples do: [ :k | 
 			w nextPutAll: 'About to run ', cls name, '>>', k, ' ...'.

@@ -4,7 +4,7 @@ Extension { #name : #ClassDescription }
 ClassDescription >> ageInDays [
 	"Return the number of days the class exists"
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
-	^ (TRPlatform current dateAndTimeClass now - self oldestMethod date) asDays
+	^ (DateAndTime now - self oldestMethod date) asDays
 ]
 
 { #category : #'*Roassal2-Core' }
@@ -38,7 +38,7 @@ ClassDescription >> commonSuperclassWith: aClass [
 { #category : #'*Roassal2-Core' }
 ClassDescription >> computeOldestMethod [
 	| d m |
-	d := TRPlatform current dateAndTimeClass now.
+	d := DateAndTime now.
 	m := nil.
 	self methods, self class methods do: [ :cm | cm date < d ifTrue: [ m := cm. d := cm date ] ].
 	^ m
@@ -62,7 +62,7 @@ ClassDescription >> gotMethodOnDay: dayAsNumber [
 	Always returns true for dayAsNumber = 0"
 	| age |
 	age := self ageInDaysRounded.
-	^ self rtmethods anySatisfy: [ :cm | (age - cm ageInDaysRounded) = dayAsNumber ]
+	^ self methods anySatisfy: [ :cm | (age - cm ageInDaysRounded) = dayAsNumber ]
 
 ]
 
@@ -85,7 +85,7 @@ ClassDescription >> isReferencedBy: aClass [
 { #category : #'*Roassal2-Core' }
 ClassDescription >> livingInDays [
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
-	^ (TRPlatform current dateAndTimeClass now - self oldestMethod date) asDays
+	^ (DateAndTime now - self oldestMethod date) asDays
 ]
 
 { #category : #'*Roassal2-Core' }
