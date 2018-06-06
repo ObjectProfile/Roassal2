@@ -172,12 +172,6 @@ RTHTML5Exporter >> directory: aFile [
 	directory := aFile.
 ]
 
-{ #category : #accessing }
-RTHTML5Exporter >> directoryPathname: aPathAsString [
-	"Set the directory where the view is exported"
-	self directory: aPathAsString asFileReference 
-]
-
 { #category : #'Pillar example' }
 RTHTML5Exporter >> exampleWithPillar01 [
 
@@ -1380,8 +1374,6 @@ var TRCanvas = TRAnnouceableObject.extend({
 			this.fixedShapes[k].update();
 	},
 	getShapeById: function (id){
-		var res = this.fixedShapes[id];
-		if(res) return res;
 		return this.shapes[id];
 	},
 	isDragging: function (){

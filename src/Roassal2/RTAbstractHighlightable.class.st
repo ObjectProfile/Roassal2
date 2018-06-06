@@ -69,12 +69,10 @@ RTAbstractHighlightable >> attributeIdentificator [
 
 { #category : #actions }
 RTAbstractHighlightable >> doHighlight: element [
-	"Public method. Highlight the RTElement passed as argument. It may do the necessary recursion if set by a subclass"
 	| elements |
 	self unhighlightRecordedElements.
 	elements := highlightElements rtValue: element.
 	elements := elements copyWithout: nil.
-	elements := self getRelevantElementsFrom: elements.
 	elements do: [ :eachElement | self doHighlightElement: eachElement ].
 	element attributes at: self attributeIdentificator put: elements.
 	self class lastHighlightedElements: elements
@@ -87,7 +85,6 @@ RTAbstractHighlightable >> doHighlightElement: anElement [
 
 { #category : #actions }
 RTAbstractHighlightable >> doUnhighlight: element [
-	"Public method. Unhighlight the RTElement passed as argument. It may do the necessary recursion if set by a subclass"
 	self unhighlightRecordedElements.
 	(element hasAttribute: self attributeIdentificator)
 		ifFalse: [ ^ self ].
@@ -100,12 +97,6 @@ RTAbstractHighlightable >> doUnhighlight: element [
 { #category : #actions }
 RTAbstractHighlightable >> doUnhighlightElement: anElement [
 	self subclassResponsibility
-]
-
-{ #category : #actions }
-RTAbstractHighlightable >> getRelevantElementsFrom: elements [
-	"For a given collections of elements, this methods return the elements that must be considered."
-	^ elements
 ]
 
 { #category : #public }
@@ -132,55 +123,7 @@ RTAbstractHighlightable >> highlightElements: aBlock [
 { #category : #public }
 RTAbstractHighlightable >> highlightObject: aBlock [
 	"aBlock returns an object to highlight"
-	
-	"
-Example:
-
-b := RTMondrian new.
-b shape circle size: 10.
-b interaction showEdge 
-	connectToAll: #subclasses.
-
-b interaction highlightNeighbors: #subclasses color: Color red.
-
-b interaction showLabel 
-	highlightObject: #superclass.
-	
-
-b nodes: (Collection withAllSubclasses).
-b edges moveBehind; connectFrom: #superclass.
-b layout radial.
-b
-	"
-	
 	self highlight: [ :oo | Array with: (aBlock rtValue: oo) ]
-]
-
-{ #category : #public }
-RTAbstractHighlightable >> highlightObjects: aBlock [
-	"aBlock returns an array of objects to highlight"
-	
-	"
-Example:
-
-b := RTMondrian new.
-b shape circle size: 10.
-b interaction showEdge 
-	connectToAll: #subclasses.
-
-b interaction highlightNeighbors: #subclasses color: Color red.
-
-b interaction showLabel 
-	highlightObjects: #subclasses.
-	
-
-b nodes: (Collection withAllSubclasses).
-b edges moveBehind; connectFrom: #superclass.
-b layout radial.
-b
-	"
-	
-	self highlight: [ :oo | aBlock rtValue: oo ]
 ]
 
 { #category : #initialize }
