@@ -14,6 +14,16 @@ Class {
 }
 
 { #category : #accessing }
+RTScalePow >> clamp: x [
+	linear clamp: x
+]
+
+{ #category : #accessing }
+RTScalePow >> domain: x [
+	linear domain: ((domain := x) collect: [ :i | powp scale: i ]).
+]
+
+{ #category : #accessing }
 RTScalePow >> exponent [
 	^ exponent
 ]
@@ -36,9 +46,29 @@ RTScalePow >> initialize [
 	powb := RTScalePowPow exponent: 1 / exponent.
 ]
 
+{ #category : #accessing }
+RTScalePow >> interpolate [
+	^ linear interpolate
+]
+
+{ #category : #accessing }
+RTScalePow >> interpolate: x [
+	linear interpolate: x
+]
+
 { #category : #transformations }
 RTScalePow >> invert: x [
 	^ powb scale: (linear invert: x)
+]
+
+{ #category : #accessing }
+RTScalePow >> range [
+	^ linear range
+]
+
+{ #category : #accessing }
+RTScalePow >> range: x [
+	linear range: x
 ]
 
 { #category : #hooks }

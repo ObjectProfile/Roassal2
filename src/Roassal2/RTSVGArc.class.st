@@ -57,7 +57,6 @@ RTSVGArc >> addPath: stream [
 		nextPutAll: ' A ',(b value: i),' ',(b value: i), ' 0 0 1 ', (b value: i*xcos+c x),' ',(b value: i*xsin+c y);
 		nextPutAll: ' A ',(b value: i+c x),' ',(b value: i+c y), ' 0 0 1 ', (b value: i*acos+c x),' ',(b value: i*asin+c y);
 		nextPutAll: ' Z" '.
-		
 ]
 
 { #category : #accessing }

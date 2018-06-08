@@ -222,6 +222,12 @@ RTElement >> removeWithNestedElements [
 ]
 
 { #category : #actions }
+RTElement >> resetConnectedEdges [
+	"Simply make the elements not connected anymore"
+	connectedEdges := nil.
+]
+
+{ #category : #actions }
 RTElement >> rotateByDegrees: degree [
 	"Translate the element to a new position. If I am connected to some edges, the edges are also updated."
 

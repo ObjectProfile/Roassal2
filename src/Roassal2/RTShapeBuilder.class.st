@@ -405,12 +405,12 @@ RTShapeBuilder >> octagon [
 
 { #category : #shapes }
 RTShapeBuilder >> orthoHorizontalLine [
-	^ self shape: RTMultiLine new orthoHorizontal 
+	^ self shape: RTStyledMultiLine new orthoHorizontal 
 ]
 
 { #category : #shapes }
 RTShapeBuilder >> orthoVerticalLine [
-	^ self shape: (RTMultiLine new withVerticallAttachPoint; orthoVertical)
+	^ self shape: (RTStyledMultiLine new withVerticallAttachPoint; orthoVertical)
 ]
 
 { #category : #shapes }
@@ -502,6 +502,33 @@ RTShapeBuilder >> star [
 { #category : #shapes }
 RTShapeBuilder >> styledLabel [
 	shape := RTStyledLabel new
+]
+
+{ #category : #'shape - edges' }
+RTShapeBuilder >> styledLine [
+	"
+	Set a styled line in the shape builder. A styled line could be dashed, and with different styles.
+	Have a look to RTStyledMultiLine for the complete API.
+	
+	Here is an example:
+-=-=-=
+v := RTView new.
+
+elements := RTEllipse new size: 20; elementsOn: (1 to: 10).
+v addAll: elements.
+
+eb := RTEdgeBuilder new.
+
+eb shape styledLine dashedLine arrowHead.
+
+eb view: v.
+eb connectFrom: [ :value | value // 2 ].
+
+RTTreeLayout on: elements.
+v
+-=-=-=
+	"
+	self shape: RTStyledMultiLine new
 ]
 
 { #category : #'shapes - texting' }
