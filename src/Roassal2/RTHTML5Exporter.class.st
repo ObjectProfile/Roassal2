@@ -172,6 +172,12 @@ RTHTML5Exporter >> directory: aFile [
 	directory := aFile.
 ]
 
+{ #category : #accessing }
+RTHTML5Exporter >> directoryPathname: aPathAsString [
+	"Set the directory where the view is exported"
+	self directory: aPathAsString asFileReference 
+]
+
 { #category : #'Pillar example' }
 RTHTML5Exporter >> exampleWithPillar01 [
 
@@ -1374,6 +1380,8 @@ var TRCanvas = TRAnnouceableObject.extend({
 			this.fixedShapes[k].update();
 	},
 	getShapeById: function (id){
+		var res = this.fixedShapes[id];
+		if(res) return res;
 		return this.shapes[id];
 	},
 	isDragging: function (){
@@ -1964,6 +1972,7 @@ var TRBezierShape = TRLineShape.extend({
 var TRSimpleArrowShape = TRLineShape.extend({
 	size: null,
 	baseSize: null,
+  percentage: null,
 	init: function(obj){
 		this.id = obj.id;
 		this.fromid = obj.fromid;
@@ -1975,6 +1984,7 @@ var TRSimpleArrowShape = TRLineShape.extend({
 		this.setAttachPoint(obj.ap);
 		this.size = obj.size;
 		this.baseSize = obj.base;
+		this.percentage = obj.percentage;
 	},
 	update: function(){
 		if(this.fromid == this.toid) return;
@@ -1987,10 +1997,11 @@ var TRSimpleArrowShape = TRLineShape.extend({
 		var vector = minus(to, from);
 		var u = normal(vector);
 		var unit = div(vector, r(vector));
-		var middle = minus(to, product(unit, this.size));
+		var endPoint = minus(to, product(vector, (1 - this.percentage)));
+		var middle = minus(endPoint, product(unit, this.size));
 		var left = minus(middle, product(u, base/2));
 		var right = plus(middle, product(u, base/2));
-		var d = "M "+left.x+" "+left.y+" L "+to.x+" "+to.y+" L "+right.x+ " "+right.y;
+		var d = "M "+left.x+" "+left.y+" L "+endPoint.x+" "+endPoint.y+" L "+right.x+ " "+right.y;
 		$(this.path).attr("d", d);
 	}
 });

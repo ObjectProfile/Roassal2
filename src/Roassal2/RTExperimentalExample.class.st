@@ -3140,7 +3140,7 @@ RTExperimentalExample >> exampleStars [
 	rotation := 0.
 	diagonal := ((width * width) + (height * height)) sqrt / 2.
 	
-	random := SharedRandom globalGenerator.
+	random := Random new.
 	next2 := [ :v :w | RTScale linear 
 		range: (Array with: v with: w); scale: random next ].
 	next := [ :v | next2 value: 0 value: v ].
