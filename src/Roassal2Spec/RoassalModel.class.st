@@ -3,7 +3,7 @@ I am a Spec model to embed Roassal2 visualizations. See the SpecEasel class for 
 "
 Class {
 	#name : #RoassalModel,
-	#superclass : #AbstractWidgetModel,
+	#superclass : #AbstractWidgetPresenter,
 	#instVars : [
 		'script',
 		'lastEvent'

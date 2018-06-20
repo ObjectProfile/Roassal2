@@ -6,7 +6,7 @@ SpecEasel  new openWithSpec
 "
 Class {
 	#name : #SpecEasel,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'label',
 		'text',
