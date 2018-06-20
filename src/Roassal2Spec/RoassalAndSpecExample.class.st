@@ -84,7 +84,11 @@ RoassalAndSpecExample >> initializeWidgets [
 
 	
 	diagram := self instantiate: RoassalModel.	
-	diagram script: [ :aView :canvas | self view: aView. aView @ RTDraggableView ].
+	diagram script: [ :aView :canvas | self view: aView. aView @ RTDraggableView. 
+								aView canvas addMenu: 'In' callback: [ RTZoomInMove on: aView ].
+								aView canvas addMenu: 'Out' callback: [ RTZoomOutMove on: aView ].
+								aView canvas addMenu: 'Center' callback: [ aView canvas focusOnCenterScaled ].
+ 						].
 "	diagram script: [ :view :canvas | self textAsCode value: view value: canvas ]"
 ]
 
