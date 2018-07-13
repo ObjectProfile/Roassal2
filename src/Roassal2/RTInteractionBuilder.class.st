@@ -226,7 +226,14 @@ RTInteractionBuilder >> popupText: aBlock [
 ]
 
 { #category : #'public - events-registering' }
+RTInteractionBuilder >> popupText: aBlock backgroundColor: aColorBlock [
+	"Define a popup with a color background, no alpha color is used"
+	self addExclusiveInteraction: (RTPopup new text: aBlock; alphaPopupBackground: 1.0; backgroundColor: aColorBlock)
+]
+
+{ #category : #'public - events-registering' }
 RTInteractionBuilder >> popupText: aBlock color: aColorBlock [
+	"Define a popup, with a color as the text"
 	self addExclusiveInteraction: (RTPopup new text: aBlock; textColor: aColorBlock)
 ]
 
