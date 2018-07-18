@@ -2,14 +2,15 @@ Class {
 	#name : #RTInteractiveComposer,
 	#superclass : #RTObject,
 	#instVars : [
-		'rules'
+		'rules',
+		'nextWindow'
 	],
 	#category : #'Roassal2-InteractiveComposer'
 }
 
 { #category : #'as yet unclassified' }
 RTInteractiveComposer >> for: aClass do: oneArgBlock [
-	self if: [ :obj | obj class inheritsFrom: aClass ] do: oneArgBlock
+	self if: [ :obj | obj class == aClass or: [ obj class inheritsFrom: aClass ] ] do: oneArgBlock
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,11 +31,15 @@ RTInteractiveComposer >> initialize [
 
 { #category : #'as yet unclassified' }
 RTInteractiveComposer >> openOn: anObject [
-	| r builderOrView |
+	"Return the window that was open"
+	| r builderOrView window |
 	r := (self ruleFor: anObject).
+	r ifNil: [ ^ nil ].
 	builderOrView := (r value rtValue: anObject).
 	self prepareForInteraction: builderOrView.
-	builderOrView open
+	window := builderOrView view open.
+	builderOrView view canvas camera focusOnCenterScaled.
+	^ window
 ]
 
 { #category : #'as yet unclassified' }
@@ -44,11 +49,19 @@ RTInteractiveComposer >> prepareForInteraction: aViewOrBuilder [
 	view := aViewOrBuilder view.
 	 
 	view elements when: TRMouseClick do: [ :evt |
-		self openOn: evt element model
+		| w |
+		
+		w := self openOn: evt element model.
+		(nextWindow notNil and: [ w notNil ]) ifTrue: [ 
+			w position: nextWindow position.
+			w extent: nextWindow extent.
+			nextWindow delete.
+		].
+		nextWindow := w.
 	]
 ]
 
 { #category : #'as yet unclassified' }
 RTInteractiveComposer >> ruleFor: anObject [
-	^ rules detect: [ :assoc | assoc key value: anObject ]
+	^ rules detect: [ :assoc | assoc key value: anObject ] ifNone: [ ^ nil ]
 ]
