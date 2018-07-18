@@ -119,9 +119,11 @@ SpecEasel >> text: anObject [
 { #category : #drawing }
 SpecEasel >> textAsCode [
 	"This could be made more clever with regard to compilation and runtime errors. But for this simple example it should suffice."
-	^OpalCompiler evaluate: '[:view :canvas | ', self text getText asString , ']'
-		logged: false
-	
+
+	^ OpalCompiler new
+		source: '[:view :canvas | ' , self text getText asString , ']';
+		logged: false;
+		evaluate
 ]
 
 { #category : #accessing }
