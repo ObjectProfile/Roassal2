@@ -148,8 +148,10 @@ RTInteractiveComposerWindow >> newCode [
 { #category : #initialization }
 RTInteractiveComposerWindow >> playText: aText [
 	"The argument is the text to be compiled"
-	
-	OpalCompiler new environment: { #view -> view } asDictionary; source: aText; evaluate
+	| env |
+	env := self class environment copy.
+	env at: #view put: view.
+	OpalCompiler new environment: env asDictionary; source: aText; evaluate
 	
 "	view add: (RTEllipse new size: 10; color: Color red) element.
 	RTGridLayout on: view elements"
