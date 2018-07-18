@@ -5,7 +5,9 @@ Class {
 		'menu',
 		'text',
 		'tabManager',
-		'view'
+		'view',
+		'initialScript',
+		'codePanel'
 	],
 	#category : #'Roassal2-InteractiveComposer'
 }
@@ -27,6 +29,16 @@ RTInteractiveComposerWindow class >> example [
 	^ self new openWithSpec
 ]
 
+{ #category : #specs }
+RTInteractiveComposerWindow class >> example2 [
+	<sampleInstance>
+	^ self new 
+		initialScript: [ :aView |
+			aView add: (RTEllipse new size: 30; color: Color green) element.
+		];
+		openWithSpec
+]
+
 { #category : #accessing }
 RTInteractiveComposerWindow >> addItemTo: aGroup [
 	aGroup
@@ -39,6 +51,23 @@ RTInteractiveComposerWindow >> addItemTo: aGroup [
 					self buildWithSpec ] ].
 	self needRebuild: false.
 	self buildWithSpec
+]
+
+{ #category : #accessing }
+RTInteractiveComposerWindow >> initialScript [
+	^ initialScript
+]
+
+{ #category : #accessing }
+RTInteractiveComposerWindow >> initialScript: aOneArgBlock [
+	"Take as parameter a roassal view"
+	initialScript := aOneArgBlock
+]
+
+{ #category : #initialization }
+RTInteractiveComposerWindow >> initialize [
+	super initialize.
+	initialScript := [ :aView | "do nothing" ].
 ]
 
 { #category : #initialization }
@@ -109,11 +138,29 @@ RTInteractiveComposerWindow >> menu [
 ]
 
 { #category : #initialization }
+RTInteractiveComposerWindow >> newCode [
+	^ super newCode
+		aboutToStyle: true;
+		whenTextIsAccepted: [ :aText | self playText: aText ]
+		yourself
+]
+
+{ #category : #initialization }
+RTInteractiveComposerWindow >> playText: aText [
+	"The argument is the text to be compiled"
+	
+	OpalCompiler new environment: { #view -> view } asDictionary; source: aText; evaluate
+	
+"	view add: (RTEllipse new size: 10; color: Color red) element.
+	RTGridLayout on: view elements"
+]
+
+{ #category : #initialization }
 RTInteractiveComposerWindow >> populateManager [
 
 	tabManager
-		addTab: self tab1;
-		addTab: self tab2
+		addTab: self tabView;
+		addTab: self tabScript
 ]
 
 { #category : #accessing }
@@ -147,41 +194,40 @@ RTInteractiveComposerWindow >> subMenu [
 					action: [ self inform: 'Kill' ] ] ]
 ]
 
+{ #category : #accessing }
+RTInteractiveComposerWindow >> tabManager [
+	^ tabManager
+]
+
 { #category : #initialization }
-RTInteractiveComposerWindow >> tab1 [
+RTInteractiveComposerWindow >> tabScript [
 
 	| tab |
 	tab := self newTab.
 	tab
-		label: 'Tab1';
+		label: 'Script';
 		icon: (tab iconNamed: #nautilusIcon);
 		model:
-			(self newCode).
+			(codePanel := self newCode).
 	^ tab
 ]
 
 { #category : #initialization }
-RTInteractiveComposerWindow >> tab2 [
+RTInteractiveComposerWindow >> tabView [
 
 	| tab diagram |
 	diagram := self instantiate: RoassalModel.
 	diagram script: [ :aView :canvas | self view: aView.
-		self halt.
-		self inform: 'execute!'.
-		aView add: (RTEllipse new size: 30; color: Color red) element. 
-		 aView @ RTDraggableView ].
+		initialScript rtValue: aView.
+		"aView add: (RTEllipse new size: 30; color: Color red) element. "
+		aView @ RTDraggableView ].
 	
 	tab := self newTab.
 	tab
-		label: 'Tab2';
+		label: 'View';
 		icon: (tab iconNamed: #nautilusIcon);
 		model: diagram.
 	^ tab
-]
-
-{ #category : #accessing }
-RTInteractiveComposerWindow >> tabManager [
-	^ tabManager
 ]
 
 { #category : #accessing }
