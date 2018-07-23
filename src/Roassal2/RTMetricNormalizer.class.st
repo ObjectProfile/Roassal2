@@ -83,7 +83,8 @@ RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
 		distinctColorUsing: #package.
 	b	
 	"
-	| normalizer allObjects |
+	"The method return the mapping"
+	| normalizer allObjects colorMapping |
 	allObjects := elements collect: [ :e | aBlockOrSymbol rtValue: e model ].
 	allObjects removeDuplicates.
 	
@@ -91,7 +92,10 @@ RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
 						objects: allObjects; 
 						command: aBlockOrSymbol.
 
-	elements do: [ :el | el trachelShape color: (normalizer rtValue: el model) ]
+	elements do: [ :el | el trachelShape color: (normalizer rtValue: el model) ].
+	
+	colorMapping := allObjects collect: [ :obj | obj -> (normalizer colorOf: obj) ].
+	^ colorMapping
 ]
 
 { #category : #'public normalize line width' }
