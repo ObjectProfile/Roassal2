@@ -38,7 +38,7 @@ RTSBFadeInteractionExamples >> example02 [
 	"	
 	| b |
 	b := RTSunburstBuilder new.
-	b interaction popupText: #yourself solidBackgroundColor: Color white.
+	b interaction popupText: #yourself backgroundColor: Color white.
 	b radialSpacing: 5.
 	b angularSpacing: 1.
 
@@ -51,8 +51,7 @@ RTSBFadeInteractionExamples >> example02 [
 	"This should'nt work"
 	b interaction addInteraction: (RTSBFadeInteraction new).
 	
-	b build.
-	^ b view
+	^ b
 ]
 
 { #category : #examples }
