@@ -7,7 +7,8 @@ Class {
 		'tabManager',
 		'view',
 		'initialScript',
-		'codePanel'
+		'codePanel',
+		'model'
 	],
 	#category : #'Roassal2-InteractiveComposer'
 }
@@ -24,12 +25,6 @@ RTInteractiveComposerWindow class >> defaultSpec [
 ]
 
 { #category : #specs }
-RTInteractiveComposerWindow class >> example [
-	<sampleInstance>
-	^ self new openWithSpec
-]
-
-{ #category : #specs }
 RTInteractiveComposerWindow class >> example2 [
 	<sampleInstance>
 	^ self new 
@@ -37,6 +32,40 @@ RTInteractiveComposerWindow class >> example2 [
 			aView add: (RTEllipse new size: 30; color: Color green) element.
 		];
 		openWithSpec
+]
+
+{ #category : #'world menu' }
+RTInteractiveComposerWindow class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Roassal Easel') action: [ self open ]
+]
+
+{ #category : #specs }
+RTInteractiveComposerWindow class >> open [
+	<sampleInstance>
+	^ self new openWithSpec
+]
+
+{ #category : #specs }
+RTInteractiveComposerWindow class >> openOn: anObject [
+	<sampleInstance>
+	^ self new model: anObject; openWithSpec
+]
+
+{ #category : #specs }
+RTInteractiveComposerWindow class >> openOn: anObject script: aScript [
+	"
+	self openOn: 42 script: [ :view |
+		| b |
+		b := RTMondrian new.
+		b view: view.
+		b nodes: (1 to: 10).
+		b layout grid.
+		b build ].
+	"
+
+	<sampleInstance>
+	^ self new model: anObject; initialScript: aScript; openWithSpec
 ]
 
 { #category : #accessing }
@@ -67,7 +96,9 @@ RTInteractiveComposerWindow >> initialScript: aOneArgBlock [
 { #category : #initialization }
 RTInteractiveComposerWindow >> initialize [
 	super initialize.
-	initialScript := [ :aView | "do nothing" ].
+	initialScript := [ :aView | aView add: (RTLabel elementOn: self model) ].
+	self model: 'Please, enter a script'
+	
 ]
 
 { #category : #initialization }
@@ -129,7 +160,7 @@ RTInteractiveComposerWindow >> initializeWidgets [
 	tabManager := self newTabManager.
 	tabManager whenTabSelected: [ self updateTitle ].
 	self populateManager.
-	self focusOrder add: text.
+	self focusOrder add: text; add: tabManager.
 ]
 
 { #category : #accessing }
@@ -137,10 +168,21 @@ RTInteractiveComposerWindow >> menu [
 	^ menu
 ]
 
+{ #category : #accessing }
+RTInteractiveComposerWindow >> model [
+	^ model
+]
+
+{ #category : #accessing }
+RTInteractiveComposerWindow >> model: anObject [
+	model := anObject
+]
+
 { #category : #initialization }
 RTInteractiveComposerWindow >> newCode [
 	^ super newCode
 		aboutToStyle: true;
+"		doItReceiver: self model;"
 		whenTextIsAccepted: [ :aText | self playText: aText ]
 		yourself
 ]
@@ -148,10 +190,17 @@ RTInteractiveComposerWindow >> newCode [
 { #category : #initialization }
 RTInteractiveComposerWindow >> playText: aText [
 	"The argument is the text to be compiled"
-	| env |
+	| env completeText block |
 	env := self class environment copy.
-	env at: #view put: view.
-	OpalCompiler new environment: env asDictionary; source: aText; evaluate
+	env at: #model put: self model.
+
+"	env at: #view put: view.
+	result := OpalCompiler new environment: env asDictionary; source: aText; evaluate.
+"
+	completeText := '[:view | ', aText, ' ] '.
+	block := OpalCompiler new environment: env asDictionary; source: completeText; evaluate.
+	self class openOn: 42 script: block
+	
 	
 "	view add: (RTEllipse new size: 10; color: Color red) element.
 	RTGridLayout on: view elements"
@@ -162,7 +211,7 @@ RTInteractiveComposerWindow >> populateManager [
 
 	tabManager
 		addTab: self tabView;
-		addTab: self tabScript
+		addTab: self tabScriptRoassal
 ]
 
 { #category : #accessing }
@@ -202,12 +251,12 @@ RTInteractiveComposerWindow >> tabManager [
 ]
 
 { #category : #initialization }
-RTInteractiveComposerWindow >> tabScript [
+RTInteractiveComposerWindow >> tabScriptRoassal [
 
 	| tab |
 	tab := self newTab.
 	tab
-		label: 'Script';
+		label: 'Roassal';
 		icon: (tab iconNamed: #nautilusIcon);
 		model:
 			(codePanel := self newCode).
