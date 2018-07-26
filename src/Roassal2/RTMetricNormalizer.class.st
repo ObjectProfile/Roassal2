@@ -630,6 +630,26 @@ RTMetricNormalizer >> normalizeLineWidthBasedOnOccurences: oneArgMetricBlock [
 "
 Example:
 
+paks := RPackageOrganizer default packages select: [ :p | p packageName beginsWith: 'Metacello-' ].
+
+b := RTMondrian new.
+b shape label text: #packageName; color: Color veryVeryDarkGray.
+b interaction highlightEdges: #dependentPackages color: Color red trans.
+b nodes: paks.
+
+b shape line color: Color blue trans.
+b edges 
+	highlightable;
+	connectToAll: #dependentPackages.
+b layout circle.
+
+b normalizer
+	normalizeSize: [ :pak | pak definedClasses size ];
+	normalizeLineWidthBasedOnOccurences: #dependentPackagesWithOccurences.
+b
+
+
+-------
 b := RTMondrian new.
 b shape circle size: 20; color: Color red trans.
 b nodes: RTObject withAllSubclasses.
