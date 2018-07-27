@@ -5,7 +5,7 @@ Extensive documentation is available on http://AgileVisualization.com
 
 Source code of Roassal is kept on SmalltalkHub: http://smalltalkhub.com/#!/~ObjectProfile/Roassal2
 
-Execute the following code snippet to load Roassal2 in a fresh Pharo 6.1 image:
+Execute the following code snippet to load Roassal2 in a fresh Pharo 6.1 or 7 image:
 ```Smalltalk
  Metacello new 
 	smalltalkhubUser: 'ObjectProfile' project: 'Roassal2';
