@@ -148,7 +148,10 @@ ConfigurationOfRoassal2 class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
+	^ ((Smalltalk at: #MetacelloToolBox)
+		validateConfiguration: self
+		debug: #()
+		recurse: false) inspect
 ]
 
 { #category : #'old-baselines' }
@@ -975,7 +978,7 @@ ConfigurationOfRoassal2 >> development: spec [
 	spec for: #'pharo4.x' version: '1.5-baseline'.
 	spec for: #'pharo5.x' version: '1.13-baseline'.
 	spec for: #'pharo6.x' version: '1.20-baseline'.
-	spec for: #'pharo7.x' version: '1.20-baseline'.
+	spec for: #'pharo7.x' version: '1.21-baseline'.
 ]
 
 { #category : #accessing }
@@ -2105,6 +2108,27 @@ ConfigurationOfRoassal2 >> version161: spec [
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
 			package: 'Trachel' with: 'Trachel-akevalion.430';
 			package: 'Roassal2' with: 'Roassal2-akevalion.1782';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.15';
+			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
+			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfRoassal2 >> version162: spec [
+	<version: '1.62' imports: #('1.20-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: ''.
+		spec author: 'AlexandreBergel'.
+		spec timestamp: '07/30/2018'.
+		
+		spec 
+			package: 'WebBrowser-Core' with: 'WebBrowser-Core-TorstenBergmann.6';
+			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
+			package: 'Trachel' with: 'Trachel-AlexandreBergel.431';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1800';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.15';
 			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
