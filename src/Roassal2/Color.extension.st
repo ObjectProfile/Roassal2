@@ -1,5 +1,11 @@
 Extension { #name : #Color }
 
+{ #category : #'*Roassal2-Core' }
+Color >> asThemed [
+	"Infer a color that is supposed to be adapted to the current theme"
+	^ TRTheme current transformColor: self
+]
+
 { #category : #'*Roassal2' }
 Color class >> colorWheel: s alpha: a [
 	^ (Color wheel: 6) collect: [:c | c alpha: a ].
@@ -112,4 +118,10 @@ Color class >> red: r green: g blue: b alpha: a [
 	"Return a color with the given r, g, and b components in the range [0.0..255]."
 
 	^ self r: (r/255 asFloat) g: (g/255 asFloat) b: (b/255 asFloat) alpha: a
+]
+
+{ #category : #'*Roassal2-Core' }
+Color >> trans [
+	"Make the color transparent"
+	^ self alpha: 0.4
 ]

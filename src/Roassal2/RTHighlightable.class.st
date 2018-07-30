@@ -38,15 +38,6 @@ RTHighlightable >> color: aColor [
 ]
 
 { #category : #actions }
-RTHighlightable >> doHighlightEdge: anEdge [
-	"Highlight a particular element."
-	"There is duplication of code with #doHighlightElement: Maybe we can avoid this in the future"
-	self recordElement: anEdge.
-	anEdge trachelShape color: (self highlightEdgeColorFor: anEdge).
-	anEdge view ifNotNil: [ anEdge view signalUpdate ].
-]
-
-{ #category : #actions }
 RTHighlightable >> doHighlightElement: anElement [
 	"Highlight a particular element."
 	self recordElement: anElement.
@@ -72,62 +63,10 @@ RTHighlightable >> doUnhighlightElement: anElementOrEdge [
 	self shouldHighlightEdges ifTrue: [ (getConnectedEdgesBlock rtValue: anElementOrEdge) do: [ :anEdge | self doUnhighlightElement: anEdge ] ]
 ]
 
-{ #category : #accessing }
-RTHighlightable >> edgeColor [
-	"Return a color, or a one-arg block that takes as argument an edge"
-	^ edgeColor
-]
-
-{ #category : #accessing }
-RTHighlightable >> edgeColor: aColorOrOneArgBlock [
-	"Argument can either be a color, or a one argument block, which will take the edge as argument when evaluated. In that case, the block should return a color"
-	edgeColor := aColorOrOneArgBlock
-]
-
-{ #category : #'public - configuration' }
-RTHighlightable >> focusOnIncomingElements [
-	"Recursively highlights elements reaching out incoming edges"
-	getConnectedEdgesBlock := #incomingEdges.
-	self getConnectedElementBlock: [ :e | (getConnectedEdgesBlock rtValue: e) collect: #from ].
-
-]
-
-{ #category : #'public - configuration' }
-RTHighlightable >> focusOnOutgoingElements [
-	"Recursively highlights elements reaching out outgoing edges"
-	getConnectedEdgesBlock := #outgoingEdges.
-	self getConnectedElementBlock: [ :e | (getConnectedEdgesBlock rtValue: e) collect: #to ].
-
-]
-
-{ #category : #accessing }
-RTHighlightable >> getConnectedElementBlock [
-	"Return the one-arg block that is useful to obtained relevant connected nodes"
-	^ getConnectedElementBlock
-]
-
-{ #category : #accessing }
-RTHighlightable >> getConnectedElementBlock: aBlockOrSymbol [
-	"Set the way connected elements must be obtained "
-	getConnectedElementBlock := aBlockOrSymbol
-]
-
-{ #category : #actions }
-RTHighlightable >> getConnectedElementsFrom: anElement [
-	"Return the elements to consider while recursing for a given element"
-	^ getConnectedElementBlock rtValue: anElement
-]
-
 { #category : #utility }
 RTHighlightable >> highlightColorFor: anElement [
 	"Return the highlight color"
 	^ self highlightedColor rtValue: anElement model
-]
-
-{ #category : #actions }
-RTHighlightable >> highlightEdgeColorFor: anEdge [
-	"Return the highlight color"
-	^ edgeColor rtValue: anEdge
 ]
 
 { #category : #configuration }
@@ -156,16 +95,4 @@ RTHighlightable >> recordElement: anElement [
 	(anElement attributes includesKey: #originalColor) ifTrue: [ ^ self ].
 	anElement attributes at: #originalColor put: (anElement trachelShape color)
 
-]
-
-{ #category : #'public - testing' }
-RTHighlightable >> shouldHighlightEdges [
-	"Return true if edges should be highlighted"
-	^ edgeColor notNil
-]
-
-{ #category : #'public - testing' }
-RTHighlightable >> shouldNotHighlightEdges [
-	"Return true if edges should not be highlighted"
-	^ self shouldHighlightEdges not
 ]
