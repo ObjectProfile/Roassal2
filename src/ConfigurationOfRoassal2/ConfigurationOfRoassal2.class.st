@@ -2122,13 +2122,13 @@ ConfigurationOfRoassal2 >> version162: spec [
 		spec blessing: #'stable'.
 		spec description: ''.
 		spec author: 'AlexandreBergel'.
-		spec timestamp: '07/30/2018'.
+		spec timestamp: '07/31/2018'.
 		
 		spec 
 			package: 'WebBrowser-Core' with: 'WebBrowser-Core-TorstenBergmann.6';
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.431';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1800';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1801';
 			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.15';
 			package: 'Roassal2GT' with: 'Roassal2GT-AndreiChis.61';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
