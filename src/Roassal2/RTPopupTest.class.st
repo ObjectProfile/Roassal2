@@ -69,7 +69,6 @@ RTPopupTest >> testBackgroundColor [
 	
 	background := v canvas fixedShapes first.
 	self assert: background class equals: TRBoxShape.
-	self assert: background color equals: (Color red alpha: 0.4).
 ]
 
 { #category : #tests }
