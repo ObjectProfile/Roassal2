@@ -1003,7 +1003,7 @@ ConfigurationOfRoassal2 >> stable: spec [
 	spec for: #'pharo3.x' version: '1.6'.
 	spec for: #'pharo5.x' version: '1.50'.
 	spec for: #'pharo6.x' version: '1.58'.
-	spec for: #'pharo7.x' version: '1.61'.
+	spec for: #'pharo7.x' version: '1.62'.
 ]
 
 { #category : #'old-versions' }
