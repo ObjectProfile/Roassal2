@@ -32,7 +32,7 @@ String >> cutCamelCase [
 	^pieces
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 String >> subStringsKeepingEmptyFields: separators [ 
 	"Answer an array containing the substrings in the receiver separated 
 	by the elements of separators."
