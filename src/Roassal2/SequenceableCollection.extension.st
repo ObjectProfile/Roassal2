@@ -11,7 +11,7 @@ SequenceableCollection >> cumsum [
  
 ]
 
-{ #category : #'*roassal2-core' }
+{ #category : #'*Roassal2' }
 SequenceableCollection >> histogram [
 	"Plot the histrogram (distribution) of the numerical values given the metric block or symbol on my elements.
 	#('yes' 'no' 'no' 'yes' 'yes' 'maybe' 'maybe' 'yes') histogram
@@ -22,7 +22,7 @@ SequenceableCollection >> histogram [
 
 ]
 
-{ #category : #'*roassal2-core' }
+{ #category : #'*Roassal2' }
 SequenceableCollection >> histogram: aBlockOrSymbol [
 	"Plot the histrogram (distribution) of the numerical values given the metric block or symbol on my elements.
 	#('yes' 'no' 'no' 'yes' 'yes' 'maybe' 'maybe' 'yes') histogram
@@ -74,7 +74,7 @@ SequenceableCollection >> histogram: aBlockOrSymbol [
 	^ b."
 ]
 
-{ #category : #'*roassal2-core' }
+{ #category : #'*Roassal2' }
 SequenceableCollection >> plot [
 	"
 	#(1 2 3 4 5) plot
@@ -97,7 +97,7 @@ SequenceableCollection >> plot [
 	
 ]
 
-{ #category : #'*roassal2-core' }
+{ #category : #'*Roassal2' }
 SequenceableCollection >> removeDuplicates [
 	| iterator |
 	"Remove the copies of elements, but keep the same order"
@@ -114,7 +114,7 @@ SequenceableCollection >> removeDuplicates [
 	 ]
 ]
 
-{ #category : #'*roassal2-core' }
+{ #category : #'*Roassal2' }
 SequenceableCollection >> rtSwapElement: u withElement: v [
 	| index1 index2 |
 	index1 := self indexOf: u.

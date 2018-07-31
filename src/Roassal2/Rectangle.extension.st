@@ -1,6 +1,6 @@
 Extension { #name : #Rectangle }
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Rectangle >> areasOverlapingOutside: aRectangle [ 
 	"Answer an Array of maximized Rectangles comprising (overlaped by each other) the parts of the receiver not 
 	intersecting aRectangle."
@@ -25,12 +25,12 @@ Rectangle >> areasOverlapingOutside: aRectangle [
 	^ areas
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Rectangle >> halfPerimeter [
 	^ self width + self height
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Rectangle >> perimeter [
 	^ self halfPerimeter * 2
 ]

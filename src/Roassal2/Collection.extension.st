@@ -1,18 +1,18 @@
 Extension { #name : #Collection }
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> asGroup [
 	^ RTGroup withAll: self
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> asIdentityGroup [
 	^ RTIdentityGroup withAll: self
 	
 
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> maxFor: aSymbolOrBlock [ 
 	"Return one of the elements which has the minimum value returned by aSymbolOrBlock"
 	
@@ -28,12 +28,12 @@ Collection >> maxFor: aSymbolOrBlock [
 				ifFalse: [ max ] ]
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> maxValue: aBlock [
 	^ self inject: (aBlock value: self anyOne) into: [ :max :each | max max: (aBlock value: each) ]
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> minFor: aSymbolOrBlock [ 
 	"Return one of the elements which has the minimum value returned by aSymbolOrBlock"
 	
@@ -49,17 +49,17 @@ Collection >> minFor: aSymbolOrBlock [
 				ifFalse: [ min ] ]
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> minValue: aBlock [
 	^ self inject: (aBlock value: self anyOne) into: [ :min :each | min min: (aBlock value: each) ]
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> reverseSortedAs: aSortBlockOrSymbol [
 	^ (self sortedAs: aSortBlockOrSymbol) reverse
 ]
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 Collection >> sortedAs: aSortBlockOrSymbol [
 	"Answer a SortedCollection whose elements are the elements of the 
 	receiver. The sort order is defined by the argument, aSortBlock."

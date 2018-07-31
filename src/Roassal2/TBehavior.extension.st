@@ -1,6 +1,6 @@
 Extension { #name : #TBehavior }
 
-{ #category : #'*Roassal2-Core' }
+{ #category : #'*Roassal2' }
 TBehavior >> numberOfLinesOfCode [ 
 	"Return the amount of lines of code"
 	
