@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #tests }
+RTLabelTest >> expectedFailures [
+	^ #(#testFont)
+]
+
+{ #category : #tests }
 RTLabelTest >> rotated45gridLayout [
 	<gtExample>
 	"

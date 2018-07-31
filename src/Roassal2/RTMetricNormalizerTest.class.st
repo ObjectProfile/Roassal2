@@ -225,7 +225,8 @@ RTMetricNormalizerTest >> testDistinctColor [
 	self assert: (v elementsFromModels: #(1 2)) size equals: 4.
 
 	RTGridLayout on: v elements.
-	n := RTMetricNormalizer new
+	n := RTMetricNormalizer new.
+	n
 		view: v;
 		objects: #(1 2);
 		distinctColor. 

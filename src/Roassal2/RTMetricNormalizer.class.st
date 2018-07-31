@@ -122,6 +122,7 @@ RTMetricNormalizer >> elements [
 
 { #category : #accessing }
 RTMetricNormalizer >> elements: someElements [
+	"Set the elements to be considered by the metric normalizer"
 	elements := someElements
 ]
 
