@@ -74,12 +74,14 @@ RTLineDualWidth >> pathFor: anEdge and: trachelShape [
 				nextPutAll: p y asFloat asString;
 				space ].
 			side := [ :vector :end :size | 
-			| left right u unit middle |
+			| left right u unit middle l r |
 			u := vector normal.
 			unit := vector / vector r.
 			middle := end - (unit * size).
 			left := middle - (u * size).
+			l := end - (u * size).
 			right := middle + (u * size).
+			r := end + (u * size).
 			s
 				nextPutAll:
 					(first
@@ -88,8 +90,12 @@ RTLineDualWidth >> pathFor: anEdge and: trachelShape [
 			point value: left.
 			s nextPutAll: 'C '.
 			point value: left.
-			point value: end + (unit * size).
-			point value: right ].
+			point value: l.
+			point value: end.
+			s nextPutAll: 'C '.
+			point value: end.
+			point value: r.
+			point value: right. ].
 			"this creates the line"
 			first := true.
 			side value: to - from value: to value: w1 / 2.
