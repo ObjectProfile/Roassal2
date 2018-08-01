@@ -13,6 +13,7 @@ Class {
 
 { #category : #examples }
 RTLineDualWidth class >> example01 [
+	<noTest>
 	| view box e1 e2 l |
 	view := RTView new.
 	view @ RTDraggableView.
@@ -32,7 +33,7 @@ RTLineDualWidth class >> example01 [
 		add: e1;
 		add: e2;
 		add: (l edgeFrom: e1 to: e2).
-	view inspect.
+	view inspect
 ]
 
 { #category : #initialization }
