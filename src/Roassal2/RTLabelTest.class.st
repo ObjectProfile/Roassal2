@@ -4,9 +4,23 @@ Class {
 	#category : #'Roassal2-Core-Tests'
 }
 
-{ #category : #tests }
-RTLabelTest >> expectedFailures [
-	^ #(#testFont)
+{ #category : #font }
+RTLabelTest >> DOESNOTWORKtestFont [
+	| v shape es firstShape fontList |
+	v := RTView new.
+	fontList := TRPlatform current fontListStrings.
+	shape := RTLabel new 
+		fontName: [ :i | fontList at: i ]; 
+		text: 'The quick brown fox jumps over the lazy dog'.
+
+	es := shape elementsOn: (1 to: fontList size).
+	es @ RTPopup.
+
+	v addAll: es.
+	RTVerticalLineLayout on: v elements.
+
+	firstShape := v canvas shapes first.
+	self assert: firstShape fontName equals: fontList first.
 ]
 
 { #category : #tests }
@@ -59,25 +73,6 @@ RTLabelTest >> testEncompassing [
 	self assert: rec class == Rectangle.
 	self assert: rec center = (0 @ 0).
 	self assert: rec extent > (10 @ 10)
-]
-
-{ #category : #font }
-RTLabelTest >> testFont [
-	| v shape es firstShape fontList |
-	v := RTView new.
-	fontList := TRPlatform current fontListStrings.
-	shape := RTLabel new 
-		fontName: [ :i | fontList at: i ]; 
-		text: 'The quick brown fox jumps over the lazy dog'.
-
-	es := shape elementsOn: (1 to: fontList size).
-	es @ RTPopup.
-
-	v addAll: es.
-	RTVerticalLineLayout on: v elements.
-
-	firstShape := v canvas shapes first.
-	self assert: firstShape fontName equals: fontList first.
 ]
 
 { #category : #tests }
