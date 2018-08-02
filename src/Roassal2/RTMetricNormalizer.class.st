@@ -84,12 +84,33 @@ RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol [
 	b	
 	"
 	"The method return the mapping"
+	^ self distinctColorUsing: aBlockOrSymbol colorPalette: (RTColorPalette qualitative colors: 12 scheme: 'Set3')
+]
+
+{ #category : #'public normalize color' }
+RTMetricNormalizer >> distinctColorUsing: aBlockOrSymbol colorPalette: someColors [
+	"Give a color to each element according to the result of execution the block and symbol on each element.
+
+	For example, the following example paints all the class according to the package the class is in:
+	| b |
+	b := RTMondrian new.
+	b shape circle.
+	b nodes: Collection withAllSubclasses.
+	b edges connectFrom: #superclass.
+	b layout tree.
+	b normalizer
+		normalizeSize: #numberOfMethods;
+		distinctColorUsing: #package.
+	b	
+	"
+	"The method return the mapping"
 	| normalizer allObjects colorMapping |
 	allObjects := elements collect: [ :e | aBlockOrSymbol rtValue: e model ].
 	allObjects removeDuplicates.
 	
 	normalizer := RTMultiLinearColorForIdentity new 
 						objects: allObjects; 
+						colors: someColors;
 						command: aBlockOrSymbol.
 
 	elements do: [ :el | el trachelShape color: (normalizer rtValue: el model) ].
