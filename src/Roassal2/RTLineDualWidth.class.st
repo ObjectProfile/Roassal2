@@ -100,7 +100,7 @@ RTLineDualWidth >> pathFor: anEdge and: trachelShape [
 			side := [ :vector :end :size | 
 			| left right u unit middle l r |
 			u := vector normal.
-			unit := vector / vector r.
+			unit := vector / (vector r max: 0.001).
 			middle := end - (unit * size).
 			left := middle - (u * size).
 			l := end - (u * size).

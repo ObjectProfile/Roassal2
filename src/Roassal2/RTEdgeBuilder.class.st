@@ -338,6 +338,25 @@ RTEdgeBuilder >> noRepetition [
 
 { #category : #'public - configuration' }
 RTEdgeBuilder >> notUseInLayout [
+	"Indicate that the edges should not be used in the layout.
+The following example shows that the layout is driven only by the red lines, and not the blue ones:
+
+b := RTMondrian new.
+b nodes: RTShape withAllSubclasses.
+
+b shape line color: Color red trans.
+b edges connectFrom: #superclass.
+
+b shape line color: Color blue trans.
+b edges
+	notUseInLayout;
+	connectToAll: #dependentClasses.
+
+b layout tree.
+b
+
+	
+	"
 	shouldNotBeUsedInLayout := false
 ]
 
