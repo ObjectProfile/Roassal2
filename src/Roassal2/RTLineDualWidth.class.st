@@ -24,6 +24,30 @@ Here is an example:
         add: (l edgeFrom: e1 to: e2).
     view 
 -=-=-=
+
+Another example:
+-=-=-=-=
+""This visualization shows dependencies between Monticello packages""
+pak := RPackageOrganizer default packages select: [ :p | 'Metacell*' match: p name ].
+
+b := RTMondrian new.
+b shape circle withTextAbove: #packageName.
+b nodes: pak.
+
+b shape lineDualWidth 
+	color: Color blue trans; 
+	withShorterDistanceAttachPoint;
+	widthFrom: [ :anEdge | (anEdge from model numberOfDependenciesToward: anEdge to model) sqrt  * 4];
+	widthTo: [ :anEdge | (anEdge to model numberOfDependenciesToward: anEdge from model) sqrt * 4].
+
+b edges 
+	noRepetition; noBidirectional;
+	connectToAll: #dependentPackages.
+b layout circle.
+
+b normalizer normalizeSize: #numberOfClasses using: #sqrt.
+b
+-=-=-=-=
 "
 Class {
 	#name : #RTLineDualWidth,
@@ -128,7 +152,7 @@ RTLineDualWidth >> pathFor: anEdge and: trachelShape [
 			s nextPutAll: 'Z' ]
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 RTLineDualWidth >> updateFor: edge trachelShape: trachelShape [
 	trachelShape 
 		from: (attachPoint startingPointOf: edge) to: (attachPoint endingPointOf: edge);
