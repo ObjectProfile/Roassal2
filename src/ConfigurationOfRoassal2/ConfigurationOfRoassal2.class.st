@@ -2149,8 +2149,8 @@ ConfigurationOfRoassal2 >> version163: spec [
 			package: 'WebBrowser-Core' with: 'WebBrowser-Core-TorstenBergmann.6';
 			package: 'Athens-SVG' with: 'Athens-SVG-PeterUhnak.17';
 			package: 'Trachel' with: 'Trachel-AlexandreBergel.434';
-			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1813';
-			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.15';
+			package: 'Roassal2' with: 'Roassal2-AlexandreBergel.1816';
+			package: 'Roassal2Spec' with: 'Roassal2Spec-AlexandreBergel.16';
 			package: 'Roassal2GT' with: 'Roassal2GT-AlexandreBergel.62';
 			package: 'Roassal2-Rules' with: 'Roassal2-Rules-YuriyTymchuk.2'. ].
 
