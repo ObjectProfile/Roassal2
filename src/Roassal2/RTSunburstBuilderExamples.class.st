@@ -1195,7 +1195,7 @@ hqu3xZnMbPiAvK0wf5BFIQdCCD8Ak2tATbaAwFWOVxwLaPiAyKCNXjla+PEYwwdEJq0kf0vX
 { #category : #sources }
 RTSunburstBuilderExamples >> examplesunburstWithLegend [
 
-| p b |
+| p b lb |
 p := RTPalette c3.
 b := RTSunburstBuilder new.
 b layout sunburstWithRadius: 100.
