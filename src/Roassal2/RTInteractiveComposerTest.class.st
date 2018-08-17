@@ -30,7 +30,7 @@ RTInteractiveComposerTest >> testBasic [
 		do: [ :aClass | 
 			b := RTMondrian new.
 			b shape label text: #selector.
-			b nodes: aClass methods.
+			b nodes: aClass rtmethods.
 			b edges connectToAll: #dependentMethods.
 			b layout grid.
 			b ].
@@ -59,7 +59,7 @@ RTInteractiveComposerTest >> testBasic2 [
 		for: Class
 		do: [ :aClass | 
 			b := RTMondrian new.
-			b nodes: aClass methods.
+			b nodes: aClass rtmethods.
 			b edges connectToAll: #dependentMethods.
 			b layout tree.
 			b normalizer normalizeSize: #numberOfLinesOfCode.
@@ -76,7 +76,7 @@ RTInteractiveComposerTest >> testBasic2 [
 		
 	w1 := i openOn: Collection withAllSubclasses.
 	w2 := i openOn: Array.
-	w3 := i openOn: Array methods first.
+	w3 := i openOn: Array rtmethods first.
 	w1 delete.
 	w2 delete.
 	w3 delete.

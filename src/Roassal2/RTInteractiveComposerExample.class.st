@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 RTInteractiveComposerExample >> example01 [
 	<script: 'self new example01'>
-
+	<noTest>
 | i b |
 i := RTInteractiveComposer new.
 
@@ -34,7 +34,7 @@ i openOn: Collection withAllSubclasses.
 { #category : #examples }
 RTInteractiveComposerExample >> example02 [
 	<script: 'self new example02'>
-
+	<noTest>
 | i b |
 i := RTInteractiveComposer new.
 

@@ -341,7 +341,7 @@ RTEdgeBuilderTest >> testShouldAllowBidirection [
 	b view: view.
 	b noBidirectional.
 	b objects: #(1 2).
-	b useAssociations: { 1 -> 2 . 2 -> 1 }.
+	b useAssociations: (Array with: 1 -> 2 with: 2 -> 1 ).
 	self deny: b isBidirectional. 
 	
 	elements := view elementsFromModels: #(1 2).
@@ -359,7 +359,7 @@ RTEdgeBuilderTest >> testShouldNotAllowBidirection [
 	self assert: view numberOfEdges equals: 0.
 	b view: view.
 	b objects: #(1 2).
-	b useAssociations: { 1 -> 2 . 2 -> 1 }.
+	b useAssociations: (Array with: 1 -> 2 with: 2 -> 1).
 	self assert: view numberOfEdges equals: 2.
 ]
 
