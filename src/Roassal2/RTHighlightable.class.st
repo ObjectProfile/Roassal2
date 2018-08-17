@@ -101,14 +101,26 @@ RTHighlightable >> focusOnOutgoingElements [
 ]
 
 { #category : #accessing }
+RTHighlightable >> getConnectedEdgesBlock [
+	^ getConnectedEdgesBlock
+]
+
+{ #category : #accessing }
+RTHighlightable >> getConnectedEdgesBlock: aOneArgBlockOrSymbol [
+	"Indicates how to get edges from a particular element, provided as argument to the block or symbol"
+	getConnectedEdgesBlock := aOneArgBlockOrSymbol
+]
+
+{ #category : #'public - configuration' }
 RTHighlightable >> getConnectedElementBlock [
 	"Return the one-arg block that is useful to obtained relevant connected nodes"
 	^ getConnectedElementBlock
 ]
 
-{ #category : #accessing }
+{ #category : #'public - configuration' }
 RTHighlightable >> getConnectedElementBlock: aBlockOrSymbol [
-	"Set the way connected elements must be obtained "
+	"Set the way connected elements must be obtained. The argument takes one argument, which is the 
+	element from which connected element should be considered."
 	getConnectedElementBlock := aBlockOrSymbol
 ]
 
@@ -130,12 +142,12 @@ RTHighlightable >> highlightEdgeColorFor: anEdge [
 	^ edgeColor rtValue: anEdge
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RTHighlightable >> highlightedColor [
 	^ color
 ]
 
-{ #category : #configuration }
+{ #category : #'public - configuration' }
 RTHighlightable >> highlightedColor: aColorOrABlock [
 	"Set the Color used to highlight"
 	color := aColorOrABlock
