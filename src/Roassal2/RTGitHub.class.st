@@ -10,7 +10,7 @@ RTGitHub class >> imageSource [  ^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9h
 
 { #category : #'as yet unclassified' }
 RTGitHub class >> menuCommandOn: aBuilder [
-	<worldMenu>
+"	<worldMenu>"
 	(aBuilder item: ('GitHub') asSymbol)
 			order: 0.002; 
 			parent: #Roassal;
