@@ -1,10 +1,9 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #configuration : 'Roassal2',
-      #load : [ 'default' ],
+      #baseline : 'Roassal2',
+      #directory : 'src',
       #platforms : [ #pharo ],
-      #version: #development
     }
   ],
   
