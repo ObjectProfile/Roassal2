@@ -92,6 +92,12 @@ RTCompositeShape >> add: aRTShape translateBy: aPoint [
 ]
 
 { #category : #'public - layout' }
+RTCompositeShape >> alignCenter [
+	shapeFraming := #alignCenter
+
+]
+
+{ #category : #'public - layout' }
 RTCompositeShape >> alignRight [
 	shapeFraming := #alignRight
 ]
