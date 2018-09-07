@@ -154,6 +154,11 @@ RTCompositeShape >> attachPoint: anAttachPoint [
 			ifTrue: [ s attachPoint: anAttachPoint ] ]
 ]
 
+{ #category : #accessing }
+RTCompositeShape >> automaticallyUpdateLayout [
+	^ automaticallyUpdateLayout 
+]
+
 { #category : #public }
 RTCompositeShape >> borderColor: aBlockOrColor [
 	self allShapes do: [ :s | s borderColor: aBlockOrColor ]
