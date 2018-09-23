@@ -19,7 +19,9 @@ Metacello new
     repository: 'github://ObjectProfile/Roassal2/src';
     load.
 ```
+
 You can also load Roassal2 from the Pharo Catalog browser.
+
 ---
 ## Pharo 6.1
 
