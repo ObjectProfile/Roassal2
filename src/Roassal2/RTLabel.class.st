@@ -22,8 +22,21 @@ Class {
 
 { #category : #configuration }
 RTLabel class >> defaultColor [
-
+	"Set the default color of RTLabel"
 	^ Color gray
+]
+
+{ #category : #public }
+RTLabel class >> defaultFontName [
+	"Return the default font name in Roassal"
+	^ TRLabelShape defaultFamilyFontName
+ 
+]
+
+{ #category : #public }
+RTLabel class >> defaultFontSize [
+	"Return the default font size in Roassal"
+	^ TRLabelShape defaultFontSize
 ]
 
 { #category : #public }
@@ -82,8 +95,8 @@ RTLabel >> heightFor: element [
 RTLabel >> initialize [
 	super initialize.
 	text := self defaultText.
-	height := TRLabelShape defaultFontSize.
-	fontName := TRLabelShape defaultFamilyFontName
+	height := self class defaultFontSize.
+	fontName := self class defaultFontName
 ]
 
 { #category : #accessing }

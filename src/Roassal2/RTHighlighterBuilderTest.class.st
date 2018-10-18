@@ -8,7 +8,30 @@ Class {
 }
 
 { #category : #tests }
-RTHighlighterBuilderTest >> testBasic [ 
+RTHighlighterBuilderTest >> testBasic [
+
+	| hb |
+	hb := RTHighlighterBuilder new.
+	self assert: hb view notNil.
+	self assert: hb numberOfEntries equals: 0.
+	self assert: hb filter equals: true.
+	self assert: hb fontSize equals: RTLabel defaultFontSize
+]
+
+{ #category : #tests }
+RTHighlighterBuilderTest >> testHighlightCompositeShape [
+
+	| v s |
+	v := RTView new.
+	s := RTCompositeShape new.
+	s add: RTLabel new.
+	s add: RTBox new.
+	v add: s element.
+	
+]
+
+{ #category : #tests }
+RTHighlighterBuilderTest >> testSmallExample [
 	| b hb highlighterElement el originalColor |
 	b := RTMondrian new.
 	b shape circle.
@@ -39,14 +62,4 @@ RTHighlighterBuilderTest >> testBasic [
 	highlighterElement announce: TRMouseLeave.
 	self assert: originalColor equals: el trachelShape color.
 	
-]
-
-{ #category : #tests }
-RTHighlighterBuilderTest >> testBasic2 [
-
-	| hb |
-	hb := RTHighlighterBuilder new.
-	self assert: hb view notNil.
-	self assert: hb numberOfEntries equals: 0.
-	self assert: hb filter equals: true
 ]
