@@ -28,7 +28,8 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'entries',
-		'filter'
+		'filter',
+		'fontSize'
 	],
 	#category : #'Roassal2-Builder-Highlighter'
 }
@@ -47,7 +48,7 @@ RTHighlighterBuilder >> createLabelFor: entry in: aView [
 	| h el |
 	h := RTHighlightable new.
 	h color: Color red.
-	el := RTLabel elementOn: entry value.
+	el := RTLabel new height: fontSize; elementOn: entry value.
 	el @ (RTHighlightable new color: Color red).
 	el
 		when: TRMouseEnter
@@ -76,11 +77,24 @@ RTHighlighterBuilder >> filter: aOneArgBlock [
 	filter := aOneArgBlock
 ]
 
+{ #category : #accessing }
+RTHighlighterBuilder >> fontSize [
+	"Return the font size used in the builder to add labels"
+	^ fontSize
+]
+
+{ #category : #accessing }
+RTHighlighterBuilder >> fontSize: fontSizeAsInteger [
+	"Set the font size used in the builder for the label"
+	fontSize := fontSizeAsInteger
+]
+
 { #category : #initialization }
 RTHighlighterBuilder >> initialize [
 	super initialize.
 	entries := OrderedCollection new.
-	filter := true
+	filter := true.
+	fontSize := RTLabel defaultFontSize
 ]
 
 { #category : #initialization }
