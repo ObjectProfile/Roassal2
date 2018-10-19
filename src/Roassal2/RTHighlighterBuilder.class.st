@@ -22,6 +22,26 @@ b build.
 
 b view
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Another example:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+b := RTMondrian new.
+b shape circle.
+b nodes: Collection withAllSubclasses.
+b edges connectFrom: #superclass.
+b layout tree.
+b normalizer normalizeSize: #numberOfMethods using: #sqrt.
+b build.
+
+	hb := RTHighlighterBuilder new.
+	hb view: b view.
+	hb highlightColor: Color white.
+	hb filter: [ :obj | obj isBehavior ].
+	hb addEntry: [ :cls | '*Array*' match: cls name ] named: 'Hide Array'.
+	hb build.
+
+b view
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTHighlighterBuilder,
@@ -30,7 +50,8 @@ Class {
 		'entries',
 		'fontSize',
 		'filterModel',
-		'filterElement'
+		'filterElement',
+		'highlightColor'
 	],
 	#category : #'Roassal2-Builder-Highlighter'
 }
@@ -48,9 +69,10 @@ RTHighlighterBuilder >> createLabelFor: entry in: aView [
 	
 	| h el |
 	h := RTHighlightable new.
-	h color: Color red.
+	h color: highlightColor.
+	h edgeColor: highlightColor.
 	el := RTLabel new height: fontSize; elementOn: entry value.
-	el @ (RTHighlightable new color: Color red).
+	el @ h.
 	el
 		when: TRMouseEnter
 		do: [ :evt | 
@@ -102,13 +124,26 @@ RTHighlighterBuilder >> fontSize: fontSizeAsInteger [
 	fontSize := fontSizeAsInteger
 ]
 
+{ #category : #accessing }
+RTHighlighterBuilder >> highlightColor [
+	"Return the color to use for the highlight"
+	^ highlightColor
+]
+
+{ #category : #accessing }
+RTHighlighterBuilder >> highlightColor: aValueOrOneArgBlock [
+	"Set the color to use for the highlight"
+	highlightColor := aValueOrOneArgBlock
+]
+
 { #category : #initialization }
 RTHighlighterBuilder >> initialize [
 	super initialize.
 	entries := OrderedCollection new.
 	filterModel := true.
 	filterElement := true.
-	fontSize := RTLabel defaultFontSize
+	fontSize := RTLabel defaultFontSize.
+	highlightColor := Color red.
 ]
 
 { #category : #initialization }
