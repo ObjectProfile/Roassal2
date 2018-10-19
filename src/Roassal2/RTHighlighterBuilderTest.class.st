@@ -21,13 +21,49 @@ RTHighlighterBuilderTest >> testBasic [
 { #category : #tests }
 RTHighlighterBuilderTest >> testHighlightCompositeShape [
 
-	| v s |
+	| v s e hb originalColorLabel originalColorBox |
 	v := RTView new.
 	s := RTCompositeShape new.
 	s add: RTLabel new.
 	s add: RTBox new.
-	v add: s element.
+	e := s element.
+	v add: e.
 	
+	hb := RTHighlighterBuilder new.
+	hb view: v.
+	hb addEntry: #isNil named: 'isNil'.
+	hb build.
+	
+	originalColorLabel := e trachelShape shapes first color.
+	originalColorBox := e trachelShape shapes second color.
+	
+	(v elementFromModel: 'isNil') announce: TRMouseEnter.
+	self assert: e trachelShape shapes first color ~= originalColorLabel.
+	self assert: e trachelShape shapes second color == originalColorBox.
+]
+
+{ #category : #tests }
+RTHighlighterBuilderTest >> testHighlightCompositeShape2 [
+
+	| v s e hb originalColorLabel originalColorBox |
+	v := RTView new.
+	s := RTCompositeShape new.
+	s add: RTBox new.
+	s add: RTLabel new.
+	e := s element.
+	v add: e.
+	
+	hb := RTHighlighterBuilder new.
+	hb view: v.
+	hb addEntry: #isNil named: 'isNil'.
+	hb build.
+
+	originalColorBox := e trachelShape shapes first color.	
+	originalColorLabel := e trachelShape shapes second color.
+	
+	(v elementFromModel: 'isNil') announce: TRMouseEnter.
+	self assert: e trachelShape shapes first color ~= originalColorBox.
+	self assert: e trachelShape shapes second color == originalColorLabel.
 ]
 
 { #category : #tests }

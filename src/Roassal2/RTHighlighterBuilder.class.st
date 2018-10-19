@@ -28,8 +28,9 @@ Class {
 	#superclass : #RTBuilder,
 	#instVars : [
 		'entries',
-		'filter',
-		'fontSize'
+		'fontSize',
+		'filterModel',
+		'filterElement'
 	],
 	#category : #'Roassal2-Builder-Highlighter'
 }
@@ -53,12 +54,12 @@ RTHighlighterBuilder >> createLabelFor: entry in: aView [
 	el
 		when: TRMouseEnter
 		do: [ :evt | 
-			(self selectElements: entry in: aView)
+			(self selectElements: entry key in: aView)
 				do: [ :anElementToHighlight | h doHighlightElement: anElementToHighlight ] ].
 	el
 		when: TRMouseLeave
 		do: [ :evt | 
-			(self selectElements: entry in: aView)
+			(self selectElements: entry key in: aView)
 				do:
 					[ :anElementToHighlight | h doUnhighlightElement: anElementToHighlight ] ].
 	^ el
@@ -66,15 +67,27 @@ RTHighlighterBuilder >> createLabelFor: entry in: aView [
 
 { #category : #accessing }
 RTHighlighterBuilder >> filter [
-	"Return the filter used to apply the entries. Initialized to true per default"
-	^ filter
+	"Return the filter used to apply the entries for the models. Initialized to true per default"
+	^ filterModel
 ]
 
 { #category : #accessing }
 RTHighlighterBuilder >> filter: aOneArgBlock [
-	"Set the filter of the highlighter. Could be for example [ :obj | obj class == Color ].
+	"Set the filter of the highlighter for the models. Could be for example [ :obj | obj class == Color ].
 	In that case, all the entries will be applied to the Color contained in the view"
-	filter := aOneArgBlock
+	filterModel := aOneArgBlock
+]
+
+{ #category : #accessing }
+RTHighlighterBuilder >> filterElement [
+	"Return the filter of the highlighter for elements. Could be for example [ :roassalElement | roassalElement shape class == RTLabel ]."
+	^ filterElement
+]
+
+{ #category : #accessing }
+RTHighlighterBuilder >> filterElement: aOneArgBlock [
+	"Set the filter of the highlighter for the elements. Could be for example [ :roassalElement | roassalElement shape class == RTLabel ]."
+	filterElement := aOneArgBlock
 ]
 
 { #category : #accessing }
@@ -93,7 +106,8 @@ RTHighlighterBuilder >> fontSize: fontSizeAsInteger [
 RTHighlighterBuilder >> initialize [
 	super initialize.
 	entries := OrderedCollection new.
-	filter := true.
+	filterModel := true.
+	filterElement := true.
 	fontSize := RTLabel defaultFontSize
 ]
 
@@ -121,8 +135,9 @@ RTHighlighterBuilder >> renderIn: aView [
 ]
 
 { #category : #private }
-RTHighlighterBuilder >> selectElements: entry in: aView [
+RTHighlighterBuilder >> selectElements: condition in: aView [
+	"Return a list of elements based on the entry"
 	^ aView elements
 		select:
-			[ :ee | (filter rtValue: ee model) and: [ entry key rtValue: ee model ] ]
+			[ :ee | (filterModel rtValue: ee model) and: [ (filterElement rtValue: ee) and: [ condition rtValue: ee model ] ] ]
 ]
