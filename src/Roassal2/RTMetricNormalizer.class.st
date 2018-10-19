@@ -900,7 +900,7 @@ RTMetricNormalizer >> normalizeTopLeftOfX: metricBlock min: min max: max minValu
 			| tt t |
 			t := transformation rtValue: (metricBlock rtValue: el model).
 			tt := self getValue: t min: min max: max minValue: minValue maxValue: maxValue.
-			translator translateTopLeftOf: el to: el encompassingRectangle topLeft + (tt @ 0) ] ] 
+			translator translateTopLeftOf: el to: "el encompassingRectangle topLeft +" (tt @ 0) ] ] 
 ]
 
 { #category : #'public normalize x' }
@@ -1051,7 +1051,7 @@ RTMetricNormalizer >> normalizeX: metricBlock min: min max: max minValue: minVal
 	[ minValue ; maxValue ] is mapped to [ min ; max ]
 	"
 		
-	self normalizeX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: #yourself
+	^ self normalizeX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: #yourself
 ]
 
 { #category : #'public normalize x' }
@@ -1113,6 +1113,12 @@ RTMetricNormalizer >> normalizeX: metricBlock min: min max: max using: transform
 		maxValue := maxValue max: t ].
 	
 	self normalizeX: metricBlock min: min max: max minValue: minValue maxValue: maxValue using: transformation
+]
+
+{ #category : #'public normalize y' }
+RTMetricNormalizer >> normalizeY: metricBlock [
+	"metricBlock is evaluated on each node model."
+	self normalizeY: metricBlock min: 0 max: 200
 ]
 
 { #category : #'public normalize y' }
