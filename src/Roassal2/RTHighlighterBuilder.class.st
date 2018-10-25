@@ -86,7 +86,18 @@ RTHighlighterBuilder >> addEntry: aOneArgBlock named: aName [
 RTHighlighterBuilder >> addEntry: aOneArgBlock named: aName highlightColor: anotherOneArgBlock [
 	"Add an entry to the highlihter. The first argument is a condition, applied on each element of a view (after been filtered). 
 	aName is the name that appears in the widget"
-	entries add: (Array with: aOneArgBlock with: aName with: anotherOneArgBlock)
+	self addEntry: aOneArgBlock named: aName highlightColor: anotherOneArgBlock defaultColor: nil
+]
+
+{ #category : #public }
+RTHighlighterBuilder >> addEntry: aOneArgBlock named: aName highlightColor: anotherOneArgBlock defaultColor: aThirdOneArgBlock [
+	"Add an entry to the highlihter. 
+	The first argument is a condition, applied on each element of a view (after been filtered). 
+	aName is the name that appears in the widget
+	anotherOneArgBlock is used to get the color for each element that has to be highlighted
+	aThirdOneArgBlock is used to color the elements that do not match the condiction (first argument). Could be nil
+	"
+	entries add: (Array with: aOneArgBlock with: aName with: anotherOneArgBlock with: aThirdOneArgBlock)
 ]
 
 { #category : #private }
@@ -108,13 +119,23 @@ RTHighlighterBuilder >> createLabelFor: entry in: aView [
 		when: TRMouseEnter
 		do: [ :evt | 
 			(self selectElements: entry first in: aView)
-				do: [ :anElementToHighlight | h color: (entry third rtValue: anElementToHighlight model); doHighlightElement: anElementToHighlight ] ].
+				do: [ :anElementToHighlight | h color: (entry third rtValue: anElementToHighlight model); doHighlightElement: anElementToHighlight ].
+			
+			entry fourth ifNotNil: [
+				(self selectElements: [:ee | (entry first rtValue: ee) not ] in: aView)
+					do: [ :anElementToHighlight | h color: (entry fourth rtValue: anElementToHighlight model); doHighlightElement: anElementToHighlight ] ] 
+			].
 	el
 		when: TRMouseLeave
 		do: [ :evt | 
 			(self selectElements: entry first in: aView)
 				do:
-					[ :anElementToHighlight | h doUnhighlightElement: anElementToHighlight ] ].
+					[ :anElementToHighlight | h doUnhighlightElement: anElementToHighlight ].
+			
+			entry fourth ifNotNil: [
+				(self selectElements: [:ee | (entry first rtValue: ee) not ] in: aView)
+					do: [ :anElementToHighlight | h doUnhighlightElement: anElementToHighlight ] ]
+			]. 
 	^ el
 ]
 
