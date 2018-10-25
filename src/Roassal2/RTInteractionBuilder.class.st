@@ -218,6 +218,7 @@ RTInteractionBuilder >> interactionOfType: cls [
 
 { #category : #public }
 RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
+	"Run on an element"
 	interactions add: [ :element | element @ (RTMenuActivable new item: aTitle asString action: [ aBlockOrSymbol rtValue: element model ]) ]
 ]
 
