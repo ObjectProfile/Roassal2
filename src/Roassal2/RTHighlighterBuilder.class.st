@@ -42,6 +42,25 @@ b build.
 
 b view
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Fading is also supported:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+b := RTMondrian new.
+b nodes: (1 to: 10).
+b normalizer normalizeSize: #yourself.
+b build.
+
+	hb := RTHighlighterBuilder new.
+	hb view: b view.
+	hb highlightColor: [ :nb | Color r: nb / 10 g: 0 b: 0 ].
+	hb filter: [ :obj | obj isNumber ].
+	hb addEntry: [ :number | true ] named: 'Red' highlightColor: [ :nb | Color r: nb / 10 g: 0 b: 0 ].
+	hb addEntry: [ :number | true ] named: 'Green' highlightColor: [ :nb | Color r: 0 g: nb / 10 b: 0 ].
+	
+	hb build.
+
+b view.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTHighlighterBuilder,
@@ -60,28 +79,40 @@ Class {
 RTHighlighterBuilder >> addEntry: aOneArgBlock named: aName [
 	"Add an entry to the highlihter. The first argument is a condition, applied on each element of a view (after been filtered). 
 	aName is the name that appears in the widget"
-	entries add: aOneArgBlock -> aName
+	self addEntry: aOneArgBlock named: aName highlightColor: highlightColor
+]
+
+{ #category : #public }
+RTHighlighterBuilder >> addEntry: aOneArgBlock named: aName highlightColor: anotherOneArgBlock [
+	"Add an entry to the highlihter. The first argument is a condition, applied on each element of a view (after been filtered). 
+	aName is the name that appears in the widget"
+	entries add: (Array with: aOneArgBlock with: aName with: anotherOneArgBlock)
 ]
 
 { #category : #private }
 RTHighlighterBuilder >> createLabelFor: entry in: aView [
-	"entry is aBlock->label and aView is the view where elements have to be searched"
+	"entry is { aBlock . label . colorBlock} and aView is the view where elements have to be searched"
 	
-	| h el |
+	| h el hMenuEntry |
+	
+	hMenuEntry := RTHighlightable new.
+	
 	h := RTHighlightable new.
 	h color: highlightColor.
 	h edgeColor: highlightColor.
-	el := RTLabel new height: fontSize; elementOn: entry value.
-	el @ h.
+	
+	"We create the text name entry in the widget"
+	el := RTLabel new height: fontSize; elementOn: entry second.
+	el @ hMenuEntry.
 	el
 		when: TRMouseEnter
 		do: [ :evt | 
-			(self selectElements: entry key in: aView)
-				do: [ :anElementToHighlight | h doHighlightElement: anElementToHighlight ] ].
+			(self selectElements: entry first in: aView)
+				do: [ :anElementToHighlight | h color: (entry third rtValue: anElementToHighlight model); doHighlightElement: anElementToHighlight ] ].
 	el
 		when: TRMouseLeave
 		do: [ :evt | 
-			(self selectElements: entry key in: aView)
+			(self selectElements: entry first in: aView)
 				do:
 					[ :anElementToHighlight | h doUnhighlightElement: anElementToHighlight ] ].
 	^ el

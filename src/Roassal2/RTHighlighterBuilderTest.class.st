@@ -19,6 +19,51 @@ RTHighlighterBuilderTest >> testBasic [
 ]
 
 { #category : #tests }
+RTHighlighterBuilderTest >> testFading [
+
+| b hb el |
+b := RTMondrian new.
+b nodes: (1 to: 10).
+b normalizer normalizeSize: #yourself.
+b build.
+
+	hb := RTHighlighterBuilder new.
+	hb view: b view.
+	hb highlightColor: [ :nb | Color r: nb / 10 g: 0 b: 0 ].
+	hb filter: [ :obj | obj isNumber ].
+	hb addEntry: [ :number | true ] named: 'Highlight'.
+	
+	hb build.
+
+b view.
+
+	el := b view elementFromModel: 'Highlight'.
+	el announce: TRMouseEnter.	
+]
+
+{ #category : #tests }
+RTHighlighterBuilderTest >> testFading2 [
+
+| b hb el |
+b := RTMondrian new.
+b nodes: (1 to: 10).
+b normalizer normalizeSize: #yourself.
+b build.
+
+	hb := RTHighlighterBuilder new.
+	hb view: b view.
+	hb filter: [ :obj | obj isNumber ].
+	hb addEntry: [ :number | true ] named: 'Highlight' highlightColor: [ :nb | Color r: nb / 10 g: 0 b: 0 ].
+	
+	hb build.
+
+b view.
+
+	el := b view elementFromModel: 'Highlight'.
+	el announce: TRMouseEnter.	
+]
+
+{ #category : #tests }
 RTHighlighterBuilderTest >> testHighlightCompositeShape [
 
 	| v s e hb originalColorLabel originalColorBox |
