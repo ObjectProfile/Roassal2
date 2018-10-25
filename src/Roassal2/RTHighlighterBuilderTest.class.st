@@ -64,6 +64,33 @@ b view.
 ]
 
 { #category : #tests }
+RTHighlighterBuilderTest >> testFadingAndDefaultColor [
+
+| b hb el |
+b := RTMondrian new.
+b nodes: (1 to: 10).
+b normalizer normalizeSize: #yourself.
+b build.
+
+	hb := RTHighlighterBuilder new.
+	hb view: b view.
+	hb filter: [ :obj | obj isNumber ].
+	hb addEntry: [ :number | number < 5 ] named: '<5' highlightColor: [ :nb | Color r: nb / 10 g: 0.8 b: 0.8 ].	
+
+	hb addEntry: [ :number | number > 5 ] named: '>5' highlightColor: [ :nb | Color r: nb / 10 g: 0.8 b: 0.8 ] defaultColor: Color black.	
+		
+	hb build.
+
+b view.
+
+	el := b view elementFromModel: '<5'.
+	el announce: TRMouseEnter.	
+	
+	el := b view elementFromModel: '>5'.
+	el announce: TRMouseEnter.	
+]
+
+{ #category : #tests }
 RTHighlighterBuilderTest >> testHighlightCompositeShape [
 
 	| v s e hb originalColorLabel originalColorBox |

@@ -222,6 +222,12 @@ RTInteractionBuilder >> item: aTitle action: aBlockOrSymbol [
 ]
 
 { #category : #public }
+RTInteractionBuilder >> item: aTitle actionElement: aBlockOrSymbol [
+	"Run on an element"
+	interactions add: [ :element | element @ (RTMenuActivable new item: aTitle asString action: [ aBlockOrSymbol rtValue: element ]) ]
+]
+
+{ #category : #public }
 RTInteractionBuilder >> menu [
 	| i |
 	i := RTMenuActivable new.
