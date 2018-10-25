@@ -33,7 +33,7 @@ RTHighlightable >> color [
 
 { #category : #accessing }
 RTHighlightable >> color: aColor [
-	"Set the color used for the highlighting"
+	"Set the color used for the highlighting for the elements"
 	color := aColor
 ]
 
