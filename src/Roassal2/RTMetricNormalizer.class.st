@@ -615,11 +615,12 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue
 							minValue: minValue 
 							maxValue: maxValue 
 							using: transformation).
-	"Very ugly hack"
-	block := [ :modelOfTheEdge | modelOfTheEdge ].
+							
+	"Hack not really nice"
+	block := [ :anEdge | anEdge attributes at: #width ].
 	self edges with: values do: [ :edge :aValue | 
-		edge model: aValue asFloat.
-		edge shape width: block.
+		edge shape widthElement: block.
+		edge attributeAt: #width put: aValue
 		] 
 	
 	
