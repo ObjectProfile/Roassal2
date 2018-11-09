@@ -296,6 +296,38 @@ RTMetricNormalizerTest >> testEdgesWidth01 [
 
 ]
 
+{ #category : #'test edges width' }
+RTMetricNormalizerTest >> testEdgesWidth02 [
+
+	| v eb as rel mn trLines |
+	v := RTView new.
+	v addAll: (RTBox elementsOn: #(1 2 3)).
+	eb := RTEdgeBuilder new.
+	eb view: v.
+	
+	as := OrderedCollection new.
+	as add: 1 -> 2.
+	as add: 1 -> 3.
+	as add: 3 -> 1.
+	eb useAssociations: as.
+	
+	self assert: v edges first model equals: 1->2.
+	
+	rel := Dictionary new.
+	rel at: 1 put: #(2 3 3).
+   rel at: 3 put: #(1 1 1).
+
+	mn := RTMetricNormalizer new.
+	mn elements: v elements.
+	mn normalizeLineWidthBasedOnOccurences: [ :aNumber | rel at: aNumber ].
+	
+	v edges do: #updateShape.
+	"v open delete."
+	
+	self assert: v edges first model equals: 1->2.
+	
+]
+
 { #category : #'test x' }
 RTMetricNormalizerTest >> testNormalizeXBugTracking [
 
