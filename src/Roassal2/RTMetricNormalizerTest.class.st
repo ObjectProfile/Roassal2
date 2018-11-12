@@ -328,6 +328,47 @@ RTMetricNormalizerTest >> testEdgesWidth02 [
 	
 ]
 
+{ #category : #'test edges width' }
+RTMetricNormalizerTest >> testLineWidthAndArrowedLine [
+	| b edgeElements |
+	b := RTMondrian new.
+	b nodes: #(1 2 3).
+	b shape shape: RTArrowedLine new.
+	edgeElements := b edges useAssociations: (Array with: 1 -> 2 with: 1 -> 3).
+	b normalizer
+		edges: edgeElements;
+		normalizeLineWidth: [ :from :to | from + to ] min: 1 max: 10.
+	b layout horizontalLine.
+	b build.
+	
+	self assert: edgeElements second trachelShape width equals: 10.
+	self assert: edgeElements first trachelShape width equals: 1.
+]
+
+{ #category : #'test edges width' }
+RTMetricNormalizerTest >> testLineWidthIsNotFraction [
+
+| data b edgeElements |
+data := Collection withAllSubclasses .
+
+b := RTMondrian new.
+b shape circle.    
+b nodes: data.
+
+edgeElements := b edges connectFrom: [ :c | c superclass ].
+
+b normalizer
+    edges: edgeElements;
+    normalizeLineWidth: [ :from :to | to numberOfMethods ] min: 1 max: 10.
+
+b layout tree.
+b build.
+
+"Drawing the visualization in a mock Pharo Canvas"
+b view canvas buildMorph drawOnMockCanvas.
+
+]
+
 { #category : #'test x' }
 RTMetricNormalizerTest >> testNormalizeXBugTracking [
 

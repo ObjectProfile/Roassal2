@@ -177,7 +177,7 @@ RTMetricNormalizer >> getNormalizedForLineWidthValues: metricBlock min: min max:
  	^ self edges collect: [ :edge | 
 			| tt t |
 			t := transformation rtValue: (metricBlock value: edge from model value: edge to model).
-			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) ]
+			tt := min + ((max - min) * ( (t - minValue) / (maxValue - minValue))) asFloat ]
 ]
 
 { #category : #utility }
