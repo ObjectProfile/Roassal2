@@ -106,3 +106,12 @@ RTTransitivelyTHighlightableTest >> testShouldNotHighlightEdges [
 	self assert: RTTransitivelyHighlightable new shouldNotHighlightEdges.
 	self assert: (RTTransitivelyHighlightable new edgeColor: Color red; shouldHighlightEdges).
 ]
+
+{ #category : #tests }
+RTTransitivelyTHighlightableTest >> testUnhighlightEdge [
+
+	| anEdge |
+	anEdge := RTEdge new.
+	RTTransitivelyHighlightable new doUnhighlightElement: anEdge.
+	RTTransitivelyHighlightable new edgeColor: Color red; doUnhighlightElement: anEdge.
+]
