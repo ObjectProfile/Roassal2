@@ -620,8 +620,9 @@ RTMetricNormalizer >> normalizeLineWidth: metricBlock min: min max: max minValue
 	block := [ :anEdge | anEdge attributes at: #width ].
 	self edges with: values do: [ :edge :aValue | 
 		edge shape widthElement: block.
-		edge attributeAt: #width put: aValue
-		] 
+		edge attributeAt: #width put: aValue.
+"		edge updateShape."
+		]
 	
 	
 ]
