@@ -299,7 +299,7 @@ RTMetricNormalizerTest >> testEdgesWidth01 [
 { #category : #'test edges width' }
 RTMetricNormalizerTest >> testEdgesWidth02 [
 
-	| v eb as rel mn trLines |
+	| v eb as rel mn |
 	v := RTView new.
 	v addAll: (RTBox elementsOn: #(1 2 3)).
 	eb := RTEdgeBuilder new.
@@ -339,10 +339,12 @@ RTMetricNormalizerTest >> testLineWidthAndArrowedLine [
 		edges: edgeElements;
 		normalizeLineWidth: [ :from :to | from + to ] min: 1 max: 10.
 	b layout horizontalLine.
-	b build.
 	
-	self assert: edgeElements second trachelShape width equals: 10.
-	self assert: edgeElements first trachelShape width equals: 1.
+	b view edges do: #updateShape.
+
+	
+	self assert: edgeElements second trachelShape shapes first width equals: 10.
+	self assert: edgeElements first trachelShape shapes first width equals: 1
 ]
 
 { #category : #'test edges width' }
