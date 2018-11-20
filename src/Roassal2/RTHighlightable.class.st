@@ -42,7 +42,7 @@ RTHighlightable >> doHighlightEdge: anEdge [
 	"Highlight a particular element."
 	"There is duplication of code with #doHighlightElement: Maybe we can avoid this in the future"
 	self recordElement: anEdge.
-	anEdge trachelShape color: (self highlightEdgeColorFor: anEdge).
+	anEdge trachelShape allColor: (self highlightEdgeColorFor: anEdge).
 	anEdge view ifNotNil: [ anEdge view signalUpdate ].
 ]
 
@@ -58,6 +58,18 @@ RTHighlightable >> doHighlightElement: anElement [
 ]
 
 { #category : #actions }
+RTHighlightable >> doUnhighlightEdge: anEdge [
+	"Unhighlight an Edge.
+	This method works only for edges"
+	(anEdge attributes includesKey: #originalColor)
+		ifFalse: [ ^ self ].
+	anEdge trachelShape allColor: (anEdge attributes at: #originalColor).
+	anEdge attributes removeKey: #originalColor.
+	anEdge view ifNotNil: [ anEdge view signalUpdate ].
+
+]
+
+{ #category : #actions }
 RTHighlightable >> doUnhighlightElement: anElementOrEdge [
 	"Unhighlight a particular element.
 	This method also works for edges"
@@ -69,7 +81,7 @@ RTHighlightable >> doUnhighlightElement: anElementOrEdge [
 	
 	"Highlight edges if necessary"
 	anElementOrEdge isEdge ifTrue: [ ^ self ].
-	self shouldHighlightEdges ifTrue: [ (getConnectedEdgesBlock rtValue: anElementOrEdge) do: [ :anEdge | self doUnhighlightElement: anEdge ] ]
+	self shouldHighlightEdges ifTrue: [ (getConnectedEdgesBlock rtValue: anElementOrEdge) do: [ :anEdge | self doUnhighlightEdge: anEdge ] ]
 ]
 
 { #category : #accessing }
