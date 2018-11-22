@@ -114,7 +114,7 @@ RTArrowedLine >> updateFor: edge trachelShape: trachelShape [
 RTArrowedLine >> widthElement: aBlockOrValue [
 	"Set the width of the shape"
 	super widthElement: aBlockOrValue.
-	head size: aBlockOrValue
+	"head size: aBlockOrValue"
 ]
 
 { #category : #accessing }
