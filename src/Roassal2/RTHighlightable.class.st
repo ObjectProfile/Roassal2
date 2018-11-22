@@ -97,6 +97,46 @@ RTHighlightable >> edgeColor: aColorOrOneArgBlock [
 ]
 
 { #category : #'public - configuration' }
+RTHighlightable >> focusOnIncomingAndOutgoingElements [
+	"Recursively highlights elements reaching out incoming edges
+	
+	Here is an example:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+v := RTView new.
+es := RTEllipse elementsOn: (1 to: 4).
+es @ RTDraggable.
+es do: [ :e | e color: Color red ].
+v addAll: es.
+
+RTEdgeBuilder new
+    view: v;
+    shape: (RTArrowedLine new 
+        head: (RTFilledNarrowArrow asHead size: 4; width: 0.5); 
+        width: 0.5;
+        attachPoint: (RTBorderAttachPoint new offset: 9);
+        yourself);
+    moveBehind;
+    connectFrom: [ :vv | vv - 1 ].
+
+es do: [ :anElement |
+	anElement @ (RTHighlightable new focusOnIncomingAndOutgoingElements; 
+		edgeColor: [ :edge | (edge from == anElement) 
+									ifTrue: [ Color blue ] 
+									ifFalse: [ Color green ] ]; yourself) ].
+
+
+RTOptimizedForceBasedLayout new on: es.
+
+v
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	"
+	
+	getConnectedEdgesBlock := [ :anElement | anElement outgoingEdges , anElement incomingEdges ].
+	self getConnectedElementBlock: [ :e | (getConnectedEdgesBlock rtValue: e) collect: #from ].
+
+]
+
+{ #category : #'public - configuration' }
 RTHighlightable >> focusOnIncomingElements [
 	"Recursively highlights elements reaching out incoming edges"
 	getConnectedEdgesBlock := #incomingEdges.
