@@ -22,6 +22,16 @@ Metacello new
 
 You can also load Roassal2 from the Pharo Catalog browser.
 
+If you have a local copy of Roassal, you can do the following:
+
+```Smalltalk
+Metacello new
+  baseline: 'Roassal2';
+  repository: 'gitlocal:///Users/alexandrebergel/Dropbox/GitRepos/Roassal2' ;
+  lock;
+  load.
+```
+
 ---
 ## Pharo 6.1
 
