@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'text',
 		'height',
-		'fontName'
+		'fontName',
+		'rawFont'
 	],
 	#category : #'Roassal2-Shapes'
 }
@@ -100,6 +101,18 @@ RTLabel >> initialize [
 ]
 
 { #category : #accessing }
+RTLabel >> rawFont [
+	"Return the raw font used by the label. If not explictely set, then it returns null"
+	^ rawFont 
+]
+
+{ #category : #accessing }
+RTLabel >> rawFont: aRawFont [
+	"Set the raw font. In such a case, the lookup does not happen"
+	rawFont := aRawFont
+]
+
+{ #category : #accessing }
 RTLabel >> text: aValueOrAOneArgBlock [
 	"aValueOrAOneArgBlock is applied on the object model"
 	self textElement: [ :anElement | aValueOrAOneArgBlock rtValue: anElement model ]
@@ -174,10 +187,15 @@ RTLabel >> trachelShapeForOneLine: anElement [
 	|  shape |	
 	shape := TRLabelShape new.
 	shape text: (self textFor: anElement);
-			color: (self colorFor: anElement);
-			position: anElement position;
-			fontSize: (self heightFor: anElement);
-			fontName: (self fontNameFor: anElement).
+				color: (self colorFor: anElement);
+				position: anElement position.
+	rawFont ifNil: [
+		shape
+				fontSize: (self heightFor: anElement);
+				fontName: (self fontNameFor: anElement) ].
+	rawFont ifNotNil: [ 
+		shape font: rawFont
+		 ].
 	^ shape
 ]
 
