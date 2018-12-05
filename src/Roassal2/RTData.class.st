@@ -435,7 +435,23 @@ RTData >> samplingIfMoreThan: aThreshold [
 	If the number of objects provided to #points: is greater than aThreshold, then 
 	aThreshold elements are picked from the objects.
 	
-	This coudl be improved. For example, different strategies to do the sampling can be envisioned.
+	Here is an example:
+	
+-=-=-=-=
+sixMillionsPoints := -3.14 to: 3.14 by: 0.000001.
+
+g := RTGrapher new.
+d := RTData new.
+d samplingIfMoreThan: 2000.
+d points: sixMillionsPoints.
+d noDot.
+d x: #yourself.
+d y: [ :x | x cos * 2 * x sin ].
+d connectColor: Color blue.
+g add: d.
+g
+-=-=-=-=
+	The sampling could be improved. For example, different strategies to do the sampling can be envisioned.
 	"
 	sampling := aThreshold
 ]
