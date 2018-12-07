@@ -1,6 +1,19 @@
 "
 A RTHighlightable changes color of elements which should be highlighted.
 
+Example using Mondrian:
+-=-=-=-=-=-=-=-=-=
+b := RTMondrian new.
+b view @ RTZoomableView .
+b interaction highlightEdges: #dependentClasses.
+b shape circle.
+b nodes: (Collection withAllSubclasses).
+b edges moveBehind; connectToAll: #dependentClasses.
+b normalizer normalizeSize: #numberOfMethods; normalizeColor: #numberOfMethods.
+b layout force.
+
+b
+-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTHighlightable,
@@ -9,7 +22,8 @@ Class {
 		'color',
 		'edgeColor',
 		'getConnectedEdgesBlock',
-		'getConnectedElementBlock'
+		'getConnectedElementBlock',
+		'shouldPushFrontEdges'
 	],
 	#category : #'Roassal2-Interactions'
 }
@@ -43,6 +57,7 @@ RTHighlightable >> doHighlightEdge: anEdge [
 	"There is duplication of code with #doHighlightElement: Maybe we can avoid this in the future"
 	self recordElement: anEdge.
 	anEdge trachelShape allColor: (self highlightEdgeColorFor: anEdge).
+	shouldPushFrontEdges ifTrue: [ anEdge pushFront ].
 	anEdge view ifNotNil: [ anEdge view signalUpdate ].
 ]
 
@@ -66,6 +81,7 @@ RTHighlightable >> doUnhighlightEdge: anEdge [
 	anEdge trachelShape allColor: (anEdge attributes at: #originalColor).
 	anEdge attributes removeKey: #originalColor.
 	anEdge view ifNotNil: [ anEdge view signalUpdate ].
+	shouldPushFrontEdges ifTrue: [ anEdge pushBack ].
 
 ]
 
@@ -213,6 +229,13 @@ RTHighlightable >> initialize [
 	"Per default, edges should not be highlighted"
 	edgeColor := nil.
 	self focusOnOutgoingElements.
+	shouldPushFrontEdges := false.
+]
+
+{ #category : #'public - configuration' }
+RTHighlightable >> pushFrontEdges [
+	"Make highlighted edges pushed to front"
+	shouldPushFrontEdges := true.
 ]
 
 { #category : #actions }
@@ -232,4 +255,9 @@ RTHighlightable >> shouldHighlightEdges [
 RTHighlightable >> shouldNotHighlightEdges [
 	"Return true if edges should not be highlighted"
 	^ self shouldHighlightEdges not
+]
+
+{ #category : #'public - testing' }
+RTHighlightable >> shouldPushFrontEdges [
+	shouldPushFrontEdges := true.
 ]

@@ -206,6 +206,19 @@ RTHighlightableTest >> testMultipleElementsDoHighlight [
 	self assert: box2 trachelShape color = Color red
 ]
 
+{ #category : #'tests push edges front' }
+RTHighlightableTest >> testPushEdgeFront [
+	| b |
+	b := RTMondrian new.
+	b interaction highlightEdges: #dependentClasses.
+	b shape circle.
+	b nodes: (Collection withAllSubclasses).
+	b edges moveBehind; connectToAll: #dependentClasses.
+"	b normalizer normalizeSize: #numberOfMethods; normalizeColor: #numberOfMethods."
+	b layout force.
+	b build
+]
+
 { #category : #tests }
 RTHighlightableTest >> testSetColor [
 

@@ -111,7 +111,7 @@ b edges connectToAll: [ :v | Array with: v - 1 with: v with: v + 1 ].
 b 
 	
 	"
-	interactions add: [ :element | element @ (RTHighlightable new shouldHighlightEdges; edgeColor: Color red) ]
+	interactions add: [ :element | element @ (RTHighlightable new shouldHighlightEdges; pushFrontEdges; edgeColor: Color red) ]
 ]
 
 { #category : #'public - events-registering' }
