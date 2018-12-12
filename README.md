@@ -41,5 +41,5 @@ You can load Roassal in Pharo 6.1 using the following script:
 Gofer it
     smalltalkhubUser: 'ObjectProfile' project: 'Roassal2';
     configurationOf: 'Roassal2';
-    loadVersion: '1.58'
+    loadVersion: '1.59'
 ```
