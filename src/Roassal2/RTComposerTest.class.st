@@ -178,7 +178,7 @@ RTComposerTest >> testLayoutOnNestingElementsAndLabeledShapes [
 	c layout: RTGridLayout new.
 	
 	r2 := (c getGroup: #hierarchy) encompassingRectangle.
-	self assert: r1 extent equals: r2 extent.
+	self assert: (r1 extent - r2 extent) < (0.001 @ 0.001) 
 ]
 
 { #category : #tests }
