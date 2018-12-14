@@ -234,6 +234,12 @@ TRShape >> isLineShape [
 ]
 
 { #category : #testing }
+TRShape >> isMarkedAsVisible [
+	"Return true if the element is visible"
+	^ isVisible
+]
+
+{ #category : #testing }
 TRShape >> isMovable [
 	"Return if the shape is not fixed, therefore movable."
 	^ self canvas isMovableShape: self
@@ -247,8 +253,8 @@ TRShape >> isNotFixed [
 
 { #category : #testing }
 TRShape >> isVisible [
-	"Return true if the element is visible"
-	^ isVisible
+	"Return true if the element is being seen by the camera"
+	^ self canvas camera isVisible: self
 ]
 
 { #category : #accessing }
