@@ -202,6 +202,7 @@ RTPalette class >> darkBright [
 	"Palette from Stephen Few, from Show me your numbers book"
 	
 	"
+	| b |
 	b := RTMondrian new.
 	b shape box width: 80; height: 30; color: #yourself.
 	b nodes: RTPalette darkBright.
@@ -229,6 +230,7 @@ RTPalette class >> light [
 	"Palette from Stephen Few, from Show me your numbers book"
 	
 	"
+	| b |
 	b := RTMondrian new.
 	b shape box width: 80; height: 30; color: #yourself.
 	b nodes: RTPalette light.
