@@ -451,11 +451,11 @@ TRShapeTest >> testScaleSVG [
 TRShapeTest >> testVisible [
 	| b |
 	b := TRBoxShape new.
-	self assert: b isVisible.
+	self assert: b isMarkedAsVisible.
 	
 	b hide.
-	self deny: b isVisible.
+	self deny: b isMarkedAsVisible.
 	
 	b show.
-	self assert: b isVisible.
+	self assert: b isMarkedAsVisible.
 ]
