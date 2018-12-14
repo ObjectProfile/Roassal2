@@ -10,7 +10,8 @@ Class {
 		'element',
 		'matrix',
 		'rotationAngleDegrees',
-		'session'
+		'session',
+		'isVisible'
 	],
 	#category : #'Trachel-Shapes'
 }
@@ -181,6 +182,12 @@ TRShape >> height [
 	^ self encompassingRectangle height
 ]
 
+{ #category : #actions }
+TRShape >> hide [
+	"Make the element not visible. Note that an hidden element can be in the canvas"
+	isVisible := false
+]
+
 { #category : #testing }
 TRShape >> includesPoint: aPoint [
 	^ false
@@ -200,6 +207,7 @@ TRShape >> initialize [
 	matrix := TRPlatform current affineTransformClass new.
 	rotationAngleDegrees := 0.
 	self position: 0 @ 0.
+	isVisible := true.
 	session := TRPlatform current session.
 ]
 
@@ -207,6 +215,12 @@ TRShape >> initialize [
 TRShape >> isFixed [
 	"Return true if the shape is fixed, not subject to the camera therefore"
 	^ self canvas fixedShapes includes: self
+]
+
+{ #category : #testing }
+TRShape >> isHidden [
+	"Return true if the element is not visible"
+	^ isVisible negated
 ]
 
 { #category : #testing }
@@ -233,8 +247,8 @@ TRShape >> isNotFixed [
 
 { #category : #testing }
 TRShape >> isVisible [
-	"Return true if the element is being seen by the camera"
-	^ self canvas camera isVisible: self
+	"Return true if the element is visible"
+	^ isVisible
 ]
 
 { #category : #accessing }
@@ -374,6 +388,12 @@ TRShape >> setAsNotFixed [
 { #category : #testing }
 TRShape >> shouldBeDrawn [
 	^ true
+]
+
+{ #category : #actions }
+TRShape >> show [
+	"Make the element not visible. Note that an hidden element can be in the canvas"
+	isVisible := true
 ]
 
 { #category : #actions }
