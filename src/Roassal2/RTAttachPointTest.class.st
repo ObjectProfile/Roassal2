@@ -11,7 +11,7 @@ Class {
 	#category : #'Roassal2-Core-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RTAttachPointTest >> setUp [
 	super setUp.
 	view := RTView new.

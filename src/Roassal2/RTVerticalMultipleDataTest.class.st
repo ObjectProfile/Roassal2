@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RTVerticalMultipleDataTest >> setUp [
 	super setUp.			
 	b := RTGrapher new.

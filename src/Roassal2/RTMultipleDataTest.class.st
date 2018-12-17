@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-Grapher-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RTMultipleDataTest >> setUp [
 	super setUp.
 	d := RTHorizontalMultipleData new.

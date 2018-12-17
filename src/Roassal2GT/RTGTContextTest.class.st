@@ -8,7 +8,7 @@ Class {
 	#category : #'Roassal2GT-Glamour-Context'
 }
 
-{ #category : #tests }
+{ #category : #running }
 RTGTContextTest >> setUp [
 	super setUp.
 	prez := GLMRoassal2Presentation new.

@@ -9,6 +9,8 @@ Class {
 
 { #category : #running }
 RTInteractiveComposerTest >> setUp [
+	
+	super setUp.
 	i := RTInteractiveComposer new.
 ]
 

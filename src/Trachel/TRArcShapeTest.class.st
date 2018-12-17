@@ -42,7 +42,7 @@ Class {
 	#category : #'Trachel-Tests'
 }
 
-{ #category : #'basic tests' }
+{ #category : #running }
 TRArcShapeTest >> setUp [
 	super setUp.
 	arc1:=TRArcShape new.
