@@ -33,7 +33,7 @@ exporter fileOutAsString
 "
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 RTTest >> setUp [
 " The following lines are useful for debugging
 
@@ -43,4 +43,6 @@ RTTest >> setUp [
 	
 	Transcript show: self class name asString, '>>'.
 	Transcript show: testSelector asString; cr"
+	
+	super setUp.
 ]
