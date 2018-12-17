@@ -345,7 +345,7 @@ TRPharoPlatform >> inform: str [
 
 { #category : #public }
 TRPharoPlatform >> jsonReaderClass [
-	^ NeoJSONReader
+	^ STONJSON
 ]
 
 { #category : #'accessing-classes' }
