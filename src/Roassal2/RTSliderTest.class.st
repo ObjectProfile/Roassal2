@@ -7,7 +7,7 @@ Class {
 	#category : #'Roassal2-Builder-UI-Slider'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RTSliderTest >> setUp [
 	super setUp.
 	slider := RTSlider new
