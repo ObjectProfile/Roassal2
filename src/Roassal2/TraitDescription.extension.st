@@ -1,21 +1,21 @@
-Extension { #name : #TClassDescription }
+Extension { #name : #TraitDescription }
 
 { #category : #'*Roassal2' }
-TClassDescription >> ageInDays [
+TraitDescription >> ageInDays [
 	"Return the number of days the class exists"
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
-	^ (DateAndTime now - self oldestMethod date) asDays
+	^ (TRPlatform current dateAndTimeClass now - self oldestMethod date) asDays
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> ageInDaysRounded [
+TraitDescription >> ageInDaysRounded [
 	"Return the number of days the class exists"
 
 	^ self ageInDays rounded
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> commonSuperclassWith: aClass [
+TraitDescription >> commonSuperclassWith: aClass [
 	"
 	Metaclass commonSuperclassWith: Class
 	Metaclass commonSuperclassWith: Point
@@ -36,16 +36,16 @@ TClassDescription >> commonSuperclassWith: aClass [
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> computeOldestMethod [
+TraitDescription >> computeOldestMethod [
 	| d m |
-	d := DateAndTime now.
+	d := TRPlatform current dateAndTimeClass now.
 	m := nil.
 	self methods, self class methods do: [ :cm | cm date < d ifTrue: [ m := cm. d := cm date ] ].
 	^ m
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> computeYoungestMethod [
+TraitDescription >> computeYoungestMethod [
 	| d m ms aMethod |
 	ms := self methods, self class methods.
 	aMethod := ms anyOne.
@@ -57,23 +57,23 @@ TClassDescription >> computeYoungestMethod [
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> gotMethodOnDay: dayAsNumber [
+TraitDescription >> gotMethodOnDay: dayAsNumber [
 	"Return true if a method has been defined on dayAsNumber.
 	Always returns true for dayAsNumber = 0"
 	| age |
 	age := self ageInDaysRounded.
-	^ self methods anySatisfy: [ :cm | (age - cm ageInDaysRounded) = dayAsNumber ]
+	^ self rtmethods anySatisfy: [ :cm | (age - cm ageInDaysRounded) = dayAsNumber ]
 
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
+TraitDescription >> hasAnyMethodProducedAfterDay: aNumberOfDays [
 	^ self methods anySatisfy: [ :cm | cm livingInDays = aNumberOfDays ]
 
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> isReferencedBy: aClass [ 
+TraitDescription >> isReferencedBy: aClass [ 
 	"
 	Return true or false on whether the class receiver is referenced by aClass
 	
@@ -83,23 +83,23 @@ TClassDescription >> isReferencedBy: aClass [
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> livingInDays [
+TraitDescription >> livingInDays [
 	self numberOfMethods isZero ifTrue: [ ^ 0 ].
-	^ (DateAndTime now - self oldestMethod date) asDays
+	^ (TRPlatform current dateAndTimeClass now - self oldestMethod date) asDays
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> numberOfSubclasses [
+TraitDescription >> numberOfSubclasses [
 	^ self allSubclasses size
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> numberOfVariables [
+TraitDescription >> numberOfVariables [
 	^ self instVarNames size
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> oldestMethod [
+TraitDescription >> oldestMethod [
 	"We pick a method, and put the cache in it"
 	| aMethod |
 	aMethod := (self methods, self class methods) first.
@@ -112,13 +112,13 @@ TClassDescription >> oldestMethod [
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> rtmethods [
+TraitDescription >> rtmethods [
 	"This method is useful to have examples working on VisualWorks"
 	^ self methods
 ]
 
 { #category : #'*Roassal2' }
-TClassDescription >> youngestMethod [
+TraitDescription >> youngestMethod [
 	"We pick a method, and put the cache in it"
 	| aMethod |
 	aMethod := (self methods, self class methods) first.
