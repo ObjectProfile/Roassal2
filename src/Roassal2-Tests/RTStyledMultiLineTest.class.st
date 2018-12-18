@@ -4,7 +4,7 @@ A RTStyledMultiLineTest is a test class for testing the behavior of RTStyledMult
 Class {
 	#name : #RTStyledMultiLineTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

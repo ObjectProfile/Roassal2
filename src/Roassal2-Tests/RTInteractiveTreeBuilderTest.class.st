@@ -4,7 +4,7 @@ A RTInteractiveTreeBuilderTest is a test class for testing the behavior of RTInt
 Class {
 	#name : #RTInteractiveTreeBuilderTest,
 	#superclass : #TestCase,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

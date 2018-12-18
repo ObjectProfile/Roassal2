@@ -1,7 +1,7 @@
 Class {
 	#name : #RTOptimizedForceBasedLayoutTest,
 	#superclass : #RTForceBasedLayoutTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

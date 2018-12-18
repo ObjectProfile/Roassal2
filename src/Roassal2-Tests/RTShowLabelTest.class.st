@@ -8,7 +8,7 @@ Class {
 		'box',
 		'view'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }
