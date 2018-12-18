@@ -57,6 +57,7 @@ RTAbstractPlugin class >> menuCommandOn: aBuilder [
 								order: 15;
 								parent: self menuConfigurationSymbol;
 								label: cls new pluginName;
+								help: cls new pluginName;
 								icon: RTIcon smallRoassal;
 								action: [ cls new run ] ] ].
 	b withSeparatorAfter.
