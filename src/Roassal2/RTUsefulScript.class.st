@@ -18,6 +18,7 @@ RTUsefulScript class >> menuCommandOn: aBuilder [
 								order: 10;
 								parent: self menuConfigurationSymbol;
 								label: cls new label;
+								help: cls new label;
 								icon: RTIcon smallRoassal;
 								action: [ cls new run ] ] ]
 ]

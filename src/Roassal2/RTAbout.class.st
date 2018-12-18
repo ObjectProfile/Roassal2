@@ -14,6 +14,7 @@ RTAbout class >> menuCommandOn: aBuilder [
 			order: 0.001; 
 			parent: self projectName asSymbol;
 			label: 'About ', self projectName;
+			help: 'Roassal credits';
 			icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
 			action: [ self new open ]
 ]

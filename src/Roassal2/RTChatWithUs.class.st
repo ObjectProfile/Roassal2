@@ -28,6 +28,7 @@ RTChatWithUs class >> menuCommandOn: aBuilder [
 			order: 0.002; 
 			parent: self projectName asSymbol;
 			label: 'Live chat';
+			help: 'chat with Roassal team on discord';
 			icon: self discord;
 			action: [ WebBrowser openOn: 'https://discord.gg/bAuNJMP'  ]
 ]
