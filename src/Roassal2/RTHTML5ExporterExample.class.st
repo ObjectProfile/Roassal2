@@ -110,13 +110,15 @@ RTHTML5ExporterExample >> exportAll [
 	| examples index stream views name exporter st blacklist v view |
 	(self confirm: 'Are you sure to run this example? Warning: Several files are created') ifFalse: [ ^ self ].
 blacklist := OrderedCollection new
-	add: RTOpenStreetMapExample;
 	add: RTAnimatedScatterPlotExample;
 	add: RTAnimationExample;
 	add: RTConstraintExample;
 	add: RTExploraBuilderExample;
 	add: RTLineDecorationExample;
 	add: RTDynamicStackerGrapherExample.
+	
+Smalltalk at: #RTOpenStreetMapExample ifPresent: [ :cc | blacklist add: cc ].
+
 examples := ((RTAbstractExample subclasses select: [ :cls | (blacklist includes: cls) not ] )collect: #new) sortedAs: #label.
 index := TRPlatform current workingDirectory / 'index.html'.
 index exists ifTrue: [ index delete ].

@@ -1,6 +1,18 @@
 Extension { #name : #RPackage }
 
 { #category : #'*Roassal2' }
+RPackage >> classesDependingOnPackage: aPackage [
+	"
+	Return the list of packages that I depend on
+	
+	(RPackageOrganizer default packageNamed: 'Roassal2') classesDependingOnPackage: (RPackageOrganizer default packageNamed: 'Roassal2-OpenStreetMap')
+	"
+
+	^ self definedClasses
+		select: [ :cls | cls dependentClasses anySatisfy: [ :c | c package == aPackage ] ]
+]
+
+{ #category : #'*Roassal2' }
 RPackage >> dependentPackages [
 	"
 	Return the list of packages that I depend on
