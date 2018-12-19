@@ -28,10 +28,12 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-Rules' with: [ spec requires: #('Roassal2') ];
 				
 				package: 'Roassal2-Tests' with: [ spec requires: #('Trachel' 'Roassal2' 'Roassal2-Exporter') ];
-				package: 'Roassal2-OpenStreetMap' with: [ spec requires: #('Roassal2') ].
+				package: 'Roassal2-OpenStreetMap' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2-ExporterVW' with: [ spec requires: #('Roassal2') ] ]. 
 
-			spec group: 'default' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Exporter' 'Roassal2GT' 'Roassal2-Rules' 'Roassal2-Tests' 'Roassal2-OpenStreetMap').
-			spec group: 'minimal' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Exporter' 'Roassal2GT' 'Roassal2-Rules').
-			spec group: 'NoGlamour' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Exporter' 'Roassal2-Rules' 'Roassal2-Tests').
-			spec group: 'Tests' with: #('Trachel' 'Roassal2' 'Roassal2-Tests' 'Roassal2Spec' 'Roassal2-Exporter' 'Roassal2GT' 'Roassal2-Rules' ) ]
+			spec group: 'Core' with: #('Trachel' 'Roassal2' 'Roassal2Spec' 'Roassal2-Exporter' 'Roassal2-Rules').
+			spec group: 'Minimal' with: #('Core' 'Roassal2GT').
+			spec group: 'NoGlamour' with: #('Core' 'Roassal2-Tests').
+			spec group: 'Tests' with: #('Minimal' 'Roassal2-Tests').
+			spec group: 'default' with: #('Tests' 'Roassal2-OpenStreetMap' 'Roassal2-ExporterVW').
 ]
