@@ -1951,16 +1951,6 @@ j7GQIO+9d5vushirnBAm7Ud/3tTkn58/dx4VO8tFH2k+B3VzUysoLwmA6nIfWLMcRb/yhWHq
 RB9E9Ivog4h+EX0QISv/Byc8GhDPYOGSAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #sources }
-RTExperimentalExample >> exampleRadarOnUML [
-
-| view radar |
-view := RTUMLExample new exampleNoInstVar.
-radar := RTRadar on: view.
-"radar build. temporal disable"
-^ view
-]
-
 { #category : #icons }
 RTExperimentalExample >> exampleRadarOnUMLIcon [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAALDklEQVR4XuXdV2/cOhAF4Pv/
