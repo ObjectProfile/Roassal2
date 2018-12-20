@@ -5,7 +5,7 @@ It is useful for example, to monitor the evolution or see the impact of the Virt
 Class {
 	#name : #RTBenchmarks,
 	#superclass : #RTObject,
-	#category : #'Roassal2-Utility'
+	#category : #'Roassal2-Benchmarks'
 }
 
 { #category : #benchmarking }
