@@ -20,7 +20,7 @@ Class {
 		'labelShapeX',
 		'labelShapeY'
 	],
-	#category : #'Roassal2-Builder-DSM'
+	#category : #'Roassal2-DependencyStructuralMatrices'
 }
 
 { #category : #UI }

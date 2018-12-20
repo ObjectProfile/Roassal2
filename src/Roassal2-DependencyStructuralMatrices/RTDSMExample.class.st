@@ -43,7 +43,7 @@ RTDSMExample new installTitle: 'EvolutionDSM'
 Class {
 	#name : #RTDSMExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-DSM'
+	#category : #'Roassal2-DependencyStructuralMatrices'
 }
 
 { #category : #'example-data' }
