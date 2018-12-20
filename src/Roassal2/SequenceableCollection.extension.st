@@ -1,16 +1,5 @@
 Extension { #name : #SequenceableCollection }
 
-{ #category : #'*roassal2-core' }
-SequenceableCollection >> cumsum [
-	"Cumulative sum
-	#(1 2 3 4 5) cumsum = #(1 3 6 10 15)
-	"
-   | sum |
-	sum := 0.
-	^ self collect: [ :v | sum := sum + v. sum ]
- 
-]
-
 { #category : #'*Roassal2' }
 SequenceableCollection >> histogram [
 	"Plot the histrogram (distribution) of the numerical values given the metric block or symbol on my elements.
