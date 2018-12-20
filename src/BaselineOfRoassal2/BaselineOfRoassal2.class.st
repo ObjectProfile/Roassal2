@@ -34,6 +34,7 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-DependencyStructuralMatrices' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-Kiviat' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-AxisAdapted' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2-AnimatedScatterPlot' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-UML' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-Benchmarks' with: [ spec requires: #('Roassal2' 'Roassal2-UML') ];
 			
@@ -53,6 +54,7 @@ BaselineOfRoassal2 >> baseline: spec [
 				'Roassal2-DependencyStructuralMatrices'
 				'Roassal2-Kiviat'
 				'Roassal2-AxisAdopted'
+				'Roassal2-AnimatedScatterPlot'
 				'Roassal2-UML'
 				'Roassal2-Benchmarks').
 			spec group: 'Minimal' with: #('Core' 'Roassal2GT').
