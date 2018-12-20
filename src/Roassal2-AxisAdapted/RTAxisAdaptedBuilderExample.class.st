@@ -11,7 +11,7 @@ Class {
 		'xAxisConfiguration',
 		'yAxisConfiguration'
 	],
-	#category : #'Roassal2-Builder-AxisAdapted'
+	#category : #'Roassal2-AxisAdapted'
 }
 
 { #category : #sources }
