@@ -35,7 +35,7 @@ Class {
 		'partitions',
 		'dynamicForceBasedLayout'
 	],
-	#category : #'Roassal2-Core-LayoutBuilder'
+	#category : #'Roassal2-Core-Builder'
 }
 
 { #category : #'public - layout' }
