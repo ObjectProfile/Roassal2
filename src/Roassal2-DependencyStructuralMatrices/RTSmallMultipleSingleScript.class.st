@@ -10,7 +10,7 @@ Class {
 		'objectsY',
 		'objectsX'
 	],
-	#category : #'Roassal2-Plugins'
+	#category : #'Roassal2-DependencyStructuralMatrices-Pluggins'
 }
 
 { #category : #hooks }

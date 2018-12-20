@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'timelineBlock'
 	],
-	#category : #'Roassal2-Builder-DSM'
+	#category : #'Roassal2-DependencyStructuralMatrices'
 }
 
 { #category : #UI }
