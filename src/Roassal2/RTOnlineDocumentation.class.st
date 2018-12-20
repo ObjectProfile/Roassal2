@@ -11,6 +11,7 @@ RTOnlineDocumentation class >> menuCommandOn: aBuilder [
 			order: 0.001; 
 			parent: #Roassal;
 			label: 'Online documentation';
+			help: 'open the Roassal documentation in a web browser';
 			icon: (Smalltalk ui icons iconNamed: #smallHelp);
 			action: [ WebBrowser openOn: 'http://AgileVisualization.com' ]
 ]
