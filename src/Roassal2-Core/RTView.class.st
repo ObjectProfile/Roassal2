@@ -27,7 +27,7 @@ Class {
 		'edges',
 		'trCanvas'
 	],
-	#category : #'Roassal2-Core'
+	#category : #'Roassal2-Core-Base'
 }
 
 { #category : #visitor }
