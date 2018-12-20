@@ -53,7 +53,7 @@ BaselineOfRoassal2 >> baseline: spec [
 				'Roassal2-BoxPlot'
 				'Roassal2-DependencyStructuralMatrices'
 				'Roassal2-Kiviat'
-				'Roassal2-AxisAdopted'
+				'Roassal2-AxisAdapted'
 				'Roassal2-AnimatedScatterPlot'
 				'Roassal2-UML'
 				'Roassal2-Benchmarks').
