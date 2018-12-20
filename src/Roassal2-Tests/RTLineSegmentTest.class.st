@@ -10,7 +10,7 @@ Class {
 		'lineDiagonal',
 		'lineX0'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-AttachPoints'
 }
 
 { #category : #running }

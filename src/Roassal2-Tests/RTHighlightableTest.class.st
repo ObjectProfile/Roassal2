@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'box'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Core'
 }
 
 { #category : #tests }

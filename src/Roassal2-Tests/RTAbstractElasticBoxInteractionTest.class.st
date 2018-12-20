@@ -4,7 +4,7 @@ A RTAbstractElasticBoxInteractionTest is a test class for testing the behavior o
 Class {
 	#name : #RTAbstractElasticBoxInteractionTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

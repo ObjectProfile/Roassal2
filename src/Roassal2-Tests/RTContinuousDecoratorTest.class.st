@@ -4,7 +4,7 @@ A RTContinuousDecoratorTest is a test class for testing the behavior of RTContin
 Class {
 	#name : #RTContinuousDecoratorTest,
 	#superclass : #TestCase,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

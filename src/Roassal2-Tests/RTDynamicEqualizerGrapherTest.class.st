@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Builder-Grapher'
 }
 
 { #category : #running }

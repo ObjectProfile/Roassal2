@@ -4,7 +4,7 @@ A RTRangeBelowXAxisTest is a test class for testing the behavior of RTRangeBelow
 Class {
 	#name : #RTRangeBelowXAxisTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Builder-Grapher-Decorators'
 }
 
 { #category : #tests }

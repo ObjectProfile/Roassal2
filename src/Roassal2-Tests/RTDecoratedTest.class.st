@@ -4,7 +4,7 @@ A RTDecoratedTest is a test class for testing the behavior of RTDecorated
 Class {
 	#name : #RTDecoratedTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Core'
 }
 
 { #category : #tests }

@@ -19,7 +19,7 @@ Class {
 		'view',
 		'popup'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Core'
 }
 
 { #category : #running }

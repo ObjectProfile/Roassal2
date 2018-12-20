@@ -18,6 +18,7 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 			order: 0.1; 
 			parent: #Roassal;
 			label: 'Roassal examples';
+			help: 'Browse Roassal interactive examples';
 			icon: RTIcon smallRoassal;
 			action: [ self new open ] ]
 ]

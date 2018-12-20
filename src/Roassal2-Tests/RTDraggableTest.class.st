@@ -10,7 +10,7 @@ Class {
 		'e2',
 		'e3'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Core'
 }
 
 { #category : #running }

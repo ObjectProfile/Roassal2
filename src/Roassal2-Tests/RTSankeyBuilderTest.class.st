@@ -4,7 +4,7 @@ A RTSankeyBuilderTest is a test class for testing the behavior of RTSankeyBuilde
 Class {
 	#name : #RTSankeyBuilderTest,
 	#superclass : #TestCase,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #tests }

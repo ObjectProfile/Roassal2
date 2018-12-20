@@ -1,7 +1,7 @@
 Class {
 	#name : #RTVerticalTickLineDecoratorTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Builder-Grapher-Decorators'
 }
 
 { #category : #tests }

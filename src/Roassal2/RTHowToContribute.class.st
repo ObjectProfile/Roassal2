@@ -14,6 +14,7 @@ RTHowToContribute class >> menuCommandOn: aBuilder [
 			order: 0.002; 
 			parent: #Roassal;
 			label: 'Make ', self projectName, ' Better';
+			help: 'How to contribute to ', self projectName;
 			icon: (Smalltalk ui icons iconNamed: #thumbsUp);
 			action: [ self new open. WebBrowser openOn: 'http://www.lulu.com/shop/http://www.lulu.com/shop/alexandre-bergel/agile-visualization/paperback/product-22853677.html' ]
 ]
