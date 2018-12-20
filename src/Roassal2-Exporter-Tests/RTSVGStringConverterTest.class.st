@@ -1,7 +1,7 @@
 Class {
 	#name : #RTSVGStringConverterTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Exporter-SVG'
+	#category : #'Roassal2-Exporter-Tests'
 }
 
 { #category : #tests }
