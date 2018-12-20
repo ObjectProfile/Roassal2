@@ -1,7 +1,7 @@
 Class {
 	#name : #RTPolygonTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Core'
 }
 
 { #category : #tests }

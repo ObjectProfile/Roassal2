@@ -11,7 +11,7 @@ Class {
 		'edgeX',
 		'edgeD'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-AttachPoints'
 }
 
 { #category : #running }

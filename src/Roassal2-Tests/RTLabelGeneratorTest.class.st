@@ -8,7 +8,7 @@ Class {
 		'nice',
 		'lg'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-ShapesAndBuilder'
 }
 
 { #category : #running }
