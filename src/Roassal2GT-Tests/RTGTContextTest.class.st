@@ -5,7 +5,7 @@ Class {
 		'prez',
 		'view'
 	],
-	#category : #'Roassal2GT-Glamour-Context'
+	#category : #'Roassal2GT-Tests'
 }
 
 { #category : #running }

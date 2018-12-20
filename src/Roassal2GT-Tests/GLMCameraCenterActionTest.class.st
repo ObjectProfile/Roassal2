@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMCameraCenterActionTest,
 	#superclass : #TestCase,
-	#category : #'Roassal2GT-Glamour-Actions'
+	#category : #'Roassal2GT-Tests'
 }
 
 { #category : #tests }

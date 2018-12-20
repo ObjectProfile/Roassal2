@@ -1,7 +1,7 @@
 Class {
 	#name : #RTFindInAViewTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2GT-Spotter'
+	#category : #'Roassal2GT-Tests'
 }
 
 { #category : #tests }

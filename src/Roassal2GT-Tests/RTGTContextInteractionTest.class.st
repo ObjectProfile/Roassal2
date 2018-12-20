@@ -1,7 +1,7 @@
 Class {
 	#name : #RTGTContextInteractionTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2GT-Glamour-Roassal-Interaction'
+	#category : #'Roassal2GT-Tests'
 }
 
 { #category : #tests }
