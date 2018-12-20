@@ -40,7 +40,7 @@ Class {
 		'shapeEdge',
 		'polygonElement'
 	],
-	#category : #'Roassal2-Builder-Kiviat'
+	#category : #'Roassal2-Kiviat'
 }
 
 { #category : #adding }
