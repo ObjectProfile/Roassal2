@@ -5,7 +5,7 @@ A GLMRoassalMorphicTest is xxxxxxxxx.
 Class {
 	#name : #GLMRoassal2MorphicTest,
 	#superclass : #GLMMorphicTest,
-	#category : #'Roassal2GT-Glamour'
+	#category : #'Roassal2GT-Tests'
 }
 
 { #category : #tests }
