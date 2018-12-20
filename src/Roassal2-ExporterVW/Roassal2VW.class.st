@@ -9,32 +9,42 @@ Class {
 
 { #category : #accesing }
 Roassal2VW >> blacklist [
-	^ 'RTGeneralExample>>#combiningRoassalAndMorphic
-	RTElementTest >> #testPlatformPopup
-	RTRoassalExample >> #examplePlatformPoup
-	RTAbstractExample class >> #createIcon
-	RTAbstractExample >> #installTitle:code:
-	FileReference >> #gtInspectorCsvIn:
-	RTTabTable >> #gtInspectorTableIn:
-	RTExploraBuilderExample >> #exampleCircularList
-	RTHTML5ExporterExample >> #exportAll
-	RTPopupTest >> #testPopupView
-	RTPopupTest >> #testPopupView02
-	RTBuilder >> #openWithToolbar
-	RTView >> #openWithToolbar
-	RTView >> #spotterShapesFor:
-	RTView >> #spotterShapesModelsFor:
-	RTGrapherTest >> #testError
-	RTMondrianTest >> #testSourceError
-	RTObject class >> #gtExamplesFactory
-	TRDarkTheme >> #trachelCanvasColor
-	TRTheme class >> #infer
-	RTMondrianTest >> #testNodesError
-	ClassDescription >> #rtmethods
-	ClassDescription >> #oldestMethod
-	ClassDescription >> #ageInDays
-	RTRoassalExample >> #exampleBidirectionalLines
-	ClassDescription >> #gotMethodOnDay:' lines collect: [ :each | (self class compiler evaluate: each) ] thenSelect: #notNil.
+	
+	| blacklistMethods existing |
+	
+	blacklistMethods := {'RTGeneralExample'->#combiningRoassalAndMorphic.
+	'RTElementTest'-> #testPlatformPopup.
+	'RTRoassalExample'-> #examplePlatformPoup.
+	'RTAbstractExample class'-> #createIcon.
+	'RTAbstractExample'-> #installTitle:code:.
+	'FileReference'-> #gtInspectorCsvIn:.
+	'RTTabTable'-> #gtInspectorTableIn:.
+	'RTExploraBuilderExample'-> #exampleCircularList.
+	'RTHTML5ExporterExample'-> #exportAll.
+	'RTPopupTest'-> #testPopupView.
+	'RTPopupTest'-> #testPopupView02.
+	'RTBuilder'-> #openWithToolbar.
+	'RTView'-> #openWithToolbar.
+	'RTView'-> #spotterShapesFor:.
+	'RTView'-> #spotterShapesModelsFor:.
+	'RTGrapherTest'-> #testError.
+	'RTMondrianTest'-> #testSourceError.
+	'RTObject class'-> #gtExamplesFactory.
+	'TRDarkTheme'-> #trachelCanvasColor.
+	'TRTheme class'-> #infer.
+	'RTMondrianTest'-> #testNodesError.
+	'ClassDescription'-> #rtmethods.
+	'ClassDescription'-> #oldestMethod.
+	'ClassDescription'-> #ageInDays.
+	'RTRoassalExample'-> #exampleBidirectionalLines.
+	'ClassDescription'-> #gotMethodOnDay:}.
+	
+	^ blacklistMethods 
+			collect: [ :each | 
+				| aClass |
+				aClass := self class environment classNamed: each key.
+				aClass ifNil: [ nil ] ifNotNil: [ aClass >> each value ] ] 
+			thenSelect: #notNil.
 ]
 
 { #category : #importing }
