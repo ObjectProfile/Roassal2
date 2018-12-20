@@ -44,7 +44,7 @@ b build.
 Class {
 	#name : #RTCalendarExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Calendar'
+	#category : #'Roassal2-Calendar'
 }
 
 { #category : #sources }

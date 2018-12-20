@@ -1,20 +1,6 @@
 Extension { #name : #RTLayoutBuilder }
 
 { #category : #'*Roassal2' }
-RTLayoutBuilder >> date [
-	"Used by RTCalendarBuilder"
-	layout := RTDateLayout new.
-	^ layout
-]
-
-{ #category : #'*Roassal2' }
-RTLayoutBuilder >> month [
-	"Used by RTCalendarBuilder"
-	layout := RTMonthLayout new.
-	^ layout
-]
-
-{ #category : #'*Roassal2' }
 RTLayoutBuilder >> sunburstWithArcWidth: aNumber [
 	layout := RTSunburstConstantWidthLayout new.
 	layout arcWidth: aNumber.

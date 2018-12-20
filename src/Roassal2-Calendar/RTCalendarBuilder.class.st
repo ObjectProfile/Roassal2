@@ -18,7 +18,7 @@ Class {
 		'monthInteraction',
 		'yearInteraction'
 	],
-	#category : #'Roassal2-Builder-Calendar'
+	#category : #'Roassal2-Calendar'
 }
 
 { #category : #hooks }

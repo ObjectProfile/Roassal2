@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gapSize'
 	],
-	#category : #'Roassal2-Builder-Calendar'
+	#category : #'Roassal2-Calendar'
 }
 
 { #category : #hook }
