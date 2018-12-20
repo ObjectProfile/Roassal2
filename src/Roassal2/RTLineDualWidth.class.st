@@ -59,7 +59,7 @@ Class {
 	#category : #'Roassal2-Shapes'
 }
 
-{ #category : #examples }
+{ #category : #'as yet unclassified' }
 RTLineDualWidth class >> example01 [
 	<noTest>
 	| view box e1 e2 l |
