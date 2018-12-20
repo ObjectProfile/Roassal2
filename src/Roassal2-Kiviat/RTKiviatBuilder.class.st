@@ -47,7 +47,7 @@ Class {
 		'axisTitles',
 		'axisBuilt'
 	],
-	#category : #'Roassal2-Builder-Kiviat'
+	#category : #'Roassal2-Kiviat'
 }
 
 { #category : #'as yet unclassified' }

@@ -32,6 +32,7 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-Calendar' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-BoxPlot' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-DependencyStructuralMatrices' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2-Kiviat' with: [ spec requires: #('Roassal2') ];
 			
 				package: 'Roassal2-Tests' with: [ spec requires: #('Trachel' 'Roassal2' 'Roassal2-Exporter') ];
 				package: 'Roassal2-OpenStreetMap' with: [ spec requires: #('Roassal2') ];
@@ -46,7 +47,8 @@ BaselineOfRoassal2 >> baseline: spec [
 				'Roassal2-Rules'
 				'Roassal2-Calendar'
 				'Roassal2-BoxPlot'
-				'Roassal2-DependencyStructuralMatrices').
+				'Roassal2-DependencyStructuralMatrices'
+				'Roassal2-Kiviat').
 			spec group: 'Minimal' with: #('Core' 'Roassal2GT').
 			spec group: 'NoGlamour' with: #('Core' 'Roassal2-Tests' 'Roassal2-Exporter-Tests').
 			spec group: 'Tests' with: #('Minimal' 'Roassal2-Tests' 'Roassal2-Exporter-Tests' 'Roassal2GT-Tests').

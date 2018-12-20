@@ -17,7 +17,7 @@ RTKiviatBuilderExample new installTitle: 'Colored3'
 Class {
 	#name : #RTKiviatBuilderExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-Kiviat'
+	#category : #'Roassal2-Kiviat'
 }
 
 { #category : #sources }

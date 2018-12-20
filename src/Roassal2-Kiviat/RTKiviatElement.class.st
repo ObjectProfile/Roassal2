@@ -29,7 +29,7 @@ Class {
 		'value',
 		'position'
 	],
-	#category : #'Roassal2-Builder-Kiviat'
+	#category : #'Roassal2-Kiviat'
 }
 
 { #category : #initialization }
