@@ -21,7 +21,7 @@ Class {
 		'classNameShape',
 		'edgeActions'
 	],
-	#category : #'Roassal2-Builder-UML'
+	#category : #'Roassal2-UML'
 }
 
 { #category : #public }

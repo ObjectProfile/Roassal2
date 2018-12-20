@@ -24,7 +24,7 @@ b build.
 Class {
 	#name : #RTUMLExample,
 	#superclass : #RTAbstractExample,
-	#category : #'Roassal2-Builder-UML'
+	#category : #'Roassal2-UML'
 }
 
 { #category : #sources }
