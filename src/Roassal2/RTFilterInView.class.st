@@ -31,6 +31,9 @@ b
 Class {
 	#name : #RTFilterInView,
 	#superclass : #RTAbstractHighlightElementsInView,
+	#instVars : [
+		'shouldFilterChildren'
+	],
 	#category : #'Roassal2-Interactions'
 }
 
@@ -42,6 +45,18 @@ RTFilterInView >> askForPattern [
 		initialAnswer: '*aPattern*'
 ]
 
+{ #category : #'public - configuration' }
+RTFilterInView >> doNotFilterChildren [
+	"Children of a matched element should are not considered"
+	shouldFilterChildren := false
+]
+
+{ #category : #'public - configuration' }
+RTFilterInView >> filterChildren [
+	"Children of a matched element should also be considered"
+	shouldFilterChildren := true
+]
+
 { #category : #hooks }
 RTFilterInView >> filterOutUsing: aString [
 
@@ -49,6 +64,20 @@ RTFilterInView >> filterOutUsing: aString [
 	elements := self getRelevantElementsFor: aString.
 	elements do: [ :el | el trachelShape hide ].
 	view signalUpdate.
+]
+
+{ #category : #initialization }
+RTFilterInView >> getRelevantElementsFor: string [
+	"Return the list of elements found in the view that matches the string"
+	| els |
+	els := super getRelevantElementsFor: string.
+	^ shouldFilterChildren ifTrue: [ els, (els flatCollect: #nestedElements) ] ifFalse: [ els ]
+]
+
+{ #category : #initialization }
+RTFilterInView >> initialize [
+	super initialize.
+	self filterChildren
 ]
 
 { #category : #hooks }
@@ -83,5 +112,6 @@ RTFilterInView >> keepOnlyUsing: aString [
 
 { #category : #hooks }
 RTFilterInView >> reset [
-	view elements do: [ :el | el trachelShape show ]
+	view elements do: [ :el | el trachelShape show ].
+	view signalUpdate
 ]
