@@ -43,15 +43,6 @@ RTFilterInView >> askForPattern [
 ]
 
 { #category : #hooks }
-RTFilterInView >> filterInUsing: aString [
-
-	| elements |
-	elements := self getRelevantElementsFor: aString.
-	(view elements copyWithoutAll: elements) do: [ :el | el trachelShape hide ].
-	view signalUpdate.
-]
-
-{ #category : #hooks }
 RTFilterInView >> filterOutUsing: aString [
 
 	| elements |
@@ -65,10 +56,10 @@ RTFilterInView >> initializeElement: aView [
 	| string |
 	super initializeElement: aView.
 	view
-		addMenu: 'FilterIn'
+		addMenu: 'OnlyKeep'
 		callback: [ string := self askForPattern.
 			string ifNotNil:
-				[ self filterInUsing: string ] ].
+				[ self keepOnlyUsing: string ] ].
 
 	view
 		addMenu: 'FilterOut'
@@ -79,6 +70,15 @@ RTFilterInView >> initializeElement: aView [
 	view
 		addMenu: 'Reset'
 		callback: [ self reset ]
+]
+
+{ #category : #hooks }
+RTFilterInView >> keepOnlyUsing: aString [
+
+	| elements |
+	elements := self getRelevantElementsFor: aString.
+	(view elements copyWithoutAll: elements) do: [ :el | el trachelShape hide ].
+	view signalUpdate.
 ]
 
 { #category : #hooks }
