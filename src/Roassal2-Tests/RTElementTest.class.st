@@ -542,3 +542,30 @@ RTElementTest >> testWidthAndHeight2 [
 	self assert: outter height = 15.
 	self assert: outter encompassingRectangle extent = (45 @ 15)
 ]
+
+{ #category : #'nested elements' }
+RTElementTest >> testWithAllParentElements01 [
+	| e ps |
+	e := RTElement new.
+	ps := e withAllParentElements.
+	self assert: ps isArray.
+	self assert: ps size equals: 1.
+	self assert: ps first equals: e. 
+]
+
+{ #category : #'nested elements' }
+RTElementTest >> testWithAllParentElements02 [
+	| ps e1 e2 e3 |
+	e1 := RTElement new.
+	e2 := RTElement new.
+	e3 := RTElement new.
+	e3 parentElement: e2.
+	e2 parentElement: e1.
+	ps := e3 withAllParentElements.
+	self assert: ps isArray.
+	self assert: ps equals: (Array with: e3 with: e2 with: e1).
+	
+	ps := e2 withAllParentElements.
+	self assert: ps isArray.
+	self assert: ps equals: (Array with: e2 with: e1)
+]

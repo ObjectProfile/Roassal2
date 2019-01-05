@@ -39,6 +39,14 @@ RTNest >> behavior: aBehavior [
 	behavior := aBehavior 
 ]
 
+{ #category : #utility }
+RTNest >> bindBackElement: backElement with: elements [
+	(backElement hasAttribute: #nestedElements)
+		ifFalse: [ backElement attributeAt: #nestedElements put: RTGroup new ].
+	(backElement attributeAt: #nestedElements) addAll: elements.
+	elements do: [ :anElement | anElement attributeAt: #parentElement put: backElement ]
+]
+
 { #category : #public }
 RTNest >> centerOn: backElement elements: elements [
 	"Public method. This method does the following actions:
@@ -200,14 +208,6 @@ RTNest >> makeElements: elements resizableWithoutRecursion: backElement [
 	elements do: [ :e | e trachelShape addCallback: callback1 ; addCallback: callback2 ] 
 ]
 
-{ #category : #utility }
-RTNest >> mark: backElement with: elements [
-	(backElement hasAttribute: #nestedElements)
-		ifFalse: [ backElement attributeAt: #nestedElements put: RTGroup new ].
-	(backElement attributeAt: #nestedElements) addAll: elements.
-	elements do: [ :anElement | anElement attributeAt: #parentElement put: backElement ]
-]
-
 { #category : #'setting nesting behavior' }
 RTNest >> noBehavior [
 	self behavior: (RTNoBehavior instance)
@@ -238,7 +238,7 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 
 	aSymbolLayout rtValue: element trachelShape.
 	element trachelShape relayout.
-	self mark: element with: elements
+	self bindBackElement: element with: elements
 ]
 
 { #category : #public }
@@ -269,7 +269,7 @@ RTNest >> on: backElement nest: elements [
 				nest: elements ].
 	self doLayoutIfNecessaryOn: elements.
 	self on: backElement simplyNest: elements.
-	self mark: backElement with: elements
+	self bindBackElement: backElement with: elements
 ]
 
 { #category : #public }
