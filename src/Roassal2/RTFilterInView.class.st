@@ -61,6 +61,7 @@ RTFilterInView >> filterChildren [
 RTFilterInView >> filterOutUsing: aString [
 
 	| elements |
+self halt.
 	elements := self getRelevantElementsFor: aString.
 	elements do: [ :el | el trachelShape hide ].
 	view signalUpdate.
@@ -106,6 +107,7 @@ RTFilterInView >> keepOnlyUsing: aString [
 
 	| elements |
 	elements := self getRelevantElementsFor: aString.
+	shouldFilterChildren ifTrue: [ elements := elements flatCollect: #withAllParentElements ].
 	(view elements copyWithoutAll: elements) do: [ :el | el trachelShape hide ].
 	view signalUpdate.
 ]

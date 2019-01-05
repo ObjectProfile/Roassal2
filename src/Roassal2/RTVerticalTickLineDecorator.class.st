@@ -1,19 +1,3 @@
-"
-Add vertical line, one per tick.
-
-Here is an example:
-g := RTGrapher new.
-d := RTData new.
-d connectColor: Color blue.
-d noDot.
-d points: (-3.14 to: 3.14 by: 0.1).
-d y: #sin.
-d x: #yourself.
-g add: d.
-g addDecorator: (RTVerticalTickLineDecorator new).
-g addDecorator: (RTHorizontalTickLineDecorator new).
-g
-"
 Class {
 	#name : #RTVerticalTickLineDecorator,
 	#superclass : #RTAbstractTickLineDecorator,

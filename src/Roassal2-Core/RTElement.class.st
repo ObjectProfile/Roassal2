@@ -148,7 +148,7 @@ RTElement >> isNotConnected [
 	^ self isConnected not
 ]
 
-{ #category : #accessing }
+{ #category : #nesting }
 RTElement >> nestedElements [
 	"Return the list of elements that I may nest. Return an empty array if none"
 	^ (self hasAttribute: #nestedElements)
@@ -163,7 +163,7 @@ RTElement >> outgoingEdges [
 	^ self connectedEdges select: [ :e | e from == self ]
 ]
 
-{ #category : #accessing }
+{ #category : #nesting }
 RTElement >> parentElement [
 	"Return the parent element that contains me. Return nil if none.
 	This attribute is set by RTNest"
@@ -172,7 +172,7 @@ RTElement >> parentElement [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : #nesting }
 RTElement >> parentElement: anElement [
 	"Keep a reference to the parent element"
 	self attributeAt: #parentElement put: anElement
@@ -213,7 +213,7 @@ RTElement >> removeWithItsConnectedEdges [
 	view := nil 
 ]
 
-{ #category : #actions }
+{ #category : #nesting }
 RTElement >> removeWithNestedElements [
 	"Remove the element from the view. Edges that may be connected are also removed"
 	self nestedElements do: #remove.
@@ -258,7 +258,7 @@ RTElement >> translateTo: newPosition [
 	self updateConnectedEdges
 ]
 
-{ #category : #accessing }
+{ #category : #nesting }
 RTElement >> unbindNestedElements [
 	"Unlink the nested elements to myself"
 	self removeAttributeAt: #nestedElements ifAbsent: [  ]
@@ -289,4 +289,22 @@ RTElement >> width [
 { #category : #accessing }
 RTElement >> width: aValue [
 	^ trachelShape width: aValue
+]
+
+{ #category : #nesting }
+RTElement >> withAllParentElements [
+	"Return the collection of all the parents"
+	| answer |
+	answer := OrderedCollection new.
+	answer add: self.
+	self withAllParentElements: answer.
+	^ answer asArray
+]
+
+{ #category : #nesting }
+RTElement >> withAllParentElements: aCollection [
+	"Private method. Used to compute the collection of parent elements"
+	self parentElement ifNil: [ ^ self ].
+	aCollection add: self parentElement.
+	self parentElement withAllParentElements: aCollection
 ]
