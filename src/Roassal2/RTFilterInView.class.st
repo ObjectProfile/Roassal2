@@ -61,7 +61,6 @@ RTFilterInView >> filterChildren [
 RTFilterInView >> filterOutUsing: aString [
 
 	| elements |
-self halt.
 	elements := self getRelevantElementsFor: aString.
 	elements do: [ :el | el trachelShape hide ].
 	view signalUpdate.
