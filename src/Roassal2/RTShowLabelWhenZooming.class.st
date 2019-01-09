@@ -28,7 +28,10 @@ RTShowLabelWhenZooming >> conditionBlock [
 
 { #category : #accessing }
 RTShowLabelWhenZooming >> conditionBlock: aOneArgBlock [
-	"Take the element model as argument"
+	"The conditionBlock is used to filter the label shapes that should be considered.
+	All the Trachel label shapes that matches the argument are considered to be hidden.
+	
+	Take the trachel shape as argument"
 	conditionBlock := aOneArgBlock
 ]
 
@@ -43,7 +46,7 @@ RTShowLabelWhenZooming >> initialize [
 RTShowLabelWhenZooming >> initializeElement: aView [
 	aView canvas camera addCallback: (TRCameraScaleCallback new block:  [ :scaleFactor | 
 	| lbls | 
-	lbls := aView canvas shapes select: [ :s | (s isKindOf: TRLabelShape) and: [ conditionBlock rtValue: s element model ] ].
+	lbls := aView canvas shapes select: [ :s | (s isKindOf: TRLabelShape) and: [ conditionBlock rtValue: s ] ].
 	"lbls := (aView elements select: [ :el | el shape isKindOf: RTLabel ]) collect: #trachelShape."
 	(scaleFactor > scaleThreshold) ifTrue: [ lbls do: #show ] ifFalse: [ lbls do: #hide ]]). 
 	
@@ -56,5 +59,6 @@ RTShowLabelWhenZooming >> scaleThreshold [
 
 { #category : #accessing }
 RTShowLabelWhenZooming >> scaleThreshold: aFloat [
+	"Set the scale threshold for which elements have to be hidden"
 	scaleThreshold := aFloat
 ]

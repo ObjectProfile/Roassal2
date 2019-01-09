@@ -220,7 +220,7 @@ TRShape >> isFixed [
 { #category : #testing }
 TRShape >> isHidden [
 	"Return true if the element is not visible"
-	^ isVisible negated
+	^ isVisible not
 ]
 
 { #category : #testing }
