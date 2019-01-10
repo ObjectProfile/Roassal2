@@ -4,7 +4,7 @@ A RTResizableTest is a test class for testing the behavior of RTResizable
 Class {
 	#name : #RTResizableTest,
 	#superclass : #RTTest,
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Interactions'
 }
 
 { #category : #tests }

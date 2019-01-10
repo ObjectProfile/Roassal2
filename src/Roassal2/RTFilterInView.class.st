@@ -27,17 +27,32 @@ b view @ RTFilterInView.
 b 
 -=-=-=
 
+Example using the spawn block:
+-=-=-=
+| b |
+b := RTMondrian new.
+b shape box size: #numberOfMethods.
+b nodes: (Collection withAllSubclasses).
+b layout grid.
+b normalizer normalizeColor: #numberOfMethods.
+
+filter := RTFilterInView new.
+filter spawnBlock: [ :el | RTView new addAll: el copy; yourself ].
+b view @ filter.
+b 
+-=-=-=
 "
 Class {
 	#name : #RTFilterInView,
 	#superclass : #RTAbstractHighlightElementsInView,
 	#instVars : [
-		'shouldFilterChildren'
+		'shouldFilterChildren',
+		'spawnBlock'
 	],
 	#category : #'Roassal2-Interactions'
 }
 
-{ #category : #hooks }
+{ #category : #'private - action' }
 RTFilterInView >> askForPattern [
 	^ TRPlatform current
 		dialogRequest:
@@ -59,7 +74,7 @@ RTFilterInView >> filterChildren [
 
 { #category : #hooks }
 RTFilterInView >> filterOutUsing: aString [
-
+	"Filter out all the elements whose printstring of the model matches aString"
 	| elements |
 	elements := self getRelevantElementsFor: aString.
 	elements do: [ :el | el trachelShape hide ].
@@ -77,7 +92,10 @@ RTFilterInView >> getRelevantElementsFor: string [
 { #category : #initialization }
 RTFilterInView >> initialize [
 	super initialize.
-	self filterChildren
+	self filterChildren.
+	
+	"But having this variable at nil, no spawn option is offered"
+	spawnBlock := nil.
 ]
 
 { #category : #hooks }
@@ -98,12 +116,24 @@ RTFilterInView >> initializeElement: aView [
 		
 	view
 		addMenu: 'Reset'
-		callback: [ self reset ]
+		callback: [ self reset ].
+		
+	self shouldOfferSpawn ifTrue: [ 
+		view addMenu: 'Inspect'
+			callback: [ self inspectMarkedVisibleElements ]
+	]
+]
+
+{ #category : #'private - action' }
+RTFilterInView >> inspectMarkedVisibleElements [
+	| elements |
+	elements := view elements select: [ :e | e trachelShape isMarkedAsVisible ].
+	(spawnBlock rtValue: elements) inspect
 ]
 
 { #category : #hooks }
 RTFilterInView >> keepOnlyUsing: aString [
-
+	"Keeo all the elements whose printstring of the model matches aString"
 	| elements |
 	elements := self getRelevantElementsFor: aString.
 	shouldFilterChildren ifTrue: [ elements := elements flatCollect: #withAllParentElements ].
@@ -111,8 +141,28 @@ RTFilterInView >> keepOnlyUsing: aString [
 	view signalUpdate.
 ]
 
-{ #category : #hooks }
+{ #category : #'private - action' }
 RTFilterInView >> reset [
+	"Make all the elements visible again"
 	view elements do: [ :el | el trachelShape show ].
 	view signalUpdate
+]
+
+{ #category : #testing }
+RTFilterInView >> shouldOfferSpawn [
+	"Return true if the option should be offered"
+	^ spawnBlock notNil
+]
+
+{ #category : #accessing }
+RTFilterInView >> spawnBlock [
+	"Return the block used for the spawning. Return nil if none is set"
+	^ spawnBlock
+]
+
+{ #category : #accessing }
+RTFilterInView >> spawnBlock: aOneArgBlock [
+	"Set the block used to inspect the marked as visible elements.
+	The argument of the block is the list of all the Roassal Elements whose trachel shape is marked as visible."
+	spawnBlock := aOneArgBlock
 ]

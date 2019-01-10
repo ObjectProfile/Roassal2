@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'slider'
 	],
-	#category : #'Roassal2-Tests'
+	#category : #'Roassal2-Tests-Interactions'
 }
 
 { #category : #running }
