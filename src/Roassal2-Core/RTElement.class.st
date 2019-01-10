@@ -93,6 +93,12 @@ RTElement >> geometry [
 	^ self shape geometryFor: self
 ]
 
+{ #category : #nesting }
+RTElement >> hasNestedElements [
+	"Return true if the element has some nested elements"
+	^ self nestedElements notEmpty
+]
+
 { #category : #accessing }
 RTElement >> height [
 	^ trachelShape height
