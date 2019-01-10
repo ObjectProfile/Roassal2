@@ -64,7 +64,7 @@ RTHighlightElementsInView >> increaseColorIndex [
 { #category : #initialization }
 RTHighlightElementsInView >> initialize [
 	super initialize.
-	colorIndex := 0.
+	self resetColorIndex.
 	transparency := 1.0
 ]
 
@@ -99,6 +99,7 @@ RTHighlightElementsInView >> processEmptyString [
 				ifTrue: [ e trachelShape
 						color: (e attributeAt: #prevousColorRTHighlightElementsInView).
 					e removeAttributeAt: #prevousColorRTHighlightElementsInView ] ].
+	self resetColorIndex.
 	^ self
 ]
 
@@ -108,6 +109,11 @@ RTHighlightElementsInView >> rememberPreviousColorIfNecessaryFor: e [
 		ifFalse: [ e
 				attributeAt: #prevousColorRTHighlightElementsInView
 				put: e trachelShape color ]
+]
+
+{ #category : #initialization }
+RTHighlightElementsInView >> resetColorIndex [
+	colorIndex := 0
 ]
 
 { #category : #accessing }
