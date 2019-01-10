@@ -44,12 +44,17 @@ RTShowLabelWhenZooming >> initialize [
 
 { #category : #hooks }
 RTShowLabelWhenZooming >> initializeElement: aView [
-	aView canvas camera addCallback: (TRCameraScaleCallback new block:  [ :scaleFactor | 
-	| lbls | 
-	lbls := aView canvas shapes select: [ :s | (s isKindOf: TRLabelShape) and: [ conditionBlock rtValue: s ] ].
-	"lbls := (aView elements select: [ :el | el shape isKindOf: RTLabel ]) collect: #trachelShape."
-	(scaleFactor > scaleThreshold) ifTrue: [ lbls do: #show ] ifFalse: [ lbls do: #hide ]]). 
-	
+	aView canvas camera
+		addCallback:
+			(TRCameraScaleCallback new
+				block: [ :scaleFactor | 
+					| lbls |
+					lbls := aView canvas shapes
+						select: [ :s | (s isKindOf: TRLabelShape) and: [ conditionBlock rtValue: s ] ].
+					"lbls := (aView elements select: [ :el | el shape isKindOf: RTLabel ]) collect: #trachelShape."
+					scaleFactor > scaleThreshold
+						ifTrue: [ lbls do: #show ]
+						ifFalse: [ lbls do: #hide ] ])
 ]
 
 { #category : #accessing }
