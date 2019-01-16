@@ -66,6 +66,13 @@ RTFilterInView >> doNotFilterChildren [
 	shouldFilterChildren := false
 ]
 
+{ #category : #'private - action' }
+RTFilterInView >> elementsToBeInspected [
+
+	^ view elements select: [ :e | e trachelShape isMarkedAsVisible and: [ e trachelShape isFixed not ] ]
+	
+]
+
 { #category : #'public - configuration' }
 RTFilterInView >> filterChildren [
 	"Children of a matched element should also be considered"
@@ -127,7 +134,7 @@ RTFilterInView >> initializeElement: aView [
 { #category : #'private - action' }
 RTFilterInView >> inspectMarkedVisibleElements [
 	| elements |
-	elements := view elements select: [ :e | e trachelShape isMarkedAsVisible ].
+	elements := self elementsToBeInspected.
 	(spawnBlock rtValue: elements) inspect
 ]
 

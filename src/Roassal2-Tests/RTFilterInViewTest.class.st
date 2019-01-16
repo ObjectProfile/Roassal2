@@ -67,3 +67,13 @@ RTFilterInViewTest >> testKeepOnly [
 	
 	
 ]
+
+{ #category : #tests }
+RTFilterInViewTest >> testWithFixedShape [
+	| fixedElement |
+	fixedElement := (RTLabel new elementOn: 'hello') setAsFixed; yourself.
+	view add: fixedElement.	
+	self deny: (filter elementsToBeInspected includes: fixedElement).
+	
+	
+]
