@@ -345,6 +345,12 @@ TRMorph >> relativePositionFor: evt [
 	"^ trachelCanvas camera fromPixelToSpace: (evt position - self bounds origin) "
 ]
 
+{ #category : #initialization }
+TRMorph >> reset [
+	"This method is useful in case some references of TRMorph cannot be garbage collected, as it may happen with GT."
+	self class instVarNames do: [ :n | self instVarNamed: n put: nil ]
+]
+
 { #category : #'event-processed' }
 TRMorph >> shapeForEvent: anEvent [
 	"Return the Trachel shape for the event provided as argument"
