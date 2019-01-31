@@ -298,6 +298,31 @@ RTElement >> width: aValue [
 ]
 
 { #category : #nesting }
+RTElement >> withAllConnectedElements [
+	"Return the collection of all the connected elements"
+	| answer |
+	answer := Set new.
+	answer add: self.
+	self withAllConnectedElements: answer.
+	^ answer asArray
+]
+
+{ #category : #nesting }
+RTElement >> withAllConnectedElements: aCollection [
+	"Private method. Used to compute the collection of connected elements"
+
+	| els |
+	connectedEdges ifNil: [ ^ self ].
+	els := (connectedEdges collect: #to), (connectedEdges collect: #from).
+	els do: [ :e | 
+			(aCollection includes: e)
+				ifFalse: [ 
+					aCollection add: e.
+					e withAllConnectedElements: aCollection ] ].
+	aCollection addAll: els.
+]
+
+{ #category : #nesting }
 RTElement >> withAllParentElements [
 	"Return the collection of all the parents"
 	| answer |

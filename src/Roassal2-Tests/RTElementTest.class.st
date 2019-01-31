@@ -544,6 +544,26 @@ RTElementTest >> testWidthAndHeight2 [
 ]
 
 { #category : #'nested elements' }
+RTElementTest >> testWithAllConnectedElements [
+	| v |
+	v := RTView new.
+	v addAll: (RTBox elementsOn: (1 to: 6)) @ RTPopup.
+	RTEdgeBuilder new
+		view: v;
+		useAssociations:
+			{(1 -> 2).
+			(1 -> 3).
+			(4 -> 5)}.
+	RTTreeLayout on: v elements.
+	self assert: v elements first withAllConnectedElements size equals: 3.
+	self assert: v elements second withAllConnectedElements size equals: 3.
+	self assert: v elements third withAllConnectedElements size equals: 3.
+	self assert: v elements fourth withAllConnectedElements size equals: 2.
+	self assert: v elements fifth withAllConnectedElements size equals: 2.
+	self assert: v elements sixth withAllConnectedElements size equals: 1.
+]
+
+{ #category : #'nested elements' }
 RTElementTest >> testWithAllParentElements01 [
 	| e ps |
 	e := RTElement new.
