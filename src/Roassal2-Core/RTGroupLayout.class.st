@@ -32,6 +32,32 @@ RTGroupLayout new grid; on: b view elements.
 
 b view.
 -=-=-=-=-=-=-=-=-=-=-=-=
+
+The whole picture of Pharo
+-=-=-=-=-=-=-=-=-=-=-=-=
+classes := Smalltalk globals allClasses copyWithoutAll: { Object . TestCase . Model }.
+
+b := RTMondrian new.
+b shape box
+	width: [ :c | c numberOfVariables * 6 ];
+	height: #numberOfMethods.
+b nodes: classes.
+b edges connectFrom: #superclass.
+b layout tree.
+""b normalizer normalizeSize: #numberOfMethods.""
+b build.
+
+gl := RTGroupLayout new flow.
+gl on: b view elements.
+gl lonelyGroup do: #remove.
+
+(RTGroupLayout new getSortedGroupsFrom: b view elements) do: [ :g | 
+	c := Color random.
+	g do: [ :e | e color: c ] ].
+
+b view @ RTZoomableView.
+b view.
+-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #RTGroupLayout,
