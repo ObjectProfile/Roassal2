@@ -185,7 +185,7 @@ RTTimelineSet >> renderIn: view using: timelineBuilder [
 		normalizeWidth: [ :anObject | (end rtValue: anObject) - (start rtValue: anObject) ]
 			min: self minimumEventWidth
 			max: timelineBuilder extent x
-			minValue: 0
+			minValue: globalMin
 			maxValue: globalMax.
 
 	"For the location"
@@ -209,7 +209,7 @@ RTTimelineSet >> setRenderedHeight: timelineBuilder [
 
 { #category : #rendering }
 RTTimelineSet >> setRenderedXFor: element builder: timelineBuilder [
-	^ (start rtValue: element model) / globalMax * timelineBuilder extent x
+	^ ((start rtValue: element model) - globalMin) / (globalMax -globalMin) * timelineBuilder extent x
 ]
 
 { #category : #rendering }
@@ -217,7 +217,7 @@ RTTimelineSet >> setRenderedYFor: element builder: timelineBuilder [
 	| indexY |
 	indexY := timelineBuilder
 		indexOfLineIdentifier: (lineIdentifier rtValue: element model).
-	^ (timelineBuilder getPixelPositionOf: 0 @ indexY) y
+	^ (timelineBuilder getPixelPositionOfX: globalMin andY:indexY) y
 ]
 
 { #category : #accessing }
