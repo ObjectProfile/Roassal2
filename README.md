@@ -1,3 +1,30 @@
+
+This fork changes the timeline functionality to allow visualizing arrays of dates. Here's an example:
+
+```Smalltalk
+	| data b s |
+	data := Array with: 
+        (Array with:'abc' with:(Date fromString:'1 March 2019') with:(Date fromString: '5 April 2019')) with:
+        (Array with:'efg' with:(Date fromString:'1 April 2019') with:(Date fromString: '7 April 2019')).
+
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: data.
+	s lineIdentifier: #first.
+	s start: #second.
+	s end: #third.
+	b add: s.
+	
+	b axisX 
+		numberOfLabels: 5;
+		labelRotation: -45;
+		labelConversion: [ :v | v ]. 
+	
+	b build.
+	^ b view
+```
+
 # Roassal2
 
 Roassal2 is a visualization engine for the Pharo and VisualWorks programming language and environment.
