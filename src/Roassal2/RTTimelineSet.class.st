@@ -182,7 +182,7 @@ RTTimelineSet >> renderIn: view using: timelineBuilder [
 	"We set the width of the elements"
 	RTMetricNormalizer new
 		elements: elements;
-		normalizeWidth: [ :anObject | (end rtValue: anObject) - (start rtValue: anObject) ]
+		normalizeWidth: [ :anObject | globalMin + ((end rtValue: anObject) - (start rtValue: anObject)) ]
 			min: self minimumEventWidth
 			max: timelineBuilder extent x
 			minValue: globalMin
