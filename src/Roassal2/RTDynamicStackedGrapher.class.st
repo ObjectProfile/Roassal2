@@ -185,6 +185,8 @@ RTDynamicStackedGrapher >> removeExceedingBar [
 
 { #category : #hooks }
 RTDynamicStackedGrapher >> renderIn: aView [
+	layoutTranslator class = RTSmoothLayoutTranslator 
+		ifTrue: [ layoutTranslator view: aView ].
 	self defineAxesIfNecessary.
 	self renderAxis.
 	
