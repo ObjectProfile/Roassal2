@@ -23,6 +23,8 @@ RTSVGExporterTest >> testEmpty [
 	
 	| v str |
 	v := RTView new.
+	"use a White theme for the test"
+	v canvas theme: TRWhiteSolarizedTheme new.
 
 	str := WriteStream on: String new.
 	RTSVGExporter new view: v; exportOnStream: str.
