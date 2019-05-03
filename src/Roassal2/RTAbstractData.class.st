@@ -43,6 +43,52 @@ RTAbstractData >> barChartUsing: barLabelFactory [
 ]
 
 { #category : #'public - bar shape' }
+RTAbstractData >> barChartWithBarAboveTitle: aBlockOrSymbol [
+	"Add bar charts with centered title, the default color is used. This is a public method"
+"
+Here is an example:
+
+
+| b d |			
+b := RTGrapher new.
+
+d := RTVerticalMultipleData new.
+d barShape width: 40.
+d points: #( #('hello' 1 2 1) #('world' 2 4 2 ) #('bonjour' 3 5 4) #('bonjour' 3 5 4 ) #('bonjour' 3 5 4)).
+d addMetric: #second.
+d addMetric: #third.
+d addMetric: #fourth.
+
+d barChartWithBarAboveTitle: #first.
+b add: d.
+
+b			
+
+
+"
+	
+	
+	^ self barChartWithBarAboveTitle: aBlockOrSymbol color: self defaultLabelColor
+]
+
+{ #category : #'public - bar shape' }
+RTAbstractData >> barChartWithBarAboveTitle: aBlockOrSymbol color: aColor [
+	"Draw a bar chart with title"
+	self barShape.
+	elementActions add: [ :someElements | 
+		| lbl |
+		self selectElementsForAddingAboveBarTitle doWithIndex: [ :e :index |
+			| modelToBeUsed |
+			modelToBeUsed := self getModelForElement:e atIndex: index.
+			lbl := (RTLabel new text: aBlockOrSymbol; color: aColor) 
+						elementOn: modelToBeUsed.
+			TRConstraint move: lbl above: e.
+			elements anyOne view add: lbl.
+		] ].
+	 
+]
+
+{ #category : #'public - bar shape' }
 RTAbstractData >> barChartWithBarCenteredTitle: aBlockOrSymbol [
 	"Add bar charts with centered title, the default color is used. This is a public method"
 	^ self barChartWithBarCenteredTitle: aBlockOrSymbol color: self defaultLabelColor
@@ -325,6 +371,13 @@ RTAbstractData >> resetShapeBuilderForBar [
 	"Default width that compute an appropriate width"
 	barBuilder width: [ :object | 
 		(builder extent x / (self numberOfPoints * self numberOfMetrics * 2)) asFloat ]
+]
+
+{ #category : #hooks }
+RTAbstractData >> selectElementsForAddingAboveBarTitle [
+	"Return the collection of principal element for each element group.  
+	This principal element is used to position the title label, above the bar"
+	self subclassResponsibility
 ]
 
 { #category : #hooks }
