@@ -3,7 +3,7 @@ Display the standard deviation of the data
 
 -=-=-=-=
 b := RTGrapher new.
-ds := RTDataSet new. 
+ds := RTData new. 
 ds dotShape color: Color red. 
 ds points: #(5 1 20 8).
 b add: ds.
