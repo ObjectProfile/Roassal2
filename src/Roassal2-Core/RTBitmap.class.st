@@ -28,6 +28,24 @@ Another example:
 	v add: s element.
 	^ v
 -=-=--=
+
+Another example:
+-=-=-=-=
+root := '/Users/alexandrebergel/Desktop/TT' asFileReference.
+
+b := RTMondrian new.
+b shape label text: #basename.
+b interaction popupView: [ :group :element |
+	| form fileReference |
+	fileReference := element model.
+	form := fileReference binaryReadStreamDo: [ :stream | ImageReadWriter formFromStream: stream ].
+	form := form scaledToSize: 200 @ 200.
+	group add: (RTBitmap new extent: 200 @ 200; form: form; element) 
+].
+b nodes: root children.
+b layout verticalLine.
+b
+-=-=-=-=
 "
 Class {
 	#name : #RTBitmap,
