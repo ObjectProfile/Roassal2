@@ -5,15 +5,17 @@ Add horizontal lines for some values
 	| b ds p |
 	b := RTGrapher new.
 
-	ds := RTDataSet new.
-	ds points: #( 0 1 2 10).
-
+	ds := RTData new.
+	ds dotShape color: Color red.
+	ds points: #( 0 1 2 5 10).
+	ds x: #yourself.
+	ds y: #yourself.
 	b add: ds.
 
 	b minY: -3.33.
 
 	p := RTHorizontalLineDecorator new.
-	p add: 5; add: 7; add: 3.34.
+	p add: 1; add: 5; add: 3.34.
 	p shape line color: (Color red alpha: 0.3).
 	b addDecorator: p.
 
@@ -22,8 +24,7 @@ Add horizontal lines for some values
 	p shape line color: (Color blue alpha: 0.3).
 	b addDecorator: p.
 
-	b build.
-	^ b view 
+	b 
 -=-=-=-=-=
 "
 Class {
