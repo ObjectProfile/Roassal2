@@ -34,9 +34,9 @@ CPPAbstractFile >> getSource [
 	self fileReference exists ifFalse: [ ^ '' ].
 	
 	r := self fileReference readStream.
-	r ascii.
+"	r ascii.
 	r converter: Latin1TextConverter new.
-	^ r contents.
+"	^ r contents.
 	
 ]
 

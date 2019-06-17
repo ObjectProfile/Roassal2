@@ -1,5 +1,32 @@
 "
 I process a root directory and build CPPModules, CPPHeaders and directories to visualize them
+
+Here is an example:
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    root := '/Users/alexandrebergel/Desktop/SUCHAI-Flight-Software'.
+    p := CPPProcessor new.
+    p processRootFolder: root asFileReference.
+    p resolveDependencies.
+    
+    b := RTMondrian new.
+    b shape circle 
+        color: Color gray;
+        if: [ :f | '*RTOS*' match: f filename ] color: Color red.
+    b interaction highlightNeighbors:  #dependentModules color: Color orange .
+    b nodes: p modules.
+    
+    b shape line 
+        color: (Color blue alpha: 0.2);
+        width: 2.
+    b edges 
+        moveBehind;
+        connectToAll: #dependentModules.
+    b layout grid.
+    b layout forceWithCharge: -300.
+    
+    b normalizer normalizeSize: #loc.
+    b
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 "
 Class {
 	#name : #CPPProcessor,
@@ -7,20 +34,10 @@ Class {
 	#instVars : [
 		'headers',
 		'modules',
-		'directories',
-		'blackListRules'
+		'directories'
 	],
 	#category : #'DataStudio-CProjectVisualizer-Core'
 }
-
-{ #category : #accessing }
-CPPProcessor >> addBlackListRule: aString [
-	"This method is useful to make the CPPProcessor ignore some particular file.
-	E.g., aString = '*nanomind*'
-	IMPORTANT: This method should be called __BEFORE__ calling processRootFolder:
-	"
-	blackListRules add: aString
-]
 
 { #category : #testing }
 CPPProcessor >> containsModulesHavingSameName [
@@ -87,8 +104,7 @@ CPPProcessor >> initialize [
 	super initialize.
 	headers := Dictionary new.
 	modules := Dictionary new.
-	directories := OrderedCollection new.
-	blackListRules := OrderedCollection new.
+	directories := OrderedCollection new
 ]
 
 { #category : #processing }
@@ -185,12 +201,11 @@ CPPProcessor >> processRootFolder: aFileReference [
 	allDirectories := allFiles select: #isDirectory.
 	self processDirectories: allDirectories.
 	relevantFiles := allFiles select: [ :f | #('c' 'h' 'cpp' 'hpp' 'C' 'H' 'CPP' 'HPP' 'cc') includes: f extension ].
-	relevantFiles := relevantFiles reject: [ :f | blackListRules anySatisfy: [ :pmatch | pmatch match: f fullName ] ].
 	relevantFiles do: [ :f | 
 			| r |
 			r := f readStream.
-			r ascii.
-			r converter: Latin1TextConverter new.
+"			r ascii.
+			r converter: Latin1TextConverter new."
 			self processFileAsString: r contents named: f pathString ].
 ]
 
