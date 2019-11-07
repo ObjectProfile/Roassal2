@@ -361,7 +361,7 @@ TRPharoPlatform >> materializeFromByteArray: array [
 
 { #category : #'accessing-classes' }
 TRPharoPlatform >> matrixClass [
-	^ Matrix
+	^ Array2D
 ]
 
 { #category : #public }
