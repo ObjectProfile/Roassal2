@@ -9,10 +9,10 @@ Extensive documentation is available on http://AgileVisualization.com
 The distribution of Roassal for VisualWorks is in the Cincom public store. Simply look for `roassal2-full` on the public store. Note that your need to have the Cairo libraries installed along with the VisualWorks installation.
 
 ---
-## Pharo 7
-The source code of Roassal2 is contained in this GitHub repository.
+## Pharo 8
 
-Execute the following code snippet to load Roassal2 in a fresh Pharo 7 image:
+Execute the following code snippet to load Roassal2 in a fresh Pharo 8 image:
+
 ```Smalltalk
 Metacello new
     baseline: 'Roassal2';
@@ -31,6 +31,18 @@ Metacello new
   lock;
   load.
 ```
+    
+---
+## Pharo 7
+
+Roassal2 is frozen for Pharo 7. You can load it using:
+
+```Smalltalk
+Metacello new 
+    baseline: 'Roassal2'; 
+    repository: 'github://ObjectProfile/Roassal2:pharo7/src'; 
+    load
+```  
 
 ---
 ## Pharo 6.1
