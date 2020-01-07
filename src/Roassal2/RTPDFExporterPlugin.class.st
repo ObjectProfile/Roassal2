@@ -12,10 +12,10 @@ By loading this plugin, you will be able to export the visualization as a PDF fi
 
 { #category : #hooks }
 RTPDFExporterPlugin >> execute [
-	Gofer new 
-		smalltalkhubUser: 'azazael' project: 'RTPDFExporter';
-		package: 'ConfigurationOfRTPDFExporter'; load.
-	(Smalltalk at: #ConfigurationOfRTPDFExporter) loadDevelopment
+	Metacello new
+		baseline: 'RoassalPdfExporter';
+		repository: 'github://akevalion/RTPDFExporter';
+		load.
 ]
 
 { #category : #testing }
