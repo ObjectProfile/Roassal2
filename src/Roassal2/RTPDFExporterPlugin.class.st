@@ -16,6 +16,7 @@ RTPDFExporterPlugin >> execute [
 		baseline: 'RoassalPdfExporter';
 		repository: 'github://akevalion/RTPDFExporter';
 		load.
+		
 ]
 
 { #category : #testing }
