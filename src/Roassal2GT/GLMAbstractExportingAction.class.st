@@ -19,9 +19,10 @@ GLMAbstractExportingAction >> doExportToFull: fileName [
 GLMAbstractExportingAction >> execute [
 	| fileName |
 	fileName := UITheme builder 
-						fileSave: 'Enter the ', self titleExtension,' file name'
+						chooseForSaveFileReference: 'Enter the ', self titleExtension, ' file name'
 						extensions: self extensions
-						path: nil.
+						path: FileLocator home asPath. 
+
 	fileName notNil ifTrue: [ 
 		self doExportToFull: fileName asAbsolute ]
 ]
