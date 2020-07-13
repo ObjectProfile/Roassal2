@@ -18,10 +18,11 @@ BaselineOfRoassal2 >> baseline: spec [
 			spec baseline: 'Geometry' with: [ 
 				spec repository: 'github://peteruhnak/geometry/repository' ].
 					
-			spec package: 'Athens-SVG' with: [ spec repository: 'http://www.smalltalkhub.com/mc/Pharo/Athens/main' ].
+			spec package: 'Athens-SVG-PathConverter' with: [
+				spec repository: 'github://pharo-contributions/Athens-SVG' ].
 			spec
 				package: 'Trachel';
-				package: 'Roassal2-Core' with: [ spec requires: #('Trachel' 'Athens-SVG' 'Geometry') ];
+				package: 'Roassal2-Core' with: [ spec requires: #('Trachel' 'Athens-SVG-PathConverter' 'Geometry') ];
 				package: 'Roassal2' with: [ spec requires: #('Roassal2-Core') ];
 				package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-Exporter' with: [ spec requires: #('Trachel' 'Roassal2') ];
