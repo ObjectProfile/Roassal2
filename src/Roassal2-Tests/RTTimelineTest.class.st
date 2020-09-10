@@ -27,6 +27,27 @@ RTTimelineTest >> testBasic [
 ]
 
 { #category : #tests }
+RTTimelineTest >> testBasicWithDates [
+
+	| b s |
+	b := RTTimeline new.
+	
+	s := RTTimelineSet new.
+	s objects: ((1 to:10) collect:[:each | Date today + (Duration days:each)]).
+	s end: [ :v | v + (Duration days:1) ].
+	b add: s.
+	
+	b axisX labelConversion:[:v | v].	
+	b build.
+	
+	self assert: b numberOfSets equals: 1.
+	self assert: b numberOfEvents equals: 10.
+	self assert: b numberOfLines equals: 10.
+
+
+]
+
+{ #category : #tests }
 RTTimelineTest >> testBasicWithDifferentIdentifier02 [
 
 	| b s |
