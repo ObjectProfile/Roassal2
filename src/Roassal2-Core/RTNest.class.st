@@ -210,7 +210,7 @@ RTNest >> makeElements: elements resizableWithoutRecursion: backElement [
 
 { #category : #'setting nesting behavior' }
 RTNest >> noBehavior [
-	self behavior: (RTNoBehavior instance)
+	self behavior: RTNoBehavior new
 ]
 
 { #category : #public }

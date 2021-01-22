@@ -25,6 +25,9 @@ v
 Class {
 	#name : #RTNestingBehavior,
 	#superclass : #RTObject,
+	#instVars : [
+		'padding'
+	],
 	#category : #'Roassal2-Core-Base'
 }
 
@@ -45,8 +48,7 @@ RTNestingBehavior >> centerOnTrachelShape: trachelShape elements: elements [
 		- resize the backElement to encompasse all the elements
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
-	| encompassingRectangle off padding |
-	padding := 5.
+	| encompassingRectangle off |
 	encompassingRectangle := elements encompassingRectangle.
 
 	trachelShape extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).
@@ -55,6 +57,12 @@ RTNestingBehavior >> centerOnTrachelShape: trachelShape elements: elements [
 	off := off asIntegerPoint.
 	elements do: [ :e | e translateBy: off ].
 	
+]
+
+{ #category : #initialization }
+RTNestingBehavior >> initialize [
+	super initialize.
+	self padding: 5.
 ]
 
 { #category : #utility }
@@ -79,15 +87,19 @@ RTNestingBehavior >> on: backElement setNested: elements [
 	self resize: backElement for: elements
 ]
 
+{ #category : #accessing }
+RTNestingBehavior >> padding [
+	^ padding
+]
+
+{ #category : #accessing }
+RTNestingBehavior >> padding: aNumber [
+	padding := aNumber
+]
+
 { #category : #utility }
 RTNestingBehavior >> resize: backElement bounds: encompassingRectangle [
 	"it translates backElement, but does not trigger events."
-	| newRec padding |
-	padding := 5.
-	newRec := (encompassingRectangle topLeft - (padding @ padding)) extent: 
-					((encompassingRectangle width + (padding * 2)) @ 
-					 (encompassingRectangle height + (padding * 2))).
-
 	backElement
 		extent: (encompassingRectangle width + (padding * 2)) @ (encompassingRectangle height + (padding * 2)).	
 	backElement translateTo: encompassingRectangle center
