@@ -27,4 +27,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run unit tests
-        run: bash ./scripts/runTests.sh
+        run: bash ./scripts/runTestsOnPharo9.sh
