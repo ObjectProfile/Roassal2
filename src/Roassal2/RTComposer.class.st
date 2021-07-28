@@ -338,7 +338,7 @@ RTComposer >> setGeneralTitle: aTitleAsString [
 RTComposer >> setGeneralTitle: aTitleAsString gap: gapAsPoint [
 	| title |
 	title := (RTLabel new text: aTitleAsString; height: 20) element.
-	TRConstraint move: title above: self allGroupedElements asGroup.
+	TRConstraint move: title above: self allGroupedElements asRTGroup.
 	title translateBy: gapAsPoint.
 	self view add: title
 ]

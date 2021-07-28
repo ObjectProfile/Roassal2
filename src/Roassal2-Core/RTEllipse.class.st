@@ -20,7 +20,15 @@ RTEllipse >> accept: aVisitor [
 
 { #category : #accessing }
 RTEllipse >> geometryFor: anElement [
-	^ GEllipse center: anElement position a: anElement width / 2 b: anElement height / 2
+	| rect e p |
+	rect := anElement encompassingRectangle.
+	e := rect extent / 2.
+	p := anElement position.
+	e = (0@0) ifTrue: [ ^ p asGPoint ].
+	^ GEllipse 
+		center: p asGPoint
+		vertex: (p + (e x@ 0)) asGPoint
+		coVertex: (p + (0@ e y)) asGPoint
 ]
 
 { #category : #initialization }

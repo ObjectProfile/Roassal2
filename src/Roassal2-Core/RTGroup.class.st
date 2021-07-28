@@ -54,6 +54,11 @@ RTGroup >> asGroup [
 	^ self
 ]
 
+{ #category : #converting }
+RTGroup >> asRTGroup [
+	^ self
+]
+
 { #category : #attributes }
 RTGroup >> attributeAt: aKey [
 	^ self attributes at: aKey

@@ -34,18 +34,23 @@ RTBorderAttachPoint >> basicEndingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RTBorderAttachPoint >> basicPointFrom: fromElement to: toElement of: anEdge [
-	| source target line shift |
+	| source target line shift vector unit res |
 	source := self geometryFor: fromElement.
 	target := self geometryFor: toElement.
 	shift := self offsetNormalFor: anEdge.
-	line := GLineSegment from: source center to: target center.
-	shift := (line vector = (0@0) 
-		ifTrue: [ -1 @ 0]
-		ifFalse: [ line vector normal ]) * shift.
+	line := GLine through: source center and: target center.
+	vector := line v2 asPoint - line v1 asPoint.
+	vector := vector x @ vector y.
+	unit := vector / (vector r max: 1).
+	
+	shift := vector normal * shift.
 	anEdge from = toElement
 		ifTrue: [ shift := shift * -1 ].
-	line := GLineSegment from: source center + shift to: target center + shift.
-	^ self borderPointFrom: source to: target via: line
+	line := GLine
+		through: source center asPoint + shift
+		and: target center asPoint + shift.
+	res := self borderPointFrom: source to: target via: line.
+	^ res asPoint
 ]
 
 { #category : #'public - hooks' }
@@ -55,9 +60,8 @@ RTBorderAttachPoint >> basicStartingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RTBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
-
-	^ ((aLine intersect: aSource) detectMin: [ :p | 
-		   p distanceTo: aLine to ]) ifNil: [ aSource center ]
+	^ ((aLine intersectionsWith: aSource) detectMin: [ :p | p asPoint distanceTo: aLine v2 ])
+		ifNil: [ aSource center ]
 ]
 
 { #category : #accessing }

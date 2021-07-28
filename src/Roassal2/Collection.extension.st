@@ -13,6 +13,11 @@ Collection >> asIdentityGroup [
 ]
 
 { #category : #'*Roassal2' }
+Collection >> asRTGroup [
+	^ RTGroup withAll: self
+]
+
+{ #category : #'*Roassal2' }
 Collection >> maxFor: aSymbolOrBlock [ 
 	"Return one of the elements which has the minimum value returned by aSymbolOrBlock"
 	

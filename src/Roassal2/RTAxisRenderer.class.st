@@ -83,7 +83,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	ticks := self addTicksFrom: toPosition to: fromPosition.
 	self numberOfLabels = 0 ifTrue: [ ^ self ].
 	tickIntervalForLabel := self tickIntervalForLabel.
-	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i ].
+	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i asInteger ].
 	labelValues := (0 to: self numberOfLabels)
 		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
 
