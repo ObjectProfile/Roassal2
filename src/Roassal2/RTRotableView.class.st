@@ -82,18 +82,18 @@ RTRotableView >> initializeElement: element [
 
 { #category : #action }
 RTRotableView >> updateTargetElements: evt [
+
 	| target c angle eangle p d evtPoint |
-	target := elements value."A collection of elements"
-	c := center value."a point"
-	evtPoint := (evt positionFromCamera - c ).
+	target := elements value. "A collection of elements"
+	c := center value. "a point"
+	evtPoint := evt positionFromCamera - c.
 	angle := startPoint theta - evtPoint theta.
 	startPoint := evtPoint.
 
-	target do: [ :e |
-		d := c dist: e position .
+	target do: [ :e | 
+		d := c distanceTo: e position.
 		eangle := (e position - c) theta - angle.
-		p := c + ((d * eangle cos) @ (d * eangle sin)).
-		e translateTo: p.
-		 ].
-	view signalUpdate.
+		p := c + (d * eangle cos @ (d * eangle sin)).
+		e translateTo: p ].
+	view signalUpdate
 ]

@@ -16,8 +16,8 @@ BaselineOfRoassal2 >> baseline: spec [
 			spec baseline: 'GToolkitExamples' with: [ 
 				spec repository: 'github://feenkcom/gtoolkit-examples/src' ].
 			spec baseline: 'Geometry' with: [ 
-				spec repository: 'github://peteruhnak/geometry/repository' ].
-					
+				spec repository: 'github://pharo-contributions/Geometry/src' ].
+			
 			spec package: 'Athens-SVG-PathConverter' with: [
 				spec repository: 'github://pharo-contributions/Athens-SVG' ].
 			spec

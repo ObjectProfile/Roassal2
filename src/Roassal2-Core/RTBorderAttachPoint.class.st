@@ -55,8 +55,9 @@ RTBorderAttachPoint >> basicStartingPointOf: anEdge [
 
 { #category : #'public - hooks' }
 RTBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
-	^ ((aLine intersect: aSource) detectMin: [ :p | p dist: aLine to ])
-		ifNil: [ aSource center ]
+
+	^ ((aLine intersect: aSource) detectMin: [ :p | 
+		   p distanceTo: aLine to ]) ifNil: [ aSource center ]
 ]
 
 { #category : #accessing }

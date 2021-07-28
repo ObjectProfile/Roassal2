@@ -102,11 +102,10 @@ CompiledMethod >> livingInDays [
 
 { #category : #'*roassal2' }
 CompiledMethod >> numberOfLinesOfCode [
-	(self propertyValueAt: #numberOfLinesOfCode)
-		ifNil: [ self
-				propertyValueAt: #numberOfLinesOfCode
-				put: self sourceCode lineCount ].
-	^ self propertyValueAt: #numberOfLinesOfCode
+
+	(self propertyAt: #numberOfLinesOfCode) ifNil: [ 
+		self propertyAt: #numberOfLinesOfCode put: self sourceCode lineCount ].
+	^ self propertyAt: #numberOfLinesOfCode
 ]
 
 { #category : #'*roassal2' }
