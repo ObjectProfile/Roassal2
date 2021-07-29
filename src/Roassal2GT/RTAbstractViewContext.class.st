@@ -42,7 +42,7 @@ RTAbstractViewContext class >> setOnView: aView [
 ]
 
 { #category : #public }
-RTAbstractViewContext >> adjustView: aView inPresentation: aPresentation. [
+RTAbstractViewContext >> adjustView: aView inPresentation: aPresentation [.
 	self view: aView.
 	self presentation: aPresentation.
 	self registerCallbacks
