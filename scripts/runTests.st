@@ -27,7 +27,7 @@ unitTests do: [ :unitTestClass | | res |
 		res failures , res errors do: [:error | 
 			stream tab; nextPutAll: error asString; crlf]
 	] ifFalse: [
-		stream nextPutAll: unitTestClass name. ].
+		stream nextPutAll: unitTestClass name; space; nextPutAll: res asString. ].
 	
 	stream crlf
 ].
