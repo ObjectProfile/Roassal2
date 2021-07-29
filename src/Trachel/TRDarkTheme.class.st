@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 TRDarkTheme >> trachelCanvasColor [
-	^ Pharo3DarkTheme baseColor
+	^ PharoDarkTheme baseColor
 ]
 
 { #category : #accessing }
