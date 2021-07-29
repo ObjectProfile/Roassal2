@@ -6534,7 +6534,7 @@ D8IfPwg/CH/8IPwg/H1W/QP/JtvxUKSFkwAAAABJRU5ErkJggg=='
 { #category : #sources }
 RTRoassalExample >> exampleScaledNesting [
 
-	| view inner host edges outter trachelCanvas resizable |
+	| view inner host outter trachelCanvas resizable |
 	outter := OrderedCollection new.
 	view := RTView new.
 	view @ RTDraggableView.
@@ -6547,10 +6547,10 @@ RTRoassalExample >> exampleScaledNesting [
 
 		view add: host.
 		view addAll: inner.
-		edges := RTEdgeBuilder new
-			         view: view;
-			         elements: inner;
-			         connectFrom: [ :v | v // 2 ].
+		RTEdgeBuilder new
+			view: view;
+			elements: inner;
+			connectFrom: [ :v | v // 2 ].
 
 		RTGridLayout new on: inner.
 		RTNest new on: host nest: inner ].
@@ -6560,7 +6560,7 @@ RTRoassalExample >> exampleScaledNesting [
 	TRFocusCenter on: trachelCanvas.
 
 	"Zoom a specific element"
-	resizable := outter at: (Random new nextInteger: outter size).
+	resizable := outter atRandom.
 	view addMenu: 'Smaller' callback: [ 
 		view addAnimation: (RTResizeMove new
 				 toExtent: resizable extent * 0.6
