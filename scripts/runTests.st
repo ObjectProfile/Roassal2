@@ -1,5 +1,5 @@
+| path stream unitTests |
 "We capture all the unit tests in Pharo"
-unitTestsBefore := TestCase withAllSubclasses.
 
 "We load the application software analyzer"
 [ Metacello new
@@ -8,7 +8,11 @@ unitTestsBefore := TestCase withAllSubclasses.
     load. ] on: MCMergeOrLoadWarning do: [ :warning | warning load ].
 
 "We identify the unit tests contained in the loaded application"
-unitTests := (TestCase withAllSubclasses copyWithoutAll: unitTestsBefore) sorted: [ :c1 :c2 | c1 name < c2 name ].
+unitTests := (TestCase withAllSubclasses
+	select: [:cls |  
+		('Roassal2*' match: cls package name) or: [
+			('Trachel*' match: cls package name) ] ]) 
+	sorted: [ :c1 :c2 | c1 name < c2 name ].
 
 "We create a file that will contain the result of the test execution"
 path := '/tmp/result.txt'.
