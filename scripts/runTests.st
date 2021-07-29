@@ -20,10 +20,15 @@ path asFileReference exists ifTrue: [ path asFileReference delete ].
 stream := path asFileReference writeStream.
 
 "We run the unit tests"
-unitTests do: [ :unitTestClass |
+unitTests do: [ :unitTestClass | | res |
 	res := unitTestClass buildSuite run.
-	(res hasFailures or: [ res hasErrors ]) ifTrue: [ stream nextPutAll: 'ERROR: ' ].
-	stream nextPutAll: unitTestClass name, ' ', res asString.
+	(res hasFailures or: [ res hasErrors ]) ifTrue: [ 
+		stream nextPutAll: '--> ERROR: '; nextPutAll: unitTestClass name; crlf.
+		res failures , res errors do: [:error | 
+			stream tab; nextPutAll: error asString; crlf]
+	] ifFalse: [
+		stream nextPutAll: unitTestClass name. ].
+	
 	stream crlf
 ].
 
