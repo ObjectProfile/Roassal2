@@ -1,4 +1,5 @@
 # Roassal2
+[![Test P8](https://github.com/ObjectProfile/Roassal2/actions/workflows/runOnPharo8.yml/badge.svg)](https://github.com/ObjectProfile/Roassal2/actions/workflows/runOnPharo8.yml)
 [![Test P9](https://github.com/ObjectProfile/Roassal2/actions/workflows/runTestPharo9.yml/badge.svg)](https://github.com/ObjectProfile/Roassal2/actions/workflows/runTestPharo9.yml)
 
 Roassal2 is a visualization engine for the Pharo and VisualWorks programming language and environment.
