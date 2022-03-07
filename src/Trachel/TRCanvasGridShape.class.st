@@ -96,7 +96,7 @@ TRCanvasGridShape >> initialize [
 { #category : #asserting }
 TRCanvasGridShape >> shouldBeVisible [
 
-	^ spacing > (10.0 / (self canvas camera scale max: 0.05))
+	^ spacing > (13.0 / (self canvas camera scale max: 0.05))
 ]
 
 { #category : #accessing }
