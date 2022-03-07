@@ -7,7 +7,8 @@ Class {
 		'fontSize',
 		'fontName',
 		'cachedWidth',
-		'cachedHeight'
+		'cachedHeight',
+		'cachedBasicRectangle'
 	],
 	#category : #'Trachel-Shapes'
 }
@@ -65,10 +66,12 @@ TRLabelShape >> ascent [
 
 { #category : #private }
 TRLabelShape >> basicEncompassingRectangle [
+
 	| w h |
-	w := self textWidth.
-	h := self textHeight.
-	^ ((w / -2) @ (h / -2)) extent: (w @ h)
+	^ cachedBasicRectangle ifNil: [ 
+		  w := self textWidth.
+		  h := self textHeight.
+		  cachedBasicRectangle := (w / -2) @ (h / -2) extent: w @ h ]
 ]
 
 { #category : #accessing }
@@ -189,8 +192,10 @@ TRLabelShape >> initialize [
 
 { #category : #initialization }
 TRLabelShape >> resetCache [
+
 	cachedWidth := nil.
-	cachedHeight := nil
+	cachedHeight := nil.
+	cachedBasicRectangle := nil
 ]
 
 { #category : #accessing }
@@ -218,15 +223,24 @@ TRLabelShape >> text: aText on: aPosition [
 
 { #category : #private }
 TRLabelShape >> textHeight [
+
 	"without any transformation"
-	^ cachedHeight ifNil: [ [cachedHeight := font height] on: Error do: [ :ex | cachedHeight := 10 ] ]
+
+	^ cachedHeight ifNil: [ 
+		  [ cachedHeight := font height asFloat ]
+			  on: Error
+			  do: [ :ex | cachedHeight := 10.0 ] ]
 ]
 
 { #category : #private }
 TRLabelShape >> textWidth [
+
 	"without any transformation"
 	"font widthOfString: is a really expensive operation, so we cache it"
-	^ cachedWidth ifNil: [ [ cachedWidth := font widthOfString: text ] on: Error do: [ :ex | cachedWidth := 5 ] ]
+	^ cachedWidth ifNil: [ 
+		  [ cachedWidth := (font widthOfString: text) asFloat ]
+			  on: Error
+			  do: [ :ex | cachedWidth := 5.0 ] ]
 ]
 
 { #category : #public }
