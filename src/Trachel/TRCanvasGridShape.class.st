@@ -18,6 +18,18 @@ TRCanvasGridShape >> addToOffset: aPoint [
 ]
 
 { #category : #private }
+TRCanvasGridShape >> basicEncompassingRectangle [
+
+	^ (0 @ 0) corner: (0 @ 0)
+]
+
+{ #category : #accessing }
+TRCanvasGridShape >> center [
+
+	^ self canvas camera position
+]
+
+{ #category : #private }
 TRCanvasGridShape >> computePath [
 
 	| width height |
@@ -71,7 +83,7 @@ TRCanvasGridShape >> drawOn: athensCanvas [
 { #category : #accessing }
 TRCanvasGridShape >> encompassingRectangle [
 
-	^ 0 @ 0 corner: 0 @ 0
+	^ self basicEncompassingRectangle
 ]
 
 { #category : #initialization }
@@ -84,9 +96,7 @@ TRCanvasGridShape >> initialize [
 { #category : #asserting }
 TRCanvasGridShape >> shouldBeVisible [
 
-	^ self canvas extent x > spacing and: [ 
-		  self canvas extent y > spacing and: [ 
-			  spacing > (10.0 / (self canvas camera scale max: 0.05)) ] ]
+	^ spacing > (10.0 / (self canvas camera scale max: 0.05))
 ]
 
 { #category : #accessing }
