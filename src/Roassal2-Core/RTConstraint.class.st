@@ -255,11 +255,21 @@ RTConstraint >> setChild: aChildShape parent: aParentShape [
 
 { #category : #'public - executing' }
 RTConstraint >> stick [
-	| block |
+
+	| block removalBlock translationCallback extentCallback |
 	self move.
 	block := [ :shape :step | self move ].
-	fixedElement addCallback: (TRTranslationCallback block: block).
-	fixedElement addCallback: (TRExtentCallback block: block)
+	removalBlock := [ :callback | 
+	                fixedElement trachelShape
+		                removeCallback: callback
+		                ifAbsent: [  ] ].
+	translationCallback := TRTranslationCallback block: block.
+	extentCallback := TRExtentCallback block: block.
+	fixedElement addCallback: translationCallback.
+	fixedElement addCallback: extentCallback.
+	movableElement addCallback: (TRRemoveCallback block: [ 
+			 removalBlock value: translationCallback.
+			 removalBlock value: extentCallback ])
 ]
 
 { #category : #'public - positioning' }
