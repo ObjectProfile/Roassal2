@@ -283,6 +283,12 @@ RTSVGVisitor >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
 ]
 
 { #category : #visitor }
+RTSVGVisitor >> visitArcLine: aLineArc [
+
+	self notYetImplemented
+]
+
+{ #category : #visitor }
 RTSVGVisitor >> visitArcShape: aShape [
 	|sCenter svgE|
 	sCenter := self alignPoint: (aShape position).
@@ -423,6 +429,14 @@ RTSVGVisitor >> visitEllipseShape: anEllipse [
 	box := self alignRectangle: (anEllipse encompassingRectangle).
 	svgE := RTSVGOval new element: anEllipse box: box color: fillColor borderWidth: 1 borderColor: borderColor.
 	svgE addOn: stream using: self.
+]
+
+{ #category : #visitor }
+RTSVGVisitor >> visitGrid: aGridShape [
+
+	"do not draw a grid"
+
+	
 ]
 
 { #category : #visitor }

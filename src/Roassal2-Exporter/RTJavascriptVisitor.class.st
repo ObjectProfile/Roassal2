@@ -173,6 +173,12 @@ RTJavascriptVisitor >> visitAbstractLine: anAbstractLine [
 ]
 
 { #category : #visitor }
+RTJavascriptVisitor >> visitArcLine: aLineArc [
+
+	self notYetImplemented
+]
+
+{ #category : #visitor }
 RTJavascriptVisitor >> visitArcShape: aShape [
 	aShape topLeft ifNil: [ aShape computeRectangle ].
 	stream nextPutAll: '
@@ -444,6 +450,14 @@ RTJavascriptVisitor >> visitEllipseShape: anEllipse [
 	self addColor: anEllipse color.
 	self addInteractions: anEllipse element.
 	self addMatrix: anEllipse matrix.
+]
+
+{ #category : #visitor }
+RTJavascriptVisitor >> visitGrid: aGridShape [
+
+	"do not draw a grid"
+
+	
 ]
 
 { #category : #visitor }

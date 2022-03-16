@@ -12,6 +12,12 @@ Class {
 	#category : #'Trachel-Shapes'
 }
 
+{ #category : #visiting }
+TRCanvasGridShape >> accept: aVisitor [
+
+	aVisitor visitGrid: self
+]
+
 { #category : #accessing }
 TRCanvasGridShape >> addToOffset: aPoint [
 	offset := offset + aPoint

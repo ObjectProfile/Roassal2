@@ -18,7 +18,8 @@ Class {
 
 { #category : #visitor }
 TRShape >> accept: aVisitor [
-	aVisitor visitShape: self
+
+	self subclassResponsibility
 ]
 
 { #category : #actions }
