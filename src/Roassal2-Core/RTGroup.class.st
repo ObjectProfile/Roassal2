@@ -39,6 +39,12 @@ RTGroup >> addAll: elements [
 	^ super addAll: elements
 ]
 
+{ #category : #adding }
+RTGroup >> addCallback: aCallback [
+
+	self elements do: [ :each | each addCallback: aCallback ]
+]
+
 { #category : #public }
 RTGroup >> addShape: aShape [
 	self do: [ :e | e addShape: aShape ]
