@@ -282,7 +282,7 @@ RTStackBarPlot >> renderIn: aView [
 	lines := RTGroup new.
 	values
 		do: [ :tupple | 
-			elements := tupple values asGroup collectWithIndex: [ :aValue :index | self elementOn: aValue -> index ].
+			elements := tupple values asRTGroup collectWithIndex: [ :aValue :index | self elementOn: aValue -> index ].
 			aView addAll: elements.
 			lines add: elements ].
 	lines doWithIndex: [ :l :i | 

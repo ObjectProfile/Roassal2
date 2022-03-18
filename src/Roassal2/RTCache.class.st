@@ -32,8 +32,8 @@ RTCache >> cacheElements: someElements edges: someEdges [
 	"This method is assuming all the elements belong to the same view"
 	| view newElement elements edges |
 	
-	elements := someElements asGroup.
-	edges := someEdges asGroup.
+	elements := someElements asRTGroup.
+	edges := someEdges asRTGroup.
 	view := someElements anyOne view.
 	canvas := view canvas.
 	trachelShapes := canvas shapes.

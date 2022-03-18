@@ -81,7 +81,7 @@ RTAbstractRegularTreeLayout >> horizontallyReverse: elements [
 	"Horizontally reverse the elements, as well as the attachpoints"
 
 	| g largeur |
-	g := elements asGroup.
+	g := elements asRTGroup.
 	largeur := g extent x.
 	elements
 		do: [ :el | el translateTo: (largeur - el position x) @ el position y ]
@@ -191,7 +191,7 @@ RTAbstractRegularTreeLayout >> verticallyReverse: elements [
 	"Vertically reverse the elements, as well as the attachpoints"
 
 	| g hauteur |
-	g := elements asGroup.
+	g := elements asRTGroup.
 	hauteur := g extent y.
 	elements
 		do: [ :el | el translateTo: el position x @ (hauteur - el position y) ]

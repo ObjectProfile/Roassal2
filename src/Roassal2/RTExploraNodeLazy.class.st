@@ -12,7 +12,7 @@ RTExploraNodeLazy >> addListenerFor: anEvent onDirection: aDirection withBlock: 
 	| listener |
 	
 	listener := element.
-	iconOpen ifNotNil: [ listener := (Array with: iconOpen with: iconClose) asGroup ].
+	iconOpen ifNotNil: [ listener := (Array with: iconOpen with: iconClose) asRTGroup ].
 		
 	self addExpansionDirection: aDirection.
 	
@@ -25,7 +25,7 @@ RTExploraNodeLazy >> addListenerFor: anEvent onDirection: aDirection withBlock: 
 			ifFalse: [ self exploreOnDirection: aDirection ].
 			((builder layout rtValue: self)
 				translator: (RTSmoothLayoutTranslator new nbCycles: 0.25))
-				on: ((builder nodes collect: [ :n | n element ]) asGroup).	
+				on: ((builder nodes collect: [ :n | n element ]) asRTGroup).	
 		element view canvas signalUpdate].
 	
 
@@ -37,7 +37,7 @@ RTExploraNodeLazy >> exploreOnDirection: aDirection [
 	
 	self expandWithBlock: block onDirection: aDirection.
 	
-	objs := ((builder nodes collect: [ :n | n element ]) asGroup) collect: [ :el | el model ].
+	objs := ((builder nodes collect: [ :n | n element ]) asRTGroup) collect: [ :el | el model ].
 	objectsToAdd := self expansionOnDirection: aDirection.
 	objsAlreadyIn := objectsToAdd select: [ :obj | objs includes: obj ].
 	objectsToAdd := objectsToAdd reject: [ :obj | objs includes: obj ].

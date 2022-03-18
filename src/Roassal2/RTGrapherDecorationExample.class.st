@@ -55,7 +55,7 @@ deco legendLabel text: [ :as | | pos year |
 b addDecorator: deco.
 b build.
 
-elements := (b view canvas shapes) asGroup.
+elements := (b view canvas shapes) asRTGroup.
 image := 'https://dl.dropboxusercontent.com/s/v5b7fg4gzb4w4xs/dota.jpeg?dl=0'.
 image := (TRPlatform current download: image ) contents.
 image := RTBitmap new 
