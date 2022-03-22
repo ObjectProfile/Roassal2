@@ -46,8 +46,8 @@ TRLineShape >> accept: aVisitor [
 ]
 
 { #category : #visitor }
-TRLineShape >> accept: aVisitor with: decoration [
-	aVisitor visitLineShape: self with: decoration
+TRLineShape >> accept: aVisitor with: anArrayOfDecorationInfo [
+	aVisitor visitLineShape: self with: anArrayOfDecorationInfo
 ]
 
 { #category : #accessing }

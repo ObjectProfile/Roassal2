@@ -166,13 +166,6 @@ RTJavascriptVisitor >> view: aView [
 ]
 
 { #category : #visitor }
-RTJavascriptVisitor >> visitAbstractLine: anAbstractLine [
-	"anAbstractLine accept: anAbstractLine
-	"
-	"TODO"
-]
-
-{ #category : #visitor }
 RTJavascriptVisitor >> visitArcLine: aLineArc [
 
 	self notYetImplemented
@@ -207,8 +200,8 @@ RTJavascriptVisitor >> visitArcShape: aShape [
 
 ]
 
-{ #category : #visitor }
-RTJavascriptVisitor >> visitArrowHeadShape: arrowShape [
+{ #category : #'visitor-decorations' }
+RTJavascriptVisitor >> visitArrowHeadShape: arrowShape onStart: aBoolean [
 	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
@@ -233,8 +226,8 @@ RTJavascriptVisitor >> visitArrowHeadShape: arrowShape [
 	
 ]
 
-{ #category : #visitor }
-RTJavascriptVisitor >> visitArrowShape: arrowShape [
+{ #category : #'visitor-decorations' }
+RTJavascriptVisitor >> visitArrowShape: arrowShape onStart: aBoolean [
 	| e |
 	e := arrowShape element.
 	stream nextPutAll: '
@@ -380,8 +373,8 @@ RTJavascriptVisitor >> visitCanvas: aCanvas [
 
 ]
 
-{ #category : #visitor }
-RTJavascriptVisitor >> visitDiamondShape: diamondShape [
+{ #category : #'visitor-decorations' }
+RTJavascriptVisitor >> visitDiamondShape: diamondShape onStart: aBoolean [
 	"TODO"
 
 ]
@@ -458,11 +451,6 @@ RTJavascriptVisitor >> visitGrid: aGridShape [
 	"do not draw a grid"
 
 	
-]
-
-{ #category : #visitor }
-RTJavascriptVisitor >> visitGroup: aRTGroup [
-	aRTGroup accept: self.
 ]
 
 { #category : #'visitor-interactions' }
@@ -753,6 +741,12 @@ RTJavascriptVisitor >> visitShowLabelInteraction: anInt with: el [
 	].
 	stream nextPutAll: ']) '.
 	anInt doUnhighlightElement: el
+]
+
+{ #category : #visiting }
+RTJavascriptVisitor >> visitTextShape: aText [
+
+	self notYetImplemented
 ]
 
 { #category : #visitor }

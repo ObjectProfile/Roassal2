@@ -1,10 +1,10 @@
 "
-A DCTRCanvasExporter is exporter of canvas into image
+A RTCanvasExporter is exporter of canvas into image. Note that this implementation is much less efficient than RTPNGExporter. If you need just simple PNG export without custom scaling/zoom, use RTPNGExporter.
 	
 	supported formats: png, jpg, jpeg, bmp, gif	
 	usage example:
 
-	(DCTRCanvasExporter canvas: roassalView canvas)
+	(RTCanvasExporter canvas: roassalView canvas)
 		withoutFixedShapes;
 		whole;
 		defaultScale;
@@ -31,6 +31,13 @@ Class {
 RTCanvasExporter class >> canvas: aCanvas [
 	^ self new
 		canvas: aCanvas;
+		yourself
+]
+
+{ #category : #initialization }
+RTCanvasExporter class >> view: aView [
+	^ self new
+		view: aView;
 		yourself
 ]
 
@@ -158,6 +165,12 @@ RTCanvasExporter >> scaleToMorphLimits [
 		ifTrue: [ self scale: maxWidthAndHeight / self extent x * self cameraScale ].
 	self extent y > maxWidthAndHeight
 		ifTrue: [ self scale: maxWidthAndHeight / self extent y * self cameraScale ]
+]
+
+{ #category : #settings }
+RTCanvasExporter >> view: aView [
+
+	self canvas: aView canvas
 ]
 
 { #category : #settings }

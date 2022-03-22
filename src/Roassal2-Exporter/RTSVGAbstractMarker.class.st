@@ -10,7 +10,8 @@ Class {
 	#instVars : [
 		'xExtent',
 		'yExtent',
-		'size'
+		'size',
+		'startOrEnd'
 	],
 	#category : #'Roassal2-Exporter-SVG'
 }
@@ -51,12 +52,17 @@ RTSVGAbstractMarker >> addPath: stream [
 
 { #category : #adding }
 RTSVGAbstractMarker >> addRefPosition: stream [
-	stream nextPutAll: ('refX = "<1p>" refY = "<2p>" ' expandMacrosWith: self xExtent with: (self yExtent / 2) rounded)
+
+	stream nextPutAll: ('refX = "<1p>" refY = "<2p>" '
+			 expandMacrosWith: (self xClosestToAttachPoint)
+			 with: (self yExtent / 2) rounded)
 ]
 
 { #category : #adding }
 RTSVGAbstractMarker >> addSize: stream [
-	stream nextPutAll: ('markerWidth = "<1p>" markerHeight = "<1p>" ' expandMacrosWith: size)
+
+	stream nextPutAll:
+		('markerWidth = "<1p>" markerHeight = "<1p>" ' expandMacrosWith: size)
 ]
 
 { #category : #adding }
@@ -80,10 +86,24 @@ RTSVGAbstractMarker >> id: aid fillColor: aColor borderColor: anotherColor width
 
 { #category : #initialization }
 RTSVGAbstractMarker >> initialize [
+
 	self type: 'marker'.
 	self label: 'marker'.
+	startOrEnd := #end.
 	xExtent := 10.
-	yExtent := 10.
+	yExtent := 10
+]
+
+{ #category : #testing }
+RTSVGAbstractMarker >> isOnStart [
+
+	^ startOrEnd = #start
+]
+
+{ #category : #accessing }
+RTSVGAbstractMarker >> onStart [
+
+	startOrEnd := #start
 ]
 
 { #category : #adding }
@@ -94,6 +114,14 @@ RTSVGAbstractMarker >> openInnerDef: stream [
 { #category : #accessing }
 RTSVGAbstractMarker >> size: anObject [
 	size := anObject
+]
+
+{ #category : #accessing }
+RTSVGAbstractMarker >> xClosestToAttachPoint [
+
+	^ self isOnStart
+		  ifTrue: [ 0 ]
+		  ifFalse: [ self xExtent ]
 ]
 
 { #category : #accessing }

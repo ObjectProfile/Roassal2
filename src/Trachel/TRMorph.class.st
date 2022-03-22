@@ -480,6 +480,9 @@ TRMorph >> trMouseDragEnd: aMorphicEvent [
 	self announceToEventOverseer: trEvent.
 
 	(shapeBeingPointed isKindOf: TRCanvas) ifFalse: [
+		"first check if shere is a shape under drag 
+		(may not be if events are handled in wrong order during debugging)"
+		shapeUnderDrag ifNil: [ eventBeginingDragging := nil. ^ self ].
 		dropEvent := self eventOfClass: TRMouseDragDrop shape: shapeUnderDrag from: aMorphicEvent.
 		dropEvent draggedShape: shapeBeingPointed.
 		shapeUnderDrag announce: dropEvent.

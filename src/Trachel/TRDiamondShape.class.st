@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #visitor }
-TRDiamondShape >> accept: aVisitor [
-	aVisitor visitDiamondShape: self
+TRDiamondShape >> accept: aVisitor onStart: aBoolean [
+	aVisitor visitDiamondShape: self onStart: aBoolean
 ]
 
 { #category : #hooks }

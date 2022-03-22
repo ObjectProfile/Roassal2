@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #visitor }
-TRSimpleArrowShape >> accept: aVisitor [
-	aVisitor visitArrowShape: self
+TRSimpleArrowShape >> accept: aVisitor onStart: aBoolean [
+	aVisitor visitArrowShape: self onStart: aBoolean
 ]
 
 { #category : #hooks }

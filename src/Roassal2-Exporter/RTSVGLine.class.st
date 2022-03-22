@@ -12,7 +12,7 @@ Class {
 
 { #category : #adding }
 RTSVGLine >> addOn: stream using: aSVGVisitor [
-	
+
 	self id: (aSVGVisitor nameFor: self element).
 	self openDef: stream.
 	self addPosition: stream.
@@ -21,12 +21,11 @@ RTSVGLine >> addOn: stream using: aSVGVisitor [
 	self addStrokeOpacity: stream.
 	self addStrokeWidth: stream.
 	self closeTag: stream.
-	self decoration ifNotNil: [ self addMarker: stream ].
+	self addMarkers: stream.
 	self startClass: stream.
 	self closeTag: stream.
 	self addExternalInteractions: aSVGVisitor.
-	self closeDef: stream.
-	
+	self closeDef: stream
 ]
 
 { #category : #adding }
@@ -48,9 +47,15 @@ RTSVGLine >> element: anElement from: aPoint to: anotherPoint width: anInteger c
 ]
 
 { #category : #accessing }
-RTSVGLine >> element: anElement from: aPoint to: anotherPoint width: anInteger color: aColor decoration: aLineDecoration [
-	self element: anElement from: aPoint to: anotherPoint  width: anInteger color: aColor.
-	self decoration: aLineDecoration 
+RTSVGLine >> element: anElement from: aPoint to: anotherPoint width: anInteger color: aColor decorationsInfo: anArrayOfDecorationInfo [
+
+	self
+		element: anElement
+		from: aPoint
+		to: anotherPoint
+		width: anInteger
+		color: aColor.
+	self decorationsInfo: anArrayOfDecorationInfo
 ]
 
 { #category : #accessing }
@@ -65,6 +70,8 @@ RTSVGLine >> extent: anObject [
 
 { #category : #initialization }
 RTSVGLine >> initialize [
+
+	super initialize.
 	self type: 'line'.
 	self label: 'line'
 ]

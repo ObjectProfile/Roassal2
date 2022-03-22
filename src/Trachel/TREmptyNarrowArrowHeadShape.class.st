@@ -4,6 +4,11 @@ Class {
 	#category : #'Trachel-ShapesForArrow'
 }
 
+{ #category : #visiting }
+TREmptyNarrowArrowHeadShape >> accept: aVisitor onStart: aBoolean [
+	aVisitor visitNarrowArrowHeadShape: self onStart: aBoolean
+]
+
 { #category : #hooks }
 TREmptyNarrowArrowHeadShape >> computePath [
 	| vector r u unit middle endPoint |

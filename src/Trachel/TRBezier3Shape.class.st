@@ -16,8 +16,8 @@ TRBezier3Shape >> accept: aVisitor [
 ]
 
 { #category : #visitor }
-TRBezier3Shape >> accept: aVisitor with: decoration [
-	aVisitor visitBezierShape: self with: decoration
+TRBezier3Shape >> accept: aVisitor with: anArrayOfDecorationInfo [
+	aVisitor visitBezierShape: self with: anArrayOfDecorationInfo
 ]
 
 { #category : #hooks }

@@ -152,6 +152,15 @@ RTSVGVisitor >> center: aPoint [
 	center := aPoint
 ]
 
+{ #category : #utils }
+RTSVGVisitor >> findDecorationInfoForLines: lines outOfDecorations: decorations [
+
+	^ (lines collect: [ :eachLine | 
+		   eachLine
+		   -> (self getDecorationInfoOutOf: decorations forLine: eachLine) ])
+		  asDictionary
+]
+
 { #category : #alignment }
 RTSVGVisitor >> fixedEncompassingRectangle [
  	| shapes |
@@ -167,30 +176,34 @@ RTSVGVisitor >> fixedEncompassingRectangle [
 ]
 
 { #category : #utils }
-RTSVGVisitor >> getCorrespondingLine: decorator from: lines [
-	lines do: [ :l |
-		(l class = TRBezierShape) 
-			ifTrue: [ decorator to = l points last 
-				ifTrue: [
-					lines remove: l. 
-					^ Array with: l with: decorator ] ]
-			ifFalse: [ decorator to = l to ifTrue: [ 
-					lines remove: l. 
-					^ Array with: l with: decorator ] ].
-		 ].
-	^nil
-]
+RTSVGVisitor >> getDecorationInfoOutOf: decorators forLine: line [
 
-{ #category : #utils }
-RTSVGVisitor >> getDecorationId: aLineDecorationShape [
-	|t w c s lw|
-	t := aLineDecorationShape class name.
-	w := aLineDecorationShape mySize.
-	c := aLineDecorationShape color.
-	s := aLineDecorationShape strokePaint.
-	lw := aLineDecorationShape width.
-	^(t asString, w asString, ((c red * 256) + (s red * 256)) rounded asString, ((c green * 256) + (s green * 256)) rounded asString, ((c blue * 256) + (s blue * 256)) rounded asString, lw asString)
-	
+	| tailDecorator headDecorator |
+	tailDecorator := nil.
+	headDecorator := nil.
+	decorators do: [ :decorator | 
+		decorator to = line to
+			ifTrue: [ 
+				headDecorator := RTLineDecorationInfo
+					                 line: line
+					                 decoration: decorator.
+				tailDecorator ifNotNil: [ 
+					^ { 
+						  headDecorator.
+						  tailDecorator } ] ]
+			ifFalse: [ 
+				decorator to = line from ifTrue: [ 
+					tailDecorator := RTLineDecorationInfo
+						                 line: line
+						                 decorationOnStart: decorator.
+					headDecorator ifNotNil: [ 
+						^ { 
+							  headDecorator.
+							  tailDecorator } ] ] ] ].
+	headDecorator
+		ifNil: [ tailDecorator ifNotNil: [ ^ { tailDecorator } ] ]
+		ifNotNil: [ ^ { headDecorator } ].
+	^ #(  )
 ]
 
 { #category : #initialization }
@@ -212,6 +225,12 @@ RTSVGVisitor >> interactions: anObject [
 	interactions := anObject
 ]
 
+{ #category : #visitor }
+RTSVGVisitor >> lineClasses [
+
+	^ TRAbstractLineShape allSubclasses
+]
+
 { #category : #accessing }
 RTSVGVisitor >> names [
 	^ names
@@ -220,17 +239,6 @@ RTSVGVisitor >> names [
 { #category : #accessing }
 RTSVGVisitor >> names: anObject [
 	names := anObject
-]
-
-{ #category : #utils }
-RTSVGVisitor >> separateDecorated: lines decorations: decorations [
-	|decorated temp |
-	decorated := OrderedCollection new.
-	decorations do: [ :d | 
-		temp := (self getCorrespondingLine: d from: lines).
-		decorated add: temp.
-		].
-	^decorated
 ]
 
 { #category : #visitor }
@@ -271,18 +279,6 @@ RTSVGVisitor >> visit [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitAbstractLine: anAbstractLine [
-	anAbstractLine accept: anAbstractLine
-	
-]
-
-{ #category : #visitor }
-RTSVGVisitor >> visitAbstractLineDecorationShape: anAbstractLineDecoration [
-	anAbstractLineDecoration accept: anAbstractLineDecoration
-	
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitArcLine: aLineArc [
 
 	self notYetImplemented
@@ -296,39 +292,19 @@ RTSVGVisitor >> visitArcShape: aShape [
 	svgE addOn: stream using: self. 
 ]
 
-{ #category : #visitor }
-RTSVGVisitor >> visitArrowHeadShape: arrowHeadShape [
-	| aid color bColor w s svgE|
-	aid := self getDecorationId: arrowHeadShape.
-	color := arrowHeadShape color.
-	bColor := arrowHeadShape strokePaint.
-	w := arrowHeadShape width.
-	s := arrowHeadShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			svgE := RTSVGArrowHeadMarker new id: aid fillColor: color borderColor: bColor width: w size: s.
-			svgE addOn: stream using: self. 
-			markers add: aid. 
-			]
-		
-	
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitArrowHeadShape: arrowHeadShape onStart: aBoolean [
+
+	self
+		visitLineDecorationShape: arrowHeadShape
+		using: RTSVGArrowHeadMarker
+		onStart: aBoolean
 ]
 
-{ #category : #visitor }
-RTSVGVisitor >> visitArrowShape: arrowShape [
-	| aid bColor w s svgE|
-	aid := self getDecorationId: arrowShape.
-	bColor := arrowShape strokePaint.
-	w := arrowShape width.
-	s := arrowShape mySize.
-	(markers includes: aid)
-		ifFalse: [ 
-			svgE := RTSVGArrowMarker new id: aid fillColor: nil borderColor: bColor width: w size: s.
-			svgE addOn: stream using: self. 
-			markers add: aid. 
-			]
-		
-	
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitArrowShape: arrowShape onStart: aBoolean [
+
+	self visitLineDecorationShape: arrowShape using: RTSVGArrowMarker onStart: aBoolean
 ]
 
 { #category : #visitor }
@@ -345,11 +321,11 @@ RTSVGVisitor >> visitBezierShape: aBezierShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitBezierShape: aBezierShape with: aLineDecoration [
+RTSVGVisitor >> visitBezierShape: aBezierShape with: anArrayOfDecorationInfo [
 	|points svgE|
 	points:= aBezierShape points copy.
 	points := points collect: [ :p | self alignPoint: p].
-	svgE := RTSVGBezierLine new element: (aBezierShape) points: points width: (aBezierShape width) color: (aBezierShape strokePaint) decoration: aLineDecoration.
+	svgE := RTSVGBezierLine new element: (aBezierShape) points: points width: (aBezierShape width) color: (aBezierShape strokePaint) decorationsInfo: anArrayOfDecorationInfo.
 	svgE addOn: stream using: self. 
 ]
 
@@ -379,43 +355,46 @@ RTSVGVisitor >> visitBoxShape: aBox [
 
 { #category : #visitor }
 RTSVGVisitor >> visitCanvas: aCanvas [
-	|elementShapes edgeShapes decoratedEdgeShapes decorationShapes nonDecorationShapes lineClasses lineDecorationClasses canvasShapes|
-	
-	
+
+	| elementShapes edgeShapes decorationInfoByLines decorationShapes nonDecorationShapes lineClasses lineDecorationClasses canvasShapes |
 	canvasShapes := aCanvas shapes.
-	lineClasses := Array with: TRLineShape with: TRBezierShape.
-	lineDecorationClasses := TRAbstractLineDecoratorShape withAllSubclasses.
-	elementShapes := canvasShapes reject: [ :e |  (lineClasses includes: e class)  or: [ lineDecorationClasses includes: e class  ]].
-	edgeShapes := (canvasShapes select: [ :e |  (lineClasses includes: e class)] ) asOrderedCollection.
-	nonDecorationShapes := (canvasShapes reject: [ :e | lineDecorationClasses includes: e class ]) asOrderedCollection.
-	decorationShapes := canvasShapes select: [ :e |  lineDecorationClasses includes: e class].
-	decoratedEdgeShapes := self separateDecorated: edgeShapes decorations: decorationShapes.
-	
-	stream 
-		nextPutAll: '<defs>'.
-	decorationShapes do: [:s | s accept: self ].
-	stream 
-		nextPutAll: '</defs>'.
-	nonDecorationShapes do:[:s | s accept: self].
-	decoratedEdgeShapes do:[:p | p first accept: self with: p second].
+	lineClasses := self lineClasses.
+	lineDecorationClasses := TRAbstractLineDecoratorShape
+		                         withAllSubclasses.
+	elementShapes := canvasShapes reject: [ :e | 
+		                 (lineClasses includes: e class) or: [ 
+			                 lineDecorationClasses includes: e class ] ].
+	edgeShapes := (canvasShapes select: [ :e | 
+		               lineClasses includes: e class ]) asOrderedCollection.
+	nonDecorationShapes := (canvasShapes reject: [ :e | 
+		                        lineDecorationClasses includes: e class ])
+		                       asOrderedCollection.
+	decorationShapes := canvasShapes select: [ :e | 
+		                    lineDecorationClasses includes: e class ].
+
+	decorationInfoByLines := self
+		                         findDecorationInfoForLines: edgeShapes
+		                         outOfDecorations: decorationShapes.
+	stream nextPutAll: '<defs>'.
+	decorationInfoByLines do: [ :eachArrayOfInfo | 
+		eachArrayOfInfo do: [ :eachInfo | 
+			eachInfo decoration accept: self onStart: eachInfo isOnStart ] ].
+	stream nextPutAll: '</defs>'.
+	nonDecorationShapes do: [ :s | s accept: self ].
+	decorationInfoByLines associationsDo: [ :eachAssociation | 
+		eachAssociation key accept: self with: eachAssociation value ]
 ]
 
-{ #category : #visitor }
-RTSVGVisitor >> visitDiamondShape: diamondShape [
-	| aid color bColor w s svgE|
-	aid := self getDecorationId: diamondShape.
-	color := diamondShape color.
-	bColor := diamondShape strokePaint.
-	w := diamondShape width.
-	s := diamondShape mySize.
-	(markers contains: aid)
-		ifFalse: [  
-			svgE := RTSVGDiamondMarker new id: aid fillColor: color borderColor: bColor width: w size: s.
-			svgE addOn: stream using: self. 
-			markers add: aid. 
-			]
-		
-	
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitCircleHeadShape: shape onStart: aBoolean [
+
+	self visitLineDecorationShape: shape using: RTSVGCircleMarker onStart: aBoolean
+]
+
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitDiamondShape: diamondShape onStart: aBoolean [
+
+	self visitLineDecorationShape: diamondShape using: RTSVGDiamondMarker onStart: aBoolean
 ]
 
 { #category : #visitor }
@@ -440,11 +419,6 @@ RTSVGVisitor >> visitGrid: aGridShape [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitGroup: aRTGroup [
-	aRTGroup accept: self.
-]
-
-{ #category : #visitor }
 RTSVGVisitor >> visitLabelShape: aLabel [
 	| color rectangle position text svgE|
 	color := aLabel color.	
@@ -460,6 +434,30 @@ RTSVGVisitor >> visitLabelShape: aLabel [
 	svgE addOn: stream using: self.
 ]
 
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitLineDecorationShape: shape using: svgShapeClass onStart: aBoolean [
+
+	| aid color bColor w s svgE decorationInfo |
+	decorationInfo := RTLineDecorationInfo new decoration: shape.
+	aBoolean ifTrue: [ decorationInfo onStart ].
+	aid := RTSVGAbstractLine getDecorationId: decorationInfo.
+	color := shape color.
+	bColor := shape strokePaint.
+	w := shape width.
+	s := shape mySize.
+	(markers includes: aid) ifFalse: [ 
+		svgE := svgShapeClass new
+			        id: aid
+			        fillColor: color
+			        borderColor: bColor
+			        width: w
+			        size: s;
+			        yourself.
+		aBoolean ifTrue: [ svgE onStart ].
+		svgE addOn: stream using: self.
+		markers add: aid ]
+]
+
 { #category : #visitor }
 RTSVGVisitor >> visitLineShape: aLine [
 	|startingPoint endingPoint svgE|
@@ -470,17 +468,30 @@ RTSVGVisitor >> visitLineShape: aLine [
 ]
 
 { #category : #visitor }
-RTSVGVisitor >> visitLineShape: aLine with: aLineDecoration [
-	|startingPoint endingPoint svgE|
-	startingPoint := self alignPoint: (aLine from).
-	endingPoint := self alignPoint: (aLine to).
-	svgE := RTSVGLine new element: (aLine) from: startingPoint to: endingPoint width: 1 color: (aLine strokePaint) decoration: aLineDecoration.
-	svgE addOn: stream using: self. 
+RTSVGVisitor >> visitLineShape: aLine with: anArrayOfDecorationInfo [
+
+	| startingPoint endingPoint svgE |
+	startingPoint := self alignPoint: aLine from.
+	endingPoint := self alignPoint: aLine to.
+	svgE := RTSVGLine new
+		        element: aLine
+		        from: startingPoint
+		        to: endingPoint
+		        width: 1
+		        color: aLine strokePaint
+		        decorationsInfo: anArrayOfDecorationInfo.
+	svgE addOn: stream using: self
 ]
 
 { #category : #visitor }
 RTSVGVisitor >> visitMondrianViewBuilder: aView [
 	aView view accept: self
+]
+
+{ #category : #'visitor-decorations' }
+RTSVGVisitor >> visitNarrowArrowHeadShape: arrowHeadShape onStart: aBoolean [
+
+	self visitArrowHeadShape: arrowHeadShape onStart: aBoolean
 ]
 
 { #category : #visitor }
