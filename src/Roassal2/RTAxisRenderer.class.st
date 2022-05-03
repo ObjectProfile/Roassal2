@@ -85,7 +85,7 @@ RTAxisRenderer >> axisFrom: fromPosition to: toPosition width: lineThicknessInPi
 	tickIntervalForLabel := self tickIntervalForLabel.
 	labelledTicks := (1 to: ticks size by: tickIntervalForLabel) collect: [ :i | ticks at: i asInteger ].
 	labelValues := (0 to: self numberOfLabels)
-		collect: [ :i | self minValue + (i * (self maxValue - self minValue) / self numberOfLabels) ].
+		collect: [ :i | self minValue + ((self maxValue - self minValue) * i/ self numberOfLabels) ].
 
 	labelShape := RTLabel new 
 		color: self defaultLabelColor;

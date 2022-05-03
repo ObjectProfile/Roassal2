@@ -132,9 +132,9 @@ RTTimeline >> renderTimeLineLabels [
 	labels
 		doWithIndex:
 			[ :aLabel :index | 
-			position := self getPixelPositionOf: 0 @ index.
+			position := self getPixelPositionOfX: minX andY: index.
 			labelElements add: (self label: aLabel on: position) ].
-	halfVerticalStep := (self getPixelPositionOf: 0 @ 1) y / -2.
+	halfVerticalStep := (self getPixelPositionOfX: minX andY: 1) y / -2.
 
 	RTAlignment new
 		elements: labelElements;
@@ -155,7 +155,8 @@ RTTimeline >> setsComputeMinAndMax [
 	
 	sets do: [ :s | s globalMin: globalMin ].
 	sets do: [ :s | s globalMax: globalMax ].
-	
+
+	self minX: globalMin.	
 	self maxX: globalMax.
 	self maxY: self numberOfLines.
 
