@@ -14,6 +14,17 @@ RTObject class >> basicNew [
 
 { #category : #converting }
 RTObject >> asGroup [
+
+	self
+		deprecated: 'Use #asRTGroup for Roassal3/Pharo9+ compatibility'
+		on: '2022-03-18'
+		in: #Pharo9
+		transformWith: '`@receiver asGroup' -> '`@receiver asRTGroup'.
+	^ self asRTGroup
+]
+
+{ #category : #converting }
+RTObject >> asRTGroup [
 	^ RTGroup with: self
 
 ]

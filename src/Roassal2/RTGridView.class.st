@@ -135,11 +135,12 @@ RTGridView >> initializeElement: aView [
 
 { #category : #hooks }
 RTGridView >> registerMovementEvents: aCanvas [
-	aCanvas camera
-		addCallback:
-			(TRTranslationCallback
-				block: [ :shape :step | 
-					gridShape addToOffset: step.
-					gridShape signalUpdate ]).
-	aCanvas when: TRMouseWheelEvent do: [ :e | gridShape resetPath ]
+
+	aCanvas camera addCallback:
+		(TRTranslationCallback block: [ :shape :step | 
+			 gridShape addToOffset: step.
+			 gridShape signalUpdate ]).
+	aCanvas camera addCallback:
+		(TRCameraScaleCallback block: [ :scaleFactor | gridShape resetPath ]).
+	aCanvas when: TRResizeCanvasEvent do: [ :evt | gridShape resetPath ]
 ]

@@ -127,9 +127,17 @@ v canvas buildMorph drawOnMockCanvas
 
 { #category : #'event-processed' }
 TRMorph >> eventOfClass: anEventClass actionClass: anActionClass from: aMorphicEvent [
+
 	| relativePosition trEvent shape |
 	relativePosition := self relativePositionFor: aMorphicEvent.
-	shape := self shapeWithAction: anActionClass forPositionInPixels: relativePosition.
+	shape := ((anActionClass = TRMouseDragging or: [ 
+		           anActionClass = TRMouseMove ]) and: [ 
+		          aMorphicEvent yellowButtonPressed ])
+		         ifTrue: [ trachelCanvas ]
+		         ifFalse: [ 
+			         self
+				         shapeWithAction: anActionClass
+				         forPositionInPixels: relativePosition ].
 
 	trEvent := anEventClass fromEvent: aMorphicEvent.
 	trEvent
@@ -195,6 +203,7 @@ TRMorph >> handleKeystroke: anEvent [
 { #category : #'events-processing' }
 TRMorph >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent.
+	anEvent wasHandled ifTrue: [ ^ self ].
 	self trMouseMove: anEvent
 ]
 
@@ -471,6 +480,9 @@ TRMorph >> trMouseDragEnd: aMorphicEvent [
 	self announceToEventOverseer: trEvent.
 
 	(shapeBeingPointed isKindOf: TRCanvas) ifFalse: [
+		"first check if shere is a shape under drag 
+		(may not be if events are handled in wrong order during debugging)"
+		shapeUnderDrag ifNil: [ eventBeginingDragging := nil. ^ self ].
 		dropEvent := self eventOfClass: TRMouseDragDrop shape: shapeUnderDrag from: aMorphicEvent.
 		dropEvent draggedShape: shapeBeingPointed.
 		shapeUnderDrag announce: dropEvent.
@@ -512,47 +524,74 @@ TRMorph >> trMouseDragStart: aMorphicEvent [
 
 { #category : #'event-processed' }
 TRMorph >> trMouseDragging: aMorphicEvent [
-	| trEvent step underShape trUnderDragEvent overEvent |
+
+	| trEvent step relativePosition |
 	eventBeginingDragging ifNil: [ ^ self ].
 	step := aMorphicEvent position - eventBeginingDragging position.
 
-	trEvent := self eventOfClass: TRMouseDragging from: aMorphicEvent.
+	"manual event creation to avoid shape lookup as we already know it"
+	relativePosition := self relativePositionFor: aMorphicEvent.
+	trEvent := TRMouseDragging fromEvent: aMorphicEvent.
+	trEvent
+		morph: self;
+		canvas: trachelCanvas;
+		shape: shapeBeingPointed;
+		position: relativePosition.
 	trEvent step: step.
 
-	shapeBeingPointed ifNil: [ shapeBeingPointed := trEvent shape ].
 	"If the element was removed during the drag then cancel the event"
-	shapeBeingPointed canvas
-		ifNil: [ eventBeginingDragging := nil.
-			shapeBeingPointed := nil.
-			^ self ].
+	shapeBeingPointed canvas ifNil: [ 
+		eventBeginingDragging := nil.
+		shapeBeingPointed := nil.
+		^ self ].
 
 	trEvent shape: shapeBeingPointed.
 	shapeBeingPointed announce: trEvent.
 	self announceToEventOverseer: trEvent.
 	eventBeginingDragging := aMorphicEvent copy.
-	
-	(shapeBeingPointed isKindOf: TRCanvas) ifTrue: [ ^self ].
-	
-	trUnderDragEvent := self eventOfClass: TRMouseAbstractDrop actionClass: TRMouseAbstractDrop from:  aMorphicEvent under: shapeBeingPointed.
+
+	self trMouseDraggingOver: aMorphicEvent
+]
+
+{ #category : #'private-event-processed' }
+TRMorph >> trMouseDraggingOver: aMorphicEvent [
+
+	| trUnderDragEvent underShape overEvent |
+	(shapeBeingPointed isKindOf: TRCanvas) ifTrue: [ ^ self ].
+
+	trUnderDragEvent := self
+		                    eventOfClass: TRMouseAbstractDrop
+		                    actionClass: TRMouseAbstractDrop
+		                    from: aMorphicEvent
+		                    under: shapeBeingPointed.
 	trUnderDragEvent draggedShape: shapeBeingPointed.
 	underShape := trUnderDragEvent shape.
-	
-	underShape = shapeUnderDrag ifFalse: [ |leaveEvent enterEvent|
-		leaveEvent := self eventOfClass: TRMouseDragLeave shape: shapeUnderDrag from: aMorphicEvent.
+
+	underShape = shapeUnderDrag ifFalse: [ 
+		| leaveEvent enterEvent |
+		leaveEvent := self
+			              eventOfClass: TRMouseDragLeave
+			              shape: shapeUnderDrag
+			              from: aMorphicEvent.
 		leaveEvent draggedShape: shapeBeingPointed.
 		shapeUnderDrag announce: leaveEvent.
 		self announceToEventOverseer: leaveEvent.
-		enterEvent := self eventOfClass: TRMouseDragEnter shape: underShape from: aMorphicEvent.
+		enterEvent := self
+			              eventOfClass: TRMouseDragEnter
+			              shape: underShape
+			              from: aMorphicEvent.
 		enterEvent draggedShape: shapeBeingPointed.
 		underShape announce: enterEvent.
 		self announceToEventOverseer: enterEvent.
-		shapeUnderDrag := underShape.
-	].
-	
-	overEvent := self eventOfClass: TRMouseDragOver shape: shapeUnderDrag from: aMorphicEvent.
+		shapeUnderDrag := underShape ].
+
+	overEvent := self
+		             eventOfClass: TRMouseDragOver
+		             shape: shapeUnderDrag
+		             from: aMorphicEvent.
 	overEvent draggedShape: shapeBeingPointed.
 	shapeUnderDrag announce: overEvent.
-	self announceToEventOverseer: overEvent.
+	self announceToEventOverseer: overEvent
 ]
 
 { #category : #'event-processed' }

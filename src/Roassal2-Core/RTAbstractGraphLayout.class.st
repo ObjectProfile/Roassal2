@@ -254,14 +254,14 @@ RTAbstractGraphLayout >> on: el edges: edgs [
 
 { #category : #private }
 RTAbstractGraphLayout >> parentsFor: aNode [
-	^ self cachedParents
-		at: aNode
-		ifAbsentPut:
-			[ | nodes |
-			nodes := OrderedCollection new.
-			self edgesDo:
-					[:edge | edge to == aNode ifTrue: [ nodes add: edge from ] ].
-			nodes ]
+
+	^ self cachedParents at: aNode ifAbsentPut: [ 
+		  | nodes |
+		  nodes := OrderedCollection new.
+		  self edgesDo: [ :edge | 
+			  (edge to == aNode and: [ edge from ~= aNode ]) ifTrue: [ 
+				  nodes add: edge from ] ].
+		  nodes ]
 ]
 
 { #category : #private }

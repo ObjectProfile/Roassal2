@@ -15,7 +15,7 @@ RTAbstractElementHandling >> elements [
 
 { #category : #accessing }
 RTAbstractElementHandling >> elements: someElements [
-	elements := someElements asGroup
+	elements := someElements asRTGroup
 ]
 
 { #category : #accessing }

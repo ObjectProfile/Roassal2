@@ -11,7 +11,7 @@ TRFocusing class >> on: canvas [
 
 { #category : #utility }
 TRFocusing >> encompassingRectangleOf: shapes [
-	^ shapes asGroup encompassingRectangle 
+	^ shapes asRTGroup encompassingRectangle 
 
 ]
 

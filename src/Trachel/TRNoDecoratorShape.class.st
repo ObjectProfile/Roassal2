@@ -5,7 +5,8 @@ Class {
 }
 
 { #category : #visitor }
-TRNoDecoratorShape >> accept: aVisitor [
+TRNoDecoratorShape >> accept: aVisitor onStart: aBoolean [
+
 	aVisitor visitNoShape: self
 ]
 

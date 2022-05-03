@@ -82,10 +82,10 @@ RTExploraBuilder >> buildNode: object parent: parent [
 		elementIconOpen := (icons first) elementOn: #iconOpen.
 		elementIconClose := (icons second) elementOn: #iconClose.
 		
-		RTConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf: element.
+		RTConstraint move: ((Array with: elementIconOpen with: elementIconClose) asRTGroup) onTheRightOf: element.
 
 		element addCallback: (TRTranslationCallback new block: [
-			TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asGroup) onTheRightOf:element. 		
+			TRConstraint move: ((Array with: elementIconOpen with: elementIconClose) asRTGroup) onTheRightOf:element. 		
 			self view signalUpdate
 			]).
 	

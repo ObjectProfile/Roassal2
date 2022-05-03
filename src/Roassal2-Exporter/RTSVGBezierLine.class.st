@@ -47,6 +47,7 @@ RTSVGBezierLine >> addCurves: stream with: visitor [
 
 { #category : #adding }
 RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
+
 	| from to shape el |
 	shape := self element.
 	el := shape element.
@@ -61,11 +62,11 @@ RTSVGBezierLine >> addOn: stream using: aSVGVisitor [
 	self addStrokeOpacity: stream.
 	self addStrokeWidth: stream.
 	self closeTag: stream.
-	self decoration ifNotNil: [ self addMarker: stream ].
+	self addMarkers: stream.
 	self startClass: stream.
 	self closeTag: stream.
 	self addExternalInteractions: aSVGVisitor.
-	self closeDef: stream.
+	self closeDef: stream
 ]
 
 { #category : #adding }
@@ -83,13 +84,20 @@ RTSVGBezierLine >> element: anElement points: somePoints width: anInteger color:
 ]
 
 { #category : #accessing }
-RTSVGBezierLine >> element: anElement points: somePoints width: anInteger color: aColor decoration: aLineDecoration [
-	self element: anElement points: somePoints width: anInteger color: aColor.
-	self decoration: aLineDecoration
+RTSVGBezierLine >> element: anElement points: somePoints width: anInteger color: aColor decorationsInfo: anArrayOfDecorationInfo [
+
+	self
+		element: anElement
+		points: somePoints
+		width: anInteger
+		color: aColor.
+	self decorationsInfo: anArrayOfDecorationInfo
 ]
 
 { #category : #initialization }
 RTSVGBezierLine >> initialize [
+
+	super initialize.
 	self type: 'path'.
 	self label: 'bezier'
 ]

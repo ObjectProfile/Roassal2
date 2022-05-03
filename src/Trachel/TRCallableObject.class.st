@@ -75,9 +75,10 @@ TRCallableObject >> triggerCallbacksForStep: aStep [
 
 { #category : #callbacks }
 TRCallableObject >> triggerRemoveCallbacks [
+
 	"aStep is a point that represents a translation step"
+
 	self hasCallback ifFalse: [ ^ self ].
-	self callbacks do: [ :c | 
-		c isRemoveCallback ifTrue: [ 
-			c removeShape: self ] ]
+	(Array withAll: self callbacks) do: [ :c | 
+		c isRemoveCallback ifTrue: [ c removeShape: self ] ]
 ]

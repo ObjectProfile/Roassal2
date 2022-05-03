@@ -13,8 +13,8 @@ TRBezierShape >> accept: aVisitor [
 ]
 
 { #category : #visitor }
-TRBezierShape >> accept: aVisitor with: decoration [
-	aVisitor visitBezierShape: self with: decoration
+TRBezierShape >> accept: aVisitor with: anArrayOfDecorationInfo [
+	aVisitor visitBezierShape: self with: anArrayOfDecorationInfo
 ]
 
 { #category : #hooks }
@@ -52,6 +52,12 @@ TRBezierShape >> drawOn: athensCanvas [
 { #category : #accessing }
 TRBezierShape >> encompassingRectangle [
 	^ Rectangle encompassing: listOfPoints
+]
+
+{ #category : #accessing }
+TRBezierShape >> from [
+
+	^ self points first
 ]
 
 { #category : #testing }
@@ -104,6 +110,12 @@ TRBezierShape >> position [
 TRBezierShape >> strokePaint: aColor [
 	"set the color of the border line"
 	self color: aColor
+]
+
+{ #category : #accessing }
+TRBezierShape >> to [
+
+	^ self points last
 ]
 
 { #category : #actions }

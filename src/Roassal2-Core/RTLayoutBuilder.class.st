@@ -309,7 +309,7 @@ RTLayoutBuilder >> processPartitions: elements [
 		"tupple = { conditionblock . layout }"
 		els := elements select: [ :el | tupple first rtValue: el model ].
 		tupple second on: els.
-		groupOfElements add: els asGroup.
+		groupOfElements add: els asRTGroup.
 		 ].
 	
 	layout on: groupOfElements

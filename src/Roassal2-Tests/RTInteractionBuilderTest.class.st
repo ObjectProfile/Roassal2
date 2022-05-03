@@ -42,7 +42,7 @@ RTInteractionBuilderTest >> testAddingTwoActions [
 	self assert: builder numberOfInteractions equals: 2.
 	
 	e := RTElement new.
-	builder setUpElements: (Array with: e) asGroup.
+	builder setUpElements: (Array with: e) asRTGroup.
 	self assert: e announcer numberOfSubscriptions equals: 1.
 	
 ]

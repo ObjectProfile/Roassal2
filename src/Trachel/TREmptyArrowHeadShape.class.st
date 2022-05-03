@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #visitor }
-TREmptyArrowHeadShape >> accept: aVisitor [
-	aVisitor visitArrowHeadShape: self
+TREmptyArrowHeadShape >> accept: aVisitor onStart: aBoolean [
+	aVisitor visitArrowHeadShape: self onStart: aBoolean
 ]
 
 { #category : #hooks }

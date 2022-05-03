@@ -256,11 +256,11 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 		self kiviatMetrics do: [ :m | titles add: (view elements detect: [ :e |  (e shape isKindOf: RTLabel) and: [ (e trachelShape text) = (m named) ] ])].
 		 ].
 
-	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) do: [  :e | 
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asRTGroup) do: [  :e | 
 		e @ (RTShowLabel new labelledInteraction: (RTLabeled new text: [ :el | el kiviatNode named])).
 		].
 	
-	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup)  when: TRMouseEnter do: [  :evt | 
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asRTGroup)  when: TRMouseEnter do: [  :evt | 
 		(kiviatNodes select: [ :kn | kn named = evt element model kiviatNode named ]) do: [ :kn |
 			
 			kn nodeKiviatElements do: [ :e | self recordElement: e. e trachelShape color: (e trachelShape color alpha: highColor)].
@@ -274,7 +274,7 @@ RTKiviatBuilder >> executeHighlightLowColor: lowColor highColor: highColor [
 		view signalUpdate.
 		].
 	
-	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asGroup) when: TRMouseLeave do: [  :evt | 
+	((kiviatNodes flatCollect: [ :kn | kn nodeKiviatElements]) asRTGroup) when: TRMouseLeave do: [  :evt | 
 		kiviatNodes do: [ :kn |
 			kn nodeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].
 			kn edgeKiviatElements do: [ :e | e trachelShape color: (e attributes at: #originalColor)].

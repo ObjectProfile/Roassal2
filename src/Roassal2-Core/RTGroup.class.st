@@ -24,7 +24,8 @@ RTGroup >> @ interaction [
 
 { #category : #visitor }
 RTGroup >> accept: aRTVisitor [
-	self  do: [ :e | e trachelShape accept: aRTVisitor]
+
+	aRTVisitor visitGroup: self
 ]
 
 { #category : #accessing }
@@ -39,6 +40,12 @@ RTGroup >> addAll: elements [
 	^ super addAll: elements
 ]
 
+{ #category : #adding }
+RTGroup >> addCallback: aCallback [
+
+	self elements do: [ :each | each addCallback: aCallback ]
+]
+
 { #category : #public }
 RTGroup >> addShape: aShape [
 	self do: [ :e | e addShape: aShape ]
@@ -51,11 +58,18 @@ RTGroup >> addedIn: view [
 
 { #category : #converting }
 RTGroup >> asGroup [
-	^ self
+
+	self
+		deprecated: 'Use #asRTGroup for Roassal3/Pharo9+ compatibility'
+		on: '2022-03-18'
+		in: #Pharo9
+		transformWith: '`@receiver asGroup' -> '`@receiver asRTGroup'.
+	^ self asRTGroup
 ]
 
 { #category : #converting }
 RTGroup >> asRTGroup [
+
 	^ self
 ]
 

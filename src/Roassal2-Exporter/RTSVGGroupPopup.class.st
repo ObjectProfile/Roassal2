@@ -27,7 +27,7 @@ RTSVGGroupPopup >> addEventHandlers: aStream id: aString element: aRTElement cen
 		nextPutAll: String cr.
 	visitor := RTSVGVisitor new stream: aStream; center: aNumber; yourself.
 	visitor canvas: myGroup encompassingRectangle.
-	visitor visitGroup: myGroup.
+	myGroup accept: visitor.
 	aStream 
 		nextPutAll:  '</g>'
 ]

@@ -92,7 +92,7 @@ TRCamera >> encompassingRectangle [
 
 { #category : #utility }
 TRCamera >> encompassingRectangleOf: shapes [
-	^ shapes asGroup encompassingRectangle 
+	^ shapes asRTGroup encompassingRectangle 
 
 ]
 

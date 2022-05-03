@@ -52,6 +52,13 @@ RTVisitor >> visitCanvas: aCanvas [
 ]
 
 { #category : #visitor }
+RTVisitor >> visitGroup: aRTGroup [
+
+	aRTGroup do: [ :roassalShape | 
+		roassalShape trachelShape accept: self ]
+]
+
+{ #category : #visitor }
 RTVisitor >> visitView: aView [
 	aView canvas accept: self
 ]

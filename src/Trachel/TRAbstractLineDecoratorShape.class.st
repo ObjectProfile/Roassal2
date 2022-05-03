@@ -44,9 +44,16 @@ TRAbstractLineDecoratorShape class >> fromLine: aTRLine size: aNumber color: aCo
 	^self from: aTRLine from to: aTRLine to width: aTRLine width size: aNumber color: aColor stroke: aTRLine strokePaint.
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 TRAbstractLineDecoratorShape >> accept: aVisitor [
-	aVisitor visitAbstractLineDecorationShape: self
+
+	^ self accept: aVisitor onStart: false
+]
+
+{ #category : #visiting }
+TRAbstractLineDecoratorShape >> accept: aVisitor onStart: aBoolean [
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

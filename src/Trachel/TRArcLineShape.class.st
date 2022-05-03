@@ -12,6 +12,12 @@ Class {
 	#category : #'Trachel-Shapes'
 }
 
+{ #category : #visiting }
+TRArcLineShape >> accept: aVisitor [
+
+	aVisitor visitArcLine: self
+]
+
 { #category : #accessing }
 TRArcLineShape >> center [
 	^ center

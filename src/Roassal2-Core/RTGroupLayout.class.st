@@ -92,7 +92,7 @@ RTGroupLayout >> getGroupsFrom: elements [
 		| els |
 		els := iterativeGroup first withAllConnectedElements.
 		els size > 1 
-			ifTrue: [ groups add: els asGroup ] 
+			ifTrue: [ groups add: els asRTGroup ] 
 			ifFalse: [ lonelyGroup addAll: els ].
 		iterativeGroup removeAll: els.
 	].

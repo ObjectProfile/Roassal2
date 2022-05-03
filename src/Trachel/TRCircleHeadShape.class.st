@@ -4,6 +4,12 @@ Class {
 	#category : #'Trachel-ShapesForArrow'
 }
 
+{ #category : #visiting }
+TRCircleHeadShape >> accept: aVisitor onStart: aBoolean [
+
+	aVisitor visitCircleHeadShape: self onStart: aBoolean
+]
+
 { #category : #hooks }
 TRCircleHeadShape >> computePath [
 	path := TRPlatform current computeCircleHeadPathFor: self.

@@ -2,19 +2,37 @@ Extension { #name : #Collection }
 
 { #category : #'*Roassal2' }
 Collection >> asGroup [
-	^ RTGroup withAll: self
+
+	self
+		deprecated: 'Use #asRTGroup for Roassal3/Pharo9+ compatibility'
+		on: '2022-03-18'
+		in: #Pharo9
+		transformWith: '`@receiver asGroup' -> '`@receiver asRTGroup'.
+	^ self asRTGroup
 ]
 
 { #category : #'*Roassal2' }
 Collection >> asIdentityGroup [
-	^ RTIdentityGroup withAll: self
-	
 
+	self
+		deprecated:
+		'Use #asRTIdentityGroup for Roassal3/Pharo9+ compatibility'
+		on: '2022-03-18'
+		in: #Pharo9
+		transformWith:
+		'`@receiver asIdentityGroup' -> '`@receiver asRTIdentityGroup'.
+	^ self asRTIdentityGroup
 ]
 
 { #category : #'*Roassal2' }
 Collection >> asRTGroup [
 	^ RTGroup withAll: self
+]
+
+{ #category : #'*Roassal2' }
+Collection >> asRTIdentityGroup [
+
+	^ RTIdentityGroup withAll: self
 ]
 
 { #category : #'*Roassal2' }

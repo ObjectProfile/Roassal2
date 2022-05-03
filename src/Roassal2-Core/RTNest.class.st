@@ -64,7 +64,7 @@ RTNest >> centerOnTrachelShape: trachelShape elements: elements [
 		- translate all the elements on top of backElement
 		- perform a layout if one is set"
 
-	behavior centerOnTrachelShape: trachelShape elements: elements asGroup.
+	behavior centerOnTrachelShape: trachelShape elements: elements asRTGroup.
 
 ]
 
@@ -75,7 +75,7 @@ RTNest >> doLayoutIfNecessaryOn: elements [
 
 { #category : #utility }
 RTNest >> encompassingRectangleOf: elements [
-	^ elements asGroup encompassingRectangle 
+	^ elements asRTGroup encompassingRectangle 
 
 ]
 
@@ -233,7 +233,7 @@ RTNest >> on: element inShape: aSymbol nest: elements layout: aSymbolLayout [
 	self doLayoutIfNecessaryOn: elements.
 	
 	"We assume that the roassal shape of element is composed"
-	behavior on: (aSymbol rtValue: element trachelShape shapes) setNested: elements asGroup.
+	behavior on: (aSymbol rtValue: element trachelShape shapes) setNested: elements asRTGroup.
 	"self onTrachelShape: (aSymbol rtValue: element trachelShape shapes) nest: elements."
 
 	aSymbolLayout rtValue: element trachelShape.
@@ -292,7 +292,7 @@ RTNest >> on: backElement nestRootOf: elements [
 
 { #category : #public }
 RTNest >> on: backElement simplyNest: elements [
-	behavior on: backElement setNested: elements asGroup
+	behavior on: backElement setNested: elements asRTGroup
 ]
 
 { #category : #'OBSOLETE - to be removed' }
@@ -324,7 +324,7 @@ RTNest >> onTrachelShape: trachelShape nest: elements [
 	 - make the inner elements draggable"
 
 	self doLayoutIfNecessaryOn: elements.
-	behavior on: trachelShape setNested: elements asGroup
+	behavior on: trachelShape setNested: elements asRTGroup
 
 	"self centerOnTrachelShape: trachelShape elements: elements.
 	self makeElements: elements draggableByTrachelShape: trachelShape."

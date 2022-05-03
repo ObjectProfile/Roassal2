@@ -2,7 +2,7 @@
 I am a simple test class for RTSVGVisitor2
 "
 Class {
-	#name : #RTSVGVisitor2Test,
+	#name : #RTJavascriptVisitorTest,
 	#superclass : #RTTest,
 	#instVars : [
 		'visitor'
@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : #running }
-RTSVGVisitor2Test >> setUp [
+RTJavascriptVisitorTest >> setUp [
 	super setUp.
 	visitor := RTJavascriptVisitor new.
 	
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testAddInteractions [
+RTJavascriptVisitorTest >> testAddInteractions [
 	| element |
 	element := RTBox new borderColor: Color black; elementOn: 1.
 	element @ RTDraggable.
@@ -27,7 +27,7 @@ RTSVGVisitor2Test >> testAddInteractions [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testAddMatrix [
+RTJavascriptVisitorTest >> testAddMatrix [
 	| el |
 	el := RTBox new element.
 	el translateTo: 0 @ 0.5.
@@ -36,7 +36,7 @@ RTSVGVisitor2Test >> testAddMatrix [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testAddPopup [
+RTJavascriptVisitorTest >> testAddPopup [
 	| element background |
 	element := RTBox new borderColor: Color black; elementOn: 1.
 	element @ (RTPopup new group: [ :group :el |
@@ -53,7 +53,7 @@ RTSVGVisitor2Test >> testAddPopup [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testBasic [
+RTJavascriptVisitorTest >> testBasic [
 	| size |
 	self assert: visitor view isNil.
 	self assert: visitor stream contents isEmpty.
@@ -69,7 +69,7 @@ RTSVGVisitor2Test >> testBasic [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testBorderWidth [
+RTJavascriptVisitorTest >> testBorderWidth [
 	| el |
 	el := RTBox new borderColor: Color black; element.
 	visitor addBorderWidth: el trachelShape.
@@ -77,7 +77,7 @@ RTSVGVisitor2Test >> testBorderWidth [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitArcShape [
+RTJavascriptVisitorTest >> testVisitArcShape [
 	| el |
 	el := (RTArc new  betaAngle: 0; innerRadius: 30; externalRadius: 30) element.
 	visitor visitElement: el.
@@ -86,7 +86,7 @@ RTSVGVisitor2Test >> testVisitArcShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitArrowShape [
+RTJavascriptVisitorTest >> testVisitArrowShape [
 	| shape box e1 e2 view |
 	view := RTView new.
 	box := RTBox new.
@@ -110,7 +110,7 @@ RTSVGVisitor2Test >> testVisitArrowShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitBoxShape [
+RTJavascriptVisitorTest >> testVisitBoxShape [
 	| box |
 	box := RTBox new size: 1/2; elementOn: 'foo'.
 	visitor visitElement: box.
@@ -119,7 +119,7 @@ RTSVGVisitor2Test >> testVisitBoxShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitEllipseShape [
+RTJavascriptVisitorTest >> testVisitEllipseShape [
 	| ellipse |
 	ellipse := RTEllipse new size: 1/2; elementOn: 'foo'.
 	visitor visitElement: ellipse.
@@ -128,7 +128,7 @@ RTSVGVisitor2Test >> testVisitEllipseShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitGroup [
+RTJavascriptVisitorTest >> testVisitGroup [
 	| group |
 	group := RTGroup new.
 	group add: RTBox element.
@@ -138,7 +138,7 @@ RTSVGVisitor2Test >> testVisitGroup [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitLineShape [
+RTJavascriptVisitorTest >> testVisitLineShape [
 	| shape box e1 e2 |
 	box := RTBox new.
 	e1 := box element.
@@ -150,7 +150,7 @@ RTSVGVisitor2Test >> testVisitLineShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitPolygonShape [
+RTJavascriptVisitorTest >> testVisitPolygonShape [
 	| shape |
 	shape := RTPolygon new 
 		vertices: (Array with: 0@0 with: 1@0 with: 1@1); elementOn: 'foo'.
@@ -160,7 +160,7 @@ RTSVGVisitor2Test >> testVisitPolygonShape [
 ]
 
 { #category : #tests }
-RTSVGVisitor2Test >> testVisitSVGPath [
+RTJavascriptVisitorTest >> testVisitSVGPath [
 	| shape |
 	shape := RTSVGPath new path:'M 100 100 L 300 100 L 200 300 z'; element.
 	
