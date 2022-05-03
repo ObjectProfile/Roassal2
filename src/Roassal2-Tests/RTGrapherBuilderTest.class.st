@@ -31,8 +31,8 @@ RTGrapherBuilderTest >> testCentralPoint [
 	
 	b build.
 	
-	self assert: b centralPoint equals: 0 @ -80.
-	self assert: b getAxisX fromPoint equals: 0 @ -80
+	self assert: b centralPoint equals: 0 @ 0.
+	self assert: b getAxisX fromPoint equals: 0 @ 0
 
 ]
 

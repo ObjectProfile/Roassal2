@@ -17,8 +17,8 @@ RTGrapherTest >> testAxesPosition [
 	b build.
 	center := b getPixelPositionOf: 0 @ 0.
 	self assert: center equals: 0 @ -100.
-	self assert: b axisX fromPoint equals: 0 @ -100.
-	self assert: b axisX toPoint equals: 300 @ -100.
+	self assert: b axisX fromPoint equals: 0 @ 0.
+	self assert: b axisX toPoint equals: 300 @ 0.
 	self assert: b axisY fromPoint equals: 0 @ 0.
 	self assert: b axisY toPoint equals: 0 @ -200
 ]
@@ -35,8 +35,8 @@ RTGrapherTest >> testAxesWithOFffsetPosition [
 	b build.
 	center := b getPixelPositionOf: 0 @ 0.
 	self assert: center equals: 0 @ -100.
-	self assert: b axisX fromPoint equals: 0 @ -100.
-	self assert: b axisX toPoint equals: 300 @ -100.
+	self assert: b axisX fromPoint equals: 0 @ 0.
+	self assert: b axisX toPoint equals: 300 @ 0.
 	self assert: b axisY fromPoint equals: -30 @ 0.
 	self assert: b axisY toPoint equals: -30 @ -200
 ]
