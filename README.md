@@ -1,30 +1,4 @@
 
-This fork changes the timeline functionality to allow visualizing arrays of dates. Here's an example:
-
-```Smalltalk
-	| data b s |
-	data := Array with: 
-        (Array with:'abc' with:(Date fromString:'1 March 2019') with:(Date fromString: '5 April 2019')) with:
-        (Array with:'efg' with:(Date fromString:'1 April 2019') with:(Date fromString: '7 April 2019')).
-
-	b := RTTimeline new.
-	
-	s := RTTimelineSet new.
-	s objects: data.
-	s lineIdentifier: #first.
-	s start: #second.
-	s end: #third.
-	b add: s.
-	
-	b axisX 
-		numberOfLabels: 5;
-		labelRotation: -45;
-		labelConversion: [ :v | v ]. 
-	
-	b build.
-	^ b view
-```
-
 # Roassal2
 [![Test P8](https://github.com/ObjectProfile/Roassal2/actions/workflows/runOnPharo8.yml/badge.svg)](https://github.com/ObjectProfile/Roassal2/actions/workflows/runOnPharo8.yml)
 [![Test P9](https://github.com/ObjectProfile/Roassal2/actions/workflows/runTestPharo9.yml/badge.svg)](https://github.com/ObjectProfile/Roassal2/actions/workflows/runTestPharo9.yml)
