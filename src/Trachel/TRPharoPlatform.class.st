@@ -302,7 +302,8 @@ TRPharoPlatform >> fontFamilyName: name size: number [
 
 { #category : #public }
 TRPharoPlatform >> fontListStrings [
-	^ FontChooser new fontListStrings.
+
+	^ LogicalFontManager current allFamilies collect: #familyName
 ]
 
 { #category : #'accessing-classes' }
