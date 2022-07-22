@@ -25,6 +25,7 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-Core' with: [ spec requires: #('Trachel' 'Athens-SVG-PathConverter' 'Geometry') ];
 				package: 'Roassal2' with: [ spec requires: #('Roassal2-Core') ];
 				package: 'Roassal2Spec' with: [ spec requires: #('Roassal2') ];
+				package: 'Roassal2Spec2' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-Exporter' with: [ spec requires: #('Trachel' 'Roassal2') ];
 				package: 'Roassal2-Exporter-Tests' with: [ spec requires: #('Roassal2-Exporter' 'Roassal2-Tests') ];
 				package: 'Roassal2GT' with: [ spec requires: #('Roassal2' 'GToolkitExamples' 'Roassal2-Exporter') ];
@@ -43,11 +44,15 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-OpenStreetMap' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-ExporterVW' with: [ spec requires: #('Roassal2') ] ]. 
 
+			spec for: #(#'pharo10.x' #'pharo11.x' #'pharo12.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec2) ].
+			spec for: #(#'pharo9.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec Roassal2Spec2) ].
+			spec for: #(#'pharo6.x' #'pharo7.x' #'pharo8.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec) ].
+
 			spec group: 'Core' with: #(
 				'Trachel' 
 				'Roassal2-Core'
 				'Roassal2'
-				'Roassal2Spec'
+				'Roassal2SpecGroup'
 				'Roassal2-Exporter'
 				'Roassal2-Rules'
 				'Roassal2-Calendar'
