@@ -44,9 +44,15 @@ BaselineOfRoassal2 >> baseline: spec [
 				package: 'Roassal2-OpenStreetMap' with: [ spec requires: #('Roassal2') ];
 				package: 'Roassal2-ExporterVW' with: [ spec requires: #('Roassal2') ] ]. 
 
-			spec for: #(#'pharo10.x' #'pharo11.x' #'pharo12.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec2) ].
-			spec for: #(#'pharo9.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec Roassal2Spec2) ].
-			spec for: #(#'pharo6.x' #'pharo7.x' #'pharo8.x') do: [spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec) ].
+			spec for: #(#'pharo10.x' #'pharo11.x' #'pharo12.x') do: [
+				spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec2)
+			].
+			spec for: #(#'pharo9.x') do: [
+				spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec Roassal2Spec2)
+			].
+			spec for: #(#'pharo8.x' #'pharo7.x') do: [
+				spec group: 'Roassal2SpecGroup' with: #(Roassal2Spec).
+			].	
 
 			spec group: 'Core' with: #(
 				'Trachel' 
@@ -63,8 +69,16 @@ BaselineOfRoassal2 >> baseline: spec [
 				'Roassal2-AnimatedScatterPlot'
 				'Roassal2-UML'
 				'Roassal2-Benchmarks').
-			spec group: 'Minimal' with: #('Core' 'Roassal2GT').
 			spec group: 'NoGlamour' with: #('Core' 'Roassal2-Tests' 'Roassal2-Exporter-Tests').
-			spec group: 'Tests' with: #('Minimal' 'Roassal2-Tests' 'Roassal2-Exporter-Tests' 'Roassal2GT-Tests').
+			
+			spec for: #(#'pharo9.x' #'pharo8.x' #'pharo7.x') do: [
+				spec group: 'Minimal' with: #('Core' 'Roassal2GT').
+				spec group: 'Tests' with: #('Minimal' 'Roassal2-Tests' 'Roassal2-Exporter-Tests' 'Roassal2GT-Tests').
+			].			
+			spec for: #(#'pharo10.x' #'pharo11.x' #'pharo12.x') do: [
+				spec group: 'Minimal' with: #('Core').
+				spec group: 'Tests' with: #('NoGlamour').
+			].
+			
 			spec group: 'default' with: #('Tests' 'Roassal2-OpenStreetMap' 'Roassal2-ExporterVW').
 ]
