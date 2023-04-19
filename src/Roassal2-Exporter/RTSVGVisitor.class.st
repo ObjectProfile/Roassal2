@@ -165,13 +165,14 @@ RTSVGVisitor >> findDecorationInfoForLines: lines outOfDecorations: decorations 
 RTSVGVisitor >> fixedEncompassingRectangle [
  	| shapes |
 	shapes := self view canvas shapes.
+	shapes ifEmpty: [ ^ 0@0 extent: 5 asPoint ].
 	canvas := shapes first encompassingRectangle.
 	shapes do: [ :s| |rect|
-				rect := s encompassingRectangle.
-				rect height < 0 
-					ifTrue: [ rect := Rectangle origin: rect bottomLeft corner: rect topRight].
-				canvas := canvas merge: rect.
-				 ].
+		rect := s encompassingRectangle.
+		rect height < 0 
+			ifTrue: [ rect := Rectangle origin: rect bottomLeft corner: rect topRight].
+		canvas := canvas merge: rect.
+		 ].
 	^canvas 
 ]
 
